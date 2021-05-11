@@ -1,0 +1,954 @@
+
+
+.container-fluid{
+    margin: 0 auto;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    position: relative
+}
+
+// .container-fluid .column-one {
+//         width: 275px;
+//         height: 100%;
+//         position: absolute;
+//         border-right: 1px solid #f4f4f4;
+//         overflow: hidden;
+//         padding: 50px;
+//         background-color: #ffffff;
+//     }
+
+  /* Style the search field */
+form.example input[type=text] {
+    padding: 10px;
+    font-size: 17px;
+    border: 1px solid #f2f3f7;
+    float: left;
+    width: 80%;
+    background: #f2f3f7;
+  }
+  
+  /* Style the submit button */
+  .example{
+      padding: 20px;
+  }
+  form.example button {
+    float: left;
+    width: 10%;
+    padding: 10px;
+    background: #f2f3f7;
+    color: white;
+    font-size: 17px;
+    border: 1px solid #f2f3f7;
+    border-left: none; /* Prevent double borders */
+    cursor: pointer;
+  }
+  form.example button {
+    float: left;
+    width: 10%;
+    padding: 10px;
+    background: #f2f3f7;
+    color: white;
+    font-size: 17px;
+    border: 1px solid #f2f3f7;
+    border-left: none; /* Prevent double borders */
+    cursor: pointer;
+  }
+  
+  form.example button:hover {
+    background: #0b7dda;
+  }
+  
+  /* Clear floats */
+  form.example::after {
+    content: "";
+    clear: both;
+    display: table;
+  }
+
+
+
+//   .title {
+//     padding-top: 2px;
+//     font-weight: 600;
+//     text-overflow: ellipsis;
+//     white-space: nowrap;
+//     overflow: hidden;
+// }
+// .fw-4 {
+//     font-weight: 400!important;
+// }
+
+//   .desc {
+//     color: #a3a3a3;
+//     font-size: 10px;
+//     text-overflow: ellipsis;
+//     white-space: nowrap;
+//     overflow: hidden;
+// }
+
+// .icon {
+//     display: inline-block;
+//     height: 40px;
+//     width: 40px;
+//     border-radius: 20px;
+//     text-align: center;
+//     line-height: 40px;
+//     font-size: 18px;
+// }
+
+
+//facebook snippet
+
+.well-social-post {
+    border-radius: 0;
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    padding:0;
+}
+
+.well-social-post .glyphicon,
+.well-social-post .fa,
+.well-social-post [class^='icon-'],
+.well-social-post [class*='icon-'] {
+    font-weight: bold;
+    color: #999999;
+}
+
+.well-social-post a,
+.well-social-post a:hover,
+.well-social-post a:active,
+.well-social-post a:focus {
+    text-decoration: none;
+}
+
+.well-social-post .list-inline {
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
+}
+
+.well-social-post .list-inline li {
+    position: relative;
+}
+
+.well-social-post .list-inline li.active::after {
+    position: absolute;
+    display: block;
+    width: 0;
+    height: 0;
+    content: "";
+    top: 30px;
+    left: 50%;
+    left: -webkit-calc(50% - 5px);
+    left: -moz-calc(50%-5px);
+    left: calc(50% - 5px);
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid #dddddd;
+}
+
+.well-social-post .list-inline li.active a {
+    color: #222222;
+    font-weight: bold;
+}
+
+.well-social-post .form-control {
+    width: 100%;
+    min-height: 100px;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+.well-social-post .list-inline {
+    padding: 10px;
+}
+
+.well-social-post .list-inline li + li {
+    margin-left: 10px;
+}
+
+.well-social-post .post-actions {
+    margin: 0;
+    background-color: #f6f7f8;
+    border-top-color: #e9eaed;
+}  
+.pull-right{
+    left: 60%;
+}
+
+
+//fb view
+
+/*-- Global Selectors --*/
+a{
+    color:#47649F;
+}
+
+body{
+    font-family:'helvetica';    
+}
+
+/*-- Bootstrap Override Style --*/
+
+
+/*-- Content Style --*/
+.post-footer-option li{
+    float:left;
+    margin-right:50px;
+    padding-bottom:15px;
+
+}
+
+.post-footer-option li a{
+    color:#AFB4BD;
+    font-weight:500;
+    font-size:1.3rem;
+}
+
+.photo-profile{
+    border:1px solid #DDD;    
+}
+
+.anchor-username h4{
+    font-weight:bold;    
+}
+
+.anchor-time{
+    color:#ADB2BB;
+    font-size:1.2rem;
+}
+
+.post-footer-comment-wrapper{
+    background-color:#ffffff;
+}
+
+.media{
+    padding-top: 20px;
+}
+
+.post-body{
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+    
+
+   .preview-comment {
+        position: relative;
+        padding: 7px 0px 12px;
+        color: #999;
+        text-align: center;
+      
+        margin: 0 10px;
+        margin-top: 10px;
+        padding-bottom: 20px;
+    }
+
+    .preview-facebook .preview-comment .item {
+        float: left;
+        margin-right: 25px;
+        font-weight: 600;
+        font-size: 12px;
+    }
+    .preview-facebook .preview-comment .item .facebook-icon {
+        position: relative;
+        top: 3px;
+    }
+
+    .form-check-label{
+        font-weight: 600;
+        color: #7d7e80;
+        
+    }
+    
+    .flex-container {
+        display: flex;
+        padding-left:20px ;
+    }
+    
+    .flex-child {
+        flex: 1;
+        
+    }  
+    
+    .flex-child:first-child {
+        margin-right: 20px;
+    } 
+    .form-check-input{
+        left: 114px;
+    }
+
+    .scroll {
+        margin:4px, 4px;
+        padding:4px;
+        background-color: green;
+        width: 500px;
+        height: 100%;
+        overflow-x: hidden;
+        overflow-y: auto;
+        text-align:justify;
+    }
+
+    .ql-toolbar.ql-snow .ql-formats {
+        margin-right: 15px;
+      }
+
+      /*Preview photos*/
+.preview-facebook-media{
+    position: relative;
+}
+
+.preview-facebook-media .user-info{
+    padding: 10px 10px;
+    position: relative;
+}
+
+.preview-facebook-media .user-info img{
+    width: 40px;
+    margin-right: 5px;
+}
+
+.preview-facebook-media .user-info .text{
+    position: absolute;
+    top: 14px;
+    font-size: 13px;
+    left: 68px;
+    line-height: 17px;
+}
+
+.preview-facebook-media .user-info .text .name{
+    font-weight: bold;
+    color: #365899;
+}
+
+.preview-facebook-media .user-info .text span{
+    color: #90949c;
+    font-size: 12px;
+}
+
+.preview-facebook-media .preview-media{
+    height: 417px;
+    background-size: cover;
+    background-position: center center;
+    background-color: #f4f4f4;
+    overflow: hidden;
+    position: relative;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.preview-facebook-media .preview-media .item{
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    border: 1px solid #fff;
+    transition: all 0.5s;
+    position: relative;
+    overflow: hidden;
+}
+
+.preview-facebook-media .preview-media.preview-media1,
+.preview-facebook-media .preview-media.preview-media2,
+.preview-facebook-media .preview-media.preview-media3,
+.preview-facebook-media .preview-media.preview-media4{
+    background-color: #fff;
+}
+
+.preview-facebook-media .preview-media.preview-media2{
+    height: 180px;
+}
+
+.preview-facebook-media .preview-media.preview-media2 .item:nth-child(1){
+    width: 50%;
+    height: 100%;
+    float: left;
+}
+
+.preview-facebook-media .preview-media.preview-media3 .item:nth-child(1){
+    width: 100%;
+    height: 50%;
+    float: left;
+}
+
+.preview-facebook-media .preview-media.preview-media4 .item:nth-child(1),
+.preview-facebook-media .preview-media.preview-media4 .item:nth-child(2),
+.preview-facebook-media .preview-media.preview-media4 .item:nth-child(3),
+.preview-facebook-media .preview-media.preview-media4 .item:nth-child(4)
+{
+    width: 50%;
+    height: 50%;
+    float: left;
+}
+
+.preview-facebook-media .preview-media.preview-media1 .item:nth-child(1){
+    width: 100%;
+    height: 100%;
+    float: left;
+}
+
+.preview-facebook-media .preview-media.preview-media3 .item:nth-child(2){
+    width: 50%;
+    height: 50%;
+    float: left;
+}
+
+.preview-facebook-media .preview-media.preview-media3 .item:nth-child(3){
+    width: 50%;
+    height: 50%;
+    float: left;
+}
+
+.preview-facebook-media .preview-media.preview-media2 .item:nth-child(2){
+    width: 50%;
+    height: 100%;
+    float: left;
+}
+
+.preview-facebook-media .preview-media.preview-media5 .item:nth-child(1),
+.preview-facebook-media .preview-media.preview-media5 .item:nth-child(2)
+{
+    width: 50%;
+    height: 64%;
+    float: left;
+}
+
+.preview-facebook-media .preview-media.preview-media5 .item:nth-child(3),
+.preview-facebook-media .preview-media.preview-media5 .item:nth-child(4),
+.preview-facebook-media .preview-media.preview-media5 .item:nth-child(5)
+{
+    width: 33.3333%;
+    height: 36%;
+    float: left;
+}
+
+.preview-facebook-media video{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: auto;
+    height: 100%;
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+.preview-facebook-media .post-info,.preview-facebook-media .caption{
+    padding: 10px 10px;
+    word-break: break-all;
+    color: #000;
+}
+
+.preview-facebook-media .post-info img,.preview-facebook-media .caption img{
+    width: 15px;
+    position: relative;
+    top: -2px;
+}
+
+
+.preview-facebook-media .line-no-text{
+    margin-bottom: 3px;
+    height: 13px;
+    background: #f4f4f4;
+}
+
+/*Preview Link*/
+.preview-facebook-link{
+    position: relative;
+}
+
+.preview-facebook-link .preview-header{
+    padding: 20px;
+    height: 60px;
+    border-bottom: 1px solid #f4f4f4;
+}
+
+.preview-facebook-link .preview-header i{
+    font-size: 20px;
+}
+
+.preview-facebook-link .preview-header .facebook-logo{
+    position: absolute;
+    text-align: center;
+    width: 100%;
+    left: 0;
+    top: 16px;
+    color: #4a76a8;
+    font-size: 18px;
+}
+
+.preview-facebook-link .preview-header .facebook-logo i{
+    font-size: 30px;
+}
+
+.preview-facebook-link .user-info{
+    padding: 10px 10px;
+    position: relative;
+}
+
+.preview-facebook-link .user-info img{
+    width: 40px;
+    margin-right: 5px;
+}
+
+.preview-facebook-link .user-info .text{
+    position: absolute;
+    top: 14px;
+    font-size: 13px;
+    left: 68px;
+    line-height: 17px;
+}
+
+.preview-facebook-link .user-info .text .name{
+    font-weight: bold;
+    color: #2a5885;
+}
+
+.preview-facebook-link .user-info .text span{
+    color: #939393;
+    font-size: 12px;
+}
+
+.preview-facebook-link .post-info,.preview-facebook-link .caption{
+    padding: 10px 10px;
+    word-break: break-all;
+    color: #000;
+}
+
+.preview-facebook-link .post-info img,.preview-facebook-link .caption img{
+    width: 15px;
+    position: relative;
+    top: -2px;
+}
+
+
+.preview-facebook-link .line-no-text{
+    margin-bottom: 3px;
+    height: 13px;
+    background: #f4f4f4;
+}
+
+.preview-facebook-link .line-no-text.w50{
+    width: 50%;
+}
+
+.preview-facebook-link .preview-link{
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    margin: 0 10px;
+    margin-bottom: 10px;
+}
+
+.preview-facebook-link .preview-link .image{
+    height: 203px;
+    width: 100%;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    background-color: #f4f4f4;
+    background-position: center;
+}
+
+.preview-facebook-link .preview-link .info{
+    padding: 10px;
+    letter-spacing: normal;
+}
+
+.preview-facebook-link .preview-link .info .title{
+    color: #000;
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 22px;
+    margin-bottom: 5px;
+    max-height: 110px;
+    overflow: hidden;
+    word-wrap: break-word;
+}
+
+.preview-facebook-link .preview-link .info .desc{
+    color: #000;
+    font-size: 12px;
+    font-family: inherit;
+}
+
+.preview-facebook-link .preview-link .info .website{
+    color: #90949c;
+    font-size: 12px;
+    text-transform: uppercase;
+    font-family: inherit;
+    margin-top: 10px;
+}
+
+.preview-facebook-link .preview-comment{
+    margin-top: 0px;
+}
+
+/*Preview Text*/
+.preview-facebook-text{
+    position: relative;
+}
+
+.preview-facebook-text .preview-header{
+    padding: 20px;
+    height: 60px;
+    border-bottom: 1px solid #f4f4f4;
+}
+
+.preview-facebook-text .preview-header i{
+    font-size: 20px;
+}
+
+.preview-facebook-text .preview-header .fb-logo{
+    position: absolute;
+    text-align: center;
+    width: 100%;
+    left: 0;
+    top: 16px;
+    color: #4a76a8;
+    font-size: 18px;
+}
+
+.preview-facebook-text .preview-header .fb-logo i{
+    font-size: 30px;
+}
+
+.preview-facebook-text .user-info{
+    padding: 10px 10px;
+    position: relative;
+}
+
+.preview-facebook-text .user-info img{
+    width: 40px;
+    margin-right: 5px;
+}
+
+.preview-facebook-text .user-info .text{
+    position: absolute;
+    top: 14px;
+    font-size: 13px;
+    left: 68px;
+    line-height: 17px;
+}
+
+.preview-facebook-text .user-info .text .name{
+    font-weight: bold;
+    color: #2a5885;
+}
+
+.preview-facebook-text .user-info .text span{
+    color: #939393;
+    font-size: 12px;
+}
+
+.preview-facebook-text .post-info,.preview-facebook-text .caption{
+    padding: 10px 10px;
+    word-break: break-all;
+    color: #000;
+}
+
+.preview-facebook-text .post-info img,.preview-facebook-text .caption img{
+    width: 15px;
+    position: relative;
+    top: -2px;
+}
+
+
+.preview-facebook-text .line-no-text{
+    margin-bottom: 3px;
+    height: 13px;
+    background: #f4f4f4;
+}
+
+.preview-facebook-text .preview-comment{
+    margin-top: 0px;
+}
+
+.preview-facebook .preview-comment{
+    position: relative;
+    padding: 7px 0px 12px;
+    color: #999;
+    text-align: center;
+    border-top: 1px solid #eee;
+    margin: 0 10px;
+    margin-top: 10px;
+}
+
+.preview-facebook .preview-comment .item{
+    float: left;
+    margin-right: 25px;
+    font-weight: 600;
+    font-size: 12px;
+}
+
+.preview-facebook .preview-media .item .count{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.3);
+    text-align: center;
+    color: #fff;
+    font-weight: bold;
+    padding-top: 31%;
+    font-size: 27px;
+}
+
+.preview-facebook .preview-comment .item .facebook-icon{
+    position: relative;
+    top: 3px;
+}
+
+
+
+.facebook-icon{
+    //background-image: url(../img/facebook-icon.png);
+    background-repeat: no-repeat;
+    width: 18px;
+    height: 18px;
+    display: inline-block;
+}
+
+.facebook-icon.like{
+    background-position: 0 0;
+}
+
+.facebook-icon.comment{
+    background-position: 0 -22px;
+}
+
+.facebook-icon.share{
+    background-position: 0 -42px;
+}
+
+
+// post css
+
+
+//preview Instagram
+
+/*Preview*/
+.preview-instagram-photo{
+    position: relative;
+    border: 1px solid #f4f4f4;
+}
+
+.preview-instagram-photo .preview-content .user-info{
+    padding: 10px 20px;
+}
+
+.preview-instagram-photo .preview-content .user-info img{
+    width: 30px;
+    margin-right: 5px;
+}
+
+.preview-instagram-photo .preview-content .preview-media{
+    height: 368px;
+    background-size: cover;
+    background-position: center center;
+    background-color: #f4f4f4;
+    overflow: hidden;
+    position: relative;
+}
+
+.preview-instagram-photo .preview-content .preview-media .item{
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    transition: all 0.5s;
+    height: 100%;
+}
+
+.preview-instagram-photo video{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: auto;
+    height: 100%;
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+.preview-instagram-photo .preview-content .post-info,.preview-instagram-photo .preview-content .caption{
+    padding: 10px 20px;
+    word-break: break-all;
+}
+
+.preview-instagram-photo .preview-content .post-info img,.preview-instagram-photo .preview-content .caption img{
+    width: 15px;
+    position: relative;
+    top: -2px;
+}
+
+
+.preview-instagram-photo .preview-content .line-no-text{
+    margin-bottom: 3px;
+    height: 13px;
+    background: #f4f4f4;
+}
+
+.preview-instagram-photo .preview-content .preview-comment{
+    position: relative;
+    border-top: 1px solid #eee;
+    padding: 15px 50px;
+    color: #999;
+   // background: url(../img/heart-icon.png) no-repeat 20px;
+}
+
+.preview-instagram-photo .preview-content .preview-comment .icon-3dot {
+    width: 23px;
+    height: 5px;
+ //   background: url(../img/icon-3dot.png) no-repeat;
+    position: absolute;
+    right: 20px;
+    top: 22px;
+}
+
+.preview-instagram-story{
+   // background: #000 url(../img/instagram-logo.png) no-repeat center center;
+    height: 557px;
+    overflow: hidden;
+    position: relative;
+    z-index: 5;
+    max-width: 350px;
+    margin: auto;
+}
+
+.preview-instagram-story video{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: auto;
+    height: 100%;
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+.preview-instagram-story .preview-media{
+    height: 100%;
+    background-size: cover;
+    background-position: center center;
+    overflow: hidden;
+    position: relative;
+}
+
+.preview-instagram-story .preview-media .item{
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    transition: all 0.5s;
+    height: 100%;
+}
+
+.preview-instagram-carousel{
+    position: relative;
+    border: 1px solid #f4f4f4;
+}
+
+.preview-instagram-carousel .preview-content .user-info{
+    padding: 10px 20px;
+}
+
+.preview-instagram-carousel .preview-content .user-info img{
+    width: 30px;
+    margin-right: 5px;
+}
+
+.preview-instagram-carousel .owl-theme .owl-nav.disabled+.owl-dots {
+    margin-top: -35px;
+    position: relative;
+    z-index: 100;
+}
+
+.preview-instagram-carousel .owl-theme .owl-dots .owl-dot span{
+    background: transparent;
+    border: 1px solid #fff;
+}
+
+.preview-instagram-carousel .owl-theme .owl-dots .owl-dot.active span, 
+.preview-instagram-carousel .owl-theme .owl-dots .owl-dot:hover span {
+    background: #fff;
+}
+
+.preview-instagram-carousel .preview-content .preview-carousel{
+    display: block;
+    height: 368px;
+    background-size: cover;
+    background-color: #f4f4f4;
+}
+
+.preview-instagram-carousel .preview-content .preview-carousel .item{
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    transition: all 0.5s;
+    height: 368px;
+}
+
+.preview-instagram-carousel .preview-content .preview-carousel video{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: auto;
+    height: 100%;
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+.preview-instagram-carousel .preview-content .preview-carousel .image{
+    height: 359px;
+    background-size: cover;
+    background-color: #f4f4f4;
+    background-position: center center;
+}
+
+.preview-instagram-carousel .preview-content .preview-carousel .carousel-control{
+    background: none;
+}
+
+.preview-instagram-carousel .preview-content .post-info,.preview-instagram-carousel .preview-content .caption{
+    padding: 10px 20px;
+}
+
+.preview-instagram-carousel .preview-content .post-info img,.preview-instagram-carousel .preview-content .caption img{
+    width: 15px;
+    position: relative;
+    top: -2px;
+}
+
+.preview-instagram-carousel .preview-content .line-no-text{
+    margin-bottom: 3px;
+    height: 13px;
+    background: #f4f4f4;
+}
+
+.preview-instagram-carousel .preview-content .preview-comment{
+    position: relative;
+    border-top: 1px solid #f4f4f4;
+    padding: 15px 50px;
+    color: #999;
+   // background: url(../img/heart-icon.png) no-repeat 20px;
+}
+
+.preview-instagram-carousel .preview-content .preview-comment .icon-3dot {
+    width: 23px;
+    height: 5px;
+ //   background: url(../img/icon-3dot.png) no-repeat;
+    position: absolute;
+    right: 20px;
+    top: 22px;
+}
+
+.preview-instagram-carousel .carousel-indicators li{
+    margin: 0 2px;
+    width: 15px;
+    height: 15px;
+}
+
+

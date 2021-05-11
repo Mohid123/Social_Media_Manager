@@ -1,0 +1,91 @@
+<!--begin::Brand-->
+<div class="brand flex-column-auto" id="kt_brand" [ngClass]="brandClasses">
+  <!--begin::Logo-->
+  <a routerLink="/" class="brand-logo">
+    <img alt="Logo" [attr.src]="headerLogo" style="width: 150px !important;" />
+  </a>
+  <!--end::Logo-->
+
+  <ng-container *ngIf="asideSelfMinimizeToggle">
+    <button class="brand-toggle btn btn-sm px-0" id="kt_aside_toggle">
+      <span [inlineSVG]="
+          './assets/media/svg/icons/Navigation/Angle-double-left.svg'
+        " cacheSVG="true" class="svg-icon svg-icon-xl"></span>
+    </button>
+  </ng-container>
+</div>
+<!--end::Brand-->
+
+<!--begin::Aside Menu-->
+<div class="aside-menu-wrapper flex-column-fluid" id="kt_aside_menu_wrapper">
+  <ng-container *ngIf="disableAsideSelfDisplay">
+    <!--begin::Header Logo-->
+    <a routerLink="/">
+      <img alt="Logo" [attr.src]="headerLogo" />
+    </a>
+    <!--end::Header Logo-->
+  </ng-container>
+  <!--begin::Menu Container-->
+  <div id="kt_aside_menu" class="aside-menu" [ngClass]="asideMenuCSSClasses" data-menu-vertical="1"
+    [attr.data-menu-scroll]="asideMenuScroll" [attr.data-menu-dropdown]="asideMenuDropdown"
+    data-menu-dropdown-timeout="500">
+    <!-- begin::Menu Nav -->
+    <ul class="menu-nav" [ngClass]="ulCSSClasses">
+      <!-- begin::1 Level -->
+      <li class="menu-item" aria-haspopup="true" routerLinkActive="menu-item-active">
+        <a class="menu-link" routerLink="/dashboard" routerLinkActive="active">
+            <i class="svg-icon menu-icon fas fa-chalkboard text-success icon-lg mr-5"></i>
+          <span class="menu-text" translate="MENU.DASHBOARD" ></span>
+        </a>
+      </li>
+      <!-- end::1 Level -->
+
+      <!--PUBLISH ALL-->
+      <li class="menu-item" aria-haspopup="true" routerLinkActive="menu-item-active" style="border-bottom: 1px solid rgba(163, 175, 183, 0.219);">
+        <a class="menu-link" routerLink="/publish-all" routerLinkActive="active">
+            <i class="svg-icon menu-icon fab fa-telegram-plane text-danger icon-lg mr-5"></i>
+          <span class="menu-text">Publish All</span>
+        </a>
+      </li>
+      
+
+      <!--FACEBOOK-->
+      <li class="menu-item" aria-haspopup="true" routerLinkActive="menu-item-active">
+        <a class="menu-link" routerLink="/facebook" routerLinkActive="active">
+            <i class="svg-icon menu-icon socicon-facebook icon-lg mr-5" style="color:rgb(0, 153, 255)"></i>
+          <span class="menu-text">Facebook</span>
+        </a>
+      </li>
+    
+
+       <!--INSTAGRAM-->
+      <li class="menu-item" aria-haspopup="true" routerLinkActive="menu-item-active">
+        <a class="menu-link" routerLink="/instagram" routerLinkActive="active">
+            <i class="svg-icon menu-icon socicon-instagram icon-lg mr-5" style="color: #d62976"></i>
+          <span class="menu-text">Instagram</span>
+        </a>
+      </li>
+
+      
+      <!--TeamTalkers-->
+       <li class="menu-item" aria-haspopup="true" routerLinkActive="menu-item-active" style="border-bottom: 1px solid rgba(163, 175, 183, 0.219);">
+        <a class="menu-link" routerLink="/team-talkers" routerLinkActive="active">
+            <i class="svg-icon menu-icon icon-lg mr-5" style="color: #fae278"><span >TT</span></i>
+          <span class="menu-text">Team Talkers</span>
+        </a>
+      </li>
+
+      <!--Account Manager-->
+      <li class="menu-item" aria-haspopup="true" routerLinkActive="menu-item-active" >
+        <a class="menu-link" routerLink="/account-manager" routerLinkActive="active">
+            <i class="svg-icon menu-icon far fa-user-circle icon-lg mr-5" style="color: #969696"></i>
+          <span class="menu-text">Account Manager</span>
+        </a>
+      </li>
+      
+    </ul>
+    <!-- end::Menu Nav -->
+  </div>
+  <!--end::Menu Container-->
+</div>
+<!--end::Aside Menu-->
