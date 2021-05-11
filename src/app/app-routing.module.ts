@@ -4,7 +4,7 @@ import { AuthGuard } from './modules/auth/_services/auth.guard';
 
 export const routes: Routes = [
   {
-    path: 'auth',
+    path: '',
     loadChildren: () =>
       import('./modules/auth/auth.module').then((m) => m.AuthModule),
   },
@@ -14,7 +14,7 @@ export const routes: Routes = [
       import('./modules/errors/errors.module').then((m) => m.ErrorsModule),
   },
   {
-    path: '',
+    path: 'pages',
     canActivate: [AuthGuard],
     loadChildren: () =>
       import('./pages/layout.module').then((m) => m.LayoutModule),

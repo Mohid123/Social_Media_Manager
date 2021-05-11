@@ -77,18 +77,24 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   submit() {
-    this.hasError = false;
-    const loginSubscr = this.authService
-      .login(this.f.email.value, this.f.password.value)
-      .pipe(first())
-      .subscribe((user: UserModel) => {
-        if (user) {
-          this.router.navigate([this.  returnUrl]);
-        } else {
-          this.hasError = true;
-        }
-      });
-    this.unsubscribe.push(loginSubscr);
+    console.log(this.f.email.value , this.f.password.value)
+    localStorage.setItem('isAuthenticated' , 'true')
+        this.router.navigateByUrl('/pages/publish-all');
+    // this.hasError = false;
+  
+
+    // const loginSubscr = this.authService
+    //   .login(this.f.email.value, this.f.password.value)
+    //   .pipe(first())
+    //   .subscribe((user: UserModel) => {
+    //     if (user) {
+    //       console.log(user)
+    //       this.router.navigate([this.returnUrl]);
+    //     } else {
+    //       this.hasError = true;
+    //     }
+    //   });
+    // this.unsubscribe.push(loginSubscr);
   }
 
   ngOnDestroy() {
