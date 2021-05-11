@@ -29,6 +29,8 @@ import { AccountManagerComponent } from './account-manager/account-manager.compo
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatIconModule } from "@angular/material/icon";
 import {MatInputModule} from '@angular/material/input';
+import { MDBBootstrapModule } from 'angular-bootstrap-md';
+
 @NgModule({
   declarations: [
     LayoutComponent,
@@ -53,6 +55,7 @@ import {MatInputModule} from '@angular/material/input';
     PagesRoutingModule,
     TranslationModule,
     InlineSVGModule,
+    MDBBootstrapModule.forRoot(),
     ExtrasModule,
     NgbDropdownModule,
     NgbProgressbarModule,
