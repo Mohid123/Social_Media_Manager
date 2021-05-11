@@ -79,7 +79,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   submit() {
     console.log(this.f.email.value , this.f.password.value)
     localStorage.setItem('isAuthenticated' , 'true')
-        this.router.navigateByUrl('/pages/publish-all');
+        this.router.navigateByUrl('/pages/dashboard');
     // this.hasError = false;
   
 
