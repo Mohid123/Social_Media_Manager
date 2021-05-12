@@ -12,7 +12,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthService } from './modules/auth/_services/auth.service';
 import { environment } from 'src/environments/environment';
-import { QuillModule } from 'ngx-quill'
+// import { QuillModule } from 'ngx-quill'
 
 // Highlight JS
 import { HighlightModule, HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
@@ -39,7 +39,7 @@ function appInitializer(authService: AuthService) {
     BrowserAnimationsModule,
     SplashScreenModule,
     TranslateModule.forRoot(),
-    QuillModule.forRoot(),
+    // QuillModule.forRoot(),
     HttpClientModule,
     HighlightModule,
     ClipboardModule,
