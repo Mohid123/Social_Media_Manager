@@ -11,7 +11,7 @@ import { ActivatedRoute, Router } from '@angular/router';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
-export class LoginComponent implements OnInit, OnDestroy {
+export class LoginComponent implements OnInit {
   // KeenThemes mock, change it to:
   // defaultAuth = {
   //   email: '',
@@ -26,8 +26,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   returnUrl: string;
   isLoading$: Observable<boolean>;
 
-  // private fields
-  private unsubscribe: Subscription[] = []; // Read more: => https://brianflove.com/2016/12/11/anguar-2-unsubscribe-observables/
+  private unsubscribe: Subscription[] = []; 
 
   constructor(
     private fb: FormBuilder,
@@ -37,9 +36,9 @@ export class LoginComponent implements OnInit, OnDestroy {
   ) {
     this.isLoading$ = this.authService.isLoading$;
     // redirect to home if already logged in
-    if (this.authService.currentUserValue) {
-      this.router.navigate(['/']);
-    }
+      // if (this.authService.currentUserValue) {
+      //   this.router.navigate(['/']);
+      // }
   }
 
   ngOnInit(): void {
@@ -77,27 +76,16 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   submit() {
-    console.log(this.f.email.value , this.f.password.value)
+    debugger;
+    let userInformation =  this.loginForm.value;
+    console.log(this.loginForm)
+    console.log(this.loginForm.value)
     localStorage.setItem('isAuthenticated' , 'true')
         this.router.navigateByUrl('/pages/dashboard');
-    // this.hasError = false;
-  
 
-    // const loginSubscr = this.authService
-    //   .login(this.f.email.value, this.f.password.value)
-    //   .pipe(first())
-    //   .subscribe((user: UserModel) => {
-    //     if (user) {
-    //       console.log(user)
-    //       this.router.navigate([this.returnUrl]);
-    //     } else {
-    //       this.hasError = true;
-    //     }
-    //   });
-    // this.unsubscribe.push(loginSubscr);
   }
 
-  ngOnDestroy() {
-    this.unsubscribe.forEach((sb) => sb.unsubscribe());
-  }
+  // ngOnDestroy() {
+  //   this.unsubscribe.forEach((sb) => sb.unsubscribe());
+  // }
 }

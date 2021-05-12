@@ -1,0 +1,33 @@
+export class Post {
+    _id:string;
+    userID: string;
+    eventID: string;
+    byUser: string;
+    type: string;
+    mediaName: string;
+    textFirst: string;
+    textSecond: string;
+    text: string;
+    captureFileURL: string;
+    hyperLink: string;
+    hyperlinkTextFirst: string;
+    hyperlinkTextSecond: string;
+    hyperlinkCaptureFileURL: string;
+    path: string;
+    viewsCount: number;
+    commentsCount: number;
+    reactionCount: number;
+    repostCount: number;
+    postedDate: Date;
+    thumbnail: string;
+    thumbnailPath: string;
+    thumbnailURL: string;
+    repostCheck: boolean;
+    reportStatus: boolean;
+    approveForClub: boolean;
+    postedTo: string;
+    deletedCheck: boolean;
+    poll: string;
+    pinPost: boolean;
+    backgroundColorHex: any;
+}
