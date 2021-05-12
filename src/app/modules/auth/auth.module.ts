@@ -9,6 +9,8 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
 import { LogoutComponent } from './logout/logout.component';
 import { AuthComponent } from './auth.component';
 import {TranslationModule} from '../i18n/translation.module';
+import {MatSelectModule} from '@angular/material/select';
+
 
 @NgModule({
   declarations: [
@@ -25,6 +27,7 @@ import {TranslationModule} from '../i18n/translation.module';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    MatSelectModule
   ]
 })
 export class AuthModule {}

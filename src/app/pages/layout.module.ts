@@ -65,7 +65,8 @@ import { MDBBootstrapModule } from 'angular-bootstrap-md';
     SubheaderModule,
     MatTabsModule,
     MatIconModule,
-    MatInputModule
+    MatInputModule,
+   
   ],
 })
 export class LayoutModule { }
