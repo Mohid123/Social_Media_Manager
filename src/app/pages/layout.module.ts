@@ -30,6 +30,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatIconModule } from "@angular/material/icon";
 import {MatInputModule} from '@angular/material/input';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
+import { QuillModule } from 'ngx-quill'
 
 @NgModule({
   declarations: [
@@ -56,6 +57,7 @@ import { MDBBootstrapModule } from 'angular-bootstrap-md';
     TranslationModule,
     InlineSVGModule,
     MDBBootstrapModule.forRoot(),
+    QuillModule.forRoot(),
     ExtrasModule,
     NgbDropdownModule,
     NgbProgressbarModule,

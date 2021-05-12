@@ -12,4 +12,5 @@ export class TeamtalkersComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  
 }
