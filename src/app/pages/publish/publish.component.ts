@@ -5,7 +5,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./publish.component.scss']
 })
 export class PublishComponent implements OnInit {
-
+public textFirst : string
   constructor() { }
 
   ngOnInit(): void {

@@ -15,33 +15,9 @@
   >
     <!--begin::Title-->
     <div class="pb-13 pt-lg-0 pt-5">
-      <!-- <h3 class="font-weight-bolder text-dark font-size-h4 font-size-h1-lg">
-        Welcome to Metronic
-      </h3> -->
-      <!-- <span class="text-muted font-weight-bold font-size-h4"
-        >New Here?
-        <a
-          routerLink="/auth/registration"
-          id="kt_login_signup"
-          class="text-primary font-weight-bolder"
-          >{{ "AUTH.GENERAL.SIGNUP_BUTTON" | translate }}</a
-        >
-      </span> -->
+
     </div>
-    <!--end::Title-->
 
-    <!-- begin::Alert info-->
-    <!-- <ng-container *ngIf="!hasError">
-      <div class="mb-10 alert alert-custom alert-light-info alert-dismissible">
-        <div class="alert-text">
-          Use account <strong>{{ defaultAuth.email }}</strong> and password
-          <strong>{{ defaultAuth.password }}</strong> to continue.
-        </div>
-      </div>
-    </ng-container> -->
-    <!-- end::Alert info-->
-
-    <!-- begin::Alert error-->
     <ng-container *ngIf="hasError">
       <div
         class="mb-10 alert alert-custom alert-light-danger alert-dismissible"
@@ -95,21 +71,13 @@
         }"
       ></ng-container>
     </div>
-    <!--end::Form group-->
 
-    <!--begin::Form group-->
     <div class="form-group">
       <div class="d-flex justify-content-between mt-n5">
         <label class="font-size-h6 font-weight-bolder text-dark pt-5"
           >Password</label
         >
-        <!-- <a
-          routerLink="/auth/forgot-password"
-          class="text-primary font-size-h6 font-weight-bolder text-hover-primary pt-5"
-          id="kt_login_forgot"
-        >
-          Forgot Password ?
-        </a> -->
+
       </div>
 
       <input
@@ -158,15 +126,7 @@
         Sign In
       </button>
 
-      <!-- <button
-        type="button"
-        class="btn btn-light-primary font-weight-bolder px-8 py-4 my-3 font-size-lg"
-      >
-        <span class="svg-icon svg-icon-md">
-          <img src="./assets/media/svg/social-icons/google.svg" />
-        </span>
-        Sign in with Google
-      </button> -->
+
 
       <ng-container *ngIf="isLoading$ | async">
         <span class="spinner spinner-primary ml-5"></span>
