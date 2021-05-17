@@ -4,6 +4,7 @@ import { Subscription, Observable } from 'rxjs';
 import { first } from 'rxjs/operators';
 import { UserModel } from '../_models/user.model';
 import { AuthService } from '../_services/auth.service';
+
 import { ActivatedRoute, Router } from '@angular/router';
 
 interface Food {
@@ -15,8 +16,11 @@ interface Food {
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
+
+  
 })
 export class LoginComponent implements OnInit {
+ 
   // KeenThemes mock, change it to:
   // defaultAuth = {
   //   email: '',
@@ -42,9 +46,11 @@ export class LoginComponent implements OnInit {
     private fb: FormBuilder,
     private authService: AuthService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+  
+    
   ) {
-    this.isLoading$ = this.authService.isLoading$;
+  
     // redirect to home if already logged in
       // if (this.authService.currentUserValue) {
       //   this.router.navigate(['/']);
