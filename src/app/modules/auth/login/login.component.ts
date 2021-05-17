@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subscription, Observable } from 'rxjs';
 import { first } from 'rxjs/operators';
@@ -6,6 +6,7 @@ import { UserModel } from '../_models/user.model';
 import { AuthService } from '../_services/auth.service';
 
 import { ActivatedRoute, Router } from '@angular/router';
+// import {MatDialog, MAT_DIALOG_DATA} from '@angular/material';
 
 interface Food {
   value: string;
@@ -47,6 +48,7 @@ export class LoginComponent implements OnInit {
     private authService: AuthService,
     private route: ActivatedRoute,
     private router: Router,
+    // public dialog: MatDialog
   
     
   ) {
@@ -56,6 +58,14 @@ export class LoginComponent implements OnInit {
       //   this.router.navigate(['/']);
       // }
   }
+  // openDialog() {
+  //   this.dialog.open(DialogDataExampleDialog, {
+  //     data: {
+  //       animal: 'panda'
+  //    }
+  //   });
+  // }
+
 
   ngOnInit(): void {
     this.initForm();
@@ -105,3 +115,4 @@ export class LoginComponent implements OnInit {
   //   this.unsubscribe.forEach((sb) => sb.unsubscribe());
   // }
 }
+

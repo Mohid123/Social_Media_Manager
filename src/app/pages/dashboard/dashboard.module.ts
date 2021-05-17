@@ -1,13 +1,15 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { DashboardComponent } from './dashboard.component';
-// import { DashboardsModule } from '../../_metronic/partials/content/dashboards/dashboards.module';
+import { NgxSpinnerModule } from "ngx-spinner";
+
 
 @NgModule({
   declarations: [DashboardComponent],
   imports: [
     CommonModule,
+    NgxSpinnerModule,
     RouterModule.forChild([
       {
         path: '',
@@ -16,5 +18,6 @@ import { DashboardComponent } from './dashboard.component';
     ]),
     // DashboardsModule,
   ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class DashboardModule {}

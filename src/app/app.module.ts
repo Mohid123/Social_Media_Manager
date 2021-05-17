@@ -20,6 +20,7 @@ import { SplashScreenModule } from './_metronic/partials/layout/splash-screen/sp
 // #fake-start#
 import { FakeAPIService } from './_fake/fake-api.service';
 import { MatTabsModule } from '@angular/material/tabs';
+// import { NgxSpinnerModule } from "ngx-spinner";
 // import { MatIconModule } from "@angular/material/icon";
 // #fake-end#
 
@@ -55,7 +56,7 @@ function appInitializer(authService: AuthService) {
     InlineSVGModule.forRoot(),
     NgbModule,
     // MatIconModule,
-    MatTabsModule
+    MatTabsModule,
   ],
   providers: [
     {

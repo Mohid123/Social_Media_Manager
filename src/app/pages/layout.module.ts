@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule , CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { InlineSVGModule } from 'ng-inline-svg';
 import { PagesRoutingModule } from './pages-routing.module';
@@ -30,6 +30,8 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatIconModule } from "@angular/material/icon";
 import {MatInputModule} from '@angular/material/input';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
+import { NgxSpinnerModule } from "ngx-spinner";
+
 // import { QuillModule } from 'ngx-quill'
 
 @NgModule({
@@ -49,7 +51,8 @@ import { MDBBootstrapModule } from 'angular-bootstrap-md';
     FacebookComponent,
     InstagramComponent,
     TeamtalkersComponent,
-    AccountManagerComponent
+    AccountManagerComponent,
+  
   ],
   imports: [
     CommonModule,
@@ -66,7 +69,10 @@ import { MDBBootstrapModule } from 'angular-bootstrap-md';
     MatTabsModule,
     MatIconModule,
     MatInputModule,
+    NgxSpinnerModule
+  
    
   ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class LayoutModule { }

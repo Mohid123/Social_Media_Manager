@@ -1,3 +1,4 @@
+<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "default" color = "#fff" type = "ball-spin" [fullScreen] = "true"><p style="color: white" > D I V I D I S </p></ngx-spinner>
 <div class="row">
     <div class="col-lg-3">
         <!--begin::Card-->
@@ -17,7 +18,7 @@
                     </h3>
                    </div>
             </div>
-            <div class="card-body">
+            <div class="ss">
                 <div data-scroll="true" data-height="50">
                     <div class="card-header border-0 pt-5">
                         <form class="form-inline md-form form-sm">
@@ -176,7 +177,7 @@
                    </div>
             </div>
             <div class="card-body">
-                <mat-tab-group mat-align-tabs="center">
+                <mat-tab-group mat-align-tabs="center" dynamicHeight>
                     <mat-tab>
                       <ng-template mat-tab-label>
                        
@@ -226,7 +227,16 @@
                                                     <div class="p-2">
                                                         <div class="image-upload">
                                                             <label for="file-input">
-                                                                <i class="far fa-image icon-lg" style="cursor: pointer;"></i>
+                                                                
+                                                                <div class="btn btn-icon btn-light w-auto btn-clean d-inline-flex align-items-center btn-lg px-2 mr-5">
+                                                                    <span class="symbol symbol-35 symbol-light-primary">
+                                                                        <span class="symbol-label"><a href="#" class="btn btn-icon btn-sm ">
+                                                                            <i class="fas fa-upload icon-lg" style="cursor: pointer;"></i>
+                                                                        </a></span>
+                                                                    </span>
+                                                                    <span class="btn text-dark-50 font-weight-normal font-size-base"> &nbsp;Upload image</span>
+                                                                    
+                                                                </div>
                                                             </label>
 
                                                             <input id="file-input" type="file" name="myfile" multiple/> 
@@ -320,11 +330,21 @@
                                                     <div class="p-2">
                                                         <div class="image-upload">
                                                             <label for="file-input">
-                                                                <i class="fas fa-video icon-lg" style="cursor: pointer;"></i>
+                                                                
+                                                                <div class="btn btn-icon btn-light w-auto btn-clean d-inline-flex align-items-center btn-lg px-2 mr-5">
+                                                                    <span class="symbol symbol-35 symbol-light-primary">
+                                                                        <span class="symbol-label"><a href="#" class="btn btn-icon btn-sm ">
+                                                                            <i class="fas fa-video icon-lg" style="cursor: pointer;"></i>
+                                                                        </a></span>
+                                                                    </span>
+                                                                    <span class="btn text-dark-50 font-weight-normal font-size-base"> &nbsp;Upload video</span>
+                                                                    
+                                                                </div>
                                                             </label>
-    
+
                                                             <input id="file-input" type="file" name="myfile" multiple/> 
                                                         </div>
+                                                        
                                                </div>
                                                   
                                                 </div>
@@ -471,7 +491,7 @@
                    </div>
             </div>
             <div class="card-body">
-                <mat-tab-group mat-align-tabs="center">
+                <mat-tab-group mat-align-tabs="center" disablePagination="true">
                     <mat-tab>
                       <ng-template mat-tab-label>
                         <mat-icon><i class="fab fa-facebook-square icon-2x" style="color: #3b5998;"></i></mat-icon>
@@ -519,11 +539,14 @@
                                         <div class="preview-comment">
                                             <div class="row">
                                                 <div class="col item">
-                                                    <i class="facebook-icon like" aria-hidden="true"></i> Like                        </div>
+                                                  <i class="fas fa-thumbs-up"></i> &nbsp;Like
+                                                </div>
                                                 <div class="col item">
-                                                    <i class="facebook-icon comment" aria-hidden="true"></i> Comment                        </div>
+                                                    <i class="fas fa-comments"></i> &nbsp;Comment
+                                                </div>
                                                 <div class="col item">
-                                                    <i class="facebook-icon share" aria-hidden="true"></i> Share                        </div>
+                                                    <i class="fas fa-share" aria-hidden="true"></i> &nbsp;Share
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -744,6 +767,150 @@
                                     </div>
                                 </div>
                             </div>
+                      </div>
+                      </mat-tab>
+
+                      <mat-tab>
+                        <ng-template mat-tab-label>
+                            <mat-icon><a class="btn btn-icon btn-xs" style="background-color: #272727;">
+                                <i class="svg-icon menu-icon mr-2" style="color: #fdaa02"><span style="padding-left: 6px; font-weight: bold;">TT</span></i>
+                            </a></mat-icon>
+                          
+                        </ng-template>
+                        <div class="card card-custom gutter-b">
+                          <div class="preview-facebook">
+      
+                              <div class="card">
+                                  
+                                  <div class="card-body p-0">
+                          
+                                      <div class="preview-facebook preview-facebook-media item-post-type" data-type="media" style="display: none;">
+                                          <div class="user-info">
+                                              <img class="img-circle" src="https://getstackposts.com/inc/themes/backend/default/assets/img/avatar.jpg">
+                                              <div class="text">
+                                                  <div class="name"> Anonymous</div>
+                                                  <span> Just now . <i class="fa fa-globe" aria-hidden="true"></i></span>
+                                              </div>
+                                          </div>
+                                          <div class="caption"><div class="line-no-text"></div><div class="line-no-text"></div><div class="line-no-text w50"></div></div>
+                                          <div class="preview-media" data-max-image="5"></div>
+                                          <div class="preview-comment">
+                                              <div class="row">
+                                                  <div class="col item">
+                                                      <i class="facebook-icon like" aria-hidden="true"></i> Like                        </div>
+                                                  <div class="col item">
+                                                      <i class="facebook-icon comment" aria-hidden="true"></i> Comment                        </div>
+                                                  <div class="col item">
+                                                      <i class="facebook-icon share" aria-hidden="true"></i> Share                        </div>
+                                              </div>
+                                          </div>
+                                      </div>
+                          
+                                      <div class="preview-facebook preview-facebook-media item-post-type" data-type="photo" >
+                                          <div class="user-info">
+                                              <img class="img-circle" src="https://getstackposts.com/inc/themes/backend/default/assets/img/avatar.jpg">
+                                              <div class="text">
+                                                  <div class="name"> Anonymous</div>
+                                                  <span> Just now . <i class="fa fa-globe" aria-hidden="true"></i></span>
+                                              </div>
+                                          </div>
+                                          <div class="caption"><div class="line-no-text"></div><div class="line-no-text"></div><div class="line-no-text w50"></div></div>
+                                          <div class="preview-media" data-max-image="5"></div>
+                                          <div class="preview-comment">
+                                              <div class="row">
+                                                  <div class="col item">
+                                                    <i class="fas fa-thumbs-up"></i> &nbsp;Like
+                                                  </div>
+                                                  <div class="col item">
+                                                      <i class="fas fa-comments"></i> &nbsp;Comment
+                                                  </div>
+                                                  <div class="col item">
+                                                      <i class="fas fa-share" aria-hidden="true"></i> &nbsp;Share
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      </div>
+                          
+                                      <div class="preview-facebook preview-facebook-media item-post-type" data-type="video" style="display: none;">
+                                          <div class="user-info">
+                                              <img class="img-circle" src="https://getstackposts.com/inc/themes/backend/default/assets/img/avatar.jpg">
+                                              <div class="text">
+                                                  <div class="name"> Anonymous</div>
+                                                  <span> Just now . <i class="fa fa-globe" aria-hidden="true"></i></span>
+                                              </div>
+                                          </div>
+                                          <div class="caption"><div class="line-no-text"></div><div class="line-no-text"></div><div class="line-no-text w50"></div></div>
+                                          <div class="preview-media" data-max-image="5"></div>
+                                          <div class="preview-comment">
+                                              <div class="row">
+                                                  <div class="col item">
+                                                      <i class="facebook-icon like" aria-hidden="true"></i> Like                        </div>
+                                                  <div class="col item">
+                                                      <i class="facebook-icon comment" aria-hidden="true"></i> Comment                        </div>
+                                                  <div class="col item">
+                                                      <i class="facebook-icon share" aria-hidden="true"></i> Share                        </div>
+                                              </div>
+                                          </div>
+                                      </div>
+                          
+                                      <div class="preview-facebook preview-facebook-link item-post-type" data-type="link" style="display: none;">
+                                          <div class="user-info">
+                                              <img class="img-circle" src="https://getstackposts.com/inc/themes/backend/default/assets/img/avatar.jpg">
+                                              <div class="text">
+                                                  <div class="name"> Anonymous</div>
+                                                  <span> Just now . <i class="fa fa-globe" aria-hidden="true"></i></span>
+                                              </div>
+                                          </div>
+                                          <div class="caption"><div class="line-no-text"></div><div class="line-no-text"></div><div class="line-no-text w50"></div></div>
+                          
+                                          <div class="preview-link">
+                                              <div class="image"></div>
+                                              <div class="info">
+                                                  <div class="title"><div class="line-no-text"></div></div>
+                                                  <div class="desc"><div class="line-no-text"></div><div class="line-no-text"></div><div class="line-no-text"></div></div>
+                                                  <div class="website"><div class="line-no-text w50"></div></div>
+                                              </div>
+                                          </div>
+                                          
+                                          <div class="preview-comment">
+                                              <div class="row">
+                                                  <div class="col item">
+                                                      <i class="facebook-icon like" aria-hidden="true"></i> Like                        </div>
+                                                  <div class="col item">
+                                                      <i class="facebook-icon comment" aria-hidden="true"></i> Comment                        </div>
+                                                  <div class="col item">
+                                                      <i class="facebook-icon share" aria-hidden="true"></i> Share                        </div>
+                                              </div>
+                                          </div>
+                                      </div>									
+                          
+                                      <div class="preview-facebook preview-facebook-text item-post-type" data-type="text" style="display: none;">
+                                          <div class="user-info">
+                                              <img class="img-circle" src="https://getstackposts.com/inc/themes/backend/default/assets/img/avatar.jpg">
+                                              <div class="text">
+                                                  <div class="name"> Anonymous</div>
+                                                  <span> Just now . <i class="fa fa-globe" aria-hidden="true"></i></span>
+                                              </div>
+                                          </div>
+                                          <div class="caption"><div class="line-no-text"></div><div class="line-no-text"></div><div class="line-no-text w50"></div></div>
+                                          
+                                          <div class="preview-comment">
+                                              <div class="row">
+                                                  <div class="col item">
+                                                      <i class="facebook-icon like" aria-hidden="true"></i> Like                        </div>
+                                                  <div class="col item">
+                                                      <i class="facebook-icon comment" aria-hidden="true"></i> Comment                        </div>
+                                                  <div class="col item">
+                                                      <i class="facebook-icon share" aria-hidden="true"></i> Share                        </div>
+                                              </div>
+                                          </div>
+                                      </div>
+                          
+                                  </div>
+                          
+                              </div>			            		
+                          
+                          </div>
                       </div>
                       </mat-tab>
                   

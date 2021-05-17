@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { NgxSpinnerService } from "ngx-spinner";
+
+
 
 @Component({
   selector: 'app-facebook',
@@ -7,9 +10,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FacebookComponent implements OnInit {
 
-  constructor() { }
+  constructor(private spinner: NgxSpinnerService) { }
 
-  ngOnInit(): void {
+  ngOnInit() {
+    /** spinner starts on init */
+    this.spinner.show();
+
+    setTimeout(() => {
+      /** spinner ends after 5 seconds */
+      this.spinner.hide();
+    }, 1000);
   }
-
-}
+} 

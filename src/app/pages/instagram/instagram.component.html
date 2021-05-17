@@ -1,3 +1,4 @@
+<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "default" color = "#fff" type = "ball-spin" [fullScreen] = "true"><p style="color: white" > D I V I D I S </p></ngx-spinner>
 <div class="row">
     <div class="col-lg-3">
         <!--begin::Card-->
@@ -17,7 +18,7 @@
                     </h3>
                    </div>
             </div>
-            <div class="card-body">
+            <div class="ss">
                 <div data-scroll="true" data-height="50">
                     <div class="card-header border-0 pt-5">
                         <form class="form-inline md-form form-sm">
@@ -176,7 +177,7 @@
                    </div>
             </div>
             <div class="card-body">
-                <mat-tab-group mat-align-tabs="center">
+                <mat-tab-group mat-align-tabs="center" dynamicHeight>
                     <mat-tab>
                       <ng-template mat-tab-label>
                        
@@ -226,7 +227,16 @@
                                                     <div class="p-2">
                                                         <div class="image-upload">
                                                             <label for="file-input">
-                                                                <i class="far fa-image icon-lg" style="cursor: pointer;"></i>
+                                                                
+                                                                <div class="btn btn-icon btn-light w-auto btn-clean d-inline-flex align-items-center btn-lg px-2 mr-5">
+                                                                    <span class="symbol symbol-35 symbol-light-primary">
+                                                                        <span class="symbol-label"><a href="#" class="btn btn-icon btn-sm ">
+                                                                            <i class="fas fa-upload icon-lg" style="cursor: pointer;"></i>
+                                                                        </a></span>
+                                                                    </span>
+                                                                    <span class="btn text-dark-50 font-weight-normal font-size-base"> &nbsp;Upload image</span>
+                                                                    
+                                                                </div>
                                                             </label>
 
                                                             <input id="file-input" type="file" name="myfile" multiple/> 
@@ -320,7 +330,16 @@
                                                     <div class="p-2">
                                                         <div class="image-upload">
                                                             <label for="file-input">
-                                                                <i class="fas fa-video icon-lg" style="cursor: pointer;"></i>
+                                                                
+                                                                <div class="btn btn-icon btn-light w-auto btn-clean d-inline-flex align-items-center btn-lg px-2 mr-5">
+                                                                    <span class="symbol symbol-35 symbol-light-primary">
+                                                                        <span class="symbol-label"><a href="#" class="btn btn-icon btn-sm ">
+                                                                            <i class="fas fa-video icon-lg" style="cursor: pointer;"></i>
+                                                                        </a></span>
+                                                                    </span>
+                                                                    <span class="btn text-dark-50 font-weight-normal font-size-base"> &nbsp;Upload video</span>
+                                                                    
+                                                                </div>
                                                             </label>
 
                                                             <input id="file-input" type="file" name="myfile" multiple/> 
@@ -390,7 +409,7 @@
                    </div>
             </div>
             <div class="card-body">
-                <mat-tab-group mat-align-tabs="center">
+                <mat-tab-group mat-align-tabs="center" dynamicHeight>
                    
     
                     <mat-tab>
