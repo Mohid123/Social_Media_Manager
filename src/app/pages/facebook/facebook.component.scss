@@ -32,7 +32,7 @@
     }
     
     .preview-facebook-media .preview-media{
-        height: 417px;
+        height: 350px;
         background-size: cover;
         background-position: center center;
         background-color: #f4f4f4;
@@ -428,4 +428,8 @@
     .image-upload > input
 {
     display: none;
+}
+.pl-0{
+    padding-top: 20px !important;
+    padding-left: 20px !important;
 }

@@ -4,6 +4,7 @@ import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subscription, Observable } from 'rxjs';
 import { AuthService } from '../_services/auth.service';
+
 import { ActivatedRoute, Router } from '@angular/router';
 import { Club } from '../../../core/models/club.model'
 import { MainAuthService } from '../../../core/services/auth.service'
@@ -11,9 +12,10 @@ import { MainAuthService } from '../../../core/services/auth.service'
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
+
+  
 })
 export class LoginComponent implements OnInit {
-
   defaultAuth: any = {
     email: 'admin@demo.com',
     password: 'demo',
