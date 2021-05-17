@@ -1,11 +1,11 @@
 <!--begin::Signin-->  
 
 <div class="login-form login-signin">
-  <mat-form-field appearance="fill" style="background: #F3F6F9">
-    <mat-label style="font-weight: 400; font-family: 'Poppins'; color: #3F4254;">Select Club</mat-label>
-    <mat-select>
-      <mat-option *ngFor="let food of foods" [value]="food.value">
-        {{food.viewValue}}
+  <mat-form-field appearance="fill">
+    <mat-label>Select Club</mat-label>
+    <mat-select [(ngModel)]="selectedClub" (ngModelChange) = "onClubSelect()">
+      <mat-option *ngFor="let club of allClubs" [value]="club "  >
+        {{club.clubName}}
       </mat-option>
     </mat-select>
   </mat-form-field>
@@ -20,7 +20,7 @@
     [formGroup]="loginForm"
     novalidate="novalidate"
     id="kt_login_signin_form"
-    (ngSubmit)="submit()"
+    (ngSubmit)="loginFormsubmit()"
   >
     <!--begin::Title-->
     <div class="pb-13 pt-lg-0 pt-5">

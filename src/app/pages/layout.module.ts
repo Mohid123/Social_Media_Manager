@@ -1,4 +1,7 @@
-import { NgModule , CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import {  CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { InlineSVGModule } from 'ng-inline-svg';
 import { PagesRoutingModule } from './pages-routing.module';
@@ -60,7 +63,6 @@ import { NgxSpinnerModule } from "ngx-spinner";
     TranslationModule,
     InlineSVGModule,
     MDBBootstrapModule.forRoot(),
-    // QuillModule.forRoot(),
     ExtrasModule,
     NgbDropdownModule,
     NgbProgressbarModule,

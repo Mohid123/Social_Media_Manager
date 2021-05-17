@@ -34,7 +34,7 @@ export class AppComponent implements OnInit, OnDestroy {
   ) {
     // register translations
     this.translationService.loadTranslations(
-      enLang,
+      enLang, 
       chLang,
       esLang,
       jpLang,
