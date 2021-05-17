@@ -12,17 +12,11 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthService } from './modules/auth/_services/auth.service';
 import { environment } from 'src/environments/environment';
-// import { QuillModule } from 'ngx-quill'
-
-// Highlight JS
 import { HighlightModule, HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
 import { SplashScreenModule } from './_metronic/partials/layout/splash-screen/splash-screen.module';
-// #fake-start#
 import { FakeAPIService } from './_fake/fake-api.service';
 import { MatTabsModule } from '@angular/material/tabs';
-// import { MatIconModule } from "@angular/material/icon";
-// #fake-end#
-
+import { MatIconModule } from "@angular/material/icon";
 function appInitializer(authService: AuthService) {
   return () => {
     return new Promise((resolve) => {
@@ -39,22 +33,20 @@ function appInitializer(authService: AuthService) {
     BrowserAnimationsModule,
     SplashScreenModule,
     TranslateModule.forRoot(),
-    // QuillModule.forRoot(),
     HttpClientModule,
     HighlightModule,
     ClipboardModule,
-    // #fake-start#
+    MatIconModule,
     environment.isMockEnabled
       ? HttpClientInMemoryWebApiModule.forRoot(FakeAPIService, {
         passThruUnknownUrl: true,
         dataEncapsulation: false,
       })
       : [],
-    // #fake-end#
     AppRoutingModule,
+
     InlineSVGModule.forRoot(),
     NgbModule,
-    // MatIconModule,
     MatTabsModule
   ],
   providers: [

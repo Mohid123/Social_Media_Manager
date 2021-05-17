@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { SplashScreenService } from './../../_metronic/partials/layout/splash-screen/splash-screen.service';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-teamtalkers',
@@ -7,10 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TeamtalkersComponent implements OnInit {
 
-  constructor() { }
+
+  constructor(
+  
+  ) {}
 
   ngOnInit(): void {
+    // this.splashScreenService.init();
   }
-
   
 }
+

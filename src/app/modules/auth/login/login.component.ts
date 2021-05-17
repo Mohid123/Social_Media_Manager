@@ -1,32 +1,19 @@
+import { ClubService } from './../../../core/services/club.service';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subscription, Observable } from 'rxjs';
-import { first } from 'rxjs/operators';
-import { UserModel } from '../_models/user.model';
 import { AuthService } from '../_services/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
-
-interface Food {
-  value: string;
-  viewValue: string;
-}
-
+import { Club } from '../../../core/models/club.model'
+import { MainAuthService } from '../../../core/services/auth.service'
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
-  // KeenThemes mock, change it to:
-  // defaultAuth = {
-  //   email: '',
-  //   password: '',
-  // };
-  foods: Food[] = [
-    {value: 'steak-0', viewValue: 'Steak'},
-    {value: 'pizza-1', viewValue: 'Pizza'},
-    {value: 'tacos-2', viewValue: 'Tacos'}
-  ];
+
   defaultAuth: any = {
     email: 'admin@demo.com',
     password: 'demo',
@@ -35,35 +22,29 @@ export class LoginComponent implements OnInit {
   hasError: boolean;
   returnUrl: string;
   isLoading$: Observable<boolean>;
+  allClubs: Club[]
+  selectedClub : Club
 
-  private unsubscribe: Subscription[] = []; 
+
+  private unsubscribe: Subscription[] = [];
 
   constructor(
-    private fb: FormBuilder,
-    private authService: AuthService,
-    private route: ActivatedRoute,
-    private router: Router
-  ) {
-    this.isLoading$ = this.authService.isLoading$;
-    // redirect to home if already logged in
-      // if (this.authService.currentUserValue) {
-      //   this.router.navigate(['/']);
-      // }
-  }
+    private fb: FormBuilder,private authService: AuthService,private route: ActivatedRoute,private router: Router,private http: HttpClient,private _clubService: ClubService,
+     private _authService: MainAuthService
+  ) { }
 
   ngOnInit(): void {
-    this.initForm();
-    // get return url from route parameters or default to '/'
-    this.returnUrl =
-        this.route.snapshot.queryParams['returnUrl'.toString()] || '/';
-    }
+    this.initLoginForm();
+    this.getAllClubs();
+    // this.loginByEmail()
+  }
 
-  // convenience getter for easy access to form fields
   get f() {
     return this.loginForm.controls;
   }
 
-  initForm() {
+
+  initLoginForm() {
     this.loginForm = this.fb.group({
       email: [
         this.defaultAuth.email,
@@ -71,7 +52,7 @@ export class LoginComponent implements OnInit {
           Validators.required,
           Validators.email,
           Validators.minLength(3),
-          Validators.maxLength(320), // https://stackoverflow.com/questions/386294/what-is-the-maximum-length-of-a-valid-email-address
+          Validators.maxLength(320),
         ]),
       ],
       password: [
@@ -85,17 +66,45 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  submit() {
-    debugger;
-    let userInformation =  this.loginForm.value;
-    console.log(this.loginForm)
-    console.log(this.loginForm.value)
-    localStorage.setItem('isAuthenticated' , 'true')
+  loginByEmail() {
+    if(!this.selectedClub){
+      alert('Invalid ClubName')
+      return;
+    }
+    const payload = {
+      clubID: this.selectedClub.id,
+      email: this.loginForm.value.email,
+      password: this.loginForm.value.password
+    }
+    this._authService.loginByEmail(payload).subscribe(user => {
+      if(user){
+        localStorage.setItem('isAuthenticated', 'true')
         this.router.navigateByUrl('/pages/dashboard');
+        console.log(user)
+      }
+    }, err => {
+     alert(err.message)
+    })
+  }
+
+  getAllClubs() {
+    this._clubService.getAllClubs(0, 10).subscribe(clubs => {
+      this.allClubs = clubs
+      console.log(this.allClubs);
+    }, (error) => {
+      console.log(error)
+    })
+  }
+
+  loginFormsubmit() {
+    this.router.navigateByUrl('/pages/dashboard');
+// this.loginByEmail();
 
   }
 
-  // ngOnDestroy() {
-  //   this.unsubscribe.forEach((sb) => sb.unsubscribe());
-  // }
+  onClubSelect(){
+    
+    console.log(this.selectedClub)
+  }
+
 }

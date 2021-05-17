@@ -2,10 +2,10 @@
 
 <div class="login-form login-signin">
   <mat-form-field appearance="fill">
-    <mat-label>Favorite food</mat-label>
-    <mat-select>
-      <mat-option *ngFor="let food of foods" [value]="food.value">
-        {{food.viewValue}}
+    <mat-label>Select Club</mat-label>
+    <mat-select [(ngModel)]="selectedClub" (ngModelChange) = "onClubSelect()">
+      <mat-option *ngFor="let club of allClubs" [value]="club "  >
+        {{club.clubName}}
       </mat-option>
     </mat-select>
   </mat-form-field>
@@ -18,7 +18,7 @@
     [formGroup]="loginForm"
     novalidate="novalidate"
     id="kt_login_signin_form"
-    (ngSubmit)="submit()"
+    (ngSubmit)="loginFormsubmit()"
   >
     <!--begin::Title-->
     <div class="pb-13 pt-lg-0 pt-5">

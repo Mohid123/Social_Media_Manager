@@ -30,7 +30,7 @@ export class TopbarComponent implements OnInit, AfterViewInit {
   extrasCartLayout: 'offcanvas' | 'dropdown';
   extrasQuickPanelDisplay: boolean;
   extrasLanguagesDisplay: boolean;
-  extrasUserDisplay: boolean;
+  extrasUserDisplay: boolean = true;
   extrasUserLayout: 'offcanvas' | 'dropdown';
 
   constructor(private layout: LayoutService, private auth: AuthService) {

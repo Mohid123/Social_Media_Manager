@@ -1,3 +1,5 @@
+
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { InlineSVGModule } from 'ng-inline-svg';
@@ -30,8 +32,6 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatIconModule } from "@angular/material/icon";
 import {MatInputModule} from '@angular/material/input';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
-// import { QuillModule } from 'ngx-quill'
-
 @NgModule({
   declarations: [
     LayoutComponent,
@@ -57,7 +57,6 @@ import { MDBBootstrapModule } from 'angular-bootstrap-md';
     TranslationModule,
     InlineSVGModule,
     MDBBootstrapModule.forRoot(),
-    // QuillModule.forRoot(),
     ExtrasModule,
     NgbDropdownModule,
     NgbProgressbarModule,
