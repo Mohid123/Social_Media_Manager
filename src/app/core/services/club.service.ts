@@ -16,19 +16,19 @@ export class ClubService {
     return this._apiService.get(`/club/getAllClubs?offset=${offset}&limit=${limit}`)
   }
 
-  getClubById(clubID){
+  getClubById(clubID): Observable<any> {
     return this._apiService.get(`/club/getClubByID/${clubID}`)
   }
   
-  addClub(payload){   
+  addClub(payload): Observable<any> {   
     return this._apiService.post('/club/addClub', payload)
   }
 
-  updateClub(club){
+  updateClub(club): Observable<any> {
     return this._apiService.post('/club/updateClub' , club)
   }
 
-  deleteClub(clubID){
+  deleteClub(clubID): Observable<any> {
     return this._apiService.get(`/club/deleteClub/${clubID}`)
   }
 

@@ -1,3 +1,4 @@
+import { UsersService } from './../../../core/services/users.service';
 import { ClubService } from './../../../core/services/club.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit,  ViewEncapsulation } from '@angular/core';
@@ -33,8 +34,8 @@ export class LoginComponent implements OnInit {
   private unsubscribe: Subscription[] = [];
 
   constructor(
-    private fb: FormBuilder,private authService: AuthService,private route: ActivatedRoute,private router: Router,private http: HttpClient,private _clubService: ClubService,
-     private _authService: MainAuthService, private modalService: NgbModal
+    private fb: FormBuilder,private authService: AuthService,private route: ActivatedRoute,private router: Router,private _clubService: ClubService,
+     private _authService: MainAuthService, private modalService: NgbModal , private _userService : UsersService
   ) { }
 
   
@@ -46,8 +47,27 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
     this.initLoginForm();
     this.getAllClubs();
+    this.getAllUsers()
    }
 
+   getAllUsers(){
+     const user = {
+      id: "543221",
+      clubID: "string",
+      FBPages: [
+        "string"
+      ],
+      FBGroups: [
+        "string"
+      ],
+      FBTimeline: "string",
+      InstaTimeline: "string",
+      userID: "string"
+    }
+    this._userService.addUser(user).subscribe(data=>{
+      console.log(data)
+    })
+}
 
   initLoginForm() {
     this.loginForm = this.fb.group({
