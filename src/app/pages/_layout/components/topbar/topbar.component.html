@@ -9,16 +9,16 @@
   
   <div>
     <ng-template #content let-c="close" let-d="dismiss">
-      <div class="modal-header">
-        <h4 class="modal-title">Log out</h4>
+      <div class="modal-header d-flex justify-content-center" style="background-color: #1e1e2d;">
+        <h4 class="modal-title" style="color: #fff;">Log out</h4>
         <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body">
-		<p>Are you sure, you want to logout?</p>
+      <div class="modal-body d-flex justify-content-center">
+		<p class="font-size-h5 ">Are you sure, you want to logout?</p>
       </div>
-      <div class="modal-footer">
+      <div class="modal-footer d-flex justify-content-center">
         <button type="button" class="btn btn-secondary" (click)="c('Close click')">No</button>
         <button type="button" class="btn btn-primary">Yes</button>
       </div>
