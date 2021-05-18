@@ -35,7 +35,7 @@ export class ApiService {
     ).pipe(catchError(this.handleErrors));
   }
 
-  delete(path , headers?) {
+  delete(path ) {
     return this.http.delete(
       `${environment.api_url}${path}`
     ).pipe(catchError(this.handleErrors));
