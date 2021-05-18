@@ -1,8 +1,9 @@
+import { Interceptor } from './core/interceptors/http-interceptor';
 import { NgModule, APP_INITIALIZER } from '@angular/core';
 import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { ClipboardModule } from 'ngx-clipboard';
 import { TranslateModule } from '@ngx-translate/core';
@@ -68,6 +69,11 @@ function appInitializer(authService: AuthService) {
         },
       },
     },
+    {
+      provide : HTTP_INTERCEPTORS,
+      useClass : Interceptor,
+      multi : true
+    }
   ],
   bootstrap: [AppComponent],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
