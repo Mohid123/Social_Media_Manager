@@ -1,6 +1,6 @@
 import { ClubService } from './../../../core/services/club.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit,  ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subscription, Observable } from 'rxjs';
 import { AuthService } from '../_services/auth.service';
@@ -8,6 +8,8 @@ import { AuthService } from '../_services/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Club } from '../../../core/models/club.model'
 import { MainAuthService } from '../../../core/services/auth.service'
+
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -32,8 +34,14 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,private authService: AuthService,private route: ActivatedRoute,private router: Router,private http: HttpClient,private _clubService: ClubService,
-     private _authService: MainAuthService
+     private _authService: MainAuthService, private modalService: NgbModal
   ) { }
+
+  
+  openVerticallyCentered(content) {
+    this.modalService.open(content, { centered: true });
+  }
+
 
   ngOnInit(): void {
     this.initLoginForm();

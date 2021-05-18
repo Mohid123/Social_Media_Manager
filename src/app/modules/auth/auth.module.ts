@@ -10,6 +10,11 @@ import { LogoutComponent } from './logout/logout.component';
 import { AuthComponent } from './auth.component';
 import {TranslationModule} from '../i18n/translation.module';
 import {MatSelectModule} from '@angular/material/select';
+import { PerfectScrollbarModule }          from 'ngx-perfect-scrollbar';
+import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
+export const PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
+  suppressScrollX: true
+};
 
 
 @NgModule({
@@ -22,12 +27,14 @@ import {MatSelectModule} from '@angular/material/select';
   ],
   imports: [
     CommonModule,
+   
     TranslationModule,
     AuthRoutingModule,
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
     MatSelectModule,
+    PerfectScrollbarModule
 
   ]
 })
