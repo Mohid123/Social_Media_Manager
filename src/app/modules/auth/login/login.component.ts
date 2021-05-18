@@ -129,5 +129,8 @@ export class LoginComponent implements OnInit {
     console.log(this.selectedClub)
   }
 
+  clickme(club){
+    console.log(club)
+  }
 }
 
