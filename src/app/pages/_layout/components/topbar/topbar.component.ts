@@ -40,8 +40,10 @@ export class TopbarComponent implements OnInit, AfterViewInit {
     this.user$ = this.auth.currentUserSubject.asObservable();
   }
 
-  open(content) {
-    this.modalService.open(content).result.then((result) => {
+ 
+
+  openVerticallyCentered(content) {
+    this.modalService.open(content,{centered: true}).result.then((result) => {
     this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
         this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
