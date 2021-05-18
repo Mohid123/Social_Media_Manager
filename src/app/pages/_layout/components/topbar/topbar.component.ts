@@ -11,6 +11,7 @@ import KTLayoutQuickPanel from '../../../../../assets/js/layout/extended/quick-p
 import KTLayoutQuickUser from '../../../../../assets/js/layout/extended/quick-user';
 import KTLayoutHeaderTopbar from '../../../../../assets/js/layout/base/header-topbar';
 import { KTUtil } from '../../../../../assets/js/components/util';
+import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-topbar',
@@ -18,6 +19,8 @@ import { KTUtil } from '../../../../../assets/js/components/util';
   styleUrls: ['./topbar.component.scss'],
 })
 export class TopbarComponent implements OnInit, AfterViewInit {
+  closeResult: string;
+
   user$: Observable<UserModel>;
   // tobbar extras
   extraSearchDisplay: boolean;
@@ -33,10 +36,26 @@ export class TopbarComponent implements OnInit, AfterViewInit {
   extrasUserDisplay: boolean = true;
   extrasUserLayout: 'offcanvas' | 'dropdown';
 
-  constructor(private layout: LayoutService, private auth: AuthService) {
+  constructor(private layout: LayoutService, private auth: AuthService, private modalService: NgbModal) {
     this.user$ = this.auth.currentUserSubject.asObservable();
   }
 
+  open(content) {
+    this.modalService.open(content).result.then((result) => {
+    this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+        this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+}
+private getDismissReason(reason: any): string {
+  if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+  } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+  } else {
+      return  `with: ${reason}`;
+  }
+}
   ngOnInit(): void {
     // topbar extras
     this.extraSearchDisplay = this.layout.getProp('extras.search.display');
@@ -64,6 +83,7 @@ export class TopbarComponent implements OnInit, AfterViewInit {
       'extras.quickPanel.display'
     );
   }
+
 
   ngAfterViewInit(): void {
     KTUtil.ready(() => {

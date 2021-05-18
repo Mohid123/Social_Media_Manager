@@ -5,6 +5,34 @@
 <ng-container *ngIf="extrasLanguagesDisplay">
   <app-language-selector style="margin-top: 10px;"></app-language-selector>
 </ng-container>
+<div class="example-preview ">
+  
+  <div>
+    <ng-template #content let-c="close" let-d="dismiss">
+      <div class="modal-header">
+        <h4 class="modal-title">Log out</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+		<p>Are you sure, you want to logout?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="c('Close click')">No</button>
+        <button type="button" class="btn btn-primary">Yes</button>
+      </div>
+    </ng-template>
+   
+  <div class="btn btn-icon btn-light w-auto btn-clean d-inline-flex align-items-center btn-lg px-2 mr-5" (click)="open(content)">
+    <span class="text-muted font-weight-bold font-size-base mr-1">Hi,</span>
+    <span class="text-dark-50 font-weight-bolder font-size-base mr-3">Sean</span>
+    <span class="symbol symbol-35 symbol-light-primary">
+        <span class="symbol-label font-size-h5 font-weight-bold">S</span>
+    </span>
+</div>
+  </div>
+</div>
 
 <ng-container *ngIf="extrasUserDisplay">
   <ng-container *ngIf="extrasUserLayout === 'offcanvas'">
