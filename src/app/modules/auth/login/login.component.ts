@@ -38,12 +38,7 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
     this.initLoginForm();
     this.getAllClubs();
-    // this.loginByEmail()
-  }
-
-  get f() {
-    return this.loginForm.controls;
-  }
+   }
 
 
   initLoginForm() {
@@ -100,12 +95,9 @@ export class LoginComponent implements OnInit {
 
   loginFormsubmit() {
     this.router.navigateByUrl('/pages/dashboard');
-// this.loginByEmail();
-
   }
 
   onClubSelect(){
-    
     console.log(this.selectedClub)
   }
 
