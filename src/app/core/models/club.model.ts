@@ -1,9 +1,8 @@
 export class Club {
     id : string 
-    name : string 
     logoURL : string
-    color : string
+    clubColor : string
     baseURL : string
     appPackageID : string
-
+    clubName : string
 }
