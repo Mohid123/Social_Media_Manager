@@ -105,6 +105,10 @@
     <!-- end::Alert error-->
 
     <!--begin::Form group-->
+
+    
+<h3 *ngIf="selectedClub" > Selected Club :  {{selectedClub.clubName}}</h3>
+
     <div class="form-group">
       <label class="font-size-h6 font-weight-bolder text-dark">Email</label>
       <input class="form-control form-control-solid h-auto py-7 px-6 rounded-lg" type="email" name="email"
