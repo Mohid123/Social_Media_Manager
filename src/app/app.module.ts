@@ -18,6 +18,7 @@ import { SplashScreenModule } from './_metronic/partials/layout/splash-screen/sp
 import { FakeAPIService } from './_fake/fake-api.service';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatIconModule } from "@angular/material/icon";
+import { ToastrModule } from 'ngx-toastr';
 function appInitializer(authService: AuthService) {
   return () => {
     return new Promise((resolve) => {
@@ -45,7 +46,7 @@ function appInitializer(authService: AuthService) {
       })
       : [],
     AppRoutingModule,
-
+    ToastrModule.forRoot( {positionClass: 'toast-top-right'} ),
     InlineSVGModule.forRoot(),
     NgbModule,
     MatTabsModule

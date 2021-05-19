@@ -9,7 +9,7 @@ import { AuthService } from '../_services/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Club } from '../../../core/models/club.model'
 import { MainAuthService } from '../../../core/services/auth.service'
-
+import { ToastrService } from 'ngx-toastr';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-login',
@@ -35,12 +35,13 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,private authService: AuthService,private route: ActivatedRoute,private router: Router,private _clubService: ClubService,
-     private _authService: MainAuthService, private modalService: NgbModal , private _userService : UsersService
+     private _authService: MainAuthService, private modalService: NgbModal , private _userService : UsersService , private toastr: ToastrService
   ) { }
 
 
 
   ngOnInit(): void {
+    this.toastr.success('Hello world!', 'Toastr fun!');
     this.initLoginForm();
     this.getAllClubs();
    }
@@ -58,7 +59,7 @@ export class LoginComponent implements OnInit {
         ]),
       ],
       password: [
-        this.defaultAuth.password,
+        this.defaultAuth.password,  
         Validators.compose([
           Validators.required,
           Validators.minLength(3),
@@ -99,7 +100,8 @@ export class LoginComponent implements OnInit {
   }
 
   loginFormsubmit() {
-    this.loginByEmail();
+    this.toastr.error('Hello world!', 'Toastr fun!');
+    // this.loginByEmail();
     // this.router.navigateByUrl('/pages/dashboard');
   }
 
