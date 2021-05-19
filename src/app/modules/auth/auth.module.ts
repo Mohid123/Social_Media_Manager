@@ -12,6 +12,8 @@ import {TranslationModule} from '../i18n/translation.module';
 import {MatSelectModule} from '@angular/material/select';
 import { PerfectScrollbarModule }          from 'ngx-perfect-scrollbar';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
+
+
 export const PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
 };

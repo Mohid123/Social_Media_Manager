@@ -4,6 +4,7 @@ import { NgxSpinnerService } from "ngx-spinner";
 
 import * as am4core from '@amcharts/amcharts4/core';
 import * as am4charts from '@amcharts/amcharts4/charts';
+import am4themes_dark from "@amcharts/amcharts4/themes/dark";
 import am4themes_animated from '@amcharts/amcharts4/themes/animated';
 
 @Component({
@@ -25,6 +26,7 @@ export class DashboardComponent implements OnInit {
   ngAfterViewInit() {
     // Chart code goes in here
     this.browserOnly(() => {
+      // am4core.useTheme(am4themes_dark);
       am4core.useTheme(am4themes_animated);
 
       let chart = am4core.create("chartdiv", am4charts.XYChart);

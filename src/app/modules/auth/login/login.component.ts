@@ -11,6 +11,7 @@ import { Club } from '../../../core/models/club.model'
 import { MainAuthService } from '../../../core/services/auth.service'
 
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
