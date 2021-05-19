@@ -42,7 +42,6 @@ export class LoginComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.toastr.success('Hello world!', 'Toastr fun!');
     this.initLoginForm();
     this.getAllClubs();
   }
@@ -72,7 +71,7 @@ export class LoginComponent implements OnInit {
 
   loginByEmail() {
     if (!this.selectedClub) {
-      alert('Invalid ClubName')
+    this.toastr.error('Please Select Club' , 'Empty Club')
       return;
     }
     const payload = {
@@ -83,11 +82,14 @@ export class LoginComponent implements OnInit {
     this._authService.loginByEmail(payload).subscribe(user => {
       if (user) {
         localStorage.setItem('isAuthenticated', 'true')
+        localStorage.setItem('userToken' , user.token)
+        this.toastr.success('Login Success' , 'Logged In Successfully');
         this.router.navigateByUrl('/pages/dashboard');
         console.log(user)
       }
     }, err => {
-      alert(err.message)
+      console.log(err)
+     this.toastr.error(err.message)
     })
   }
 
@@ -110,10 +112,15 @@ export class LoginComponent implements OnInit {
   openVerticallyCentered(content) {
     this.modalService.open(content, { centered: true });
   }
+searchClub(){
 
+  
+}
 
   onClubSelected(club) {
     this.selectedClub = club
+    console.log(this.selectedClub)
+
   }
 }
 
