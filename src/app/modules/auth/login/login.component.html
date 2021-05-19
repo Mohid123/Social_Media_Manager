@@ -31,26 +31,19 @@
             <div class="row row-cols-1 row-cols-md-3 g-4">
               <div  class="col" *ngFor="let club of allClubs">
                 <div class="card" (click)="onClubSelected(club) ; c('Close click')">
-                  <img src="{{club.logoURL}}" class="card-img-top size" alt="...">
-                  <p class="card-title">{{club.clubName}}</p>
+                
+                  <img src="{{club.logoURL}}" class="rounded mx-auto d-block card-img-top size d-flex justify-content-center" alt="...">
+                 <ul class="list-group list-group-flush">
+                   <li class="list-group-item d-flex justify-content-center font-weight-bold">{{club.clubName}}</li>  
+                 </ul>
                 </div>
-                <!-- <h6 class="d-flex justify-content-center font-size-lg" >{{club.clubName}}</h6> -->
+                
                
               </div>
             </div> 
 
 
-            <!-- <div class="row row-cols-1 row-cols-md-3 g-4 ">
-              <div class="card" *ngFor="let club of allClubs" (click)="clickme(club) ; c('Close click')">
-                <img class="card-img-top size" src="{{club.logoURL}}" alt="Card image cap">
-                <div class="card-body">
-                  <h6 class="card-text d-flex justify-content-center">{{club.clubName}}</h6>
-                  
-                </div>
-              </div>
-              
-            </div> -->
-
+           
 
 
 
