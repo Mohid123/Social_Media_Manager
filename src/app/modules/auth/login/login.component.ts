@@ -9,7 +9,7 @@ import { AuthService } from '../_services/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Club } from '../../../core/models/club.model'
 import { MainAuthService } from '../../../core/services/auth.service'
-
+import { ToastrService } from 'ngx-toastr';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
@@ -36,39 +36,17 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,private authService: AuthService,private route: ActivatedRoute,private router: Router,private _clubService: ClubService,
-     private _authService: MainAuthService, private modalService: NgbModal , private _userService : UsersService
+     private _authService: MainAuthService, private modalService: NgbModal , private _userService : UsersService , private toastr: ToastrService
   ) { }
 
-  
-  openVerticallyCentered(content) {
-    this.modalService.open(content, { centered: true });
-  }
 
 
   ngOnInit(): void {
+    this.toastr.success('Hello world!', 'Toastr fun!');
     this.initLoginForm();
     this.getAllClubs();
-    this.getAllUsers()
    }
 
-   getAllUsers(){
-     const user = {
-      id: "543221",
-      clubID: "string",
-      FBPages: [
-        "string"
-      ],
-      FBGroups: [
-        "string"
-      ],
-      FBTimeline: "string",
-      InstaTimeline: "string",
-      userID: "string"
-    }
-    this._userService.addUser(user).subscribe(data=>{
-      console.log(data)
-    })
-}
 
   initLoginForm() {
     this.loginForm = this.fb.group({
@@ -82,7 +60,7 @@ export class LoginComponent implements OnInit {
         ]),
       ],
       password: [
-        this.defaultAuth.password,
+        this.defaultAuth.password,  
         Validators.compose([
           Validators.required,
           Validators.minLength(3),
@@ -123,15 +101,19 @@ export class LoginComponent implements OnInit {
   }
 
   loginFormsubmit() {
-    this.router.navigateByUrl('/pages/dashboard');
+    this.toastr.error('Hello world!', 'Toastr fun!');
+    // this.loginByEmail();
+    // this.router.navigateByUrl('/pages/dashboard');
   }
 
-  onClubSelect(){
-    console.log(this.selectedClub)
+    
+  openVerticallyCentered(content) {
+    this.modalService.open(content, { centered: true });
   }
 
-  clickme(club){
-    console.log(club)
+
+  onClubSelected(club){
+    this.selectedClub = club
   }
 }
 

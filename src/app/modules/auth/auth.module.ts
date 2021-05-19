@@ -12,8 +12,7 @@ import {TranslationModule} from '../i18n/translation.module';
 import {MatSelectModule} from '@angular/material/select';
 import { PerfectScrollbarModule }          from 'ngx-perfect-scrollbar';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
-
-
+import { ToastrModule } from 'ngx-toastr';
 export const PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
 };
@@ -29,7 +28,7 @@ export const PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   ],
   imports: [
     CommonModule,
-   
+    ToastrModule.forRoot(),
     TranslationModule,
     AuthRoutingModule,
     FormsModule,
