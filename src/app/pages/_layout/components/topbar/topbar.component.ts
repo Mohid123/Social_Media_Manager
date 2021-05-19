@@ -12,6 +12,7 @@ import KTLayoutQuickUser from '../../../../../assets/js/layout/extended/quick-us
 import KTLayoutHeaderTopbar from '../../../../../assets/js/layout/base/header-topbar';
 import { KTUtil } from '../../../../../assets/js/components/util';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-topbar',
@@ -36,7 +37,7 @@ export class TopbarComponent implements OnInit, AfterViewInit {
   extrasUserDisplay: boolean = true;
   extrasUserLayout: 'offcanvas' | 'dropdown';
 
-  constructor(private layout: LayoutService, private auth: AuthService, private modalService: NgbModal) {
+  constructor(private layout: LayoutService, private auth: AuthService, private modalService: NgbModal, private router: Router) {
     this.user$ = this.auth.currentUserSubject.asObservable();
   }
 
@@ -86,6 +87,11 @@ private getDismissReason(reason: any): string {
     );
   }
 
+
+  logout(){
+    // this.router.navigateByUrl('/login');
+    // localStorage.clear();
+  }
 
   ngAfterViewInit(): void {
     KTUtil.ready(() => {
