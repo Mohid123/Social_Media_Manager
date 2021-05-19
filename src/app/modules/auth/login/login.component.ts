@@ -10,7 +10,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Club } from '../../../core/models/club.model'
 import { MainAuthService } from '../../../core/services/auth.service'
 import { ToastrService } from 'ngx-toastr';
-import { NgbModal  , NgbModalConfig} from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 
 
 
@@ -18,7 +18,7 @@ import { NgbModal  , NgbModalConfig} from '@ng-bootstrap/ng-bootstrap';
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
-  providers : [NgbModalConfig , NgbModal]
+  providers: [NgbModalConfig, NgbModal]
 
 
 })
@@ -34,24 +34,26 @@ export class LoginComponent implements OnInit {
   allClubs: Club[]
   selectedClub: Club
   searchString: string
-  searchStarted : boolean = false;
-  tempClubs : any
+  searchStarted: boolean = false;
+  tempClubs: any
 
   private unsubscribe: Subscription[] = [];
 
   constructor(
-    private config : NgbModalConfig ,
+    private config: NgbModalConfig,
     private fb: FormBuilder, private authService: AuthService, private route: ActivatedRoute, private router: Router, private _clubService: ClubService,
     private _authService: MainAuthService, private modalService: NgbModal, private _userService: UsersService, private toastr: ToastrService
-  ) {config.backdrop = 'static';
-  config.keyboard = false;}
+  ) {
+    config.backdrop = 'static';
+    config.keyboard = false;
+  }
 
 
 
   ngOnInit(): void {
     this.initLoginForm();
     this.getAllClubs();
-  
+
   }
 
 
@@ -110,10 +112,6 @@ export class LoginComponent implements OnInit {
     })
   }
 
-
-
-
-
   loginFormsubmit() {
     this.router.navigateByUrl('/pages/dashboard');
   }
@@ -121,19 +119,18 @@ export class LoginComponent implements OnInit {
   openVerticallyCentered(content) {
     this.modalService.open(content, { centered: true });
   }
+
   searchClub(event) {
-    let items =   document.getElementById("items").style.display = "none"
+    let items = document.getElementById("items").style.display = "none"
     this.searchStarted = true
     this.searchString = event
-    const data = this.allClubs.filter(i =>i.clubName.toLowerCase().includes(this.searchString.toLowerCase()));
+    const data = this.allClubs.filter(i => i.clubName.toLowerCase().includes(this.searchString.toLowerCase()));
     this.tempClubs = data
   }
 
   onClubSelected(club) {
-    
     this.selectedClub = club
     console.log(this.selectedClub)
-
   }
 }
 
