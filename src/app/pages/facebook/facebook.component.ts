@@ -12,6 +12,7 @@ export class FacebookComponent implements OnInit {
 
   constructor(private spinner: NgxSpinnerService) { }
 
+  name = 'Angular 5';
   ngOnInit() {
     /** spinner starts on init */
     this.spinner.show();

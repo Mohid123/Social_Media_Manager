@@ -34,6 +34,8 @@ import { MatIconModule } from "@angular/material/icon";
 import {MatInputModule} from '@angular/material/input';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { NgxSpinnerModule } from "ngx-spinner";
+import { FormsModule } from '@angular/forms';
+
 
 // import { QuillModule } from 'ngx-quill'
 
@@ -71,7 +73,8 @@ import { NgxSpinnerModule } from "ngx-spinner";
     MatTabsModule,
     MatIconModule,
     MatInputModule,
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    FormsModule
   
    
   ],
