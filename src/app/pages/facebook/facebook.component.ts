@@ -12,7 +12,8 @@ export class FacebookComponent implements OnInit {
 
   constructor(private spinner: NgxSpinnerService) { }
 
-  name = 'Angular 5';
+ public name = "";
+ 
   ngOnInit() {
     /** spinner starts on init */
     this.spinner.show();
@@ -21,5 +22,24 @@ export class FacebookComponent implements OnInit {
       /** spinner ends after 5 seconds */
       this.spinner.hide();
     }, 1000);
+  }
+  url = '';
+  showDiv = {
+    previous : true,
+    current : false,
+    next : false
+  }
+  onSelectFile(event) {
+    if (event.target.files && event.target.files[0]) {
+      var reader = new FileReader();
+
+      reader.readAsDataURL(event.target.files[0]); // read file as data url
+
+      reader.onload = (event) => { // called once readAsDataURL is completed
+        this.url = event.target.result as string;
+       
+       
+      }
+    }
   }
 } 

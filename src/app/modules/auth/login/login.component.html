@@ -5,11 +5,12 @@
     Sign In
 
   </h2>
+  
 
   <div class="example-preview">
     <div>
       <ng-template #content let-c="close" let-d="dismiss">
-        <div class="modal-header d-flex justify-content-center" style="background-color: #1e1e2d;">
+        <div class="modal-header d-flex justify-content-center" style="background-color: #1e1e2d; padding-bottom: 4px;">
 
           <form>
             <div class="form-group ">
@@ -58,7 +59,7 @@
         <div class="modal-footer d-flex justify-content-center">
           <button type="button" class="btn btn-secondary" (click)="c('Close click');searchStarted = false">Close</button>
 
-          <button type="button" class="btn" style="background-color: #1e1e2d; color: #fff;">Save changes</button>
+          <!-- <button type="button" class="btn" style="background-color: #1e1e2d; color: #fff;">Save changes</button> -->
         </div>
       </ng-template>
 

@@ -130,7 +130,7 @@ export class LoginComponent implements OnInit {
   }
 
   onClubSelected(club) {
-
+    
     this.selectedClub = club
     console.log(this.selectedClub)
 
