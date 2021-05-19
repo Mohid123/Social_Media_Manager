@@ -30,7 +30,7 @@
 
             <div class="row row-cols-1 row-cols-md-3 g-4">
               <div  class="col" *ngFor="let club of allClubs">
-                <div class="card" (click)="clickme(club) ; c('Close click')">
+                <div class="card" (click)="onClubSelected(club) ; c('Close click')">
                   <img src="{{club.logoURL}}" class="card-img-top size" alt="...">
                   <p class="card-title">{{club.clubName}}</p>
                 </div>

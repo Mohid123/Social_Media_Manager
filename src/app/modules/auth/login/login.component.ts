@@ -38,36 +38,13 @@ export class LoginComponent implements OnInit {
      private _authService: MainAuthService, private modalService: NgbModal , private _userService : UsersService
   ) { }
 
-  
-  openVerticallyCentered(content) {
-    this.modalService.open(content, { centered: true });
-  }
 
 
   ngOnInit(): void {
     this.initLoginForm();
     this.getAllClubs();
-    this.getAllUsers()
    }
 
-   getAllUsers(){
-     const user = {
-      id: "543221",
-      clubID: "string",
-      FBPages: [
-        "string"
-      ],
-      FBGroups: [
-        "string"
-      ],
-      FBTimeline: "string",
-      InstaTimeline: "string",
-      userID: "string"
-    }
-    this._userService.addUser(user).subscribe(data=>{
-      console.log(data)
-    })
-}
 
   initLoginForm() {
     this.loginForm = this.fb.group({
@@ -122,15 +99,18 @@ export class LoginComponent implements OnInit {
   }
 
   loginFormsubmit() {
-    this.router.navigateByUrl('/pages/dashboard');
+    this.loginByEmail();
+    // this.router.navigateByUrl('/pages/dashboard');
   }
 
-  onClubSelect(){
-    console.log(this.selectedClub)
+    
+  openVerticallyCentered(content) {
+    this.modalService.open(content, { centered: true });
   }
 
-  clickme(club){
-    console.log(club)
+
+  onClubSelected(club){
+    this.selectedClub = club
   }
 }
 
