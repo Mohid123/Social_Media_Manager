@@ -10,7 +10,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Club } from '../../../core/models/club.model'
 import { MainAuthService } from '../../../core/services/auth.service'
 import { ToastrService } from 'ngx-toastr';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal  , NgbModalConfig} from '@ng-bootstrap/ng-bootstrap';
 
 
 
@@ -18,6 +18,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
+  providers : [NgbModalConfig , NgbModal]
 
 
 })
@@ -32,20 +33,25 @@ export class LoginComponent implements OnInit {
   isLoading$: Observable<boolean>;
   allClubs: Club[]
   selectedClub: Club
-
+  searchString: string
+  searchStarted : boolean = false;
+  tempClubs : any
 
   private unsubscribe: Subscription[] = [];
 
   constructor(
+    private config : NgbModalConfig ,
     private fb: FormBuilder, private authService: AuthService, private route: ActivatedRoute, private router: Router, private _clubService: ClubService,
     private _authService: MainAuthService, private modalService: NgbModal, private _userService: UsersService, private toastr: ToastrService
-  ) { }
+  ) {config.backdrop = 'static';
+  config.keyboard = false;}
 
 
 
   ngOnInit(): void {
     this.initLoginForm();
     this.getAllClubs();
+  
   }
 
 
@@ -73,7 +79,7 @@ export class LoginComponent implements OnInit {
 
   loginByEmail() {
     if (!this.selectedClub) {
-    this.toastr.error('Please Select Club' , 'Empty Club')
+      this.toastr.error('Please Select Club', 'Empty Club')
       return;
     }
     const payload = {
@@ -84,14 +90,14 @@ export class LoginComponent implements OnInit {
     this._authService.loginByEmail(payload).subscribe(user => {
       if (user) {
         localStorage.setItem('isAuthenticated', 'true')
-        localStorage.setItem('userToken' , user.token)
-        this.toastr.success('Login Success' , 'Logged In Successfully');
+        localStorage.setItem('userToken', user.token)
+        this.toastr.success('Login Success', 'Logged In Successfully');
         this.router.navigateByUrl('/pages/dashboard');
         console.log(user)
       }
     }, err => {
       console.log(err)
-     this.toastr.error(err.message)
+      this.toastr.error(err.message)
     })
   }
 
@@ -104,24 +110,27 @@ export class LoginComponent implements OnInit {
     })
   }
 
+
+
+
+
   loginFormsubmit() {
-    // this.toastr.error('Hello world!', 'Toastr fun!');
-    // this.loginByEmail();
     this.router.navigateByUrl('/pages/dashboard');
   }
-
- 
-
 
   openVerticallyCentered(content) {
     this.modalService.open(content, { centered: true });
   }
-searchClub(){
-
-  
-}
+  searchClub(event) {
+    let items =   document.getElementById("items").style.display = "none"
+    this.searchStarted = true
+    this.searchString = event
+    const data = this.allClubs.filter(i =>i.clubName.toLowerCase().includes(this.searchString.toLowerCase()));
+    this.tempClubs = data
+  }
 
   onClubSelected(club) {
+
     this.selectedClub = club
     console.log(this.selectedClub)
 

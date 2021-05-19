@@ -15,42 +15,48 @@
             <div class="form-group ">
               <label for="exampleInputEmail1" class="d-flex justify-content-center font-size-h2"
                 style="color: #fff;">Search club</label>
-              <input  class="form-control bg-primary-o-30" (keyup) = "searchClub()" style="color: #fff;" id="exampleInputEmail1"
+              <input  class="form-control bg-primary-o-30" [ngModelOptions]="{standalone: true}" [(ngModel)]="searchString" (ngModelChange) = "searchClub($event)" style="color: #fff;" id="exampleInputEmail1"
                 placeholder="Search" >
 
             </div>
 
           </form>
-          <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+          <button type="button" class="close" aria-label="Close" (click)="d('Cross click') ; searchStarted = false">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body d-flex justify-content-center">
           <perfect-scrollbar style="height: 250px;">
 
-            <div class="row row-cols-1 row-cols-md-3 g-4">
-              <div  class="col" *ngFor="let club of allClubs">
-                <div class="card" (click)="onClubSelected(club) ; c('Close click')">
-                
+            <div class="row row-cols-1 row-cols-md-3 g-4" id="items">
+              <div  class="col" *ngFor="let club of allClubs" id="items">
+                <div class="card" (click)="onClubSelected(club) ; c('Close click') ; searchStarted = false">
                   <img src="{{club.logoURL}}" class="rounded mx-auto d-block card-img-top size d-flex justify-content-center" alt="...">
                  <ul class="list-group list-group-flush">
                    <li class="list-group-item d-flex justify-content-center font-weight-bold">{{club.clubName}}</li>  
                  </ul>
-                </div>
-                
-               
+                </div>     
               </div>
             </div> 
 
 
-           
-
+            
+            <div class="row row-cols-1 row-cols-md-3 g-4" *ngIf="searchStarted">
+              <div  class="col" *ngFor="let club of tempClubs" id="items">
+                <div class="card" (click)="onClubSelected(club) ; c('Close click')">
+                  <img src="{{club.logoURL}}" class="rounded mx-auto d-block card-img-top size d-flex justify-content-center" alt="...">
+                 <ul class="list-group list-group-flush">
+                   <li class="list-group-item d-flex justify-content-center font-weight-bold">{{club.clubName}}</li>  
+                 </ul>
+                </div>     
+              </div>
+            </div> 
 
 
           </perfect-scrollbar>
         </div>
         <div class="modal-footer d-flex justify-content-center">
-          <button type="button" class="btn btn-secondary" (click)="c('Close click')">Close</button>
+          <button type="button" class="btn btn-secondary" (click)="c('Close click');searchStarted = false">Close</button>
 
           <button type="button" class="btn" style="background-color: #1e1e2d; color: #fff;">Save changes</button>
         </div>
