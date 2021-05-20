@@ -24,11 +24,12 @@ export class FacebookComponent implements OnInit {
     }, 1000);
   }
   url = '';
-  showDiv = {
-    photo : false,
-    video : false,
-    text : false
-  }
+  
+  // showDiv = {
+  //   photo : false,
+  //   video : false,
+  //   text : false
+  // }
   onSelectFile(event) {
     if (event.target.files && event.target.files[0]) {
       var reader = new FileReader();

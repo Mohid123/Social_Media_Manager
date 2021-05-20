@@ -187,7 +187,7 @@
             </div>
             <div class="card-body">
                 <mat-tab-group mat-align-tabs="center" dynamicHeight>
-                    <mat-tab (click)="showDiv.photo = !showDiv.photo; showDiv.text = false; showDiv.video = false">
+                    <mat-tab >
                         <ng-template mat-tab-label>
 
                             <mat-icon><i class="far fa-images icon-lg" style="color: #3699FF;"></i></mat-icon>&nbsp;
@@ -293,7 +293,7 @@
                         </div>
                     </mat-tab>
 
-                    <mat-tab (click)="showDiv.text = !showDiv.text;showDiv.photo = false;showDiv.video = false" >
+                    <mat-tab >
                         <ng-template mat-tab-label>
                             <mat-icon><i class="fas fa-video icon-lg" style="color: #3699FF;"></i></mat-icon>&nbsp;
                             &nbsp;Video
@@ -399,7 +399,7 @@
                         </div>
                     </mat-tab>
 
-                    <mat-tab (click)="showDiv.video = !showDiv.video;showDiv.photo = false;showDiv.text = false">
+                    <mat-tab >
                         <ng-template mat-tab-label>
                             <mat-icon><i class="far fa-file-alt icon-lg" style="color: #3699FF;"></i></mat-icon>&nbsp;
                             &nbsp;Text
@@ -534,37 +534,6 @@
 
                                     <div class="card-body p-0">
 
-                                        <div class="preview-facebook preview-facebook-media item-post-type"
-                                            data-type="media" style="display: none;" >
-                                            <div class="user-info">
-                                                <img class="img-circle"
-                                                    src="https://getstackposts.com/inc/themes/backend/default/assets/img/avatar.jpg">
-                                                <div class="text">
-                                                    <div class="name"> Anonymous</div>
-                                                    <span> Just now . <i class="fa fa-globe"
-                                                            aria-hidden="true"></i></span>
-                                                </div>
-                                            </div>
-                                            <div class="caption">
-                                                <div class="line-no-text"></div>
-                                                <div class="line-no-text"></div>
-                                                <div class="line-no-text w50"></div>
-                                            </div>
-                                            <div class="preview-media" data-max-image="5"></div>
-                                            <div class="preview-comment">
-                                                <div class="row">
-                                                    <div class="col item">
-                                                        <i class="la-thumbs-up"></i> Like
-                                                    </div>
-                                                    <div class="col item">
-                                                        <i class="facebook-icon comment" aria-hidden="true"></i> Comment
-                                                    </div>
-                                                    <div class="col item">
-                                                        <i class="facebook-icon share" aria-hidden="true"></i> Share
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
 
                                         <div class="preview-facebook preview-facebook-media item-post-type"
                                             data-type="photo" >
@@ -600,7 +569,7 @@
                                         </div>
 
                                         <div class="preview-facebook preview-facebook-media item-post-type"
-                                            data-type="video" style="display: none;" *ngIf="showDiv.video">
+                                            data-type="video"  >
                                             <div class="user-info">
                                                 <img class="img-circle"
                                                     src="https://getstackposts.com/inc/themes/backend/default/assets/img/avatar.jpg">
@@ -633,7 +602,7 @@
 
 
                                         <div class="preview-facebook preview-facebook-text item-post-type"
-                                            data-type="text" *ngIf="showDiv.text">
+                                            data-type="text" >
                                             <div class="user-info">
                                                 <img class="img-circle"
                                                     src="https://getstackposts.com/inc/themes/backend/default/assets/img/avatar.jpg">
