@@ -3,13 +3,12 @@
 <div class="login-form login-signin">
   <h2 class="font-weight-bolder  font-size-h2" style="color: #000000; letter-spacing: 1px;">
     Sign In
-
   </h2>
   
 
   <div class="example-preview">
     <div>
-      <ng-template #content let-c="close" let-d="dismiss">
+      <ng-template #content6 let-c="close" let-d="dismiss">
         <div class="modal-header d-flex justify-content-center" style="background-color: #1e1e2d; padding-bottom: 4px;">
 
           <form>
@@ -29,7 +28,7 @@
         <div class="modal-body d-flex justify-content-center">
           <perfect-scrollbar style="height: 250px;">
 
-            <div class="row row-cols-1 row-cols-md-3 g-4" id="items">
+            <div class="row row-cols-1 row-cols-md-4 g-4" id="items">
               <div  class="col" *ngFor="let club of allClubs" id="items">
                 <div class="card" (click)="onClubSelected(club) ; c('Close click') ; searchStarted = false">
                   <img src="{{club.logoURL}}" class="rounded mx-auto d-block card-img-top size d-flex justify-content-center" alt="...">
@@ -64,7 +63,7 @@
       </ng-template>
 
       <div class="btn btn-icon btn-light w-auto btn-clean d-inline-flex align-items-center btn-lg px-2 mr-5"
-        (click)="openVerticallyCentered(content)" style="background-color: #1e1e2d;">
+        (click)="openVerticallyCentered(content6)" style="background-color: #1e1e2d;">
         <span class="svg-icon svg-icon-primary svg-icon-2x">
           <!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2021-05-14-112058/theme/html/demo1/dist/../src/media/svg/icons/Design/Select.svg--><svg
             xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
@@ -88,6 +87,7 @@
   </div>
 
 
+ 
 
   <!--begin::Form-->
 
@@ -107,8 +107,12 @@
 
     <!--begin::Form group-->
 
-    
-<h3 *ngIf="selectedClub" > Selected Club :  {{selectedClub.clubName}}</h3>
+    <div class="alert alert-custom alert-white shadow-sm fade show" role="alert" *ngIf="selectedClub" >
+      <div class="alert-icon"><img src="{{selectedClub.logoURL}}" class="rounded mx-auto d-block card-img-top" style="width: 70px; height: 70px;" alt="..."></div>
+      <div class="alert-text"><h3><small>Selected club:&nbsp; </small>   {{selectedClub.clubName}}</h3></div>
+      
+  </div>
+
 
     <div class="form-group">
       <label class="font-size-h6 font-weight-bolder text-dark">Email</label>

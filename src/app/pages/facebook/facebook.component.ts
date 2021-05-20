@@ -25,9 +25,9 @@ export class FacebookComponent implements OnInit {
   }
   url = '';
   showDiv = {
-    previous : true,
-    current : false,
-    next : false
+    photo : false,
+    video : false,
+    text : false
   }
   onSelectFile(event) {
     if (event.target.files && event.target.files[0]) {

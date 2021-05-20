@@ -19,4 +19,6 @@ ngOnInit() {
     this.spinner.hide();
   }, 1000);
 }
+
+
 } 

@@ -117,7 +117,7 @@ export class LoginComponent implements OnInit {
   }
 
   openVerticallyCentered(content) {
-    this.modalService.open(content, { centered: true });
+    this.modalService.open(content, { centered: true, size: 'lg' });
   }
 
   searchClub(event) {
@@ -132,5 +132,6 @@ export class LoginComponent implements OnInit {
     this.selectedClub = club
     console.log(this.selectedClub)
   }
+
 }
 

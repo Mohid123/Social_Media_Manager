@@ -187,7 +187,7 @@
             </div>
             <div class="card-body">
                 <mat-tab-group mat-align-tabs="center" dynamicHeight>
-                    <mat-tab (click)="showDiv.previous = !showDiv.previous;showDiv.current = false;showDiv.next = false">
+                    <mat-tab (click)="showDiv.photo = !showDiv.photo; showDiv.text = false; showDiv.video = false">
                         <ng-template mat-tab-label>
 
                             <mat-icon><i class="far fa-images icon-lg" style="color: #3699FF;"></i></mat-icon>&nbsp;
@@ -293,7 +293,7 @@
                         </div>
                     </mat-tab>
 
-                    <mat-tab (click)="showDiv.current = !showDiv.current;showDiv.previous = false;showDiv.next = false" >
+                    <mat-tab (click)="showDiv.text = !showDiv.text;showDiv.photo = false;showDiv.video = false" >
                         <ng-template mat-tab-label>
                             <mat-icon><i class="fas fa-video icon-lg" style="color: #3699FF;"></i></mat-icon>&nbsp;
                             &nbsp;Video
@@ -399,7 +399,7 @@
                         </div>
                     </mat-tab>
 
-                    <mat-tab (click)="showDiv.next = !showDiv.next;showDiv.previous = false;showDiv.current = false">
+                    <mat-tab (click)="showDiv.video = !showDiv.video;showDiv.photo = false;showDiv.text = false">
                         <ng-template mat-tab-label>
                             <mat-icon><i class="far fa-file-alt icon-lg" style="color: #3699FF;"></i></mat-icon>&nbsp;
                             &nbsp;Text
@@ -535,7 +535,7 @@
                                     <div class="card-body p-0">
 
                                         <div class="preview-facebook preview-facebook-media item-post-type"
-                                            data-type="media" style="display: none;">
+                                            data-type="media" style="display: none;" >
                                             <div class="user-info">
                                                 <img class="img-circle"
                                                     src="https://getstackposts.com/inc/themes/backend/default/assets/img/avatar.jpg">
@@ -567,7 +567,7 @@
                                         </div>
 
                                         <div class="preview-facebook preview-facebook-media item-post-type"
-                                            data-type="photo" *ngIf="showDiv.previous">
+                                            data-type="photo" >
                                             <div class="user-info">
                                                 <img class="img-circle"
                                                     src="https://getstackposts.com/inc/themes/backend/default/assets/img/avatar.jpg">
@@ -600,7 +600,7 @@
                                         </div>
 
                                         <div class="preview-facebook preview-facebook-media item-post-type"
-                                            data-type="video" style="display: none;" *ngIf="showDiv.next">
+                                            data-type="video" style="display: none;" *ngIf="showDiv.video">
                                             <div class="user-info">
                                                 <img class="img-circle"
                                                     src="https://getstackposts.com/inc/themes/backend/default/assets/img/avatar.jpg">
@@ -633,7 +633,7 @@
 
 
                                         <div class="preview-facebook preview-facebook-text item-post-type"
-                                            data-type="text" *ngIf="showDiv.current">
+                                            data-type="text" *ngIf="showDiv.text">
                                             <div class="user-info">
                                                 <img class="img-circle"
                                                     src="https://getstackposts.com/inc/themes/backend/default/assets/img/avatar.jpg">
