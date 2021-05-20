@@ -186,10 +186,9 @@
                 </div>
             </div>
             <div class="card-body">
-                <mat-tab-group mat-align-tabs="center" dynamicHeight>
+                <mat-tab-group mat-align-tabs="center" dynamicHeight (selectedTabChange)="switchTabs($event)">
                     <mat-tab >
                         <ng-template mat-tab-label>
-
                             <mat-icon><i class="far fa-images icon-lg" style="color: #3699FF;"></i></mat-icon>&nbsp;
                             &nbsp;Photo
                         </ng-template>
@@ -293,7 +292,7 @@
                         </div>
                     </mat-tab>
 
-                    <mat-tab >
+                    <mat-tab (click)="showDiv.video = true ; showDiv.photo = false ; showDiv.text = false ">
                         <ng-template mat-tab-label>
                             <mat-icon><i class="fas fa-video icon-lg" style="color: #3699FF;"></i></mat-icon>&nbsp;
                             &nbsp;Video
@@ -399,7 +398,7 @@
                         </div>
                     </mat-tab>
 
-                    <mat-tab >
+                    <mat-tab (click)="showDiv.text = true ; showDiv.photo = false ; showDiv.video = false ">
                         <ng-template mat-tab-label>
                             <mat-icon><i class="far fa-file-alt icon-lg" style="color: #3699FF;"></i></mat-icon>&nbsp;
                             &nbsp;Text
@@ -536,7 +535,7 @@
 
 
                                         <div class="preview-facebook preview-facebook-media item-post-type"
-                                            data-type="photo" >
+                                            data-type="photo" *ngIf="showDiv.photo">
                                             <div class="user-info">
                                                 <img class="img-circle"
                                                     src="https://getstackposts.com/inc/themes/backend/default/assets/img/avatar.jpg">
@@ -569,7 +568,7 @@
                                         </div>
 
                                         <div class="preview-facebook preview-facebook-media item-post-type"
-                                            data-type="video"  >
+                                            data-type="video"  *ngIf="showDiv.video">
                                             <div class="user-info">
                                                 <img class="img-circle"
                                                     src="https://getstackposts.com/inc/themes/backend/default/assets/img/avatar.jpg">
@@ -602,7 +601,7 @@
 
 
                                         <div class="preview-facebook preview-facebook-text item-post-type"
-                                            data-type="text" >
+                                            data-type="text" *ngIf="showDiv.text">
                                             <div class="user-info">
                                                 <img class="img-circle"
                                                     src="https://getstackposts.com/inc/themes/backend/default/assets/img/avatar.jpg">
