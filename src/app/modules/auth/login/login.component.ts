@@ -36,7 +36,6 @@ export class LoginComponent implements OnInit {
   searchString: string
   searchStarted: boolean = false;
   tempClubs: any
-
   private unsubscribe: Subscription[] = [];
 
   constructor(
@@ -48,14 +47,10 @@ export class LoginComponent implements OnInit {
     config.keyboard = false;
   }
 
-
-
   ngOnInit(): void {
     this.initLoginForm();
     this.getAllClubs();
-
   }
-
 
   initLoginForm() {
     this.loginForm = this.fb.group({
@@ -106,7 +101,6 @@ export class LoginComponent implements OnInit {
   getAllClubs() {
     this._clubService.getAllClubs(0, 10).subscribe(clubs => {
       this.allClubs = clubs
-      console.log(this.allClubs);
     }, (error) => {
       console.log(error)
     })
@@ -121,11 +115,10 @@ export class LoginComponent implements OnInit {
   }
 
   searchClub(event) {
-    let items = document.getElementById("items").style.display = "none"
+    document.getElementById("items").style.display = "none"
     this.searchStarted = true
     this.searchString = event
-    const data = this.allClubs.filter(i => i.clubName.toLowerCase().includes(this.searchString.toLowerCase()));
-    this.tempClubs = data
+    this.tempClubs = this.allClubs.filter(i => i.clubName.toLowerCase().includes(this.searchString.toLowerCase()));
   }
 
   onClubSelected(club) {

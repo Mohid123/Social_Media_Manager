@@ -6,12 +6,10 @@ import { HttpInterceptor, HttpHandler, HttpRequest, HttpEvent } from "@angular/c
 export class Interceptor implements HttpInterceptor {
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
       
-    const customReq = request.clone({
-      
+    const customReq = request.clone({      
     setHeaders : {
-        'Authorization' : localStorage.getItem('userToken')
-    }
+        'Authorization' : localStorage.getItem('userToken')}
     });
     return next.handle(customReq);
-  }
+  } 
 }
