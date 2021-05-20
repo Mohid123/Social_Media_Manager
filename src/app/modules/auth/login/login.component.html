@@ -29,13 +29,8 @@
         <div class="modal-body d-flex justify-content-center">
           <perfect-scrollbar style="height: 250px;">
 
-<<<<<<< HEAD
-            <div class="row row-cols-1 row-cols-md-3 g-4" id="items">
-              <div class="col" *ngFor="let club of allClubs" id="items">
-=======
             <div class="row row-cols-1 row-cols-md-4 g-4" id="items">
-              <div  class="col" *ngFor="let club of allClubs" id="items">
->>>>>>> 1179abecfec9bceccfa5e4eeaa4648bd3b1c6dd0
+              <div class="col" *ngFor="let club of allClubs" id="items">
                 <div class="card" (click)="onClubSelected(club) ; c('Close click') ; searchStarted = false">
                   <img src="{{club.logoURL}}"
                     class="rounded mx-auto d-block card-img-top size d-flex justify-content-center" alt="...">
@@ -116,17 +111,12 @@
 
     <!--begin::Form group-->
 
-<<<<<<< HEAD
-
-    <h3 *ngIf="selectedClub"> Selected Club : {{selectedClub.clubName}}</h3>
-=======
     <div class="alert alert-custom alert-white shadow-sm fade show" role="alert" *ngIf="selectedClub" >
       <div class="alert-icon"><img src="{{selectedClub.logoURL}}" class="rounded mx-auto d-block card-img-top" style="width: 70px; height: 70px;" alt="..."></div>
       <div class="alert-text"><h3><small>Selected club:&nbsp; </small>   {{selectedClub.clubName}}</h3></div>
       
   </div>
 
->>>>>>> 1179abecfec9bceccfa5e4eeaa4648bd3b1c6dd0
 
     <div class="form-group">
       <label class="font-size-h6 font-weight-bolder text-dark">Email</label>
