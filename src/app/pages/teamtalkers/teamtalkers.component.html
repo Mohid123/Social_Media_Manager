@@ -253,7 +253,7 @@
                                                                     </div>
                                                                 </label>
     
-                                                                <input id="file-input" type="file" name="myfile" multiple/> 
+                                                                <input id="file-input" type="file" name="myfile" (change)="onSelectFile($event)" multiple/> 
                                                             </div>
 
                                                         </div>
@@ -356,7 +356,7 @@
                                                                     </div>
                                                                 </label>
     
-                                                                <input id="file-input" type="file" name="myfile" multiple/> 
+                                                                <input id="file-input" type="file" name="myfile" (change)="onSelectFile($event)" multiple/> 
                                                             </div>
                                                         </div>
 
@@ -534,37 +534,7 @@
 
                                     <div class="card-body p-0">
 
-                                        <div class="preview-facebook preview-facebook-media item-post-type"
-                                            data-type="media" style="display: none;">
-                                            <div class="user-info">
-                                                <img class="img-circle"
-                                                    src="https://getstackposts.com/inc/themes/backend/default/assets/img/avatar.jpg">
-                                                <div class="text">
-                                                    <div class="name"> Anonymous</div>
-                                                    <span> Just now . <i class="fa fa-globe"
-                                                            aria-hidden="true"></i></span>
-                                                </div>
-                                            </div>
-                                            <div class="caption">
-                                                <div class="line-no-text">{{teamtalkerCaption}}</div>
-                                                <div class="line-no-text"></div>
-                                                <div class="line-no-text w50"></div>
-                                            </div>
-                                            <div class="preview-media" data-max-image="5"></div>
-                                            <div class="preview-comment">
-                                                <div class="row">
-                                                    <div class="col item">
-                                                        <i class="la-thumbs-up"></i> Like
-                                                    </div>
-                                                    <div class="col item">
-                                                        <i class="facebook-icon comment" aria-hidden="true"></i> Comment
-                                                    </div>
-                                                    <div class="col item">
-                                                        <i class="facebook-icon share" aria-hidden="true"></i> Share
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                       
 
                                         <div class="preview-facebook preview-facebook-media item-post-type"
                                             data-type="photo" *ngIf="showDiv.photo">
@@ -582,7 +552,7 @@
                                                 <div class="line-no-text"></div>
                                                 <div class="line-no-text w50"></div>
                                             </div>
-                                            <div class="preview-media" data-max-image="5"></div>
+                                            <div class="preview-media" data-max-image="5"><img [src]="url" *ngIf="format==='image' && url" style="width: 100%; height: 100%;"></div>
                                             <div class="preview-comment">
                                                 <div class="row">
                                                     <div class="col item">
@@ -614,7 +584,7 @@
                                                 <div class="line-no-text"></div>
                                                 <div class="line-no-text w50"></div>
                                             </div>
-                                            <div class="preview-media" data-max-image="5"></div>
+                                            <div class="preview-media" data-max-image="5"><video [src]="url" *ngIf="format==='video' && url" height="200" controls></video></div>
                                             <div class="preview-comment">
                                                 <div class="row">
                                                     <div class="col item">
@@ -630,54 +600,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="preview-facebook preview-facebook-link item-post-type"
-                                            data-type="link" style="display: none;">
-                                            <div class="user-info">
-                                                <img class="img-circle"
-                                                    src="https://getstackposts.com/inc/themes/backend/default/assets/img/avatar.jpg">
-                                                <div class="text">
-                                                    <div class="name"> Anonymous</div>
-                                                    <span> Just now . <i class="fa fa-globe"
-                                                            aria-hidden="true"></i></span>
-                                                </div>
-                                            </div>
-                                            <div class="caption">
-                                                <div class="line-no-text"></div>
-                                                <div class="line-no-text"></div>
-                                                <div class="line-no-text w50"></div>
-                                            </div>
-
-                                            <div class="preview-link">
-                                                <div class="image"></div>
-                                                <div class="info">
-                                                    <div class="title">
-                                                        <div class="line-no-text"></div>
-                                                    </div>
-                                                    <div class="desc">
-                                                        <div class="line-no-text"></div>
-                                                        <div class="line-no-text"></div>
-                                                        <div class="line-no-text"></div>
-                                                    </div>
-                                                    <div class="website">
-                                                        <div class="line-no-text w50"></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="preview-comment">
-                                                <div class="row">
-                                                    <div class="col item">
-                                                        <i class="facebook-icon like" aria-hidden="true"></i> Like
-                                                    </div>
-                                                    <div class="col item">
-                                                        <i class="facebook-icon comment" aria-hidden="true"></i> Comment
-                                                    </div>
-                                                    <div class="col item">
-                                                        <i class="facebook-icon share" aria-hidden="true"></i> Share
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                      
 
                                         <div class="preview-facebook preview-facebook-text item-post-type"
                                             data-type="text" *ngIf="showDiv.text">

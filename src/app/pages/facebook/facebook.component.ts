@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { NgxSpinnerService } from "ngx-spinner";
 @Component({
   selector: 'app-facebook',

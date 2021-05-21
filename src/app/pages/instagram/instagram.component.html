@@ -177,7 +177,7 @@
                    </div>
             </div>
             <div class="card-body">
-                <mat-tab-group mat-align-tabs="center" dynamicHeight>
+                <mat-tab-group mat-align-tabs="center" dynamicHeight (selectedTabChange)="switchTabs($event)">
                     <mat-tab>
                       <ng-template mat-tab-label>
                        
@@ -239,7 +239,7 @@
                                                                 </div>
                                                             </label>
 
-                                                            <input id="file-input" type="file" name="myfile" multiple/> 
+                                                            <input id="file-input" type="file" name="myfile" (change)="onSelectFile($event)" multiple/> 
                                                         </div>
                                                </div>
                                                   
@@ -281,7 +281,7 @@
                     </div>
                     </mat-tab>
                   
-                    <mat-tab>
+                    <mat-tab (click)="showDiv.video = true ; showDiv.photo = false ; ">
                       <ng-template mat-tab-label>
                         <mat-icon><i class="fas fa-video icon-lg" style="color: #3699FF;"></i></mat-icon>&nbsp; &nbsp;Video
                         
@@ -421,13 +421,15 @@
                             <div class="preview-instagram">
                                 <div class="card border-0">
                                     <div class="card-block p-0 border-0">
-                                        <div class="preview-instagram preview-instagram-photo item-post-type" data-type="media" >
+
+                                        <!-- Photo post -->
+                                        <div class="preview-instagram preview-instagram-photo item-post-type" data-type="phot" *ngIf="showDiv.photo">
                                             <div class="preview-content">
                                                 <div class="user-info">
                                                     <img class="img-circle" src="https://getstackposts.com/modules/inc/themes/backend/default/assets/img/avatar.jpg">
                                                     <span>Anonymous</span>
                                                 </div>
-                                                <div class="preview-media" data-max-image="1"></div>
+                                                <div class="preview-media" data-max-image="1"> <img style="width: 100%; height: 100%;" class="img-circle" [src]= url></div>
                                                 <div class="post-info">
                                                     <div class="info-active pull-left"> Be the first to Like this</div>
                                                     <!-- <div class="pull-right">1s</div> -->
@@ -442,108 +444,31 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <!-- <div class="preview-instagram preview-instagram-photo item-post-type" data-type="photo" style="display: none;">
+
+                                          <!-- Video post -->
+                                        <div class="preview-instagram preview-instagram-photo item-post-type" data-type="video" *ngIf="showDiv.video">
                                             <div class="preview-content">
                                                 <div class="user-info">
-                                                    <img class="img-circle" src="https://getstackposts.com/modules/inc/themes/backend/default/assets/img/avatar.jpg">
+                                                    <img class="img-circle" src="https://getstackposts.com/inc/themes/backend/default/assets/img/avatar.jpg">
                                                     <span>Anonymous</span>
                                                 </div>
                                                 <div class="preview-media" data-max-image="1"></div>
                                                 <div class="post-info">
                                                     <div class="info-active pull-left"> Be the first to Like this</div>
-                                                    <div class="pull-right">1s</div>
+                                                    <div class="pull-right"></div>
                                                     <div class="clearfix"></div>
                                                 </div>
-                                                <div class="caption pt0"><div class="line-no-text">{{instaCaption}}</div><div class="line-no-text"></div><div class="line-no-text w50"></div></div>
+                                                <div class="caption pt0"><div class="line-no-text">
+                                                    {{instaCaption}}
+                                                </div><div class="line-no-text"></div><div class="line-no-text w50"></div></div>
                                                 <div class="preview-comment">
                                                     Add a comment                              
                                                     <div class="icon-3dot"></div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="preview-instagram preview-instagram-photo item-post-type" data-type="video" style="display: none;">
-                                            <div class="preview-content">
-                                                <div class="user-info">
-                                                    <img class="img-circle" src="https://getstackposts.com/modules/inc/themes/backend/default/assets/img/avatar.jpg">
-                                                    <span>Anonymous</span>
-                                                </div>
-                                                <div class="preview-media" data-max-image="1"></div>
-                                                <div class="post-info">
-                                                    <div class="info-active pull-left"> Be the first to Like this</div>
-                                                    <div class="pull-right">1s</div>
-                                                    <div class="clearfix"></div>
-                                                </div>
-                                                <div class="caption pt0"><div class="line-no-text"></div><div class="line-no-text"></div><div class="line-no-text w50"></div></div>
-                                                <div class="preview-comment">
-                                                    Add a comment                              
-                                                    <div class="icon-3dot"></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="preview-instagram preview-instagram-photo item-post-type" data-type="link" style="display: none;">
-                                            <div class="preview-content">
-                                                <div class="user-info">
-                                                    <img class="img-circle" src="https://getstackposts.com/modules/inc/themes/backend/default/assets/img/avatar.jpg">
-                                                    <span>Anonymous</span>
-                                                </div>
-                                                <div class="preview-media" data-max-image="1"></div>
-                                                <div class="post-info">
-                                                    <div class="info-active pull-left"> Be the first to Like this</div>
-                                                    <div class="pull-right">1s</div>
-                                                    <div class="clearfix"></div>
-                                                </div>
-                                                <div class="caption pt0"><div class="line-no-text"></div><div class="line-no-text"></div><div class="line-no-text w50"></div></div>
-                                                <div class="preview-comment">
-                                                    Add a comment                              
-                                                    <div class="icon-3dot"></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="preview-instagram preview-instagram-story item-post-type" data-type="story" style="display: none;">
-                                            <div class="preview-media" data-max-image="1"></div>
-                                        </div> -->
-                                        <!-- <div class="preview-instagram preview-instagram-photo item-post-type" data-type="igtv" style="display: none;">
-                                            <div class="preview-content">
-                                                <div class="user-info">
-                                                    <img class="img-circle" src="https://getstackposts.com/modules/inc/themes/backend/default/assets/img/avatar.jpg">
-                                                    <span>Anonymous</span>
-                                                </div>
-                                                <div class="preview-media" data-max-image="1"></div>
-                                                <div class="post-info">
-                                                    <div class="info-active pull-left"> Be the first to Like this</div>
-                                                    <div class="pull-right">1s</div>
-                                                    <div class="clearfix"></div>
-                                                </div>
-                                                <div class="caption pt0"><div class="line-no-text"></div><div class="line-no-text"></div><div class="line-no-text w50"></div></div>
-                                                <div class="preview-comment">
-                                                    Add a comment                              
-                                                    <div class="icon-3dot"></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="preview-instagram preview-instagram-carousel item-post-type" data-type="carousel" style="display: none;">
-                                            <div class="preview-content">
-                                                <div class="user-info">
-                                                    <img class="img-circle" src="https://getstackposts.com/modules/inc/themes/backend/default/assets/img/avatar.jpg">
-                                                    <span>Anonymous</span>
-                                                </div>
-                                                <div class="preview-media preview-carousel owl-carousel owl-theme" data-max-image="9"></div>
-                                                <div class="post-info">
-                                                    <div class="info-active pull-left"> Be the first to Like this</div>
-                                                    <div class="pull-right">1s</div>
-                                                    <div class="clearfix"></div>
-                                                </div>
-                                                <div class="caption pt0"><div class="line-no-text"></div><div class="line-no-text"></div><div class="line-no-text w50"></div></div>
-                                                <div class="preview-comment">
-                                                    Add a comment                
-                                                    <div class="icon-3dot"></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="preview-instagram preview-instagram-photo item-post-type" data-type="text" style="display: none;">
-                                            <div class="text-center p-25">
-                                                This social network not support post this post type                </div>
-                                        </div> -->
+
+                                    
                                     </div>
                                 </div>
                             </div>
