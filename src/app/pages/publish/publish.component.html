@@ -2,7 +2,7 @@
 <div class="row">
     <div class="col-lg-3">
         <!--begin::Card-->
-        <div class="card card-custom card-stretch">
+        <div class="card card-custom card-stretch" id="kt_page_stretched_card">
             <div class="card-header" style="background-color: #1e1e2d;">
                 <div class="card-title">
                     <h3 class="card-label">
@@ -18,8 +18,9 @@
                     </h3>
                    </div>
             </div>
-            <div class="ss">
-                <div data-scroll="true" data-height="50">
+            <div class="card-body">
+
+                <div class="card-scroll custom-scrollbar-css p-2" style="height: 660px;">
                     <div class="card-header border-0 pt-5">
                         <form class="form-inline md-form form-sm d-flex justify-content-center">
                             <mdb-icon fas icon="search" aria-hidden="true"></mdb-icon>
@@ -28,118 +29,65 @@
                           </form>
                         
                     </div>
-    
-                    <!--end::Header-->
-                    <!--begin::Body-->
-                    <div class="card-body py-0" style="padding: 0px;">
-                        <!--begin::Table-->
-                        <div >
-                            <table class="table table-head-custom " id="kt_advance_table_widget_1">
-                                <thead>
-                                    <tr class="text-left">
-                                        <th class="pl-0" style="width: 20px">
-                                            <label class="checkbox checkbox-lg checkbox-inline">
-                                                <input type="checkbox" value="1" />
-                                                <span></span>
-                                             
-                                            </label>
-                                        </th>
-                                        <th class="pr-0" style="width: 50px"></th>
-                                        <th style="min-width: 200px"></th>
-    
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td class="pl-0">
-                                            <label class="checkbox checkbox-lg checkbox-inline">
-                                                <input type="checkbox" value="1" />
-                                                <span></span>
-                                            </label>
-                                        </td>
-                                        <td class="pr-0">
-                                            <div class="symbol symbol-50 symbol-light mt-1">
-                                                <span class="symbol-label">
-                                                    <img src="assets/media/svg/avatars/001-boy.svg"
-                                                        class="h-75 align-self-end" alt="" />
-                                                </span>
-                                            </div>
-                                        </td>
-                                        <td class="pl-0">
-                                            <a href="#"
-                                                class="text-dark-75 font-weight-bolder text-hover-primary mb-1 font-size-lg">Brad
-                                                Simmons</a>
-                                            <span class="text-muted font-weight-bold text-muted d-block">HTML, JS,
-                                                ReactJS</span>
-                                        </td>
-    
-                                    </tr>
-                                    <tr>
-                                        <td class="pl-0">
-                                            <label class="checkbox checkbox-lg checkbox-inline">
-                                                <input type="checkbox" value="1" />
-                                                <span></span>
-                                            </label>
-                                        </td>
-                                        <td class="pr-0">
-                                            <div class="symbol symbol-50 symbol-light mt-1">
-                                                <span class="symbol-label">
-                                                    <img src="assets/media/svg/avatars/001-boy.svg"
-                                                        class="h-75 align-self-end" alt="" />
-                                                </span>
-                                            </div>
-                                        </td>
-                                        <td class="pl-0">
-                                            <a href="#"
-                                                class="text-dark-75 font-weight-bolder text-hover-primary mb-1 font-size-lg">Brad
-                                                Simmons</a>
-                                            <span class="text-muted font-weight-bold text-muted d-block">HTML, JS,
-                                                ReactJS</span>
-                                        </td>
-    
-                                    </tr>
-                                    <tr>
-                                        <td class="pl-0">
-                                            <label class="checkbox checkbox-lg checkbox-inline">
-                                                <input type="checkbox" value="1" />
-                                                <span></span>
-                                            </label>
-                                        </td>
-                                        <td class="pr-0">
-                                            <div class="symbol symbol-50 symbol-light mt-1">
-                                                <span class="symbol-label">
-                                                    <img src="assets/media/svg/avatars/001-boy.svg"
-                                                        class="h-75 align-self-end" alt="" />
-                                                </span>
-                                            </div>
-                                        </td>
-                                        <td class="pl-0">
-                                            <a href="#"
-                                                class="text-dark-75 font-weight-bolder text-hover-primary mb-1 font-size-lg">Brad
-                                                Simmons</a>
-                                            <span class="text-muted font-weight-bold text-muted d-block">HTML, JS,
-                                                ReactJS</span>
-                                        </td>
-    
-                                    </tr>
-    
-    
-                                </tbody>
-                            </table>
-                        </div>
-                        <!--end::Table-->
-                    </div>
-                      </div>
-                
-                 <!--begin::Header-->
-                 
+               
+                        
+            <div class="card-body py-0" style="padding: 0px;">
+        
+                <div class="card-scroll" >
+                    <table class="table table-head-custom " id="kt_advance_table_widget_1">
+                        <thead>
+                            <tr class="text-left">
+                                <th class="pl-0" style="width: 20px"> 
+                                    <label class="checkbox checkbox-lg checkbox-inline"> 
+                                        <input [(ngModel)]="masterSelected" name="list_name" value="m1" (change)="checkUncheckAll()" type="checkbox" value="1"/>
+                                        <span></span>
+                                    
+                                    </label>
+                                   
+                                </th>
+                              
 
-                    
+                                <th class="pr-0 pt-0" style="width: 50px; text-transform: lowercase; text-transform: none;">Select all</th>
+                                <!-- <th style="min-width: 200px">all</th> -->
+
+                            </tr>
+                        </thead>
+                        <tbody *ngFor="let item of checklist">
+                            <tr>
+                                <td class="pl-0" >
+                                    <label class="checkbox checkbox-lg checkbox-inline">
+                                        <input type="checkbox"  [(ngModel)]="item.isSelected" name="list_name" value="{{item.id}}" (change)="isAllSelected()"/>
+                                        <span></span>
+                                    </label>
+                                </td>
+                                <td class="pr-0">
+                                    <div class="symbol symbol-50 symbol-light mt-1">
+                                        <span class="symbol-label">
+                                            <img src="assets/media/svg/avatars/001-boy.svg"
+                                                class="h-75 align-self-end" alt="" />
+                                        </span>
+                                    </div>
+                                </td>
+                                <td class="pl-0">
+                                    <a href="#"
+                                        class="text-dark-75 font-weight-bolder text-hover-primary mb-1 font-size-lg">Brad
+                                        Simmons</a>
+                                    <span class="text-muted font-weight-bold text-muted d-block">HTML, JS,
+                                        ReactJS</span>
+                                </td>
+
+                            </tr>
+                            
+                            
+
+
+                        </tbody>
+                    </table>
                 </div>
-                <!-- Card -->
-
-<!-- Card -->
-            
+                <!--end::Table-->
+            </div>
+                </div>
+            </div>
         </div>
         <!--end::Card-->
 
@@ -177,7 +125,7 @@
                    </div>
             </div>
             <div class="card-body">
-                <mat-tab-group mat-align-tabs="center" dynamicHeight (selectedTabChange)="switchTabs($event)">
+                <mat-tab-group mat-align-tabs="center"  (selectedTabChange)="switchTabs($event)">
                     <mat-tab>
                       <ng-template mat-tab-label>
                        
