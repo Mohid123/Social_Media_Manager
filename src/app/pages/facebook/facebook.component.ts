@@ -52,6 +52,7 @@ export class FacebookComponent implements OnInit {
       reader.onload = (event) => { // called once readAsDataURL is completed
         this.url = event.target.result as string;
         this.cf.detectChanges();
+      
        console.log(event)
        
       }
