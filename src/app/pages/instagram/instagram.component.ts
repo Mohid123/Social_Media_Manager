@@ -10,7 +10,7 @@ export class InstagramComponent implements OnInit {
 
   
   constructor(private spinner: NgxSpinnerService) { }
-
+  public instaCaption = "";
   ngOnInit() {
     /** spinner starts on init */
     this.spinner.show();

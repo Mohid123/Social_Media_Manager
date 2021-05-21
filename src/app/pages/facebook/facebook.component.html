@@ -317,7 +317,7 @@
 
                                             <form class="form">
                                                 <div class="form-group">
-                                                    <textarea class="form-control form-control-lg form-control-solid"
+                                                    <textarea [(ngModel)]="name" [ngModelOptions]="{standalone: true}" class="form-control form-control-lg form-control-solid"
                                                         id="exampleTextarea" rows="3"
                                                         placeholder="What’s on your mind, Jerry?"
                                                         style="width: 220%"></textarea>
@@ -424,7 +424,7 @@
 
                                             <form class="form">
                                                 <div class="form-group">
-                                                    <textarea class="form-control form-control-lg form-control-solid"
+                                                    <textarea [(ngModel)]="name" [ngModelOptions]="{standalone: true}" class="form-control form-control-lg form-control-solid"
                                                         id="exampleTextarea" rows="3"
                                                         placeholder="What’s on your mind, Jerry?"
                                                         style="width: 220%"></textarea>
@@ -579,7 +579,7 @@
                                                 </div>
                                             </div>
                                             <div class="caption">
-                                                <div class="line-no-text"></div>
+                                                <div class="line-no-text">{{name}}</div>
                                                 <div class="line-no-text"></div>
                                                 <div class="line-no-text w50"></div>
                                             </div>
@@ -587,13 +587,13 @@
                                             <div class="preview-comment">
                                                 <div class="row">
                                                     <div class="col item">
-                                                        <i class="facebook-icon like" aria-hidden="true"></i> Like
+                                                      <i class="fas fa-thumbs-up"></i> &nbsp;Like
                                                     </div>
                                                     <div class="col item">
-                                                        <i class="facebook-icon comment" aria-hidden="true"></i> Comment
+                                                        <i class="fas fa-comments"></i> &nbsp;Comment
                                                     </div>
                                                     <div class="col item">
-                                                        <i class="facebook-icon share" aria-hidden="true"></i> Share
+                                                        <i class="fas fa-share" aria-hidden="true"></i> &nbsp;Share
                                                     </div>
                                                 </div>
                                             </div>
@@ -612,7 +612,7 @@
                                                 </div>
                                             </div>
                                             <div class="caption" >
-                                                <div class="line-no-text"></div>
+                                                <div class="line-no-text">{{name}}</div>
                                                 <div class="line-no-text"></div>
                                                 <div class="line-no-text w50"></div>
                                             </div>
@@ -620,13 +620,13 @@
                                             <div class="preview-comment">
                                                 <div class="row">
                                                     <div class="col item">
-                                                        <i class="facebook-icon like" aria-hidden="true"></i> Like
+                                                      <i class="fas fa-thumbs-up"></i> &nbsp;Like
                                                     </div>
                                                     <div class="col item">
-                                                        <i class="facebook-icon comment" aria-hidden="true"></i> Comment
+                                                        <i class="fas fa-comments"></i> &nbsp;Comment
                                                     </div>
                                                     <div class="col item">
-                                                        <i class="facebook-icon share" aria-hidden="true"></i> Share
+                                                        <i class="fas fa-share" aria-hidden="true"></i> &nbsp;Share
                                                     </div>
                                                 </div>
                                             </div>

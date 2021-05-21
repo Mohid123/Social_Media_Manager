@@ -202,7 +202,7 @@
 
                                               <form class="form">
                                                 <div class="form-group">
-                                                    <textarea class="form-control form-control-lg form-control-solid" id="exampleTextarea" rows="3" placeholder="What’s on your mind, Jerry?" style="width: 220%"></textarea>
+                                                    <textarea [(ngModel)]="instaCaption" [ngModelOptions]="{standalone: true}" class="form-control form-control-lg form-control-solid" id="exampleTextarea" rows="3" placeholder="What’s on your mind, Jerry?" style="width: 220%"></textarea>
                                                 </div>
                                              
                                             </form>
@@ -305,7 +305,7 @@
 
                                               <form class="form">
                                                 <div class="form-group">
-                                                    <textarea class="form-control form-control-lg form-control-solid" id="exampleTextarea" rows="3" placeholder="What’s on your mind, Jerry?" style="width: 220%"></textarea>
+                                                    <textarea [(ngModel)]="instaCaption" [ngModelOptions]="{standalone: true}" class="form-control form-control-lg form-control-solid" id="exampleTextarea" rows="3" placeholder="What’s on your mind, Jerry?" style="width: 220%"></textarea>
                                                 </div>
                                              
                                             </form>
@@ -430,17 +430,19 @@
                                                 <div class="preview-media" data-max-image="1"></div>
                                                 <div class="post-info">
                                                     <div class="info-active pull-left"> Be the first to Like this</div>
-                                                    <div class="pull-right">1s</div>
+                                                    <!-- <div class="pull-right">1s</div> -->
                                                     <div class="clearfix"></div>
                                                 </div>
-                                                <div class="caption pt0"><div class="line-no-text"></div><div class="line-no-text"></div><div class="line-no-text w50"></div></div>
+                                                <div class="caption pt0"><div class="line-no-text" >
+                                                    {{instaCaption}}
+                                                </div><div class="line-no-text"></div><div class="line-no-text w50"></div></div>
                                                 <div class="preview-comment">
                                                     Add a comment                              
                                                     <div class="icon-3dot"></div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="preview-instagram preview-instagram-photo item-post-type" data-type="photo" style="display: none;">
+                                        <!-- <div class="preview-instagram preview-instagram-photo item-post-type" data-type="photo" style="display: none;">
                                             <div class="preview-content">
                                                 <div class="user-info">
                                                     <img class="img-circle" src="https://getstackposts.com/modules/inc/themes/backend/default/assets/img/avatar.jpg">
@@ -452,7 +454,7 @@
                                                     <div class="pull-right">1s</div>
                                                     <div class="clearfix"></div>
                                                 </div>
-                                                <div class="caption pt0"><div class="line-no-text"></div><div class="line-no-text"></div><div class="line-no-text w50"></div></div>
+                                                <div class="caption pt0"><div class="line-no-text">{{instaCaption}}</div><div class="line-no-text"></div><div class="line-no-text w50"></div></div>
                                                 <div class="preview-comment">
                                                     Add a comment                              
                                                     <div class="icon-3dot"></div>
@@ -499,8 +501,8 @@
                                         </div>
                                         <div class="preview-instagram preview-instagram-story item-post-type" data-type="story" style="display: none;">
                                             <div class="preview-media" data-max-image="1"></div>
-                                        </div>
-                                        <div class="preview-instagram preview-instagram-photo item-post-type" data-type="igtv" style="display: none;">
+                                        </div> -->
+                                        <!-- <div class="preview-instagram preview-instagram-photo item-post-type" data-type="igtv" style="display: none;">
                                             <div class="preview-content">
                                                 <div class="user-info">
                                                     <img class="img-circle" src="https://getstackposts.com/modules/inc/themes/backend/default/assets/img/avatar.jpg">
@@ -541,7 +543,7 @@
                                         <div class="preview-instagram preview-instagram-photo item-post-type" data-type="text" style="display: none;">
                                             <div class="text-center p-25">
                                                 This social network not support post this post type                </div>
-                                        </div>
+                                        </div> -->
                                     </div>
                                 </div>
                             </div>
