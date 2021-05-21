@@ -19,6 +19,11 @@ import { FakeAPIService } from './_fake/fake-api.service';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatIconModule } from "@angular/material/icon";
 import { ToastrModule } from 'ngx-toastr';
+import { SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-login';
+import {
+  GoogleLoginProvider,
+  FacebookLoginProvider
+} from 'angularx-social-login';
 function appInitializer(authService: AuthService) {
   return () => {
     return new Promise((resolve) => {
@@ -38,6 +43,7 @@ function appInitializer(authService: AuthService) {
     HttpClientModule,
     HighlightModule,
     ClipboardModule,
+    SocialLoginModule,
     MatIconModule,
     environment.isMockEnabled
       ? HttpClientInMemoryWebApiModule.forRoot(FakeAPIService, {
@@ -74,6 +80,18 @@ function appInitializer(authService: AuthService) {
       provide : HTTP_INTERCEPTORS,
       useClass : Interceptor,
       multi : true
+    },
+    {
+      provide: 'SocialAuthServiceConfig',
+      useValue: {
+        autoLogin: false,
+        providers: [
+          {
+            id: FacebookLoginProvider.PROVIDER_ID,
+            provider: new FacebookLoginProvider('844857613045687')
+          }
+        ]
+      } as SocialAuthServiceConfig,
     }
   ],
   bootstrap: [AppComponent],

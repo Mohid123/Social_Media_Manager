@@ -1,3 +1,5 @@
+import { catchError } from 'rxjs/operators';
+import { ErrorhandlerService } from './errorhandler.service';
 import { HttpClient } from '@angular/common/http';
 import { environment } from './../../../environments/environment';
 import { Injectable } from '@angular/core';
@@ -7,19 +9,19 @@ import { Injectable } from '@angular/core';
 })
 export class InstagramService {
 
-  constructor(private http : HttpClient) { }
+  constructor(private http : HttpClient , private _errorHandlerService : ErrorhandlerService) { }
 
   getInstagramAccountID(facebookPageID , fbPageAccessToken){
-    return this.http.get(`${environment.base_url}${facebookPageID}?fields=instagram_business_account&access_token=${fbPageAccessToken}`)
+    return this.http.get(`${environment.base_url}${facebookPageID}?fields=instagram_business_account&access_token=${fbPageAccessToken}`).pipe(catchError(this._errorHandlerService.handleErrors))
   }
 
 
   createIGMediaContainer(instagramAccountID , caption , fbPageAccessToken , imageURL){
-    return this.http.post(`${environment.base_url}${instagramAccountID}/media?caption=${caption}&access_token=${fbPageAccessToken}&image_url=${imageURL}` , '')
+    return this.http.post(`${environment.base_url}${instagramAccountID}/media?caption=${caption}&access_token=${fbPageAccessToken}&image_url=${imageURL}` , '').pipe(catchError(this._errorHandlerService.handleErrors))
   }
 
   publishContent(instagramAccountID , containerID , FBPageAccessToken){
-    return this.http.post(`${environment.base_url}${instagramAccountID}/media_publish?creation_id=${containerID}&access_token=${FBPageAccessToken}` , '')
+    return this.http.post(`${environment.base_url}${instagramAccountID}/media_publish?creation_id=${containerID}&access_token=${FBPageAccessToken}` , '').pipe(catchError(this._errorHandlerService.handleErrors))
   }
 
 }
