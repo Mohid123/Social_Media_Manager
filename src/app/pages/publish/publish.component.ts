@@ -7,10 +7,12 @@ import { NgxSpinnerService } from "ngx-spinner";
 })
 export class PublishComponent implements OnInit {
 public textFirst : string
-title = 'Angular 7 CheckBox Select/ Unselect All';
+
   masterSelected:boolean;
   checklist:any;
   checkedList:any;
+  public format;
+  public url = 'https://getstackposts.com/inc/themes/backend/default/assets/img/avatar.jpg';
   
 constructor(private spinner: NgxSpinnerService , private cf : ChangeDetectorRef) { 
   this.masterSelected = false;
@@ -51,7 +53,7 @@ getCheckedItemList(){
 }
 public socialCaption ="";
 public selectedInstagram : boolean = true
-public url : string ='https://getstackposts.com/inc/themes/backend/default/assets/img/avatar.jpg'
+
 showDiv = {
   photo : true,
   video : false,
@@ -90,15 +92,19 @@ switchTabs(event){
 }
 
 onSelectFile(event) {
-  console.log(event)
-  // console.log(event)
-  if (event.target.files && event.target.files[0]) {
+  const file = event.target.files && event.target.files[0];
+  if (file) {
     var reader = new FileReader();
-    reader.readAsDataURL(event.target.files[0]); // read file as data url
-    reader.onload = (event) => { // called once readAsDataURL is completed
-      this.url = event.target.result as string;
+    reader.readAsDataURL(file);
+    if(file.type.indexOf('image')> -1){
+      this.format = 'image';
+    } else if(file.type.indexOf('video')> -1){
+      this.format = 'video';
+    }
+    reader.onload = (event) => {
+      this.url = (<FileReader>event.target).result as string;
       this.cf.detectChanges();
-     console.log(event)
+   
     }
   }
 }

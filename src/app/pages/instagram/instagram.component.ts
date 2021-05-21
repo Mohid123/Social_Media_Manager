@@ -11,6 +11,7 @@ export class InstagramComponent implements OnInit {
   
   constructor(private spinner: NgxSpinnerService, private cf : ChangeDetectorRef) { }
   public instaCaption = "";
+  public format;
   url = 'https://getstackposts.com/inc/themes/backend/default/assets/img/avatar.jpg';
   showDiv = {
     photo : true,
@@ -41,15 +42,18 @@ export class InstagramComponent implements OnInit {
   
   }
   onSelectFile(event) {
-   
-    if (event.target.files && event.target.files[0]) {
+    const file = event.target.files && event.target.files[0];
+    if (file) {
       var reader = new FileReader();
-      reader.readAsDataURL(event.target.files[0]); 
-      reader.onload = (event) => { 
-        this.url = event.target.result as string;
+      reader.readAsDataURL(file);
+      if(file.type.indexOf('image')> -1){
+        this.format = 'image';
+      } else if(file.type.indexOf('video')> -1){
+        this.format = 'video';
+      }
+      reader.onload = (event) => {
+        this.url = (<FileReader>event.target).result as string;
         this.cf.detectChanges();
-       console.log(event)
-       
       }
     }
   }

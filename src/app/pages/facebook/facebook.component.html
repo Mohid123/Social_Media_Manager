@@ -357,7 +357,7 @@
                                                                     </div>
                                                                 </label>
     
-                                                                <input id="file-input" type="file" accept="video/*" name="myfile" multiple/> 
+                                                                <input id="file-input" type="file" accept="video/*" (change)="onSelectFile($event)" name="myfile" multiple/> 
                                                             </div>
                                                         </div>
 
@@ -583,7 +583,7 @@
                                                 <div class="line-no-text"></div>
                                                 <div class="line-no-text w50"></div>
                                             </div>
-                                            <div class="preview-media" data-max-image="5" ></div>
+                                            <div class="preview-media" data-max-image="5" ><video [src]="url" *ngIf="format==='video' && url" height="200" controls></video></div>
                                             <div class="preview-comment">
                                                 <div class="row">
                                                     <div class="col item">

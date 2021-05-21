@@ -290,7 +290,7 @@
                                                                 </div>
                                                             </label>
 
-                                                            <input id="file-input" accept="video/*" type="file" name="myfile" multiple/> 
+                                                            <input id="file-input" accept="video/*" (change)="onSelectFile($event)" type="file" name="myfile" multiple/> 
                                                         </div>
                                                         
                                                </div>
@@ -502,7 +502,7 @@
                                             <div class="line-no-text"></div>
                                             <div class="line-no-text w50"></div>
                                         </div>
-                                        <div class="preview-media" data-max-image="5" ></div>
+                                        <div class="preview-media" data-max-image="5" ><video [src]="url" *ngIf="format==='video' && url" height="200" controls></video> </div>
                                         <div class="preview-comment">
                                             <div class="row">
                                                 <div class="col item">
@@ -568,13 +568,13 @@
                             <div class="preview-instagram">
                                 <div class="card border-0">
                                     <div class="card-block p-0 border-0">
-                                        <div class="preview-instagram preview-instagram-photo item-post-type" data-type="media" >
+                                        <div class="preview-instagram preview-instagram-photo item-post-type" data-type="media" *ngIf="showDiv.photo" >
                                             <div class="preview-content">
                                                 <div class="user-info">
                                                     <img class="img-circle" src="https://getstackposts.com/modules/inc/themes/backend/default/assets/img/avatar.jpg">
                                                     <span>Anonymous</span>
                                                 </div>
-                                                <div class="preview-media" data-max-image="1"></div>
+                                                <div class="preview-media" data-max-image="1"><img style="height: 100%; width: 100%;" class="img-circle" [src]="url"></div>
                                                 <div class="post-info">
                                                     <div class="info-active pull-left"> Be the first to Like this</div>
                                                     <!-- <div class="pull-right">1s</div> -->
@@ -589,32 +589,14 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <!-- <div class="preview-instagram preview-instagram-photo item-post-type" data-type="photo" style="display: none;">
+                                        
+                                        <div class="preview-instagram preview-instagram-photo item-post-type" data-type="video"  *ngIf="showDiv.video">
                                             <div class="preview-content">
                                                 <div class="user-info">
                                                     <img class="img-circle" src="https://getstackposts.com/modules/inc/themes/backend/default/assets/img/avatar.jpg">
                                                     <span>Anonymous</span>
                                                 </div>
-                                                <div class="preview-media" data-max-image="1"></div>
-                                                <div class="post-info">
-                                                    <div class="info-active pull-left"> Be the first to Like this</div>
-                                                    <div class="pull-right">1s</div>
-                                                    <div class="clearfix"></div>
-                                                </div>
-                                                <div class="caption pt0"><div class="line-no-text">{{socialCaption}}</div><div class="line-no-text"></div><div class="line-no-text w50"></div></div>
-                                                <div class="preview-comment">
-                                                    Add a comment                              
-                                                    <div class="icon-3dot"></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="preview-instagram preview-instagram-photo item-post-type" data-type="video" style="display: none;">
-                                            <div class="preview-content">
-                                                <div class="user-info">
-                                                    <img class="img-circle" src="https://getstackposts.com/modules/inc/themes/backend/default/assets/img/avatar.jpg">
-                                                    <span>Anonymous</span>
-                                                </div>
-                                                <div class="preview-media" data-max-image="1"></div>
+                                                <div class="preview-media" data-max-image="1"><video [src]="url" *ngIf="format==='video' && url" height="200" controls></video></div>
                                                 <div class="post-info">
                                                     <div class="info-active pull-left"> Be the first to Like this</div>
                                                     <div class="pull-right">1s</div>
@@ -627,70 +609,10 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="preview-instagram preview-instagram-photo item-post-type" data-type="link" style="display: none;">
-                                            <div class="preview-content">
-                                                <div class="user-info">
-                                                    <img class="img-circle" src="https://getstackposts.com/modules/inc/themes/backend/default/assets/img/avatar.jpg">
-                                                    <span>Anonymous</span>
-                                                </div>
-                                                <div class="preview-media" data-max-image="1"></div>
-                                                <div class="post-info">
-                                                    <div class="info-active pull-left"> Be the first to Like this</div>
-                                                    <div class="pull-right">1s</div>
-                                                    <div class="clearfix"></div>
-                                                </div>
-                                                <div class="caption pt0"><div class="line-no-text"></div><div class="line-no-text"></div><div class="line-no-text w50"></div></div>
-                                                <div class="preview-comment">
-                                                    Add a comment                              
-                                                    <div class="icon-3dot"></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="preview-instagram preview-instagram-story item-post-type" data-type="story" style="display: none;">
-                                            <div class="preview-media" data-max-image="1"></div>
-                                        </div> -->
-                                        <!-- <div class="preview-instagram preview-instagram-photo item-post-type" data-type="igtv" style="display: none;">
-                                            <div class="preview-content">
-                                                <div class="user-info">
-                                                    <img class="img-circle" src="https://getstackposts.com/modules/inc/themes/backend/default/assets/img/avatar.jpg">
-                                                    <span>Anonymous</span>
-                                                </div>
-                                                <div class="preview-media" data-max-image="1"></div>
-                                                <div class="post-info">
-                                                    <div class="info-active pull-left"> Be the first to Like this</div>
-                                                    <div class="pull-right">1s</div>
-                                                    <div class="clearfix"></div>
-                                                </div>
-                                                <div class="caption pt0"><div class="line-no-text"></div><div class="line-no-text"></div><div class="line-no-text w50"></div></div>
-                                                <div class="preview-comment">
-                                                    Add a comment                              
-                                                    <div class="icon-3dot"></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="preview-instagram preview-instagram-carousel item-post-type" data-type="carousel" style="display: none;">
-                                            <div class="preview-content">
-                                                <div class="user-info">
-                                                    <img class="img-circle" src="https://getstackposts.com/modules/inc/themes/backend/default/assets/img/avatar.jpg">
-                                                    <span>Anonymous</span>
-                                                </div>
-                                                <div class="preview-media preview-carousel owl-carousel owl-theme" data-max-image="9"></div>
-                                                <div class="post-info">
-                                                    <div class="info-active pull-left"> Be the first to Like this</div>
-                                                    <div class="pull-right">1s</div>
-                                                    <div class="clearfix"></div>
-                                                </div>
-                                                <div class="caption pt0"><div class="line-no-text"></div><div class="line-no-text"></div><div class="line-no-text w50"></div></div>
-                                                <div class="preview-comment">
-                                                    Add a comment                
-                                                    <div class="icon-3dot"></div>
-                                                </div>
-                                            </div>
-                                        </div> -->
-                                        <!-- <div class="preview-instagram preview-instagram-photo item-post-type" data-type="text" >
-                                            <div class="text-center p-25">
-                                                This social network not support post this post type                </div>
-                                        </div>  -->
+                                        
+                                        
+                                      
+                                       
                                     </div>
                                 </div>
                             </div>
@@ -711,37 +633,7 @@
 
                                     <div class="card-body p-0">
 
-                                        <div class="preview-facebook preview-facebook-media item-post-type"
-                                            data-type="media" style="display: none;">
-                                            <div class="user-info">
-                                                <img class="img-circle"
-                                                    src="https://getstackposts.com/inc/themes/backend/default/assets/img/avatar.jpg">
-                                                <div class="text">
-                                                    <div class="name"> Anonymous</div>
-                                                    <span> Just now . <i class="fa fa-globe"
-                                                            aria-hidden="true"></i></span>
-                                                </div>
-                                            </div>
-                                            <div class="caption">
-                                                <div class="line-no-text">{{socialCaption}}</div>
-                                                <div class="line-no-text"></div>
-                                                <div class="line-no-text w50"></div>
-                                            </div>
-                                            <div class="preview-media" data-max-image="5"></div>
-                                            <div class="preview-comment">
-                                                <div class="row">
-                                                    <div class="col item">
-                                                        <i class="la-thumbs-up"></i> Like
-                                                    </div>
-                                                    <div class="col item">
-                                                        <i class="facebook-icon comment" aria-hidden="true"></i> Comment
-                                                    </div>
-                                                    <div class="col item">
-                                                        <i class="facebook-icon share" aria-hidden="true"></i> Share
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                      
 
                                         <div class="preview-facebook preview-facebook-media item-post-type"
                                             data-type="photo" *ngIf="showDiv.photo">
@@ -759,7 +651,7 @@
                                                 <div class="line-no-text"></div>
                                                 <div class="line-no-text w50"></div>
                                             </div>
-                                            <div class="preview-media" data-max-image="5"></div>
+                                            <div class="preview-media" data-max-image="5"><img style="height: 100%; width: 100%;" class="img-circle" [src]="url"></div>
                                             <div class="preview-comment">
                                                 <div class="row">
                                                     <div class="col item">
@@ -791,7 +683,7 @@
                                                 <div class="line-no-text"></div>
                                                 <div class="line-no-text w50"></div>
                                             </div>
-                                            <div class="preview-media" data-max-image="5"></div>
+                                            <div class="preview-media" data-max-image="5"><video [src]="url" *ngIf="format==='video' && url" height="200" controls></video></div>
                                             <div class="preview-comment">
                                                 <div class="row">
                                                     <div class="col item">
@@ -807,54 +699,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="preview-facebook preview-facebook-link item-post-type"
-                                            data-type="link" style="display: none;">
-                                            <div class="user-info">
-                                                <img class="img-circle"
-                                                    src="https://getstackposts.com/inc/themes/backend/default/assets/img/avatar.jpg">
-                                                <div class="text">
-                                                    <div class="name"> Anonymous</div>
-                                                    <span> Just now . <i class="fa fa-globe"
-                                                            aria-hidden="true"></i></span>
-                                                </div>
-                                            </div>
-                                            <div class="caption">
-                                                <div class="line-no-text"></div>
-                                                <div class="line-no-text"></div>
-                                                <div class="line-no-text w50"></div>
-                                            </div>
-
-                                            <div class="preview-link">
-                                                <div class="image"></div>
-                                                <div class="info">
-                                                    <div class="title">
-                                                        <div class="line-no-text">{{socialCaption}}</div>
-                                                    </div>
-                                                    <div class="desc">
-                                                        <div class="line-no-text"></div>
-                                                        <div class="line-no-text"></div>
-                                                        <div class="line-no-text"></div>
-                                                    </div>
-                                                    <div class="website">
-                                                        <div class="line-no-text w50"></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="preview-comment">
-                                                <div class="row">
-                                                    <div class="col item">
-                                                        <i class="facebook-icon like" aria-hidden="true"></i> Like
-                                                    </div>
-                                                    <div class="col item">
-                                                        <i class="facebook-icon comment" aria-hidden="true"></i> Comment
-                                                    </div>
-                                                    <div class="col item">
-                                                        <i class="facebook-icon share" aria-hidden="true"></i> Share
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                       
 
                                         <div class="preview-facebook preview-facebook-text item-post-type"
                                             data-type="text" *ngIf="showDiv.text">

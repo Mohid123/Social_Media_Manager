@@ -11,7 +11,8 @@ export class FacebookComponent implements OnInit {
   }
 
  public name = "";
- url = 'https://getstackposts.com/inc/themes/backend/default/assets/img/avatar.jpg';
+ public format;
+ public url = 'https://getstackposts.com/inc/themes/backend/default/assets/img/avatar.jpg';
  showDiv = {
   photo : true,
   video : false,
@@ -45,16 +46,18 @@ export class FacebookComponent implements OnInit {
 
 
   onSelectFile(event) {
-    // console.log(event)
-    if (event.target.files && event.target.files[0]) {
+    const file = event.target.files && event.target.files[0];
+    if (file) {
       var reader = new FileReader();
-      reader.readAsDataURL(event.target.files[0]); // read file as data url
-      reader.onload = (event) => { // called once readAsDataURL is completed
-        this.url = event.target.result as string;
+      reader.readAsDataURL(file);
+      if(file.type.indexOf('image')> -1){
+        this.format = 'image';
+      } else if(file.type.indexOf('video')> -1){
+        this.format = 'video';
+      }
+      reader.onload = (event) => {
+        this.url = (<FileReader>event.target).result as string;
         this.cf.detectChanges();
-      
-       console.log(event)
-       
       }
     }
   }
