@@ -10,11 +10,9 @@ export class TeamtalkersComponent implements OnInit {
 
   constructor(private spinner: NgxSpinnerService, private cf : ChangeDetectorRef) { }
 
-  url;
-  format;
-
+  public url : any;
+  public format : string;
   public teamtalkerCaption = "";
-  // url = 'https://getstackposts.com/inc/themes/backend/default/assets/img/avatar.jpg';
   showDiv = {
     photo : true,
     video : false,
@@ -46,19 +44,6 @@ export class TeamtalkersComponent implements OnInit {
       this.showDiv.text = true;
     }
   }
-  // onSelectFile(event) {
-    
-  //   if (event.target.files && event.target.files[0]) {
-  //     var reader = new FileReader();
-  //     reader.readAsDataURL(event.target.files[0]); 
-  //     reader.onload = (event) => { 
-  //       this.url = event.target.result as string;
-  //       this.cf.detectChanges();
-  //      console.log(event)
-       
-  //     }
-  //   }
-  // }
   
   onSelectFile(event) {
     const file = event.target.files && event.target.files[0];
@@ -72,6 +57,7 @@ export class TeamtalkersComponent implements OnInit {
       }
       reader.onload = (event) => {
         this.url = (<FileReader>event.target).result;
+        console.log(this.url)
         this.cf.detectChanges();
       }
     }

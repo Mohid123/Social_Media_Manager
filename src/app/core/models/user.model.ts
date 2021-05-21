@@ -6,4 +6,7 @@ export class User {
     FBTimeline : string
     InstaTimeline : string
     userID : string // For his club
+    FbuserId : string
+    FbuserAuthToken : string
+    
 }
