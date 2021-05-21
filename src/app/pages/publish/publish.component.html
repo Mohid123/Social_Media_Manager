@@ -239,7 +239,7 @@
                                                                 </div>
                                                             </label>
 
-                                                            <input id="file-input" type="file" name="myfile" multiple/> 
+                                                            <input id="file-input" (change)="onSelectFile($event)" type="file" name="myfile" multiple/> 
                                                         </div>
                                                </div>
                                                   
@@ -281,7 +281,7 @@
                     </div>
                     </mat-tab>
                   
-                    <mat-tab (click)="showDiv.video = true ; showDiv.photo = false ; showDiv.text = false ">
+                    <mat-tab   (click)="showDiv.video = true ; showDiv.photo = false ; showDiv.text = false ">
                       <ng-template mat-tab-label>
                         <mat-icon><i class="fas fa-video icon-lg" style="color: #3699FF;"></i></mat-icon>&nbsp; &nbsp;Video
                         
@@ -521,7 +521,7 @@
                                             
                                         </div>
                                         <div class="preview-media" data-max-image="5" >
-                                            <img class="img-circle" [src]="url ? url : 'https://getstackposts.com/inc/themes/backend/default/assets/img/avatar.jpg'">
+                                            <img style="height: 100%; width: 100%;" class="img-circle" [src]="url">
                                         </div>
                                         <div class="preview-comment">
                                             <div class="row">
@@ -611,7 +611,7 @@
                     </div>
                     </mat-tab>
     
-                    <mat-tab>
+                    <mat-tab *ngIf="selectedInstagram" >
                         <ng-template mat-tab-label>
                           <mat-icon><i class="fab fa-instagram icon-2x" style="color: #d62976;"></i></mat-icon>
                           
@@ -739,10 +739,10 @@
                                                 </div>
                                             </div>
                                         </div> -->
-                                        <div class="preview-instagram preview-instagram-photo item-post-type" data-type="text" >
+                                        <!-- <div class="preview-instagram preview-instagram-photo item-post-type" data-type="text" >
                                             <div class="text-center p-25">
                                                 This social network not support post this post type                </div>
-                                        </div> 
+                                        </div>  -->
                                     </div>
                                 </div>
                             </div>
