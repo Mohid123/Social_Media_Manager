@@ -520,7 +520,7 @@
             </div>
             <div class="card-body">
                 <mat-tab-group mat-align-tabs="center" dynamicHeight>
-                    <mat-tab style="overflow-y: hidden;">
+                    <mat-tab>
                         <ng-template mat-tab-label>
                             <mat-icon><a href="#" class="btn btn-icon btn-xs" style="background-color: #272727;">
                                 <i class="svg-icon menu-icon mr-2" style="color: #fdaa02"><span style="padding-left: 6px; font-weight: bold;">TT</span></i>
@@ -584,7 +584,7 @@
                                                 <div class="line-no-text"></div>
                                                 <div class="line-no-text w50"></div>
                                             </div>
-                                            <div class="preview-media" data-max-image="5"><video [src]="url" *ngIf="format==='video' && url" height="200" controls></video></div>
+                                            <div class="preview-media" data-max-image="5"><video [src]="url" *ngIf="format==='video' && url" style="width:100%; height: 100%" controls></video></div>
                                             <div class="preview-comment">
                                                 <div class="row">
                                                     <div class="col item">

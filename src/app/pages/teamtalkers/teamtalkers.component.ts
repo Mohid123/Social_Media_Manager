@@ -10,7 +10,7 @@ export class TeamtalkersComponent implements OnInit {
 
   constructor(private spinner: NgxSpinnerService, private cf : ChangeDetectorRef) { }
 
-  public url : any;
+  url = 'https://getstackposts.com/inc/themes/backend/default/assets/img/avatar.jpg';
   public format : string;
   public teamtalkerCaption = "";
   showDiv = {
@@ -56,7 +56,7 @@ export class TeamtalkersComponent implements OnInit {
         this.format = 'video';
       }
       reader.onload = (event) => {
-        this.url = (<FileReader>event.target).result;
+        this.url = (<FileReader>event.target).result as string;
         console.log(this.url)
         this.cf.detectChanges();
       }
