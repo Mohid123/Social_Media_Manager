@@ -89,8 +89,8 @@ private getDismissReason(reason: any): string {
 
 
   logout(){
-    // this.router.navigateByUrl('/login');
-    // localStorage.clear();
+    this.router.navigateByUrl('/login');
+    localStorage.clear();
   }
 
   ngAfterViewInit(): void {

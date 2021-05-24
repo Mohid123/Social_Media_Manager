@@ -85,13 +85,11 @@ export class LoginComponent implements OnInit {
       password: this.loginForm.value.password
     }
     this._authService.loginByEmail(payload).subscribe(user => {
-      if (user) {
-        localStorage.setItem('isAuthenticated', 'true')
         localStorage.setItem('userToken', user.token)
+        localStorage.setItem('club' , this.selectedClub.clubName)
+        localStorage.setItem('logo' , this.selectedClub.logoURL)
         this.toastr.success('Login Success', 'Logged In Successfully');
         this.router.navigateByUrl('/pages/dashboard');
-        console.log(user)
-      }
     }, err => {
       console.log(err)
       this.toastr.error(err.message)
@@ -107,7 +105,8 @@ export class LoginComponent implements OnInit {
   }
 
   loginFormsubmit() {
-    this.router.navigateByUrl('/pages/dashboard');
+    this.loginByEmail()
+    // this.router.navigateByUrl('/pages/dashboard');
   }
 
   openVerticallyCentered(content) {

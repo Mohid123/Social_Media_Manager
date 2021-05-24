@@ -7,7 +7,8 @@ import { NgxSpinnerService } from "ngx-spinner";
   styleUrls: ['./teamtalkers.component.scss']
 })
 export class TeamtalkersComponent implements OnInit {
-
+clubName : string
+clubLogo : string
   constructor(private spinner: NgxSpinnerService, private cf : ChangeDetectorRef) { }
 
   url = 'https://getstackposts.com/inc/themes/backend/default/assets/img/avatar.jpg';
@@ -19,9 +20,9 @@ export class TeamtalkersComponent implements OnInit {
     text : false
   }
   ngOnInit() {
-   
+   this.clubName = localStorage.getItem('club')
+   this.clubLogo = localStorage.getItem('logo')
     this.spinner.show();
-
     setTimeout(() => {
     
       this.spinner.hide();

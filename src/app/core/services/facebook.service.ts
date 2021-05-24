@@ -3,6 +3,7 @@ import { ErrorhandlerService } from './errorhandler.service';
 import { environment } from './../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -25,7 +26,6 @@ return this.http.post(`${environment.base_url}${FacebookPageID}/photos?url=${ima
  }
 
  getLongLivedFBAccessToken(userToken) {
-   return this.http.get(`https://graph.facebook.com/oauth/access_token?grant_type=fb_exchange_token&client_id=${environment.app_id}&client_secret=${environment.app_secret}&fb_exchange_token=${userToken}`).pipe(catchError(this._errorHandlerService.handleErrors))
-
- }
+  return this.http.get(`https://graph.facebook.com/oauth/access_token?grant_type=fb_exchange_token&client_id=${environment.app_id}&client_secret=${environment.app_secret}&fb_exchange_token=${userToken}`);
+}
 }

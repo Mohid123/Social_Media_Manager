@@ -1,3 +1,5 @@
+import { MainAuthService } from './../../../../core/services/auth.service';
+import { AuthService } from './../../../../modules/auth/_services/auth.service';
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { LayoutService } from '../../../../_metronic/core';
@@ -19,11 +21,13 @@ export class AsideComponent implements OnInit {
   brandClasses: string;
   asideMenuScroll = 1;
   asideSelfMinimizeToggle = false;
-
-  constructor(private layout: LayoutService, private loc: Location) { }
+  clubName : string
+  clubLogo : string
+  constructor(private layout: LayoutService, private loc: Location , private _authService : MainAuthService) { }
 
   ngOnInit(): void {
-    // load view settings
+    this.clubName = localStorage.getItem('club');
+    this.clubLogo = localStorage.getItem('logo');
     this.disableAsideSelfDisplay =
       this.layout.getProp('aside.self.display') === false;
     this.brandSkin = this.layout.getProp('brand.self.theme');
