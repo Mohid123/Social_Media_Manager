@@ -7,32 +7,36 @@ import { NgxSpinnerService } from "ngx-spinner";
 })
 export class FacebookComponent implements OnInit {
 
-  constructor(private spinner: NgxSpinnerService , private cf : ChangeDetectorRef) { 
+  constructor(private spinner: NgxSpinnerService, private cf: ChangeDetectorRef) {
   }
 
- public name = "";
- public format;
- public url = 'https://getstackposts.com/inc/themes/backend/default/assets/img/avatar.jpg';
- showDiv = {
-  photo : true,
-  video : false,
-  text : false
-}
- 
-  ngOnInit() {
-    this.spinner.show();
+  public name = "";
+  public format;
+  public url = 'https://getstackposts.com/inc/themes/backend/default/assets/img/avatar.jpg';
+  showDiv = {
+    photo: true,
+    video: false,
+    text: false
+  }
 
+  ngOnInit() {
+    this.showSpinner();
+  }
+
+  showSpinner() {
+    this.spinner.show();
     setTimeout(() => {
       this.spinner.hide();
     }, 1000);
   }
-  switchTabs(event){
-    if(event.index == 0){
+
+  switchTabs(event) {
+    if (event.index == 0) {
       this.showDiv.photo = true;
       this.showDiv.video = false;
       this.showDiv.text = false;
     }
-    else if(event.index == 1){
+    else if (event.index == 1) {
       this.showDiv.photo = false;
       this.showDiv.video = true;
       this.showDiv.text = false;
@@ -44,15 +48,14 @@ export class FacebookComponent implements OnInit {
     }
   }
 
-
   onSelectFile(event) {
     const file = event.target.files && event.target.files[0];
     if (file) {
       var reader = new FileReader();
       reader.readAsDataURL(file);
-      if(file.type.indexOf('image')> -1){
+      if (file.type.indexOf('image') > -1) {
         this.format = 'image';
-      } else if(file.type.indexOf('video')> -1){
+      } else if (file.type.indexOf('video') > -1) {
         this.format = 'video';
       }
       reader.onload = (event) => {
@@ -61,4 +64,4 @@ export class FacebookComponent implements OnInit {
       }
     }
   }
-} 
+}

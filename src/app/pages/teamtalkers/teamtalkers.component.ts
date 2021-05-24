@@ -20,11 +20,15 @@ clubLogo : string
     text : false
   }
   ngOnInit() {
+    this.showSpinner();
    this.clubName = localStorage.getItem('club')
    this.clubLogo = localStorage.getItem('logo')
+  }
+
+  
+  showSpinner(){
     this.spinner.show();
     setTimeout(() => {
-    
       this.spinner.hide();
     }, 1000);
   }

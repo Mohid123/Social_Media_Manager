@@ -1,3 +1,4 @@
+import { ClubService } from './../../core/services/club.service';
 import { Component, OnInit, Inject, NgZone, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { NgxSpinnerService } from "ngx-spinner";
@@ -14,7 +15,7 @@ import am4themes_animated from '@amcharts/amcharts4/themes/animated';
 })
 export class DashboardComponent implements OnInit {
   private chart: am4charts.XYChart;
-  constructor(private spinner: NgxSpinnerService, @Inject(PLATFORM_ID) private platformId, private zone: NgZone) { }
+  constructor(private spinner: NgxSpinnerService, @Inject(PLATFORM_ID) private platformId, private zone: NgZone , private _clubService : ClubService) { }
 
   browserOnly(f: () => void) {
     if (isPlatformBrowser(this.platformId)) {
@@ -23,14 +24,29 @@ export class DashboardComponent implements OnInit {
       });
     }
   }
+
+  ngOnInit() {
+    this.showSpinner()
+    this.getClubById()
+  }
+
+  showSpinner(){
+    this.spinner.show();
+    setTimeout(() => {
+      this.spinner.hide();
+    }, 1000);
+  }
+
+  getClubById(){
+    this._clubService.getClubById('60a1f75c764e4033cc10f7d6').subscribe(data=>{
+      console.log(data);
+    })
+  }
+
   ngAfterViewInit() {
-    // Chart code goes in here
     this.browserOnly(() => {
-      // am4core.useTheme(am4themes_dark);
       am4core.useTheme(am4themes_animated);
-
       let chart = am4core.create("chartdiv", am4charts.XYChart);
-
       chart.paddingRight = 20;
 
       let data = [];
@@ -64,24 +80,11 @@ export class DashboardComponent implements OnInit {
     });
   }
   ngOnDestroy() {
-    // Clean up chart when the component is removed
     this.browserOnly(() => {
       if (this.chart) {
         this.chart.dispose();
       }
     });
   }
-
-
-  ngOnInit() {
-    /** spinner starts on init */
-    this.spinner.show();
-
-    setTimeout(() => {
-      /** spinner ends after 5 seconds */
-      this.spinner.hide();
-    }, 1000);
-  }
-
   
 } 
