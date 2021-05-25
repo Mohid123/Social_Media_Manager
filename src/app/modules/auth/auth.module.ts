@@ -13,6 +13,8 @@ import {MatSelectModule} from '@angular/material/select';
 import { PerfectScrollbarModule }          from 'ngx-perfect-scrollbar';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 import { ToastrModule } from 'ngx-toastr';
+import { NgxSpinnerModule } from 'ngx-spinner';
+
 export const PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
 };
@@ -35,7 +37,8 @@ export const PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ReactiveFormsModule,
     HttpClientModule,
     MatSelectModule,
-    PerfectScrollbarModule
+    PerfectScrollbarModule,
+    NgxSpinnerModule,
 
   ]
 })

@@ -1,3 +1,4 @@
+import { NgxSpinnerService } from 'ngx-spinner';
 import { UsersService } from './../../../core/services/users.service';
 import { ClubService } from './../../../core/services/club.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -41,7 +42,7 @@ export class LoginComponent implements OnInit {
   constructor(
     private config: NgbModalConfig,
     private fb: FormBuilder, private authService: AuthService, private route: ActivatedRoute, private router: Router, private _clubService: ClubService,
-    private _authService: MainAuthService, private modalService: NgbModal, private _userService: UsersService, private toastr: ToastrService
+    private _authService: MainAuthService, private modalService: NgbModal, private _userService: UsersService, private toastr: ToastrService, private spinner: NgxSpinnerService
   ) {
     config.backdrop = 'static';
     config.keyboard = false;
@@ -67,7 +68,7 @@ export class LoginComponent implements OnInit {
         this.defaultAuth.password,
         Validators.compose([
           Validators.required,
-          Validators.minLength(3),
+          Validators.minLength(6),
           Validators.maxLength(100),
         ]),
       ],
@@ -75,7 +76,9 @@ export class LoginComponent implements OnInit {
   }
 
   loginByEmail() {
+    this.spinner.show();
     if (!this.selectedClub) {
+      this.spinner.hide()
       this.toastr.error('Please Select Club', 'Empty Club')
       return;
     }
@@ -85,13 +88,16 @@ export class LoginComponent implements OnInit {
       password: this.loginForm.value.password
     }
     this._authService.loginByEmail(payload).subscribe(user => {
-        localStorage.setItem('userToken', user.token)
-        localStorage.setItem('club' , this.selectedClub.clubName)
-        localStorage.setItem('logo' , this.selectedClub.logoURL)
-        this.toastr.success('Login Success', 'Logged In Successfully');
-        this.router.navigateByUrl('/pages/dashboard');
+      console.log(user)
+      localStorage.setItem('id' , user.loggedInUser.id)
+      localStorage.setItem('userToken', user.token)
+      localStorage.setItem('club', this.selectedClub.clubName)
+      this.toastr.success('Login Success', 'Logged In Successfully');
+      this.router.navigateByUrl('/pages/dashboard');
+      this.spinner.hide();
+
     }, err => {
-      console.log(err)
+      this.spinner.hide()
       this.toastr.error(err.message)
     })
   }
@@ -105,8 +111,8 @@ export class LoginComponent implements OnInit {
   }
 
   loginFormsubmit() {
-    this.loginByEmail()
-    // this.router.navigateByUrl('/pages/dashboard');
+    // this.loginByEmail()
+    this.router.navigateByUrl('/pages/dashboard');
   }
 
   openVerticallyCentered(content) {
@@ -122,7 +128,6 @@ export class LoginComponent implements OnInit {
 
   onClubSelected(club) {
     this.selectedClub = club
-    console.log(this.selectedClub)
   }
 
 }

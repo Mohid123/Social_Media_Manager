@@ -1,5 +1,7 @@
 <!--begin::Signin-->
 
+<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "default" color = "#fff" type = "ball-spin" [fullScreen] = "true"><p style="color: white" >Please wait..</p></ngx-spinner>
+
 <div class="login-form login-signin">
   <h2 class="font-weight-bolder  font-size-h2" style="color: #000000; letter-spacing: 1px;">
     Sign In
@@ -160,7 +162,7 @@
         }"></ng-container>
       <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
           validation: 'minlength',
-          message: 'Password should have at least 3 symbols',
+          message: 'Password should contain at least 6 characters',
           control: loginForm.controls['password']
         }"></ng-container>
       <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{

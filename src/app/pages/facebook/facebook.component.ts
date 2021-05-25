@@ -1,5 +1,8 @@
+import { FacebookService } from './../../core/services/facebook.service';
+import { ToastrService } from 'ngx-toastr';
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { NgxSpinnerService } from "ngx-spinner";
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 @Component({
   selector: 'app-facebook',
   templateUrl: './facebook.component.html',
@@ -7,12 +10,13 @@ import { NgxSpinnerService } from "ngx-spinner";
 })
 export class FacebookComponent implements OnInit {
 
-  constructor(private spinner: NgxSpinnerService, private cf: ChangeDetectorRef) {
+  constructor(private spinner: NgxSpinnerService, private cf: ChangeDetectorRef, private toast: ToastrService, private _facebookService: FacebookService) {
   }
 
-  public name = "";
-  public format;
-  public url = 'https://getstackposts.com/inc/themes/backend/default/assets/img/avatar.jpg';
+  public name: string = ""
+  public format: string;
+  public url: string = 'https://getstackposts.com/inc/themes/backend/default/assets/img/avatar.jpg';
+  public file: File
   showDiv = {
     photo: true,
     video: false,
@@ -49,19 +53,32 @@ export class FacebookComponent implements OnInit {
   }
 
   onSelectFile(event) {
-    const file = event.target.files && event.target.files[0];
-    if (file) {
+    this.file = event.target.files && event.target.files[0];
+    if (this.file) {
       var reader = new FileReader();
-      reader.readAsDataURL(file);
-      if (file.type.indexOf('image') > -1) {
+      reader.readAsDataURL(this.file);
+      if (this.file.type.indexOf('image') > -1) {
         this.format = 'image';
-      } else if (file.type.indexOf('video') > -1) {
+      } else if (this.file.type.indexOf('video') > -1) {
         this.format = 'video';
       }
       reader.onload = (event) => {
+        console.log(event)
         this.url = (<FileReader>event.target).result as string;
         this.cf.detectChanges();
       }
     }
+  }
+
+  postImageContent() {
+    //  if(this.name == ""){
+    //    this.toast.error('Nothing to Post' , 'Empty Content');
+    //    return;
+    //  }
+    if (!this.file) {
+      this.toast.error('Please select an Image File', 'Empty File');
+      return;
+    }
+    console.log('file selected')
   }
 }

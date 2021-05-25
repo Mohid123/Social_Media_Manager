@@ -17,17 +17,17 @@ export class DashboardComponent implements OnInit {
   private chart: am4charts.XYChart;
   constructor(private spinner: NgxSpinnerService, @Inject(PLATFORM_ID) private platformId, private zone: NgZone , private _clubService : ClubService) { }
 
+  ngOnInit() {
+    // this.showSpinner()
+    // this.getClubById()
+  }
+
   browserOnly(f: () => void) {
     if (isPlatformBrowser(this.platformId)) {
       this.zone.runOutsideAngular(() => {
         f();
       });
     }
-  }
-
-  ngOnInit() {
-    this.showSpinner()
-    this.getClubById()
   }
 
   showSpinner(){

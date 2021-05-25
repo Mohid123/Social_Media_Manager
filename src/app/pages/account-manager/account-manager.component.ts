@@ -30,11 +30,13 @@ public user: SocialUser
     };
     await this.authService.signIn(FacebookLoginProvider.PROVIDER_ID, fbLoginOptions).then((user) => {
       console.log(user)
-      this._facebookService.getLongLivedFBAccessToken(user.authToken).subscribe(data => {
-        console.log(data)
+      this._facebookService.getLongLivedFBAccessToken(user.authToken).subscribe(permanentToken => {
+        console.log(permanentToken)
       }, error => {
         console.log(error)
       });
+    }, error=>{
+      console.log(error)
     }).catch(err => console.log(err));
   }
 
