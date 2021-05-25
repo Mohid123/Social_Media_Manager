@@ -14,17 +14,16 @@ import { User } from 'src/app/core/models/user.model';
 export class AccountManagerComponent implements OnInit {
   public socialUser: SocialUser
   public signedInUser: User
-  public clubName : string;
+  public clubName: string;
 
   constructor(private spinner: NgxSpinnerService, private authService: SocialAuthService, private _facebookService: FacebookService,
     private _profileService: UsersService,
     private _authService: MainAuthService) { }
-  
+
   ngOnInit() {
     this.clubName = localStorage.getItem('club');
     this.showSpinner();
     this.getSignedInUser();
-
   }
 
   getSignedInUser() {
@@ -41,28 +40,48 @@ export class AccountManagerComponent implements OnInit {
   }
 
   async signInWithFB() {
+    debugger;
     const fbLoginOptions = {
       scope: 'pages_messaging,pages_messaging_subscriptions,email,pages_show_list,instagram_basic,instagram_content_publish,pages_read_engagement,publish_to_groups'
     };
     await this.authService.signIn(FacebookLoginProvider.PROVIDER_ID, fbLoginOptions).then((socialUser) => {
       this.socialUser = socialUser;
-      this.getLongLivedFBUserToken(this.socialUser.authToken).subscribe(data=>{
-        this.signedInUser.FBUserAuthToken = data.access_token;
-        this.signedInUser.FBuserID = this.socialUser.id
-        this.updateSignedInUser(this.signedInUser)
+      this.signedInUser[0].FBuserID = this.socialUser.id
+      this.getLongLivedFBUserToken(this.socialUser.authToken).subscribe(data => {
+        console.log(data , 'long access token')
+        this.signedInUser[0].FBUserAuthToken = data.access_token;
+        this.getFacebookPages(this.socialUser.id , data.access_token).subscribe(data=>{
+          console.log(data);
+          data.data.forEach(item => {
+            let obj = {
+              pageAccessToken : item.access_token,
+              pageID : item.id,
+              pageName : item.name
+            }
+            this.signedInUser[0].FBPages.push(obj);
+          });
+          this.updateSignedInUser(this.signedInUser[0])
+        })
       })
     }).catch(err => console.log(err));
   }
 
-  getLongLivedFBUserToken(userToken) : Observable<any> {
+  getLongLivedFBUserToken(userToken): Observable<any> {
     return this._facebookService.getLongLivedFBAccessToken(userToken);
   }
 
-  updateSignedInUser(user) : void {
+  getFacebookPages(id, userToken) {
+    return this._facebookService.getFacebookPages(id, userToken)
+  }
+
+  updateSignedInUser(user): void {
     this._profileService.updateUser(user).subscribe(updatedUser => {
-      console.log(updatedUser)
+      console.log(updatedUser , 'updated user')
     }, error => {
       console.log(error)
     })
   }
+
+
+
 }

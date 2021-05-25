@@ -12,8 +12,12 @@ export class FacebookService {
 
   constructor(private http: HttpClient, private _errorHandlerService: ErrorhandlerService) { }
 
-  getFacebookPageAccessToken(userID, userAuthToken) : Observable<any> {
-    return this.http.get(`${environment.base_url}${userID}/accounts?access_token=${userAuthToken}`).pipe(catchError(this._errorHandlerService.handleErrors))
+  getFacebookPages(userID, userAuthToken) : Observable<any> {
+    // return this.http.get(`${environment.base_url}${userID}/accounts?access_token=${userAuthToken}`).pipe(catchError(this._errorHandlerService.handleErrors))
+    return this.http.get(`${environment.base_url}${userID}/accounts?access_token=${userAuthToken}`).pipe(catchError(this._errorHandlerService.handleErrors));
+    
+    // https://graph.facebook.com/{user-id}/accounts
+    //  ?access_token={user-access-token}
   }
 
   addTextPostToFB(FacebookPageID, content, FBpageAccessToken): Observable<any>  {

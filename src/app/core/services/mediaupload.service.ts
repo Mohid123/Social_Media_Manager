@@ -9,7 +9,7 @@ export class MediauploadService {
 
   constructor(private _apiService : ApiService) { }
 
-uploadImage(folderName , fieldName){
+uploadMedia(folderName , fieldName){
   return this._apiService.post(`media-upload/mediaFiles/${folderName}/${fieldName}`)
 }
 

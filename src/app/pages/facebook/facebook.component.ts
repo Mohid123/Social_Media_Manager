@@ -43,6 +43,7 @@ export class FacebookComponent implements OnInit {
   getSignedInUser() {
     this._authService.getSignedInUser().subscribe(user => {
       this.signedInUser = user;
+      console.log(this.signedInUser)
     })
   }
 
@@ -104,7 +105,13 @@ export class FacebookComponent implements OnInit {
       this.toast.error('Please add content to post', 'No Content Added');
       return;
     }
-    console.log('file selected')
+    this.spinner.show();
+    this._facebookService.addTextPostToFB(this.signedInUser[0].FBPages[0].pageID , this.name , this.signedInUser[0].FBPages[0].pageAccessToken).subscribe(data=>{
+      this.toast.success('Post Added Successfully' , 'Post Added');
+      console.log(data)
+    } , (error)=>{
+      console.log(error)
+    })
   }
 }
 
