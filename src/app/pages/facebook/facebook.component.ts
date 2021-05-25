@@ -1,3 +1,4 @@
+import { MediauploadService } from './../../core/services/mediaupload.service';
 import { MainAuthService } from './../../core/services/auth.service';
 import { FacebookService } from './../../core/services/facebook.service';
 import { ToastrService } from 'ngx-toastr';
@@ -14,7 +15,8 @@ export class FacebookComponent implements OnInit {
 
   constructor(private spinner: NgxSpinnerService, private cf: ChangeDetectorRef, private toast: ToastrService,
     private _facebookService: FacebookService,
-    private _authService: MainAuthService) {
+    private _authService: MainAuthService,
+    private _mediaUploadService: MediauploadService) {
   }
 
   public name: string = ""
@@ -43,7 +45,6 @@ export class FacebookComponent implements OnInit {
   getSignedInUser() {
     this._authService.getSignedInUser().subscribe(user => {
       this.signedInUser = user;
-      console.log(this.signedInUser)
     })
   }
 
@@ -67,7 +68,6 @@ export class FacebookComponent implements OnInit {
 
   onSelectFile(event) {
     this.file = event.target.files && event.target.files[0];
-    console.log(this.file)
     if (this.file) {
       var reader = new FileReader();
       reader.readAsDataURL(this.file);
@@ -77,7 +77,6 @@ export class FacebookComponent implements OnInit {
         this.format = 'video';
       }
       reader.onload = (event) => {
-        console.log(event)
         this.url = (<FileReader>event.target).result as string;
         this.cf.detectChanges();
       }
@@ -85,10 +84,16 @@ export class FacebookComponent implements OnInit {
   }
 
   postImageContent() {
+    debugger;
     if (!this.file) {
       this.toast.error('Please select an Image File', 'Empty File');
       return;
     }
+    this._mediaUploadService.uploadMedia('facebook' , '123' , this.file).subscribe(data=>{
+      console.log(data)
+    } , err=>{
+      console.log(err)
+    })
     console.log('file selected')
   }
 
@@ -97,6 +102,7 @@ export class FacebookComponent implements OnInit {
       this.toast.error('Please select a Video File', 'Empty File');
       return;
     }
+   
     console.log('file selected')
   }
 
@@ -106,10 +112,13 @@ export class FacebookComponent implements OnInit {
       return;
     }
     this.spinner.show();
-    this._facebookService.addTextPostToFB(this.signedInUser[0].FBPages[0].pageID , this.name , this.signedInUser[0].FBPages[0].pageAccessToken).subscribe(data=>{
-      this.toast.success('Post Added Successfully' , 'Post Added');
+    this._facebookService.addTextPostToFB(this.signedInUser.FBPages[0].pageID, this.name, this.signedInUser.FBPages[0].pageAccessToken).subscribe(data => {
+      this.spinner.hide();
+      this.toast.success('Post Added Successfully', 'Post Added');
+      this.name = ""
+      this.cf.detectChanges();
       console.log(data)
-    } , (error)=>{
+    }, (error) => {
       console.log(error)
     })
   }

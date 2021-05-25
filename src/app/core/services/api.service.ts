@@ -14,7 +14,7 @@ export class ApiService {
   ) {}
 
   private handleErrors(error: any) {
-    return  throwError(error.error);
+    return  throwError(error);
   }
 
   get(path: string){
@@ -29,7 +29,7 @@ export class ApiService {
     ).pipe(catchError(this.handleErrors));
   }
 
-  post(path: string, payload: Object = {}) {
+  post(path: string, payload) {
     return this.http.post(
       `${environment.api_url}${path}`,  payload
     ).pipe(catchError(this.handleErrors));

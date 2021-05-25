@@ -9,8 +9,9 @@ export class MediauploadService {
 
   constructor(private _apiService : ApiService) { }
 
-uploadMedia(folderName , fieldName){
-  return this._apiService.post(`media-upload/mediaFiles/${folderName}/${fieldName}`)
+uploadMedia(folderName , fieldName , file){
+  const formData: FormData = new FormData();
+  formData.append('file', file, file.name);
+  return this._apiService.post(`/media-upload/mediaFiles/${folderName}/${fieldName}` , formData)
 }
-
 }

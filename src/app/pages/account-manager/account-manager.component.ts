@@ -46,10 +46,10 @@ export class AccountManagerComponent implements OnInit {
     };
     await this.authService.signIn(FacebookLoginProvider.PROVIDER_ID, fbLoginOptions).then((socialUser) => {
       this.socialUser = socialUser;
-      this.signedInUser[0].FBuserID = this.socialUser.id
+      this.signedInUser.FBuserID = this.socialUser.id
       this.getLongLivedFBUserToken(this.socialUser.authToken).subscribe(data => {
         console.log(data , 'long access token')
-        this.signedInUser[0].FBUserAuthToken = data.access_token;
+        this.signedInUser.FBUserAuthToken = data.access_token;
         this.getFacebookPages(this.socialUser.id , data.access_token).subscribe(data=>{
           console.log(data);
           data.data.forEach(item => {
@@ -58,9 +58,9 @@ export class AccountManagerComponent implements OnInit {
               pageID : item.id,
               pageName : item.name
             }
-            this.signedInUser[0].FBPages.push(obj);
+            this.signedInUser.FBPages.push(obj);
           });
-          this.updateSignedInUser(this.signedInUser[0])
+          this.updateSignedInUser(this.signedInUser)
         })
       })
     }).catch(err => console.log(err));
