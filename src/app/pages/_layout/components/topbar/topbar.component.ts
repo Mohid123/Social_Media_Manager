@@ -11,7 +11,7 @@ import KTLayoutQuickPanel from '../../../../../assets/js/layout/extended/quick-p
 import KTLayoutQuickUser from '../../../../../assets/js/layout/extended/quick-user';
 import KTLayoutHeaderTopbar from '../../../../../assets/js/layout/base/header-topbar';
 import { KTUtil } from '../../../../../assets/js/components/util';
-import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
 
 @Component({
@@ -21,7 +21,7 @@ import { Router } from '@angular/router';
 })
 export class TopbarComponent implements OnInit, AfterViewInit {
   closeResult: string;
-
+  userName: string
   user$: Observable<UserModel>;
   // tobbar extras
   extraSearchDisplay: boolean;
@@ -41,26 +41,8 @@ export class TopbarComponent implements OnInit, AfterViewInit {
     this.user$ = this.auth.currentUserSubject.asObservable();
   }
 
- 
-
-  openVerticallyCentered(content) {
-    this.modalService.open(content,{centered: true}).result.then((result) => {
-    this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
-        this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-    });
-}
-private getDismissReason(reason: any): string {
-  if (reason === ModalDismissReasons.ESC) {
-      return 'by pressing ESC';
-  } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-      return 'by clicking on a backdrop';
-  } else {
-      return  `with: ${reason}`;
-  }
-}
   ngOnInit(): void {
-    // topbar extras
+    
     this.extraSearchDisplay = this.layout.getProp('extras.search.display');
     this.extrasSearchLayout = this.layout.getProp('extras.search.layout');
     this.extrasNotificationsDisplay = this.layout.getProp(
@@ -87,25 +69,37 @@ private getDismissReason(reason: any): string {
     );
   }
 
+  openVerticallyCentered(content) {
+    this.modalService.open(content, { centered: true }).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+  }
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return `with: ${reason}`;
+    }
+  }
 
-  logout(){
+  logout() {
     this.router.navigateByUrl('/login');
     localStorage.clear();
   }
 
   ngAfterViewInit(): void {
     KTUtil.ready(() => {
-      // Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
-      // Add 'implements AfterViewInit' to the class.
       if (this.extraSearchDisplay && this.extrasSearchLayout === 'offcanvas') {
         KTLayoutQuickSearch.init('kt_quick_search');
       }
-
       if (
         this.extrasNotificationsDisplay &&
         this.extrasNotificationsLayout === 'offcanvas'
       ) {
-        // Init Quick Notifications Offcanvas Panel
         KTLayoutQuickNotifications.init('kt_quick_notifications');
       }
 
@@ -113,26 +107,20 @@ private getDismissReason(reason: any): string {
         this.extrasQuickActionsDisplay &&
         this.extrasQuickActionsLayout === 'offcanvas'
       ) {
-        // Init Quick Actions Offcanvas Panel
         KTLayoutQuickActions.init('kt_quick_actions');
       }
 
       if (this.extrasCartDisplay && this.extrasCartLayout === 'offcanvas') {
-        // Init Quick Cart Panel
         KTLayoutQuickCartPanel.init('kt_quick_cart');
       }
 
       if (this.extrasQuickPanelDisplay) {
-        // Init Quick Offcanvas Panel
         KTLayoutQuickPanel.init('kt_quick_panel');
       }
 
       if (this.extrasUserDisplay && this.extrasUserLayout === 'offcanvas') {
-        // Init Quick User Panel
         KTLayoutQuickUser.init('kt_quick_user');
       }
-
-      // Init Header Topbar For Mobile Mode
       KTLayoutHeaderTopbar.init('kt_header_mobile_topbar_toggle');
     });
   }

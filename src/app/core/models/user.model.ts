@@ -8,5 +8,4 @@ export class User {
     userID : string // For his club
     FbuserId : string
     FbuserAuthToken : string
-    
 }

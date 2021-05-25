@@ -12,20 +12,20 @@ export class FacebookService {
 
   constructor(private http: HttpClient, private _errorHandlerService: ErrorhandlerService) { }
 
-  getFacebookPageAccessToken(userID, userAuthToken) {
+  getFacebookPageAccessToken(userID, userAuthToken) : Observable<any> {
     return this.http.get(`${environment.base_url}${userID}/accounts?access_token=${userAuthToken}`).pipe(catchError(this._errorHandlerService.handleErrors))
   }
 
-  addTextPostToFB(FacebookPageID, content, FBpageAccessToken) {
+  addTextPostToFB(FacebookPageID, content, FBpageAccessToken): Observable<any>  {
     return this.http.post(`${environment.base_url}${FacebookPageID}/feed?message=${content}&access_token=${FBpageAccessToken}`, '').pipe(catchError(this._errorHandlerService.handleErrors))
   }
 
 
-  addImagePostToFB(FacebookPageID, imageURL, content, FBpageAccessToken) {
+  addImagePostToFB(FacebookPageID, imageURL, content, FBpageAccessToken): Observable<any>  {
     return this.http.post(`${environment.base_url}${FacebookPageID}/photos?url=${imageURL}&message=${content}&access_token=${FBpageAccessToken}`, '').pipe(catchError(this._errorHandlerService.handleErrors))
   }
 
-  getLongLivedFBAccessToken(userToken) {
+  getLongLivedFBAccessToken(userToken): Observable<any>  {
     return this.http.get(`https://graph.facebook.com/oauth/access_token?grant_type=fb_exchange_token&client_id=${environment.app_id}&client_secret=${environment.app_secret}&fb_exchange_token=${userToken}`);
   }
 }

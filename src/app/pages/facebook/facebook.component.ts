@@ -16,6 +16,7 @@ export class FacebookComponent implements OnInit {
   public name: string = ""
   public format: string;
   public url: string = 'https://getstackposts.com/inc/themes/backend/default/assets/img/avatar.jpg';
+  
   public file: File
   showDiv = {
     photo: true,
@@ -54,6 +55,7 @@ export class FacebookComponent implements OnInit {
 
   onSelectFile(event) {
     this.file = event.target.files && event.target.files[0];
+    console.log(this.file)
     if (this.file) {
       var reader = new FileReader();
       reader.readAsDataURL(this.file);
@@ -71,14 +73,28 @@ export class FacebookComponent implements OnInit {
   }
 
   postImageContent() {
-    //  if(this.name == ""){
-    //    this.toast.error('Nothing to Post' , 'Empty Content');
-    //    return;
-    //  }
     if (!this.file) {
       this.toast.error('Please select an Image File', 'Empty File');
       return;
     }
     console.log('file selected')
   }
+
+  postVideoContent(){
+    if (!this.file) {
+      this.toast.error('Please select a Video File', 'Empty File');
+      return;
+    }
+    console.log('file selected')
+  }
+
+  postTextContent(){
+    if (this.name == "") {
+      this.toast.error('Please add content to post', 'No Content Added');
+      return;
+    }
+    console.log('file selected')
+  }
+
 }
+

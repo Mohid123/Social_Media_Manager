@@ -1,3 +1,6 @@
+import { InstagramService } from './../../core/services/instagram.service';
+import { FacebookService } from './../../core/services/facebook.service';
+import { ToastrService } from 'ngx-toastr';
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { NgxSpinnerService } from "ngx-spinner";
 @Component({
@@ -7,14 +10,23 @@ import { NgxSpinnerService } from "ngx-spinner";
 })
 export class PublishComponent implements OnInit {
   public textFirst: string
-
   masterSelected: boolean;
   checklist: any;
   checkedList: any;
   public format;
-  public url = 'https://getstackposts.com/inc/themes/backend/default/assets/img/avatar.jpg';
+  public url: string = 'https://getstackposts.com/inc/themes/backend/default/assets/img/avatar.jpg';
+  public file: File
+  public socialCaption = "";
+  public selectedInstagram: boolean = true
+  public postContent: string
+  public showDiv = {
+    photo: true,
+    video: false,
+    text: false
+  }
 
-  constructor(private spinner: NgxSpinnerService, private cf: ChangeDetectorRef) {
+
+  constructor(private spinner: NgxSpinnerService, private cf: ChangeDetectorRef, private toast: ToastrService , private _facebookService : FacebookService , private _instagramService : InstagramService) {
     this.masterSelected = false;
     this.checklist = [
       { id: 1, value: 'Elenor Anderson', isSelected: false },
@@ -31,6 +43,11 @@ export class PublishComponent implements OnInit {
     ];
     this.getCheckedItemList();
   }
+
+  ngOnInit() {
+    this.showSpinner()
+  }
+
   checkUncheckAll() {
     for (var i = 0; i < this.checklist.length; i++) {
       this.checklist[i].isSelected = this.masterSelected;
@@ -43,7 +60,7 @@ export class PublishComponent implements OnInit {
     })
     this.getCheckedItemList();
   }
-  getCheckedItemList() {
+  getCheckedItemList() : void {
     this.checkedList = [];
     for (var i = 0; i < this.checklist.length; i++) {
       if (this.checklist[i].isSelected)
@@ -51,20 +68,8 @@ export class PublishComponent implements OnInit {
     }
     this.checkedList = JSON.stringify(this.checkedList);
   }
-  public socialCaption = "";
-  public selectedInstagram: boolean = true
 
-  showDiv = {
-    photo: true,
-    video: false,
-    text: false
-  }
-
-  ngOnInit() {
-    this.showSpinner()
-  }
-
-  showSpinner() {
+  showSpinner() : void{
     this.spinner.show();
     setTimeout(() => {
       this.spinner.hide();
@@ -94,22 +99,44 @@ export class PublishComponent implements OnInit {
     }
   }
 
-  onSelectFile(event) {
-    const file = event.target.files && event.target.files[0];
-    if (file) {
+  onSelectFile(event) : void {
+    this.file = event.target.files && event.target.files[0];
+    if (this.file) {
       var reader = new FileReader();
-      reader.readAsDataURL(file);
-      if (file.type.indexOf('image') > -1) {
+      reader.readAsDataURL(this.file);
+      if (this.file.type.indexOf('image') > -1) {
         this.format = 'image';
-      } else if (file.type.indexOf('video') > -1) {
+      } else if (this.file.type.indexOf('video') > -1) {
         this.format = 'video';
       }
       reader.onload = (event) => {
         this.url = (<FileReader>event.target).result as string;
         this.cf.detectChanges();
-
       }
     }
+  }
+
+  postImageContent() {
+    if (!this.file) {
+      this.toast.error('Please select an Image File', 'Empty File');
+      return;
+    } 
+  }
+
+  postVideoContent() {
+    if (!this.file) {
+      this.toast.error('Please select a Video File', 'Empty File');
+      return;
+    }
+    console.log('file selected')
+  }
+
+  postTextContent() {
+    if (this.socialCaption == "") {
+      this.toast.error('Please add content to post', 'No Content Added');
+      return;
+    }
+    console.log('file selected')
   }
 
 }
