@@ -517,16 +517,34 @@
 
                                     <div class="card-body p-0">
 
-
-                                        <div class="preview-facebook preview-facebook-media item-post-type"
-                                            data-type="photo" *ngIf="showDiv.photo">
-                                            <div class="user-info">
-                                                <img class="img-circle"
-                                                    src="https://getstackposts.com/inc/themes/backend/default/assets/img/avatar.jpg">
-                                                <div class="text">
-                                                    <div class="name"> Anonymous</div>
-                                                    <span> Just now . <i class="fa fa-globe"
-                                                            aria-hidden="true"></i></span>
+                                    <div class="preview-facebook preview-facebook-media item-post-type"
+                                        data-type="photo" *ngIf="showDiv.photo">
+                                        <div class="user-info">
+                                            <img class="img-circle"
+                                                src="https://getstackposts.com/inc/themes/backend/default/assets/img/avatar.jpg">
+                                            <div class="text">
+                                                <div class="name"> Anonymous</div>
+                                                <span> Just now . <i class="fa fa-globe"
+                                                        aria-hidden="true"></i></span>
+                                            </div>
+                                        </div>
+                                        <div class="caption">
+                                            <div class="line-no-text">{{socialCaption}}</div>
+                                            
+                                        </div>
+                                        <div class="preview-media" data-max-image="5" >
+                                            <img style="height: 100%; width: 100%;" class="img-circle" [src]="url" *ngIf="format==='image' && url">
+                                        </div>
+                                        <div class="preview-comment">
+                                            <div class="row">
+                                                <div class="col item">
+                                                  <i class="fas fa-thumbs-up"></i> &nbsp;Like
+                                                </div>
+                                                <div class="col item">
+                                                    <i class="fas fa-comments"></i> &nbsp;Comment
+                                                </div>
+                                                <div class="col item">
+                                                    <i class="fas fa-share" aria-hidden="true"></i> &nbsp;Share
                                                 </div>
                                             </div>
                                             <div class="caption">
@@ -643,9 +661,7 @@
                                                         src="https://getstackposts.com/modules/inc/themes/backend/default/assets/img/avatar.jpg">
                                                     <span>Anonymous</span>
                                                 </div>
-                                                <div class="preview-media" data-max-image="1"><img
-                                                        style="height: 100%; width: 100%;" class="img-circle"
-                                                        [src]="url"></div>
+                                                <div class="preview-media" data-max-image="1"><img style="height: 100%; width: 100%;" class="img-circle" [src]="url" *ngIf="format==='image' && url"></div>
                                                 <div class="post-info">
                                                     <div class="info-active pull-left"> Be the first to Like this</div>
                                                     <!-- <div class="pull-right">1s</div> -->
@@ -732,12 +748,10 @@
                                             </div>
                                             <div class="caption">
                                                 <div class="line-no-text">{{socialCaption}}</div>
-                                                <div class="line-no-text"></div>
-                                                <div class="line-no-text w50"></div>
+                                                <!-- <div class="line-no-text"></div>
+                                                <div class="line-no-text w50"></div> -->
                                             </div>
-                                            <div class="preview-media" data-max-image="5"><img
-                                                    style="height: 100%; width: 100%;" class="img-circle" [src]="url">
-                                            </div>
+                                            <div class="preview-media" data-max-image="5"><img style="height: 100%; width: 100%;" class="img-circle" [src]="url" *ngIf="format==='image' && url"></div>
                                             <div class="preview-comment">
                                                 <div class="row">
                                                     <div class="col item">

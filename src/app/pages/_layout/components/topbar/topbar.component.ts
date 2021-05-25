@@ -36,13 +36,15 @@ export class TopbarComponent implements OnInit, AfterViewInit {
   extrasLanguagesDisplay: boolean;
   extrasUserDisplay: boolean = true;
   extrasUserLayout: 'offcanvas' | 'dropdown';
+  clubName : string
 
   constructor(private layout: LayoutService, private auth: AuthService, private modalService: NgbModal, private router: Router) {
     this.user$ = this.auth.currentUserSubject.asObservable();
   }
 
   ngOnInit(): void {
-    
+    // topbar extras
+    this.clubName = localStorage.getItem('club');
     this.extraSearchDisplay = this.layout.getProp('extras.search.display');
     this.extrasSearchLayout = this.layout.getProp('extras.search.layout');
     this.extrasNotificationsDisplay = this.layout.getProp(
