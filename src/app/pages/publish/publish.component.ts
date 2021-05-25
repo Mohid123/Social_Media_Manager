@@ -12,7 +12,7 @@ export class PublishComponent implements OnInit {
   checklist: any;
   checkedList: any;
   public format;
-  public url = 'https://getstackposts.com/inc/themes/backend/default/assets/img/avatar.jpg';
+  public url = '';
 
   constructor(private spinner: NgxSpinnerService, private cf: ChangeDetectorRef) {
     this.masterSelected = false;

@@ -551,7 +551,7 @@
                                                 
                                             </div>
                                             <div class="preview-media" data-max-image="5" >
-                                                <img style="width: 100%; height: 100%;" class="img-circle" [src]= url>
+                                                <img style="width: 100%; height: 100%;" class="img-circle" [src]= "url" *ngIf="format==='image' && url">
                                             </div>
                                             <div class="preview-comment">
                                                 <div class="row">
@@ -581,8 +581,7 @@
                                             </div>
                                             <div class="caption">
                                                 <div class="line-no-text">{{name}}</div>
-                                                <div class="line-no-text"></div>
-                                                <div class="line-no-text w50"></div>
+                                              
                                             </div>
                                             <div class="preview-media" data-max-image="5" ><video [src]="url" *ngIf="format==='video' && url" style="width:100%; height: 100%" controls></video></div>
                                             <div class="preview-comment">
@@ -653,30 +652,7 @@
         <!--end::Card-->
     </div>
 </div>
-<!-- <div class="container">
-	<div class="row">
-		<div class="col-md-4">
-			<div class="btn-group">
-				<div class="btn btn-dark"
-					(click)="showDiv.previous = !showDiv.previous;showDiv.current = false;showDiv.next = false">
-					Previous
-				</div>
-				<div class="btn btn-outline-secondary"
-					(click)="showDiv.current = !showDiv.current;showDiv.previous = false;showDiv.next = false">
-					Today
-				</div>
-				<div class="btn btn-dark" (click)="showDiv.next = !showDiv.next;showDiv.previous = false;showDiv.current = false">
-					Next
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="row">
-		<div *ngIf="showDiv.previous">Previous week datay.</div>
-		<div *ngIf="showDiv.next">Next week data.</div>
-		<div *ngIf="showDiv.current">Current week data</div>
-	</div>
-</div> -->
+
 
 
 
