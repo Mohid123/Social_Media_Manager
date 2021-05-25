@@ -1,8 +1,10 @@
+import { MainAuthService } from './../../core/services/auth.service';
 import { FacebookService } from './../../core/services/facebook.service';
 import { ToastrService } from 'ngx-toastr';
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { NgxSpinnerService } from "ngx-spinner";
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { User } from 'src/app/core/models/user.model';
 @Component({
   selector: 'app-facebook',
   templateUrl: './facebook.component.html',
@@ -10,13 +12,15 @@ import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 })
 export class FacebookComponent implements OnInit {
 
-  constructor(private spinner: NgxSpinnerService, private cf: ChangeDetectorRef, private toast: ToastrService, private _facebookService: FacebookService) {
+  constructor(private spinner: NgxSpinnerService, private cf: ChangeDetectorRef, private toast: ToastrService,
+    private _facebookService: FacebookService,
+    private _authService: MainAuthService) {
   }
 
   public name: string = ""
   public format: string;
   public url: string = 'https://getstackposts.com/inc/themes/backend/default/assets/img/avatar.jpg';
-  
+  public signedInUser: User
   public file: File
   showDiv = {
     photo: true,
@@ -26,6 +30,7 @@ export class FacebookComponent implements OnInit {
 
   ngOnInit() {
     this.showSpinner();
+    this.getSignedInUser();
   }
 
   showSpinner() {
@@ -33,6 +38,12 @@ export class FacebookComponent implements OnInit {
     setTimeout(() => {
       this.spinner.hide();
     }, 1000);
+  }
+
+  getSignedInUser() {
+    this._authService.getSignedInUser().subscribe(user => {
+      this.signedInUser = user;
+    })
   }
 
   switchTabs(event) {
@@ -80,7 +91,7 @@ export class FacebookComponent implements OnInit {
     console.log('file selected')
   }
 
-  postVideoContent(){
+  postVideoContent() {
     if (!this.file) {
       this.toast.error('Please select a Video File', 'Empty File');
       return;
@@ -88,13 +99,12 @@ export class FacebookComponent implements OnInit {
     console.log('file selected')
   }
 
-  postTextContent(){
+  postTextContent() {
     if (this.name == "") {
       this.toast.error('Please add content to post', 'No Content Added');
       return;
     }
     console.log('file selected')
   }
-
 }
 

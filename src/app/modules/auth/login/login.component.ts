@@ -111,8 +111,8 @@ export class LoginComponent implements OnInit {
   }
 
   loginFormsubmit() {
-    // this.loginByEmail()
-    this.router.navigateByUrl('/pages/dashboard');
+    this.loginByEmail()
+    // this.router.navigateByUrl('/pages/dashboard');
   }
 
   openVerticallyCentered(content) {

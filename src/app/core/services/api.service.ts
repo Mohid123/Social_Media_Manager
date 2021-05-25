@@ -31,7 +31,7 @@ export class ApiService {
 
   post(path: string, payload: Object = {}) {
     return this.http.post(
-      `${environment.api_url}${path}`, payload
+      `${environment.api_url}${path}`,  payload
     ).pipe(catchError(this.handleErrors));
   }
 
