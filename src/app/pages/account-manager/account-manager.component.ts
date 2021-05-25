@@ -12,10 +12,11 @@ import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 })
 export class AccountManagerComponent implements OnInit {
   public socialUser: SocialUser
-  public 
+  clubName : string;
   constructor(private spinner: NgxSpinnerService, private authService: SocialAuthService, private _facebookService: FacebookService, private _profileService: UsersService) { }
 
   ngOnInit() {
+    this.clubName = localStorage.getItem('club');
     this.showSpinner();
   }
 
