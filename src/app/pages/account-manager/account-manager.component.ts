@@ -14,11 +14,14 @@ import { User } from 'src/app/core/models/user.model';
 export class AccountManagerComponent implements OnInit {
   public socialUser: SocialUser
   public signedInUser: User
+  public clubName : string;
+
   constructor(private spinner: NgxSpinnerService, private authService: SocialAuthService, private _facebookService: FacebookService,
     private _profileService: UsersService,
     private _authService: MainAuthService) { }
-
+  
   ngOnInit() {
+    this.clubName = localStorage.getItem('club');
     this.showSpinner();
     this.getSignedInUser();
 
