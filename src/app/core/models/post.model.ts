@@ -1,5 +1,8 @@
+import { Poll } from './poll.model';
+
+
 export class Post {
-    _id:string;
+    id:string;
     userID: string;
     eventID: string;
     byUser: string;
@@ -26,7 +29,38 @@ export class Post {
     approveForClub: boolean;
     postedTo: string;
     deletedCheck: boolean;
-    poll: string;
+    poll: Poll;
     pinPost: boolean;
     backgroundColorHex: any;
+
+constructor(){
+    this.id = "",
+    this.userID =  "",
+    this.eventID = "";
+    this.byUser = "";
+    this.type = "";
+    this.textFirst = "";
+    this.textSecond ="";
+    this.text ="";
+    this.captureFileURL="";
+    this.hyperLink="";
+    this.hyperlinkTextFirst="";
+    this.hyperlinkTextSecond="";
+    this.hyperlinkCaptureFileURL="";
+    this.path="";
+    this.viewsCount = 0
+    this.commentsCount = 0
+    this.reactionCount = 0
+    this.repostCount = 0
+    this.thumbnail="";
+    this.thumbnailPath="";
+    this.thumbnailURL="";
+    this.repostCheck = false
+    this.reportStatus = false
+    this.approveForClub = false
+    this.postedTo = ""
+    this.deletedCheck = false
+    this.pinPost = false
+    this.backgroundColorHex = ""
 }
+}   

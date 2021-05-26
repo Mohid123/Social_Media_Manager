@@ -1,3 +1,6 @@
+import { ErrorhandlerService } from './errorhandler.service';
+import { catchError } from 'rxjs/operators';
+import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { ApiService } from './api.service';
 import { Injectable } from '@angular/core';
@@ -7,11 +10,12 @@ import { Injectable } from '@angular/core';
 })
 export class MediauploadService {
 
-  constructor(private _apiService : ApiService) { }
+  constructor(private _apiService: ApiService, private http: HttpClient, private _errorHandlerService: ErrorhandlerService) { }
 
-uploadMedia(folderName , fieldName , file){
-  const formData: FormData = new FormData();
-  formData.append('file', file, file.name);
-  return this._apiService.post(`/media-upload/mediaFiles/${folderName}/${fieldName}` , formData)
-}
+
+  uploadMedia(folderName, fieldName, file) {
+    const formData: FormData = new FormData();
+    formData.append('file', file, file.name);
+    return this.http.post(`${environment.club_api_url}/media-upload/mediaFiles/${folderName}/${fieldName}`, formData).pipe(catchError(this._errorHandlerService.handleErrors))
+  }
 }

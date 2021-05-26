@@ -92,6 +92,8 @@ export class LoginComponent implements OnInit {
       localStorage.setItem('id' , user.loggedInUser.id)
       localStorage.setItem('userToken', user.token)
       localStorage.setItem('club', this.selectedClub.clubName)
+      localStorage.setItem('Admin' , user.user.admin )
+      localStorage.setItem('baseUrl' , this.selectedClub.baseURL) 
       this.toastr.success('Login Success', 'Logged In Successfully');
       this.router.navigateByUrl('/pages/dashboard');
       this.spinner.hide();
