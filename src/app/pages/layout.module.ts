@@ -1,3 +1,4 @@
+import { VideoProcessingService } from './../core/services/video-service/video-processing.service';
 import {  CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -81,7 +82,7 @@ import {
     NgxSpinnerModule,
     FormsModule
   ],
-  // providers: [],
+  providers: [VideoProcessingService],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class LayoutModule { }

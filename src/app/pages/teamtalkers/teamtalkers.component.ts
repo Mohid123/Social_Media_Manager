@@ -1,3 +1,4 @@
+import { VideoProcessingService } from './../../core/services/video-service/video-processing.service';
 import { MediauploadService } from './../../core/services/mediaupload.service';
 import { PostService } from './../../core/services/post.service';
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
@@ -34,6 +35,7 @@ export class TeamtalkersComponent implements OnInit {
      private _postService: PostService,
      private _mediaUploadService : MediauploadService,
      private _authService: MainAuthService,
+     private _videoService : VideoProcessingService
      ) {
     this.post = new Post()
   }
@@ -108,11 +110,17 @@ export class TeamtalkersComponent implements OnInit {
     })
   }
   
-  postVideoContent() {
+  addVideoPost() {
+    debugger;
     if (!this.file) {
       this.toast.error('Please select a Video File', 'Empty File');
       return;
     }
+    this._videoService.generateThumbnail(this.file).then(data=>{
+      console.log(data , 'chaska')
+    }).catch(err=>{
+      console.log(err)
+    })
 
     
   }
@@ -154,7 +162,6 @@ export class TeamtalkersComponent implements OnInit {
       }
       reader.onload = (event) => {
         this.url = (<FileReader>event.target).result as string;
-        console.log(this.url)
         this.cf.detectChanges();
       }
     }

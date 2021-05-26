@@ -24,6 +24,7 @@ import {
   GoogleLoginProvider,
   FacebookLoginProvider
 } from 'angularx-social-login';
+import { VideoProcessingService } from './core/services/video-service/video-processing.service';
 function appInitializer(authService: AuthService) {
   return () => {
     return new Promise((resolve) => {
