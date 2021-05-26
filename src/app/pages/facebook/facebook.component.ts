@@ -19,9 +19,9 @@ export class FacebookComponent implements OnInit {
     private _mediaUploadService: MediauploadService) {
   }
 
-  public name: string = ""
+  public name: string = "";
   public format: string;
-  public url: string = 'https://getstackposts.com/inc/themes/backend/default/assets/img/avatar.jpg';
+  public url: string;
   public signedInUser: User
   public file: File
   showDiv = {
@@ -45,6 +45,7 @@ export class FacebookComponent implements OnInit {
   getSignedInUser() {
     this._authService.getSignedInUser().subscribe(user => {
       this.signedInUser = user;
+      console.log(user)
     })
   }
 
@@ -89,12 +90,20 @@ export class FacebookComponent implements OnInit {
       this.toast.error('Please select an Image File', 'Empty File');
       return;
     }
-    this._mediaUploadService.uploadMedia('facebook' , '123' , this.file).subscribe(data=>{
-      console.log(data)
-    } , err=>{
-      console.log(err)
+    this.spinner.show()
+    this._mediaUploadService.uploadMedia('Facebook' , this.signedInUser.id, this.file).subscribe((media : any) =>{
+      this._facebookService.addImagePostToFB(this.signedInUser.FBPages[0].pageID , media.url , this.name , this.signedInUser.FBPages[0].pageAccessToken).subscribe(uploaded=>{
+        this.spinner.hide();
+        this.toast.success('Image Post Added Successfully', 'Post Added');
+        this.url = ""
+        this.name = ""
+        this.cf.detectChanges();
+        console.log(uploaded)
+      })
+    } , (err)=>{
+      this.spinner.hide();
+      this.toast.error(err.message)
     })
-    console.log('file selected')
   }
 
   postVideoContent() {
@@ -102,8 +111,26 @@ export class FacebookComponent implements OnInit {
       this.toast.error('Please select a Video File', 'Empty File');
       return;
     }
-   
-    console.log('file selected')
+    this.spinner.show()
+    this._mediaUploadService.uploadMedia('Facebook' , this.signedInUser.id, this.file).subscribe((media : any) =>{
+      console.log(media);
+      this._facebookService.addImagePostToFB(this.signedInUser.FBPages[0].pageID , media.url , this.name , this.signedInUser.FBPages[0].pageAccessToken).subscribe(uploaded=>{
+        this.spinner.hide();
+        this.toast.success('Image Post Added Successfully', 'Post Added');
+        this.url = ""
+        this.name = ""
+        this.cf.detectChanges();
+        console.log(uploaded)
+      } , (err)=>{
+        this.toast.error(err.message);
+        this.spinner.hide()
+        console.log(err);
+      } )
+    } , (err)=>{
+      this.spinner.hide();
+      console.log(err)
+      this.toast.error(err.message)
+    }) 
   }
 
   postTextContent() {
@@ -119,7 +146,8 @@ export class FacebookComponent implements OnInit {
       this.cf.detectChanges();
       console.log(data)
     }, (error) => {
-      console.log(error)
+      this.spinner.hide();
+      this.toast.error(error.message)
     })
   }
 }

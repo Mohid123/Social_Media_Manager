@@ -1,8 +1,11 @@
+import { MainAuthService } from './../../core/services/auth.service';
+import { MediauploadService } from './../../core/services/mediaupload.service';
 import { InstagramService } from './../../core/services/instagram.service';
 import { FacebookService } from './../../core/services/facebook.service';
 import { ToastrService } from 'ngx-toastr';
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { NgxSpinnerService } from "ngx-spinner";
+import { User } from 'src/app/core/models/user.model';
 @Component({
   selector: 'app-publish',
   templateUrl: './publish.component.html',
@@ -10,15 +13,17 @@ import { NgxSpinnerService } from "ngx-spinner";
 })
 export class PublishComponent implements OnInit {
   public textFirst: string
+  public signedInUser: User
   masterSelected: boolean;
   checklist: any;
   checkedList: any;
-  public format;
+  public format: string;
   public url: string = 'https://getstackposts.com/inc/themes/backend/default/assets/img/avatar.jpg';
   public file: File
-  public socialCaption = "";
+  public socialCaption: string = "";
   public selectedInstagram: boolean = true
   public postContent: string
+  public IGaccount: any
   public showDiv = {
     photo: true,
     video: false,
@@ -26,7 +31,12 @@ export class PublishComponent implements OnInit {
   }
 
 
-  constructor(private spinner: NgxSpinnerService, private cf: ChangeDetectorRef, private toast: ToastrService , private _facebookService : FacebookService , private _instagramService : InstagramService) {
+  constructor(private spinner: NgxSpinnerService, private cf: ChangeDetectorRef,
+    private toast: ToastrService, private _facebookService: FacebookService,
+    private _instagramService: InstagramService,
+    private _mediaUploadService: MediauploadService,
+    private _authService: MainAuthService
+  ) {
     this.masterSelected = false;
     this.checklist = [
       { id: 1, value: 'Elenor Anderson', isSelected: false },
@@ -46,7 +56,24 @@ export class PublishComponent implements OnInit {
 
   ngOnInit() {
     this.showSpinner()
+    this.getSignedInUser();
   }
+
+  getSignedInUser() {
+    this._authService.getSignedInUser().subscribe(user => {
+      this.signedInUser = user;
+      console.log(this.signedInUser)
+      this.getIGAccountDetails(user.FBPages[0].pageID, user.FBPages[0].pageAccessToken).subscribe(data => {
+        this.IGaccount = data
+      })
+    })
+  }
+
+  getIGAccountDetails(FbPageID, FbPageAccessToken) {
+    return this._instagramService.getInstagramAccountID(FbPageID, FbPageAccessToken)
+  }
+
+
 
   checkUncheckAll() {
     for (var i = 0; i < this.checklist.length; i++) {
@@ -60,7 +87,7 @@ export class PublishComponent implements OnInit {
     })
     this.getCheckedItemList();
   }
-  getCheckedItemList() : void {
+  getCheckedItemList(): void {
     this.checkedList = [];
     for (var i = 0; i < this.checklist.length; i++) {
       if (this.checklist[i].isSelected)
@@ -69,7 +96,7 @@ export class PublishComponent implements OnInit {
     this.checkedList = JSON.stringify(this.checkedList);
   }
 
-  showSpinner() : void{
+  showSpinner(): void {
     this.spinner.show();
     setTimeout(() => {
       this.spinner.hide();
@@ -99,7 +126,7 @@ export class PublishComponent implements OnInit {
     }
   }
 
-  onSelectFile(event) : void {
+  onSelectFile(event): void {
     this.file = event.target.files && event.target.files[0];
     if (this.file) {
       var reader = new FileReader();
@@ -120,7 +147,33 @@ export class PublishComponent implements OnInit {
     if (!this.file) {
       this.toast.error('Please select an Image File', 'Empty File');
       return;
-    } 
+    }
+    this.spinner.show()
+    this._mediaUploadService.uploadMedia('Facebook', this.signedInUser.id, this.file).subscribe((media: any) => {
+      this._facebookService.addImagePostToFB(this.signedInUser.FBPages[0].pageID, media.url, this.socialCaption, this.signedInUser.FBPages[0].pageAccessToken).subscribe(uploaded => {
+        this._instagramService.createIGMediaContainer(this.IGaccount.instagram_business_account.id, this.socialCaption, this.signedInUser.FBPages[0].pageAccessToken, media.url).subscribe((container: any) => {
+          this._instagramService.publishContent(this.IGaccount.instagram_business_account.id, container.id, this.signedInUser.FBPages[0].pageAccessToken).subscribe(data => {
+            console.log(uploaded , 'FBuploaded')
+            console.log(data, 'IG uploaded')
+            this.socialCaption = ""
+            this.url = ""
+            this.cf.detectChanges();
+            this.spinner.hide()
+            this.toast.success('Post Added Successfully on Facebook and Instagram', 'Post Added');
+          }, (error) => {
+            this.spinner.hide()
+            this.toast.error(error)
+          })
+        }, (error) => {
+          this.spinner.hide()
+          this.toast.error(error)
+        })
+      })
+    }, (err) => {
+      this.spinner.hide();
+      this.toast.error(err.message)
+    })
+
   }
 
   postVideoContent() {
@@ -140,3 +193,22 @@ export class PublishComponent implements OnInit {
   }
 
 }
+
+
+
+      //   this._instagramService.createIGMediaContainer(this.IGaccount.instagram_business_account.id , this.socialCaption , this.signedInUser.FBPages[0].pageAccessToken , media.url ).subscribe((container:any)=>{
+      //     this._instagramService.publishContent(this.IGaccount.instagram_business_account.id , container.id , this.signedInUser.FBPages[0].pageAccessToken).subscribe(data=>{
+      //       console.log(uploaded , 'facebook' , data , 'IG')
+      //       this.socialCaption = ""
+      //       this.url =""
+      //       this.cf.detectChanges();
+      //       this.spinner.hide()
+      //       this.toast.success('Image Post Added Successfully', 'Post Added');
+      //     } , error=>{
+      //       this.spinner.hide()
+      //       this.toast.error(error)
+      //     })
+      //   } , error =>{
+      //     this.spinner.hide()
+      //     this.toast.error(error)
+      //   })

@@ -4,7 +4,6 @@ export class Post {
     eventID: string;
     byUser: string;
     type: string;
-    mediaName: string;
     textFirst: string;
     textSecond: string;
     text: string;
