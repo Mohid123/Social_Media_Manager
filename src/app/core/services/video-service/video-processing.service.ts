@@ -13,8 +13,8 @@ export class VideoProcessingService {
     const canvas: HTMLCanvasElement = this.document.createElement('canvas');
     const context: CanvasRenderingContext2D = canvas.getContext('2d');
     return new Promise<string>((resolve, reject) => {
-      canvas.addEventListener('error',  reject);
-      video.addEventListener('error',  reject);
+      canvas.addEventListener('error', reject);
+      video.addEventListener('error', reject);
       video.addEventListener('canplay', event => {
         canvas.width = video.videoWidth;
         canvas.height = video.videoHeight;
@@ -30,4 +30,20 @@ export class VideoProcessingService {
     });
   }
 
+  dataURLtoFile(dataurl, filename) {
+    return new Promise((resolve, reject) => {
+
+      var arr = dataurl.split(','),
+        mime = arr[0].match(/:(.*?);/)[1],
+        bstr = atob(arr[1]),
+        n = bstr.length,
+        u8arr = new Uint8Array(n);
+
+      while (n--) {
+        u8arr[n] = bstr.charCodeAt(n);
+      }
+
+      resolve(new File([u8arr], filename, { type: 'image/jpeg' }));
+    })
+  }
 }

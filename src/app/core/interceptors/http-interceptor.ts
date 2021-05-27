@@ -11,7 +11,8 @@ export class Interceptor implements HttpInterceptor {
       customReq = request.clone()
     }
     // server.teamtalkers.com
-    else if(request.url.includes('192.168.1.105')){
+    //192.168.1.105
+    else if(request.url.includes('server.teamtalkers.com')){
       customReq = request.clone({
         headers: request.headers.set('Authorization', localStorage.getItem('userToken'))
       });
@@ -19,6 +20,7 @@ export class Interceptor implements HttpInterceptor {
     else {
       customReq = request.clone()
     }
+    console.log(customReq);
     return next.handle(customReq).pipe(catchError(err => {
       return throwError(err)
     }));

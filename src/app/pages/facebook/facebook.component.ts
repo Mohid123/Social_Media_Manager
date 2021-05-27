@@ -92,13 +92,14 @@ export class FacebookComponent implements OnInit {
     }
     this.spinner.show()
     this._mediaUploadService.uploadMedia('Facebook' , this.signedInUser.id, this.file).subscribe((media : any) =>{
-      this._facebookService.addImagePostToFB(this.signedInUser.FBPages[0].pageID , media.url , this.name , this.signedInUser.FBPages[0].pageAccessToken).subscribe(uploaded=>{
+      console.log(media)
+      this._facebookService.addImagePostToFB(this.signedInUser.FBPages[0].pageID , media.url , this.name , this.signedInUser.FBPages[0].pageAccessToken).subscribe(post=>{
         this.spinner.hide();
         this.toast.success('Image Post Added Successfully', 'Post Added');
         this.url = ""
         this.name = ""
         this.cf.detectChanges();
-        console.log(uploaded)
+        console.log(post)
       })
     } , (err)=>{
       this.spinner.hide();

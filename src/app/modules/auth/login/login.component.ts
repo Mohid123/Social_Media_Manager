@@ -76,6 +76,7 @@ export class LoginComponent implements OnInit {
   }
 
   loginByEmail() {
+    debugger
     this.spinner.show();
     if (!this.selectedClub) {
       this.spinner.hide()
@@ -130,6 +131,7 @@ export class LoginComponent implements OnInit {
 
   onClubSelected(club) {
     this.selectedClub = club
+    console.log(club)
   }
 
 }
