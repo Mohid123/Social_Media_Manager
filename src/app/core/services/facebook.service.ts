@@ -20,13 +20,13 @@ export class FacebookService {
     //  ?access_token={user-access-token}
   }
 
-  addTextPostToFB(FacebookPageID, content, FBpageAccessToken): Observable<any>  {
-    return this.http.post(`${environment.base_url}${FacebookPageID}/feed?message=${content}&access_token=${FBpageAccessToken}`, '').pipe(catchError(this._errorHandlerService.handleErrors))
+  addTextPostToFB(facebookPageId, content, fbpageAccessToken): Observable<any>  {
+    return this.http.post(`${environment.base_url}${facebookPageId}/feed?message=${content}&access_token=${fbpageAccessToken}`, '').pipe(catchError(this._errorHandlerService.handleErrors))
   }
 
 
-  addImagePostToFB(FacebookPageID, imageURL, content, FBpageAccessToken): Observable<any>  {
-    return this.http.post(`${environment.base_url}${FacebookPageID}/photos?url=${imageURL}&message=${content}&access_token=${FBpageAccessToken}`, '').pipe(catchError(this._errorHandlerService.handleErrors))
+  addImagePostToFB(facebookPageId, imageURL, content, fbpageAccessToken): Observable<any>  {
+    return this.http.post(`${environment.base_url}${facebookPageId}/photos?url=${imageURL}&message=${content}&access_token=${fbpageAccessToken}`, '').pipe(catchError(this._errorHandlerService.handleErrors))
   }
 
   
@@ -34,4 +34,11 @@ export class FacebookService {
   getLongLivedFBAccessToken(userToken): Observable<any>  {
     return this.http.get(`https://graph.facebook.com/oauth/access_token?grant_type=fb_exchange_token&client_id=${environment.app_id}&client_secret=${environment.app_secret}&fb_exchange_token=${userToken}`);
   }
+
+  uploadVideosToFB(facebookPageId , fbPageAccessToken , fileUrl , videoDescription){
+    return this.http.post(`${environment.base_url}${facebookPageId}/videos?access_token=${fbPageAccessToken}&file_url=${fileUrl}&description=${videoDescription}` , '');
+  }
+
+
+
 }

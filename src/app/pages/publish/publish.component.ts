@@ -1,3 +1,4 @@
+import { PostService } from './../../core/services/post.service';
 import { MainAuthService } from './../../core/services/auth.service';
 import { MediauploadService } from './../../core/services/mediaupload.service';
 import { InstagramService } from './../../core/services/instagram.service';
@@ -6,6 +7,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { NgxSpinnerService } from "ngx-spinner";
 import { User } from 'src/app/core/models/user.model';
+import { Post } from 'src/app/core/models/post.model';
 @Component({
   selector: 'app-publish',
   templateUrl: './publish.component.html',
@@ -24,6 +26,8 @@ export class PublishComponent implements OnInit {
   public selectedInstagram: boolean = true
   public postContent: string
   public IGaccount: any
+  public posted: string;
+  public post: Post
   public showDiv = {
     photo: true,
     video: false,
@@ -35,8 +39,10 @@ export class PublishComponent implements OnInit {
     private toast: ToastrService, private _facebookService: FacebookService,
     private _instagramService: InstagramService,
     private _mediaUploadService: MediauploadService,
-    private _authService: MainAuthService
+    private _authService: MainAuthService,
+    private _postService : PostService
   ) {
+    this.post = new Post()
     this.masterSelected = false;
     this.checklist = [
       { id: 1, value: 'Elenor Anderson', isSelected: false },
@@ -57,7 +63,20 @@ export class PublishComponent implements OnInit {
   ngOnInit() {
     this.showSpinner()
     this.getSignedInUser();
+    this.checkUserStatus();
   }
+
+  checkUserStatus() {
+    let status = localStorage.getItem('admin');
+    if (status == 'true') {
+      this.posted = 'Club'
+    }
+    else {
+      this.posted = 'Public'
+    }
+  }
+
+
 
   getSignedInUser() {
     this._authService.getSignedInUser().subscribe(user => {
@@ -150,10 +169,15 @@ export class PublishComponent implements OnInit {
     }
     this.spinner.show()
     this._mediaUploadService.uploadMedia('Facebook', this.signedInUser.id, this.file).subscribe((media: any) => {
+      this.post.text = this.socialCaption;
+      this.post.captureFileURL = media.url;
+      this.post.path = media.path
+      this.post.postedTo = this.posted
+      this._postService.addPost(this.post).subscribe(data => {
       this._facebookService.addImagePostToFB(this.signedInUser.FBPages[0].pageID, media.url, this.socialCaption, this.signedInUser.FBPages[0].pageAccessToken).subscribe(uploaded => {
         this._instagramService.createIGMediaContainer(this.IGaccount.instagram_business_account.id, this.socialCaption, this.signedInUser.FBPages[0].pageAccessToken, media.url).subscribe((container: any) => {
           this._instagramService.publishContent(this.IGaccount.instagram_business_account.id, container.id, this.signedInUser.FBPages[0].pageAccessToken).subscribe(data => {
-            console.log(uploaded , 'FBuploaded')
+            console.log(uploaded, 'FBuploaded')
             console.log(data, 'IG uploaded')
             this.socialCaption = ""
             this.url = ""
@@ -169,6 +193,7 @@ export class PublishComponent implements OnInit {
           this.toast.error(error)
         })
       })
+    })
     }, (err) => {
       this.spinner.hide();
       this.toast.error(err.message)
@@ -189,9 +214,14 @@ export class PublishComponent implements OnInit {
       this.toast.error('Please add content to post', 'No Content Added');
       return;
     }
-    console.log('file selected')
+    this.post.text = this.socialCaption;
+    this.post.postedTo = this.posted
+    this._postService.addPost(this.post).subscribe(data=>{
+      this._facebookService.addTextPostToFB(this.signedInUser.FBPages[0].pageID, this.socialCaption, this.signedInUser.FBPages[0].pageAccessToken).subscribe(data => {
+        console.log(data);
+      })
+    })
   }
-
 }
 
 

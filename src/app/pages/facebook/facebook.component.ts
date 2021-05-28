@@ -108,6 +108,7 @@ export class FacebookComponent implements OnInit {
   }
 
   postVideoContent() {
+    debugger;
     if (!this.file) {
       this.toast.error('Please select a Video File', 'Empty File');
       return;
@@ -115,13 +116,13 @@ export class FacebookComponent implements OnInit {
     this.spinner.show()
     this._mediaUploadService.uploadMedia('Facebook' , this.signedInUser.id, this.file).subscribe((media : any) =>{
       console.log(media);
-      this._facebookService.addImagePostToFB(this.signedInUser.FBPages[0].pageID , media.url , this.name , this.signedInUser.FBPages[0].pageAccessToken).subscribe(uploaded=>{
+      this._facebookService.uploadVideosToFB(this.signedInUser.FBPages[0].pageID , this.signedInUser.FBPages[0].pageAccessToken, media.url , this.name).subscribe(uploaded=>{
         this.spinner.hide();
         this.toast.success('Image Post Added Successfully', 'Post Added');
         this.url = ""
         this.name = ""
         this.cf.detectChanges();
-        console.log(uploaded)
+        console.log(uploaded , 'videoid')
       } , (err)=>{
         this.toast.error(err.message);
         this.spinner.hide()

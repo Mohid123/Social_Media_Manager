@@ -7,6 +7,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class ClubService {
+private club : any
 
   constructor(private _apiService : ApiService) { }
 
@@ -30,6 +31,14 @@ export class ClubService {
 
   deleteClub(clubID): Observable<any> {
     return this._apiService.get(`/club/deleteClub/${clubID}`)
+  }
+
+  get getClub(){
+    return this.club;
+  }
+
+  set setClub(club){
+    this.club = club;
   }
 
 }

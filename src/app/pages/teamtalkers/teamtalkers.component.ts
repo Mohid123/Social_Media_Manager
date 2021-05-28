@@ -1,3 +1,4 @@
+import { ClubService } from './../../core/services/club.service';
 import { BaseModel } from './../../_metronic/shared/crud-table/models/base.model';
 import { VideoProcessingService } from './../../core/services/video-service/video-processing.service';
 import { MediauploadService } from './../../core/services/mediaupload.service';
@@ -36,7 +37,8 @@ export class TeamtalkersComponent implements OnInit {
     private _postService: PostService,
     private _mediaUploadService: MediauploadService,
     private _authService: MainAuthService,
-    private _videoService: VideoProcessingService
+    private _videoService: VideoProcessingService,
+    private _clubService : ClubService
   ) {
     this.post = new Post()
   }
@@ -47,10 +49,12 @@ export class TeamtalkersComponent implements OnInit {
     this.clubName = localStorage.getItem('club')
     this.checkUserStatus();
     this.getSignedInUser();
+    console.log(this._clubService.getClub)
   }
 
+
   checkUserStatus() {
-    let status = localStorage.getItem('Admin');
+    let status = localStorage.getItem('admin');
     if (status == 'true') {
       this.posted = 'Club'
     }
@@ -58,6 +62,15 @@ export class TeamtalkersComponent implements OnInit {
       this.posted = 'Public'
     }
   }
+
+  
+  showSpinner() {
+    this.spinner.show();
+    setTimeout(() => {
+      this.spinner.hide();
+    }, 1000);
+  }
+
 
   getSignedInUser() {
     this._authService.getSignedInUser().subscribe(user => {
@@ -72,8 +85,8 @@ export class TeamtalkersComponent implements OnInit {
       return;
     }
     this.spinner.show();
+    this.post.postedTo = this.posted;
     this.post.text = this.teamtalkerCaption;
-
     this._postService.addPost(this.post).subscribe(data => {
       this.spinner.hide();
       this.teamtalkerCaption = "";
@@ -94,7 +107,7 @@ export class TeamtalkersComponent implements OnInit {
       this.toast.error('Please Select Image File to post', 'No File Selected');
       return;
     }
-    this._mediaUploadService.uploadMedia(localStorage.getItem('club'), '123', this.file).subscribe((media: any) => {
+    this._mediaUploadService.uploadMedia(localStorage.getItem('club'), this.signedInUser.id, this.file).subscribe((media: any) => {
       this.post.text = this.teamtalkerCaption;
       this.post.captureFileURL = media.url;
       this.post.path = media.path
@@ -111,52 +124,6 @@ export class TeamtalkersComponent implements OnInit {
       })
     })
   }
-
-  addVideoPost() {
-    let file: any;
-    if (!this.file) {
-      this.toast.error('Please select a Video File', 'Empty File');
-      return;
-    }
-    this.spinner.show();
-    this.post.text = this.teamtalkerCaption;
-    this._mediaUploadService.uploadMedia('Videos', this.signedInUser.id, this.file).subscribe((uploadedVideo: any) => {
-      this.post.captureFileURL = uploadedVideo.url;
-      this.post.path = uploadedVideo.path
-      this._videoService.generateThumbnail(this.file).then(base64 => {
-        file = base64
-        file = file.replace('data:image/png;base64,', '');
-        const imageBlob = this.dataURItoBlob(file.toString());
-        const imageFile = new File([imageBlob], 'thumbnail.jpeg', { type: 'image/jpeg' });
-        this._mediaUploadService.uploadMedia('VideoThumbnails', this.signedInUser.id, imageFile).subscribe((thumbnailFile: any) => {
-          this.post.thumbnailPath = thumbnailFile.path
-          this.post.thumbnailURL = thumbnailFile.url
-          this._postService.addPost(this.post).subscribe(post => {
-            console.log(post);
-            this.spinner.hide();
-            this.teamtalkerCaption = "";
-            this.toast.success('Video Post Added Successfully', 'Post Added')
-            this.cf.detectChanges();
-          }, (error) => {
-            this.toast.error(error)
-          })
-        }, (error) => {
-          this.toast.error(error)
-        })
-      }, (error) => {
-        this.toast.error(error)
-      })
-    })
-  }
-
-
-  showSpinner() {
-    this.spinner.show();
-    setTimeout(() => {
-      this.spinner.hide();
-    }, 1000);
-  }
-
 
   switchTabs(event) {
     if (event.index == 0) {
@@ -202,5 +169,43 @@ export class TeamtalkersComponent implements OnInit {
     }
     const blob = new Blob([int8Array], { type: 'image/jpeg' });
     return blob;
+  }
+
+
+  addVideoPost() {
+    let file: any;
+    if (!this.file) {
+      this.toast.error('Please select a Video File', 'Empty File');
+      return;
+    }
+    this.spinner.show();
+    this.post.text = this.teamtalkerCaption;
+    this._mediaUploadService.uploadMedia('Videos', this.signedInUser.id, this.file).subscribe((uploadedVideo: any) => {
+      this.post.captureFileURL = uploadedVideo.url;
+      this.post.path = uploadedVideo.path
+      this._videoService.generateThumbnail(this.file).then(base64 => {
+        file = base64
+        file = file.replace('data:image/png;base64,', '');
+        const imageBlob = this.dataURItoBlob(file.toString());
+        const imageFile = new File([imageBlob], 'thumbnail.jpeg', { type: 'image/jpeg' });
+        this._mediaUploadService.uploadMedia('VideoThumbnails', this.signedInUser.id, imageFile).subscribe((thumbnailFile: any) => {
+          this.post.thumbnailPath = thumbnailFile.path
+          this.post.thumbnailURL = thumbnailFile.url
+          this._postService.addPost(this.post).subscribe(post => {
+            console.log(post);
+            this.spinner.hide();
+            this.teamtalkerCaption = "";
+            this.toast.success('Video Post Added Successfully', 'Post Added')
+            this.cf.detectChanges();
+          }, (error) => {
+            this.toast.error(error)
+          })
+        }, (error) => {
+          this.toast.error(error)
+        })
+      }, (error) => {
+        this.toast.error(error)
+      })
+    })
   }
 }

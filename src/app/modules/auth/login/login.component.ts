@@ -25,8 +25,8 @@ import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 })
 export class LoginComponent implements OnInit {
   defaultAuth: any = {
-    email: 'admin@demo.com',
-    password: 'demo',
+    email: '',
+    password: '',
   };
   loginForm: FormGroup;
   hasError: boolean;
@@ -76,6 +76,7 @@ export class LoginComponent implements OnInit {
   }
 
   loginByEmail() {
+
     debugger
     this.spinner.show();
     if (!this.selectedClub) {
@@ -93,8 +94,9 @@ export class LoginComponent implements OnInit {
       localStorage.setItem('id' , user.loggedInUser.id)
       localStorage.setItem('userToken', user.token)
       localStorage.setItem('club', this.selectedClub.clubName)
-      localStorage.setItem('Admin' , user.user.admin )
+      localStorage.setItem('admin' , user.user.admin )
       localStorage.setItem('baseUrl' , this.selectedClub.baseURL) 
+      this._clubService.setClub = this.selectedClub
       this.toastr.success('Login Success', 'Logged In Successfully');
       this.router.navigateByUrl('/pages/dashboard');
       this.spinner.hide();
@@ -133,6 +135,7 @@ export class LoginComponent implements OnInit {
     this.selectedClub = club
     console.log(club)
   }
+
 
 }
 
