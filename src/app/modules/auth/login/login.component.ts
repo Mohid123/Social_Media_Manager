@@ -91,9 +91,10 @@ export class LoginComponent implements OnInit {
     }
     this._authService.loginByEmail(payload).subscribe(user => {
       console.log(user)
-      localStorage.setItem('id' , user.loggedInUser.id)
-      localStorage.setItem('userToken', user.token)
+      localStorage.setItem('userId' , user.loggedInUser.id)
+      localStorage.setItem('token', user.token)
       localStorage.setItem('club', this.selectedClub.clubName)
+      localStorage.setItem('clubId' , this.selectedClub.id)
       localStorage.setItem('admin' , user.user.admin )
       localStorage.setItem('baseUrl' , this.selectedClub.baseURL) 
       this._clubService.setClub = this.selectedClub

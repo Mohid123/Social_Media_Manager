@@ -1,3 +1,5 @@
+import { ReportService } from './../../core/services/report.service';
+import { Report } from './../../core/models/report.model';
 import { MediauploadService } from './../../core/services/mediaupload.service';
 import { MainAuthService } from './../../core/services/auth.service';
 import { FacebookService } from './../../core/services/facebook.service';
@@ -16,7 +18,9 @@ export class FacebookComponent implements OnInit {
   constructor(private spinner: NgxSpinnerService, private cf: ChangeDetectorRef, private toast: ToastrService,
     private _facebookService: FacebookService,
     private _authService: MainAuthService,
-    private _mediaUploadService: MediauploadService) {
+    private _mediaUploadService: MediauploadService,
+    private _reportService: ReportService) {
+    this.report = new Report()
   }
 
   public name: string = "";
@@ -24,6 +28,7 @@ export class FacebookComponent implements OnInit {
   public url: string;
   public signedInUser: User
   public file: File
+  public report: Report
   showDiv = {
     photo: true,
     video: false,
@@ -33,6 +38,7 @@ export class FacebookComponent implements OnInit {
   ngOnInit() {
     this.showSpinner();
     this.getSignedInUser();
+    console.log(this.report)
   }
 
   showSpinner() {
@@ -85,71 +91,118 @@ export class FacebookComponent implements OnInit {
   }
 
   postImageContent() {
-    debugger;
     if (!this.file) {
       this.toast.error('Please select an Image File', 'Empty File');
       return;
     }
     this.spinner.show()
-    this._mediaUploadService.uploadMedia('Facebook' , this.signedInUser.id, this.file).subscribe((media : any) =>{
-      console.log(media)
-      this._facebookService.addImagePostToFB(this.signedInUser.FBPages[0].pageID , media.url , this.name , this.signedInUser.FBPages[0].pageAccessToken).subscribe(post=>{
+    this._mediaUploadService.uploadMedia('Facebook', this.signedInUser.id, this.file).subscribe((media: any) => {
+      this._facebookService.addImagePostToFB(this.signedInUser.FBPages[0].pageID, media.url, this.name, this.signedInUser.FBPages[0].pageAccessToken).subscribe(post => {
         this.spinner.hide();
         this.toast.success('Image Post Added Successfully', 'Post Added');
         this.url = ""
         this.name = ""
         this.cf.detectChanges();
-        console.log(post)
+        this.report.clubID = localStorage.getItem('clubId');
+        this.report.postID = post.post_id;
+        this.report.postedTo = 'Facebook';
+        this.report.successStatus = 1;
+        this.report.userID = localStorage.getItem('userId')
+        this._reportService.addReport(this.report).subscribe(data => {
+          console.log(data, 'Report Created');
+        })
+      }, (error) => {
+        debugger;
+        this.spinner.hide();
+        this.toast.error(error.message)
+        this.report.clubID = localStorage.getItem('clubId');
+        this.report.postID = "";
+        this.report.postedTo = 'Facebook';
+        this.report.successStatus = 0;
+        this.report.userID = localStorage.getItem('userId')
+        this._reportService.addReport(this.report).subscribe(data => {
+          console.log(data, 'Report Created');
+        })
       })
-    } , (err)=>{
+    }, (err) => {
       this.spinner.hide();
       this.toast.error(err.message)
     })
   }
 
   postVideoContent() {
-    debugger;
     if (!this.file) {
       this.toast.error('Please select a Video File', 'Empty File');
       return;
     }
     this.spinner.show()
-    this._mediaUploadService.uploadMedia('Facebook' , this.signedInUser.id, this.file).subscribe((media : any) =>{
+    this._mediaUploadService.uploadMedia('Facebook', this.signedInUser.id, this.file).subscribe((media: any) => {
       console.log(media);
-      this._facebookService.uploadVideosToFB(this.signedInUser.FBPages[0].pageID , this.signedInUser.FBPages[0].pageAccessToken, media.url , this.name).subscribe(uploaded=>{
+      this._facebookService.addVideoPost(this.signedInUser.FBPages[0].pageID, this.signedInUser.FBPages[0].pageAccessToken, media.url, this.name).subscribe((video : any) => {
         this.spinner.hide();
         this.toast.success('Image Post Added Successfully', 'Post Added');
         this.url = ""
         this.name = ""
         this.cf.detectChanges();
-        console.log(uploaded , 'videoid')
-      } , (err)=>{
-        this.toast.error(err.message);
+        console.log(video, 'videoid')
+        this.report.clubID = localStorage.getItem('clubId');
+        this.report.postID = video.id;
+        this.report.postedTo = 'Facebook';
+        this.report.successStatus = 0;
+        this.report.userID = localStorage.getItem('userId')
+        this._reportService.addReport(this.report).subscribe(data => {
+          console.log(data, 'Report Created');
+        })
+      }, (err) => {
         this.spinner.hide()
-        console.log(err);
-      } )
-    } , (err)=>{
-      this.spinner.hide();
-      console.log(err)
-      this.toast.error(err.message)
-    }) 
+        this.toast.error(err.message);
+        this.report.clubID = localStorage.getItem('clubId');
+        this.report.postID = "";
+        this.report.postedTo = 'Facebook';
+        this.report.successStatus = 0;
+        this.report.userID = localStorage.getItem('userId')
+        this._reportService.addReport(this.report).subscribe(data => {
+          console.log(data, 'Report Created');
+        })
+      })
+    }, (err) => {
+      this.spinner.hide()
+      this.toast.error(err.message);
+    })
   }
+
 
   postTextContent() {
     if (this.name == "") {
       this.toast.error('Please add content to post', 'No Content Added');
       return;
     }
+    debugger;
     this.spinner.show();
-    this._facebookService.addTextPostToFB(this.signedInUser.FBPages[0].pageID, this.name, this.signedInUser.FBPages[0].pageAccessToken).subscribe(data => {
+    this._facebookService.addTextPostToFB(this.signedInUser.FBPages[0].pageID, this.name, this.signedInUser.FBPages[0].pageAccessToken).subscribe(post => {
       this.spinner.hide();
       this.toast.success('Post Added Successfully', 'Post Added');
       this.name = ""
       this.cf.detectChanges();
-      console.log(data)
+      this.report.clubID = localStorage.getItem('clubId');
+      this.report.postID = post.id;
+      this.report.postedTo = 'Facebook';
+      this.report.successStatus = 1;
+      this.report.userID = localStorage.getItem('userId')
+      this._reportService.addReport(this.report).subscribe(data => {
+        console.log(data, 'Report Created');
+      })     
     }, (error) => {
       this.spinner.hide();
-      this.toast.error(error.message)
+      this.toast.error(error.message);
+      this.report.clubID = localStorage.getItem('clubId');
+      this.report.postID = ""
+      this.report.postedTo = 'Facebook';
+      this.report.successStatus = 0;
+      this.report.userID = localStorage.getItem('userId')
+      this._reportService.addReport(this.report).subscribe(data => {
+        console.log(data, 'Report Created');
+      })     
     })
   }
 }

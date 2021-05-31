@@ -56,7 +56,6 @@ export class InstagramComponent implements OnInit {
 
 
   postVideoContent() {
-    debugger
     if (!this.file) {
       this.toast.error('Please select an Video File', 'Empty File');
       return;

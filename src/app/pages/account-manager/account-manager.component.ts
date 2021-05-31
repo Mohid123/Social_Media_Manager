@@ -40,7 +40,6 @@ export class AccountManagerComponent implements OnInit {
   }
 
   async signInWithFB() {
-    debugger;
     const fbLoginOptions = {
       scope: 'pages_messaging,pages_messaging_subscriptions,email,pages_show_list,instagram_basic,instagram_content_publish,pages_read_engagement,publish_to_groups'
     };
