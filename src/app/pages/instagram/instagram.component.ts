@@ -1,3 +1,5 @@
+import { Report } from './../../core/models/report.model';
+import { ReportService } from './../../core/services/report.service';
 import { MediauploadService } from './../../core/services/mediaupload.service';
 import { InstagramService } from './../../core/services/instagram.service';
 import { MainAuthService } from './../../core/services/auth.service';
@@ -22,6 +24,7 @@ export class InstagramComponent implements OnInit {
   public file: File
   public format: string;
   public url: string = '';
+  public report: Report
   showDiv = {
     photo: true,
     video: false,
@@ -31,8 +34,8 @@ export class InstagramComponent implements OnInit {
     private _authService: MainAuthService,
     private _instagramService: InstagramService,
     private _mediaUploadService: MediauploadService,
-    private toast: ToastrService) { }
-
+    private _reportService : ReportService,
+    private toast: ToastrService) { this.report = new Report() }
 
   ngOnInit() {
     this.showSpinner()
@@ -45,7 +48,6 @@ export class InstagramComponent implements OnInit {
       this.getIGAccountDetails(user.FBPages[0].pageID, user.FBPages[0].pageAccessToken).subscribe(data => {
         this.IGaccount = data
         console.log(this.IGaccount)
-        // console.log(this.instagramAccountDetails)
       })
     })
   }
@@ -55,43 +57,6 @@ export class InstagramComponent implements OnInit {
   }
 
 
-  postVideoContent() {
-    if (!this.file) {
-      this.toast.error('Please select an Video File', 'Empty File');
-      return;
-    }
-    this.spinner.show();
-    this._mediaUploadService.uploadMedia('InstagramTest', '123', this.file).subscribe((media: any) => {
-      console.log(media.url)
-      this._instagramService.createIgContainerForVideo(this.IGaccount.instagram_business_account.id, media.url, this.instaCaption, this.signedInUser.FBPages[0].pageAccessToken).subscribe((container: any) => {
-        console.log(container)
-        let interval = setInterval(() => {
-          this._instagramService.getContainerStatus(container.id, this.signedInUser.FBPages[0].pageAccessToken).subscribe((data: any) => {
-            console.log(data)
-            if (data.status_code == "FINISHED") {
-              this._instagramService.publishContent(this.IGaccount.instagram_business_account.id, container.id, this.signedInUser.FBPages[0].pageAccessToken).subscribe(data => {
-                this.spinner.hide()
-                clearInterval(interval)
-                this.url = "";
-                this.instaCaption = "";
-                this.cf.detectChanges()
-                this.toast.success('Published' , 'Video Post Added');
-              })
-            }
-            else if (data.status_code == "ERROR") {
-              this.spinner.hide()
-              clearInterval(interval)
-              this.url = "";
-              this.instaCaption = "";
-              this.cf.detectChanges()
-              this.toast.error('Error uploding')
-            }
-          })
-        }, 3000)
-
-      })
-    })
-  }
 
   showSpinner() {
     this.spinner.show();
@@ -113,7 +78,72 @@ export class InstagramComponent implements OnInit {
     }
   }
 
+  
+  createReport( status , postId?){
+    debugger; 
+    this.report.clubID = localStorage.getItem('clubId');
+    this.report.postID =  postId ? postId : "";
+    this.report.postedTo = 'Instagram';
+    this.report.successStatus = status;
+    this.report.userID = localStorage.getItem('userId')
+    this._reportService.addReport(this.report).subscribe(data => {
+      console.log(data, 'Report Created');
+    })    
+  }
+
+  postVideoContent() {
+    if (!this.file) {
+      this.toast.error('Please select an Video File', 'Empty File');
+      return;
+    }
+    this.spinner.show();
+    this._mediaUploadService.uploadMedia('InstagramTest', '123', this.file).subscribe((media: any) => {
+      console.log(media.url)
+      this._instagramService.createIgContainerForVideo(this.IGaccount.instagram_business_account.id, media.url, this.instaCaption, this.signedInUser.FBPages[0].pageAccessToken).subscribe((container: any) => {
+        console.log(container)
+        let interval = setInterval(() => {
+          this._instagramService.getContainerStatus(container.id, this.signedInUser.FBPages[0].pageAccessToken).subscribe((data: any) => {
+            console.log(data , 'containerId')
+            if (data.status_code == "FINISHED") {
+              this._instagramService.publishContent(this.IGaccount.instagram_business_account.id, container.id, this.signedInUser.FBPages[0].pageAccessToken).subscribe((data : any) => {
+                this.spinner.hide()
+                clearInterval(interval)
+                this.url = "";
+                this.instaCaption = "";
+                this.cf.detectChanges()
+                this.toast.success('Published' , 'Video Post Added');
+                this.createReport(1 , data.id)
+              } , error=>{
+                this.spinner.hide();
+                this.toast.error(error.message);
+                clearInterval(interval)
+                this.createReport(0)
+              })
+            }
+            else if (data.status_code == "ERROR") {
+              this.spinner.hide()
+              clearInterval(interval)
+              this.url = "";
+              this.instaCaption = "";
+              this.cf.detectChanges()
+              this.toast.error('Error uploding Video' , 'Video Format Unsupported' )
+            }
+          })
+        }, 3000)
+
+       },(error)=>{
+         this.spinner.hide();
+         this.toast.error(error.message)
+       })
+    },(error)=>{
+      this.spinner.hide();
+      this.toast.error(error.message)
+    })
+  }
+
   postImageContent() {
+    debugger;
+    debugger;
     if (!this.file) {
       this.toast.error('Please select an Image File', 'Empty File');
       return;
@@ -121,24 +151,26 @@ export class InstagramComponent implements OnInit {
     this.spinner.show()
     this._mediaUploadService.uploadMedia('Instagram', this.signedInUser.id, this.file).subscribe((media: any) => {
       this._instagramService.createIGMediaContainer(this.IGaccount.instagram_business_account.id, this.instaCaption, this.signedInUser.FBPages[0].pageAccessToken, media.url).subscribe((container: any) => {
-        this._instagramService.publishContent(this.IGaccount.instagram_business_account.id, container.id, this.signedInUser.FBPages[0].pageAccessToken).subscribe(data => {
+        this._instagramService.publishContent(this.IGaccount.instagram_business_account.id, container.id, this.signedInUser.FBPages[0].pageAccessToken).subscribe((data : any) => {
           console.log(data)
           this.instaCaption = ""
           this.url = ""
           this.cf.detectChanges();
           this.spinner.hide()
           this.toast.success('Image Post Added Successfully', 'Post Added');
+          this.createReport(1 , data.id)
         }, error => {
           this.spinner.hide()
-          this.toast.error(error)
+          this.toast.error(error.message)
+          this.createReport(0);
         })
       }, error => {
         this.spinner.hide()
-        this.toast.error(error)
+        this.toast.error(error.message)
       })
     }, error => {
       this.spinner.hide()
-      this.toast.error(error)
+      this.toast.error(error.message)
     })
   }
 

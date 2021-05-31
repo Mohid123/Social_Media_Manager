@@ -148,7 +148,7 @@ export class FacebookComponent implements OnInit {
         this.report.clubID = localStorage.getItem('clubId');
         this.report.postID = video.id;
         this.report.postedTo = 'Facebook';
-        this.report.successStatus = 0;
+        this.report.successStatus = 1;
         this.report.userID = localStorage.getItem('userId')
         this._reportService.addReport(this.report).subscribe(data => {
           console.log(data, 'Report Created');
