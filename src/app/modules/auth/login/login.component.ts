@@ -105,6 +105,7 @@ export class LoginComponent implements OnInit {
     }, err => {
       this.spinner.hide()
       this.toastr.error(err.message)
+      console.log(err)
     })
   }
 

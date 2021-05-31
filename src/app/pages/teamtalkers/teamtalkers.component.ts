@@ -1,3 +1,4 @@
+import { ReportService } from './../../core/services/report.service';
 import { ClubService } from './../../core/services/club.service';
 import { BaseModel } from './../../_metronic/shared/crud-table/models/base.model';
 import { VideoProcessingService } from './../../core/services/video-service/video-processing.service';
@@ -9,6 +10,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Post } from 'src/app/core/models/post.model';
 import { MainAuthService } from 'src/app/core/services/auth.service';
 import { User } from 'src/app/core/models/user.model';
+import { Report } from 'src/app/core/models/report.model';
 
 @Component({
   selector: 'app-teamtalkers',
@@ -16,7 +18,7 @@ import { User } from 'src/app/core/models/user.model';
   styleUrls: ['./teamtalkers.component.scss']
 })
 export class TeamtalkersComponent implements OnInit {
-  
+
   public format: string;
   public teamtalkerCaption: string = "";
   public clubName: string
@@ -25,7 +27,8 @@ export class TeamtalkersComponent implements OnInit {
   public post: Post
   public file: File
   public signedInUser: User
-  public posted: string
+  public posted: string = 'Club'
+  public report: Report
   showDiv = {
     photo: true,
     video: false,
@@ -38,32 +41,43 @@ export class TeamtalkersComponent implements OnInit {
     private _mediaUploadService: MediauploadService,
     private _authService: MainAuthService,
     private _videoService: VideoProcessingService,
-    private _clubService : ClubService
+    private _reportService: ReportService
   ) {
     this.post = new Post()
+    this.report = new Report();
   }
 
 
   ngOnInit() {
     this.showSpinner();
     this.clubName = localStorage.getItem('club')
-    this.checkUserStatus();
+    // this.checkUserStatus();
     this.getSignedInUser();
-    console.log(this._clubService.getClub)
   }
 
 
-  checkUserStatus() {
-    let status = localStorage.getItem('admin');
-    if (status == 'true') {
-      this.posted = 'Club'
-    }
-    else {
-      this.posted = 'Public'
-    }
+  // checkUserStatus() {
+  //   let status = localStorage.getItem('admin');
+  //   if (status == 'true') {
+  //     this.posted = 'Club'
+  //   }
+  //   else {
+  //     this.posted = 'Public'
+  //   }
+  // }
+
+  createReport(status, postId?) {
+    debugger;
+    this.report.clubID = localStorage.getItem('clubId');
+    this.report.postID = postId ? postId : "";
+    this.report.postedTo = 'Club';
+    this.report.successStatus = status;
+    this.report.userID = localStorage.getItem('userId')
+    this._reportService.addReport(this.report).subscribe(data => {
+      console.log(data, 'Report Created');
+    })
   }
 
-  
   showSpinner() {
     this.spinner.show();
     setTimeout(() => {
@@ -80,6 +94,7 @@ export class TeamtalkersComponent implements OnInit {
   }
 
   addTextPost() {
+    debugger;
     if (this.teamtalkerCaption == "") {
       this.toast.error('Please add content to post', 'No Content Added');
       return;
@@ -87,43 +102,47 @@ export class TeamtalkersComponent implements OnInit {
     this.spinner.show();
     this.post.postedTo = this.posted;
     this.post.text = this.teamtalkerCaption;
-    this._postService.addPost(this.post).subscribe(data => {
+    this._postService.addPost(this.post).subscribe((data : any) => {
       this.spinner.hide();
       this.teamtalkerCaption = "";
       this.toast.success('Post Added Successfully', 'Post Added')
       this.cf.detectChanges();
+      this.createReport(1 , data.id)
       console.log(data);
     }, (error) => {
       this.spinner.hide()
       this.toast.error(error.message)
+      this.createReport(0)
     })
   }
-
-
-
 
   addImagePost() {
     if (!this.file) {
       this.toast.error('Please Select Image File to post', 'No File Selected');
       return;
     }
+    this.spinner.show();
     this._mediaUploadService.uploadMedia(localStorage.getItem('club'), this.signedInUser.id, this.file).subscribe((media: any) => {
       this.post.text = this.teamtalkerCaption;
       this.post.captureFileURL = media.url;
       this.post.path = media.path
       this.post.postedTo = this.posted
-      this._postService.addPost(this.post).subscribe(data => {
+      this._postService.addPost(this.post).subscribe((data:any) => {
         this.spinner.hide();
         this.teamtalkerCaption = "";
         this.toast.success('Post Added Successfully', 'Post Added')
         this.cf.detectChanges();
         console.log(data);
+        this.createReport(1 , data.id)
       }, (error) => {
         this.spinner.hide()
-        this.toast.error(error.message)
+        this.toast.error(error.message);
+        this.createReport(0)
       })
     })
   }
+
+
 
   switchTabs(event) {
     if (event.index == 0) {
@@ -191,19 +210,25 @@ export class TeamtalkersComponent implements OnInit {
         this._mediaUploadService.uploadMedia('VideoThumbnails', this.signedInUser.id, imageFile).subscribe((thumbnailFile: any) => {
           this.post.thumbnailPath = thumbnailFile.path
           this.post.thumbnailURL = thumbnailFile.url
-          this._postService.addPost(this.post).subscribe(post => {
+          this._postService.addPost(this.post).subscribe((post : any) => {
             console.log(post);
             this.spinner.hide();
             this.teamtalkerCaption = "";
+            this.url = "";
             this.toast.success('Video Post Added Successfully', 'Post Added')
             this.cf.detectChanges();
+            this.createReport(1 , post.id)
           }, (error) => {
+            this.spinner.hide();
             this.toast.error(error)
+            this.createReport(0)
           })
         }, (error) => {
+          this.spinner.hide();
           this.toast.error(error)
         })
       }, (error) => {
+        this.spinner.hide();
         this.toast.error(error)
       })
     })
