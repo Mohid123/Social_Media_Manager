@@ -1,3 +1,4 @@
+import { ReportService } from './../../core/services/report.service';
 import { ClubService } from './../../core/services/club.service';
 import { Component, OnInit, Inject, NgZone, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
@@ -14,48 +15,53 @@ export class DashboardComponent implements OnInit {
   public pieChartOptions: ChartOptions = {
     responsive: true,
     legend: {
-      
     }
   };
   public pieChartLabels: Label[] = [['Facebook'], ['Instagram'], 'Club'];
-  public pieChartData: SingleDataSet = [5, 10, 2];
+  public pieChartData: SingleDataSet = [1, 1, 1];
   public pieChartType: ChartType = 'pie';
   public pieChartLegend = true;
   public pieChartPlugins = [];
   public options: any = {
     legend: { position: 'left' },
     labels: {
-        fontSize: 10,
-        usePointStyle: true
-      }
+      fontSize: 10,
+      usePointStyle: true
+    }
   }
   public pieChartOption: any = {
-   
+
   }
-
   public doughnutChartColors: Color[] = [
-    {backgroundColor:["#3b5998","#d62976" , "#fbad50"]},
-    {backgroundColor:["#3b5998","#d62976" , "#fbad50"]},
-    // {backgroundColor:["#3b5998","#FF5800","#FFB414"]}
+    { backgroundColor: ["#3b5998", "#d62976", "#fbad50"] },
+    { backgroundColor: ["#3b5998", "#d62976", "#fbad50"] },
   ];
+  
 
 
 
-  constructor(private spinner: NgxSpinnerService, private _clubService : ClubService) { 
+  constructor(private spinner: NgxSpinnerService, private _clubService: ClubService, private _reportService: ReportService) {
     monkeyPatchChartJsTooltip();
     monkeyPatchChartJsLegend();
   }
 
   ngOnInit() {
     this.showSpinner()
+    this.getFacebookStats()
   }
 
- 
-  showSpinner(){
+
+  showSpinner() {
     this.spinner.show();
     setTimeout(() => {
       this.spinner.hide();
     }, 1000);
   }
 
-} 
+  getFacebookStats() {
+    this._reportService.getFacebookStats().subscribe(data => {
+      console.log(data)
+    })
+  }
+
+}

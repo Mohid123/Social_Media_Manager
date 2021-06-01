@@ -10,6 +10,7 @@ import { User } from 'src/app/core/models/user.model';
 import { chainedInstruction } from '@angular/compiler/src/render3/view/util';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { ToastrService } from 'ngx-toastr';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-instagram',
@@ -43,7 +44,7 @@ export class InstagramComponent implements OnInit {
   }
 
   getSignedInUser() {
-    this._authService.getSignedInUser().subscribe(user => {
+    this._authService.getSignedInUser().pipe(take(1)).subscribe(user => {
       this.signedInUser = user;
       this.getIGAccountDetails(user.FBPages[0].pageID, user.FBPages[0].pageAccessToken).subscribe(data => {
         this.IGaccount = data
@@ -113,6 +114,7 @@ export class InstagramComponent implements OnInit {
                 this.cf.detectChanges()
                 this.toast.success('Published' , 'Video Post Added');
                 this.createReport(1 , data.id)
+                window.location.reload();
               } , error=>{
                 this.spinner.hide();
                 this.toast.error(error.message);
@@ -127,6 +129,7 @@ export class InstagramComponent implements OnInit {
               this.instaCaption = "";
               this.cf.detectChanges()
               this.toast.error('Error uploding Video' , 'Video Format Unsupported' )
+              this.createReport(0);
             }
           })
         }, 3000)
