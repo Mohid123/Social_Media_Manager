@@ -1,6 +1,6 @@
 import { ReportService } from './../../core/services/report.service';
 import { ClubService } from './../../core/services/club.service';
-import { Component, OnInit, Inject, NgZone, PLATFORM_ID } from '@angular/core';
+import { Component, OnInit, Inject, NgZone, PLATFORM_ID, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { NgxSpinnerService } from "ngx-spinner";
 import { ChartType, ChartOptions } from 'chart.js';
@@ -10,7 +10,7 @@ import { SingleDataSet, Label, monkeyPatchChartJsLegend, monkeyPatchChartJsToolt
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit, AfterViewInit {
 
   public pieChartOptions: ChartOptions = {
     responsive: true,
@@ -18,7 +18,7 @@ export class DashboardComponent implements OnInit {
     }
   };
   public pieChartLabels: Label[] = [['Facebook'], ['Instagram'], 'Club'];
-  public pieChartData: SingleDataSet = [1, 1, 1];
+  public pieChartData: SingleDataSet = [];
   public pieChartType: ChartType = 'pie';
   public pieChartLegend = true;
   public pieChartPlugins = [];
@@ -36,11 +36,15 @@ export class DashboardComponent implements OnInit {
     { backgroundColor: ["#3b5998", "#d62976", "#fbad50"] },
     { backgroundColor: ["#3b5998", "#d62976", "#fbad50"] },
   ];
-  
+
+  public facebookStats: any
+  public instagramStats : any
+  public clubStats : any
 
 
 
-  constructor(private spinner: NgxSpinnerService, private _clubService: ClubService, private _reportService: ReportService) {
+
+  constructor(private spinner: NgxSpinnerService, private _clubService: ClubService, private _reportService: ReportService, private cf: ChangeDetectorRef) {
     monkeyPatchChartJsTooltip();
     monkeyPatchChartJsLegend();
   }
@@ -48,8 +52,12 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {
     this.showSpinner()
     this.getFacebookStats()
+     this.getInstagramStats()
+     this.getClubStats()
   }
 
+  ngAfterViewInit() {
+  }
 
   showSpinner() {
     this.spinner.show();
@@ -59,9 +67,29 @@ export class DashboardComponent implements OnInit {
   }
 
   getFacebookStats() {
-    this._reportService.getFacebookStats().subscribe(data => {
-      console.log(data)
+    this._reportService.getFacebookStats().subscribe(stats => {
+      this.facebookStats = stats
+      this.cf.detectChanges();
+      console.log(this.facebookStats)
     })
   }
+
+  getInstagramStats(){
+    this._reportService.getInstagramStats().subscribe(stats => {
+      this.instagramStats = stats
+      this.cf.detectChanges();
+      console.log(this.instagramStats)
+    })
+  }
+
+  getClubStats(){
+    this._reportService.getClubStatus().subscribe(stats => {
+      this.clubStats = stats
+      this.cf.detectChanges();
+      console.log(this.clubStats)
+    })
+  }
+
+
 
 }

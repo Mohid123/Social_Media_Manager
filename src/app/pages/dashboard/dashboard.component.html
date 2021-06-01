@@ -204,15 +204,16 @@
                             <i class="socicon-facebook mr-5 icon-lg" style="color: white"></i>
                             <div class="text-inverse-danger font-weight-bolder font-size-h5 mb-2 mt-5">Facebook</div>
                             <button class="btn font-weight-bold btn-light-primary mr-2">Total<span class="label pulse pulse-primary ml-3" >
-                                <span class="position-relative">10</span>
+                                <span *ngIf="facebookStats"   class="position-relative">{{facebookStats.total}}</span>
                                 <span class="pulse-ring"></span>
                             </span></button><br><br>
                             <button class="btn font-weight-bold btn-light-success mr-5">Succecced<span class="label pulse pulse-success ml-3" >
-                                <span class="position-relative">1</span>
+                                <span *ngIf="facebookStats"  class="position-relative">{{facebookStats.succeeded}}</span>
                                 <span class="pulse-ring"></span>
                             </span></button>
                             <button class="btn font-weight-bold btn-light-danger mr-2">Failed<span class="label pulse pulse-danger ml-3" >
-                                <span class="position-relative">1</span>
+                                <span *ngIf="facebookStats" class="position-relative">{{facebookStats.failed}}</span>
+                                
                                 <span class="pulse-ring"></span>
                             </span></button>
                             
@@ -230,15 +231,15 @@
                             <i class="socicon-instagram mr-5 icon-lg" style="color: white"></i>
                             <div class="text-inverse-danger font-weight-bolder font-size-h5 mb-2 mt-5">Instagram</div>
                             <button class="btn font-weight-bold btn-light-primary mr-2">Total<span class="label pulse pulse-primary ml-3" >
-                                <span class="position-relative">1</span>
+                                <span *ngIf="instagramStats" class="position-relative">{{instagramStats.total}}</span>
                                 <span class="pulse-ring"></span>
                             </span></button><br><br>
                             <button class="btn font-weight-bold btn-light-success mr-5">Succecced<span class="label pulse pulse-success ml-3" >
-                                <span class="position-relative">1</span>
+                                <span *ngIf="instagramStats"  class="position-relative">{{instagramStats.succeeded}}</span>
                                 <span class="pulse-ring"></span>
                             </span></button>
                             <button class="btn font-weight-bold btn-light-danger mr-2">Failed<span class="label pulse pulse-danger ml-3" >
-                                <span class="position-relative">1</span>
+                                <span *ngIf="instagramStats" class="position-relative">{{instagramStats.failed}}</span>
                                 <span class="pulse-ring"></span>
                             </span></button>
                             
@@ -256,15 +257,15 @@
                             <i class="socicon-telegram mr-5 icon-lg" style="color: white"></i>
                             <div class="text-inverse-danger font-weight-bolder font-size-h5 mb-2 mt-5">TeamTalker</div>
                             <button class="btn font-weight-bold btn-light-primary mr-2">Total<span class="label pulse pulse-primary ml-3" >
-                                <span class="position-relative">1</span>
+                                <span *ngIf="clubStats" class="position-relative">{{clubStats.total}}</span>
                                 <span class="pulse-ring"></span>
                             </span></button><br><br>
                             <button class="btn font-weight-bold btn-light-success mr-5">Succecced<span class="label pulse pulse-success ml-3" >
-                                <span class="position-relative">1</span>
+                                <span *ngIf="clubStats"  class="position-relative">{{clubStats.succeeded}}</span>
                                 <span class="pulse-ring"></span>
                             </span></button>
                             <button class="btn font-weight-bold btn-light-danger mr-2">Failed<span class="label pulse pulse-danger ml-3" >
-                                <span class="position-relative">1</span>
+                                <span *ngIf="clubStats"  class="position-relative">{{clubStats.failed}}</span>
                                 <span class="pulse-ring"></span>
                             </span></button>
                             
