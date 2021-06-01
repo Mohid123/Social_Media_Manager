@@ -34,6 +34,15 @@ export class ReportService {
     return this._apiService.get('/report/getFacebookStats');
   }
 
+  getInstagramStats() : Observable <any>{
+    return this._apiService.get('/report/getInstagramStats');
+
+  }
+
+  getClubStatus() : Observable <any>{
+    return this._apiService.get('/report/getClubStats');
+
+  }
 
 
 
