@@ -69,6 +69,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   getFacebookStats() {
     this._reportService.getFacebookStats().subscribe(stats => {
       this.facebookStats = stats
+      this.pieChartData.push(stats.total)
       this.cf.detectChanges();
       console.log(this.facebookStats)
     })
@@ -78,6 +79,8 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     this._reportService.getInstagramStats().subscribe(stats => {
       this.instagramStats = stats
       this.cf.detectChanges();
+      this.pieChartData.push(stats.total)
+      
       console.log(this.instagramStats)
     })
   }
@@ -85,8 +88,12 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   getClubStats(){
     this._reportService.getClubStatus().subscribe(stats => {
       this.clubStats = stats
+      this.pieChartData.push(stats.total)
       this.cf.detectChanges();
+
       console.log(this.clubStats)
+      console.log(this.pieChartData)
+
     })
   }
 
