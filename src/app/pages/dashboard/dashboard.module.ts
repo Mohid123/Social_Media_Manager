@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { DashboardComponent } from './dashboard.component';
 import { NgxSpinnerModule } from "ngx-spinner";
+import { ChartsModule } from 'ng2-charts';
 
 
 @NgModule({
@@ -10,6 +11,7 @@ import { NgxSpinnerModule } from "ngx-spinner";
   imports: [
     CommonModule,
     NgxSpinnerModule,
+    ChartsModule,
     RouterModule.forChild([
       {
         path: '',

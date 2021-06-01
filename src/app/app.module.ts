@@ -20,6 +20,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatIconModule } from "@angular/material/icon";
 import { ToastrModule } from 'ngx-toastr';
 import { SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-login';
+import { ChartsModule } from 'ng2-charts';
 import {
   GoogleLoginProvider,
   FacebookLoginProvider
@@ -45,6 +46,7 @@ function appInitializer(authService: AuthService) {
     HighlightModule,
     ClipboardModule,
     SocialLoginModule,
+    ChartsModule,
     MatIconModule,
     environment.isMockEnabled
       ? HttpClientInMemoryWebApiModule.forRoot(FakeAPIService, {
