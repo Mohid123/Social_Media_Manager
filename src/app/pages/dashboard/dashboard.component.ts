@@ -10,7 +10,7 @@ import { SingleDataSet, Label, monkeyPatchChartJsLegend, monkeyPatchChartJsToolt
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
-export class DashboardComponent implements OnInit, AfterViewInit {
+export class DashboardComponent implements OnInit {
 
   public pieChartOptions: ChartOptions = {
     responsive: true,
@@ -38,10 +38,8 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   ];
 
   public facebookStats: any
-  public instagramStats : any
-  public clubStats : any
-
-
+  public instagramStats: any
+  public clubStats: any
 
 
   constructor(private spinner: NgxSpinnerService, private _clubService: ClubService, private _reportService: ReportService, private cf: ChangeDetectorRef) {
@@ -51,13 +49,9 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.showSpinner()
-    this.getFacebookStats()
-     this.getInstagramStats()
-     this.getClubStats()
+    this.getStats();
   }
 
-  ngAfterViewInit() {
-  }
 
   showSpinner() {
     this.spinner.show();
@@ -66,34 +60,31 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     }, 1000);
   }
 
-  getFacebookStats() {
+  getInstagramStats() {
+    return this._reportService.getInstagramStats()
+  }
+
+  getClubStats() {
+    return this._reportService.getClubStatus()
+  }
+
+  getStats() {
     this._reportService.getFacebookStats().subscribe(stats => {
       this.facebookStats = stats
       this.pieChartData.push(stats.total)
-      this.cf.detectChanges();
-      console.log(this.facebookStats)
-    })
-  }
-
-  getInstagramStats(){
-    this._reportService.getInstagramStats().subscribe(stats => {
-      this.instagramStats = stats
-      this.cf.detectChanges();
-      this.pieChartData.push(stats.total)
-      
-      console.log(this.instagramStats)
-    })
-  }
-
-  getClubStats(){
-    this._reportService.getClubStatus().subscribe(stats => {
-      this.clubStats = stats
-      this.pieChartData.push(stats.total)
-      this.cf.detectChanges();
-
-      console.log(this.clubStats)
-      console.log(this.pieChartData)
-
+      console.log(this.facebookStats , 'FB stats')
+      this.getInstagramStats().subscribe(stats => {
+        this.instagramStats = stats
+        this.pieChartData.push(stats.total)
+        console.log(this.instagramStats , 'IG stats')
+        this.getClubStats().subscribe(stats => {
+          this.clubStats = stats
+          this.pieChartData.push(stats.total)
+          this.cf.detectChanges();
+          console.log(this.clubStats , 'Club stats')
+          console.log(this.pieChartData)
+        })
+      })
     })
   }
 
