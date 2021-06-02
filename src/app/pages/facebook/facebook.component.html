@@ -59,7 +59,31 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
+                                    <tr *ngFor="let pages of facebookPages">
+                                        <td class="pl-0">
+                                            <label class="checkbox checkbox-lg checkbox-inline">
+                                                <input type="checkbox" [(ngModel)]="pages.isSelected" (change) = "getFacebookPages(pages.isSelected , pages)" value="1" />
+                                                <span></span>
+                                            </label>
+                                        </td>
+                                        <td class="pr-0">
+                                            <div class="symbol symbol-50 symbol-light mt-1">
+                                                <span class="symbol-label">
+                                                    <img src="assets/media/svg/avatars/001-boy.svg"
+                                                        class="h-75 align-self-end" alt="" />
+                                                </span>
+                                            </div>
+                                        </td>
+                                        <td class="pl-0">
+                                            <a href="#"
+                                                class="text-dark-75 font-weight-bolder text-hover-primary mb-1 font-size-lg">{{pages.pageName}}
+                                                </a>
+                                            <span class="text-muted font-weight-bold text-muted d-block">
+                                                </span>
+                                        </td>
+
+                                    </tr>
+                                    <!-- <tr>
                                         <td class="pl-0">
                                             <label class="checkbox checkbox-lg checkbox-inline">
                                                 <input type="checkbox" value="1" />
@@ -106,31 +130,7 @@
                                                 ReactJS</span>
                                         </td>
 
-                                    </tr>
-                                    <tr>
-                                        <td class="pl-0">
-                                            <label class="checkbox checkbox-lg checkbox-inline">
-                                                <input type="checkbox" value="1" />
-                                                <span></span>
-                                            </label>
-                                        </td>
-                                        <td class="pr-0">
-                                            <div class="symbol symbol-50 symbol-light mt-1">
-                                                <span class="symbol-label">
-                                                    <img src="assets/media/svg/avatars/001-boy.svg"
-                                                        class="h-75 align-self-end" alt="" />
-                                                </span>
-                                            </div>
-                                        </td>
-                                        <td class="pl-0">
-                                            <a href="#"
-                                                class="text-dark-75 font-weight-bolder text-hover-primary mb-1 font-size-lg">Brad
-                                                Simmons</a>
-                                            <span class="text-muted font-weight-bold text-muted d-block">HTML, JS,
-                                                ReactJS</span>
-                                        </td>
-
-                                    </tr>
+                                    </tr> -->
 
 
                                 </tbody>

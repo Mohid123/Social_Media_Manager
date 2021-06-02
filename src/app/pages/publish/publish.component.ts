@@ -1,3 +1,5 @@
+import { ReportService } from './../../core/services/report.service';
+import { locale } from './../../modules/i18n/vocabs/de';
 import { PostService } from './../../core/services/post.service';
 import { MainAuthService } from './../../core/services/auth.service';
 import { MediauploadService } from './../../core/services/mediaupload.service';
@@ -8,6 +10,8 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { NgxSpinnerService } from "ngx-spinner";
 import { User } from 'src/app/core/models/user.model';
 import { Post } from 'src/app/core/models/post.model';
+import { take, filter } from 'rxjs/operators';
+import { Report } from 'src/app/core/models/report.model';
 @Component({
   selector: 'app-publish',
   templateUrl: './publish.component.html',
@@ -17,17 +21,22 @@ export class PublishComponent implements OnInit {
   public textFirst: string
   public signedInUser: User
   masterSelected: boolean;
-  checklist: any;
+  checklist: any = [];
   checkedList: any;
+  itemSelected: boolean = false
   public format: string;
   public url: string = 'https://getstackposts.com/inc/themes/backend/default/assets/img/avatar.jpg';
+  public facebookProfileUrl : string = 'https://social.teamtalkers.com/api/v1/en/media-upload/mediaFiles/123/test/6ca2499366f5b5611041fe57e2aac1ee9.svg'
+  public instagramProfileUrl : string = 'https://social.teamtalkers.com/api/v1/en/media-upload/mediaFiles/123/test/113ad1ea783c7d107afd8ddc09eb6f23e.svg'
   public file: File
   public socialCaption: string = "";
   public selectedInstagram: boolean = true
   public postContent: string
   public IGaccount: any
-  public posted: string;
+  public posted: string = "";
   public post: Post
+  public facebookPages: any = []
+  public report : Report
   public showDiv = {
     photo: true,
     video: false,
@@ -40,51 +49,49 @@ export class PublishComponent implements OnInit {
     private _instagramService: InstagramService,
     private _mediaUploadService: MediauploadService,
     private _authService: MainAuthService,
-    private _postService : PostService
+    private _postService: PostService,
+    private _reportService : ReportService
   ) {
-    this.post = new Post()
+    this.post = new Post();
+    this.report = new Report();
+    
     this.masterSelected = false;
-    this.checklist = [
-      { id: 1, value: 'Elenor Anderson', isSelected: false },
-      { id: 2, value: 'Caden Kunze', isSelected: false },
-      { id: 3, value: 'Ms. Hortense Zulauf', isSelected: false },
-      { id: 4, value: 'Grady Reichert', isSelected: false },
-      { id: 5, value: 'Dejon Olson', isSelected: false },
-      { id: 6, value: 'Jamir Pfannerstill', isSelected: false },
-      { id: 7, value: 'Aracely Renner DVM', isSelected: false },
-      { id: 5, value: 'Dejon Olson', isSelected: false },
-      { id: 6, value: 'Jamir Pfannerstill', isSelected: false },
-      { id: 7, value: 'Aracely Renner DVM', isSelected: false },
-      { id: 8, value: 'Genoveva Luettgen', isSelected: false }
-    ];
-    this.getCheckedItemList();
   }
 
   ngOnInit() {
     this.showSpinner()
     this.getSignedInUser();
-    this.checkUserStatus();
-  }
+    this.getCheckedItemList();
 
-  checkUserStatus() {
-    let status = localStorage.getItem('admin');
-    if (status == 'true') {
-      this.posted = 'Club'
-    }
-    else {
-      this.posted = 'Public'
-    }
   }
 
 
 
   getSignedInUser() {
-    this._authService.getSignedInUser().subscribe(user => {
+    debugger;
+    this._authService.getSignedInUser().pipe(take(1)).subscribe(user => {
       this.signedInUser = user;
-      console.log(this.signedInUser)
-      this.getIGAccountDetails(user.FBPages[0].pageID, user.FBPages[0].pageAccessToken).subscribe(data => {
-        this.IGaccount = data
-      })
+      if (this.signedInUser.FBPages.length > 0) {
+        this.signedInUser.FBPages.map(item => {
+          item.isSelected = false;
+          item.captureImageURL = this.facebookProfileUrl;
+          this.facebookPages.push(item)
+          this.checklist.push(item);
+          this.cf.detectChanges();
+        })
+        this.facebookPages.forEach(item => {
+          this.getIGAccountDetails(item.pageID, item.pageAccessToken).subscribe((data: any) => {
+            if (data.instagram_business_account) {
+              data.isSelected = false;
+              data.pageName = 'Instagram Account'
+              data.captureImageURL = this.instagramProfileUrl;
+              this.checklist.push(data);
+              this.cf.detectChanges()
+            }
+          })
+        });
+        console.log(this.checklist)
+      }
     })
   }
 
@@ -92,27 +99,27 @@ export class PublishComponent implements OnInit {
     return this._instagramService.getInstagramAccountID(FbPageID, FbPageAccessToken)
   }
 
-
-
-  checkUncheckAll() {
+  selectAll() {
     for (var i = 0; i < this.checklist.length; i++) {
       this.checklist[i].isSelected = this.masterSelected;
     }
     this.getCheckedItemList();
   }
-  isAllSelected() {
+
+  singleItemSelected() {
     this.masterSelected = this.checklist.every(function (item: any) {
       return item.isSelected == true;
     })
     this.getCheckedItemList();
   }
+
   getCheckedItemList(): void {
     this.checkedList = [];
     for (var i = 0; i < this.checklist.length; i++) {
       if (this.checklist[i].isSelected)
         this.checkedList.push(this.checklist[i]);
     }
-    this.checkedList = JSON.stringify(this.checkedList);
+    console.log(this.checkedList)
   }
 
   showSpinner(): void {
@@ -163,42 +170,82 @@ export class PublishComponent implements OnInit {
   }
 
   postImageContent() {
+    let selectedFacebookPages = []
+    let selctedInstagramPages = []
+    let selectedClubGroups = []
     if (!this.file) {
       this.toast.error('Please select an Image File', 'Empty File');
       return;
     }
-    this.spinner.show()
+    else if (this.checkedList.length == 0) {
+      this.toast.error('No Item Selected', 'Please select items to post');
+      return;
+    }
+    this.checkedList.filter(item=> {
+      if(item.hasOwnProperty('pageAccessToken')){
+        selectedFacebookPages.push(item)
+      }
+      else if(item.hasOwnProperty('instagram_business_account')){
+        selctedInstagramPages.push(item);
+      }
+    })
+    
     this._mediaUploadService.uploadMedia('Facebook', this.signedInUser.id, this.file).subscribe((media: any) => {
-      this.post.text = this.socialCaption;
-      this.post.captureFileURL = media.url;
-      this.post.path = media.path
-      this.post.postedTo = this.posted
-      this._postService.addPost(this.post).subscribe(data => {
-      this._facebookService.addImagePostToFB(this.signedInUser.FBPages[0].pageID, media.url, this.socialCaption, this.signedInUser.FBPages[0].pageAccessToken).subscribe(uploaded => {
-        this._instagramService.createIGMediaContainer(this.IGaccount.instagram_business_account.id, this.socialCaption, this.signedInUser.FBPages[0].pageAccessToken, media.url).subscribe((container: any) => {
-          this._instagramService.publishContent(this.IGaccount.instagram_business_account.id, container.id, this.signedInUser.FBPages[0].pageAccessToken).subscribe(data => {
-            console.log(uploaded, 'FBuploaded')
-            console.log(data, 'IG uploaded')
-            this.socialCaption = ""
-            this.url = ""
-            this.cf.detectChanges();
-            this.spinner.hide()
-            this.toast.success('Post Added Successfully on Facebook and Instagram', 'Post Added');
-          }, (error) => {
-            this.spinner.hide()
-            this.toast.error(error)
-          })
-        }, (error) => {
-          this.spinner.hide()
-          this.toast.error(error)
-        })
+      this.spinner.show();
+      selectedFacebookPages.forEach(item=>{
+        this._facebookService.addImagePostToFB(item.pageID, media.url, this.socialCaption, item.pageAccessToken).subscribe((FBuploaded:any) => {
+          console.log(FBuploaded);
+          this.toast.success('Post added on Facebook Pages' , 'Post added Successfully');
+          this.createReport(1 , FBuploaded.id)  
+      } , (error)=>{
+        this.spinner.hide();
+        this.toast.error(error.message);
       })
     })
-    }, (err) => {
-      this.spinner.hide();
-      this.toast.error(err.message)
-    })
+  })
+    //   this.post.text = this.socialCaption;
+    //   this.post.captureFileURL = media.url;
+    //   this.post.path = media.path
+    //   this.post.postedTo = this.posted
+    //   this._postService.addPost(this.post).subscribe(clubuploaded => {
+    //     this._facebookService.addImagePostToFB(this.signedInUser.FBPages[0].pageID, media.url, this.socialCaption, this.signedInUser.FBPages[0].pageAccessToken).subscribe(FBuploaded => {
+    //       this._instagramService.createIGMediaContainer(this.IGaccount.instagram_business_account.id, this.socialCaption, this.signedInUser.FBPages[0].pageAccessToken, media.url).subscribe((container: any) => {
+    //         this._instagramService.publishContent(this.IGaccount.instagram_business_account.id, container.id, this.signedInUser.FBPages[0].pageAccessToken).subscribe(IGuploaded => {
+    //           console.log(clubuploaded, 'Club uploaded')
+    //           console.log(FBuploaded, 'FBuploaded')
+    //           console.log(IGuploaded, 'IG uploaded')
+    //           this.socialCaption = ""
+    //           this.url = ""
+    //           this.cf.detectChanges();
+    //           this.spinner.hide()
+    //           this.toast.success('Post Added Successfully on Facebook and Instagram', 'Post Added');
+    //         }, (error) => {
+    //           this.spinner.hide()
+    //           this.toast.error(error)
+    //         })
+    //       }, (error) => {
+    //         this.spinner.hide()
+    //         this.toast.error(error)
+    //       })
+    //     })
+    //   })
+    // }, (err) => {
+    //   this.spinner.hide();
+    //   this.toast.error(err.message)
+    // })
 
+  }
+
+
+  createReport( status , postId?){
+    this.report.clubID = localStorage.getItem('clubId');
+    this.report.postID =  postId ? postId : "";
+    this.report.postedTo = 'Instagram';
+    this.report.successStatus = status;
+    this.report.userID = localStorage.getItem('userId')
+    this._reportService.addReport(this.report).subscribe(data => {
+      console.log(data, 'Report Created');
+    })    
   }
 
   postVideoContent() {
@@ -216,7 +263,7 @@ export class PublishComponent implements OnInit {
     }
     this.post.text = this.socialCaption;
     this.post.postedTo = this.posted
-    this._postService.addPost(this.post).subscribe(data=>{
+    this._postService.addPost(this.post).subscribe(data => {
       this._facebookService.addTextPostToFB(this.signedInUser.FBPages[0].pageID, this.socialCaption, this.signedInUser.FBPages[0].pageAccessToken).subscribe(data => {
         console.log(data);
       })

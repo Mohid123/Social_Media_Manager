@@ -40,8 +40,9 @@ export class AccountManagerComponent implements OnInit {
   }
 
   async signInWithFB() {
+    debugger;
     const fbLoginOptions = {
-      scope: 'pages_messaging,pages_messaging_subscriptions,email,pages_show_list,instagram_basic,instagram_content_publish,pages_read_engagement,publish_to_groups'
+      scope: 'pages_messaging,pages_messaging_subscriptions,email,pages_show_list,instagram_basic,instagram_content_publish, publish_video ,pages_read_engagement,publish_to_groups , pages_manage_posts'
     };
     await this.authService.signIn(FacebookLoginProvider.PROVIDER_ID, fbLoginOptions).then((socialUser) => {
       this.socialUser = socialUser;
@@ -49,8 +50,9 @@ export class AccountManagerComponent implements OnInit {
       this.getLongLivedFBUserToken(this.socialUser.authToken).subscribe(data => {
         console.log(data , 'long access token')
         this.signedInUser.FBUserAuthToken = data.access_token;
+        debugger;
         this.getFacebookPages(this.socialUser.id , data.access_token).subscribe(data=>{
-          console.log(data);
+          console.log(data , 'Facebook pages');
           data.data.forEach(item => {
             let obj = {
               pageAccessToken : item.access_token,
@@ -69,7 +71,7 @@ export class AccountManagerComponent implements OnInit {
     return this._facebookService.getLongLivedFBAccessToken(userToken);
   }
 
-  getFacebookPages(id, userToken) {
+  getFacebookPages(id, userToken) : Observable<any> {
     return this._facebookService.getFacebookPages(id, userToken)
   }
 

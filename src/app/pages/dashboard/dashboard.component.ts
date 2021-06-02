@@ -49,7 +49,7 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit() {
     this.showSpinner()
-    this.getStats();
+    // this.getStats();
   }
 
 
@@ -60,33 +60,33 @@ export class DashboardComponent implements OnInit {
     }, 1000);
   }
 
-  getInstagramStats() {
-    return this._reportService.getInstagramStats()
-  }
+  // getInstagramStats() {
+  //   return this._reportService.getInstagramStats()
+  // }
 
-  getClubStats() {
-    return this._reportService.getClubStatus()
-  }
+  // getClubStats() {
+  //   return this._reportService.getClubStatus()
+  // }
 
-  getStats() {
-    this._reportService.getFacebookStats().subscribe(stats => {
-      this.facebookStats = stats
-      this.pieChartData.push(stats.total)
-      console.log(this.facebookStats , 'FB stats')
-      this.getInstagramStats().subscribe(stats => {
-        this.instagramStats = stats
-        this.pieChartData.push(stats.total)
-        console.log(this.instagramStats , 'IG stats')
-        this.getClubStats().subscribe(stats => {
-          this.clubStats = stats
-          this.pieChartData.push(stats.total)
-          this.cf.detectChanges();
-          console.log(this.clubStats , 'Club stats')
-          console.log(this.pieChartData)
-        })
-      })
-    })
-  }
+  // getStats() {
+  //   this._reportService.getFacebookStats().subscribe(stats => {
+  //     this.facebookStats = stats
+  //     this.pieChartData.push(stats.total)
+  //     console.log(this.facebookStats , 'FB stats')
+  //     this.getInstagramStats().subscribe(stats => {
+  //       this.instagramStats = stats
+  //       this.pieChartData.push(stats.total)
+  //       console.log(this.instagramStats , 'IG stats')
+  //       this.getClubStats().subscribe(stats => {
+  //         this.clubStats = stats
+  //         this.pieChartData.push(stats.total)
+  //         this.cf.detectChanges();
+  //         console.log(this.clubStats , 'Club stats')
+  //         console.log(this.pieChartData)
+  //       })
+  //     })
+  //   })
+  // }
 
 
 

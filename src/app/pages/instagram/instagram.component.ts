@@ -44,12 +44,18 @@ export class InstagramComponent implements OnInit {
   }
 
   getSignedInUser() {
+    debugger;
     this._authService.getSignedInUser().pipe(take(1)).subscribe(user => {
       this.signedInUser = user;
-      this.getIGAccountDetails(user.FBPages[0].pageID, user.FBPages[0].pageAccessToken).subscribe(data => {
-        this.IGaccount = data
-        console.log(this.IGaccount)
-      })
+      console.log(this.signedInUser)
+      if(this.signedInUser.FBPages.length > 0){
+        this.signedInUser.FBPages.forEach(item=>{
+          this.getIGAccountDetails(item.pageID, item.pageAccessToken).subscribe(data => {
+            this.IGaccount = data
+            console.log(this.IGaccount)
+          })
+        })
+      }
     })
   }
 

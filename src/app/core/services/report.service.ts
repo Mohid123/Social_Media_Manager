@@ -30,17 +30,17 @@ export class ReportService {
     return this._apiService.post('/report/updateReport' , report)
   }
 
-  getFacebookStats() : Observable <any>{
-    return this._apiService.get('/report/getFacebookStats');
+  getFacebookStats(userId) : Observable <any>{
+    return this._apiService.get(`/report/getFacebookStats/${userId}`);
   }
 
-  getInstagramStats() : Observable <any>{
-    return this._apiService.get('/report/getInstagramStats');
+  getInstagramStats(userId) : Observable <any>{
+    return this._apiService.get(`/report/getInstagramStats/${userId}`);
 
   }
 
-  getClubStatus() : Observable <any>{
-    return this._apiService.get('/report/getClubStats');
+  getClubStatus(userId) : Observable <any>{
+    return this._apiService.get(`/report/getClubStats/${userId}`);
 
   }
 
