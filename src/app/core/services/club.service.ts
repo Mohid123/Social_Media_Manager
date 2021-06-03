@@ -1,4 +1,7 @@
-import { HttpHeaders } from '@angular/common/http';
+import { ErrorhandlerService } from './errorhandler.service';
+import { catchError } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
+import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ApiService } from './api.service';
 import { Injectable } from '@angular/core';
@@ -9,7 +12,7 @@ import { Injectable } from '@angular/core';
 export class ClubService {
 private club : any
 
-  constructor(private _apiService : ApiService) { }
+  constructor(private _apiService : ApiService , private http : HttpClient , private _errorHandlerService : ErrorhandlerService) { }
 
   getAllClubs(offset , limit) : Observable<any> {
     limit = parseInt(limit) < 1 ? 10 : limit;
@@ -41,6 +44,13 @@ private club : any
     this.club = club;
   }
 
-    
+  getClubGroups(offset , limit) : Observable<any> {
+    return this.http.get(`${environment.club_api_url}/groups/getAllGroups?offset=${offset}&limit=${limit}`).pipe(catchError(this._errorHandlerService.handleErrors))
+  }  
+
+  getClubEvents(offset , limit){
+    return this.http.get(`${environment.club_api_url}/event/getAllEvents?offset=${offset}&limit=${limit}`).pipe(catchError(this._errorHandlerService.handleErrors))
+  }
+
   
 }

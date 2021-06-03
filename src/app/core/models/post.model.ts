@@ -5,6 +5,7 @@ export class Post {
     id:string;
     userID: string;
     eventID: string;
+    groupID: string;
     byUser: string;
     type: string;
     textFirst: string;
@@ -61,6 +62,7 @@ constructor(){
     this.postedTo = ""
     this.deletedCheck = false
     this.pinPost = false
-    this.backgroundColorHex = ""
+    this.backgroundColorHex = "";
+    this.userID = localStorage.getItem('userId');
 }
 }   

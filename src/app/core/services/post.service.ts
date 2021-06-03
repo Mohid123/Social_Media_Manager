@@ -17,5 +17,12 @@ export class PostService {
      return this.http.post(`${environment.club_api_url}/post/AddPost` , payload).pipe(catchError(this._errorHandlerService.handleErrors));
   } 
 
+  addPostToGroup(payload){
+    return this.http.post(`${environment.club_api_url}/groups/addPost/` , payload).pipe(catchError(this._errorHandlerService.handleErrors));
+  } 
+
+  addPostToEvent(payload){
+    return this.http.post(`${environment.club_api_url}/event/addPost` , payload).pipe(catchError(this._errorHandlerService.handleErrors));
+  }
 
 }

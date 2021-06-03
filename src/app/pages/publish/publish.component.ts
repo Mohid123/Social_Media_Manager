@@ -1,3 +1,5 @@
+import { VideoProcessingService } from './../../core/services/video-service/video-processing.service';
+import { ClubService } from './../../core/services/club.service';
 import { ReportService } from './../../core/services/report.service';
 import { locale } from './../../modules/i18n/vocabs/de';
 import { PostService } from './../../core/services/post.service';
@@ -10,8 +12,9 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { NgxSpinnerService } from "ngx-spinner";
 import { User } from 'src/app/core/models/user.model';
 import { Post } from 'src/app/core/models/post.model';
-import { take, filter } from 'rxjs/operators';
+import { take, filter, single } from 'rxjs/operators';
 import { Report } from 'src/app/core/models/report.model';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 @Component({
   selector: 'app-publish',
   templateUrl: './publish.component.html',
@@ -50,7 +53,9 @@ export class PublishComponent implements OnInit {
     private _mediaUploadService: MediauploadService,
     private _authService: MainAuthService,
     private _postService: PostService,
-    private _reportService: ReportService
+    private _reportService: ReportService,
+    private _clubService: ClubService,
+    private _videoService: VideoProcessingService
   ) {
     this.post = new Post();
     this.report = new Report();
@@ -90,9 +95,10 @@ export class PublishComponent implements OnInit {
             }
           })
         });
-        console.log(this.checklist)
       }
     })
+    this.getClubGroups()
+    this.getClubEvents()
   }
 
   getIGAccountDetails(FbPageID, FbPageAccessToken) {
@@ -169,10 +175,34 @@ export class PublishComponent implements OnInit {
     }
   }
 
+  getClubGroups() {
+    this._clubService.getClubGroups(0, 50).subscribe((groups: any) => {
+      console.log(groups)
+      groups.map(singleItem => {
+        singleItem.isSelected = false
+        this.checklist.push(singleItem);
+      })
+    })
+    this.cf.detectChanges()
+  }
+
+  getClubEvents() {
+    this._clubService.getClubEvents(0, 50).subscribe((events: any) => {
+      console.log(events)
+      events.map((sigleItem) => {
+        sigleItem.isSelected = false;
+        this.checklist.push(sigleItem)
+      })
+    })
+    this.cf.detectChanges()
+  }
+
+
   postImageContent() {
     let selectedFacebookPages = []
     let selctedInstagramPages = []
     let selectedClubGroups = []
+    let selectedClubEvents = []
     if (!this.file) {
       this.toast.error('Please select an Image File', 'Empty File');
       return;
@@ -188,7 +218,14 @@ export class PublishComponent implements OnInit {
       else if (item.hasOwnProperty('instagram_business_account')) {
         selctedInstagramPages.push(item);
       }
+      else if (item.hasOwnProperty('groupName')) {
+        selectedClubGroups.push(item);
+      }
+      else if (item.hasOwnProperty('eventName')) {
+        selectedClubEvents.push(item)
+      }
     })
+    console.log(selectedFacebookPages, selctedInstagramPages, selectedClubGroups, selectedClubEvents)
 
     this._mediaUploadService.uploadMedia('Facebook', this.signedInUser.id, this.file).subscribe((media: any) => {
       this.spinner.show();
@@ -226,6 +263,62 @@ export class PublishComponent implements OnInit {
         })
       }
     })
+
+    if (selectedClubGroups) {
+      this.spinner.show();
+      this._mediaUploadService.uploadClubMedia('GroupMedia', this.signedInUser.id, this.file).subscribe((media: any) => {
+        selectedClubGroups.forEach(singleGroup => {
+          delete this.post.eventID;
+          this.post.postedTo = 'Group';
+          this.post.text = this.socialCaption;
+          this.post.groupID = singleGroup.id;
+          this.post.pinPost = false;
+          this.post.deletedCheck = false;
+          this.post.captureFileURL = media.url;
+          this.post.path = media.path;
+          this._postService.addPostToGroup(this.post).subscribe((groupPost: any) => {
+
+            console.log(groupPost, 'GroupPosts')
+            this.toast.success(`Post added Succeessfully to ${singleGroup.groupName}`);
+            this.url = "";
+            this.cf.detectChanges();
+            this.createReport(1, groupPost.id)
+          }, (error: any) => {
+            this.spinner.hide();
+            this.toast.error(error.message)
+          })
+        })
+      })
+    }
+
+    if (selectedClubEvents) {
+      this.spinner.show();
+      this._mediaUploadService.uploadClubMedia('EventMedia', this.signedInUser.id, this.file).subscribe((media: any) => {
+        selectedClubEvents.forEach((singleEvent: any) => {
+          delete this.post.groupID;
+          this.post.postedTo = 'Event';
+          this.post.text = this.socialCaption;
+          this.post.eventID = singleEvent.id;
+          this.post.pinPost = false;
+          this.post.deletedCheck = false;
+          this.post.captureFileURL = media.url
+          this.post.path = media.path
+          this._postService.addPostToEvent(this.post).subscribe((eventPost: any) => {
+            console.log(eventPost, 'EventPost')
+            this.toast.success(`Post added Succeessfully to ${singleEvent.eventName}`);
+            this.spinner.hide()
+            this.url = "";
+            this.cf.detectChanges();
+            this.createReport(1, eventPost.id)
+
+          }, (error) => {
+            this.spinner.hide();
+            this.toast.error(error.message)
+          })
+        })
+      })
+
+    }
   }
 
 
@@ -244,6 +337,8 @@ export class PublishComponent implements OnInit {
     let selectedFacebookPages = []
     let selctedInstagramPages = []
     let selectedClubGroups = []
+    let selectedClubEvents = [];
+    let file;
 
     if (!this.file) {
       this.toast.error('Please select a Video File', 'Empty File');
@@ -261,6 +356,13 @@ export class PublishComponent implements OnInit {
       }
       else if (item.hasOwnProperty('instagram_business_account')) {
         selctedInstagramPages.push(item);
+      }
+
+      else if (item.hasOwnProperty('groupName')) {
+        selectedClubGroups.push(item);
+      }
+      else if (item.hasOwnProperty('eventName')) {
+        selectedClubEvents.push(item)
       }
     })
 
@@ -315,14 +417,99 @@ export class PublishComponent implements OnInit {
               })
             }, 3000)
           })
-        } , (error)=>{
+        }, (error) => {
           this.spinner.hide();
           this.toast.error(error.message);
-         
+
           this.createReport(0)
         })
       }
     })
+
+    if (selectedClubGroups) {
+      delete this.post.eventID;
+      this.post.postedTo = 'Group';
+      this.post.text = this.socialCaption;
+      this.post.pinPost = false;
+      this.post.deletedCheck = false;
+      this._mediaUploadService.uploadClubMedia('GroupMedia', this.signedInUser.id, this.file).subscribe((uploadedVideo: any) => {
+        this.post.captureFileURL = uploadedVideo.url;
+        this.post.path = uploadedVideo.path
+        this._videoService.generateThumbnail(this.file).then(base64 => {
+          file = base64
+          file = file.replace('data:image/png;base64,', '');
+          const imageBlob = this.dataURItoBlob(file.toString());
+          const imageFile = new File([imageBlob], 'thumbnail.jpeg', { type: 'image/jpeg' });
+          this._mediaUploadService.uploadMedia('VideoThumbnails', this.signedInUser.id, imageFile).subscribe((thumbnailFile: any) => {
+            this.post.thumbnailPath = thumbnailFile.path
+            this.post.thumbnailURL = thumbnailFile.url
+
+            selectedClubGroups.forEach(singleGroup => {
+              this.post.groupID = singleGroup.id
+              this._postService.addPostToGroup(this.post).subscribe((groupPost: any) => {
+                console.log(groupPost ,'grouppost')
+                this.toast.success(`Video Post added Successfully to ${singleGroup.groupName}`);
+                this.spinner.hide()
+                this.url = "";
+                this.cf.detectChanges();
+                this.createReport(1, groupPost.id)
+              }, (error) => {
+                this.spinner.hide();
+                this.toast.error(error.message);
+              })
+            })
+          })
+        })
+      })
+    }
+
+    if(selectedClubEvents){
+      delete this.post.groupID;
+      this.post.postedTo = 'Event';
+      this.post.text = this.socialCaption;
+      this.post.pinPost = false;
+      this.post.deletedCheck = false;
+      this._mediaUploadService.uploadClubMedia('EventMedia', this.signedInUser.id, this.file).subscribe((uploadedVideo: any) => {
+        this.post.captureFileURL = uploadedVideo.url;
+        this.post.path = uploadedVideo.path
+        this._videoService.generateThumbnail(this.file).then(base64 => {
+          file = base64
+          file = file.replace('data:image/png;base64,', '');
+          const imageBlob = this.dataURItoBlob(file.toString());
+          const imageFile = new File([imageBlob], 'thumbnail.jpeg', { type: 'image/jpeg' });
+          this._mediaUploadService.uploadMedia('VideoThumbnails', this.signedInUser.id, imageFile).subscribe((thumbnailFile: any) => {
+            this.post.thumbnailPath = thumbnailFile.path
+            this.post.thumbnailURL = thumbnailFile.url
+
+            selectedClubEvents.forEach(singleEvent => {
+              this.post.eventID = singleEvent.id
+              this._postService.addPostToEvent(this.post).subscribe((eventPost: any) => {
+                console.log(eventPost ,'eventpost')
+                this.toast.success(`Video Post added Successfully to ${singleEvent.groupName}`);
+                this.spinner.hide()
+                this.url = "";
+                this.cf.detectChanges();
+                this.createReport(1, eventPost.id)
+              }, (error) => {
+                this.spinner.hide();
+                this.toast.error(error.message);
+              })
+            })
+          })
+        })
+      })
+    }
+  }
+
+  dataURItoBlob(dataURI) {
+    const byteString = window.atob(dataURI);
+    const arrayBuffer = new ArrayBuffer(byteString.length);
+    const int8Array = new Uint8Array(arrayBuffer);
+    for (let i = 0; i < byteString.length; i++) {
+      int8Array[i] = byteString.charCodeAt(i);
+    }
+    const blob = new Blob([int8Array], { type: 'image/jpeg' });
+    return blob;
   }
 
   postTextContent() {
@@ -363,4 +550,3 @@ export class PublishComponent implements OnInit {
     }
   }
 }
-     
