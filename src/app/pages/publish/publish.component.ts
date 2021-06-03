@@ -447,7 +447,7 @@ export class PublishComponent implements OnInit {
             selectedClubGroups.forEach(singleGroup => {
               this.post.groupID = singleGroup.id
               this._postService.addPostToGroup(this.post).subscribe((groupPost: any) => {
-                console.log(groupPost ,'grouppost')
+                console.log(groupPost, 'grouppost')
                 this.toast.success(`Video Post added Successfully to ${singleGroup.groupName}`);
                 this.spinner.hide()
                 this.url = "";
@@ -463,12 +463,10 @@ export class PublishComponent implements OnInit {
       })
     }
 
-    if(selectedClubEvents){
+    if (selectedClubEvents) {
       delete this.post.groupID;
       this.post.postedTo = 'Event';
       this.post.text = this.socialCaption;
-      this.post.pinPost = false;
-      this.post.deletedCheck = false;
       this._mediaUploadService.uploadClubMedia('EventMedia', this.signedInUser.id, this.file).subscribe((uploadedVideo: any) => {
         this.post.captureFileURL = uploadedVideo.url;
         this.post.path = uploadedVideo.path
@@ -484,7 +482,7 @@ export class PublishComponent implements OnInit {
             selectedClubEvents.forEach(singleEvent => {
               this.post.eventID = singleEvent.id
               this._postService.addPostToEvent(this.post).subscribe((eventPost: any) => {
-                console.log(eventPost ,'eventpost')
+                console.log(eventPost, 'eventpost')
                 this.toast.success(`Video Post added Successfully to ${singleEvent.groupName}`);
                 this.spinner.hide()
                 this.url = "";
@@ -517,6 +515,7 @@ export class PublishComponent implements OnInit {
     let selectedFacebookPages = []
     let selctedInstagramPages = []
     let selectedClubGroups = []
+    let selectedClubEvents = []
 
     if (this.socialCaption == "") {
       this.toast.error('Please add content to post', 'No Content Added');
@@ -533,6 +532,12 @@ export class PublishComponent implements OnInit {
       else if (item.hasOwnProperty('instagram_business_account')) {
         selctedInstagramPages.push(item);
       }
+      else if (item.hasOwnProperty('groupName')) {
+        selectedClubGroups.push(item);
+      }
+      else if (item.hasOwnProperty('eventName')) {
+        selectedClubEvents.push(item)
+      }
     })
 
     if (selectedFacebookPages) {
@@ -545,6 +550,50 @@ export class PublishComponent implements OnInit {
           this.socialCaption = ""
           this.cf.detectChanges();
           this.createReport(1, FbPost.id)
+        })
+      })
+    }
+
+    if (selectedClubGroups) {
+      delete this.post.eventID;
+      this.post.postedTo = 'Group';
+      this.post.type = 'text'
+      this.post.text = this.socialCaption;
+      selectedClubGroups.forEach(singleGroup => {
+        this.post.groupID = singleGroup.id;
+        this._postService.addPostToGroup(this.post).subscribe((groupPost: any) => {
+          console.log(groupPost)
+          this.spinner.hide()
+          this.toast.success(` Post added Successfully to ${singleGroup.groupName}`);
+          this.socialCaption = "";
+          this.cf.detectChanges()
+          this.createReport(1, groupPost.id)
+        }, (error) => {
+          this.spinner.hide();
+          this.toast.error(error.message);
+        })
+      })
+    }
+
+    if(selectedClubEvents){
+      delete this.post.groupID;
+      this.post.postedTo = 'Event';
+      this.post.type = 'text'
+      this.post.text = this.socialCaption;
+      selectedClubEvents.forEach(singleEvent => {
+        this.post.eventID = singleEvent.id;
+        this._postService.addPostToEvent(this.post).subscribe((eventPost: any) => {
+          console.log(eventPost)
+          this.spinner.hide()
+          this.toast.success(` Post added Successfully to ${singleEvent.eventName}`);
+          this.socialCaption = "";
+          this.cf.detectChanges()
+          this.createReport(1, eventPost.id)
+        }, (error) => {
+          this.spinner.hide();
+          this.toast.error(error.message);
+          this.createReport(0)
+
         })
       })
     }
