@@ -29,8 +29,12 @@ export class FacebookComponent implements OnInit {
   public signedInUser: User
   public file: File
   public report: Report
-  private selectedFBPages : any[] = []
-  public facebookPages : any[] = []
+  private selectedFBPages: any[] = []
+  public facebookPages: any[] = []
+  public masterSelected: boolean
+  public facebookProfileUrl: string = 'https://social.teamtalkers.com/api/v1/en/media-upload/mediaFiles/123/test/6ca2499366f5b5611041fe57e2aac1ee9.svg'
+  checklist: any = [];
+  checkedList: any;
   showDiv = {
     photo: true,
     video: false,
@@ -40,6 +44,7 @@ export class FacebookComponent implements OnInit {
   ngOnInit() {
     this.showSpinner();
     this.getSignedInUser();
+    this.getCheckedItemList();
   }
 
   showSpinner() {
@@ -49,12 +54,37 @@ export class FacebookComponent implements OnInit {
     }, 1000);
   }
 
+
+  selectAll() {
+    for (var i = 0; i < this.checklist.length; i++) {
+      this.checklist[i].isSelected = this.masterSelected;
+    }
+    this.getCheckedItemList();
+  }
+
+  getCheckedItemList(): void {
+    this.checkedList = [];
+    for (var i = 0; i < this.checklist.length; i++) {
+      if (this.checklist[i].isSelected)
+        this.checkedList.push(this.checklist[i]);
+    }
+    console.log(this.checkedList)
+  }
+
+  singleItemSelected() {
+    this.masterSelected = this.checklist.every(function (item: any) {
+      return item.isSelected == true;
+    })
+    this.getCheckedItemList();
+  }
+
   getSignedInUser() {
     this._authService.getSignedInUser().subscribe(user => {
       this.signedInUser = user;
-      this.signedInUser.FBPages.map(page=>{
-       page.isSelected = false;
-       this.facebookPages.push(page)
+      this.signedInUser.FBPages.map(page => {
+        page.isSelected = false;
+        page.captureImageURL = this.facebookProfileUrl
+        this.checklist.push(page)
       })
     });
   }
@@ -77,8 +107,8 @@ export class FacebookComponent implements OnInit {
     }
   }
 
-  getFacebookPages(selected , page){
-    if(page.isSelected ==  true && selected ==  true){
+  getFacebookPages(selected, page) {
+    if (page.isSelected == true && selected == true) {
       this.selectedFBPages.push(page)
     }
     else {
@@ -106,45 +136,30 @@ export class FacebookComponent implements OnInit {
   }
 
   postImageContent() {
-    debugger;
     if (!this.file) {
       this.toast.error('Please select an Image File', 'Empty File');
       return;
     }
-     else if(this.signedInUser.FBPages.length === 0){
-      this.toast.error('You dont have any Facebook Pages Associated', 'No Facebook Page Found');
-       return;
+    else if (this.checkedList.length == 0) {
+      this.toast.error('No Item Selected', 'Please select items to post');
+      return;
     }
     this.spinner.show()
     this._mediaUploadService.uploadMedia('Facebook', this.signedInUser.id, this.file).subscribe((media: any) => {
-      this.signedInUser.FBPages.forEach(item=>{
-        this._facebookService.addImagePostToFB(item.pageID, media.url, this.name, item.pageAccessToken).subscribe(post => {
+      this.checkedList.forEach(item => {
+        this._facebookService.addImagePostToFB(item.pageID, media.url, this.name, item.pageAccessToken).subscribe(FbPost => {
           this.spinner.hide();
-          this.toast.success('Image Post Added Successfully', 'Post Added');
+          this.toast.success(`Image Post Added Successfully on ${item.pageName}`, 'Post Added');
           this.url = ""
           this.name = ""
           this.cf.detectChanges();
-          this.report.clubID = localStorage.getItem('clubId');
-          this.report.postID = post.post_id;
-          this.report.postedTo = 'Facebook';
-          this.report.successStatus = 1;
-          this.report.userID = localStorage.getItem('userId')
-          this._reportService.addReport(this.report).subscribe(data => {
-            console.log(data, 'Report Created');
-          })
-      })
+          this.createReport(1, FbPost.id)
+        })
       }, (error) => {
         debugger;
         this.spinner.hide();
         this.toast.error(error.message)
-        this.report.clubID = localStorage.getItem('clubId');
-        this.report.postID = "";
-        this.report.postedTo = 'Facebook';
-        this.report.successStatus = 0;
-        this.report.userID = localStorage.getItem('userId')
-        this._reportService.addReport(this.report).subscribe(data => {
-          console.log(data, 'Report Created');
-        })
+        this.createReport(0)
       })
     }, (err) => {
       this.spinner.hide();
@@ -157,42 +172,27 @@ export class FacebookComponent implements OnInit {
       this.toast.error('Please select a Video File', 'Empty File');
       return;
     }
-    else if(this.signedInUser.FBPages.length === 0){
-      this.toast.error('You dont have any Facebook Pages Associated', 'No Facebook Page Found');
-       return;
+    else if (this.checkedList.length == 0) {
+      this.toast.error('No Item Selected', 'Please select items to post');
+      return;
     }
     this.spinner.show()
     this._mediaUploadService.uploadMedia('Facebook', this.signedInUser.id, this.file).subscribe((media: any) => {
       console.log(media);
-      this.signedInUser.FBPages.forEach(item=>{
-        this._facebookService.addVideoPost(item.pageID, item.pageAccessToken, media.url, this.name).subscribe((video : any) => {
+      this.checkedList.forEach(item => {
+        this._facebookService.addVideoPost(item.pageID, item.pageAccessToken, media.url, this.name).subscribe((video: any) => {
           this.spinner.hide();
-          this.toast.success('Image Post Added Successfully', 'Post Added');
+          this.toast.success(`Video Post Added Successfully on ${item.pageName}`, 'Post Added');
           this.url = ""
           this.name = ""
           this.cf.detectChanges();
           console.log(video, 'videoid')
-          this.report.clubID = localStorage.getItem('clubId');
-          this.report.postID = video.id;
-          this.report.postedTo = 'Facebook';
-          this.report.successStatus = 1;
-          this.report.userID = localStorage.getItem('userId')
-          this._reportService.addReport(this.report).subscribe(data => {
-            console.log(data, 'Report Created');
-          })
-      })
-      
+          this.createReport(1 , video.id)
+        })
       }, (err) => {
         this.spinner.hide()
         this.toast.error(err.message);
-        this.report.clubID = localStorage.getItem('clubId');
-        this.report.postID = "";
-        this.report.postedTo = 'Facebook';
-        this.report.successStatus = 0;
-        this.report.userID = localStorage.getItem('userId')
-        this._reportService.addReport(this.report).subscribe(data => {
-          console.log(data, 'Report Created');
-        })
+        this.createReport(0)
       })
     }, (err) => {
       this.spinner.hide()
@@ -206,38 +206,39 @@ export class FacebookComponent implements OnInit {
       this.toast.error('Please add content to post', 'No Content Added');
       return;
     }
-    else if(this.signedInUser.FBPages.length === 0){
-      this.toast.error('You dont have any Facebook Pages Associated', 'No Facebook Page Found');
-       return;
+    else if (this.checkedList.length == 0) {
+      this.toast.error('No Item Selected', 'Please select items to post');
+      return;
     }
     this.spinner.show();
-    this.signedInUser.FBPages.forEach(item=>{
-      this._facebookService.addTextPostToFB(item.pageID, this.name, item.pageAccessToken).subscribe(post => {
+    this.checkedList.forEach(item => {
+      this._facebookService.addTextPostToFB(item.pageID, this.name, item.pageAccessToken).subscribe(FbPost => {
         this.spinner.hide();
-        this.toast.success('Post Added Successfully', 'Post Added');
+        this.toast.success(`Text Post Added Successfully on ${item.pageName}`, 'Post Added');
         this.name = ""
         this.cf.detectChanges();
-        this.report.clubID = localStorage.getItem('clubId');
-        this.report.postID = post.id;
-        this.report.postedTo = 'Facebook';
-        this.report.successStatus = 1;
-        this.report.userID = localStorage.getItem('userId')
-        this._reportService.addReport(this.report).subscribe(data => {
-          console.log(data, 'Report Created');
-        })     
-    })
+        this.createReport(1 ,FbPost.id )
+      })
     }, (error) => {
       this.spinner.hide();
       this.toast.error(error.message);
-      this.report.clubID = localStorage.getItem('clubId');
-      this.report.postID = ""
-      this.report.postedTo = 'Facebook';
-      this.report.successStatus = 0;
-      this.report.userID = localStorage.getItem('userId')
-      this._reportService.addReport(this.report).subscribe(data => {
-        console.log(data, 'Report Created');
-      })     
+      this.cf.detectChanges();
+      this.createReport(0)
     })
   }
+
+
+  createReport(status, postId?) {
+    this.report.clubID = localStorage.getItem('clubId');
+    this.report.postID = postId ? postId : "";
+    this.report.postedTo = 'Facebook';
+    this.report.successStatus = status;
+    this.report.userID = localStorage.getItem('userId')
+    this._reportService.addReport(this.report).subscribe(data => {
+      console.log(data, 'Report Created');
+    })
+  }
+
+
 }
 
