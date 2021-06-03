@@ -266,6 +266,7 @@ export class PublishComponent implements OnInit {
     })
 
     this._mediaUploadService.uploadMedia('Facebook', this.signedInUser.id, this.file).subscribe((media: any) => {
+      console.log(media)
       this.spinner.show();
       if (selectedFacebookPages) {
         selectedFacebookPages.forEach(item => {
@@ -281,6 +282,7 @@ export class PublishComponent implements OnInit {
       }
 
       if (selctedInstagramPages) {
+        this.spinner.show();
         selctedInstagramPages.forEach(item => {
           this._instagramService.createIgContainerForVideo(item.instagram_business_account.id, media.url, this.socialCaption, item.linkedFbPagetoken).subscribe((container: any) => {
             let interval = setInterval(() => {
@@ -314,6 +316,11 @@ export class PublishComponent implements OnInit {
               })
             }, 3000)
           })
+        } , (error)=>{
+          this.spinner.hide();
+          this.toast.error(error.message);
+         
+          this.createReport(0)
         })
       }
     })

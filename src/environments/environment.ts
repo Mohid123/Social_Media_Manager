@@ -4,13 +4,11 @@ export const environment = {
   USERDATA_KEY: 'authf649fc9a5f55',
   isMockEnabled: true,
   apiUrl: 'api',
-  // api_url : 'http://192.168.1.105:3005',
-  api_url:'https://social.teamtalkers.com/api/v1/en',
+  api_url:'https://social.teamtalkers.com/api/v1/en',   //To run on server with https 
+  // api_url : 'http://192.168.1.105:3005',   // To run project locally 
 
-  // club_api_url : 'http://192.168.1.105:3003',
-  club_api_url : 'https://server.teamtalkers.com:3002',
+  club_api_url : 'https://social.teamtalkers.com/api/v1/en', // club base url to upload club media and posts for respective club
   base_url : 'https://graph.facebook.com/',
   app_id : '844857613045687',
   app_secret : '2159f936003b2d66dfa879da95a60da5'
 };
-

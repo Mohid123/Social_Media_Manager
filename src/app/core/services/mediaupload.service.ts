@@ -16,6 +16,14 @@ export class MediauploadService {
   uploadMedia(folderName, fieldName, file) {
     const formData: FormData = new FormData();
     formData.append('file', file, file.name);
+    return this.http.post(`${environment.api_url}/media-upload/mediaFiles/${folderName}/${fieldName}`, formData).pipe(catchError(this._errorHandlerService.handleErrors))
+  }
+
+
+  uploadClubMedia(folderName , fieldName , file){
+    const formData: FormData = new FormData();
+    formData.append('file', file, file.name);
     return this.http.post(`${environment.club_api_url}/media-upload/mediaFiles/${folderName}/${fieldName}`, formData).pipe(catchError(this._errorHandlerService.handleErrors))
   }
+
 }
