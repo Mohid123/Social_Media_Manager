@@ -7,8 +7,6 @@ import { AuthService } from './../../modules/auth/_services/auth.service';
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { NgxSpinnerService } from "ngx-spinner";
 import { User } from 'src/app/core/models/user.model';
-import { chainedInstruction } from '@angular/compiler/src/render3/view/util';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { ToastrService } from 'ngx-toastr';
 import { take } from 'rxjs/operators';
 
@@ -26,6 +24,10 @@ export class InstagramComponent implements OnInit {
   public format: string;
   public url: string = '';
   public report: Report
+  public instagramProfileUrl: string = 'https://social.teamtalkers.com/api/v1/en/media-upload/mediaFiles/123/test/113ad1ea783c7d107afd8ddc09eb6f23e.svg'
+  public masterSelected: boolean;
+  public checklist: any = [];
+  private checkedList: any;
   showDiv = {
     photo: true,
     video: false,
@@ -35,24 +37,32 @@ export class InstagramComponent implements OnInit {
     private _authService: MainAuthService,
     private _instagramService: InstagramService,
     private _mediaUploadService: MediauploadService,
-    private _reportService : ReportService,
+    private _reportService: ReportService,
     private toast: ToastrService) { this.report = new Report() }
 
   ngOnInit() {
     this.showSpinner()
     this.getSignedInUser();
+    this.getCheckedItemList()
   }
 
   getSignedInUser() {
-    debugger;
     this._authService.getSignedInUser().pipe(take(1)).subscribe(user => {
       this.signedInUser = user;
       console.log(this.signedInUser)
-      if(this.signedInUser.FBPages.length > 0){
-        this.signedInUser.FBPages.forEach(item=>{
-          this.getIGAccountDetails(item.pageID, item.pageAccessToken).subscribe(data => {
-            this.IGaccount = data
-            console.log(this.IGaccount)
+      if (this.signedInUser.FBPages.length > 0) {
+        this.signedInUser.FBPages.forEach(item => {
+          this.getIGAccountDetails(item.pageID, item.pageAccessToken).subscribe((igaccount: any) => {
+            if (igaccount.hasOwnProperty('instagram_business_account')) {
+              igaccount.isSelected = false;
+              igaccount.pageName = 'Instagram Account'
+              igaccount.linkedFbPagetoken = item.pageAccessToken
+              igaccount.captureImageURL = this.instagramProfileUrl;
+              this.checklist.push(igaccount);
+              this.cf.detectChanges();
+            }
+            this.IGaccount = igaccount
+            console.log(this.checklist)
           })
         })
       }
@@ -64,7 +74,28 @@ export class InstagramComponent implements OnInit {
   }
 
 
+  selectAll() {
+    for (var i = 0; i < this.checklist.length; i++) {
+      this.checklist[i].isSelected = this.masterSelected;
+    }
+    this.getCheckedItemList();
+  }
 
+  getCheckedItemList(): void {
+    this.checkedList = [];
+    for (var i = 0; i < this.checklist.length; i++) {
+      if (this.checklist[i].isSelected)
+        this.checkedList.push(this.checklist[i]);
+    }
+    console.log(this.checkedList)
+  }
+
+  singleItemSelected() {
+    this.masterSelected = this.checklist.every(function (item: any) {
+      return item.isSelected == true;
+    })
+    this.getCheckedItemList();
+  }
   showSpinner() {
     this.spinner.show();
     setTimeout(() => {
@@ -85,66 +116,74 @@ export class InstagramComponent implements OnInit {
     }
   }
 
-  
-  createReport( status , postId?){
-    debugger; 
+
+  createReport(status, postId?) {
+    debugger;
     this.report.clubID = localStorage.getItem('clubId');
-    this.report.postID =  postId ? postId : "";
+    this.report.postID = postId ? postId : "";
     this.report.postedTo = 'Instagram';
     this.report.successStatus = status;
     this.report.userID = localStorage.getItem('userId')
     this._reportService.addReport(this.report).subscribe(data => {
       console.log(data, 'Report Created');
-    })    
+    })
   }
 
   postVideoContent() {
+    console.log(this.file)
     if (!this.file) {
       this.toast.error('Please select an Video File', 'Empty File');
       return;
     }
+    else if (this.checkedList.length == 0) {
+      this.toast.error('No Item Selected', 'Please select items to post');
+      return;
+    }
     this.spinner.show();
     this._mediaUploadService.uploadMedia('InstagramTest', '123', this.file).subscribe((media: any) => {
-      console.log(media.url)
-      this._instagramService.createIgContainerForVideo(this.IGaccount.instagram_business_account.id, media.url, this.instaCaption, this.signedInUser.FBPages[0].pageAccessToken).subscribe((container: any) => {
-        console.log(container)
-        let interval = setInterval(() => {
-          this._instagramService.getContainerStatus(container.id, this.signedInUser.FBPages[0].pageAccessToken).subscribe((data: any) => {
-            console.log(data , 'containerId')
-            if (data.status_code == "FINISHED") {
-              this._instagramService.publishContent(this.IGaccount.instagram_business_account.id, container.id, this.signedInUser.FBPages[0].pageAccessToken).subscribe((data : any) => {
+      this.checkedList.forEach(item=>{
+        this._instagramService.createIgContainerForVideo(item.instagram_business_account.id, media.url, this.instaCaption,item.linkedFbPagetoken).subscribe((container: any) => {
+          console.log(container)
+          let interval = setInterval(() => {
+            this._instagramService.getContainerStatus(container.id, item.linkedFbPagetoken).subscribe((data: any) => {
+              console.log(data, 'containerId')
+              if (data.status_code == "FINISHED") {
+                this._instagramService.publishContent(item.instagram_business_account.id, container.id, item.linkedFbPagetoken).subscribe((data: any) => {
+                  this.spinner.hide()
+                  clearInterval(interval)
+                  this.url = "";
+                  this.instaCaption = "";
+                  this.cf.detectChanges()
+                  this.toast.success('Published', 'Video Post Added');
+                  this.createReport(1, data.id)
+                }, error => {
+                  this.spinner.hide();
+                  this.toast.error(error.message);
+                  clearInterval(interval)
+                  this.createReport(0)
+                })
+              }
+              else if (data.status_code == "ERROR") {
                 this.spinner.hide()
                 clearInterval(interval)
                 this.url = "";
                 this.instaCaption = "";
                 this.cf.detectChanges()
-                this.toast.success('Published' , 'Video Post Added');
-                this.createReport(1 , data.id)
-                window.location.reload();
-              } , error=>{
-                this.spinner.hide();
-                this.toast.error(error.message);
-                clearInterval(interval)
-                this.createReport(0)
-              })
-            }
-            else if (data.status_code == "ERROR") {
-              this.spinner.hide()
-              clearInterval(interval)
-              this.url = "";
-              this.instaCaption = "";
-              this.cf.detectChanges()
-              this.toast.error('Error uploding Video' , 'Video Format Unsupported' )
-              this.createReport(0);
-            }
-          })
-        }, 3000)
+                this.toast.error('Error uploding Video', 'Video Format Unsupported')
+                this.createReport(0);
+              }
+            })
+          }, 3000)
+  
+        }, (error) => {
+          this.spinner.hide();
+          this.toast.error(error.message)
+        })
 
-       },(error)=>{
-         this.spinner.hide();
-         this.toast.error(error.message)
-       })
-    },(error)=>{
+      })
+      console.log(media.url)
+      
+    }, (error) => {
       this.spinner.hide();
       this.toast.error(error.message)
     })
@@ -157,30 +196,37 @@ export class InstagramComponent implements OnInit {
       this.toast.error('Please select an Image File', 'Empty File');
       return;
     }
+    else if (this.checkedList.length == 0) {
+      this.toast.error('No Item Selected', 'Please select items to post');
+      return;
+    }
     this.spinner.show()
+
     this._mediaUploadService.uploadMedia('Instagram', this.signedInUser.id, this.file).subscribe((media: any) => {
-      this._instagramService.createIGMediaContainer(this.IGaccount.instagram_business_account.id, this.instaCaption, this.signedInUser.FBPages[0].pageAccessToken, media.url).subscribe((container: any) => {
-        this._instagramService.publishContent(this.IGaccount.instagram_business_account.id, container.id, this.signedInUser.FBPages[0].pageAccessToken).subscribe((data : any) => {
-          console.log(data)
-          this.instaCaption = ""
-          this.url = ""
-          this.cf.detectChanges();
-          this.spinner.hide()
-          this.toast.success('Image Post Added Successfully', 'Post Added');
-          this.createReport(1 , data.id)
+      this.checkedList.forEach(item=>{
+        this._instagramService.createIGMediaContainer(item.instagram_business_account.id, this.instaCaption, item.linkedFbPagetoken, media.url).subscribe((container: any) => {
+          this._instagramService.publishContent(item.instagram_business_account.id, container.id,item.linkedFbPagetoken).subscribe((data: any) => {
+            console.log(data)
+            this.instaCaption = ""
+            this.url = ""
+            this.cf.detectChanges();
+            this.spinner.hide()
+            this.toast.success('Image Post Added Successfully', 'Post Added');
+            this.createReport(1, data.id)
+          }, error => {
+            this.spinner.hide()
+            this.toast.error(error.message)
+            this.createReport(0);
+          })
         }, error => {
           this.spinner.hide()
           this.toast.error(error.message)
-          this.createReport(0);
         })
       }, error => {
         this.spinner.hide()
         this.toast.error(error.message)
       })
-    }, error => {
-      this.spinner.hide()
-      this.toast.error(error.message)
-    })
+      })   
   }
 
   onSelectFile(event) {

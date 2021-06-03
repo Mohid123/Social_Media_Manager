@@ -86,7 +86,6 @@ export class PublishComponent implements OnInit {
               igAccount.linkedFbPagetoken = item.pageAccessToken
               igAccount.captureImageURL = this.instagramProfileUrl;
               this.checklist.push(igAccount);
-
               this.cf.detectChanges()
             }
           })

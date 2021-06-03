@@ -28,10 +28,7 @@ export class InstagramService {
     return this.http.post(`${environment.base_url}${instagramAccountId}/media?media_type=VIDEO&video_url=${videoUrl}&caption=${caption}&access_token=${pageAccessToken}`, '')
   }
 
-  publishVideos(instagramAccountID, containerID, FBpageAccessToken) {
-    return this.http.post(`${environment.base_url}${instagramAccountID}/media_publish?creation_id=${containerID}&access_token=${FBpageAccessToken}`, '')
 
-  }
 
   getContainerStatus(containerId, accessToken) {
     return this.http.get(`${environment.base_url}${containerId}?fields=status_code&access_token=${accessToken}`)
