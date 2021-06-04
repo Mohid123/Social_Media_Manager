@@ -4,6 +4,8 @@ import { RouterModule } from '@angular/router';
 import { DashboardComponent } from './dashboard.component';
 import { NgxSpinnerModule } from "ngx-spinner";
 import { ChartsModule } from 'ng2-charts';
+import { NgApexchartsModule } from "ng-apexcharts";
+
 
 
 @NgModule({
@@ -12,6 +14,7 @@ import { ChartsModule } from 'ng2-charts';
     CommonModule,
     NgxSpinnerModule,
     ChartsModule,
+    NgApexchartsModule,
     RouterModule.forChild([
       {
         path: '',

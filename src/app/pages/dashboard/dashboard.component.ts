@@ -1,10 +1,40 @@
 import { ReportService } from './../../core/services/report.service';
 import { ClubService } from './../../core/services/club.service';
-import { Component, OnInit, Inject, NgZone, PLATFORM_ID, AfterViewInit, ChangeDetectorRef } from '@angular/core';
+import { Component,ViewChild ,OnInit, Inject, NgZone, PLATFORM_ID, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { NgxSpinnerService } from "ngx-spinner";
-import { ChartType, ChartOptions } from 'chart.js';
+import { ChartType } from 'chart.js';
 import { SingleDataSet, Label, monkeyPatchChartJsLegend, monkeyPatchChartJsTooltip, Color } from 'ng2-charts';
+import {
+  ChartComponent,
+  ApexAxisChartSeries,
+  ApexChart,
+  ApexXAxis,
+  ApexDataLabels,
+  ApexStroke,
+  ApexMarkers,
+  ApexYAxis,
+  ApexGrid,
+  ApexTitleSubtitle,
+  ApexLegend
+} from "ng-apexcharts";
+
+
+export type ChartOptions = {
+  series: ApexAxisChartSeries;
+  chart: ApexChart;
+  xaxis: ApexXAxis;
+  stroke: ApexStroke;
+  dataLabels: ApexDataLabels;
+  markers: ApexMarkers;
+  tooltip: any; // ApexTooltip;
+  yaxis: ApexYAxis;
+  grid: ApexGrid;
+  legend: ApexLegend;
+  title: ApexTitleSubtitle;
+};
+
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -12,30 +42,8 @@ import { SingleDataSet, Label, monkeyPatchChartJsLegend, monkeyPatchChartJsToolt
 })
 export class DashboardComponent implements OnInit {
 
-  public pieChartOptions: ChartOptions = {
-    responsive: true,
-    legend: {
-    }
-  };
-  public pieChartLabels: Label[] = [['Facebook'], ['Instagram'], 'Club'];
-  public pieChartData: SingleDataSet = [];
-  public pieChartType: ChartType = 'pie';
-  public pieChartLegend = true;
-  public pieChartPlugins = [];
-  public options: any = {
-    legend: { position: 'left' },
-    labels: {
-      fontSize: 10,
-      usePointStyle: true
-    }
-  }
-  public pieChartOption: any = {
-
-  }
-  public doughnutChartColors: Color[] = [
-    { backgroundColor: ["#3b5998", "#d62976", "#fbad50"] },
-    { backgroundColor: ["#3b5998", "#d62976", "#fbad50"] },
-  ];
+  @ViewChild("chart") chart: ChartComponent;
+  public chartOptions: Partial<ChartOptions>;
 
   public facebookStats: any
   public instagramStats: any
@@ -43,13 +51,102 @@ export class DashboardComponent implements OnInit {
 
 
   constructor(private spinner: NgxSpinnerService, private _clubService: ClubService, private _reportService: ReportService, private cf: ChangeDetectorRef) {
-    monkeyPatchChartJsTooltip();
-    monkeyPatchChartJsLegend();
+    this.chartOptions = {
+      series: [
+        {
+          name: "Facebook",
+          data: [1, 52, 38, 24, 33, 26, 21]
+        },
+        {
+          name: "Instagram",
+          data: [35, 41, 62, 42, 13, 18, 29, 37, 36, 51, 32, 35]
+        },
+        {
+          name: "Club",
+          data: [87, 57, 74, 99, 75, 38, 62, 47, 82, 56, 45, 47]
+        }
+      ],
+      chart: {
+        height: 400,
+        type: "line"
+      },
+      dataLabels: {
+        enabled: false
+      },
+      stroke: {
+        width: 5,
+        curve: "straight",
+        dashArray: [0, 8, 5]
+      },
+      title: {
+        text: "Page Statistics",
+        align: "left"
+      },
+      legend: {
+        tooltipHoverFormatter: function(val, opts) {
+          return (
+            val +
+            " - <strong>" +
+            opts.w.globals.series[opts.seriesIndex][opts.dataPointIndex] +
+            "</strong>"
+          );
+        }
+      },
+      markers: {
+        size: 0,
+        hover: {
+          sizeOffset: 10
+        }
+      },
+      xaxis: {
+        labels: {
+          trim: false
+        },
+        categories: [
+          new Date(new Date().setDate(new Date().getDate() - 7)).getDate()+ ' ' + new Date(new Date().setDate(new Date().getDate() - 7)).toLocaleString('default', { month: 'short' }),
+          new Date(new Date().setDate(new Date().getDate() - 6)).getDate()+ ' ' + new Date(new Date().setDate(new Date().getDate() - 6)).toLocaleString('default', { month: 'short' }),
+          new Date(new Date().setDate(new Date().getDate() - 5)).getDate()+ ' ' + new Date(new Date().setDate(new Date().getDate() - 5)).toLocaleString('default', { month: 'short' }),
+          new Date(new Date().setDate(new Date().getDate() - 4)).getDate()+ ' ' + new Date(new Date().setDate(new Date().getDate() - 4)).toLocaleString('default', { month: 'short' }),
+          new Date(new Date().setDate(new Date().getDate() - 3)).getDate()+ ' ' + new Date(new Date().setDate(new Date().getDate() - 3)).toLocaleString('default', { month: 'short' }),
+          new Date(new Date().setDate(new Date().getDate() - 2)).getDate()+ ' ' + new Date(new Date().setDate(new Date().getDate() - 2)).toLocaleString('default', { month: 'short' }),
+          new Date(new Date().setDate(new Date().getDate() - 1)).getDate()+ ' ' + new Date(new Date().setDate(new Date().getDate() - 1)).toLocaleString('default', { month: 'short' }),
+          new Date(new Date().setDate(new Date().getDate())).getDate()+ ' ' + new Date(new Date().setDate(new Date().getDate())).toLocaleString('default', { month: 'short' }),
+        ]
+      },
+      tooltip: {
+        y: [
+          {
+            title: {
+              formatter: function(val) {
+                return val + " (Posts)";
+              }
+            }
+          },
+          {
+            title: {
+              formatter: function(val) {
+                return val + "Posts";
+              }
+            }
+          },
+          {
+            title: {
+              formatter: function(val) {
+                return val + "Posts";
+              }
+            }
+          }
+        ]
+      },
+      grid: {
+        borderColor: "#f1f1f1"
+      }
+    };
   }
 
   ngOnInit() {
     this.showSpinner()
-    // this.getStats();
+    console.log(this.chartOptions.xaxis.categories)
   }
 
 
