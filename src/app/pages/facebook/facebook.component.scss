@@ -433,3 +433,31 @@
     padding-top: 20px !important;
     padding-left: 20px !important;
 }
+
+@media (min-width: 992px)
+{
+.footer-fixed .content {
+    padding-bottom: 0px; 
+}
+}
+.custom-scrollbar-css {
+    height: 200px;
+  }
+  /* Custom Scrollbar using CSS */
+  .custom-scrollbar-css {
+    overflow-y: scroll;
+  }
+  /* scrollbar width */
+  .custom-scrollbar-css::-webkit-scrollbar {
+    width: 7px;
+  }
+  /* scrollbar track */
+  .custom-scrollbar-css::-webkit-scrollbar-track {
+    background: #eee;
+  }
+  /* scrollbar handle */
+  .custom-scrollbar-css::-webkit-scrollbar-thumb {
+    border-radius: 1rem;
+    background-color: #34ABC5;
+    background-image: linear-gradient(to top, #949494 0%, #1E1E2D 100%);
+  }

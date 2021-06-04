@@ -77,7 +77,7 @@ export class LoginComponent implements OnInit {
 
   loginByEmail() {
 
-    debugger
+    debugger;
     this.spinner.show();
     if (!this.selectedClub) {
       this.spinner.hide()
@@ -90,8 +90,12 @@ export class LoginComponent implements OnInit {
       password: this.loginForm.value.password
     }
     this._authService.loginByEmail(payload).subscribe(user => {
+      debugger;
       console.log(user)
+      localStorage.setItem('clubUid' , user.loggedInUser.userID)
       localStorage.setItem('userId' , user.loggedInUser.id)
+
+
       localStorage.setItem('token', user.token)
       localStorage.setItem('club', this.selectedClub.clubName)
       localStorage.setItem('clubId' , this.selectedClub.id)

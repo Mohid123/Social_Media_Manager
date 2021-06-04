@@ -63,6 +63,6 @@ constructor(){
     this.deletedCheck = false
     this.pinPost = false
     this.backgroundColorHex = "";
-    this.userID = localStorage.getItem('userId');
+    this.userID = localStorage.getItem('clubUid');
 }
 }   

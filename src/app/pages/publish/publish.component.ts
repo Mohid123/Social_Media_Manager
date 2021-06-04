@@ -14,7 +14,6 @@ import { User } from 'src/app/core/models/user.model';
 import { Post } from 'src/app/core/models/post.model';
 import { take, filter, single } from 'rxjs/operators';
 import { Report } from 'src/app/core/models/report.model';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 @Component({
   selector: 'app-publish',
   templateUrl: './publish.component.html',
@@ -73,8 +72,10 @@ export class PublishComponent implements OnInit {
 
 
   getSignedInUser() {
+    debugger;
     this._authService.getSignedInUser().pipe(take(1)).subscribe(user => {
       this.signedInUser = user;
+      console.log(this.signedInUser)
       if (this.signedInUser.FBPages.length > 0) {
         this.signedInUser.FBPages.map(item => {
           item.isSelected = false;
@@ -270,6 +271,7 @@ export class PublishComponent implements OnInit {
         selectedClubGroups.forEach(singleGroup => {
           delete this.post.eventID;
           this.post.postedTo = 'Group';
+          this.post.type = 'image';
           this.post.text = this.socialCaption;
           this.post.groupID = singleGroup.id;
           this.post.pinPost = false;
@@ -279,6 +281,7 @@ export class PublishComponent implements OnInit {
           this._postService.addPostToGroup(this.post).subscribe((groupPost: any) => {
 
             console.log(groupPost, 'GroupPosts')
+            this.spinner.hide()
             this.toast.success(`Post added Succeessfully to ${singleGroup.groupName}`);
             this.url = "";
             this.cf.detectChanges();
@@ -297,6 +300,7 @@ export class PublishComponent implements OnInit {
         selectedClubEvents.forEach((singleEvent: any) => {
           delete this.post.groupID;
           this.post.postedTo = 'Event';
+          this.post.type = 'image'
           this.post.text = this.socialCaption;
           this.post.eventID = singleEvent.id;
           this.post.pinPost = false;
@@ -304,9 +308,10 @@ export class PublishComponent implements OnInit {
           this.post.captureFileURL = media.url
           this.post.path = media.path
           this._postService.addPostToEvent(this.post).subscribe((eventPost: any) => {
+            this.spinner.hide()
+
             console.log(eventPost, 'EventPost')
             this.toast.success(`Post added Succeessfully to ${singleEvent.eventName}`);
-            this.spinner.hide()
             this.url = "";
             this.cf.detectChanges();
             this.createReport(1, eventPost.id)
@@ -339,7 +344,6 @@ export class PublishComponent implements OnInit {
     let selectedClubGroups = []
     let selectedClubEvents = [];
     let file;
-
     if (!this.file) {
       this.toast.error('Please select a Video File', 'Empty File');
       return;
@@ -430,8 +434,7 @@ export class PublishComponent implements OnInit {
       delete this.post.eventID;
       this.post.postedTo = 'Group';
       this.post.text = this.socialCaption;
-      this.post.pinPost = false;
-      this.post.deletedCheck = false;
+      this.post.type ="video"
       this._mediaUploadService.uploadClubMedia('GroupMedia', this.signedInUser.id, this.file).subscribe((uploadedVideo: any) => {
         this.post.captureFileURL = uploadedVideo.url;
         this.post.path = uploadedVideo.path
@@ -447,9 +450,10 @@ export class PublishComponent implements OnInit {
             selectedClubGroups.forEach(singleGroup => {
               this.post.groupID = singleGroup.id
               this._postService.addPostToGroup(this.post).subscribe((groupPost: any) => {
+                this.spinner.hide()
+
                 console.log(groupPost, 'grouppost')
                 this.toast.success(`Video Post added Successfully to ${singleGroup.groupName}`);
-                this.spinner.hide()
                 this.url = "";
                 this.cf.detectChanges();
                 this.createReport(1, groupPost.id)
@@ -467,6 +471,7 @@ export class PublishComponent implements OnInit {
       delete this.post.groupID;
       this.post.postedTo = 'Event';
       this.post.text = this.socialCaption;
+      this.post.type ="video"
       this._mediaUploadService.uploadClubMedia('EventMedia', this.signedInUser.id, this.file).subscribe((uploadedVideo: any) => {
         this.post.captureFileURL = uploadedVideo.url;
         this.post.path = uploadedVideo.path
@@ -482,9 +487,10 @@ export class PublishComponent implements OnInit {
             selectedClubEvents.forEach(singleEvent => {
               this.post.eventID = singleEvent.id
               this._postService.addPostToEvent(this.post).subscribe((eventPost: any) => {
+                this.spinner.hide()
+
                 console.log(eventPost, 'eventpost')
                 this.toast.success(`Video Post added Successfully to ${singleEvent.groupName}`);
-                this.spinner.hide()
                 this.url = "";
                 this.cf.detectChanges();
                 this.createReport(1, eventPost.id)
