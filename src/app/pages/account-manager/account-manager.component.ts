@@ -1,3 +1,4 @@
+import { ToastrModule, ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
 import { MainAuthService } from './../../core/services/auth.service';
 import { UsersService } from './../../core/services/users.service';
@@ -15,10 +16,13 @@ export class AccountManagerComponent implements OnInit {
   public socialUser: SocialUser
   public signedInUser: User
   public clubName: string;
+  private connectedIG : boolean = false;
 
   constructor(private spinner: NgxSpinnerService, private authService: SocialAuthService, private _facebookService: FacebookService,
     private _profileService: UsersService,
-    private _authService: MainAuthService) { }
+    private _authService: MainAuthService,
+    private _toast : ToastrService
+    ) { }
 
   ngOnInit() {
     this.clubName = localStorage.getItem('club');
@@ -51,6 +55,7 @@ export class AccountManagerComponent implements OnInit {
         console.log(data , 'long access token')
         this.signedInUser.FBUserAuthToken = data.access_token;
         debugger;
+
         this.getFacebookPages(this.socialUser.id , data.access_token).subscribe(data=>{
           console.log(data , 'Facebook pages');
           data.data.forEach(item => {
@@ -83,6 +88,12 @@ export class AccountManagerComponent implements OnInit {
     })
   }
 
+showFBPopup(){
+ this._toast.warning('Sign in via Facebook to connect your Instagram Accounts') 
+}
 
+Club(){
+  this._toast.success(`You are logged in via ${localStorage.getItem('club')} Club`)
+}
 
 }

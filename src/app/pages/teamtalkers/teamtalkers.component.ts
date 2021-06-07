@@ -30,7 +30,7 @@ export class TeamtalkersComponent implements OnInit {
   public signedInUser: User
   public posted: string = 'Club'
   public report: Report
-  checklist: any = [{ id: 1, isSelected: false, clubName: localStorage.getItem('club') }];
+  checklist: any = [{ id: 1, isSelected: false, clubName: localStorage.getItem('club') , captureImageURL : localStorage.getItem('clubLogo') }];
   checkedList: any;
   public masterSelected: boolean
   showDiv = {

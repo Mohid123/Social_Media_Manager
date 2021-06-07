@@ -23,7 +23,7 @@ export class PublishComponent implements OnInit {
   public textFirst: string
   public signedInUser: User
   masterSelected: boolean;
-  checklist: any = [{ id: 1, isSelected: false, clubName: localStorage.getItem('club') }];
+  checklist: any = [{ id: 1, isSelected: false, clubName: localStorage.getItem('club') , captureImageURL : localStorage.getItem('clubLogo') }];
   checkedList: any;
   itemSelected: boolean = false
   public format: string;
@@ -182,6 +182,8 @@ export class PublishComponent implements OnInit {
       groups.map(singleItem => {
         singleItem.isSelected = false
         this.checklist.push(singleItem);
+    this.cf.detectChanges()
+
       })
     })
     this.cf.detectChanges()
@@ -193,6 +195,8 @@ export class PublishComponent implements OnInit {
       events.map((sigleItem) => {
         sigleItem.isSelected = false;
         this.checklist.push(sigleItem)
+    this.cf.detectChanges()
+
       })
     })
     this.cf.detectChanges()

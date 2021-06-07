@@ -101,6 +101,7 @@ export class LoginComponent implements OnInit {
       localStorage.setItem('clubId' , this.selectedClub.id)
       localStorage.setItem('admin' , user.user.admin )
       localStorage.setItem('baseUrl' , this.selectedClub.baseURL) 
+      localStorage.setItem('clubLogo' , this.selectedClub.logoURL)
       this._clubService.setClub = this.selectedClub
       this.toastr.success('Login Success', 'Logged In Successfully');
       this.router.navigateByUrl('/pages/dashboard');
