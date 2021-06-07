@@ -48,6 +48,8 @@ export class ReportService {
       return this._apiService.get(`/report/getLatestReports/${userId}`)
   }
 
-
+  getLastSevenDaysStats(userId , postedTo){
+    return this._apiService.get(`/report/getLastSevenDaysStats/${userId}/${postedTo}`)
+  }
 
 }

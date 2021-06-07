@@ -30,7 +30,7 @@ export class TeamtalkersComponent implements OnInit {
   public signedInUser: User
   public posted: string = 'Club'
   public report: Report
-  checklist: any = [];
+  checklist: any = [{ id: 1, isSelected: false, clubName: localStorage.getItem('club') }];
   checkedList: any;
   public masterSelected: boolean
   showDiv = {
@@ -58,6 +58,7 @@ export class TeamtalkersComponent implements OnInit {
     this.clubName = localStorage.getItem('club')
     this.getSignedInUser();
     this.getCheckedItemList();
+
   }
 
   selectAll() {
@@ -73,7 +74,6 @@ export class TeamtalkersComponent implements OnInit {
       if (this.checklist[i].isSelected)
         this.checkedList.push(this.checklist[i]);
     }
-    console.log(this.checkedList)
   }
 
   singleItemSelected() {
@@ -135,10 +135,9 @@ export class TeamtalkersComponent implements OnInit {
 
   addTextPost() {
 
-
     let selectedClubGroups = []
     let selectedClubEvents = []
-
+    let selectedClub : boolean = false;
 
     if (this.teamtalkerCaption == "") {
       this.toast.error('Please add content to post', 'No Content Added');
@@ -155,6 +154,9 @@ export class TeamtalkersComponent implements OnInit {
       }
       else if (item.hasOwnProperty('eventName')) {
         selectedClubEvents.push(item)
+      }
+      else if (item.hasOwnProperty('clubName')) {
+        selectedClub = true;
       }
     })
     if (selectedClubGroups) {
@@ -202,13 +204,35 @@ export class TeamtalkersComponent implements OnInit {
         })
       })
     }
+
+    if(selectedClub){
+      delete this.post.groupID;
+      delete this.post.eventID;
+      this.post.postedTo = '';
+      this.post.type = 'text'
+      this.post.text = this.teamtalkerCaption;
+      this.createReport(2,'','Club')
+      this.spinner.show();
+      this._postService.addPost(this.post).subscribe((post:any)=>{
+        this.spinner.hide();
+        this.toast.success(' Post added Successfully to Club');
+        this.teamtalkerCaption = "";
+        this.cf.detectChanges()
+        this.createReport(1, post.id, 'Club')
+      } , error=>{
+        this.spinner.hide();
+        this.toast.error(error.message);
+        this.createReport(0, '', 'Club')
+      })
+    }
+
   }
 
   addImagePost() {
 
     let selectedClubGroups = []
     let selectedClubEvents = []
-
+    let selectedClub: boolean = false
     if (!this.file) {
       this.toast.error('Please Select Image File to post', 'No File Selected');
       return;
@@ -224,6 +248,9 @@ export class TeamtalkersComponent implements OnInit {
       }
       else if (item.hasOwnProperty('eventName')) {
         selectedClubEvents.push(item)
+      }
+      else if (item.hasOwnProperty('clubName')) {
+        selectedClub = true;
       }
     })
 
@@ -277,7 +304,7 @@ export class TeamtalkersComponent implements OnInit {
             this.createReport(1, eventPost.id, 'Event')
 
           }, (error) => {
-            this.createReport(0 , '' , 'Event')
+            this.createReport(0, '', 'Event')
             this.spinner.hide();
             this.toast.error(error.message)
           })
@@ -285,6 +312,34 @@ export class TeamtalkersComponent implements OnInit {
       })
 
     }
+
+    if (selectedClub) {
+      debugger;
+      this.spinner.show();
+      this._mediaUploadService.uploadClubMedia('ClubMedia', this.signedInUser.id, this.file).subscribe((media: any) => {
+        delete this.post.eventID;
+        delete this.post.groupID;
+        this.post.postedTo = '';
+        this.post.type = "image"
+        this.post.text = this.teamtalkerCaption;
+        this.post.captureFileURL = media.url;
+        this.post.path = media.path;
+        this.createReport(2, '', 'Club')
+        this._postService.addPost(this.post).subscribe((post: any) => {
+          console.log(post)
+          this.spinner.hide();
+          this.toast.success('Post added Succeessfully to Club');
+          this.url = "";
+          this.cf.detectChanges();
+          this.createReport(1, post.id, 'Club')
+        })
+      }, (error: any) => {
+        this.createReport(0, '', 'Club')
+        this.spinner.hide();
+        this.toast.error(error.message)
+      })
+    }
+
   }
 
 
@@ -339,6 +394,7 @@ export class TeamtalkersComponent implements OnInit {
   addVideoPost() {
     let selectedClubGroups = []
     let selectedClubEvents = [];
+    let selectedClub: boolean = false;
     let file;
 
     if (!this.file) {
@@ -358,6 +414,9 @@ export class TeamtalkersComponent implements OnInit {
       }
       else if (item.hasOwnProperty('eventName')) {
         selectedClubEvents.push(item)
+      }
+      else if (item.hasOwnProperty('clubName')) {
+        selectedClub = true;
       }
     })
 
@@ -431,6 +490,41 @@ export class TeamtalkersComponent implements OnInit {
               })
             })
           })
+        })
+      })
+    }
+
+    if (selectedClub) {
+      delete this.post.eventID;
+      delete this.post.groupID;
+      this.post.postedTo = '';
+      this.post.text = this.teamtalkerCaption;
+      this.post.type = "video"
+      this._mediaUploadService.uploadClubMedia('GroupMedia', this.signedInUser.id, this.file).subscribe((uploadedVideo: any) => {
+        this.post.captureFileURL = uploadedVideo.url;
+        this.post.path = uploadedVideo.path
+        this._videoService.generateThumbnail(this.file).then(base64 => {
+          file = base64
+          file = file.replace('data:image/png;base64,', '');
+          const imageBlob = this.dataURItoBlob(file.toString());
+          const imageFile = new File([imageBlob], 'thumbnail.jpeg', { type: 'image/jpeg' });
+          this._mediaUploadService.uploadMedia('VideoThumbnails', this.signedInUser.id, imageFile).subscribe((thumbnailFile: any) => {
+            this.post.thumbnailPath = thumbnailFile.path
+            this.post.thumbnailURL = thumbnailFile.url
+            this.createReport(2, '', 'Club')
+            this._postService.addPost(this.post).subscribe((post: any) => {
+              this.toast.success('Video Post added Successfully to Club');
+              this.spinner.hide()
+              this.url = "";
+              this.teamtalkerCaption = ""
+              this.cf.detectChanges();
+              this.createReport(1, post.id, 'Club')
+            }, error => {
+              this.createReport(0, '', 'Club')
+              this.spinner.hide();
+              this.toast.error(error.message);
+            })
+          });
         })
       })
     }
