@@ -1,6 +1,6 @@
 import { ReportService } from './../../core/services/report.service';
 import { ClubService } from './../../core/services/club.service';
-import { Component,ViewChild ,OnInit, Inject, NgZone, PLATFORM_ID, AfterViewInit, ChangeDetectorRef } from '@angular/core';
+import { Component, ViewChild, OnInit, Inject, NgZone, PLATFORM_ID, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { NgxSpinnerService } from "ngx-spinner";
 import { ChartType } from 'chart.js';
@@ -18,6 +18,7 @@ import {
   ApexTitleSubtitle,
   ApexLegend
 } from "ng-apexcharts";
+import { map } from 'rxjs/operators';
 
 
 export type ChartOptions = {
@@ -48,6 +49,8 @@ export class DashboardComponent implements OnInit {
   public facebookStats: any
   public instagramStats: any
   public clubStats: any
+  public latestReports: any = []
+  public signedInuserID : string
 
 
   constructor(private spinner: NgxSpinnerService, private _clubService: ClubService, private _reportService: ReportService, private cf: ChangeDetectorRef) {
@@ -83,7 +86,7 @@ export class DashboardComponent implements OnInit {
         align: "left"
       },
       legend: {
-        tooltipHoverFormatter: function(val, opts) {
+        tooltipHoverFormatter: function (val, opts) {
           return (
             val +
             " - <strong>" +
@@ -103,35 +106,35 @@ export class DashboardComponent implements OnInit {
           trim: false
         },
         categories: [
-          new Date(new Date().setDate(new Date().getDate() - 7)).getDate()+ ' ' + new Date(new Date().setDate(new Date().getDate() - 7)).toLocaleString('default', { month: 'short' }),
-          new Date(new Date().setDate(new Date().getDate() - 6)).getDate()+ ' ' + new Date(new Date().setDate(new Date().getDate() - 6)).toLocaleString('default', { month: 'short' }),
-          new Date(new Date().setDate(new Date().getDate() - 5)).getDate()+ ' ' + new Date(new Date().setDate(new Date().getDate() - 5)).toLocaleString('default', { month: 'short' }),
-          new Date(new Date().setDate(new Date().getDate() - 4)).getDate()+ ' ' + new Date(new Date().setDate(new Date().getDate() - 4)).toLocaleString('default', { month: 'short' }),
-          new Date(new Date().setDate(new Date().getDate() - 3)).getDate()+ ' ' + new Date(new Date().setDate(new Date().getDate() - 3)).toLocaleString('default', { month: 'short' }),
-          new Date(new Date().setDate(new Date().getDate() - 2)).getDate()+ ' ' + new Date(new Date().setDate(new Date().getDate() - 2)).toLocaleString('default', { month: 'short' }),
-          new Date(new Date().setDate(new Date().getDate() - 1)).getDate()+ ' ' + new Date(new Date().setDate(new Date().getDate() - 1)).toLocaleString('default', { month: 'short' }),
-          new Date(new Date().setDate(new Date().getDate())).getDate()+ ' ' + new Date(new Date().setDate(new Date().getDate())).toLocaleString('default', { month: 'short' }),
+          new Date(new Date().setDate(new Date().getDate() - 7)).getDate() + ' ' + new Date(new Date().setDate(new Date().getDate() - 7)).toLocaleString('default', { month: 'short' }),
+          new Date(new Date().setDate(new Date().getDate() - 6)).getDate() + ' ' + new Date(new Date().setDate(new Date().getDate() - 6)).toLocaleString('default', { month: 'short' }),
+          new Date(new Date().setDate(new Date().getDate() - 5)).getDate() + ' ' + new Date(new Date().setDate(new Date().getDate() - 5)).toLocaleString('default', { month: 'short' }),
+          new Date(new Date().setDate(new Date().getDate() - 4)).getDate() + ' ' + new Date(new Date().setDate(new Date().getDate() - 4)).toLocaleString('default', { month: 'short' }),
+          new Date(new Date().setDate(new Date().getDate() - 3)).getDate() + ' ' + new Date(new Date().setDate(new Date().getDate() - 3)).toLocaleString('default', { month: 'short' }),
+          new Date(new Date().setDate(new Date().getDate() - 2)).getDate() + ' ' + new Date(new Date().setDate(new Date().getDate() - 2)).toLocaleString('default', { month: 'short' }),
+          new Date(new Date().setDate(new Date().getDate() - 1)).getDate() + ' ' + new Date(new Date().setDate(new Date().getDate() - 1)).toLocaleString('default', { month: 'short' }),
+          new Date(new Date().setDate(new Date().getDate())).getDate() + ' ' + new Date(new Date().setDate(new Date().getDate())).toLocaleString('default', { month: 'short' }),
         ]
       },
       tooltip: {
         y: [
           {
             title: {
-              formatter: function(val) {
+              formatter: function (val) {
                 return val + " (Posts)";
               }
             }
           },
           {
             title: {
-              formatter: function(val) {
+              formatter: function (val) {
                 return val + "Posts";
               }
             }
           },
           {
             title: {
-              formatter: function(val) {
+              formatter: function (val) {
                 return val + "Posts";
               }
             }
@@ -145,10 +148,25 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.signedInuserID = localStorage.getItem('clubUid');
     this.showSpinner()
-    console.log(this.chartOptions.xaxis.categories)
+    this.getLatestReports()
+    this.getStats()
   }
 
+
+  getLatestReports() {
+    let userId = localStorage.getItem('clubUid');
+    this._reportService.getLatestReports(userId).subscribe((reports: any) => {
+      reports.map((singleReport: any) => {
+        let time = new Date(singleReport.postedTime).toLocaleTimeString ('fr-FR', {hour: '2-digit', minute: '2-digit'})
+        singleReport.time = time;
+      });
+      this.latestReports = reports;
+      this.cf.detectChanges();
+      // console.log(reports)
+    })
+  }
 
   showSpinner() {
     this.spinner.show();
@@ -157,33 +175,30 @@ export class DashboardComponent implements OnInit {
     }, 1000);
   }
 
-  // getInstagramStats() {
-  //   return this._reportService.getInstagramStats()
-  // }
+  getInstagramStats() {
+    return this._reportService.getInstagramStats(this.signedInuserID)
+  }
 
-  // getClubStats() {
-  //   return this._reportService.getClubStatus()
-  // }
+  getClubStats() {
 
-  // getStats() {
-  //   this._reportService.getFacebookStats().subscribe(stats => {
-  //     this.facebookStats = stats
-  //     this.pieChartData.push(stats.total)
-  //     console.log(this.facebookStats , 'FB stats')
-  //     this.getInstagramStats().subscribe(stats => {
-  //       this.instagramStats = stats
-  //       this.pieChartData.push(stats.total)
-  //       console.log(this.instagramStats , 'IG stats')
-  //       this.getClubStats().subscribe(stats => {
-  //         this.clubStats = stats
-  //         this.pieChartData.push(stats.total)
-  //         this.cf.detectChanges();
-  //         console.log(this.clubStats , 'Club stats')
-  //         console.log(this.pieChartData)
-  //       })
-  //     })
-  //   })
-  // }
+    return this._reportService.getClubStatus(this.signedInuserID)
+  }
+
+  getStats() {
+    this._reportService.getFacebookStats(this.signedInuserID).subscribe(stats => {
+      this.facebookStats = stats
+      console.log(this.facebookStats , 'FB stats')
+      this.getInstagramStats().subscribe(stats => {
+        this.instagramStats = stats
+        console.log(this.instagramStats , 'IG stats')
+        this.getClubStats().subscribe(stats => {
+          this.clubStats = stats
+          this.cf.detectChanges();
+          console.log(this.clubStats , 'Club stats')
+        })
+      })
+    })
+  }
 
 
 

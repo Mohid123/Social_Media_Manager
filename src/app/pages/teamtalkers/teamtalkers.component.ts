@@ -46,7 +46,7 @@ export class TeamtalkersComponent implements OnInit {
     private _authService: MainAuthService,
     private _videoService: VideoProcessingService,
     private _reportService: ReportService,
-    private _clubService : ClubService
+    private _clubService: ClubService
   ) {
     this.post = new Post()
     this.report = new Report();
@@ -85,7 +85,6 @@ export class TeamtalkersComponent implements OnInit {
 
   getClubGroups() {
     this._clubService.getClubGroups(0, 50).subscribe((groups: any) => {
-      console.log(groups)
       groups.map(singleItem => {
         singleItem.isSelected = false
         this.checklist.push(singleItem);
@@ -96,29 +95,22 @@ export class TeamtalkersComponent implements OnInit {
 
   getClubEvents() {
     this._clubService.getClubEvents(0, 50).subscribe((events: any) => {
-      console.log(events)
       events.map((sigleItem) => {
         sigleItem.isSelected = false;
         this.checklist.push(sigleItem)
-    this.cf.detectChanges()
-
-
-
-
-
+        this.cf.detectChanges()
       })
     })
   }
 
 
-
-  createReport(status, postId?) {
+  createReport(status, postId?, postedTo?) {
     debugger;
     this.report.clubID = localStorage.getItem('clubId');
     this.report.postID = postId ? postId : "";
-    this.report.postedTo = 'Club';
+    this.report.postedTo = postedTo
     this.report.successStatus = status;
-    this.report.userID = localStorage.getItem('userId')
+    this.report.userID = localStorage.getItem('clubUid')
     this._reportService.addReport(this.report).subscribe(data => {
       console.log(data, 'Report Created');
     })
@@ -143,7 +135,7 @@ export class TeamtalkersComponent implements OnInit {
 
   addTextPost() {
 
-    
+
     let selectedClubGroups = []
     let selectedClubEvents = []
 
@@ -158,7 +150,7 @@ export class TeamtalkersComponent implements OnInit {
     }
 
     this.checkedList.filter(item => {
-       if (item.hasOwnProperty('groupName')) {
+      if (item.hasOwnProperty('groupName')) {
         selectedClubGroups.push(item);
       }
       else if (item.hasOwnProperty('eventName')) {
@@ -172,13 +164,14 @@ export class TeamtalkersComponent implements OnInit {
       this.post.text = this.teamtalkerCaption;
       selectedClubGroups.forEach(singleGroup => {
         this.post.groupID = singleGroup.id;
+        this.createReport(2, '', 'Group')
         this._postService.addPostToGroup(this.post).subscribe((groupPost: any) => {
           console.log(groupPost)
           this.spinner.hide()
           this.toast.success(` Post added Successfully to ${singleGroup.groupName}`);
           this.teamtalkerCaption = "";
           this.cf.detectChanges()
-          this.createReport(1, groupPost.id)
+          this.createReport(1, groupPost.id, 'Group')
         }, (error) => {
           this.spinner.hide();
           this.toast.error(error.message);
@@ -186,24 +179,25 @@ export class TeamtalkersComponent implements OnInit {
       })
     }
 
-    if(selectedClubEvents){
+    if (selectedClubEvents) {
       delete this.post.groupID;
       this.post.postedTo = 'Event';
       this.post.type = 'text'
       this.post.text = this.teamtalkerCaption;
       selectedClubEvents.forEach(singleEvent => {
         this.post.eventID = singleEvent.id;
+        this.createReport(2, '', 'Event')
         this._postService.addPostToEvent(this.post).subscribe((eventPost: any) => {
           console.log(eventPost)
           this.spinner.hide()
           this.toast.success(` Post added Successfully to ${singleEvent.eventName}`);
           this.teamtalkerCaption = "";
           this.cf.detectChanges()
-          this.createReport(1, eventPost.id)
+          this.createReport(1, eventPost.id, 'Event')
         }, (error) => {
           this.spinner.hide();
           this.toast.error(error.message);
-          this.createReport(0)
+          this.createReport(0, '', 'Event')
 
         })
       })
@@ -225,7 +219,7 @@ export class TeamtalkersComponent implements OnInit {
     }
 
     this.checkedList.filter(item => {
-       if (item.hasOwnProperty('groupName')) {
+      if (item.hasOwnProperty('groupName')) {
         selectedClubGroups.push(item);
       }
       else if (item.hasOwnProperty('eventName')) {
@@ -244,6 +238,7 @@ export class TeamtalkersComponent implements OnInit {
           this.post.groupID = singleGroup.id;
           this.post.captureFileURL = media.url;
           this.post.path = media.path;
+          this.createReport(2, '', 'Group')
           this._postService.addPostToGroup(this.post).subscribe((groupPost: any) => {
 
             console.log(groupPost, 'GroupPosts')
@@ -251,8 +246,9 @@ export class TeamtalkersComponent implements OnInit {
             this.toast.success(`Post added Succeessfully to ${singleGroup.groupName}`);
             this.url = "";
             this.cf.detectChanges();
-            this.createReport(1, groupPost.id)
+            this.createReport(1, groupPost.id, 'Group')
           }, (error: any) => {
+            this.createReport(0, '', 'Group')
             this.spinner.hide();
             this.toast.error(error.message)
           })
@@ -271,15 +267,17 @@ export class TeamtalkersComponent implements OnInit {
           this.post.eventID = singleEvent.id;
           this.post.captureFileURL = media.url
           this.post.path = media.path
+          this.createReport(2, '', 'Event')
           this._postService.addPostToEvent(this.post).subscribe((eventPost: any) => {
             console.log(eventPost, 'EventPost')
             this.toast.success(`Post added Succeessfully to ${singleEvent.eventName}`);
             this.spinner.hide()
             this.url = "";
             this.cf.detectChanges();
-            this.createReport(1, eventPost.id)
+            this.createReport(1, eventPost.id, 'Event')
 
           }, (error) => {
+            this.createReport(0 , '' , 'Event')
             this.spinner.hide();
             this.toast.error(error.message)
           })
@@ -347,7 +345,7 @@ export class TeamtalkersComponent implements OnInit {
       this.toast.error('Please select a Video File', 'Empty File');
       return;
     }
-    
+
     else if (this.checkedList.length == 0) {
       this.toast.error('No Item Selected', 'Nothing to Post');
       return;
@@ -355,7 +353,7 @@ export class TeamtalkersComponent implements OnInit {
 
     this.checkedList.filter(item => {
 
-       if (item.hasOwnProperty('groupName')) {
+      if (item.hasOwnProperty('groupName')) {
         selectedClubGroups.push(item);
       }
       else if (item.hasOwnProperty('eventName')) {
@@ -367,7 +365,7 @@ export class TeamtalkersComponent implements OnInit {
       delete this.post.eventID;
       this.post.postedTo = 'Group';
       this.post.text = this.teamtalkerCaption;
-      this.post.type ="video"
+      this.post.type = "video"
       this._mediaUploadService.uploadClubMedia('GroupMedia', this.signedInUser.id, this.file).subscribe((uploadedVideo: any) => {
         this.post.captureFileURL = uploadedVideo.url;
         this.post.path = uploadedVideo.path
@@ -382,13 +380,14 @@ export class TeamtalkersComponent implements OnInit {
 
             selectedClubGroups.forEach(singleGroup => {
               this.post.groupID = singleGroup.id
+              this.createReport(2, '', 'Group')
               this._postService.addPostToGroup(this.post).subscribe((groupPost: any) => {
                 console.log(groupPost, 'grouppost')
                 this.toast.success(`Video Post added Successfully to ${singleGroup.groupName}`);
                 this.spinner.hide()
                 this.url = "";
                 this.cf.detectChanges();
-                this.createReport(1, groupPost.id)
+                this.createReport(1, groupPost.id, 'Group')
               }, (error) => {
                 this.spinner.hide();
                 this.toast.error(error.message);
@@ -403,7 +402,7 @@ export class TeamtalkersComponent implements OnInit {
       delete this.post.groupID;
       this.post.postedTo = 'Event';
       this.post.text = this.teamtalkerCaption;
-      this.post.type ="video"
+      this.post.type = "video"
       this._mediaUploadService.uploadClubMedia('EventMedia', this.signedInUser.id, this.file).subscribe((uploadedVideo: any) => {
         this.post.captureFileURL = uploadedVideo.url;
         this.post.path = uploadedVideo.path
@@ -418,13 +417,14 @@ export class TeamtalkersComponent implements OnInit {
 
             selectedClubEvents.forEach(singleEvent => {
               this.post.eventID = singleEvent.id
+              this.createReport(2, '', 'Event')
               this._postService.addPostToEvent(this.post).subscribe((eventPost: any) => {
                 console.log(eventPost, 'eventpost')
                 this.toast.success(`Video Post added Successfully to ${singleEvent.eventName}`);
                 this.spinner.hide()
                 this.url = "";
                 this.cf.detectChanges();
-                this.createReport(1, eventPost.id)
+                this.createReport(1, eventPost.id, 'Event')
               }, (error) => {
                 this.spinner.hide();
                 this.toast.error(error.message);
@@ -434,6 +434,6 @@ export class TeamtalkersComponent implements OnInit {
         })
       })
     }
-}
+  }
 }
 

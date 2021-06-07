@@ -44,6 +44,10 @@ export class ReportService {
 
   }
 
+   getLatestReports(userId){
+      return this._apiService.get(`/report/getLatestReports/${userId}`)
+  }
+
 
 
 }
