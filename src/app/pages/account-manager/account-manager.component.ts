@@ -55,7 +55,9 @@ export class AccountManagerComponent implements OnInit {
         console.log(data , 'long access token')
         this.signedInUser.FBUserAuthToken = data.access_token;
         debugger;
-
+        if(this.signedInUser.FBPages.length > 0){
+          return;
+        }
         this.getFacebookPages(this.socialUser.id , data.access_token).subscribe(data=>{
           console.log(data , 'Facebook pages');
           data.data.forEach(item => {
