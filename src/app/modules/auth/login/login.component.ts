@@ -25,8 +25,8 @@ import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 })
 export class LoginComponent implements OnInit {
   defaultAuth: any = {
-    email: '',
-    password: '',
+    email: 'admin@gmail.com',
+    password: '1234567',
   };
   loginForm: FormGroup;
   hasError: boolean;
