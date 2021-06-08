@@ -36,7 +36,8 @@ export class TopbarComponent implements OnInit, AfterViewInit {
   extrasLanguagesDisplay: boolean;
   extrasUserDisplay: boolean = true;
   extrasUserLayout: 'offcanvas' | 'dropdown';
-  clubName : string
+  clubName : string;
+  username : string = localStorage.getItem('userName')
 
   constructor(private layout: LayoutService, private auth: AuthService, private modalService: NgbModal, private router: Router) {
     this.user$ = this.auth.currentUserSubject.asObservable();

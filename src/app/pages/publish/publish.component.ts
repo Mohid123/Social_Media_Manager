@@ -39,12 +39,12 @@ export class PublishComponent implements OnInit {
   public post: Post
   public facebookPages: any = []
   public report: Report
+  public userName : string = localStorage.getItem('userName')
   public showDiv = {
     photo: true,
     video: false,
     text: false
   }
-
 
   constructor(private spinner: NgxSpinnerService, private cf: ChangeDetectorRef,
     private toast: ToastrService, private _facebookService: FacebookService,
@@ -177,6 +177,7 @@ export class PublishComponent implements OnInit {
   }
 
   getClubGroups() {
+    debugger;
     this._clubService.getClubGroups(0, 50).subscribe((groups: any) => {
       console.log(groups)
       groups.map(singleItem => {
@@ -190,6 +191,7 @@ export class PublishComponent implements OnInit {
   }
 
   getClubEvents() {
+    debugger;
     this._clubService.getClubEvents(0, 50).subscribe((events: any) => {
       console.log(events)
       events.map((sigleItem) => {

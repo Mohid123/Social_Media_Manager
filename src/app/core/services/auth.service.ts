@@ -16,13 +16,6 @@ export class MainAuthService {
     return this._apiService.post('/auth/loginByEmail', payload)
   }
 
-  set setClub(clubName) {
-    this.clubName = clubName
-  }
-
-  get getClub() {
-    return this.clubName
-  }
 
   getSignedInUser(){
     let id = localStorage.getItem('userId');

@@ -28,6 +28,7 @@ export class InstagramComponent implements OnInit {
   public masterSelected: boolean;
   public checklist: any = [];
   private checkedList: any;
+  public userName : string = localStorage.getItem('userName')
   showDiv = {
     photo: true,
     video: false,

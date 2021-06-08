@@ -78,12 +78,11 @@ export class LoginComponent implements OnInit {
   loginByEmail() {
 
     debugger;
-    this.spinner.show();
     if (!this.selectedClub) {
-      this.spinner.hide()
       this.toastr.error('Please Select Club', 'Empty Club')
       return;
     }
+    this.spinner.show();
     const payload = {
       clubID: this.selectedClub.id,
       email: this.loginForm.value.email,
@@ -92,21 +91,26 @@ export class LoginComponent implements OnInit {
     this._authService.loginByEmail(payload).subscribe(user => {
       debugger;
       console.log(user)
-      localStorage.setItem('clubUid' , user.loggedInUser.userID)
-      localStorage.setItem('userId' , user.loggedInUser.id)
-
-
-      localStorage.setItem('token', user.token)
-      localStorage.setItem('club', this.selectedClub.clubName)
-      localStorage.setItem('clubId' , this.selectedClub.id)
-      localStorage.setItem('admin' , user.user.admin )
-      localStorage.setItem('baseUrl' , this.selectedClub.baseURL) 
-      localStorage.setItem('clubLogo' , this.selectedClub.logoURL)
-      this._clubService.setClub = this.selectedClub
-      this.toastr.success('Login Success', 'Logged In Successfully');
-      this.router.navigateByUrl('/pages/dashboard');
-      this.spinner.hide();
-
+      if(user.user.admin){
+        localStorage.setItem('clubUid' , user.loggedInUser.userID)
+        localStorage.setItem('userId' , user.loggedInUser.id)
+        localStorage.setItem('token', user.token)
+        localStorage.setItem('club', this.selectedClub.clubName)
+        localStorage.setItem('clubId' , this.selectedClub.id)
+        localStorage.setItem('admin' , user.user.admin )
+        localStorage.setItem('baseUrl' , this.selectedClub.baseURL) 
+        localStorage.setItem('clubLogo' , this.selectedClub.logoURL)
+        localStorage.setItem('userName' , user.user.username)
+        this.toastr.success('Login Success', 'Logged In Successfully');
+        this.router.navigateByUrl('/pages/dashboard');
+        this.spinner.hide();  
+      }
+      else {
+        this.spinner.hide();
+        this.toastr.error('Only admins can access this panel' , 'Access Denied');
+        return;
+      }
+      
     }, err => {
       this.spinner.hide()
       this.toastr.error(err.message)

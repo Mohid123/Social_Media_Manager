@@ -10,11 +10,11 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class ClubService {
-private club : any
+  private club: any
 
-  constructor(private _apiService : ApiService , private http : HttpClient , private _errorHandlerService : ErrorhandlerService) { }
+  constructor(private _apiService: ApiService, private http: HttpClient, private _errorHandlerService: ErrorhandlerService) { }
 
-  getAllClubs(offset , limit) : Observable<any> {
+  getAllClubs(offset, limit): Observable<any> {
     limit = parseInt(limit) < 1 ? 10 : limit;
     offset = parseInt(offset) < 0 ? 0 : offset;
     return this._apiService.get(`/club/getAllClubs?offset=${offset}&limit=${limit}`)
@@ -23,34 +23,26 @@ private club : any
   getClubById(clubID): Observable<any> {
     return this._apiService.get(`/club/getClubByID/${clubID}`)
   }
-  
-  addClub(payload): Observable<any> {   
+
+  addClub(payload): Observable<any> {
     return this._apiService.post('/club/addClub', payload)
   }
 
   updateClub(club): Observable<any> {
-    return this._apiService.post('/club/updateClub' , club)
+    return this._apiService.post('/club/updateClub', club)
   }
 
   deleteClub(clubID): Observable<any> {
     return this._apiService.get(`/club/deleteClub/${clubID}`)
   }
 
-  get getClub(){
-    return this.club;
-  }
-
-  set setClub(club){
-    this.club = club;
-  }
-
-  getClubGroups(offset , limit) : Observable<any> {
+  getClubGroups(offset, limit): Observable<any> {
+    environment.club_api_url =  localStorage.getItem('baseUrl')
     return this.http.get(`${environment.club_api_url}/groups/getAllGroups?offset=${offset}&limit=${limit}`).pipe(catchError(this._errorHandlerService.handleErrors))
-  }  
+  }
 
-  getClubEvents(offset , limit){
+  getClubEvents(offset, limit) {
+    environment.club_api_url = localStorage.getItem('baseUrl')
     return this.http.get(`${environment.club_api_url}/event/getAllEvents?offset=${offset}&limit=${limit}`).pipe(catchError(this._errorHandlerService.handleErrors))
   }
-
-  
 }

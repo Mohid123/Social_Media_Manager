@@ -10,19 +10,11 @@ export class Interceptor implements HttpInterceptor {
     if(request.url.includes('getAllClubs') || request.url.includes('loginByEmail') ){
       customReq = request.clone()
     }
-    // social.teamtalkers
-    //192.168.1.105
     else if(request.url.includes('social.teamtalkers') || request.url.includes('teamtalkers')  || request.url.includes('192.168.1.105')   ) {
       customReq = request.clone({
         headers: request.headers.set('Authorization', localStorage.getItem('token'))
       });
     }
-
-    // else if(request.url.includes('teamtalkers')){
-    //   customReq = request.clone({
-    //     headers: request.headers.set('Authorization', localStorage.getItem('token'))
-    //   });
-    // }
     else {
       customReq = request.clone()
     }

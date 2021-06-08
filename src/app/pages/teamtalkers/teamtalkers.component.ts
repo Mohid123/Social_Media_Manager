@@ -30,9 +30,10 @@ export class TeamtalkersComponent implements OnInit {
   public signedInUser: User
   public posted: string = 'Club'
   public report: Report
+  public userName : string = localStorage.getItem('userName')
+  public masterSelected: boolean
   checklist: any = [{ id: 1, isSelected: false, clubName: localStorage.getItem('club') , captureImageURL : localStorage.getItem('clubLogo') }];
   checkedList: any;
-  public masterSelected: boolean
   showDiv = {
     photo: true,
     video: false,
@@ -84,6 +85,7 @@ export class TeamtalkersComponent implements OnInit {
   }
 
   getClubGroups() {
+    debugger;
     this._clubService.getClubGroups(0, 50).subscribe((groups: any) => {
       groups.map(singleItem => {
         singleItem.isSelected = false
