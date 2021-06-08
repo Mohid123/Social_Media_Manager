@@ -31,6 +31,8 @@ export class TeamtalkersComponent implements OnInit {
   public posted: string = 'Club'
   public report: Report
   public userName : string = localStorage.getItem('userName')
+  public profileImageUrl : string = localStorage.getItem('profileImageUrl')
+
   public masterSelected: boolean
   checklist: any = [{ id: 1, isSelected: false, clubName: localStorage.getItem('club') , captureImageURL : localStorage.getItem('clubLogo') }];
   checkedList: any;
@@ -210,7 +212,7 @@ export class TeamtalkersComponent implements OnInit {
     if(selectedClub){
       delete this.post.groupID;
       delete this.post.eventID;
-      this.post.postedTo = '';
+      this.post.postedTo = 'Club';
       this.post.type = 'text'
       this.post.text = this.teamtalkerCaption;
       this.createReport(2,'','Club')
@@ -321,7 +323,7 @@ export class TeamtalkersComponent implements OnInit {
       this._mediaUploadService.uploadClubMedia('ClubMedia', this.signedInUser.id, this.file).subscribe((media: any) => {
         delete this.post.eventID;
         delete this.post.groupID;
-        this.post.postedTo = '';
+        this.post.postedTo = 'Club';
         this.post.type = "image"
         this.post.text = this.teamtalkerCaption;
         this.post.captureFileURL = media.url;
@@ -499,10 +501,10 @@ export class TeamtalkersComponent implements OnInit {
     if (selectedClub) {
       delete this.post.eventID;
       delete this.post.groupID;
-      this.post.postedTo = '';
+      this.post.postedTo = 'Club';
       this.post.text = this.teamtalkerCaption;
       this.post.type = "video"
-      this._mediaUploadService.uploadClubMedia('GroupMedia', this.signedInUser.id, this.file).subscribe((uploadedVideo: any) => {
+      this._mediaUploadService.uploadClubMedia('ClubMedia', this.signedInUser.id, this.file).subscribe((uploadedVideo: any) => {
         this.post.captureFileURL = uploadedVideo.url;
         this.post.path = uploadedVideo.path
         this._videoService.generateThumbnail(this.file).then(base64 => {

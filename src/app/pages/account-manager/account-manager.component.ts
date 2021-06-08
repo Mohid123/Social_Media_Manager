@@ -17,6 +17,8 @@ export class AccountManagerComponent implements OnInit {
   public signedInUser: User
   public clubName: string;
   private connectedIG : boolean = false;
+  public clubLogo : string = localStorage.getItem('clubLogo')
+
 
   constructor(private spinner: NgxSpinnerService, private authService: SocialAuthService, private _facebookService: FacebookService,
     private _profileService: UsersService,

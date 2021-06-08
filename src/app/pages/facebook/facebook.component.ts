@@ -35,6 +35,7 @@ export class FacebookComponent implements OnInit {
   public facebookProfileUrl: string = 'https://social.teamtalkers.com/api/v1/en/media-upload/mediaFiles/123/test/6ca2499366f5b5611041fe57e2aac1ee9.svg'
   checklist: any = [];
   public userName : string = localStorage.getItem('userName')
+  public profileImageUrl : string = localStorage.getItem('profileImageUrl')
   checkedList: any;
   showDiv = {
     photo: true,

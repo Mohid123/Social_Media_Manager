@@ -29,6 +29,8 @@ export class InstagramComponent implements OnInit {
   public checklist: any = [];
   private checkedList: any;
   public userName : string = localStorage.getItem('userName')
+  public profileImageUrl : string = localStorage.getItem('profileImageUrl')
+
   showDiv = {
     photo: true,
     video: false,

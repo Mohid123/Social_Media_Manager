@@ -22,12 +22,11 @@ export class AsideComponent implements OnInit {
   asideMenuScroll = 1;
   asideSelfMinimizeToggle = false;
   clubName : string
-  clubLogo : string
   constructor(private layout: LayoutService, private loc: Location , private _authService : MainAuthService) { }
+  public clubLogo : string = localStorage.getItem('clubLogo')
 
   ngOnInit(): void {
     this.clubName = localStorage.getItem('club');
-    this.clubLogo = localStorage.getItem('logo');
     this.disableAsideSelfDisplay =
       this.layout.getProp('aside.self.display') === false;
     this.brandSkin = this.layout.getProp('brand.self.theme');

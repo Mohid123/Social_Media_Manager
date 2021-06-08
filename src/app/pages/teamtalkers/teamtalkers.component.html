@@ -155,11 +155,11 @@
                                         <!--begin::Top-->
                                         <div class="d-flex align-items-center">
                                             <!--begin::Symbol-->
-                                            <div class="symbol symbol-40 symbol-light-success mr-5"
+                                            <div class="symbol symbol-40 mr-5"
                                                 style="padding-bottom: 45px;">
                                                 <span class="symbol-label">
-                                                    <img src="assets/media/svg/avatars/007-boy-2.svg"
-                                                        class="h-75 align-self-end" alt="" />
+                                                    <img [src]="profileImageUrl"
+                                                        class="h-100 align-self-center rounded" alt="" />
                                                 </span>
                                             </div>
 
@@ -202,7 +202,7 @@
                                                                                 <i class="fas fa-upload icon-lg" style="cursor: pointer;"></i>
                                                                             </a></span>
                                                                         </span>
-                                                                        <span class="btn text-dark-50 font-weight-normal font-size-base"> &nbsp;Upload image</span>
+                                                                        <span class="btn text-dark-50 font-weight-normal font-size-base"> &nbsp;Select image</span>
                                                                         
                                                                     </div>
                                                                 </label>
@@ -262,8 +262,8 @@
                                             <div class="symbol symbol-40 symbol-light-success mr-5"
                                                 style="padding-bottom: 45px;">
                                                 <span class="symbol-label">
-                                                    <img src="assets/media/svg/avatars/007-boy-2.svg"
-                                                        class="h-75 align-self-end" alt="" />
+                                                    <img [src]="profileImageUrl"
+                                                        class="h-100 align-self-center rounded" alt="" />
                                                 </span>
                                             </div>
 
@@ -305,7 +305,7 @@
                                                                                 <i class="fas fa-video icon-lg" style="cursor: pointer;"></i>
                                                                             </a></span>
                                                                         </span>
-                                                                        <span class="btn text-dark-50 font-weight-normal font-size-base"> &nbsp;Upload video</span>
+                                                                        <span class="btn text-dark-50 font-weight-normal font-size-base"> &nbsp;select video</span>
                                                                         
                                                                     </div>
                                                                 </label>
@@ -370,8 +370,8 @@
                                             <div class="symbol symbol-40 symbol-light-success mr-5"
                                                 style="padding-bottom: 45px;">
                                                 <span class="symbol-label">
-                                                    <img src="assets/media/svg/avatars/007-boy-2.svg"
-                                                        class="h-75 align-self-end" alt="" />
+                                                    <img [src]="profileImageUrl"
+                                                        class="h-100 align-self-center rounded" alt="" />
                                                 </span>
                                             </div>
 
@@ -526,7 +526,7 @@
                                             data-type="video" *ngIf="showDiv.video">
                                             <div class="user-info">
                                                 <img class="img-circle"
-                                                    src="https://getstackposts.com/inc/themes/backend/default/assets/img/avatar.jpg">
+                                                    [src]="profileImageUrl">
                                                 <div class="text">
                                                     <div class="name"> {{userName}}</div>
                                                     <span> Just now . <i class="fa fa-globe"
@@ -559,7 +559,7 @@
                                             data-type="text" *ngIf="showDiv.text">
                                             <div class="user-info">
                                                 <img class="img-circle"
-                                                    src="https://getstackposts.com/inc/themes/backend/default/assets/img/avatar.jpg">
+                                                    [src]="profileImageUrl">
                                                 <div class="text">
                                                     <div class="name"> {{userName}}</div>
                                                     <span> Just now . <i class="fa fa-globe"

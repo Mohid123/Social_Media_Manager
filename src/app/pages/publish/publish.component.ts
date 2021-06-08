@@ -40,6 +40,8 @@ export class PublishComponent implements OnInit {
   public facebookPages: any = []
   public report: Report
   public userName : string = localStorage.getItem('userName')
+  public profileImageUrl : string = localStorage.getItem('profileImageUrl')
+
   public showDiv = {
     photo: true,
     video: false,

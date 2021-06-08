@@ -50,6 +50,7 @@
                             </tr>
                         </thead>
                         <tbody *ngFor="let item of checklist">
+                            
                             <tr>
                                 <td class="pl-0" >
                                     <label class="checkbox checkbox-lg checkbox-inline">
@@ -58,10 +59,10 @@
                                     </label>
                                 </td>
                                 <td class="pr-0">
-                                    <div class="symbol symbol-50 symbol-light mt-1">
+                                    <div class="symbol symbol-40 symbol-light mt-1">
                                         <span class="symbol-label">
                                             <img src="{{item.captureImageURL}}"
-                                                class="h-75 align-self-center" alt="" />
+                                                class="h-100 align-self-center rounded" alt="" />
                                         </span>
                                     </div>
                                 </td>
@@ -141,8 +142,8 @@
                                         <!--begin::Symbol-->
                                         <div class="symbol symbol-40 symbol-light-success mr-5"  style="padding-bottom: 45px;">
                                             <span class="symbol-label">
-                                                <img src="assets/media/svg/avatars/007-boy-2.svg"
-                                                    class="h-75 align-self-end" alt="" />
+                                                <img [src]="profileImageUrl"
+                                                    class="h-100 align-self-center rounded" alt="" />
                                             </span>
                                         </div>
 
@@ -244,8 +245,8 @@
                                         <!--begin::Symbol-->
                                         <div class="symbol symbol-40 symbol-light-success mr-5"  style="padding-bottom: 45px;">
                                             <span class="symbol-label">
-                                                <img src="assets/media/svg/avatars/007-boy-2.svg"
-                                                    class="h-75 align-self-end" alt="" />
+                                                <img [src]="profileImageUrl"
+                                                    class="h-100 align-self-center rounded" alt="" />
                                             </span>
                                         </div>
 
@@ -347,8 +348,8 @@
                                         <!--begin::Symbol-->
                                         <div class="symbol symbol-40 symbol-light-success mr-5"  style="padding-bottom: 45px;">
                                             <span class="symbol-label">
-                                                <img src="assets/media/svg/avatars/007-boy-2.svg"
-                                                    class="h-75 align-self-end" alt="" />
+                                                <img [src]="profileImageUrl"
+                                                    class="h-100 align-self-center rounded" alt="" />
                                             </span>
                                         </div>
 
@@ -456,7 +457,7 @@
                                         data-type="photo" *ngIf="showDiv.photo">
                                         <div class="user-info">
                                             <img class="img-circle"
-                                                src="https://getstackposts.com/inc/themes/backend/default/assets/img/avatar.jpg">
+                                                [src]="profileImageUrl">
                                             <div class="text">
                                                 <div class="name"> {{userName}}</div>
                                                 <span> Just now . <i class="fa fa-globe"
@@ -489,9 +490,9 @@
                                         data-type="video"  *ngIf="showDiv.video">
                                         <div class="user-info">
                                             <img class="img-circle"
-                                                src="https://getstackposts.com/inc/themes/backend/default/assets/img/avatar.jpg">
+                                                [src]="profileImageUrl">
                                             <div class="text">
-                                                <div class="name"> Anonymous</div>
+                                                <div class="name"> {{userName}}</div>
                                                 <span> Just now . <i class="fa fa-globe"
                                                         aria-hidden="true"></i></span>
                                             </div>
@@ -522,9 +523,9 @@
                                         data-type="text" *ngIf="showDiv.text">
                                         <div class="user-info">
                                             <img class="img-circle"
-                                                src="https://getstackposts.com/inc/themes/backend/default/assets/img/avatar.jpg">
+                                                [src]="profileImageUrl">
                                             <div class="text">
-                                                <div class="name"> Anonymous</div>
+                                                <div class="name"> {{userName}}</div>
                                                 <span> Just now . <i class="fa fa-globe"
                                                         aria-hidden="true"></i></span>
                                             </div>
@@ -570,8 +571,8 @@
                                         <div class="preview-instagram preview-instagram-photo item-post-type" data-type="media" *ngIf="showDiv.photo" >
                                             <div class="preview-content">
                                                 <div class="user-info">
-                                                    <img class="img-circle" src="https://getstackposts.com/modules/inc/themes/backend/default/assets/img/avatar.jpg">
-                                                    <span>Anonymous</span>
+                                                    <img class="img-circle" [src]="profileImageUrl">
+                                                    <span>{{userName}}</span>
                                                 </div>
                                                 <div class="preview-media" data-max-image="1"><img style="height: 100%; width: 100%;" class="img-circle" [src]="url" *ngIf="format==='image' && url"></div>
                                                 <div class="post-info">
@@ -592,8 +593,8 @@
                                         <div class="preview-instagram preview-instagram-photo item-post-type" data-type="video"  *ngIf="showDiv.video">
                                             <div class="preview-content">
                                                 <div class="user-info">
-                                                    <img class="img-circle" src="https://getstackposts.com/modules/inc/themes/backend/default/assets/img/avatar.jpg">
-                                                    <span>Anonymous</span>
+                                                    <img class="img-circle" [src]="profileImageUrl">
+                                                    <span>{{userName}}</span>
                                                 </div>
                                                 <div class="preview-media" data-max-image="1"><video [src]="url" *ngIf="format==='video' && url" style="width:100%; height: 100%" controls></video></div>
                                                 <div class="post-info">
@@ -638,9 +639,9 @@
                                             data-type="photo" *ngIf="showDiv.photo">
                                             <div class="user-info">
                                                 <img class="img-circle"
-                                                    src="https://getstackposts.com/inc/themes/backend/default/assets/img/avatar.jpg">
+                                                    [src]="profileImageUrl">
                                                 <div class="text">
-                                                    <div class="name"> Anonymous</div>
+                                                    <div class="name"> {{userName}}</div>
                                                     <span> Just now . <i class="fa fa-globe"
                                                             aria-hidden="true"></i></span>
                                                 </div>
@@ -670,9 +671,9 @@
                                             data-type="video" *ngIf="showDiv.video">
                                             <div class="user-info">
                                                 <img class="img-circle"
-                                                    src="https://getstackposts.com/inc/themes/backend/default/assets/img/avatar.jpg">
+                                                    [src]="profileImageUrl">
                                                 <div class="text">
-                                                    <div class="name"> Anonymous</div>
+                                                    <div class="name"> {{userName}}</div>
                                                     <span> Just now . <i class="fa fa-globe"
                                                             aria-hidden="true"></i></span>
                                                 </div>
@@ -704,9 +705,9 @@
                                             data-type="text" *ngIf="showDiv.text">
                                             <div class="user-info">
                                                 <img class="img-circle"
-                                                    src="https://getstackposts.com/inc/themes/backend/default/assets/img/avatar.jpg">
+                                                    [src]="profileImageUrl">
                                                 <div class="text">
-                                                    <div class="name"> Anonymous</div>
+                                                    <div class="name"> {{userName}}</div>
                                                     <span> Just now . <i class="fa fa-globe"
                                                             aria-hidden="true"></i></span>
                                                 </div>
