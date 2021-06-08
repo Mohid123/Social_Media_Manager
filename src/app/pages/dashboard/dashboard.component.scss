@@ -31,3 +31,21 @@
     background-color: #34ABC5;
     background-image: linear-gradient(to top, #949494 0%, #1E1E2D 100%);
   }
+  @media screen 
+ 
+  and (max-width: 1300px) 
+{
+    .btn{
+        // cursor: pointer;
+        padding: 6px;
+        font-size: 10px;
+        margin: 5px 0px;
+    }
+    .font-size-lg {
+      font-size: 12px;
+  }
+  .card-body{
+    padding: 0px
+  }
+   
+}

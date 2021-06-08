@@ -27,6 +27,8 @@ Use below html tag for RTL version
   body {
     margin: 0;
     padding: 0;
+    /* width: 1926px;
+    overflow-x: hidden;  */
   }
 
   #splash-screen {
@@ -64,6 +66,16 @@ Use below html tag for RTL version
     animation: dash 1.5s ease-in-out infinite;
   }
 
+  /* @media screen 
+ 
+  and (max-device-width: 1600px) 
+   { 
+     .zoom{
+       zoom: 80%;
+     }
+} */
+
+
   @keyframes rotate {
     100% {
       transform: rotate(360deg);
@@ -89,7 +101,7 @@ Use below html tag for RTL version
 </style>
 </head>
 
-<body root id="kt_body">
+<body root id="kt_body" class="zoom">
 </body>
 
 </html>
