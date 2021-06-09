@@ -51,6 +51,7 @@ export class AccountManagerComponent implements OnInit {
       scope: 'pages_messaging,pages_messaging_subscriptions,email,pages_show_list,instagram_basic,instagram_content_publish, publish_video ,pages_read_engagement,publish_to_groups , pages_manage_posts'
     };
     await this.authService.signIn(FacebookLoginProvider.PROVIDER_ID, fbLoginOptions).then((socialUser) => {
+      this._toast.success('Successfully logged into Facebook')
       this.socialUser = socialUser;
       this.signedInUser.FBuserID = this.socialUser.id
       this.getLongLivedFBUserToken(this.socialUser.authToken).subscribe(data => {

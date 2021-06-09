@@ -178,10 +178,10 @@ export class DashboardComponent implements OnInit {
   }
 
   showSpinner() {
-    this.spinner.show();
-    setTimeout(() => {
-      this.spinner.hide();
-    }, 1000);
+    // this.spinner.show();
+    // setTimeout(() => {
+    //   this.spinner.hide();
+    // }, 500);
   }
 
   getInstagramStats() {
