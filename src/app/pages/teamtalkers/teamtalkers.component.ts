@@ -1,10 +1,11 @@
+import { filter } from 'rxjs/operators';
 import { ReportService } from './../../core/services/report.service';
 import { ClubService } from './../../core/services/club.service';
 import { BaseModel } from './../../_metronic/shared/crud-table/models/base.model';
 import { VideoProcessingService } from './../../core/services/video-service/video-processing.service';
 import { MediauploadService } from './../../core/services/mediaupload.service';
 import { PostService } from './../../core/services/post.service';
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, AfterViewInit } from '@angular/core';
 import { NgxSpinnerService } from "ngx-spinner";
 import { ToastrService } from 'ngx-toastr';
 import { Post } from 'src/app/core/models/post.model';
@@ -12,13 +13,14 @@ import { MainAuthService } from 'src/app/core/services/auth.service';
 import { User } from 'src/app/core/models/user.model';
 import { Report } from 'src/app/core/models/report.model';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { isTemplateMiddle } from 'typescript';
 
 @Component({
   selector: 'app-teamtalkers',
   templateUrl: './teamtalkers.component.html',
   styleUrls: ['./teamtalkers.component.scss']
 })
-export class TeamtalkersComponent implements OnInit {
+export class TeamtalkersComponent implements OnInit  {
 
   public format: string;
   public teamtalkerCaption: string = "";
@@ -33,10 +35,13 @@ export class TeamtalkersComponent implements OnInit {
   public userName: string = localStorage.getItem('userName')
   public profileImageUrl: string = localStorage.getItem('profileImageUrl')
   public searchString: string;
+  public tempList : any = [{ id: 1, isSelected: false, clubName: localStorage.getItem('club'), captureImageURL: localStorage.getItem('clubLogo') , name : localStorage.getItem('club') }]
 
 
   public masterSelected: boolean
-  checklist: any = [{ id: 1, isSelected: false, clubName: localStorage.getItem('club'), captureImageURL: localStorage.getItem('clubLogo') }];
+  
+  checklist: any = [{ id: 1, isSelected: false, clubName: localStorage.getItem('club'), captureImageURL: localStorage.getItem('clubLogo') , name : localStorage.getItem('club') }];
+
   checkedList: any;
   showDiv = {
     photo: true,
@@ -66,12 +71,24 @@ export class TeamtalkersComponent implements OnInit {
 
   }
 
-  searchGroupsAndEvents(event) {
-    // debugger;
-    // this.searchString = event;
-    // console.log(this.searchString)
-    // this.checklist = this.checklist.filter((item : any) => item.eventName.toLowerCase().includes(this.searchString.toLowerCase()));
 
+
+  searchGroupsAndEvents(event) {
+    console.log(this.checklist)
+    console.log(this.tempList , 'Temporary list')
+    this.searchString = event;
+    if(this.searchString){
+      this.checklist = this.checklist.filter(item=>item.name.toLowerCase().includes(this.searchString.toLowerCase()))
+    }
+    else if(this.searchString == ""){
+      this.checklist = this.tempList;
+      this.cf.detectChanges();
+    }
+    else {
+      this.checklist = this.tempList;
+      this.cf.detectChanges();
+    }
+   
   }
   selectAll() {
     for (var i = 0; i < this.checklist.length; i++) {
@@ -100,17 +117,23 @@ export class TeamtalkersComponent implements OnInit {
     this._clubService.getClubGroups(0, 50).subscribe((groups: any) => {
       groups.map(singleItem => {
         singleItem.isSelected = false
+        singleItem.name = singleItem.groupName;
         this.checklist.push(singleItem);
+        this.tempList.push(singleItem)
         this.cf.detectChanges()
       })
     })
+    console.log(this.checklist)
   }
 
   getClubEvents() {
     this._clubService.getClubEvents(0, 50).subscribe((events: any) => {
       events.map((sigleItem) => {
         sigleItem.isSelected = false;
+        sigleItem.name = sigleItem.eventName
         this.checklist.push(sigleItem)
+        this.tempList.push(sigleItem)
+
         this.cf.detectChanges()
       })
     })
