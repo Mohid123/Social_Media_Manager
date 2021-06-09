@@ -1,3 +1,4 @@
+import { filter } from 'rxjs/operators';
 import { ReportService } from './../../core/services/report.service';
 import { Report } from './../../core/models/report.model';
 import { MediauploadService } from './../../core/services/mediaupload.service';
@@ -36,6 +37,7 @@ export class FacebookComponent implements OnInit {
   checklist: any = [];
   public userName : string = localStorage.getItem('userName')
   public profileImageUrl : string = localStorage.getItem('profileImageUrl')
+  public searchString : string
   checkedList: any;
   showDiv = {
     photo: true,
@@ -54,6 +56,12 @@ export class FacebookComponent implements OnInit {
     setTimeout(() => {
       this.spinner.hide();
     }, 1000);
+  }
+
+  searchFacebookPages(event){
+    this.searchString = event;
+    console.log(event);
+    this.checklist.filter(i => i.pageName.toLowerCase().includes(this.searchString.toLowerCase()))
   }
 
 
