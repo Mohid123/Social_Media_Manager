@@ -102,9 +102,9 @@ export class LoginComponent implements OnInit {
         localStorage.setItem('clubLogo' , this.selectedClub.logoURL)
         localStorage.setItem('userName' , user.user.username)
         localStorage.setItem('profileImageUrl' , user.user.profilePicURL)
+        this.spinner.hide();  
         this.toastr.success('Login Success', 'Logged In Successfully');
         this.router.navigateByUrl('/pages/dashboard');
-        this.spinner.hide();  
       }
       else {
         this.spinner.hide();

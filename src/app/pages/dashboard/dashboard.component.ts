@@ -220,7 +220,7 @@ export class DashboardComponent implements OnInit {
         console.log(instagramStats, 'insta stats')
         this.instagramStatistics = instagramStats;
         this.cf.detectChanges();
-        this._reportService.getLastSevenDaysStats(this.signedInuserID, 'Club').subscribe(clubStats => {
+        this._reportService.getLastSeventDaysStatsForClub(this.signedInuserID ).subscribe(clubStats => {
           console.log(clubStats, 'clubstats')
           this.clubStatistics = clubStats
           this.cf.detectChanges();
