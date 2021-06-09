@@ -36,12 +36,8 @@ export class TeamtalkersComponent implements OnInit  {
   public profileImageUrl: string = localStorage.getItem('profileImageUrl')
   public searchString: string;
   public tempList : any = [{ id: 1, isSelected: false, clubName: localStorage.getItem('club'), captureImageURL: localStorage.getItem('clubLogo') , name : localStorage.getItem('club') }]
-
-
-  public masterSelected: boolean
-  
   checklist: any = [{ id: 1, isSelected: false, clubName: localStorage.getItem('club'), captureImageURL: localStorage.getItem('clubLogo') , name : localStorage.getItem('club') }];
-
+  public masterSelected: boolean
   checkedList: any;
   showDiv = {
     photo: true,

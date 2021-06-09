@@ -12,7 +12,7 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { NgxSpinnerService } from "ngx-spinner";
 import { User } from 'src/app/core/models/user.model';
 import { Post } from 'src/app/core/models/post.model';
-import { take, filter, single } from 'rxjs/operators';
+import { take, filter, single, throwIfEmpty } from 'rxjs/operators';
 import { Report } from 'src/app/core/models/report.model';
 @Component({
   selector: 'app-publish',
@@ -23,7 +23,9 @@ export class PublishComponent implements OnInit {
   public textFirst: string
   public signedInUser: User
   masterSelected: boolean;
-  checklist: any = [{ id: 1, isSelected: false, clubName: localStorage.getItem('club') , captureImageURL : localStorage.getItem('clubLogo') }];
+  checklist: any = [{ id: 1, isSelected: false, clubName: localStorage.getItem('club') , captureImageURL : localStorage.getItem('clubLogo') , name : localStorage.getItem('club') }];
+  tempList: any = [{ id: 1, isSelected: false, clubName: localStorage.getItem('club') , captureImageURL : localStorage.getItem('clubLogo') ,  name : localStorage.getItem('club')  }];
+
   checkedList: any;
   itemSelected: boolean = false
   public format: string;
@@ -42,6 +44,7 @@ export class PublishComponent implements OnInit {
   public userName : string = localStorage.getItem('userName')
   public profileImageUrl : string = localStorage.getItem('profileImageUrl')
   public clubLogo : string = localStorage.getItem('clubLogo')
+  public searchString : string;
   public showDiv = {
     photo: true,
     video: false,
@@ -80,9 +83,11 @@ export class PublishComponent implements OnInit {
       if (this.signedInUser.FBPages.length > 0) {
         this.signedInUser.FBPages.map(item => {
           item.isSelected = false;
+          item.name = item.pageName
           item.captureImageURL = this.facebookProfileUrl;
           this.facebookPages.push(item)
           this.checklist.push(item);
+          this.tempList.push(item)
           this.cf.detectChanges();
         })
         this.facebookPages.forEach(item => {
@@ -90,9 +95,11 @@ export class PublishComponent implements OnInit {
             if (igAccount.hasOwnProperty('instagram_business_account')) {
               igAccount.isSelected = false;
               igAccount.igProfileName = 'Instagram Account'
+              igAccount.name = 'Instagram Account'
               igAccount.linkedFbPagetoken = item.pageAccessToken
               igAccount.captureImageURL = this.instagramProfileUrl;
               this.checklist.push(igAccount);
+              this.tempList.push(igAccount);
               this.cf.detectChanges()
             }
           })
@@ -108,15 +115,22 @@ export class PublishComponent implements OnInit {
   }
 
 
-  selectAllGroups(){
-    for (var i = 0; i < this.checklist.length; i++) {
-      if(this.checklist[i].groupName){
-        this.checklist[i].isSelected = this.masterSelected;
-      }
+  search(event){
+    console.log(this.checklist)
+    console.log(this.tempList , 'Temporary list')
+    this.searchString  = event
+    if(this.searchString){
+      this.checklist = this.checklist.filter(item=>item.name.toLowerCase().includes(this.searchString.toLowerCase()))
     }
-    this.getCheckedItemList();
+    else if(this.searchString == ""){
+      this.checklist = this.tempList;
+      this.cf.detectChanges();
+    }
+    else {
+      this.checklist = this.tempList;
+      this.cf.detectChanges();
+    }
   }
-
 
   selectAll() {
     debugger;
@@ -195,7 +209,9 @@ export class PublishComponent implements OnInit {
       console.log(groups)
       groups.map(singleItem => {
         singleItem.isSelected = false
+        singleItem.name = singleItem.groupName;
         this.checklist.push(singleItem);
+        this.tempList.push(singleItem);
     this.cf.detectChanges()
 
       })
@@ -209,7 +225,9 @@ export class PublishComponent implements OnInit {
       console.log(events)
       events.map((sigleItem) => {
         sigleItem.isSelected = false;
+        sigleItem.name = sigleItem.eventName;
         this.checklist.push(sigleItem)
+        this.tempList.push(sigleItem);
     this.cf.detectChanges()
 
       })
