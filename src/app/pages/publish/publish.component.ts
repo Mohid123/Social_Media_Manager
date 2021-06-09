@@ -41,7 +41,7 @@ export class PublishComponent implements OnInit {
   public report: Report
   public userName : string = localStorage.getItem('userName')
   public profileImageUrl : string = localStorage.getItem('profileImageUrl')
-
+  public clubLogo : string = localStorage.getItem('clubLogo')
   public showDiv = {
     photo: true,
     video: false,
