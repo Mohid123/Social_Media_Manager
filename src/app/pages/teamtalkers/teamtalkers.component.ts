@@ -30,11 +30,13 @@ export class TeamtalkersComponent implements OnInit {
   public signedInUser: User
   public posted: string = 'Club'
   public report: Report
-  public userName : string = localStorage.getItem('userName')
-  public profileImageUrl : string = localStorage.getItem('profileImageUrl')
+  public userName: string = localStorage.getItem('userName')
+  public profileImageUrl: string = localStorage.getItem('profileImageUrl')
+  public searchString: string;
+
 
   public masterSelected: boolean
-  checklist: any = [{ id: 1, isSelected: false, clubName: localStorage.getItem('club') , captureImageURL : localStorage.getItem('clubLogo') }];
+  checklist: any = [{ id: 1, isSelected: false, clubName: localStorage.getItem('club'), captureImageURL: localStorage.getItem('clubLogo') }];
   checkedList: any;
   showDiv = {
     photo: true,
@@ -64,6 +66,13 @@ export class TeamtalkersComponent implements OnInit {
 
   }
 
+  searchGroupsAndEvents(event) {
+    // debugger;
+    // this.searchString = event;
+    // console.log(this.searchString)
+    // this.checklist = this.checklist.filter((item : any) => item.eventName.toLowerCase().includes(this.searchString.toLowerCase()));
+
+  }
   selectAll() {
     for (var i = 0; i < this.checklist.length; i++) {
       this.checklist[i].isSelected = this.masterSelected;
@@ -141,7 +150,7 @@ export class TeamtalkersComponent implements OnInit {
 
     let selectedClubGroups = []
     let selectedClubEvents = []
-    let selectedClub : boolean = false;
+    let selectedClub: boolean = false;
 
     if (this.teamtalkerCaption == "") {
       this.toast.error('Please add content to post', 'No Content Added');
@@ -209,21 +218,21 @@ export class TeamtalkersComponent implements OnInit {
       })
     }
 
-    if(selectedClub){
+    if (selectedClub) {
       delete this.post.groupID;
       delete this.post.eventID;
       this.post.postedTo = 'Club';
       this.post.type = 'text'
       this.post.text = this.teamtalkerCaption;
-      this.createReport(2,'','Club')
+      this.createReport(2, '', 'Club')
       this.spinner.show();
-      this._postService.addPost(this.post).subscribe((post:any)=>{
+      this._postService.addPost(this.post).subscribe((post: any) => {
         this.spinner.hide();
         this.toast.success(' Post added Successfully to Club');
         this.teamtalkerCaption = "";
         this.cf.detectChanges()
         this.createReport(1, post.id, 'Club')
-      } , error=>{
+      }, error => {
         this.spinner.hide();
         this.toast.error(error.message);
         this.createReport(0, '', 'Club')
