@@ -461,3 +461,27 @@
     background-color: #34ABC5;
     background-image: linear-gradient(to top, #949494 0%, #1E1E2D 100%);
   }
+
+  @media screen 
+ 
+and (max-width: 1600px) 
+{
+   
+  
+.btn{
+    font-size: 11px;
+}
+
+  
+.card-body{
+  padding: 5px
+}
+
+.preview-facebook .preview-comment .item {
+    float: left;
+    margin-right: 16px;
+    font-weight: 500;
+    font-size: 11px;
+}
+ 
+}

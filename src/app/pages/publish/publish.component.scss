@@ -712,3 +712,27 @@
 //       padding: 0px !important;
 //   }
 
+@media screen 
+ 
+and (max-width: 1600px) 
+{
+   
+  
+.btn{
+    font-size: 11px;
+}
+
+  
+.card-body{
+  padding: 5px
+}
+
+.preview-facebook .preview-comment .item {
+    float: left;
+    margin-right: 16px;
+    font-weight: 500;
+    font-size: 11px;
+}
+ 
+}
+
