@@ -60,7 +60,6 @@ export class PublishComponent implements OnInit {
   ) {
     this.post = new Post();
     this.report = new Report();
-
     this.masterSelected = false;
   }
 
@@ -90,7 +89,7 @@ export class PublishComponent implements OnInit {
           this.getIGAccountDetails(item.pageID, item.pageAccessToken).subscribe((igAccount: any) => {
             if (igAccount.hasOwnProperty('instagram_business_account')) {
               igAccount.isSelected = false;
-              igAccount.pageName = 'Instagram Account'
+              igAccount.igProfileName = 'Instagram Account'
               igAccount.linkedFbPagetoken = item.pageAccessToken
               igAccount.captureImageURL = this.instagramProfileUrl;
               this.checklist.push(igAccount);
@@ -108,9 +107,21 @@ export class PublishComponent implements OnInit {
     return this._instagramService.getInstagramAccountID(FbPageID, FbPageAccessToken)
   }
 
-  selectAll() {
+
+  selectAllGroups(){
     for (var i = 0; i < this.checklist.length; i++) {
-      this.checklist[i].isSelected = this.masterSelected;
+      if(this.checklist[i].groupName){
+        this.checklist[i].isSelected = this.masterSelected;
+      }
+    }
+    this.getCheckedItemList();
+  }
+
+
+  selectAll() {
+    debugger;
+    for (var i = 0; i < this.checklist.length; i++) {
+      this.checklist[i].isSelected  = this.masterSelected;
     }
     this.getCheckedItemList();
   }
