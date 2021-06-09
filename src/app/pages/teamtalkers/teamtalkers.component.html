@@ -478,7 +478,7 @@
                     <mat-tab>
                         <ng-template mat-tab-label>
                             <mat-icon><a  class="btn btn-icon" style="padding-bottom: 8px;">
-                                <i class="svg-icon menu-icon icon-lg mr-5" style="color: white"><span ><img style="height: 100%; width: 100%;" src="../../../../../assets/media/logos/trophy.png" alt=""></span></i>
+                                <i class="svg-icon menu-icon icon-lg mr-5" style="color: white"><span ><img style="height: 100%; width: 100%;" [src]="clubLogo" alt=""></span></i>
                             </a></mat-icon>
 
                         </ng-template>
@@ -495,10 +495,10 @@
                                             data-type="photo" *ngIf="showDiv.photo">
                                             <div class="user-info">
                                                 <img class="img-circle"
-                                                    src="http://192.168.1.105:3000/media-upload/mediaFiles/VideoThumbnails/60ae1d089cd20e4040acbeee/4b451d298968c9ae987ad372310e545f4.jpeg">
+                                                    [src]="profileImageUrl">
                                                 <div class="text">
                                                     <div class="name"> {{userName}}</div>
-                                                    <span> Just now . <i class="fa fa-globe"
+                                                    <span> Just now   <i class="fa fa-globe"
                                                             aria-hidden="true"></i></span>
                                                 </div>
                                             </div>

@@ -23,7 +23,7 @@ export class TeamtalkersComponent implements OnInit {
   public format: string;
   public teamtalkerCaption: string = "";
   public clubName: string
-  public clubLogo: string
+  public clubLogo: string = localStorage.getItem('clubLogo')
   public url: string = '';
   public post: Post
   public file: File
