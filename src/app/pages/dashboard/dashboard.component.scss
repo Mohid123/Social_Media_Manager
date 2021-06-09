@@ -49,3 +49,12 @@
   }
    
 }
+.padd{
+  height: 660px;
+}
+
+@media screen and(max-width: 500px){
+  .padd{
+    height: 200px;
+  }
+}

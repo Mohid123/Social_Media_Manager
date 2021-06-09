@@ -8,8 +8,10 @@
 }
 
 .preview-instagram-photo .preview-content .user-info img{
-    width: 30px;
+    width: 40px;
     margin-right: 5px;
+    object-fit: cover;
+    border-radius: 5px;
 }
 
 .preview-instagram-photo .preview-content .preview-media{

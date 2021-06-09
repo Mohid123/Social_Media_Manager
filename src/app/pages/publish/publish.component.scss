@@ -24,6 +24,8 @@
 .preview-facebook-media .user-info img{
     width: 40px;
     margin-right: 5px;
+    object-fit: cover;
+    border-radius: 5px;
 }
 
 .preview-facebook-media .user-info .text{
@@ -208,6 +210,8 @@
 .preview-facebook-link .user-info img{
     width: 40px;
     margin-right: 5px;
+    object-fit: cover;
+    border-radius: 5px;
 }
 
 .preview-facebook-link .user-info .text{
@@ -336,6 +340,8 @@
 .preview-facebook-text .user-info img{
     width: 40px;
     margin-right: 5px;
+    object-fit: cover;
+    border-radius: 5px;
 }
 
 .preview-facebook-text .user-info .text{
@@ -452,8 +458,9 @@
 }
 
 .preview-instagram-photo .preview-content .user-info img{
-    width: 30px;
+    width: 40px;
     margin-right: 5px;
+    border-radius: 5px;
 }
 
 .preview-instagram-photo .preview-content .preview-media{
@@ -509,7 +516,7 @@
     border-top: 1px solid #eee;
     padding: 15px 50px;
     color: #999;
-   // background: url(../img/heart-icon.png) no-repeat 20px;
+   background: url(/assets/media/svg/icons/General/Heart.svg) no-repeat 20px;
 }
 
 .preview-instagram-photo .preview-content .preview-comment .icon-3dot {
@@ -711,6 +718,9 @@
 //   .card-body{
 //       padding: 0px !important;
 //   }
+.padd{
+    height: 660px;
+}
 
 @media screen 
  
@@ -733,6 +743,10 @@ and (max-width: 1600px)
     font-weight: 500;
     font-size: 9px;
 }
+
  
 }
 
+.padd{
+    height: 660px;
+}
