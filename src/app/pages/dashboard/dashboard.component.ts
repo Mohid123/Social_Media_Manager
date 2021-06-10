@@ -52,6 +52,7 @@ export class DashboardComponent implements OnInit {
   public facebookStatistics: any = [0, 0, 0, 0, 0, 0, 0, 0]
   public instagramStatistics: any = [0, 0, 0, 0, 0, 0, 0, 0]
   public clubStatistics: any = [0, 0, 0, 0, 0, 0, 0, 0]
+  public clubName: string = localStorage.getItem('club');
 
   constructor(private spinner: NgxSpinnerService, private _clubService: ClubService, private _reportService: ReportService, private cf: ChangeDetectorRef) {
     // this.initializeStatsChart()
