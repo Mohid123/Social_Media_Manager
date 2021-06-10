@@ -19,6 +19,7 @@ import {
   ApexLegend
 } from "ng-apexcharts";
 import { map } from 'rxjs/operators';
+import { Report } from 'src/app/core/models/report.model';
 
 
 export type ChartOptions = {

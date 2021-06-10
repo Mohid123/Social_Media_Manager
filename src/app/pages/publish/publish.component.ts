@@ -354,7 +354,6 @@ export class PublishComponent implements OnInit {
           this.post.path = media.path
           this._postService.addPostToEvent(this.post).subscribe((eventPost: any) => {
             this.spinner.hide()
-
             console.log(eventPost, 'EventPost')
             this.toast.success(`Post added Succeessfully to ${singleEvent.eventName}`);
             this.url = "";
@@ -525,12 +524,10 @@ export class PublishComponent implements OnInit {
           this._mediaUploadService.uploadClubMedia('VideoThumbnails', this.signedInUser.id, imageFile).subscribe((thumbnailFile: any) => {
             this.post.thumbnailPath = thumbnailFile.path
             this.post.thumbnailURL = thumbnailFile.url
-
             selectedClubGroups.forEach(singleGroup => {
               this.post.groupID = singleGroup.id
               this._postService.addPostToGroup(this.post).subscribe((groupPost: any) => {
                 this.spinner.hide()
-
                 console.log(groupPost, 'grouppost')
                 this.toast.success(`Video Post added Successfully to ${singleGroup.groupName}`);
                 this.url = "";

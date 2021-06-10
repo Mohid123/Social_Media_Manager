@@ -129,7 +129,6 @@ export class TeamtalkersComponent implements OnInit  {
         sigleItem.name = sigleItem.eventName
         this.checklist.push(sigleItem)
         this.tempList.push(sigleItem)
-
         this.cf.detectChanges()
       })
     })
@@ -299,7 +298,6 @@ export class TeamtalkersComponent implements OnInit  {
           this.post.path = media.path;
           this.createReport(2, '', 'Group')
           this._postService.addPostToGroup(this.post).subscribe((groupPost: any) => {
-
             console.log(groupPost, 'GroupPosts')
             this.spinner.hide();
             this.toast.success(`Post added Succeessfully to ${singleGroup.groupName}`);
@@ -329,8 +327,8 @@ export class TeamtalkersComponent implements OnInit  {
           this.createReport(2, '', 'Event')
           this._postService.addPostToEvent(this.post).subscribe((eventPost: any) => {
             console.log(eventPost, 'EventPost')
-            this.toast.success(`Post added Succeessfully to ${singleEvent.eventName}`);
             this.spinner.hide()
+            this.toast.success(`Post added Succeessfully to ${singleEvent.eventName}`);
             this.url = "";
             this.cf.detectChanges();
             this.createReport(1, eventPost.id, 'Event')
@@ -366,8 +364,8 @@ export class TeamtalkersComponent implements OnInit  {
           this.createReport(1, post.id, 'Club')
         })
       }, (error: any) => {
-        this.createReport(0, '', 'Club')
         this.spinner.hide();
+        this.createReport(0, '', 'Club')
         this.toast.error(error.message)
       })
     }
@@ -465,7 +463,7 @@ export class TeamtalkersComponent implements OnInit  {
           file = file.replace('data:image/png;base64,', '');
           const imageBlob = this.dataURItoBlob(file.toString());
           const imageFile = new File([imageBlob], 'thumbnail.jpeg', { type: 'image/jpeg' });
-          this._mediaUploadService.uploadMedia('VideoThumbnails', this.signedInUser.id, imageFile).subscribe((thumbnailFile: any) => {
+          this._mediaUploadService.uploadClubMedia('VideoThumbnails', this.signedInUser.id, imageFile).subscribe((thumbnailFile: any) => {
             this.post.thumbnailPath = thumbnailFile.path
             this.post.thumbnailURL = thumbnailFile.url
 
@@ -502,7 +500,7 @@ export class TeamtalkersComponent implements OnInit  {
           file = file.replace('data:image/png;base64,', '');
           const imageBlob = this.dataURItoBlob(file.toString());
           const imageFile = new File([imageBlob], 'thumbnail.jpeg', { type: 'image/jpeg' });
-          this._mediaUploadService.uploadMedia('VideoThumbnails', this.signedInUser.id, imageFile).subscribe((thumbnailFile: any) => {
+          this._mediaUploadService.uploadClubMedia('VideoThumbnails', this.signedInUser.id, imageFile).subscribe((thumbnailFile: any) => {
             this.post.thumbnailPath = thumbnailFile.path
             this.post.thumbnailURL = thumbnailFile.url
 
@@ -540,7 +538,7 @@ export class TeamtalkersComponent implements OnInit  {
           file = file.replace('data:image/png;base64,', '');
           const imageBlob = this.dataURItoBlob(file.toString());
           const imageFile = new File([imageBlob], 'thumbnail.jpeg', { type: 'image/jpeg' });
-          this._mediaUploadService.uploadMedia('VideoThumbnails', this.signedInUser.id, imageFile).subscribe((thumbnailFile: any) => {
+          this._mediaUploadService.uploadClubMedia('VideoThumbnails', this.signedInUser.id, imageFile).subscribe((thumbnailFile: any) => {
             this.post.thumbnailPath = thumbnailFile.path
             this.post.thumbnailURL = thumbnailFile.url
             this.createReport(2, '', 'Club')
