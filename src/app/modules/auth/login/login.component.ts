@@ -1,3 +1,4 @@
+import { locale } from './../../i18n/vocabs/en';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { UsersService } from './../../../core/services/users.service';
 import { ClubService } from './../../../core/services/club.service';
@@ -77,7 +78,6 @@ export class LoginComponent implements OnInit {
 
   loginByEmail() {
 
-    debugger;
     if (!this.selectedClub) {
       this.toastr.error('Please Select Club', 'Empty Club')
       return;
@@ -89,32 +89,37 @@ export class LoginComponent implements OnInit {
       password: this.loginForm.value.password
     }
     this._authService.loginByEmail(payload).subscribe(user => {
-      debugger;
       console.log(user)
-      if(user.user.admin){
-        localStorage.setItem('clubUid' , user.loggedInUser.userID)
-        localStorage.setItem('userId' , user.loggedInUser.id)
+      if (user.user.admin) {
+        localStorage.setItem('clubUid', user.loggedInUser.userID)
+        localStorage.setItem('userId', user.loggedInUser.id)
         localStorage.setItem('token', user.token)
         localStorage.setItem('club', this.selectedClub.clubName)
-        localStorage.setItem('clubId' , this.selectedClub.id)
-        localStorage.setItem('admin' , user.user.admin )
-        localStorage.setItem('baseUrl' , this.selectedClub.baseURL) 
-        localStorage.setItem('clubLogo' , this.selectedClub.logoURL)
-        localStorage.setItem('userName' , user.user.username)
-        localStorage.setItem('profileImageUrl' , user.user.profilePicURL)
-        this.spinner.hide();  
+        localStorage.setItem('clubId', this.selectedClub.id)
+        localStorage.setItem('admin', user.user.admin)
+        localStorage.setItem('baseUrl', this.selectedClub.baseURL)
+        localStorage.setItem('clubLogo', this.selectedClub.logoURL)
+        localStorage.setItem('userName', user.user.username)
+        localStorage.setItem('profileImageUrl', user.user.profilePicURL)
+        this.spinner.hide();
         this.toastr.success('Login Success', 'Logged In Successfully');
         this.router.navigateByUrl('/pages/dashboard');
       }
       else {
         this.spinner.hide();
-        this.toastr.error('Only admins can access this panel' , 'Access Denied');
+        this.toastr.error('Only admins can access this panel', 'Access Denied');
         return;
       }
-      
+
     }, err => {
+      debugger;
       this.spinner.hide()
-      this.toastr.error(err.message)
+      if (err.message.includes('401 Unauthorized')) {
+        this.toastr.error('User not registerd in this club', 'Unauthorized');
+        console.log(err);
+        return;
+      }
+      this.toastr.error(err.message);
       console.log(err)
     })
   }
@@ -129,7 +134,6 @@ export class LoginComponent implements OnInit {
 
   loginFormsubmit() {
     this.loginByEmail()
-    // this.router.navigateByUrl('/pages/dashboard');
   }
 
   openVerticallyCentered(content) {

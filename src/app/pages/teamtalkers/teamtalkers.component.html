@@ -607,7 +607,7 @@
                                                 <div class="line-no-text">{{teamtalkerCaption}}</div>
                                          
                                             </div>
-                                            <div class="preview-media" data-max-image="5"><video [src]="url" *ngIf="format==='video' && url" style="height: 100%; width: 100%; object-fit: cover;" controls></video></div>
+                                            <div class="preview-media" data-max-image="5"><video [src]="url" *ngIf="format==='video' && url" style="height: 100%; width: 100%; object-fit: cover;" controls disablepictureinpicture  controlsList="nodownload"></video></div>
                                             <div class="preview-comment">
                                                 <div class="row">
                                                     <div class="col item">
