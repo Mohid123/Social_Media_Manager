@@ -1,10 +1,7 @@
 import { ReportService } from './../../core/services/report.service';
 import { ClubService } from './../../core/services/club.service';
 import { Component, ViewChild, OnInit, Inject, NgZone, PLATFORM_ID, AfterViewInit, ChangeDetectorRef } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
 import { NgxSpinnerService } from "ngx-spinner";
-import { ChartType } from 'chart.js';
-import { SingleDataSet, Label, monkeyPatchChartJsLegend, monkeyPatchChartJsTooltip, Color } from 'ng2-charts';
 import {
   ChartComponent,
   ApexAxisChartSeries,
