@@ -3,7 +3,6 @@ import { ReportService } from './../../core/services/report.service';
 import { MediauploadService } from './../../core/services/mediaupload.service';
 import { InstagramService } from './../../core/services/instagram.service';
 import { MainAuthService } from './../../core/services/auth.service';
-import { AuthService } from './../../modules/auth/_services/auth.service';
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { NgxSpinnerService } from "ngx-spinner";
 import { User } from 'src/app/core/models/user.model';
@@ -18,8 +17,8 @@ import { take } from 'rxjs/operators';
 export class InstagramComponent implements OnInit {
 
   public instaCaption: string = "";
-  public signedInUser: User
-  public IGaccount: any
+  private signedInUser: User
+  private IGaccount: any
   public file: File
   public format: string;
   public url: string = '';
@@ -30,8 +29,7 @@ export class InstagramComponent implements OnInit {
   private checkedList: any;
   public userName : string = localStorage.getItem('userName')
   public profileImageUrl : string = localStorage.getItem('profileImageUrl')
-
-  showDiv = {
+  public showDiv = {
     photo: true,
     video: false,
   }
