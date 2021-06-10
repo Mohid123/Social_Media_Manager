@@ -47,6 +47,12 @@ export class InstagramComponent implements OnInit {
     this.getCheckedItemList()
   }
 
+  clear(){
+    this.instaCaption = '';
+    this.url = '';
+    this.cf.detectChanges()
+  }
+
   getSignedInUser() {
     this._authService.getSignedInUser().pipe(take(1)).subscribe(user => {
       this.signedInUser = user;

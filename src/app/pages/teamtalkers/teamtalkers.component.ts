@@ -67,6 +67,12 @@ export class TeamtalkersComponent implements OnInit  {
 
   }
 
+  clear(){
+    this.teamtalkerCaption = '';
+    this.url = ''
+    this.cf.detectChanges()
+  }
+
 
 
   searchGroupsAndEvents(event) {

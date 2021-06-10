@@ -73,6 +73,11 @@ export class PublishComponent implements OnInit {
 
   }
 
+  clear(){
+    this.url = ''; 
+    this.socialCaption = '';
+    this.cf.detectChanges()
+  }
 
 
   getSignedInUser() {
