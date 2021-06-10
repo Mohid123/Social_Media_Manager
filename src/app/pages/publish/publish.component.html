@@ -37,17 +37,15 @@
                             <table class="table table-head-custom " id="kt_advance_table_widget_1">
                               
                                 <thead>
-                                    <tr class="text-left" >
-                                        <th class="pl-0" style="width: 20px">
-                                            <label class="checkbox checkbox-lg checkbox-inline">
+                                  
+                                        <th class="pl-0">
+                                            <label class="checkbox checkbox-sm checkbox-inline">
                                                 <input [(ngModel)]="masterSelected" name="list_name" value="m1" (change)="selectAll()" type="checkbox" value="1"/>
                                                 <span></span>
-
+                                                <label>Select all</label>
                                             </label>
                                         </th>
-                                        <th class="pr-0 pt-0" style=" text-transform: lowercase; text-transform: none; ">Select all</th>
-
-                                    </tr>
+                                       
                                 </thead>
                               
                                 <th class="pr-0 pt-5 pb-5 text-left" ><span class="label label-xl label-dark label-inline mr-2">Club</span></th>
@@ -55,7 +53,7 @@
                                     <ng-container *ngIf="item.clubName" >
                                     <tr style="border-bottom: 1px solid #E4E6EF;">
                                         <td class="pl-0">
-                                            <label class="checkbox checkbox-lg checkbox-inline">
+                                            <label class="checkbox checkbox-sm checkbox-inline">
                                                 <input type="checkbox" [(ngModel)]="item.isSelected"   value="{{item.id}}"   (change) = "singleItemSelected()" />
                                                 <span></span>
                                             </label>
@@ -69,9 +67,11 @@
                                             </div>
                                         </td>
                                         <td class="pl-0">
-                                             <a  *ngIf="item.clubName"
-                                        class="text-dark-75 font-weight-bolder text-hover-primary mb-1 font-size-lg">{{item.clubName}}
-                                        </a>
+                                              <a 
+                                        class="text-dark-75 font-weight-bolder text-hover-primary mb-1 font-size-lg">
+                                    </a>
+                                <span class="font-weight-bold text-dark d-block"> {{item.clubName}}
+                                    </span>
                                         
                                         </td>
                                         </tr>
@@ -82,7 +82,7 @@
                                     <ng-container  *ngIf="item.groupName">
                                         <tr style="border-bottom: 1px solid #E4E6EF;">
                                             <td class="pl-0">
-                                                <label class="checkbox checkbox-lg checkbox-inline">
+                                                <label class="checkbox checkbox-sm checkbox-inline">
                                                     <input type="checkbox" [(ngModel)]="item.isSelected"   value="{{item.id}}"   (change) = "singleItemSelected()" />
                                                     <span></span>
                                                 </label>
@@ -96,9 +96,11 @@
                                                 </div>
                                             </td>
                                             <td class="pl-0">
-                                                <a  *ngIf="item.groupName"
-                                           class="text-dark-75 font-weight-bolder text-hover-primary mb-1 font-size-lg">{{item.groupName}}
-                                           </a>
+                                                <a 
+                                                class="text-dark-75 font-weight-bolder text-hover-primary mb-1 font-size-lg">
+                                            </a>
+                                        <span class="font-weight-bold text-dark d-block"> {{item.groupName}}
+                                            </span>
                                            
                                            </td>
                                             
@@ -112,7 +114,7 @@
                                     <ng-container *ngIf="item.eventName"> 
                                         <tr style="border-bottom: 1px solid #E4E6EF;">
                                             <td class="pl-0">
-                                                <label class="checkbox checkbox-lg checkbox-inline">
+                                                <label class="checkbox checkbox-sm checkbox-inline">
                                                     <input type="checkbox" [(ngModel)]="item.isSelected"   value="{{item.id}}"   (change) = "singleItemSelected()" />
                                                     <span></span>
                                                 </label>
@@ -126,9 +128,11 @@
                                                 </div>
                                             </td>
                                             <td class="pl-0">
-                                            <a  *ngIf="item.eventName"
-                                            class="text-dark-75 font-weight-bolder text-hover-primary mb-1 font-size-lg">{{item.eventName}}
+                                                <a 
+                                                class="text-dark-75 font-weight-bolder text-hover-primary mb-1 font-size-lg">
                                             </a>
+                                        <span class="font-weight-bold text-dark d-block"> {{item.eventName}}
+                                            </span>
                                             </td>
                                             </tr>
                                     </ng-container>
@@ -140,7 +144,7 @@
                                     <ng-container *ngIf="item.igProfileName"> 
                                         <tr style="border-bottom: 1px solid #E4E6EF;">
                                             <td class="pl-0">
-                                                <label class="checkbox checkbox-lg checkbox-inline">
+                                                <label class="checkbox checkbox-sm checkbox-inline">
                                                     <input type="checkbox" [(ngModel)]="item.isSelected"   value="{{item.id}}"   (change) = "singleItemSelected()" />
                                                     <span></span>
                                                 </label>
@@ -154,9 +158,11 @@
                                                 </div>
                                             </td>
                                             <td class="pl-0">
-                                            <a  *ngIf="item.igProfileName"
-                                            class="text-dark-75 font-weight-bolder text-hover-primary mb-1 font-size-lg">{{item.igProfileName}}
+                                                <a 
+                                                class="text-dark-75 font-weight-bolder text-hover-primary mb-1 font-size-lg">
                                             </a>
+                                        <span class="font-weight-bold text-dark d-block"> {{item.igProfileName}}
+                                            </span>
                                             </td>
                                             </tr>
                                     </ng-container>   
@@ -167,7 +173,7 @@
                                     <ng-container *ngIf="item.pageName"> 
                                         <tr style="border-bottom: 1px solid #E4E6EF;">
                                             <td class="pl-0">
-                                                <label class="checkbox checkbox-lg checkbox-inline">
+                                                <label class="checkbox checkbox-sm checkbox-inline">
                                                     <input type="checkbox" [(ngModel)]="item.isSelected"   value="{{item.id}}"   (change) = "singleItemSelected()" />
                                                     <span></span>
                                                 </label>
@@ -181,9 +187,11 @@
                                                 </div>
                                             </td>
                                             <td class="pl-0">
-                                            <a  *ngIf="item.pageName"
-                                            class="text-dark-75 font-weight-bolder text-hover-primary mb-1 font-size-lg">{{item.pageName}}
+                                                <a 
+                                                class="text-dark-75 font-weight-bolder text-hover-primary mb-1 font-size-lg">
                                             </a>
+                                        <span class="font-weight-bold text-dark d-block"> {{item.pageName}}
+                                            </span>
                                             </td>
                                             </tr>
                                     </ng-container>
@@ -235,7 +243,7 @@
             <div class="card-body">
                 <mat-tab-group mat-align-tabs="center"  (selectedTabChange)="switchTabs($event)">
                     <mat-tab>
-                      <ng-template mat-tab-label>
+                      <ng-template mat-tab-label >
                        
                        <mat-icon><i class="far fa-images icon-lg" style="color: #3699FF;"></i></mat-icon>&nbsp; &nbsp;Photo
                       </ng-template>
@@ -577,7 +585,7 @@
                                             
                                         </div>
                                         <div class="preview-media" data-max-image="5" >
-                                            <img style="height: 100%; width: 100%;" class="img-circle" [src]="url" *ngIf="format==='image' && url">
+                                            <img style="height: 100%; width: 100%; object-fit: cover;" class="img-circle" [src]="url" *ngIf="format==='image' && url">
                                         </div>
                                         <div class="preview-comment">
                                             <div class="row">
@@ -680,20 +688,18 @@
                                                 <div class="user-info">
                                                     <img class="img-circle" [src]="profileImageUrl">
                                                     <span>{{userName}}</span>
-                                                </div>
-                                                <div class="preview-media" data-max-image="1"><img style="height: 100%; width: 100%;" class="img-circle" [src]="url" *ngIf="format==='image' && url"></div>
+                                                </div>"
+                                                <div class="preview-media" data-max-image="1"><img style="height: 100%; width: 100%; object-fit: cover;" class="img-circle" [src]="url" *ngIf="format==='image' && url"></div>
                                                 <div class="post-info">
-                                                    <div class="info-active pull-left"> Be the first to Like this</div>
-                                                    <!-- <div class="pull-right">1s</div> -->
-                                                    <div class="clearfix"></div>
+                                                    
+                                                    
                                                 </div>
                                                 <div class="caption pt0"><div class="line-no-text" >
                                                     {{socialCaption}}
-                                                </div><div class="line-no-text"></div><div class="line-no-text w50"></div></div>
-                                                <div class="preview-comment">
-                                                    Add a comment                              
-                                                    <div class="icon-3dot"></div>
                                                 </div>
+                                               
+                                            </div>
+                                                
                                             </div>
                                         </div>
                                         
@@ -705,15 +711,13 @@
                                                 </div>
                                                 <div class="preview-media" data-max-image="1"><video [src]="url" *ngIf="format==='video' && url" style="width:100%; height: 100%" controls></video></div>
                                                 <div class="post-info">
-                                                    <div class="info-active pull-left"> Be the first to Like this</div>
-                                                    <div class="pull-right">1s</div>
-                                                    <div class="clearfix"></div>
+                                                    
                                                 </div>
-                                                <div class="caption pt0"><div class="line-no-text"></div><div class="line-no-text"></div><div class="line-no-text w50"></div></div>
-                                                <div class="preview-comment">
-                                                    Add a comment                              
-                                                    <div class="icon-3dot"></div>
+                                                <div class="caption pt0">
+                                                    <div class="line-no-text"> {{socialCaption}}</div>
+                                                    
                                                 </div>
+                                                
                                             </div>
                                         </div>
                                         
@@ -758,7 +762,7 @@
                                                 <!-- <div class="line-no-text"></div>
                                                 <div class="line-no-text w50"></div> -->
                                             </div>
-                                            <div class="preview-media" data-max-image="5"><img style="height: 100%; width: 100%;" class="img-circle" [src]="url" *ngIf="format==='image' && url"></div>
+                                            <div class="preview-media" data-max-image="5"><img style="height: 100%; width: 100%; object-fit: cover;"class="img-circle" [src]="url" *ngIf="format==='image' && url"></div>
                                             <div class="preview-comment">
                                                 <div class="row">
                                                     <div class="col item">
