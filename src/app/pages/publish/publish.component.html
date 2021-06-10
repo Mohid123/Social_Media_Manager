@@ -38,7 +38,7 @@
                               
                                 <thead>
                                   
-                                        <th>
+                                        <th >
                                             <label class="checkbox checkbox-sm checkbox-inline">
                                                 <input [(ngModel)]="masterSelected" name="list_name" value="m1" (change)="selectAll()" type="checkbox" value="1"/>
                                                 <span></span>
@@ -617,7 +617,7 @@
                                             <div class="line-no-text">{{socialCaption}}</div>
                                             
                                         </div>
-                                        <div class="preview-media" data-max-image="5" ><video [src]="url" *ngIf="format==='video' && url" style="width:100%; height: 100%" controls></video> </div>
+                                        <div class="preview-media" data-max-image="5" ><video [src]="url" *ngIf="format==='video' && url" style="height: 100%; width: 100%; object-fit: cover;" controls></video> </div>
                                         <div class="preview-comment">
                                             <div class="row">
                                                 <div class="col item">
@@ -709,7 +709,7 @@
                                                     <img class="img-circle" [src]="profileImageUrl">
                                                     <span>{{userName}}</span>
                                                 </div>
-                                                <div class="preview-media" data-max-image="1"><video [src]="url" *ngIf="format==='video' && url" style="width:100%; height: 100%" controls></video></div>
+                                                <div class="preview-media" data-max-image="1"><video [src]="url" *ngIf="format==='video' && url" style="height: 100%; width: 100%; object-fit: cover;" controls></video></div>
                                                 <div class="post-info">
                                                     
                                                 </div>
@@ -793,7 +793,7 @@
                                                 <div class="line-no-text">{{socialCaption}}</div>
                                                 
                                             </div>
-                                            <div class="preview-media" data-max-image="5"><video [src]="url" *ngIf="format==='video' && url" style="width:100%; height: 100%" controls></video></div>
+                                            <div class="preview-media" data-max-image="5"><video [src]="url" *ngIf="format==='video' && url" style="height: 100%; width: 100%; object-fit: cover;" controls></video></div>
                                             <div class="preview-comment">
                                                 <div class="row">
                                                     <div class="col item">
