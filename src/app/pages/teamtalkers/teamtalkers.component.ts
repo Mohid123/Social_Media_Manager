@@ -204,6 +204,7 @@ export class TeamtalkersComponent implements OnInit  {
       selectedClubGroups.forEach(singleGroup => {
         this.post.groupID = singleGroup.id;
         this.createReport(2, '', 'Group')
+        this.spinner.show();
         this._postService.addPostToGroup(this.post).subscribe((groupPost: any) => {
           console.log(groupPost)
           this.spinner.hide()
@@ -214,6 +215,7 @@ export class TeamtalkersComponent implements OnInit  {
         }, (error) => {
           this.spinner.hide();
           this.toast.error(error.message);
+          this.createReport(0,'','Group')
         })
       })
     }
@@ -226,6 +228,7 @@ export class TeamtalkersComponent implements OnInit  {
       selectedClubEvents.forEach(singleEvent => {
         this.post.eventID = singleEvent.id;
         this.createReport(2, '', 'Event')
+        this.spinner.show();
         this._postService.addPostToEvent(this.post).subscribe((eventPost: any) => {
           console.log(eventPost)
           this.spinner.hide()
@@ -292,13 +295,14 @@ export class TeamtalkersComponent implements OnInit  {
     })
 
     if (selectedClubGroups) {
+      delete this.post.eventID;
+      this.post.postedTo = 'Group';
+      this.post.type = "image"
+      this.post.text = this.teamtalkerCaption;
+
       this.spinner.show();
       this._mediaUploadService.uploadClubMedia('GroupMedia', this.signedInUser.id, this.file).subscribe((media: any) => {
         selectedClubGroups.forEach(singleGroup => {
-          delete this.post.eventID;
-          this.post.postedTo = 'Group';
-          this.post.type = "image"
-          this.post.text = this.teamtalkerCaption;
           this.post.groupID = singleGroup.id;
           this.post.captureFileURL = media.url;
           this.post.path = media.path;
