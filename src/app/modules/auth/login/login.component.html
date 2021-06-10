@@ -21,7 +21,7 @@
             </div>
             <div class="form-group d-flex flex-row-reverse" style="float: right; position: absolute; left: 593px">
               <button type="button" class="btn"
-              (click)="c('Close click');searchStarted = false"><i class="ki ki-bold-close icon-sm" style="color:rgba(255, 0, 0, 0.548)"></i></button>
+              (click)="c('Close click');searchStarted = false" data-toggle="tooltip" title="close window"><i class="ki ki-bold-close icon-sm" style="color:rgba(255, 0, 0, 0.548)"></i></button>
               <input class="form-control bg-primary-o-30" [ngModelOptions]="{standalone: true}"
                 [(ngModel)]="searchString" (ngModelChange)="searchClub($event)" style="color: #fff;"
                 id="exampleInputEmail1" placeholder="Search">
@@ -92,7 +92,7 @@
       </ng-template>
 
       <div class="btn btn-icon btn-light w-auto btn-clean d-inline-flex align-items-center btn-lg px-2 mr-5"
-        (click)="openVerticallyCentered(content6)" style="background-color: #1e1e2d;">
+        (click)="openVerticallyCentered(content6)" data-toggle="tooltip" title="select club before login" style="background-color: #1e1e2d;">
         <span class="svg-icon svg-icon-primary svg-icon-2x">
           <!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2021-05-14-112058/theme/html/demo1/dist/../src/media/svg/icons/Design/Select.svg--><svg
             xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
