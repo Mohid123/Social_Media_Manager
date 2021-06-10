@@ -73,6 +73,11 @@ export class PublishComponent implements OnInit {
 
   }
 
+  clear(){
+    this.url = ''; 
+    this.socialCaption = '';
+    this.cf.detectChanges()
+  }
 
 
   getSignedInUser() {
@@ -273,14 +278,15 @@ export class PublishComponent implements OnInit {
       this.spinner.show();
       if (selectedFacebookPages) {
         selectedFacebookPages.forEach(item => {
+          this.createReport(2 , '' , 'Facebook')
           this._facebookService.addImagePostToFB(item.pageID, media.url, this.socialCaption, item.pageAccessToken).subscribe((FbPost: any) => {
             console.log(FbPost);
             this.spinner.hide();
             this.toast.success(`Post added to ${item.pageName}`, 'Post added Successfully');
-            this.createReport(1, FbPost.id, 'Facebook')
             this.url = ""
             this.socialCaption = ""
             this.cf.detectChanges();
+            this.createReport(1, FbPost.id, 'Facebook')
           }, (error) => {
             this.spinner.hide();
             this.toast.error(error.message);
@@ -291,18 +297,19 @@ export class PublishComponent implements OnInit {
       if (selctedInstagramPages) {
         this.spinner.show();
         selctedInstagramPages.forEach(item => {
+          this.createReport(2 , '' , 'Instagram')
           this._instagramService.createIGMediaContainer(item.instagram_business_account.id, this.socialCaption, item.linkedFbPagetoken, media.url).subscribe((container: any) => {
             this._instagramService.publishContent(item.instagram_business_account.id, container.id, item.linkedFbPagetoken).subscribe((IgPost: any) => {
               console.log(IgPost, 'IGuploaded');
+              this.spinner.hide();
               this.toast.success('Post added on Instagram', 'Post added Successfully');
               this.socialCaption = ""
               this.cf.detectChanges();
-              this.spinner.hide();
               this.createReport(1, IgPost.id, 'Instagram')
             }, (error) => {
               this.spinner.hide();
               this.toast.error('Failed to upload on Instagram', 'Error');
-              this.createReport(0)
+              this.createReport(0 , '' , 'Instagram')
             })
           })
         })
@@ -310,20 +317,18 @@ export class PublishComponent implements OnInit {
     })
 
     if (selectedClubGroups) {
+      delete this.post.eventID;
+      this.post.postedTo = 'Group';
+      this.post.type = 'image';
+      this.post.text = this.socialCaption;
       this.spinner.show();
       this._mediaUploadService.uploadClubMedia('GroupMedia', this.signedInUser.id, this.file).subscribe((media: any) => {
         selectedClubGroups.forEach(singleGroup => {
-          delete this.post.eventID;
-          this.post.postedTo = 'Group';
-          this.post.type = 'image';
-          this.post.text = this.socialCaption;
           this.post.groupID = singleGroup.id;
-          this.post.pinPost = false;
-          this.post.deletedCheck = false;
           this.post.captureFileURL = media.url;
           this.post.path = media.path;
+          this.createReport(2, '', 'Group')
           this._postService.addPostToGroup(this.post).subscribe((groupPost: any) => {
-
             console.log(groupPost, 'GroupPosts')
             this.spinner.hide()
             this.toast.success(`Post added Succeessfully to ${singleGroup.groupName}`);
@@ -334,22 +339,22 @@ export class PublishComponent implements OnInit {
           }, (error: any) => {
             this.spinner.hide();
             this.toast.error(error.message)
+            this.createReport(0, '', 'Group')
           })
         })
       })
     }
 
     if (selectedClubEvents) {
+      delete this.post.groupID;
+      this.post.type = 'image'
+      this.post.postedTo = 'Event';
       this.spinner.show();
       this._mediaUploadService.uploadClubMedia('EventMedia', this.signedInUser.id, this.file).subscribe((media: any) => {
         selectedClubEvents.forEach((singleEvent: any) => {
-          delete this.post.groupID;
-          this.post.postedTo = 'Event';
-          this.post.type = 'image'
+          this.createReport(2, '', 'Event')
           this.post.text = this.socialCaption;
           this.post.eventID = singleEvent.id;
-          this.post.pinPost = false;
-          this.post.deletedCheck = false;
           this.post.captureFileURL = media.url
           this.post.path = media.path
           this._postService.addPostToEvent(this.post).subscribe((eventPost: any) => {
@@ -364,6 +369,8 @@ export class PublishComponent implements OnInit {
           }, (error) => {
             this.spinner.hide();
             this.toast.error(error.message)
+            this.createReport(0, '', 'Event')
+
           })
         })
       })
@@ -393,9 +400,9 @@ export class PublishComponent implements OnInit {
           this.createReport(1, post.id, 'Club')
         })
       }, (error: any) => {
-        this.createReport(0, '', 'Club')
         this.spinner.hide();
         this.toast.error(error.message)
+        this.createReport(0, '', 'Club')
       })
     }
   }
@@ -453,6 +460,7 @@ export class PublishComponent implements OnInit {
       this.spinner.show();
       if (selectedFacebookPages) {
         selectedFacebookPages.forEach(item => {
+          this.createReport(2, '', 'Facebook');
           this._facebookService.addVideoPost(item.pageID, item.pageAccessToken, media.url, this.socialCaption).subscribe((FbPost: any) => {
             this.spinner.hide();
             this.toast.success(`Video Post Added Successfully on ${item.pageName}`, 'Post Added');
@@ -460,6 +468,10 @@ export class PublishComponent implements OnInit {
             this.cf.detectChanges();
             console.log(FbPost, 'FbvideoPost');
             this.createReport(1, FbPost.id, 'Facebook')
+          }, error => {
+            this.spinner.hide()
+            this.toast.error(error.message);
+            this.createReport(0, '', 'Facebook')
           })
         })
       }
@@ -484,7 +496,7 @@ export class PublishComponent implements OnInit {
                     this.spinner.hide();
                     this.toast.error(error.message);
                     clearInterval(interval)
-                    this.createReport(0)
+                    this.createReport(0, '', 'Instagram')
                   })
                 }
                 else if (data.status_code == "ERROR") {
@@ -494,7 +506,7 @@ export class PublishComponent implements OnInit {
                   this.socialCaption = "";
                   this.cf.detectChanges()
                   this.toast.error('Error uploding Video', 'Video Format Unsupported')
-                  this.createReport(0);
+                  this.createReport(0, '', 'Instagram');
                 }
               })
             }, 3000)
@@ -502,8 +514,8 @@ export class PublishComponent implements OnInit {
         }, (error) => {
           this.spinner.hide();
           this.toast.error(error.message);
+          this.createReport(0, '', 'Instagram');
 
-          this.createReport(0)
         })
       }
     })
@@ -525,6 +537,7 @@ export class PublishComponent implements OnInit {
             this.post.thumbnailPath = thumbnailFile.path
             this.post.thumbnailURL = thumbnailFile.url
             selectedClubGroups.forEach(singleGroup => {
+              this.createReport(2, '', 'Group')
               this.post.groupID = singleGroup.id
               this._postService.addPostToGroup(this.post).subscribe((groupPost: any) => {
                 this.spinner.hide()
@@ -537,6 +550,8 @@ export class PublishComponent implements OnInit {
               }, (error) => {
                 this.spinner.hide();
                 this.toast.error(error.message);
+                this.createReport(0, '', 'Group')
+
               })
             })
           })
@@ -560,14 +575,13 @@ export class PublishComponent implements OnInit {
           this._mediaUploadService.uploadMedia('VideoThumbnails', this.signedInUser.id, imageFile).subscribe((thumbnailFile: any) => {
             this.post.thumbnailPath = thumbnailFile.path
             this.post.thumbnailURL = thumbnailFile.url
-
             selectedClubEvents.forEach(singleEvent => {
+              this.createReport(2, '', 'Event')
               this.post.eventID = singleEvent.id
               this._postService.addPostToEvent(this.post).subscribe((eventPost: any) => {
                 this.spinner.hide()
-
                 console.log(eventPost, 'eventpost')
-                this.toast.success(`Video Post added Successfully to ${singleEvent.groupName}`);
+                this.toast.success(`Video Post added Successfully to ${singleEvent.eventName}`);
                 this.url = "";
                 this.socialCaption = ""
                 this.cf.detectChanges();
@@ -575,12 +589,15 @@ export class PublishComponent implements OnInit {
               }, (error) => {
                 this.spinner.hide();
                 this.toast.error(error.message);
+                this.createReport(0, '', 'Event')
+
               })
             })
           })
         })
       })
     }
+
     if (selectedClub) {
       delete this.post.eventID;
       delete this.post.groupID;
@@ -607,9 +624,9 @@ export class PublishComponent implements OnInit {
               this.cf.detectChanges();
               this.createReport(1, post.id, 'Club')
             }, error => {
-              this.createReport(0, '', 'Club')
               this.spinner.hide();
               this.toast.error(error.message);
+              this.createReport(0, '', 'Club')
             })
           });
         })
@@ -665,6 +682,7 @@ export class PublishComponent implements OnInit {
     if (selectedFacebookPages) {
       this.spinner.show();
       selectedFacebookPages.forEach(item => {
+        this.createReport(2, item.id, 'Facebook')
         this._facebookService.addTextPostToFB(item.pageID, this.socialCaption, item.pageAccessToken).subscribe(FbPost => {
           console.log(FbPost);
           this.spinner.hide();
@@ -672,6 +690,10 @@ export class PublishComponent implements OnInit {
           this.socialCaption = ""
           this.cf.detectChanges();
           this.createReport(1, FbPost.id, 'Facebook')
+        }, error => {
+          this.spinner.hide();
+          this.toast.error(error.message);
+          this.createReport(0, '', 'Facebook')
         })
       })
     }
@@ -682,6 +704,7 @@ export class PublishComponent implements OnInit {
       this.post.type = 'text'
       this.post.text = this.socialCaption;
       selectedClubGroups.forEach(singleGroup => {
+        this.createReport(2, '', 'Group')
         this.post.groupID = singleGroup.id;
         this._postService.addPostToGroup(this.post).subscribe((groupPost: any) => {
           console.log(groupPost)
@@ -691,8 +714,11 @@ export class PublishComponent implements OnInit {
           this.cf.detectChanges()
           this.createReport(1, groupPost.id, 'Group')
         }, (error) => {
+
           this.spinner.hide();
           this.toast.error(error.message);
+          this.createReport(0, '', 'Group')
+
         })
       })
     }
@@ -703,6 +729,7 @@ export class PublishComponent implements OnInit {
       this.post.type = 'text'
       this.post.text = this.socialCaption;
       selectedClubEvents.forEach(singleEvent => {
+        this.createReport(2, '', 'Event')
         this.post.eventID = singleEvent.id;
         this._postService.addPostToEvent(this.post).subscribe((eventPost: any) => {
           console.log(eventPost)
@@ -714,7 +741,7 @@ export class PublishComponent implements OnInit {
         }, (error) => {
           this.spinner.hide();
           this.toast.error(error.message);
-          this.createReport(0)
+          this.createReport(0, '', 'Event')
 
         })
       })
@@ -727,8 +754,8 @@ export class PublishComponent implements OnInit {
       this.post.postedTo = 'Club';
       this.post.type = 'text'
       this.post.text = this.socialCaption;
-      this.createReport(2, '', 'Club')
       this.spinner.show();
+      this.createReport(2, '', 'Club')
       this._postService.addPost(this.post).subscribe((post: any) => {
         this.spinner.hide();
         this.toast.success(' Post added Successfully to Club');

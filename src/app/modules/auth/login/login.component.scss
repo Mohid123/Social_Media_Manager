@@ -90,3 +90,13 @@ align-items: center;
 .title{
   margin-top: 1rem;
 }
+
+@media screen and (max-width:1600px){
+  .media{
+    height: 400px !important
+  }
+  .login.login-1 .login-aside .aside-img{
+    min-height: 300px;
+  }
+}
+

@@ -51,6 +51,12 @@ export class FacebookComponent implements OnInit {
     this.getCheckedItemList();
   }
 
+  clear(){
+    this.url = '';
+    this.name = '';
+    this.cf.detectChanges();
+  }
+
   showSpinner() {
     this.spinner.show();
     setTimeout(() => {
