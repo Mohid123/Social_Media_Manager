@@ -62,9 +62,8 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit() {
     this.signedInuserID = localStorage.getItem('clubUid');
-    this.showSpinner()
     this.getLatestReports()
-    this.getStats()
+    this.getSignedInUserStats()
     this.initializeStatsChart()
     this.getLastSevenDaysStats()
   }
@@ -76,6 +75,7 @@ export class DashboardComponent implements OnInit {
         {
           name: "Facebook",
           data: this.facebookStatistics
+        
         },
         {
           name: "Instagram",
@@ -86,6 +86,7 @@ export class DashboardComponent implements OnInit {
           data: this.clubStatistics
         }
       ],
+      
       chart: {
         height: 400,
         type: "line"
@@ -163,6 +164,7 @@ export class DashboardComponent implements OnInit {
         borderColor: "#f1f1f1"
       }
     };
+    this.cf.detectChanges();
   }
 
 
@@ -178,12 +180,6 @@ export class DashboardComponent implements OnInit {
     })
   }
 
-  showSpinner() {
-    // this.spinner.show();
-    // setTimeout(() => {
-    //   this.spinner.hide();
-    // }, 500);
-  }
 
   getInstagramStats() {
     return this._reportService.getInstagramStats(this.signedInuserID)
@@ -194,18 +190,14 @@ export class DashboardComponent implements OnInit {
     return this._reportService.getClubStatus(this.signedInuserID)
   }
 
-  getStats() {
+  getSignedInUserStats() {
     this._reportService.getFacebookStats(this.signedInuserID).subscribe(stats => {
       this.facebookStats = stats
-      // console.log(this.facebookStats, 'FB stats')
       this.getInstagramStats().subscribe(stats => {
         this.instagramStats = stats
-        // console.log(this.instagramStats, 'IG stats')
         this.getClubStats().subscribe(stats => {
           this.clubStats = stats
           this.cf.detectChanges();
-          // console.log(this.clubStats, 'Club stats')
-
         })
       })
     })
@@ -216,15 +208,12 @@ export class DashboardComponent implements OnInit {
       console.log(facebookStats)
       this.facebookStatistics = facebookStats;
       console.log(facebookStats, 'FB stats')
-      this.cf.detectChanges();
       this._reportService.getLastSevenDaysStats(this.signedInuserID, 'Instagram').subscribe(instagramStats => {
         console.log(instagramStats, 'insta stats')
         this.instagramStatistics = instagramStats;
-        this.cf.detectChanges();
         this._reportService.getLastSeventDaysStatsForClub(this.signedInuserID ).subscribe(clubStats => {
           console.log(clubStats, 'clubstats')
           this.clubStatistics = clubStats
-          this.cf.detectChanges();
           this.initializeStatsChart()
         })
       })
