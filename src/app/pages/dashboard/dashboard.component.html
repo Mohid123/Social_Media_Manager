@@ -20,7 +20,7 @@
                                 <path d="M11.9630156,7.5 L12.0369844,7.5 C12.2982526,7.5 12.5154733,7.70115317 12.5355117,7.96165175 L12.9585886,13.4616518 C12.9797677,13.7369807 12.7737386,13.9773481 12.4984096,13.9985272 C12.4856504,13.9995087 12.4728582,14 12.4600614,14 L11.5399386,14 C11.2637963,14 11.0399386,13.7761424 11.0399386,13.5 C11.0399386,13.4872031 11.0404299,13.4744109 11.0414114,13.4616518 L11.4644883,7.96165175 C11.4845267,7.70115317 11.7017474,7.5 11.9630156,7.5 Z" fill="#000000"/>
                             </g>
                         </svg><!--end::Svg Icon--></span>
-                      <span class="nav-text" style="color: #fff;"> &nbsp; Activity Log</span>
+                      <span class="nav-text" style="color: #fff;"> &nbsp; Activity log</span>
                     
                     </h3>
                    </div>
@@ -29,7 +29,7 @@
                 <div class="container justify-content-around " style="border-bottom: 1px solid lightgrey; padding-bottom: 25px">
                     <span class="label label-success mr-2 "></span>Success 
                     <span class="label label-danger mr-2"></span>Failed 
-                    <span class="label label-warning mr-2"></span>Pending
+                    <span class="label label-info mr-2"></span>Pending
                 </div>
                   
                 <div class="card-scroll custom-scrollbar-css padd" >
@@ -52,12 +52,12 @@
 
                                 <i *ngIf="report.successStatus == 1" class="fa fa-genderless text-success icon-xl"></i>
 
-                                <i *ngIf="report.successStatus == 2" class="fa fa-genderless text-warning icon-xl"></i>
+                                <i *ngIf="report.successStatus == 2" class="fa fa-genderless text-info icon-xl"></i>
 
                              </div>
                              <!--end::Badge-->
                              <!--begin::Text-->
-                             <div class="font-weight-mormal font-size-lg timeline-content text-bold pl-5">Your post was posted To : <strong> {{report.postedTo}}  </strong>  </div>
+                             <div class="font-weight-mormal font-size-lg timeline-content text-bold pl-5">Your post was posted to: <strong> {{report.postedTo}}  </strong>  </div>
                              <!-- <p *ngIf="report.Successtatus == 0">Failed</p>
                              <p *ngIf="report.Successtatus == 1">Success</p>
                              <p *ngIf="report.Successtatus == 2">Pending</p> -->
@@ -141,16 +141,16 @@
                         <div class="card-body">
                             <i class="socicon-facebook mr-5 icon-lg" style="color: white"></i>
                             <div class="text-inverse-danger font-weight-bolder font-size-h5 mb-2 mt-5">Facebook</div>
-                            <button class="btn font-weight-bold btn-light-primary mr-2">Total<span class="label pulse pulse-primary" >
-                                <span *ngIf="facebookStats"   class=" font-size-h6 font-weight-bolder">{{facebookStats.total}}</span>
+                            <button class="btn font-weight-bold btn-light-primary mr-2">Total <span class="label pulse pulse-primary" >
+                                <span *ngIf="facebookStats" class="font-weight-bolder">{{facebookStats.total}}</span>
                                 <span class="pulse-ring"></span>
                             </span></button>
-                            <button class="btn font-weight-bold btn-light-success mr-2">Succecced<span class="label pulse pulse-success" >
-                                <span *ngIf="facebookStats"  class="font-size-h6 font-weight-bolder">{{facebookStats.succeeded}}</span>
+                            <button class="btn font-weight-bold btn-light-success mr-2">Succecced <span class="label pulse pulse-success" >
+                                <span *ngIf="facebookStats" class="font-weight-bolder">{{facebookStats.succeeded}}</span>
                                 <span class="pulse-ring"></span>
                             </span></button>
-                            <button class="btn font-weight-bold btn-light-danger mr-2">Failed<span class="label pulse pulse-danger" >
-                                <span *ngIf="facebookStats" class="font-size-h6 font-weight-bolder">{{facebookStats.failed}}</span>
+                            <button class="btn font-weight-bold btn-light-danger mr-2">Failed <span class="label pulse pulse-danger" >
+                                <span *ngIf="facebookStats" class="font-weight-bolder">{{facebookStats.failed}}</span>
                                 
                                 <span class="pulse-ring"></span>
                             </span></button>
@@ -169,15 +169,15 @@
                             <i class="socicon-instagram mr-5 icon-lg" style="color: white"></i>
                             <div class="text-inverse-danger font-weight-bolder font-size-h5 mb-2 mt-5">Instagram</div>
                             <button class="btn font-weight-bold btn-light-primary mr-2">Total<span class="label pulse pulse-primary" >
-                                <span *ngIf="instagramStats" class=" font-size-h6 font-weight-bolder">{{instagramStats.total}}</span>
+                                <span *ngIf="instagramStats" class="font-weight-bolder">{{instagramStats.total}}</span>
                                 <span class="pulse-ring"></span>
                             </span></button>
                             <button class="btn font-weight-bold btn-light-success mr-2">Succecced<span class="label pulse pulse-success " >
-                                <span *ngIf="instagramStats"  class=" font-size-h6 font-weight-bolder">{{instagramStats.succeeded}}</span>
+                                <span *ngIf="instagramStats"  class="font-weight-bolder">{{instagramStats.succeeded}}</span>
                                 <span class="pulse-ring"></span>
                             </span></button>
                             <button class="btn font-weight-bold btn-light-danger mr-2">Failed<span class="label pulse pulse-danger " >
-                                <span *ngIf="instagramStats" class=" font-size-h6 font-weight-bolder">{{instagramStats.failed}}</span>
+                                <span *ngIf="instagramStats" class="font-weight-bolder">{{instagramStats.failed}}</span>
                                 <span class="pulse-ring"></span>
                             </span></button>
                             
@@ -192,18 +192,18 @@
                     <a class="card card-custom bgi-no-repeat card-stretch gutter-b" style=" background-color: #FBAD50 !important;">
                         <!--begin::Body-->
                         <div class="card-body">
-                            <i class="socicon-telegram mr-5 icon-lg" style="color: white"></i>
+                            <i class="svg-icon menu-icon icon-lg"><span ><img class="rounded" style="height: auto; width: 29px; " [src]="clubLogo" alt=""></span></i>
                             <div class="text-inverse-danger font-weight-bolder font-size-h5 mb-2 mt-5">{{clubName}}</div>
                             <button class="btn font-weight-bold btn-light-primary mr-2">Total<span class="label pulse pulse-primary" >
-                                <span *ngIf="clubStats" class=" font-size-h6 font-weight-bolder">{{clubStats.total}}</span>
+                                <span *ngIf="clubStats" class="font-weight-bolder">{{clubStats.total}}</span>
                                 <span class="pulse-ring"></span>
                             </span></button>
                             <button class="btn font-weight-bold btn-light-success mr-2">Succecced<span class="label pulse pulse-success" >
-                                <span *ngIf="clubStats"  class=" font-size-h6 font-weight-bolder">{{clubStats.succeeded}}</span>
+                                <span *ngIf="clubStats"  class="font-weight-bolder">{{clubStats.succeeded}}</span>
                                 <span class="pulse-ring"></span>
                             </span></button>
                             <button class="btn font-weight-bold btn-light-danger mr-2">Failed<span class="label pulse pulse-danger" >
-                                <span *ngIf="clubStats"  class=" font-size-h6 font-weight-bolder">{{clubStats.failed}}</span>
+                                <span *ngIf="clubStats"  class="font-weight-bolder">{{clubStats.failed}}</span>
                                 <span class="pulse-ring"></span>
                             </span></button>
                             
