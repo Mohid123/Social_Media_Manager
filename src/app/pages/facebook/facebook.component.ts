@@ -55,7 +55,7 @@ export class FacebookComponent implements OnInit {
     this.spinner.show();
     setTimeout(() => {
       this.spinner.hide();
-    }, 1000);
+    }, 500);
   }
 
   searchFacebookPages(event){
@@ -91,6 +91,12 @@ export class FacebookComponent implements OnInit {
   getSignedInUser() {
     this._authService.getSignedInUser().subscribe(user => {
       this.signedInUser = user;
+
+      if(user.FBPages.length == 0){
+        this.toast.warning('Log in via Facebook to connect your Facebook pages');
+        return;
+      }
+
       this.signedInUser.FBPages.map(page => {
         page.isSelected = false;
         page.captureImageURL = this.facebookProfileUrl

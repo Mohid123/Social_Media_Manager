@@ -51,5 +51,9 @@ export class ReportService {
   getLastSevenDaysStats(userId , postedTo){
     return this._apiService.get(`/report/getLastSevenDaysStats/${userId}/${postedTo}`)
   }
+  getLastSeventDaysStatsForClub(userId){
+    return this._apiService.get(`/report/getLastSevenDaysStatsForClub/${userId}`)
+
+  }
 
 }
