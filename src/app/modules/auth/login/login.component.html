@@ -24,7 +24,7 @@
               (click)="c('Close click');searchStarted = false" data-toggle="tooltip" title="close window"><i class="ki ki-bold-close icon-sm" style="color:rgba(255, 0, 0, 0.548)"></i></button>
               <input class="form-control bg-primary-o-30" [ngModelOptions]="{standalone: true}"
                 [(ngModel)]="searchString" (ngModelChange)="searchClub($event)" style="color: #fff;"
-                id="exampleInputEmail1" placeholder="Search">
+                id="exampleInputEmail1" placeholder="try 'levski'">
                
 
             </div>
@@ -146,7 +146,7 @@
     <div class="form-group">
       <label class="font-size-h6 font-weight-bolder text-dark">Email</label>
       <input class="form-control form-control-solid h-auto py-7 px-6 rounded-lg" type="email" name="email"
-        formControlName="email" autocomplete="off" [ngClass]="{ 'is-invalid': loginForm.controls['email'].invalid }" />
+        formControlName="email" autocomplete="off" [ngClass]="{ 'is-invalid': loginForm.controls['email'].invalid }" placeholder="e.g johndoe@gmail.com"/>
       <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
           validation: 'required',
           message: 'Email is required',
@@ -177,7 +177,7 @@
 
       <input class="form-control form-control-solid h-auto py-7 px-6 rounded-lg" type="password" name="password"
         autocomplete="off" formControlName="password"
-        [ngClass]="{ 'is-invalid': loginForm.controls['password'].invalid }" />
+        [ngClass]="{ 'is-invalid': loginForm.controls['password'].invalid }" placeholder="12345678"/>
       <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
           validation: 'required',
           message: 'Password is required',
