@@ -139,7 +139,7 @@
                                     
 
                                 </tbody>
-                                <th class="pr-0 pt-5 pb-5 text-left" ><span class="label label-xl label-dark label-inline">Instagram</span></th>
+                                <th  *ngIf="facebookPages.length > 0" class="pr-0 pt-5 pb-5 text-left" ><span class="label label-xl label-dark label-inline">Instagram</span></th>
                                 <tbody  *ngFor="let item of checklist">
                                     <ng-container *ngIf="item.igProfileName"> 
                                         <tr style="border-bottom: 1px solid #E4E6EF;">
@@ -168,7 +168,7 @@
                                     </ng-container>   
 
                                 </tbody>
-                            <th class="pr-0 pt-5 pb-5 text-left" ><span class="label label-xl label-dark label-inline mr-2">Facebook</span></th>
+                            <th *ngIf="facebookPages.length > 0" class="pr-0 pt-5 pb-5 text-left" ><span class="label label-xl label-dark label-inline mr-2">Facebook</span></th>
                                 <tbody  *ngFor="let item of checklist">
                                     <ng-container *ngIf="item.pageName"> 
                                         <tr style="border-bottom: 1px solid #E4E6EF;">
