@@ -651,6 +651,7 @@ export class PublishComponent implements OnInit {
     let selctedInstagramPages = []
     let selectedClubGroups = []
     let selectedClubEvents = []
+    let selectedInstagram : boolean = false;
     let selectedClub: boolean = false;
 
     if (this.socialCaption == "") {
@@ -665,9 +666,7 @@ export class PublishComponent implements OnInit {
       if (item.hasOwnProperty('pageAccessToken')) {
         selectedFacebookPages.push(item)
       }
-      else if (item.hasOwnProperty('instagram_business_account')) {
-        selctedInstagramPages.push(item);
-      }
+
       else if (item.hasOwnProperty('groupName')) {
         selectedClubGroups.push(item);
       }
@@ -677,7 +676,15 @@ export class PublishComponent implements OnInit {
       else if (item.hasOwnProperty('clubName')) {
         selectedClub = true;
       }
+      else if(item.hasOwnProperty('instagram_business_account')){
+        selectedInstagram = true;
+      }
     })
+
+    if(selectedInstagram){
+      this.toast.warning('cannot add text post to Instagram' , '')
+      return;
+    }
 
     if (selectedFacebookPages) {
       this.spinner.show();
