@@ -146,14 +146,14 @@ export class DashboardComponent implements OnInit {
           {
             title: {
               formatter: function (val) {
-                return val + "Posts";
+                return val + " (Posts)";
               }
             }
           },
           {
             title: {
               formatter: function (val) {
-                return val + "Posts";
+                return val + " (Posts)";
               }
             }
           }
