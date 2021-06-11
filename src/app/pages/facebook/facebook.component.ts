@@ -84,7 +84,6 @@ export class FacebookComponent implements OnInit {
       if (this.checklist[i].isSelected)
         this.checkedList.push(this.checklist[i]);
     }
-    console.log(this.checkedList)
   }
 
   singleItemSelected() {
@@ -97,7 +96,7 @@ export class FacebookComponent implements OnInit {
   getSignedInUser() {
     this._authService.getSignedInUser().subscribe(user => {
       this.signedInUser = user;
-
+      console.log(this.signedInUser)
       if(user.FBPages.length == 0){
         this.toast.warning('Log in via Facebook to connect your Facebook pages');
         return;
@@ -200,7 +199,6 @@ export class FacebookComponent implements OnInit {
     }
     this.spinner.show()
     this._mediaUploadService.uploadMedia('Facebook', this.signedInUser.id, this.file).subscribe((media: any) => {
-      console.log(media);
       this.checkedList.forEach(item => {
         this._facebookService.addVideoPost(item.pageID, item.pageAccessToken, media.url, this.name).subscribe((video: any) => {
           this.spinner.hide();
