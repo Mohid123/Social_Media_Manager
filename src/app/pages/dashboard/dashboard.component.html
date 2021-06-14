@@ -57,7 +57,9 @@
                              </div>
                              <!--end::Badge-->
                              <!--begin::Text-->
-                             <div class="font-weight-mormal font-size-lg timeline-content text-bold pl-5">Your post was posted to: <strong> {{report.postedTo}}  </strong>  </div>
+                             <div *ngIf="report.successStatus == 0" class="font-weight-mormal font-size-lg timeline-content text-bold pl-5">Your<strong> {{report.postedTo}}  </strong>post was <span class="text-danger font-weight-bolder">failed</span>  </div>
+                             <div *ngIf="report.successStatus == 1"  class="font-weight-mormal font-size-lg timeline-content text-bold pl-5">Your<strong> {{report.postedTo}}  </strong>post was <span class="text-success font-weight-bolder">successfull</span> </div>
+                             <div *ngIf="report.successStatus == 2" class="font-weight-mormal font-size-lg timeline-content text-bold pl-5">Your<strong> {{report.postedTo}}  </strong>post was <span class="text-info font-weight-bolder">pending</span></div>
                              <!-- <p *ngIf="report.Successtatus == 0">Failed</p>
                              <p *ngIf="report.Successtatus == 1">Success</p>
                              <p *ngIf="report.Successtatus == 2">Pending</p> -->
