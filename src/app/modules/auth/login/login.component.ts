@@ -89,7 +89,6 @@ export class LoginComponent implements OnInit {
       password: this.loginForm.value.password
     }
     this._authService.loginByEmail(payload).subscribe(user => {
-      console.log(user)
       if (user.user.admin) {
         localStorage.setItem('clubUid', user.loggedInUser.userID)
         localStorage.setItem('userId', user.loggedInUser.id)
@@ -120,7 +119,6 @@ export class LoginComponent implements OnInit {
         return;
       }
       this.toastr.error(err.message);
-      console.log(err)
     })
   }
 
@@ -128,7 +126,7 @@ export class LoginComponent implements OnInit {
     this._clubService.getAllClubs(0, 10).subscribe(clubs => {
       this.allClubs = clubs
     }, (error) => {
-      console.log(error)
+      this.toastr.error(error.message)
     })
   }
 
@@ -149,7 +147,7 @@ export class LoginComponent implements OnInit {
 
   onClubSelected(club) {
     this.selectedClub = club
-    console.log(club)
+
   }
 
 
