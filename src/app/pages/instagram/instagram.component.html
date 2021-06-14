@@ -35,95 +35,53 @@
                         <!--begin::Table-->
                         <div >
                             <table class="table table-head-custom " id="kt_advance_table_widget_1">
-                                <thead>
+                                
                                     <tr class="text-left">
-                                        <th style="width: 20px">
+                                        <td style="width: 20px">
                                             <label class="checkbox checkbox-sm checkbox-inline">
                                                 <input [(ngModel)]="masterSelected" name="list_name" value="m1" (change)="selectAll()" type="checkbox" value="1"/>
                                             
                                                 <span></span>
-                                             <label>Select all</label>
+                                             <label style="padding-left: 20px;" class="font-weight-bolder">Select all</label>
                                              
-                                            </label>
+                                              </label>
                                         
-                                        </th>
+                                        </td>
+
+                                        
                                         <!-- <th class="pr-0 pt-0" style="width: 50px; text-transform: lowercase; text-transform: none;">Select all</th> -->
                                         <!-- <th style="min-width: 200px">Select All</th> -->
     
                                     </tr>
-                                </thead>
+                                
                                 <tbody>
                                     <tr *ngFor="let item of checklist">
-                                        <td>
-                                            <label class="checkbox checkbox-sm checkbox-inline">
-                                                <input type="checkbox" [(ngModel)]="item.isSelected"   value="{{item.id}}"   (change) = "singleItemSelected()" />
-                                                <span></span>
-                                            </label>
-                                        </td>
-                                        <td class="pr-0">
-                                            <div class="symbol symbol-40 symbol-light mt-1">
-                                                <span class="symbol-label">
-                                                    <img src= "{{item.captureImageURL}}"  class="h-100 align-self-center rounded" style="object-fit: cover; width: 100%" alt="" />
-                                                </span>
+                                       <td class="pr-0">
+                                            <div class="d-flex align-items-center">
+                                                <label class="checkbox checkbox-sm checkbox-inline">
+                                                    <input type="checkbox" [(ngModel)]="item.isSelected"   value="{{item.id}}"   (change) = "singleItemSelected()" />
+                                                    <span></span>
+                                                </label>
+                       
+                                                <div class="symbol symbol-40 symbol-light mr-5" style="padding-left: 20px">
+                                                    <span class="symbol-label">
+                                                        <img src="{{item.captureImageURL}}" class="h-100 align-self-end" style="object-fit: cover;" alt="" />
+                                                    </span>
+                                                </div>
+                                              
+                                                <div class="d-flex flex-column flex-grow-1 font-weight-bold">
+                                                    <a href="#" class="text-dark text-hover-primary mb-1 font-size-lg">{{item.pageName}}</a>
+                                                    <span class="text-muted">Instagram profile</span>
+                                                </div>
+                                                
                                             </div>
                                         </td>
-                                        <td>
-                                            <a 
-                                                class="text-dark-75 font-weight-bolder text-hover-primary mb-1 font-size-lg">
-                                                </a>
-                                            <span class="font-weight-bold text-dark d-block"> {{item.pageName}}
-                                                </span>
-                                        </td>
     
-                                    <!-- </tr>
-                                    <tr>
-                                        <td class="pl-0">
-                                            <label class="checkbox checkbox-sm checkbox-inline">
-                                                <input type="checkbox" value="1" />
-                                                <span></span>
-                                            </label>
-                                        </td>
-                                        <td class="pr-0">
-                                            <div class="symbol symbol-50 symbol-light mt-1">
-                                                <span class="symbol-label">
-                                                    <img src="assets/media/svg/avatars/001-boy.svg"
-                                                        class="h-75 align-self-end" alt="" />
-                                                </span>
-                                            </div>
-                                        </td>
-                                        <td class="pl-0">
-                                            <a 
-                                                class="text-dark-75 font-weight-bolder text-hover-primary mb-1 font-size-lg">Brad
-                                                Simmons</a>
-                                            <span class="text-muted font-weight-bold text-muted d-block">HTML, JS,
-                                                ReactJS</span>
-                                        </td>
+                                    
     
-                                    </tr>
-                                    <tr>
-                                        <td class="pl-0">
-                                            <label class="checkbox checkbox-sm checkbox-inline">
-                                                <input type="checkbox" value="1" />
-                                                <span></span>
-                                            </label>
-                                        </td>
-                                        <td class="pr-0">
-                                            <div class="symbol symbol-50 symbol-light mt-1">
-                                                <span class="symbol-label">
-                                                    <img src="assets/media/svg/avatars/001-boy.svg"
-                                                        class="h-75 align-self-end" alt="" />
-                                                </span>
-                                            </div>
-                                        </td>
-                                        <td class="pl-0">
-                                            <a 
-                                                class="text-dark-75 font-weight-bolder text-hover-primary mb-1 font-size-lg">Brad
-                                                Simmons</a>
-                                            <span class="text-muted font-weight-bold text-muted d-block">HTML, JS,
-                                                ReactJS</span>
-                                        </td>
+                                   
     
-                                    </tr> -->
+                                  
     
     
                                 </tbody>
