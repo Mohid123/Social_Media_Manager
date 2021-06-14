@@ -161,6 +161,14 @@ export class TeamtalkersComponent implements OnInit  {
   }
 
 
+  postedSuccessfully() {
+    this.spinner.hide();
+    this.url = ""
+    this.teamtalkerCaption = ""
+    this.cf.detectChanges();
+  }
+
+
   getSignedInUser() {
     this._authService.getSignedInUser().subscribe(user => {
       this.signedInUser = user;
@@ -196,45 +204,40 @@ export class TeamtalkersComponent implements OnInit  {
         selectedClub = true;
       }
     })
-    if (selectedClubGroups) {
+    if (selectedClubGroups.length > 0) {
       delete this.post.eventID;
       this.post.postedTo = 'Group';
       this.post.type = 'text'
       this.post.text = this.teamtalkerCaption;
-      selectedClubGroups.forEach(singleGroup => {
+      selectedClubGroups.forEach((singleGroup , index , array) => {
         this.post.groupID = singleGroup.id;
-        this.createReport(2, '', 'Group')
         this.spinner.show();
+        this.createReport(2, '', 'Group')
         this._postService.addPostToGroup(this.post).subscribe((groupPost: any) => {
-          console.log(groupPost)
-          this.spinner.hide()
-          this.toast.success(` Post added Successfully to ${singleGroup.groupName}`);
-          this.teamtalkerCaption = "";
-          this.cf.detectChanges()
           this.createReport(1, groupPost.id, 'Group')
         }, (error) => {
           this.spinner.hide();
           this.toast.error(error.message);
           this.createReport(0,'','Group')
         })
+        if(index == array.length - 1){
+          this.toast.success('Post added to Groups' , 'Success');
+          this.postedSuccessfully();
+        }
+
       })
     }
 
-    if (selectedClubEvents) {
+    if (selectedClubEvents.length > 0) {
       delete this.post.groupID;
       this.post.postedTo = 'Event';
       this.post.type = 'text'
       this.post.text = this.teamtalkerCaption;
-      selectedClubEvents.forEach(singleEvent => {
+      selectedClubEvents.forEach((singleEvent,index,array) => {
         this.post.eventID = singleEvent.id;
         this.createReport(2, '', 'Event')
         this.spinner.show();
         this._postService.addPostToEvent(this.post).subscribe((eventPost: any) => {
-          console.log(eventPost)
-          this.spinner.hide()
-          this.toast.success(` Post added Successfully to ${singleEvent.eventName}`);
-          this.teamtalkerCaption = "";
-          this.cf.detectChanges()
           this.createReport(1, eventPost.id, 'Event')
         }, (error) => {
           this.spinner.hide();
@@ -242,6 +245,10 @@ export class TeamtalkersComponent implements OnInit  {
           this.createReport(0, '', 'Event')
 
         })
+        if(index == array.length-1){
+          this.toast.success('Post added to Events' , 'Success');
+          this.postedSuccessfully();
+        }
       })
     }
 
@@ -294,39 +301,37 @@ export class TeamtalkersComponent implements OnInit  {
       }
     })
 
-    if (selectedClubGroups) {
+    if (selectedClubGroups.length > 0) {
       delete this.post.eventID;
       this.post.postedTo = 'Group';
       this.post.type = "image"
       this.post.text = this.teamtalkerCaption;
-
       this.spinner.show();
       this._mediaUploadService.uploadClubMedia('GroupMedia', this.signedInUser.id, this.file).subscribe((media: any) => {
-        selectedClubGroups.forEach(singleGroup => {
+        selectedClubGroups.forEach((singleGroup,index,array) => {
           this.post.groupID = singleGroup.id;
           this.post.captureFileURL = media.url;
           this.post.path = media.path;
           this.createReport(2, '', 'Group')
           this._postService.addPostToGroup(this.post).subscribe((groupPost: any) => {
-            console.log(groupPost, 'GroupPosts')
-            this.spinner.hide();
-            this.toast.success(`Post added Succeessfully to ${singleGroup.groupName}`);
-            this.url = "";
-            this.cf.detectChanges();
             this.createReport(1, groupPost.id, 'Group')
           }, (error: any) => {
             this.createReport(0, '', 'Group')
             this.spinner.hide();
             this.toast.error(error.message)
           })
+          if(index == array.length-1){
+            this.toast.success('Post added to Groups' , 'Success');
+            this.postedSuccessfully();
+          }
         })
       })
     }
 
-    if (selectedClubEvents) {
+    if (selectedClubEvents.length > 0) {
       this.spinner.show();
       this._mediaUploadService.uploadClubMedia('EventMedia', this.signedInUser.id, this.file).subscribe((media: any) => {
-        selectedClubEvents.forEach((singleEvent: any) => {
+        selectedClubEvents.forEach((singleEvent: any , index , array) => {
           delete this.post.groupID;
           this.post.postedTo = 'Event';
           this.post.text = this.teamtalkerCaption;
@@ -336,11 +341,6 @@ export class TeamtalkersComponent implements OnInit  {
           this.post.path = media.path
           this.createReport(2, '', 'Event')
           this._postService.addPostToEvent(this.post).subscribe((eventPost: any) => {
-            console.log(eventPost, 'EventPost')
-            this.spinner.hide()
-            this.toast.success(`Post added Succeessfully to ${singleEvent.eventName}`);
-            this.url = "";
-            this.cf.detectChanges();
             this.createReport(1, eventPost.id, 'Event')
 
           }, (error) => {
@@ -348,6 +348,10 @@ export class TeamtalkersComponent implements OnInit  {
             this.spinner.hide();
             this.toast.error(error.message)
           })
+          if(index == array.length-1){
+            this.toast.success('Post added to Groups' , 'Success');
+            this.postedSuccessfully();
+          }
         })
       })
 
@@ -460,7 +464,7 @@ export class TeamtalkersComponent implements OnInit  {
       }
     })
 
-    if (selectedClubGroups) {
+    if (selectedClubGroups.length > 0) {
       delete this.post.eventID;
       this.post.postedTo = 'Group';
       this.post.text = this.teamtalkerCaption;
@@ -477,27 +481,27 @@ export class TeamtalkersComponent implements OnInit  {
             this.post.thumbnailPath = thumbnailFile.path
             this.post.thumbnailURL = thumbnailFile.url
 
-            selectedClubGroups.forEach(singleGroup => {
+            selectedClubGroups.forEach((singleGroup,index,array) => {
               this.post.groupID = singleGroup.id
               this.createReport(2, '', 'Group')
               this._postService.addPostToGroup(this.post).subscribe((groupPost: any) => {
-                console.log(groupPost, 'grouppost')
-                this.toast.success(`Video Post added Successfully to ${singleGroup.groupName}`);
-                this.spinner.hide()
-                this.url = "";
-                this.cf.detectChanges();
                 this.createReport(1, groupPost.id, 'Group')
               }, (error) => {
                 this.spinner.hide();
                 this.toast.error(error.message);
+                this.createReport(0 , '' , 'Group')
               })
+              if(index == array.length-1){
+                this.toast.success('Post added to Groups' , 'Success');
+                this.postedSuccessfully();
+              }
             })
           })
         })
       })
     }
 
-    if (selectedClubEvents) {
+    if (selectedClubEvents.length > 0) {
       delete this.post.groupID;
       this.post.postedTo = 'Event';
       this.post.text = this.teamtalkerCaption;
@@ -514,20 +518,20 @@ export class TeamtalkersComponent implements OnInit  {
             this.post.thumbnailPath = thumbnailFile.path
             this.post.thumbnailURL = thumbnailFile.url
 
-            selectedClubEvents.forEach(singleEvent => {
+            selectedClubEvents.forEach((singleEvent , index , array) => {
               this.post.eventID = singleEvent.id
               this.createReport(2, '', 'Event')
               this._postService.addPostToEvent(this.post).subscribe((eventPost: any) => {
-                console.log(eventPost, 'eventpost')
-                this.toast.success(`Video Post added Successfully to ${singleEvent.eventName}`);
-                this.spinner.hide()
-                this.url = "";
-                this.cf.detectChanges();
                 this.createReport(1, eventPost.id, 'Event')
               }, (error) => {
                 this.spinner.hide();
                 this.toast.error(error.message);
+                this.createReport(0,'','Events')
               })
+              if(index == array.length-1){
+                this.toast.success('Post added to Events' , 'Success');
+                this.postedSuccessfully();
+              }
             })
           })
         })
