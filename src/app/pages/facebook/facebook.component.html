@@ -141,7 +141,7 @@
                 </div>
             </div>
             <div class="card-body">
-                <mat-tab-group mat-align-tabs="center" dynamicHeight (selectedTabChange)="switchTabs($event)">
+                <mat-tab-group mat-align-tabs="center" dynamicHeight (selectedTabChange)="switchTabs($event)" >
                     <mat-tab >
                         <ng-template mat-tab-label>
                             <mat-icon><i class="far fa-images icon-lg" style="color: #3699FF;"></i></mat-icon>&nbsp;
@@ -210,6 +210,7 @@
                                                                 </label>
     
                                                                 <input id="file-input" type="file"  accept="image/*" (change)="onSelectFile($event)" /> 
+                                                                <!-- <img [src]="url" class="img-fluid img-thumbnail rounded"> -->
                                                             </div>
 
                                                         </div>
