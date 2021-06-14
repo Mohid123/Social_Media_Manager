@@ -86,7 +86,15 @@
                                         </td>
                                     </ng-container>
                                 </tr>
-                                <th class="pr-0 pt-5 pb-5 text-left" ><span class="label label-xl label-dark label-inline mr-2">Group</span></th>
+                                <th class="pr-0 pt-5 pb-5 text-left bg-gray-100" ><span class="label label-xl label-dark label-inline mr-2 ">Group</span>
+                                    <label class="checkbox checkbox-sm checkbox-inline mt-5">
+                                        <input [(ngModel)]="groupSelected" name="list_name" value="m1" (change)="selectAllGroups()" type="checkbox" value="1"/>
+                                    
+                                        <span></span>
+                                     <label style="padding-left: 20px;" class="font-weight-bolder">Select all</label>
+                                     
+                                      </label>
+                                </th>
                                 <tr *ngFor="let item of checklist">
                                     <ng-container *ngIf="item.groupName">
                                         <td class="pr-0">
@@ -111,7 +119,15 @@
                                         </td>
                                     </ng-container>
                                 </tr>
-                                <th class="pr-0 pt-5 pb-5 text-left" ><span class="label label-xl label-dark label-inline mr-2">Event</span></th>
+                                <th class="pr-0 pt-5 pb-5 text-left bg-gray-100" ><span class="label label-xl label-dark label-inline mr-2">Event</span>
+                                    <label class="checkbox checkbox-sm checkbox-inline mt-5">
+                                        <input [(ngModel)]="eventSelected" name="list_name" value="m1" (change)="selectAllEvents()" type="checkbox" value="1"/>
+                                    
+                                        <span></span>
+                                     <label style="padding-left: 20px;" class="font-weight-bolder">Select all</label>
+                                     
+                                      </label>
+                                </th>
                                 <tr *ngFor="let item of checklist">
                                     <ng-container *ngIf="item.eventName">
                                         <td class="pr-0">

@@ -38,6 +38,8 @@ export class TeamtalkersComponent implements OnInit {
   public tempList: any = [{ id: 1, isSelected: false, clubName: localStorage.getItem('club'), captureImageURL: localStorage.getItem('clubLogo'), name: localStorage.getItem('club') }]
   checklist: any = [{ id: 1, isSelected: false, clubName: localStorage.getItem('club'), captureImageURL: localStorage.getItem('clubLogo'), name: localStorage.getItem('club') }];
   public masterSelected: boolean
+  groupSelected :boolean = false;
+  eventSelected : boolean = false;
   checkedList: any;
   showDiv = {
     photo: true,
@@ -105,6 +107,25 @@ export class TeamtalkersComponent implements OnInit {
   selectAll() {
     for (var i = 0; i < this.checklist.length; i++) {
       this.checklist[i].isSelected = this.masterSelected;
+    }
+    this.getCheckedItemList();
+  }
+
+  selectAllEvents(){
+    for (var i = 0; i < this.checklist.length; i++) {
+      if(this.checklist[i].eventName){
+        this.checklist[i].isSelected =this.eventSelected;
+      }
+    }
+    this.getCheckedItemList();
+  }
+
+  selectAllGroups(){
+    debugger;
+    for (var i = 0; i < this.checklist.length; i++) {
+      if(this.checklist[i].groupName){
+        this.checklist[i].isSelected =this.groupSelected;
+      }
     }
     this.getCheckedItemList();
   }
