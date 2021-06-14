@@ -394,7 +394,7 @@
                                         <div class="preview-instagram preview-instagram-photo item-post-type" data-type="phot" *ngIf="showDiv.photo">
                                             <div class="preview-content">
                                                 <div class="user-info">
-                                                    <img class="img-circle" [src]="profileImageUrl">
+                                                    <img class="img-circle" [src]="profileImageUrl" style="height: 40px; object-fit: cover;">
                                                     <span>{{userName}}</span>
                                                 </div>
                                                 <div class="preview-media" data-max-image="1"> <img style="height: 100%; width: 100%; object-fit: cover;" class="img-circle" [src]= url *ngIf="format==='image' && url"></div>
@@ -421,7 +421,7 @@
                                         <div class="preview-instagram preview-instagram-photo item-post-type" data-type="video" *ngIf="showDiv.video">
                                             <div class="preview-content">
                                                 <div class="user-info">
-                                                    <img class="img-circle" [src]="profileImageUrl">
+                                                    <img class="img-circle" [src]="profileImageUrl" style="height: 40px; object-fit: cover;">
                                                     <span>{{userName}}</span>
                                                 </div>
                                                 <div class="preview-media" data-max-image="1"><video [src]="url" *ngIf="format==='video' && url" style="height: 100%; width: 100%; object-fit: cover;"  controls disablepictureinpicture  controlsList="nodownload"></video></div>
