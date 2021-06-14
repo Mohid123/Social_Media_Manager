@@ -20,7 +20,7 @@ import { isTemplateMiddle } from 'typescript';
   templateUrl: './teamtalkers.component.html',
   styleUrls: ['./teamtalkers.component.scss']
 })
-export class TeamtalkersComponent implements OnInit  {
+export class TeamtalkersComponent implements OnInit {
 
   public format: string;
   public teamtalkerCaption: string = "";
@@ -35,8 +35,8 @@ export class TeamtalkersComponent implements OnInit  {
   public userName: string = localStorage.getItem('userName')
   public profileImageUrl: string = localStorage.getItem('profileImageUrl')
   public searchString: string;
-  public tempList : any = [{ id: 1, isSelected: false, clubName: localStorage.getItem('club'), captureImageURL: localStorage.getItem('clubLogo') , name : localStorage.getItem('club') }]
-  checklist: any = [{ id: 1, isSelected: false, clubName: localStorage.getItem('club'), captureImageURL: localStorage.getItem('clubLogo') , name : localStorage.getItem('club') }];
+  public tempList: any = [{ id: 1, isSelected: false, clubName: localStorage.getItem('club'), captureImageURL: localStorage.getItem('clubLogo'), name: localStorage.getItem('club') }]
+  checklist: any = [{ id: 1, isSelected: false, clubName: localStorage.getItem('club'), captureImageURL: localStorage.getItem('clubLogo'), name: localStorage.getItem('club') }];
   public masterSelected: boolean
   checkedList: any;
   showDiv = {
@@ -67,7 +67,7 @@ export class TeamtalkersComponent implements OnInit  {
 
   }
 
-  clear(){
+  clear() {
     this.teamtalkerCaption = '';
     this.url = ''
     this.cf.detectChanges()
@@ -77,12 +77,12 @@ export class TeamtalkersComponent implements OnInit  {
 
   searchGroupsAndEvents(event) {
     console.log(this.checklist)
-    console.log(this.tempList , 'Temporary list')
+    console.log(this.tempList, 'Temporary list')
     this.searchString = event;
-    if(this.searchString){
-      this.checklist = this.checklist.filter(item=>item.name.toLowerCase().includes(this.searchString.toLowerCase()))
+    if (this.searchString) {
+      this.checklist = this.checklist.filter(item => item.name.toLowerCase().includes(this.searchString.toLowerCase()))
     }
-    else if(this.searchString == ""){
+    else if (this.searchString == "") {
       this.checklist = this.tempList;
       this.cf.detectChanges();
     }
@@ -90,7 +90,7 @@ export class TeamtalkersComponent implements OnInit  {
       this.checklist = this.tempList;
       this.cf.detectChanges();
     }
-   
+
   }
   selectAll() {
     for (var i = 0; i < this.checklist.length; i++) {
@@ -165,6 +165,7 @@ export class TeamtalkersComponent implements OnInit  {
     this.spinner.hide();
     this.url = ""
     this.teamtalkerCaption = ""
+    // this.masterSelected = false;
     this.cf.detectChanges();
   }
 
@@ -209,7 +210,7 @@ export class TeamtalkersComponent implements OnInit  {
       this.post.postedTo = 'Group';
       this.post.type = 'text'
       this.post.text = this.teamtalkerCaption;
-      selectedClubGroups.forEach((singleGroup , index , array) => {
+      selectedClubGroups.forEach((singleGroup, index, array) => {
         this.post.groupID = singleGroup.id;
         this.spinner.show();
         this.createReport(2, '', 'Group')
@@ -218,10 +219,10 @@ export class TeamtalkersComponent implements OnInit  {
         }, (error) => {
           this.spinner.hide();
           this.toast.error(error.message);
-          this.createReport(0,'','Group')
+          this.createReport(0, '', 'Group')
         })
-        if(index == array.length - 1){
-          this.toast.success('Post added to Groups' , 'Success');
+        if (index == array.length - 1) {
+          this.toast.success('Post added to Groups', 'Success');
           this.postedSuccessfully();
         }
 
@@ -233,7 +234,7 @@ export class TeamtalkersComponent implements OnInit  {
       this.post.postedTo = 'Event';
       this.post.type = 'text'
       this.post.text = this.teamtalkerCaption;
-      selectedClubEvents.forEach((singleEvent,index,array) => {
+      selectedClubEvents.forEach((singleEvent, index, array) => {
         this.post.eventID = singleEvent.id;
         this.createReport(2, '', 'Event')
         this.spinner.show();
@@ -245,8 +246,8 @@ export class TeamtalkersComponent implements OnInit  {
           this.createReport(0, '', 'Event')
 
         })
-        if(index == array.length-1){
-          this.toast.success('Post added to Events' , 'Success');
+        if (index == array.length - 1) {
+          this.toast.success('Post added to Events', 'Success');
           this.postedSuccessfully();
         }
       })
@@ -308,7 +309,7 @@ export class TeamtalkersComponent implements OnInit  {
       this.post.text = this.teamtalkerCaption;
       this.spinner.show();
       this._mediaUploadService.uploadClubMedia('GroupMedia', this.signedInUser.id, this.file).subscribe((media: any) => {
-        selectedClubGroups.forEach((singleGroup,index,array) => {
+        selectedClubGroups.forEach((singleGroup, index, array) => {
           this.post.groupID = singleGroup.id;
           this.post.captureFileURL = media.url;
           this.post.path = media.path;
@@ -320,8 +321,8 @@ export class TeamtalkersComponent implements OnInit  {
             this.spinner.hide();
             this.toast.error(error.message)
           })
-          if(index == array.length-1){
-            this.toast.success('Post added to Groups' , 'Success');
+          if (index == array.length - 1) {
+            this.toast.success('Post added to Groups', 'Success');
             this.postedSuccessfully();
           }
         })
@@ -331,7 +332,7 @@ export class TeamtalkersComponent implements OnInit  {
     if (selectedClubEvents.length > 0) {
       this.spinner.show();
       this._mediaUploadService.uploadClubMedia('EventMedia', this.signedInUser.id, this.file).subscribe((media: any) => {
-        selectedClubEvents.forEach((singleEvent: any , index , array) => {
+        selectedClubEvents.forEach((singleEvent: any, index, array) => {
           delete this.post.groupID;
           this.post.postedTo = 'Event';
           this.post.text = this.teamtalkerCaption;
@@ -348,8 +349,8 @@ export class TeamtalkersComponent implements OnInit  {
             this.spinner.hide();
             this.toast.error(error.message)
           })
-          if(index == array.length-1){
-            this.toast.success('Post added to Groups' , 'Success');
+          if (index == array.length - 1) {
+            this.toast.success('Post added to Groups', 'Success');
             this.postedSuccessfully();
           }
         })
@@ -370,11 +371,8 @@ export class TeamtalkersComponent implements OnInit  {
         this.post.path = media.path;
         this.createReport(2, '', 'Club')
         this._postService.addPost(this.post).subscribe((post: any) => {
-          console.log(post)
-          this.spinner.hide();
           this.toast.success('Post added Succeessfully to Club');
-          this.url = "";
-          this.cf.detectChanges();
+          this.postedSuccessfully()
           this.createReport(1, post.id, 'Club')
         })
       }, (error: any) => {
@@ -469,6 +467,7 @@ export class TeamtalkersComponent implements OnInit  {
       this.post.postedTo = 'Group';
       this.post.text = this.teamtalkerCaption;
       this.post.type = "video"
+      this.spinner.show()
       this._mediaUploadService.uploadClubMedia('GroupMedia', this.signedInUser.id, this.file).subscribe((uploadedVideo: any) => {
         this.post.captureFileURL = uploadedVideo.url;
         this.post.path = uploadedVideo.path
@@ -481,7 +480,7 @@ export class TeamtalkersComponent implements OnInit  {
             this.post.thumbnailPath = thumbnailFile.path
             this.post.thumbnailURL = thumbnailFile.url
 
-            selectedClubGroups.forEach((singleGroup,index,array) => {
+            selectedClubGroups.forEach((singleGroup, index, array) => {
               this.post.groupID = singleGroup.id
               this.createReport(2, '', 'Group')
               this._postService.addPostToGroup(this.post).subscribe((groupPost: any) => {
@@ -489,10 +488,10 @@ export class TeamtalkersComponent implements OnInit  {
               }, (error) => {
                 this.spinner.hide();
                 this.toast.error(error.message);
-                this.createReport(0 , '' , 'Group')
+                this.createReport(0, '', 'Group')
               })
-              if(index == array.length-1){
-                this.toast.success('Post added to Groups' , 'Success');
+              if (index == array.length - 1) {
+                this.toast.success('Post added to Groups', 'Success');
                 this.postedSuccessfully();
               }
             })
@@ -506,6 +505,7 @@ export class TeamtalkersComponent implements OnInit  {
       this.post.postedTo = 'Event';
       this.post.text = this.teamtalkerCaption;
       this.post.type = "video"
+      this.spinner.show();
       this._mediaUploadService.uploadClubMedia('EventMedia', this.signedInUser.id, this.file).subscribe((uploadedVideo: any) => {
         this.post.captureFileURL = uploadedVideo.url;
         this.post.path = uploadedVideo.path
@@ -518,7 +518,7 @@ export class TeamtalkersComponent implements OnInit  {
             this.post.thumbnailPath = thumbnailFile.path
             this.post.thumbnailURL = thumbnailFile.url
 
-            selectedClubEvents.forEach((singleEvent , index , array) => {
+            selectedClubEvents.forEach((singleEvent, index, array) => {
               this.post.eventID = singleEvent.id
               this.createReport(2, '', 'Event')
               this._postService.addPostToEvent(this.post).subscribe((eventPost: any) => {
@@ -526,10 +526,10 @@ export class TeamtalkersComponent implements OnInit  {
               }, (error) => {
                 this.spinner.hide();
                 this.toast.error(error.message);
-                this.createReport(0,'','Events')
+                this.createReport(0, '', 'Events')
               })
-              if(index == array.length-1){
-                this.toast.success('Post added to Events' , 'Success');
+              if (index == array.length - 1) {
+                this.toast.success('Post added to Events', 'Success');
                 this.postedSuccessfully();
               }
             })
