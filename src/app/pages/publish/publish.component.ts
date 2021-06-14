@@ -83,6 +83,7 @@ export class PublishComponent implements OnInit {
     this.spinner.hide();
     this.url = ""
     this.socialCaption = ""
+    this.removeSlectedItems()
     this.cf.detectChanges();
   }
 
@@ -151,8 +152,17 @@ export class PublishComponent implements OnInit {
     this.getCheckedItemList();
   }
 
+  removeSlectedItems() {
+    for (var i = 0; i < this.checklist.length; i++) {
+      if (this.checklist[i].isSelected) {
+        this.checklist[i].isSelected = false
+      }
+    }
+  }
+
   singleItemSelected() {
-    this.masterSelected = this.checklist.every(function (item: any) {
+    debugger;
+    this.masterSelected = this.checklist.every((item: any) => {
       return item.isSelected == true;
     })
     this.getCheckedItemList();
@@ -315,7 +325,7 @@ export class PublishComponent implements OnInit {
               this.toast.error(error.message);
               this.createReport(0, '', 'Instagram')
             })
-          } , error=>{
+          }, error => {
             this.spinner.hide();
             this.toast.error(error.message);
             this.createReport(0, '', 'Instagram')

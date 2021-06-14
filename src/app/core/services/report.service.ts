@@ -41,7 +41,6 @@ export class ReportService {
 
   getClubStatus(userId) : Observable <any>{
     return this._apiService.get(`/report/getClubStats/${userId}`);
-
   }
 
    getLatestReports(userId){

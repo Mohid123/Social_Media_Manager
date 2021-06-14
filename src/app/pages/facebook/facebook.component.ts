@@ -70,6 +70,21 @@ export class FacebookComponent implements OnInit {
     this.checklist.filter(i => i.pageName.toLowerCase().includes(this.searchString.toLowerCase()))
   }
 
+  removeSlectedItems() {
+    for (var i = 0; i < this.checklist.length; i++) {
+      if (this.checklist[i].isSelected) {
+        this.checklist[i].isSelected = false
+      }
+    }
+  }
+  
+  postedSuccessfully() {
+    this.spinner.hide();
+    this.url = ""
+    this.name = ""
+    this.removeSlectedItems();
+    this.cf.detectChanges();
+  }
 
   selectAll() {
     for (var i = 0; i < this.checklist.length; i++) {
@@ -167,17 +182,19 @@ export class FacebookComponent implements OnInit {
     }
     this.spinner.show()
     this._mediaUploadService.uploadMedia('Facebook', this.signedInUser.id, this.file).subscribe((media: any) => {
-      this.checkedList.forEach(item => {
+      this.checkedList.forEach((item , index , array) => {
+        this.createReport(2)
         this._facebookService.addImagePostToFB(item.pageID, media.url, this.name, item.pageAccessToken).subscribe(FbPost => {
-          this.spinner.hide();
-          this.toast.success(`Image Post Added Successfully on ${item.pageName}`, 'Post Added');
-          this.url = ""
-          this.name = ""
-          this.cf.detectChanges();
           this.createReport(1, FbPost.id)
         })
+
+        if(index == array.length -1){
+          this.toast.success('Post added to Facebook Pages','Success')
+          this.postedSuccessfully();
+        }
+
+
       }, (error) => {
-        debugger;
         this.spinner.hide();
         this.toast.error(error.message)
         this.createReport(0)
@@ -199,16 +216,16 @@ export class FacebookComponent implements OnInit {
     }
     this.spinner.show()
     this._mediaUploadService.uploadMedia('Facebook', this.signedInUser.id, this.file).subscribe((media: any) => {
-      this.checkedList.forEach(item => {
-        this._facebookService.addVideoPost(item.pageID, item.pageAccessToken, media.url, this.name).subscribe((video: any) => {
-          this.spinner.hide();
-          this.toast.success(`Video Post Added Successfully on ${item.pageName}`, 'Post Added');
-          this.url = ""
-          this.name = ""
-          this.cf.detectChanges();
-          console.log(video, 'videoid')
+      this.checkedList.forEach((item,index,array) => {
+        this.createReport(2)
+        this._facebookService.addVideoPost(item.pageID, item.pageAccessToken, media.url, this.name).subscribe((video: any) => {  
           this.createReport(1 , video.id)
         })
+        if(index==array.length-1){
+          this.toast.success('Video post added to Facebook Pages','Success');
+          this.postedSuccessfully();
+        }
+
       }, (err) => {
         this.spinner.hide()
         this.toast.error(err.message);
@@ -231,14 +248,17 @@ export class FacebookComponent implements OnInit {
       return;
     }
     this.spinner.show();
-    this.checkedList.forEach(item => {
+    this.checkedList.forEach((item,index,array) => {
+      this.createReport(2)
       this._facebookService.addTextPostToFB(item.pageID, this.name, item.pageAccessToken).subscribe(FbPost => {
-        this.spinner.hide();
-        this.toast.success(`Text Post Added Successfully on ${item.pageName}`, 'Post Added');
-        this.name = ""
-        this.cf.detectChanges();
         this.createReport(1 ,FbPost.id )
       })
+
+      if(index==array.length-1){
+        this.toast.success('Text post added to Facebook pages','Success');
+        this.postedSuccessfully();
+      }
+
     }, (error) => {
       this.spinner.hide();
       this.toast.error(error.message);

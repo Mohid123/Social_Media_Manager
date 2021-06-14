@@ -92,6 +92,16 @@ export class TeamtalkersComponent implements OnInit {
     }
 
   }
+
+  removeSlectedItems() {
+    for (var i = 0; i < this.checklist.length; i++) {
+      if (this.checklist[i].isSelected) {
+        this.checklist[i].isSelected = false
+      }
+    }
+  }
+
+
   selectAll() {
     for (var i = 0; i < this.checklist.length; i++) {
       this.checklist[i].isSelected = this.masterSelected;
@@ -165,7 +175,7 @@ export class TeamtalkersComponent implements OnInit {
     this.spinner.hide();
     this.url = ""
     this.teamtalkerCaption = ""
-    // this.masterSelected = false;
+    this.removeSlectedItems();
     this.cf.detectChanges();
   }
 
