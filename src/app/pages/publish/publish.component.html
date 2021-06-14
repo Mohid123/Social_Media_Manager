@@ -216,10 +216,11 @@
                                 </tr>
                             
                             <tbody>
-                                <th class="pr-0 pt-5 pb-5 text-left" ><span class="label label-xl label-dark label-inline mr-2">Club</span></th>
+                               
+                                <th class="pr-0 pt-5 pb-5 text-left" ><span class="label label-xl label-dark label-inline mr-2">Club</span>
+                                </th>
                                 <tr *ngFor="let item of checklist">
-                                    
-                                    <ng-container *ngIf="item.clubName">
+                                     <ng-container *ngIf="item.clubName">
                                         <td class="pr-0">
                                             <div class="d-flex align-items-center ">
                                                 <label class="checkbox checkbox-sm checkbox-inline">
@@ -242,7 +243,15 @@
                                         </td>
                                     </ng-container>
                                 </tr>
-                                <th class="pr-0 pt-5 pb-5 text-left" ><span class="label label-xl label-dark label-inline mr-2">Group</span></th>
+                                <th class="pr-0 pt-5 pb-5 text-left" ><span class="label label-xl label-dark label-inline mr-2">Group</span>
+                                    <label class="checkbox checkbox-sm checkbox-inline mt-5">
+                                        <input [(ngModel)]="groupSelected" name="list_name" value="m1" (change)="selectAllGroups()" type="checkbox" value="1"/>
+                                    
+                                        <span></span>
+                                     <label style="padding-left: 20px;" class="font-weight-bolder">Select all</label>
+                                     
+                                      </label>
+                                </th>
                                 <tr *ngFor="let item of checklist">
                                     <ng-container *ngIf="item.groupName">
                                         <td class="pr-0">
@@ -267,7 +276,15 @@
                                         </td>
                                     </ng-container>
                                 </tr>
-                                <th class="pr-0 pt-5 pb-5 text-left" ><span class="label label-xl label-dark label-inline mr-2">Event</span></th>
+                                <th class="pr-0 pt-5 pb-5 text-left" ><span class="label label-xl label-dark label-inline mr-2">Event</span>
+                                    <label class="checkbox checkbox-sm checkbox-inline mt-5">
+                                        <input [(ngModel)]="eventSelected" name="list_name" value="m1" (change)="selectAllEvents()" type="checkbox" value="1"/>
+                                    
+                                        <span></span>
+                                     <label style="padding-left: 20px;" class="font-weight-bolder">Select all</label>
+                                     
+                                      </label>
+                                </th>
                                 <tr *ngFor="let item of checklist">
                                     <ng-container *ngIf="item.eventName">
                                         <td class="pr-0">
@@ -292,7 +309,15 @@
                                         </td>
                                     </ng-container>
                                 </tr>
-                                <th *ngIf="facebookPages.length > 0"  class="pr-0 pt-5 pb-5 text-left" ><span class="label label-xl label-dark label-inline mr-2">Instagram</span></th>
+                                <th *ngIf="facebookPages.length > 0"  class="pr-0 pt-5 pb-5 text-left" ><span class="label label-xl label-dark label-inline mr-2">Instagram</span>
+                                    <label class="checkbox checkbox-sm checkbox-inline mt-5">
+                                        <input [(ngModel)]="igProfilesSelected" name="list_name" value="m1" (change)="selectAllIGProfiles()" type="checkbox" value="1"/>
+                                    
+                                        <span></span>
+                                     <label style="padding-left: 20px;" class="font-weight-bolder">Select all</label>
+                                     
+                                      </label>
+                                </th>
                                 <tr *ngFor="let item of checklist">
                                     <ng-container *ngIf="item.igProfileName">
                                         <td class="pr-0">
@@ -317,7 +342,15 @@
                                         </td>
                                     </ng-container>
                                 </tr>
-                                <th *ngIf="facebookPages.length > 0" class="pr-0 pt-5 pb-5 text-left" ><span class="label label-xl label-dark label-inline mr-2">Facebook</span></th>
+                                <th *ngIf="facebookPages.length > 0" class="pr-0 pt-5 pb-5 text-left" ><span class="label label-xl label-dark label-inline mr-2">Facebook</span>
+                                    <label class="checkbox checkbox-sm checkbox-inline mt-5">
+                                        <input [(ngModel)]="fbPagesSelected" name="list_name" value="m1" (change)="selectAllFBPages()" type="checkbox" value="1"/>
+                                    
+                                        <span></span>
+                                     <label style="padding-left: 20px;" class="font-weight-bolder">Select all</label>
+                                     
+                                      </label>
+                                </th>
                                 <tr *ngFor="let item of checklist">
                                     <ng-container *ngIf="item.pageName">
                                         <td class="pr-0">

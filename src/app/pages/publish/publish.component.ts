@@ -22,7 +22,11 @@ import { Report } from 'src/app/core/models/report.model';
 export class PublishComponent implements OnInit {
   public textFirst: string
   public signedInUser: User
-  masterSelected: boolean;
+  masterSelected: boolean = false ;
+  groupSelected :boolean = false;
+  eventSelected : boolean = false;
+  fbPagesSelected : boolean = false;
+  igProfilesSelected : boolean = false;
   checklist: any = [{ id: 1, isSelected: false, clubName: localStorage.getItem('club'), captureImageURL: localStorage.getItem('clubLogo'), name: localStorage.getItem('club') }];
   tempList: any = [{ id: 1, isSelected: false, clubName: localStorage.getItem('club'), captureImageURL: localStorage.getItem('clubLogo'), name: localStorage.getItem('club') }];
 
@@ -63,7 +67,6 @@ export class PublishComponent implements OnInit {
   ) {
     this.post = new Post();
     this.report = new Report();
-    this.masterSelected = false;
   }
 
   ngOnInit() {
@@ -148,6 +151,43 @@ export class PublishComponent implements OnInit {
     debugger;
     for (var i = 0; i < this.checklist.length; i++) {
       this.checklist[i].isSelected = this.masterSelected;
+    }
+    this.getCheckedItemList();
+  }
+
+  selectAllGroups(){
+    debugger;
+    for (var i = 0; i < this.checklist.length; i++) {
+      if(this.checklist[i].groupName){
+        this.checklist[i].isSelected =this.groupSelected;
+      }
+    }
+    this.getCheckedItemList();
+  }
+
+  selectAllFBPages(){
+    for (var i = 0; i < this.checklist.length; i++) {
+      if(this.checklist[i].pageName){
+        this.checklist[i].isSelected =this.fbPagesSelected;
+      }
+    }
+    this.getCheckedItemList()
+  }
+
+  selectAllIGProfiles(){
+    for (var i = 0; i < this.checklist.length; i++) {
+      if(this.checklist[i].igProfileName){
+        this.checklist[i].isSelected =this.igProfilesSelected;
+      }
+    }
+    this.getCheckedItemList()
+  }
+
+  selectAllEvents(){
+    for (var i = 0; i < this.checklist.length; i++) {
+      if(this.checklist[i].eventName){
+        this.checklist[i].isSelected =this.eventSelected;
+      }
     }
     this.getCheckedItemList();
   }
