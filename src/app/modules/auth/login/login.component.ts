@@ -34,10 +34,10 @@ export class LoginComponent implements OnInit {
   returnUrl: string;
   isLoading$: Observable<boolean>;
   allClubs: Club[]
+  tempClubs: Club[]
   selectedClub: Club
   searchString: string
   searchStarted: boolean = false;
-  tempClubs: any
   private unsubscribe: Subscription[] = [];
 
   constructor(
@@ -124,9 +124,10 @@ export class LoginComponent implements OnInit {
 
   getAllClubs() {
     this._clubService.getAllClubs(0, 10).subscribe(clubs => {
-      this.allClubs = clubs
+      this.allClubs = clubs;
+      this.tempClubs = clubs;
     }, (error) => {
-      this.toastr.error(error.message)
+      this.toastr.error(error)
     })
   }
 
@@ -139,17 +140,19 @@ export class LoginComponent implements OnInit {
   }
 
   searchClub(event) {
-    document.getElementById("items").style.display = "none"
-    this.searchStarted = true
     this.searchString = event
-    this.tempClubs = this.allClubs.filter(i => i.clubName.toLowerCase().includes(this.searchString.toLowerCase()));
+    if (this.searchString) {
+      this.allClubs = this.allClubs.filter(i => i.clubName.toLowerCase().includes(this.searchString.toLowerCase()));
+    }
+    else if (this.searchString == "") {
+      this.allClubs = this.tempClubs;
+    }
   }
+
 
   onClubSelected(club) {
     this.selectedClub = club
-
   }
-
 
 }
 
