@@ -489,3 +489,11 @@ and (max-width: 1600px)
 }
  
 }
+
+::ng-deep.mat-tab-label.mat-tab-label-active:not(.mat-tab-disabled),
+::ng-deep.mat-tab-label.mat-tab-label-active.cdk-keyboard-focused:not(.mat-tab-disabled) {
+//   background-color: #FCE500;
+  font-weight: 500;
+  color: black;
+  opacity: 1;
+}
