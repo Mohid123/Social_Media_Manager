@@ -47,8 +47,8 @@ export class TeamtalkersComponent implements OnInit {
     text: false
   }
   show = false;
-  buttonName = 'Show';
-  hide: any;
+  // buttonName = 'Show';
+  // hide: any;
 
   constructor(private spinner: NgxSpinnerService, private cf: ChangeDetectorRef,
     private toast: ToastrService,
@@ -81,13 +81,13 @@ export class TeamtalkersComponent implements OnInit {
   toggle() {
     this.show = !this.show
   
-    if(this.show) {
-    this.buttonName = 'Hide'
-    console.log(this.show)
-    }
-    else {
-    this.buttonName = 'Show'
-    }
+    // if(this.show) {
+    // // this.buttonName = 'Hide'
+    // console.log(this.show)
+    // }
+    // else {
+    // this.buttonName = 'Show'
+    // }
     }
 
   searchGroupsAndEvents(event) {
