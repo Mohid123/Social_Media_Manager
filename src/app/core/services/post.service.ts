@@ -4,6 +4,7 @@ import { catchError } from 'rxjs/operators';
 import { ApiService } from './api.service';
 import { ErrorHandler, Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
+import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
@@ -13,16 +14,20 @@ export class PostService {
   }
   
   
-  addPost(payload){
-     return this.http.post(`${environment.club_api_url}/post/AddPost` , payload).pipe(catchError(this._errorHandlerService.handleErrors));
+  addPost(body) : Observable <any> {
+     return this.http.post(`${environment.club_api_url}/post/AddPost` , body).pipe(catchError(this._errorHandlerService.handleErrors));
   } 
 
-  addPostToGroup(payload){
-    return this.http.post(`${environment.club_api_url}/groups/addPost/` , payload).pipe(catchError(this._errorHandlerService.handleErrors));
+  addPostToGroup(body) : Observable <any> {
+    return this.http.post(`${environment.club_api_url}/groups/addPost/` , body).pipe(catchError(this._errorHandlerService.handleErrors));
   } 
 
-  addPostToEvent(payload){
-    return this.http.post(`${environment.club_api_url}/event/addPost` , payload).pipe(catchError(this._errorHandlerService.handleErrors));
+  addPostToEvent(body) : Observable <any> {
+    return this.http.post(`${environment.club_api_url}/event/addPost` , body).pipe(catchError(this._errorHandlerService.handleErrors));
+  }
+
+  hyperLinkScrapper(body) : Observable <any>  {
+    return this.http.post(`${environment.club_api_url}/firebase-migration-functions/hyperlinkScraper` , {'text':body}).pipe(catchError(this._errorHandlerService.handleErrors));
   }
 
 }

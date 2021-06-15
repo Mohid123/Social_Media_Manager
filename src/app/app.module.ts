@@ -22,9 +22,6 @@ import { ToastrModule } from 'ngx-toastr';
 import { SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-login';
 import { ChartsModule } from 'ng2-charts';
 import { NgApexchartsModule } from "ng-apexcharts";
-
-
-
 import {
   GoogleLoginProvider,
   FacebookLoginProvider
