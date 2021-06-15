@@ -131,9 +131,6 @@ export class LoginComponent implements OnInit {
     })
   }
 
-  loginFormsubmit() {
-    this.loginByEmail()
-  }
 
   openVerticallyCentered(content) {
     this.modalService.open(content, { centered: true, size: 'lg' });

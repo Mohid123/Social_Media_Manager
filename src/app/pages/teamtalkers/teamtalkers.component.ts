@@ -91,8 +91,7 @@ export class TeamtalkersComponent implements OnInit {
     }
 
   searchGroupsAndEvents(event) {
-    console.log(this.checklist)
-    console.log(this.tempList, 'Temporary list')
+
     this.searchString = event;
     if (this.searchString) {
       this.checklist = this.checklist.filter(item => item.name.toLowerCase().includes(this.searchString.toLowerCase()))
