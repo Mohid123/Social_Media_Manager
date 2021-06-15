@@ -27,8 +27,8 @@ export class InstagramComponent implements OnInit {
   public masterSelected: boolean;
   public checklist: any = [];
   private checkedList: any;
-  public userName : string = localStorage.getItem('userName')
-  public profileImageUrl : string = localStorage.getItem('profileImageUrl')
+  public userName: string = localStorage.getItem('userName')
+  public profileImageUrl: string = localStorage.getItem('profileImageUrl')
   public showDiv = {
     photo: true,
     video: false,
@@ -47,7 +47,7 @@ export class InstagramComponent implements OnInit {
     this.getCheckedItemList()
   }
 
-  clear(){
+  clear() {
     this.instaCaption = '';
     this.url = '';
     this.cf.detectChanges()
@@ -148,19 +148,16 @@ export class InstagramComponent implements OnInit {
     }
     this.spinner.show();
     this._mediaUploadService.uploadMedia('InstagramTest', '123', this.file).subscribe((media: any) => {
-      this.checkedList.forEach(item=>{
-        this._instagramService.createIgContainerForVideo(item.instagram_business_account.id, media.url, this.instaCaption,item.linkedFbPagetoken).subscribe((container: any) => {
+      this.checkedList.forEach(item => {
+        this._instagramService.createIgContainerForVideo(item.instagram_business_account.id, media.url, this.instaCaption, item.linkedFbPagetoken).subscribe((container: any) => {
           console.log(container)
           let interval = setInterval(() => {
             this._instagramService.getContainerStatus(container.id, item.linkedFbPagetoken).subscribe((data: any) => {
               console.log(data, 'containerId')
               if (data.status_code == "FINISHED") {
                 this._instagramService.publishContent(item.instagram_business_account.id, container.id, item.linkedFbPagetoken).subscribe((data: any) => {
-                  this.spinner.hide()
                   clearInterval(interval)
-                  this.url = "";
-                  this.instaCaption = "";
-                  this.cf.detectChanges()
+                  this.postedSuccessfully()
                   this.toast.success('Published', 'Video Post Added');
                   this.createReport(1, data.id)
                 }, error => {
@@ -171,17 +168,14 @@ export class InstagramComponent implements OnInit {
                 })
               }
               else if (data.status_code == "ERROR") {
-                this.spinner.hide()
                 clearInterval(interval)
-                this.url = "";
-                this.instaCaption = "";
-                this.cf.detectChanges()
+                this.postedSuccessfully()
                 this.toast.error('Error uploding Video', 'Video Format Unsupported')
                 this.createReport(0);
               }
             })
           }, 3000)
-  
+
         }, (error) => {
           this.spinner.hide();
           this.toast.error(error.message)
@@ -189,7 +183,7 @@ export class InstagramComponent implements OnInit {
 
       })
       console.log(media.url)
-      
+
     }, (error) => {
       this.spinner.hide();
       this.toast.error(error.message)
@@ -197,8 +191,7 @@ export class InstagramComponent implements OnInit {
   }
 
   postImageContent() {
-    debugger;
-    debugger;
+
     if (!this.file) {
       this.toast.error('Please select an Image File', 'Empty File');
       return;
@@ -210,15 +203,13 @@ export class InstagramComponent implements OnInit {
     this.spinner.show()
 
     this._mediaUploadService.uploadMedia('Instagram', this.signedInUser.id, this.file).subscribe((media: any) => {
-      this.checkedList.forEach(item=>{
+      this.checkedList.forEach(item => {
+        this.createReport(2)
         this._instagramService.createIGMediaContainer(item.instagram_business_account.id, this.instaCaption, item.linkedFbPagetoken, media.url).subscribe((container: any) => {
-          this._instagramService.publishContent(item.instagram_business_account.id, container.id,item.linkedFbPagetoken).subscribe((data: any) => {
-            console.log(data)
-            this.instaCaption = ""
-            this.url = ""
-            this.cf.detectChanges();
-            this.spinner.hide()
+          this._instagramService.publishContent(item.instagram_business_account.id, container.id, item.linkedFbPagetoken).subscribe((data: any) => {
+
             this.toast.success('Image Post Added Successfully', 'Post Added');
+            this.postedSuccessfully();
             this.createReport(1, data.id)
           }, error => {
             this.spinner.hide()
@@ -228,13 +219,34 @@ export class InstagramComponent implements OnInit {
         }, error => {
           this.spinner.hide()
           this.toast.error(error.message)
+          this.createReport(0);
+
         })
       }, error => {
         this.spinner.hide()
         this.toast.error(error.message)
+        this.createReport(0);
+
       })
-      })   
+    })
   }
+
+  removeSlectedItems() {
+    for (var i = 0; i < this.checklist.length; i++) {
+      if (this.checklist[i].isSelected) {
+        this.checklist[i].isSelected = false
+      }
+    }
+  }
+
+  postedSuccessfully() {
+    this.spinner.hide();
+    this.url = ""
+    this.instaCaption = ""
+    this.removeSlectedItems();
+    this.cf.detectChanges();
+  }
+
 
   onSelectFile(event) {
     this.file = event.target.files && event.target.files[0];

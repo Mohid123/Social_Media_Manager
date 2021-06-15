@@ -120,7 +120,8 @@ export class FacebookComponent implements OnInit {
       this.signedInUser.FBPages.map(page => {
         page.isSelected = false;
         page.captureImageURL = this.facebookProfileUrl
-        this.checklist.push(page)
+        this.checklist.push(page);
+        this.cf.detectChanges();
       })
     });
   }
@@ -141,16 +142,6 @@ export class FacebookComponent implements OnInit {
       this.showDiv.video = false;
       this.showDiv.text = true;
     }
-  }
-
-  getFacebookPages(selected, page) {
-    if (page.isSelected == true && selected == true) {
-      this.selectedFBPages.push(page)
-    }
-    else {
-      this.selectedFBPages.pop()
-    }
-    console.log(this.selectedFBPages)
   }
 
 
