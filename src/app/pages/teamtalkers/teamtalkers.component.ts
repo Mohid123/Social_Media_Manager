@@ -46,6 +46,9 @@ export class TeamtalkersComponent implements OnInit {
     video: false,
     text: false
   }
+  show = false;
+  buttonName = 'Show';
+  hide: any;
 
   constructor(private spinner: NgxSpinnerService, private cf: ChangeDetectorRef,
     private toast: ToastrService,
@@ -75,7 +78,17 @@ export class TeamtalkersComponent implements OnInit {
     this.cf.detectChanges()
   }
 
-
+  toggle() {
+    this.show = !this.show
+  
+    if(this.show) {
+    this.buttonName = 'Hide'
+    console.log(this.show)
+    }
+    else {
+    this.buttonName = 'Show'
+    }
+    }
 
   searchGroupsAndEvents(event) {
     console.log(this.checklist)
