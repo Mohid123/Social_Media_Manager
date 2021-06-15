@@ -22,7 +22,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-login';
 import { ChartsModule } from 'ng2-charts';
 import { NgApexchartsModule } from "ng-apexcharts";
-
+import { NgxMatDatetimePickerModule, NgxMatTimepickerModule } from '@angular-material-components/datetime-picker';
 import {
   GoogleLoginProvider,
   FacebookLoginProvider
@@ -48,6 +48,8 @@ function appInitializer(authService: AuthService) {
     HighlightModule,
     ClipboardModule,
     SocialLoginModule,
+    NgxMatDatetimePickerModule,
+    NgxMatTimepickerModule,
     ChartsModule,
     NgApexchartsModule,
     MatIconModule,

@@ -303,6 +303,7 @@ export class PublishComponent implements OnInit {
     let selectedClubGroups = []
     let selectedClubEvents = []
     let selectedClub: boolean = false;
+    let hyperLinkResponse = []
     if (!this.file) {
       this.toast.error('Please select an Image File', 'Empty File');
       return;
@@ -377,10 +378,26 @@ export class PublishComponent implements OnInit {
       })
     }
 
+    this.post.type = 'image';
+    this.spinner.show();
+    this._postService.hyperLinkScrapper(this.socialCaption).subscribe(data => {
+      hyperLinkResponse = data;
+      if (hyperLinkResponse.length > 0 && hyperLinkResponse[0].hasOwnProperty('url')) {
+        this.post.hyperLink = hyperLinkResponse[0].url
+      }
+      if (hyperLinkResponse.length > 0 && hyperLinkResponse[0].hasOwnProperty('title')) {
+        this.post.hyperlinkTextFirst = hyperLinkResponse[0].title;
+      }
+      if (hyperLinkResponse.length > 0 && hyperLinkResponse[0].hasOwnProperty('description')) {
+        this.post.hyperlinkTextSecond = hyperLinkResponse[0].description;
+      }
+      if (hyperLinkResponse.length > 0 && hyperLinkResponse[0].hasOwnProperty('image')) {
+        this.post.hyperlinkCaptureFileURL = hyperLinkResponse[0].image;
+      }
+
     if (selectedClubGroups.length > 0) {
       delete this.post.eventID;
       this.post.postedTo = 'Group';
-      this.post.type = 'image';
       this.post.text = this.socialCaption;
       this.spinner.show();
       this._mediaUploadService.uploadClubMedia('GroupMedia', this.signedInUser.id, this.file).subscribe((media: any) => {
@@ -405,9 +422,7 @@ export class PublishComponent implements OnInit {
     }
 
     if (selectedClubEvents.length > 0) {
-      debugger;
       delete this.post.groupID;
-      this.post.type = 'image'
       this.post.postedTo = 'Event';
       this.spinner.show();
       this._mediaUploadService.uploadClubMedia('EventMedia', this.signedInUser.id, this.file).subscribe((media: any) => {
@@ -441,7 +456,6 @@ export class PublishComponent implements OnInit {
         delete this.post.eventID;
         delete this.post.groupID;
         this.post.postedTo = 'Club';
-        this.post.type = "image"
         this.post.text = this.socialCaption;
         this.post.captureFileURL = media.url;
         this.post.path = media.path;
@@ -457,6 +471,7 @@ export class PublishComponent implements OnInit {
         this.createReport(0, '', 'Club')
       })
     }
+  })
   }
 
 
@@ -478,6 +493,7 @@ export class PublishComponent implements OnInit {
     let selectedClubEvents = [];
     let selectedClub: boolean = false;
     let file;
+    let hyperLinkResponse = []
     if (!this.file) {
       this.toast.error('Please select a Video File', 'Empty File');
       return;
@@ -568,12 +584,28 @@ export class PublishComponent implements OnInit {
         })
       })
     }
+    this.post.type = 'video'
+    this.spinner.show();
+    this._postService.hyperLinkScrapper(this.socialCaption).subscribe(data => {
+      hyperLinkResponse = data;
+      if (hyperLinkResponse.length > 0 && hyperLinkResponse[0].hasOwnProperty('url')) {
+        this.post.hyperLink = hyperLinkResponse[0].url
+      }
+      if (hyperLinkResponse.length > 0 && hyperLinkResponse[0].hasOwnProperty('title')) {
+        this.post.hyperlinkTextFirst = hyperLinkResponse[0].title;
+      }
+      if (hyperLinkResponse.length > 0 && hyperLinkResponse[0].hasOwnProperty('description')) {
+        this.post.hyperlinkTextSecond = hyperLinkResponse[0].description;
+      }
+      if (hyperLinkResponse.length > 0 && hyperLinkResponse[0].hasOwnProperty('image')) {
+        this.post.hyperlinkCaptureFileURL = hyperLinkResponse[0].image;
+      }
+
 
     if (selectedClubGroups.length > 0) {
       delete this.post.eventID;
       this.post.postedTo = 'Group';
       this.post.text = this.socialCaption;
-      this.post.type = "video"
       this._mediaUploadService.uploadClubMedia('GroupMedia', this.signedInUser.id, this.file).subscribe((uploadedVideo: any) => {
         this.post.captureFileURL = uploadedVideo.url;
         this.post.path = uploadedVideo.path
@@ -610,7 +642,6 @@ export class PublishComponent implements OnInit {
       delete this.post.groupID;
       this.post.postedTo = 'Event';
       this.post.text = this.socialCaption;
-      this.post.type = "video"
       this._mediaUploadService.uploadClubMedia('EventMedia', this.signedInUser.id, this.file).subscribe((uploadedVideo: any) => {
         this.post.captureFileURL = uploadedVideo.url;
         this.post.path = uploadedVideo.path
@@ -634,7 +665,7 @@ export class PublishComponent implements OnInit {
               })
               if (index == array.length - 1) {
                 this.postedSuccessfully()
-                this.toast.success('Post added to all Groups', 'Success')
+                this.toast.success('Post added to all Events', 'Success')
               }
             })
           })
@@ -647,7 +678,6 @@ export class PublishComponent implements OnInit {
       delete this.post.groupID;
       this.post.postedTo = 'Club';
       this.post.text = this.socialCaption;
-      this.post.type = "video"
       this._mediaUploadService.uploadClubMedia('GroupMedia', this.signedInUser.id, this.file).subscribe((uploadedVideo: any) => {
         this.post.captureFileURL = uploadedVideo.url;
         this.post.path = uploadedVideo.path
@@ -673,6 +703,7 @@ export class PublishComponent implements OnInit {
         })
       })
     }
+  })
   }
 
   dataURItoBlob(dataURI) {
@@ -699,6 +730,7 @@ export class PublishComponent implements OnInit {
     let selectedClubEvents = []
     let selectedInstagram: boolean = false;
     let selectedClub: boolean = false;
+    let hyperLinkResponse = []
 
     if (this.socialCaption == "") {
       this.toast.error('Please add content to post', 'No Content Added');
@@ -749,11 +781,27 @@ export class PublishComponent implements OnInit {
         }
       })
     }
+    this.post.type = 'text';
+    this._postService.hyperLinkScrapper(this.socialCaption).subscribe(data => {
+      hyperLinkResponse = data;
+      if (hyperLinkResponse.length > 0 && hyperLinkResponse[0].hasOwnProperty('url')) {
+        this.post.hyperLink = hyperLinkResponse[0].url
+        this.post.type = 'hyperlink'
+      }
+      if (hyperLinkResponse.length > 0 && hyperLinkResponse[0].hasOwnProperty('title')) {
+        this.post.textFirst = hyperLinkResponse[0].title;
+      }
+      if (hyperLinkResponse.length > 0 && hyperLinkResponse[0].hasOwnProperty('description')) {
+        this.post.textSecond = hyperLinkResponse[0].description;
+      }
+      if (hyperLinkResponse.length > 0 && hyperLinkResponse[0].hasOwnProperty('image')) {
+        this.post.captureFileURL = hyperLinkResponse[0].image;
+      }
+
 
     if (selectedClubGroups.length > 0) {
       delete this.post.eventID;
       this.post.postedTo = 'Group';
-      this.post.type = 'text'
       this.post.text = this.socialCaption;
       selectedClubGroups.forEach((singleGroup, index, array) => {
         this.createReport(2, '', 'Group')
@@ -776,7 +824,6 @@ export class PublishComponent implements OnInit {
     if (selectedClubEvents.length > 0) {
       delete this.post.groupID;
       this.post.postedTo = 'Event';
-      this.post.type = 'text'
       this.post.text = this.socialCaption;
       selectedClubEvents.forEach((singleEvent, index, array) => {
         this.createReport(2, '', 'Event')
@@ -800,9 +847,7 @@ export class PublishComponent implements OnInit {
       delete this.post.groupID;
       delete this.post.eventID;
       this.post.postedTo = 'Club';
-      this.post.type = 'text'
       this.post.text = this.socialCaption;
-      this.spinner.show();
       this.createReport(2, '', 'Club')
       this._postService.addPost(this.post).subscribe((post: any) => {
         this.postedSuccessfully()
@@ -814,6 +859,7 @@ export class PublishComponent implements OnInit {
         this.createReport(0, '', 'Club')
       })
     }
+  })
 
   }
 }

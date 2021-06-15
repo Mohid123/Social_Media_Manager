@@ -38,15 +38,15 @@ export class TeamtalkersComponent implements OnInit {
   public tempList: any = [{ id: 1, isSelected: false, clubName: localStorage.getItem('club'), captureImageURL: localStorage.getItem('clubLogo'), name: localStorage.getItem('club') }]
   checklist: any = [{ id: 1, isSelected: false, clubName: localStorage.getItem('club'), captureImageURL: localStorage.getItem('clubLogo'), name: localStorage.getItem('club') }];
   public masterSelected: boolean
-  groupSelected :boolean = false;
-  eventSelected : boolean = false;
+  groupSelected: boolean = false;
+  eventSelected: boolean = false;
   checkedList: any;
   showDiv = {
     photo: true,
     video: false,
     text: false
   }
-  public show : boolean = false;
+  public showSchedule: boolean = false;
   constructor(private spinner: NgxSpinnerService, private cf: ChangeDetectorRef,
     private toast: ToastrService,
     private _postService: PostService,
@@ -69,15 +69,16 @@ export class TeamtalkersComponent implements OnInit {
 
   }
 
+
   clear() {
     this.teamtalkerCaption = '';
     this.url = ''
     this.cf.detectChanges()
   }
 
-  toggle() {
-    this.show = !this.show
-    }
+  selectedSchedule() {
+    this.showSchedule = !this.showSchedule
+  }
 
   searchGroupsAndEvents(event) {
 
@@ -112,20 +113,20 @@ export class TeamtalkersComponent implements OnInit {
     this.getCheckedItemList();
   }
 
-  selectAllEvents(){
+  selectAllEvents() {
     for (var i = 0; i < this.checklist.length; i++) {
-      if(this.checklist[i].eventName){
-        this.checklist[i].isSelected =this.eventSelected;
+      if (this.checklist[i].eventName) {
+        this.checklist[i].isSelected = this.eventSelected;
       }
     }
     this.getCheckedItemList();
   }
 
-  selectAllGroups(){
+  selectAllGroups() {
     debugger;
     for (var i = 0; i < this.checklist.length; i++) {
-      if(this.checklist[i].groupName){
-        this.checklist[i].isSelected =this.groupSelected;
+      if (this.checklist[i].groupName) {
+        this.checklist[i].isSelected = this.groupSelected;
       }
     }
     this.getCheckedItemList();
@@ -216,6 +217,7 @@ export class TeamtalkersComponent implements OnInit {
     let selectedClubGroups = []
     let selectedClubEvents = []
     let selectedClub: boolean = false;
+    let hyperLinkResponse = [];
 
     if (this.teamtalkerCaption == "") {
       this.toast.error('Please add content to post', 'No Content Added');
@@ -237,74 +239,94 @@ export class TeamtalkersComponent implements OnInit {
         selectedClub = true;
       }
     })
-    if (selectedClubGroups.length > 0) {
-      delete this.post.eventID;
-      this.post.postedTo = 'Group';
-      this.post.type = 'text'
-      this.post.text = this.teamtalkerCaption;
-      selectedClubGroups.forEach((singleGroup, index, array) => {
-        this.post.groupID = singleGroup.id;
-        this.spinner.show();
-        this.createReport(2, '', 'Group')
-        this._postService.addPostToGroup(this.post).subscribe((groupPost: any) => {
-          this.createReport(1, groupPost.id, 'Group')
-        }, (error) => {
+
+    this.post.type = 'text';
+    this.spinner.show();
+    this._postService.hyperLinkScrapper(this.teamtalkerCaption).subscribe(data => {
+      hyperLinkResponse = data;
+      if (hyperLinkResponse.length > 0 && hyperLinkResponse[0].hasOwnProperty('url')) {
+        this.post.hyperLink = hyperLinkResponse[0].url
+        this.post.type = 'hyperlink'
+      }
+      if (hyperLinkResponse.length > 0 && hyperLinkResponse[0].hasOwnProperty('title')) {
+        this.post.textFirst = hyperLinkResponse[0].title;
+      }
+      if (hyperLinkResponse.length > 0 && hyperLinkResponse[0].hasOwnProperty('description')) {
+        this.post.textSecond = hyperLinkResponse[0].description;
+      }
+      if (hyperLinkResponse.length > 0 && hyperLinkResponse[0].hasOwnProperty('image')) {
+        this.post.captureFileURL = hyperLinkResponse[0].image;
+      }
+
+      if (selectedClubGroups.length > 0) {
+        delete this.post.eventID;
+        this.post.postedTo = 'Group';
+        this.post.text = this.teamtalkerCaption;
+        selectedClubGroups.forEach((singleGroup, index, array) => {
+          this.post.groupID = singleGroup.id;
+          this.createReport(2, '', 'Group')
+          this._postService.addPostToGroup(this.post).subscribe((groupPost: any) => {
+            console.log(groupPost, 'groupPost')
+            this.createReport(1, groupPost.id, 'Group')
+          }, (error) => {
+            this.spinner.hide();
+            this.toast.error(error.message);
+            this.createReport(0, '', 'Group')
+          })
+          if (index == array.length - 1) {
+            this.toast.success('Post added to Groups', 'Success');
+            this.postedSuccessfully();
+          }
+        })
+      }
+
+
+      if (selectedClubEvents.length > 0) {
+        delete this.post.groupID;
+        this.post.postedTo = 'Event';
+        this.post.text = this.teamtalkerCaption;
+        selectedClubEvents.forEach((singleEvent, index, array) => {
+          this.post.eventID = singleEvent.id;
+          this.createReport(2, '', 'Event')
+          this._postService.addPostToEvent(this.post).subscribe((eventPost: any) => {
+            this.createReport(1, eventPost.id, 'Event')
+          }, (error) => {
+            this.spinner.hide();
+            this.toast.error(error.message);
+            this.createReport(0, '', 'Event')
+
+          })
+          if (index == array.length - 1) {
+            this.toast.success('Post added to Events', 'Success');
+            this.postedSuccessfully();
+          }
+        })
+      }
+
+      if (selectedClub) {
+        delete this.post.groupID;
+        delete this.post.eventID;
+        this.post.postedTo = 'Club';
+        this.post.text = this.teamtalkerCaption;
+        this.createReport(2, '', 'Club')
+        this._postService.addPost(this.post).subscribe((post: any) => {
+
+          this.spinner.hide();
+          this.toast.success(' Post added Successfully to Club');
+          this.teamtalkerCaption = "";
+          this.cf.detectChanges()
+          this.createReport(1, post.id, 'Club')
+        }, error => {
           this.spinner.hide();
           this.toast.error(error.message);
-          this.createReport(0, '', 'Group')
+          this.createReport(0, '', 'Club')
         })
-        if (index == array.length - 1) {
-          this.toast.success('Post added to Groups', 'Success');
-          this.postedSuccessfully();
-        }
+      }
 
-      })
-    }
-
-    if (selectedClubEvents.length > 0) {
-      delete this.post.groupID;
-      this.post.postedTo = 'Event';
-      this.post.type = 'text'
-      this.post.text = this.teamtalkerCaption;
-      selectedClubEvents.forEach((singleEvent, index, array) => {
-        this.post.eventID = singleEvent.id;
-        this.createReport(2, '', 'Event')
-        this.spinner.show();
-        this._postService.addPostToEvent(this.post).subscribe((eventPost: any) => {
-          this.createReport(1, eventPost.id, 'Event')
-        }, (error) => {
-          this.spinner.hide();
-          this.toast.error(error.message);
-          this.createReport(0, '', 'Event')
-
-        })
-        if (index == array.length - 1) {
-          this.toast.success('Post added to Events', 'Success');
-          this.postedSuccessfully();
-        }
-      })
-    }
-
-    if (selectedClub) {
-      delete this.post.groupID;
-      delete this.post.eventID;
-      this.post.postedTo = 'Club';
-      this.post.type = 'text'
-      this.post.text = this.teamtalkerCaption;
-      this.createReport(2, '', 'Club')
-      this.spinner.show();
-      this._postService.addPost(this.post).subscribe((post: any) => {
-        this.spinner.hide();
-        this.toast.success(' Post added Successfully to Club');
-        this.teamtalkerCaption = "";
-        this.cf.detectChanges()
-        this.createReport(1, post.id, 'Club')
-      }, error => {
-        this.spinner.hide();
-        this.toast.error(error.message);
-        this.createReport(0, '', 'Club')
-      })
-    }
+    }, error => {
+      this.spinner.hide();
+      this.toast.error(error.message)
+    });
 
   }
 
@@ -313,6 +335,8 @@ export class TeamtalkersComponent implements OnInit {
     let selectedClubGroups = []
     let selectedClubEvents = []
     let selectedClub: boolean = false
+    let hyperLinkResponse = [];
+
     if (!this.file) {
       this.toast.error('Please Select Image File to post', 'No File Selected');
       return;
@@ -333,86 +357,102 @@ export class TeamtalkersComponent implements OnInit {
         selectedClub = true;
       }
     })
+    this.post.type = 'image'
+    this.spinner.show();
+    this._postService.hyperLinkScrapper(this.teamtalkerCaption).subscribe(data => {
+      hyperLinkResponse = data;
+      if (hyperLinkResponse.length > 0 && hyperLinkResponse[0].hasOwnProperty('url')) {
+        this.post.hyperLink = hyperLinkResponse[0].url
+      }
+      if (hyperLinkResponse.length > 0 && hyperLinkResponse[0].hasOwnProperty('title')) {
+        this.post.hyperlinkTextFirst = hyperLinkResponse[0].title;
+      }
+      if (hyperLinkResponse.length > 0 && hyperLinkResponse[0].hasOwnProperty('description')) {
+        this.post.hyperlinkTextSecond = hyperLinkResponse[0].description;
+      }
+      if (hyperLinkResponse.length > 0 && hyperLinkResponse[0].hasOwnProperty('image')) {
+        this.post.hyperlinkCaptureFileURL = hyperLinkResponse[0].image;
+      }
 
-    if (selectedClubGroups.length > 0) {
-      delete this.post.eventID;
-      this.post.postedTo = 'Group';
-      this.post.type = "image"
-      this.post.text = this.teamtalkerCaption;
-      this.spinner.show();
-      this._mediaUploadService.uploadClubMedia('GroupMedia', this.signedInUser.id, this.file).subscribe((media: any) => {
-        selectedClubGroups.forEach((singleGroup, index, array) => {
-          this.post.groupID = singleGroup.id;
+      if (selectedClubGroups.length > 0) {
+        debugger;
+        delete this.post.eventID;
+        this.post.postedTo = 'Group';
+        this.post.text = this.teamtalkerCaption;
+        this._mediaUploadService.uploadClubMedia('GroupMedia', this.signedInUser.id, this.file).subscribe((media: any) => {
+          selectedClubGroups.forEach((singleGroup, index, array) => {
+            this.post.groupID = singleGroup.id;
+            this.post.captureFileURL = media.url;
+            this.post.path = media.path;
+            this.createReport(2, '', 'Group')
+            this._postService.addPostToGroup(this.post).subscribe((groupPost: any) => {
+              this.createReport(1, groupPost.id, 'Group')
+            }, (error: any) => {
+              this.createReport(0, '', 'Group')
+              this.spinner.hide();
+              this.toast.error(error.message)
+            })
+            if (index == array.length - 1) {
+              this.toast.success('Post added to Groups', 'Success');
+              this.postedSuccessfully();
+            }
+          })
+        })
+      }
+
+      if (selectedClubEvents.length > 0) {
+        debugger;
+        this.spinner.show();
+        this._mediaUploadService.uploadClubMedia('EventMedia', this.signedInUser.id, this.file).subscribe((media: any) => {
+          selectedClubEvents.forEach((singleEvent: any, index, array) => {
+            delete this.post.groupID;
+            this.post.postedTo = 'Event';
+            this.post.text = this.teamtalkerCaption;
+            this.post.eventID = singleEvent.id;
+            this.post.captureFileURL = media.url
+            this.post.path = media.path
+            this.createReport(2, '', 'Event')
+            this._postService.addPostToEvent(this.post).subscribe((eventPost: any) => {
+
+              this.createReport(1, eventPost.id, 'Event')
+
+            }, (error) => {
+              this.createReport(0, '', 'Event')
+              this.spinner.hide();
+              this.toast.error(error.message)
+            })
+            if (index == array.length - 1) {
+              this.toast.success('Post added to Events', 'Success');
+              this.postedSuccessfully();
+            }
+          })
+        })
+      }
+
+      if (selectedClub) {
+        debugger;
+        this.spinner.show();
+        this._mediaUploadService.uploadClubMedia('ClubMedia', this.signedInUser.id, this.file).subscribe((media: any) => {
+          delete this.post.eventID;
+          delete this.post.groupID;
+          this.post.postedTo = 'Club';
+          this.post.text = this.teamtalkerCaption;
           this.post.captureFileURL = media.url;
           this.post.path = media.path;
-          this.createReport(2, '', 'Group')
-          this._postService.addPostToGroup(this.post).subscribe((groupPost: any) => {
-            this.createReport(1, groupPost.id, 'Group')
-          }, (error: any) => {
-            this.createReport(0, '', 'Group')
-            this.spinner.hide();
-            this.toast.error(error.message)
+          this.createReport(2, '', 'Club')
+          this._postService.addPost(this.post).subscribe((post: any) => {
+            console.log(post)
+            this.toast.success('Post added Succeessfully to Club');
+            this.postedSuccessfully()
+            this.createReport(1, post.id, 'Club')
           })
-          if (index == array.length - 1) {
-            this.toast.success('Post added to Groups', 'Success');
-            this.postedSuccessfully();
-          }
+        }, (error: any) => {
+          this.spinner.hide();
+          this.createReport(0, '', 'Club')
+          this.toast.error(error.message)
         })
-      })
-    }
-
-    if (selectedClubEvents.length > 0) {
-      this.spinner.show();
-      this._mediaUploadService.uploadClubMedia('EventMedia', this.signedInUser.id, this.file).subscribe((media: any) => {
-        selectedClubEvents.forEach((singleEvent: any, index, array) => {
-          delete this.post.groupID;
-          this.post.postedTo = 'Event';
-          this.post.text = this.teamtalkerCaption;
-          this.post.type = "image"
-          this.post.eventID = singleEvent.id;
-          this.post.captureFileURL = media.url
-          this.post.path = media.path
-          this.createReport(2, '', 'Event')
-          this._postService.addPostToEvent(this.post).subscribe((eventPost: any) => {
-            this.createReport(1, eventPost.id, 'Event')
-
-          }, (error) => {
-            this.createReport(0, '', 'Event')
-            this.spinner.hide();
-            this.toast.error(error.message)
-          })
-          if (index == array.length - 1) {
-            this.toast.success('Post added to Groups', 'Success');
-            this.postedSuccessfully();
-          }
-        })
-      })
-
-    }
-
-    if (selectedClub) {
-      debugger;
-      this.spinner.show();
-      this._mediaUploadService.uploadClubMedia('ClubMedia', this.signedInUser.id, this.file).subscribe((media: any) => {
-        delete this.post.eventID;
-        delete this.post.groupID;
-        this.post.postedTo = 'Club';
-        this.post.type = "image"
-        this.post.text = this.teamtalkerCaption;
-        this.post.captureFileURL = media.url;
-        this.post.path = media.path;
-        this.createReport(2, '', 'Club')
-        this._postService.addPost(this.post).subscribe((post: any) => {
-          this.toast.success('Post added Succeessfully to Club');
-          this.postedSuccessfully()
-          this.createReport(1, post.id, 'Club')
-        })
-      }, (error: any) => {
-        this.spinner.hide();
-        this.createReport(0, '', 'Club')
-        this.toast.error(error.message)
-      })
-    }
+      }
+    })
 
   }
 
@@ -470,6 +510,7 @@ export class TeamtalkersComponent implements OnInit {
     let selectedClubEvents = [];
     let selectedClub: boolean = false;
     let file;
+    let hyperLinkResponse = []
 
     if (!this.file) {
       this.toast.error('Please select a Video File', 'Empty File');
@@ -493,117 +534,130 @@ export class TeamtalkersComponent implements OnInit {
         selectedClub = true;
       }
     })
+    this.post.type = 'video'
+    this.spinner.show();
+    this._postService.hyperLinkScrapper(this.teamtalkerCaption).subscribe(data => {
+      hyperLinkResponse = data;
+      if (hyperLinkResponse.length > 0 && hyperLinkResponse[0].hasOwnProperty('url')) {
+        this.post.hyperLink = hyperLinkResponse[0].url
+      }
+      if (hyperLinkResponse.length > 0 && hyperLinkResponse[0].hasOwnProperty('title')) {
+        this.post.hyperlinkTextFirst = hyperLinkResponse[0].title;
+      }
+      if (hyperLinkResponse.length > 0 && hyperLinkResponse[0].hasOwnProperty('description')) {
+        this.post.hyperlinkTextSecond = hyperLinkResponse[0].description;
+      }
+      if (hyperLinkResponse.length > 0 && hyperLinkResponse[0].hasOwnProperty('image')) {
+        this.post.hyperlinkCaptureFileURL = hyperLinkResponse[0].image;
+      }
 
-    if (selectedClubGroups.length > 0) {
-      delete this.post.eventID;
-      this.post.postedTo = 'Group';
-      this.post.text = this.teamtalkerCaption;
-      this.post.type = "video"
-      this.spinner.show()
-      this._mediaUploadService.uploadClubMedia('GroupMedia', this.signedInUser.id, this.file).subscribe((uploadedVideo: any) => {
-        this.post.captureFileURL = uploadedVideo.url;
-        this.post.path = uploadedVideo.path
-        this._videoService.generateThumbnail(this.file).then(base64 => {
-          file = base64
-          file = file.replace('data:image/png;base64,', '');
-          const imageBlob = this.dataURItoBlob(file.toString());
-          const imageFile = new File([imageBlob], 'thumbnail.jpeg', { type: 'image/jpeg' });
-          this._mediaUploadService.uploadClubMedia('VideoThumbnails', this.signedInUser.id, imageFile).subscribe((thumbnailFile: any) => {
-            this.post.thumbnailPath = thumbnailFile.path
-            this.post.thumbnailURL = thumbnailFile.url
+      if (selectedClubGroups.length > 0) {
+        delete this.post.eventID;
+        this.post.postedTo = 'Group';
+        this.post.text = this.teamtalkerCaption;
+        this._mediaUploadService.uploadClubMedia('GroupMedia', this.signedInUser.id, this.file).subscribe((uploadedVideo: any) => {
+          this.post.captureFileURL = uploadedVideo.url;
+          this.post.path = uploadedVideo.path
+          this._videoService.generateThumbnail(this.file).then(base64 => {
+            file = base64
+            file = file.replace('data:image/png;base64,', '');
+            const imageBlob = this.dataURItoBlob(file.toString());
+            const imageFile = new File([imageBlob], 'thumbnail.jpeg', { type: 'image/jpeg' });
+            this._mediaUploadService.uploadClubMedia('VideoThumbnails', this.signedInUser.id, imageFile).subscribe((thumbnailFile: any) => {
+              this.post.thumbnailPath = thumbnailFile.path
+              this.post.thumbnailURL = thumbnailFile.url
 
-            selectedClubGroups.forEach((singleGroup, index, array) => {
-              this.post.groupID = singleGroup.id
-              this.createReport(2, '', 'Group')
-              this._postService.addPostToGroup(this.post).subscribe((groupPost: any) => {
-                this.createReport(1, groupPost.id, 'Group')
-              }, (error) => {
-                this.spinner.hide();
-                this.toast.error(error.message);
-                this.createReport(0, '', 'Group')
+              selectedClubGroups.forEach((singleGroup, index, array) => {
+                this.post.groupID = singleGroup.id
+                this.createReport(2, '', 'Group')
+                this._postService.addPostToGroup(this.post).subscribe((groupPost: any) => {
+                  this.createReport(1, groupPost.id, 'Group')
+                }, (error) => {
+                  this.spinner.hide();
+                  this.toast.error(error.message);
+                  this.createReport(0, '', 'Group')
+                })
+                if (index == array.length - 1) {
+                  this.toast.success('Post added to Groups', 'Success');
+                  this.postedSuccessfully();
+                }
               })
-              if (index == array.length - 1) {
-                this.toast.success('Post added to Groups', 'Success');
-                this.postedSuccessfully();
-              }
             })
           })
         })
-      })
-    }
+      }
 
-    if (selectedClubEvents.length > 0) {
-      delete this.post.groupID;
-      this.post.postedTo = 'Event';
-      this.post.text = this.teamtalkerCaption;
-      this.post.type = "video"
-      this.spinner.show();
-      this._mediaUploadService.uploadClubMedia('EventMedia', this.signedInUser.id, this.file).subscribe((uploadedVideo: any) => {
-        this.post.captureFileURL = uploadedVideo.url;
-        this.post.path = uploadedVideo.path
-        this._videoService.generateThumbnail(this.file).then(base64 => {
-          file = base64
-          file = file.replace('data:image/png;base64,', '');
-          const imageBlob = this.dataURItoBlob(file.toString());
-          const imageFile = new File([imageBlob], 'thumbnail.jpeg', { type: 'image/jpeg' });
-          this._mediaUploadService.uploadClubMedia('VideoThumbnails', this.signedInUser.id, imageFile).subscribe((thumbnailFile: any) => {
-            this.post.thumbnailPath = thumbnailFile.path
-            this.post.thumbnailURL = thumbnailFile.url
+      if (selectedClubEvents.length > 0) {
+        delete this.post.groupID;
+        this.post.postedTo = 'Event';
+        this.post.text = this.teamtalkerCaption;
+        this._mediaUploadService.uploadClubMedia('EventMedia', this.signedInUser.id, this.file).subscribe((uploadedVideo: any) => {
+          this.post.captureFileURL = uploadedVideo.url;
+          this.post.path = uploadedVideo.path
+          this._videoService.generateThumbnail(this.file).then(base64 => {
+            file = base64
+            file = file.replace('data:image/png;base64,', '');
+            const imageBlob = this.dataURItoBlob(file.toString());
+            const imageFile = new File([imageBlob], 'thumbnail.jpeg', { type: 'image/jpeg' });
+            this._mediaUploadService.uploadClubMedia('VideoThumbnails', this.signedInUser.id, imageFile).subscribe((thumbnailFile: any) => {
+              this.post.thumbnailPath = thumbnailFile.path
+              this.post.thumbnailURL = thumbnailFile.url
 
-            selectedClubEvents.forEach((singleEvent, index, array) => {
-              this.post.eventID = singleEvent.id
-              this.createReport(2, '', 'Event')
-              this._postService.addPostToEvent(this.post).subscribe((eventPost: any) => {
-                this.createReport(1, eventPost.id, 'Event')
-              }, (error) => {
-                this.spinner.hide();
-                this.toast.error(error.message);
-                this.createReport(0, '', 'Events')
+              selectedClubEvents.forEach((singleEvent, index, array) => {
+                this.post.eventID = singleEvent.id
+                this.createReport(2, '', 'Event')
+                this._postService.addPostToEvent(this.post).subscribe((eventPost: any) => {
+                  this.createReport(1, eventPost.id, 'Event')
+                }, (error) => {
+                  this.spinner.hide();
+                  this.toast.error(error.message);
+                  this.createReport(0, '', 'Events')
+                })
+                if (index == array.length - 1) {
+                  this.toast.success('Post added to Events', 'Success');
+                  this.postedSuccessfully();
+                }
               })
-              if (index == array.length - 1) {
-                this.toast.success('Post added to Events', 'Success');
-                this.postedSuccessfully();
-              }
             })
           })
         })
-      })
-    }
+      }
 
-    if (selectedClub) {
-      delete this.post.eventID;
-      delete this.post.groupID;
-      this.post.postedTo = 'Club';
-      this.post.text = this.teamtalkerCaption;
-      this.post.type = "video"
-      this._mediaUploadService.uploadClubMedia('ClubMedia', this.signedInUser.id, this.file).subscribe((uploadedVideo: any) => {
-        this.post.captureFileURL = uploadedVideo.url;
-        this.post.path = uploadedVideo.path
-        this._videoService.generateThumbnail(this.file).then(base64 => {
-          file = base64
-          file = file.replace('data:image/png;base64,', '');
-          const imageBlob = this.dataURItoBlob(file.toString());
-          const imageFile = new File([imageBlob], 'thumbnail.jpeg', { type: 'image/jpeg' });
-          this._mediaUploadService.uploadClubMedia('VideoThumbnails', this.signedInUser.id, imageFile).subscribe((thumbnailFile: any) => {
-            this.post.thumbnailPath = thumbnailFile.path
-            this.post.thumbnailURL = thumbnailFile.url
-            this.createReport(2, '', 'Club')
-            this._postService.addPost(this.post).subscribe((post: any) => {
-              this.toast.success('Video Post added Successfully to Club');
-              this.spinner.hide()
-              this.url = "";
-              this.teamtalkerCaption = ""
-              this.cf.detectChanges();
-              this.createReport(1, post.id, 'Club')
-            }, error => {
-              this.createReport(0, '', 'Club')
-              this.spinner.hide();
-              this.toast.error(error.message);
-            })
-          });
+      if (selectedClub) {
+        delete this.post.eventID;
+        delete this.post.groupID;
+        this.post.postedTo = 'Club';
+        this.post.text = this.teamtalkerCaption;
+        this._mediaUploadService.uploadClubMedia('ClubMedia', this.signedInUser.id, this.file).subscribe((uploadedVideo: any) => {
+          this.post.captureFileURL = uploadedVideo.url;
+          this.post.path = uploadedVideo.path
+          this._videoService.generateThumbnail(this.file).then(base64 => {
+            file = base64
+            file = file.replace('data:image/png;base64,', '');
+            const imageBlob = this.dataURItoBlob(file.toString());
+            const imageFile = new File([imageBlob], 'thumbnail.jpeg', { type: 'image/jpeg' });
+            this._mediaUploadService.uploadClubMedia('VideoThumbnails', this.signedInUser.id, imageFile).subscribe((thumbnailFile: any) => {
+              this.post.thumbnailPath = thumbnailFile.path
+              this.post.thumbnailURL = thumbnailFile.url
+              this.createReport(2, '', 'Club')
+              this._postService.addPost(this.post).subscribe((post: any) => {
+                this.toast.success('Video Post added Successfully to Club');
+                this.spinner.hide()
+                this.url = "";
+                this.teamtalkerCaption = ""
+                this.cf.detectChanges();
+                this.createReport(1, post.id, 'Club')
+              }, error => {
+                this.createReport(0, '', 'Club')
+                this.spinner.hide();
+                this.toast.error(error.message);
+              })
+            });
+          })
         })
-      })
-    }
+      }
+    })
   }
+
 }
 

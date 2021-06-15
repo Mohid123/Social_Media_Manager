@@ -255,7 +255,7 @@
                                         <!--begin::Form-->
                                         <!-- <button mat-raised-button >{{buttonName}}</button> -->
                                         <label class="checkbox checkbox-sm checkbox-inline">
-                                            <input  name="list_name" value="m1" (click)="showSchedule()" type="checkbox" value="1"/>
+                                            <input  name="list_name" value="m1" (click)="selectedSchedule()" type="checkbox" value="1"/>
                                         
                                             <span></span>
                                          <label style="padding-left: 20px;" class="font-weight-bolder">Schedule</label>
@@ -269,7 +269,7 @@
                                             <div class="border-top my-5"></div>
                                             <!--begin::Toolbar-->
                                             <div id="kt_forms_widget_2_editor_toolbar"
-                                                class="ql-toolbar d-flex align-items-center justify-content-between" *ngIf="!(show)">
+                                                class="ql-toolbar d-flex align-items-center justify-content-between" *ngIf="!(showSchedule)">
                                                
                                                 <div class="d-flex"  >
                                                    
@@ -316,7 +316,7 @@
                                                 
                                             </div>
                                             
-                                            <div class="d-flex" *ngIf="show">
+                                            <div class="d-flex" *ngIf="showSchedule">
                                                 <div class="p-2">
                                                     
                                                 </div>
