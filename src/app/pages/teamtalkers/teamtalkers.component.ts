@@ -14,6 +14,8 @@ import { User } from 'src/app/core/models/user.model';
 import { Report } from 'src/app/core/models/report.model';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { isTemplateMiddle } from 'typescript';
+import { DatePickerOptions } from '@ngx-tiny/date-picker';
+import { TimePickerOptions } from '@ngx-tiny/time-picker/ngx-time-picker.options';
 
 @Component({
   selector: 'app-teamtalkers',
@@ -44,9 +46,24 @@ export class TeamtalkersComponent implements OnInit {
   showDiv = {
     photo: true,
     video: false,
-    text: false
+    text: false,
+    poll: false
   }
+  selectedDate: Date;
+  selectedTime: Date;
+  datetimelocalObject: any;
   public show : boolean = false;
+
+  
+  singleDate: Date = new Date(new Date().setDate(new Date().getDate() + 1));
+  singleTime: Date = new Date(new Date().setDate(new Date().getDate() + 1));
+  singleDatePickerOptions: DatePickerOptions = {
+    minDate: new Date(new Date().setDate(new Date().getDate() - 1)), // Minimum is selecting a week ago
+    maxDate: new Date(new Date().setDate(new Date().getDate() + 7)), // Maximum date is selecting today
+  };
+  singleTimePickerOptions: TimePickerOptions = {
+    military: true
+  };
   constructor(private spinner: NgxSpinnerService, private cf: ChangeDetectorRef,
     private toast: ToastrService,
     private _postService: PostService,
@@ -59,7 +76,6 @@ export class TeamtalkersComponent implements OnInit {
     this.post = new Post()
     this.report = new Report();
   }
-
 
   ngOnInit() {
     this.showSpinner();
@@ -75,9 +91,12 @@ export class TeamtalkersComponent implements OnInit {
     this.cf.detectChanges()
   }
 
-  toggle() {
+  showSchedule() {
     this.show = !this.show
     }
+
+    
+  
 
   searchGroupsAndEvents(event) {
 
@@ -171,7 +190,15 @@ export class TeamtalkersComponent implements OnInit {
       })
     })
   }
+  getDateTime(){
+    var elem = document.getElementById('dt');
+    alert(elem)
 
+  }
+
+  dateEvent(event){
+    console.log(event.target.value)
+  }
 
   createReport(status, postId?, postedTo?) {
     debugger;
@@ -423,16 +450,25 @@ export class TeamtalkersComponent implements OnInit {
       this.showDiv.photo = true;
       this.showDiv.video = false;
       this.showDiv.text = false;
+      this.showDiv.poll = false;
     }
     else if (event.index == 1) {
       this.showDiv.photo = false;
       this.showDiv.video = true;
       this.showDiv.text = false;
+      this.showDiv.poll = false;
+    }
+    else if (event.index == 2){
+      this.showDiv.photo = false;
+      this.showDiv.video = false;
+      this.showDiv.text = true;
+      this.showDiv.poll = false;
     }
     else {
       this.showDiv.photo = false;
       this.showDiv.video = false;
-      this.showDiv.text = true;
+      this.showDiv.text = false;
+      this.showDiv.poll = true;
     }
   }
 
@@ -604,6 +640,13 @@ export class TeamtalkersComponent implements OnInit {
         })
       })
     }
+  }
+  
+  onChangeSingle(value: Date) {
+    this.selectedDate = value;
+  }
+  onChangeSingleTime(value: Date) {
+    this.selectedTime = value;
   }
 }
 

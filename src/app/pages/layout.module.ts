@@ -36,6 +36,12 @@ import {MatInputModule} from '@angular/material/input';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { NgxSpinnerModule } from "ngx-spinner";
 import { FormsModule } from '@angular/forms';
+import { NgxDatePickerModule} from '@ngx-tiny/date-picker';
+import { NgxTimePickerModule } from '@ngx-tiny/time-picker';
+
+
+
+
 
 
 
@@ -57,6 +63,7 @@ import { FormsModule } from '@angular/forms';
     InstagramComponent,
     TeamtalkersComponent,
     AccountManagerComponent,
+
   
   ],
   imports: [
@@ -74,9 +81,12 @@ import { FormsModule } from '@angular/forms';
     MatIconModule,
     MatInputModule,
     NgxSpinnerModule,
-    FormsModule
+    FormsModule,
+    NgxDatePickerModule,
+    NgxTimePickerModule
+     
   ],
-  providers: [VideoProcessingService],
+  providers: [VideoProcessingService], 
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class LayoutModule { }

@@ -23,11 +23,19 @@ import { SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-logi
 import { ChartsModule } from 'ng2-charts';
 import { NgApexchartsModule } from "ng-apexcharts";
 
+
+
 import {
   GoogleLoginProvider,
   FacebookLoginProvider
 } from 'angularx-social-login';
 import { VideoProcessingService } from './core/services/video-service/video-processing.service';
+import { NgxDatePickerModule } from '@ngx-tiny/date-picker';
+import { NgxTimePickerModule } from '@ngx-tiny/time-picker';
+
+
+
+
 function appInitializer(authService: AuthService) {
   return () => {
     return new Promise((resolve) => {
@@ -61,7 +69,11 @@ function appInitializer(authService: AuthService) {
     ToastrModule.forRoot( {positionClass: 'toast-top-right'} ),
     InlineSVGModule.forRoot(),
     NgbModule,
-    MatTabsModule
+    MatTabsModule,
+    NgxDatePickerModule,
+    NgxTimePickerModule 
+  
+
   ],
   providers: [
     {
