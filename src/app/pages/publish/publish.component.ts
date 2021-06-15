@@ -20,18 +20,17 @@ import { Report } from 'src/app/core/models/report.model';
   styleUrls: ['./publish.component.scss']
 })
 export class PublishComponent implements OnInit {
+
   public textFirst: string
   public signedInUser: User
-  masterSelected: boolean = false ;
-  groupSelected :boolean = false;
-  eventSelected : boolean = false;
-  fbPagesSelected : boolean = false;
-  igProfilesSelected : boolean = false;
-  checklist: any = [{ id: 1, isSelected: false, clubName: localStorage.getItem('club'), captureImageURL: localStorage.getItem('clubLogo'), name: localStorage.getItem('club') }];
-  tempList: any = [{ id: 1, isSelected: false, clubName: localStorage.getItem('club'), captureImageURL: localStorage.getItem('clubLogo'), name: localStorage.getItem('club') }];
-
-  checkedList: any;
-  itemSelected: boolean = false
+  public masterSelected: boolean = false ;
+  public groupSelected :boolean = false;
+  public eventSelected : boolean = false;
+  public fbPagesSelected : boolean = false;
+  public igProfilesSelected : boolean = false;
+  public checklist: any = [{ id: 1, isSelected: false, clubName: localStorage.getItem('club'), captureImageURL: localStorage.getItem('clubLogo'), name: localStorage.getItem('club') }];
+  private tempList: any = [{ id: 1, isSelected: false, clubName: localStorage.getItem('club'), captureImageURL: localStorage.getItem('clubLogo'), name: localStorage.getItem('club') }];
+  private checkedList: any;
   public format: string;
   public url: string = 'https://getstackposts.com/inc/themes/backend/default/assets/img/avatar.jpg';
   public facebookProfileUrl: string = 'https://social.teamtalkers.com/api/v1/en/media-upload/mediaFiles/123/test/6ca2499366f5b5611041fe57e2aac1ee9.svg'
@@ -49,6 +48,7 @@ export class PublishComponent implements OnInit {
   public profileImageUrl: string = localStorage.getItem('profileImageUrl')
   public clubLogo: string = localStorage.getItem('clubLogo')
   public searchString: string;
+  public scheduleSelected : boolean = false;
   public showDiv = {
     photo: true,
     video: false,
@@ -684,6 +684,11 @@ export class PublishComponent implements OnInit {
     }
     const blob = new Blob([int8Array], { type: 'image/jpeg' });
     return blob;
+  }
+
+
+  showSchedule(event){
+    console.log(event.target.value)
   }
 
   postTextContent() {
