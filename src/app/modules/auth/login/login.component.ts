@@ -36,8 +36,9 @@ export class LoginComponent implements OnInit {
   allClubs: Club[]
   tempClubs: Club[]
   selectedClub: Club
-  searchString: string
+  searchString: string 
   searchStarted: boolean = false;
+  noClubFound: boolean = false;
   private unsubscribe: Subscription[] = [];
 
   constructor(
@@ -134,16 +135,23 @@ export class LoginComponent implements OnInit {
 
   openVerticallyCentered(content) {
     this.modalService.open(content, { centered: true, size: 'lg' });
+    this.noClubFound = false;
+    this.searchString = ""
+    this.allClubs = this.tempClubs
+
   }
 
   searchClub(event) {
     this.searchString = event
     if (this.searchString) {
       this.allClubs = this.allClubs.filter(i => i.clubName.toLowerCase().includes(this.searchString.toLowerCase()));
+      this.allClubs.length > 0 ? this.noClubFound = false : this.noClubFound = true;
     }
     else if (this.searchString == "") {
       this.allClubs = this.tempClubs;
+      this.noClubFound = false;
     }
+    
   }
 
 
