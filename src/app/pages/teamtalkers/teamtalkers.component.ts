@@ -16,6 +16,7 @@ import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { isTemplateMiddle } from 'typescript';
 import { DatePickerOptions } from '@ngx-tiny/date-picker';
 import { TimePickerOptions } from '@ngx-tiny/time-picker/ngx-time-picker.options';
+import { Poll } from 'src/app/core/models/poll.model';
 
 @Component({
   selector: 'app-teamtalkers',
@@ -26,6 +27,11 @@ export class TeamtalkersComponent implements OnInit {
 
   public format: string;
   public teamtalkerCaption: string = "";
+  public poll: Poll;
+  // public pollChoiceOne: string = "";
+  // public pollChoiceTwo: string ="";
+  // public pollChoiceThree: string="";
+  // public pollChoiceFour: string="";
   public clubName: string
   public clubLogo: string = localStorage.getItem('clubLogo')
   public url: string = '';
@@ -76,6 +82,7 @@ export class TeamtalkersComponent implements OnInit {
   ) {
     this.post = new Post()
     this.report = new Report();
+    this.poll = new Poll();
   }
 
   ngOnInit() {

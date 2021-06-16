@@ -621,22 +621,22 @@
 
                                             <div class="form-group">
                                             
-                                              <input type="text" class="form-control" id="example1" placeholder="Enter your choice">
+                                              <input type="text" class="form-control" id="example1" placeholder="Enter your choice" [(ngModel)]="poll.choice1">
                                             </div>
                                       
                                             <div class="form-group">
                                               
-                                              <input type="text" class="form-control" id="example2" placeholder="Enter your choice" >
+                                              <input type="text" class="form-control" id="example2" placeholder="Enter your choice" [(ngModel)]="poll.choice2">
                                             </div>
                                       
                                             <div class="form-group">
                                              
-                                              <input type="text" class="form-control" id="example3" placeholder="Enter your choice (optional)" >
+                                              <input type="text" class="form-control" id="example3" placeholder="Enter your choice (optional)" [(ngModel)]="poll.choice3" >
                                             </div>
                                       
                                             <div class="form-group">
                                            
-                                              <input type="text" class="form-control" id="example4" placeholder="Enter your choice (optional)" >
+                                              <input type="text" class="form-control" id="example4" placeholder="Enter your choice (optional)" [(ngModel)]="poll.choice4">
                                             </div>
 
                                             <div class="row">
@@ -920,16 +920,64 @@
                                                 <img class="img-circle" style="height: 40px; object-fit: cover;"
                                                     [src]="profileImageUrl">
                                                 <div class="text">
-                                                    <div class="name"> poll</div>
+                                                    <div class="name"> {{userName}}</div>
                                                     <span> Just now . <i class="fa fa-globe"
                                                             aria-hidden="true"></i></span>
                                                 </div>
                                             </div>
                                             <div class="caption">
-                                                <div class="line-no-text">{{teamtalkerCaption}}</div>
-                                                <div class="line-no-text"></div>
+                                                <!-- <div class="line-no-text">{{teamtalkerCaption}}</div> -->
+                                                <div >
+                                                    <div>
+                                                        <div class="panel panel-primary">
+                                                            <div class="panel-heading">
+                                                                <h3 class="panel-title">
+                                                                    <span class="glyphicon glyphicon-hand-right"></span>{{teamtalkerCaption}}</h3>
+                                                            </div>
+                                                            <div class="panel-body">
+                                                                <ul class="list-group">
+                                                                    <li class="list-group-item">
+                                                                        <div class="checkbox">
+                                                                            <label>
+                                                                                <input type="checkbox" value="">
+                                                                                {{poll.choice1}}
+                                                                            </label>
+                                                                        </div>
+                                                                    </li>
+                                                                    <li class="list-group-item">
+                                                                        <div class="checkbox">
+                                                                            <label>
+                                                                                <input type="checkbox" value="">
+                                                                                {{poll.choice2}}
+                                                                            </label>
+                                                                        </div>
+                                                                    </li>
+                                                                    <li class="list-group-item">
+                                                                        <div class="checkbox">
+                                                                            <label>
+                                                                                <input type="checkbox" value="">
+                                                                                {{poll.choice3}}
+                                                                            </label>
+                                                                        </div>
+                                                                    </li>
+                                                                    <li class="list-group-item">
+                                                                        <div class="checkbox">
+                                                                            <label>
+                                                                                <input type="checkbox" value="">
+                                                                                {{poll.choice4}}
+                                                                            </label>
+                                                                        </div>
+                                                                    </li>
+                                                                    
+                                                                </ul>
+                                                            </div>
+                                                            
+                                                        </div>
+                                                    </div>
+                                                </div>
                                                 <div class="line-no-text w50"></div>
                                             </div>
+                                            <!-- <div class="line-no-text" >A. {{choiceOne}}</div> -->
 
                                             <div class="preview-comment">
                                                 <div class="row">
