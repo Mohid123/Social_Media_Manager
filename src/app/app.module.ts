@@ -27,8 +27,7 @@ import {
   FacebookLoginProvider
 } from 'angularx-social-login';
 import { VideoProcessingService } from './core/services/video-service/video-processing.service';
-import { NgxDatePickerModule } from '@ngx-tiny/date-picker';
-import { NgxTimePickerModule } from '@ngx-tiny/time-picker';
+
 
 
 
@@ -67,8 +66,7 @@ function appInitializer(authService: AuthService) {
     InlineSVGModule.forRoot(),
     NgbModule,
     MatTabsModule,
-    NgxDatePickerModule,
-    NgxTimePickerModule 
+
   
 
   ],
