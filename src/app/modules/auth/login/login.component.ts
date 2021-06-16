@@ -40,7 +40,7 @@ export class LoginComponent implements OnInit {
   searchStarted: boolean = false;
   noClubFound: boolean = false;
   private unsubscribe: Subscription[] = [];
-  noClubFound : boolean =false;
+
   constructor(
     private config: NgbModalConfig,
     private fb: FormBuilder, private authService: AuthService, private route: ActivatedRoute, private router: Router, private _clubService: ClubService,
@@ -137,7 +137,7 @@ export class LoginComponent implements OnInit {
     this.modalService.open(content, { centered: true, size: 'lg' });
     this.noClubFound = false;
     this.searchString = ""
-    this.allClubs = this.tempClubs
+    this.allClubs = this.tempClubs;
 
   }
 
@@ -146,13 +146,8 @@ export class LoginComponent implements OnInit {
     if (this.searchString) {
       this.allClubs = this.allClubs.filter(i => i.clubName.toLowerCase().includes(this.searchString.toLowerCase()));
       this.allClubs.length > 0 ? this.noClubFound = false : this.noClubFound = true;
-<<<<<<< HEAD
-=======
-
->>>>>>> a64cdab904c6d9140728c5919b32aeaba7706034
     }
     else if (this.searchString == "") {
-      this.noClubFound = false;
       this.allClubs = this.tempClubs;
       this.noClubFound = false;
     }
