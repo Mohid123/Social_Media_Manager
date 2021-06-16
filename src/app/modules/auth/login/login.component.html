@@ -58,10 +58,10 @@
         </div>
         <div class="modal-body d-flex justify-content-center">
           <perfect-scrollbar class="media" style="height: 600px">
-
+            <div *ngIf="noClubFound">No Club Found</div>
             <div class="row row-cols-1 row-cols-md-4 g-4" id="items">
               <div class="col" *ngFor="let club of allClubs" id="items">
-                <div class="card" style="width: 85%" (click)="onClubSelected(club) ; c('Close click')">
+                <div class="card" style="width: 85%" (click)="onClubSelected(club) ; c('Close click') ; ">
                   <img src="{{club.logoURL}}"
                     class="rounded mx-auto d-block card-img-top size d-flex justify-content-center" alt="...">
                   <ul class="list-group list-group-flush">

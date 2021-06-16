@@ -28,10 +28,6 @@ export class TeamtalkersComponent implements OnInit {
   public format: string;
   public teamtalkerCaption: string = "";
   public poll: Poll;
-  // public pollChoiceOne: string = "";
-  // public pollChoiceTwo: string ="";
-  // public pollChoiceThree: string="";
-  // public pollChoiceFour: string="";
   public clubName: string
   public clubLogo: string = localStorage.getItem('clubLogo')
   public url: string = '';
@@ -44,27 +40,25 @@ export class TeamtalkersComponent implements OnInit {
   public profileImageUrl: string = localStorage.getItem('profileImageUrl')
   public searchString: string;
   public tempList: any = [{ id: 1, isSelected: false, clubName: localStorage.getItem('club'), captureImageURL: localStorage.getItem('clubLogo'), name: localStorage.getItem('club') }]
-  checklist: any = [{ id: 1, isSelected: false, clubName: localStorage.getItem('club'), captureImageURL: localStorage.getItem('clubLogo'), name: localStorage.getItem('club') }];
+  public checklist: any = [{ id: 1, isSelected: false, clubName: localStorage.getItem('club'), captureImageURL: localStorage.getItem('clubLogo'), name: localStorage.getItem('club') }];
   public masterSelected: boolean
-  groupSelected: boolean = false;
-  eventSelected: boolean = false;
-  checkedList: any;
-  showDiv = {
+  public groupSelected: boolean = false;
+  public eventSelected: boolean = false;
+  private checkedList: any;
+  public showDiv = {
     photo: true,
     video: false,
     text: false,
     poll: false
   }
-  selectedDate: Date;
-  selectedTime: Date;
+  pollSelectedDate: Date;
+  pollSelectedTime: Date;
   datetimelocalObject: any;
   public show : boolean = false;
-
-  
   singleDate: Date = new Date(new Date().setDate(new Date().getDate() + 1));
   singleTime: Date = new Date(new Date().setDate(new Date().getDate() + 1));
   singleDatePickerOptions: DatePickerOptions = {
-    minDate: new Date(new Date().setDate(new Date().getDate() - 1)), // Minimum is selecting a week ago
+    minDate: new Date(new Date().setDate(new Date().getDate() -1 )), // Minimum is selecting a week ago
     maxDate: new Date(new Date().setDate(new Date().getDate() + 7)), // Maximum date is selecting today
   };
   singleTimePickerOptions: TimePickerOptions = {
@@ -93,7 +87,6 @@ export class TeamtalkersComponent implements OnInit {
 
   }
 
-
   clear() {
     this.teamtalkerCaption = '';
     this.url = ''
@@ -106,7 +99,14 @@ export class TeamtalkersComponent implements OnInit {
   }
 
     
-  
+  onChangeSingle(value: Date) {
+ 
+    this.pollSelectedDate = value;
+  }
+  onChangeSingleTime(value: Date) {
+    console.log(value)
+    this.pollSelectedTime = value;
+  }
 
   searchGroupsAndEvents(event) {
 
@@ -704,11 +704,40 @@ export class TeamtalkersComponent implements OnInit {
     })
   }
   
-  onChangeSingle(value: Date) {
-    this.selectedDate = value;
+  addPollPost(){
+    let selectedClubGroups = []
+    let selectedClubEvents = [];
+    let selectedClub: boolean = false;
+
+     if (this.checkedList.length == 0) {
+      this.toast.error('No Item Selected', 'Nothing to Post');
+      return;
+    }
+    
+    else if (this.teamtalkerCaption == "" || this.poll.choice1 == "" || this.poll.choice2 == "") {
+      this.toast.error('Please Enter into the poll with at least 2 choices', 'error' );
+      return;
+    }
+
+    this.checkedList.filter(item => {
+
+      if (item.hasOwnProperty('groupName')) {
+        selectedClubGroups.push(item);
+      }
+      else if (item.hasOwnProperty('eventName')) {
+        selectedClubEvents.push(item)
+      }
+      else if (item.hasOwnProperty('clubName')) {
+        selectedClub = true;
+      }
+    })
+
+    
+
+
   }
-  onChangeSingleTime(value: Date) {
-    this.selectedTime = value;
-  }
+
+
+
 }
 
