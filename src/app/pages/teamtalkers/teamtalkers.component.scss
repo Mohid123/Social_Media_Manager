@@ -486,7 +486,9 @@
       font-size: 11px;
   }
   
-    
+  .mat-tab-label{
+    min-width: 0% !important;
+ }
   .card-body{
     padding: 5px;
     overflow-x: hidden;
