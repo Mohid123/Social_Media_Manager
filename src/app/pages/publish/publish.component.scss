@@ -759,3 +759,7 @@ and (max-width: 1600px)
   color: black;
   opacity: 1;
 }
+
+::ng-deep .mat-tab-label{
+    min-width: 40px !important;
+ }
