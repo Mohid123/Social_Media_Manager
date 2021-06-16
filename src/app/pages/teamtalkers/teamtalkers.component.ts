@@ -97,6 +97,7 @@ export class TeamtalkersComponent implements OnInit {
   clear() {
     this.teamtalkerCaption = '';
     this.url = ''
+    this.poll = new Poll();
     this.cf.detectChanges()
   }
 
