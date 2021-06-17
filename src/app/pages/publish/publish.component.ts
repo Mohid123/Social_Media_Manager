@@ -464,7 +464,7 @@ export class PublishComponent implements OnInit {
         this.createReport(2, '', 'Club')
         this._postService.addPost(this.post).subscribe((post: any) => {
           this.postedSuccessfully()
-          this.toast.success('Post added Succeessfully to Club');
+          this.toast.success('Post added to Club');
           this.createReport(1, post.id, 'Club')
         })
       }, (error: any) => {
