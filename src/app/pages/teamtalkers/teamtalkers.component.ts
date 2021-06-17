@@ -94,9 +94,9 @@ export class TeamtalkersComponent implements OnInit {
     this.cf.detectChanges()
   }
 
-  selectedSchedule() {
-    this.showSchedule = !this.showSchedule
-  }
+  // selectedSchedule() {
+  //   this.showSchedule = !this.showSchedule
+  // }
 
     
   onChangeSingle(value: Date) {

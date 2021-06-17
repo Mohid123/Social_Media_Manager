@@ -60,14 +60,17 @@
           
           <perfect-scrollbar class="media" style="height: 600px">
             
-            <div *ngIf="noClubFound" class="d-flex align-items-center justify-content-center" style="height: 590px; width: 100% "> 
-              <div class="alert-text"><h3>No record found</h3></div>
+            <div *ngIf="noClubFound" class="d-flex align-items-center justify-content-center" style="height: 590px; width: 100% "> <div class="d-flex flex-column-auto flex-column ">
+                <a  class="text-center">
+                  <img src="./assets/media/bg/app________app____.jpg"  alt="" />
+                </a>
+                <h3 class="text-center" >
+                  No record found
+                </h3> 
+              </div>
             </div>
-        
-            
-            <div class="row row-cols-1 row-cols-md-4 g-4" id="items">
-               
-              <div class="col" *ngFor="let club of allClubs" id="items">
+             <div class="row row-cols-1 row-cols-md-4 g-4" id="items">
+               <div class="col" *ngFor="let club of allClubs" id="items">
                 <div class="card" style="width: 85%" (click)="onClubSelected(club) ; c('Close click') ; ">
                   <img src="{{club.logoURL}}"
                     class="rounded mx-auto d-block card-img-top size d-flex justify-content-center" alt="...">
