@@ -149,35 +149,34 @@
                             " role="tabpanel"
                                 aria-labelledby="kt_tab_pane_7_1">
                                 <div class="card-body">
-                                    <!--begin::Top-->
-                                    <div class="d-flex align-items-center">
-                                        <!--begin::Symbol-->
-                                        <div class="symbol symbol-50 symbol-light-success mr-5"  style="padding-bottom: 40px;">
+                                    <form class="form-inline">
+                                       
+                                        <div class="symbol symbol-50 symbol-light mr-5 pb-5" >
                                             <span class="symbol-label">
                                                 <img [src]="profileImageUrl"
                                                     class="h-100 align-self-center rounded" style="object-fit: cover; width: 100%" alt="" />
                                             </span>
                                         </div>
-
-
-                                              <form class="form">
-                                                <div class="form-group">
-                                                    <textarea [(ngModel)]="instaCaption" [ngModelOptions]="{standalone: true}" class="form-control form-control-lg form-control-solid" id="exampleTextarea" rows="3" placeholder="What’s on your mind, Jerry?" style="width: 220%"></textarea>
-                                                </div>
-                                             
-                                            </form>
-
-                                              
+                                      
+                                        <div class="d-flex flex-column flex-grow-1 font-weight-bold">
+                                            <a class="text-dark text-hover-primary mb-1 font-size-lg pb-12">{{userName}}</a>
+                                            
+                                        </div>
+                                       
+                                    </form>
                                     
+
+
+
+
+
+                                      <div class="form-group">
+                                        <textarea [(ngModel)]="instaCaption" [ngModelOptions]="{standalone: true}" class="form-control form-control-lg form-control-solid" id="exampleTextarea" rows="3" placeholder="What’s on your mind, Jerry?" ></textarea>
                                     </div>
-                                    <!--end::Top-->
-                                    <!--begin::Form-->
+                                  
                                     <form id="kt_forms_widget_2_form" class="pt-10 ql-quil ql-quil-plain">
                                         
-                                        <!--begin::Editor-->
-                                        <div id="kt_forms_widget_2_editor">
-                                        </div>
-                                        <!--end::Editor-->
+                                       
                                         <div class="border-top my-5"></div>
                                         <!--begin::Toolbar-->
                                         <div id="kt_forms_widget_2_editor_toolbar"
@@ -233,14 +232,7 @@
                                     <!--end::Form-->
                                 </div>
                             </div>
-                            <div class="tab-pane fade" id="kt_tab_pane_7_2" role="tabpanel"
-                                aria-labelledby="kt_tab_pane_7_2">
-                                ...
-                            </div>
-                            <div class="tab-pane fade" id="kt_tab_pane_7_3" role="tabpanel"
-                                aria-labelledby="kt_tab_pane_7_3">
-                                ...
-                            </div>
+                           
                         </div>
                     </div>
                     </mat-tab>
@@ -269,7 +261,7 @@
 
                                               <form class="form">
                                                 <div class="form-group">
-                                                    <textarea [(ngModel)]="instaCaption" [ngModelOptions]="{standalone: true}" class="form-control form-control-lg form-control-solid" id="exampleTextarea" rows="3" placeholder="What’s on your mind, Jerry?" style="width: 220%"></textarea>
+                                                    <textarea [(ngModel)]="instaCaption" [ngModelOptions]="{standalone: true}" class="cus-form form-control form-control-lg form-control-solid" id="exampleTextarea" rows="3" placeholder="What’s on your mind, Jerry?"></textarea>
                                                 </div>
                                              
                                             </form>
@@ -340,14 +332,7 @@
                                     <!--end::Form-->
                                 </div>
                             </div>
-                            <div class="tab-pane fade" id="kt_tab_pane_7_2" role="tabpanel"
-                                aria-labelledby="kt_tab_pane_7_2">
-                                ...
-                            </div>
-                            <div class="tab-pane fade" id="kt_tab_pane_7_3" role="tabpanel"
-                                aria-labelledby="kt_tab_pane_7_3">
-                                ...
-                            </div>
+                           
                         </div>
                     </div>
                     </mat-tab>

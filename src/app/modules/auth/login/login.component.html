@@ -147,7 +147,7 @@
     <div class="form-group">
       <label class="font-size-h6 font-weight-bolder text-dark">Email</label>
       <input class="form-control form-control-solid h-auto py-7 px-6 rounded-lg" type="email" name="email"
-        formControlName="email" autocomplete="off" [ngClass]="{ 'is-invalid': loginForm.controls['email'].invalid }" placeholder="e.g johndoe@gmail.com"/>
+        formControlName="email" autocomplete="off" [ngClass]="{ 'is-in valid': loginForm.controls['email'].invalid }" placeholder="e.g johndoe@gmail.com"/>
       <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
           validation: 'required',
           message: 'Email is required',

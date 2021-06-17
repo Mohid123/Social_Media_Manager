@@ -724,12 +724,14 @@
 
 @media screen 
  
-and (max-width: 1600px) 
+and (max-width: 1700px) 
 {
    
-  
+    .card.card-custom > .card-body {
+        padding: 0rem !important;
+    }
 .btn{
-    font-size: 11px;
+    font-size: 10px;
 }
 
   
@@ -743,6 +745,12 @@ and (max-width: 1600px)
     margin-right: 16px;
     font-weight: 500;
     font-size: 9px;
+}
+.font-size-lg{
+    font-size: 12px !important;
+}
+.cus-form{
+    width: 212% !important
 }
 
  
@@ -765,3 +773,11 @@ and (max-width: 1600px)
     padding: 0px 8px !important;
     
  }
+
+ .card.card-custom > .card-body {
+    padding: 30px 0px 0px 0px;
+}
+
+.cus-form{
+    width: 240%;
+  }

@@ -270,9 +270,12 @@
   and (max-width: 1600px) 
   {
      
+    .card.card-custom > .card-body {
+        padding: 0rem !important;
+    }
     
   .btn{
-      font-size: 11px;
+      font-size: 10px;
   }
   
     
@@ -286,7 +289,12 @@
       font-weight: 500;
       font-size: 9px;
   }
-   
+  .font-size-lg{
+    font-size: 12px !important;
+}
+.cus-form{
+    width: 212% !important
+}
   }
 
   ::ng-deep.mat-tab-label.mat-tab-label-active:not(.mat-tab-disabled),
@@ -300,3 +308,11 @@
     min-width: 40px !important;
     padding: 0px 8px !important;
  }
+
+ .card.card-custom > .card-body {
+    padding: 30px 0px 0px 0px;
+}
+
+.cus-form{
+    width: 220%;
+}
