@@ -32,6 +32,7 @@ export class FacebookComponent implements OnInit {
   public report: Report
   private selectedFBPages: any[] = []
   public facebookPages: any[] = []
+  public tempList : any[] = []
   public masterSelected: boolean
   public facebookProfileUrl: string = 'https://social.teamtalkers.com/api/v1/en/media-upload/mediaFiles/123/test/6ca2499366f5b5611041fe57e2aac1ee9.svg'
   checklist: any = [];
@@ -67,8 +68,12 @@ export class FacebookComponent implements OnInit {
 
   searchFacebookPages(event){
     this.searchString = event;
-    console.log(event);
-    this.checklist.filter(i => i.pageName.toLowerCase().includes(this.searchString.toLowerCase()))
+   if(this.searchString !== ""){
+    this.checklist = this.checklist.filter(item => item.pageName.toLowerCase().includes(this.searchString.toLowerCase()))
+   }
+   else if(this.searchString == ""){
+     this.checklist = this.tempList;
+   }
   }
 
   removeSlectedItems() {
@@ -93,8 +98,10 @@ export class FacebookComponent implements OnInit {
   selectAll() {
     for (var i = 0; i < this.checklist.length; i++) {
       this.checklist[i].isSelected = this.masterSelected;
+      
     }
     this.getCheckedItemList();
+
   }
 
   getCheckedItemList(): void {
@@ -125,6 +132,7 @@ export class FacebookComponent implements OnInit {
         page.isSelected = false;
         page.captureImageURL = this.facebookProfileUrl
         this.checklist.push(page);
+        this.tempList.push(page);
         this.cf.detectChanges();
       })
     });
@@ -175,7 +183,7 @@ export class FacebookComponent implements OnInit {
       return;
     }
     else if (this.checkedList.length == 0) {
-      this.toast.error('No Item Selected', 'Please select items to post');
+      this.toast.error('No Page Selected', 'Please select Facebook Pages to post');
       return;
     }
     this.spinner.show()
@@ -207,7 +215,7 @@ export class FacebookComponent implements OnInit {
       return;
     }
     else if (this.checkedList.length == 0) {
-      this.toast.error('No Item Selected', 'Please select items to post');
+      this.toast.error('No Page Selected', 'Please select Facebook Pages to post');
       return;
     }
     this.spinner.show()
@@ -222,7 +230,6 @@ export class FacebookComponent implements OnInit {
           }
         })
         
-
       }, (err) => {
         this.spinner.hide()
         this.toast.error(err.message);
@@ -241,7 +248,7 @@ export class FacebookComponent implements OnInit {
       return;
     }
     else if (this.checkedList.length == 0) {
-      this.toast.error('No Item Selected', 'Please select items to post');
+      this.toast.error('No Page Selected', 'Please select Facebook Pages to post');
       return;
     }
     this.spinner.show();

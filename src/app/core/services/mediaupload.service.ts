@@ -21,6 +21,7 @@ export class MediauploadService {
 
 
   uploadClubMedia(folderName , fieldName , file){
+    environment.club_api_url =  localStorage.getItem('baseUrl')
     const formData: FormData = new FormData();
     formData.append('file', file, file.name);
     return this.http.post(`${environment.club_api_url}/media-upload/mediaFiles/${folderName}/${fieldName}`, formData).pipe(catchError(this._errorHandlerService.handleErrors))

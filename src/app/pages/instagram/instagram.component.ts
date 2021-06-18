@@ -89,6 +89,10 @@ export class InstagramComponent implements OnInit {
     this.getCheckedItemList();
   }
 
+  searchInstagramProfiles(){
+    
+  }
+
   getCheckedItemList(): void {
     this.checkedList = [];
     for (var i = 0; i < this.checklist.length; i++) {
@@ -137,7 +141,7 @@ export class InstagramComponent implements OnInit {
     })
   }
 
-  postVideoContent() {
+  addVideoPost() {
     console.log(this.file)
     if (!this.file) {
       this.toast.error('Please select an Video File', 'Empty File');
@@ -191,8 +195,7 @@ export class InstagramComponent implements OnInit {
     })
   }
 
-  postImageContent() {
-
+  addImagePost() {
     if (!this.file) {
       this.toast.error('Please select an Image File', 'Empty File');
       return;

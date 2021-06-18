@@ -152,13 +152,15 @@ export class TeamtalkersComponent implements OnInit {
     this.masterSelected = false;
     this.groupSelected = false;
     this.eventSelected = false;
-    this.checkedList = []
+    this.checkedList = [];
   }
 
   selectAll() {
     for (var i = 0; i < this.checklist.length; i++) {
       this.checklist[i].isSelected = this.masterSelected;
     }
+    this.groupSelected = this.masterSelected;
+    this.eventSelected = this.masterSelected;
     this.getCheckedItemList();
   }
 
@@ -247,10 +249,9 @@ export class TeamtalkersComponent implements OnInit {
   postedSuccessfully() {
     this.spinner.hide();
     this.url = "";
-    this.teamtalkerCaption = "";
-    this.file = ""
+    this.file = "";
     this.removeSlectedItems();
-    this.cf.detectChanges()
+    this.cf.detectChanges();
   }
 
   getSignedInUser() {
@@ -271,7 +272,7 @@ export class TeamtalkersComponent implements OnInit {
       this.toast.error("Please add content to post", "No Content Added");
       return;
     } else if (this.checkedList.length == 0) {
-      this.toast.error("No Item Selected", "Nothing to Post");
+      this.toast.error('Please select atleast one Item from (Club, Group or Event)');
       return;
     }
 
@@ -326,6 +327,10 @@ export class TeamtalkersComponent implements OnInit {
             this._postService.addPostToGroup(this.post).subscribe(
               (groupPost: any) => {
                 this.createReport(1, groupPost.id, "Group");
+                if (index == array.length - 1) {
+                  this.toast.success("Post added to Groups", "Success");
+                  this.postedSuccessfully();
+                }
               },
               (error) => {
                 this.spinner.hide();
@@ -333,10 +338,6 @@ export class TeamtalkersComponent implements OnInit {
                 this.createReport(0, "", "Group");
               }
             );
-            if (index == array.length - 1) {
-              this.toast.success("Post added to Groups", "Success");
-              this.postedSuccessfully();
-            }
           });
         }
 
@@ -350,6 +351,10 @@ export class TeamtalkersComponent implements OnInit {
             this._postService.addPostToEvent(this.post).subscribe(
               (eventPost: any) => {
                 this.createReport(1, eventPost.id, "Event");
+                if (index == array.length - 1) {
+                  this.toast.success("Post added to Events", "Success");
+                  this.postedSuccessfully();
+                }
               },
               (error) => {
                 this.spinner.hide();
@@ -357,10 +362,6 @@ export class TeamtalkersComponent implements OnInit {
                 this.createReport(0, "", "Event");
               }
             );
-            if (index == array.length - 1) {
-              this.toast.success("Post added to Events", "Success");
-              this.postedSuccessfully();
-            }
           });
         }
 
@@ -374,8 +375,7 @@ export class TeamtalkersComponent implements OnInit {
             (post: any) => {
               this.spinner.hide();
               this.toast.success(" Post added Successfully to Club");
-              this.teamtalkerCaption = "";
-              this.cf.detectChanges();
+              this.postedSuccessfully();
               this.createReport(1, post.id, "Club");
             },
             (error) => {
@@ -403,7 +403,8 @@ export class TeamtalkersComponent implements OnInit {
       this.toast.error("Please Select Image File to post", "No File Selected");
       return;
     } else if (this.checkedList.length == 0) {
-      this.toast.error("No Item Selected", "Please select items to post");
+      this.toast.error('Please select atleast one Item from (Club, Group or Event)');
+
       return;
     }
 
@@ -474,7 +475,6 @@ export class TeamtalkersComponent implements OnInit {
                     this.toast.error(error.message);
                   }
                 );
-               
               });
             });
         }
@@ -605,7 +605,8 @@ export class TeamtalkersComponent implements OnInit {
       this.toast.error("Please select a Video File", "Empty File");
       return;
     } else if (this.checkedList.length == 0) {
-      this.toast.error("No Item Selected", "Nothing to Post");
+      this.toast.error('Please select atleast one Item from (Club, Group or Event)');
+
       return;
     }
 

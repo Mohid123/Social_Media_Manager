@@ -149,6 +149,10 @@ export class PublishComponent implements OnInit {
     for (var i = 0; i < this.checklist.length; i++) {
       this.checklist[i].isSelected = this.masterSelected;
     }
+    this.groupSelected = this.masterSelected;
+    this.eventSelected = this.masterSelected;
+    this.fbPagesSelected = this.masterSelected;
+    this.igProfilesSelected = this.masterSelected;
     this.getCheckedItemList();
   }
 
@@ -217,6 +221,7 @@ export class PublishComponent implements OnInit {
       if (this.checklist[i].isSelected)
         this.checkedList.push(this.checklist[i]);
     }
+    console.log(this.checkedList)
   }
 
   showSpinner(): void {
@@ -311,7 +316,7 @@ export class PublishComponent implements OnInit {
       return;
     }
     else if (this.checkedList.length == 0) {
-      this.toast.error('No Item Selected', 'Please select items to post');
+      this.toast.error('Please select atleast one Item from (Club, Group, Event, Facebook Page or Instagram Profile)');
       return;
     }
     this.checkedList.filter(item => {
@@ -503,7 +508,8 @@ export class PublishComponent implements OnInit {
     }
 
     else if (this.checkedList.length == 0) {
-      this.toast.error('No Item Selected', 'Nothing to Post');
+      this.toast.error('Please select atleast one Item from (Club, Group, Event, Facebook Page or Instagram Profile)');
+
       return;
     }
 
@@ -740,7 +746,8 @@ export class PublishComponent implements OnInit {
       return;
     }
     else if (this.checkedList.length == 0) {
-      this.toast.error('No Item Selected', 'Nothing to Post');
+      this.toast.error('Please select atleast one Item from (Club, Group, Event, Facebook Page or Instagram Profile)');
+
       return;
     }
     this.checkedList.filter(item => {
