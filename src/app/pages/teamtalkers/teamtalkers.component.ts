@@ -581,6 +581,7 @@ export class TeamtalkersComponent implements OnInit {
         this.url = (<FileReader>event.target).result as string;
         this.cf.detectChanges();
       };
+      event.target.value = '';
     }
   }
 

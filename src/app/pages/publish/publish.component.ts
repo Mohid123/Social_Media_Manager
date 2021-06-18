@@ -77,7 +77,7 @@ export class PublishComponent implements OnInit {
   }
 
   clear() {
-    this.url = '';
+    this.url = "";
     this.socialCaption = '';
     this.cf.detectChanges()
   }
@@ -248,6 +248,7 @@ export class PublishComponent implements OnInit {
   }
 
   onSelectFile(event): void {
+    console.log(event)
     this.file = event.target.files && event.target.files[0];
     if (this.file) {
       var reader = new FileReader();
@@ -261,6 +262,7 @@ export class PublishComponent implements OnInit {
         this.url = (<FileReader>event.target).result as string;
         this.cf.detectChanges();
       }
+      event.target.value = '';
     }
   }
 

@@ -70,7 +70,7 @@ export class LoginComponent implements OnInit {
         this.defaultAuth.password,
         Validators.compose([
           Validators.required,
-          Validators.minLength(6),
+          Validators.minLength(8),
           Validators.maxLength(100),
         ]),
       ],
