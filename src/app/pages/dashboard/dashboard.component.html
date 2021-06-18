@@ -27,7 +27,7 @@
             </div>
             <div class="card-body">
                 <div class="container justify-content-around " style="border-bottom: 1px solid lightgrey; padding-bottom: 25px">
-                    <span class="label label-success mr-2 "></span>Success 
+                    <span class="label label-success mr-2 "></span>Succeed 
                     <span class="label label-danger mr-2"></span>Failed 
                     <span class="label label-info mr-2"></span>Pending
                 </div>
@@ -58,7 +58,7 @@
                              <!--end::Badge-->
                              <!--begin::Text-->
                              <div *ngIf="report.successStatus == 0" class="font-weight-mormal font-size-lg timeline-content text-bold pl-5">Your<strong> {{report.postedTo}}  </strong>post was <span class="text-danger font-weight-bolder">failed</span>  </div>
-                             <div *ngIf="report.successStatus == 1"  class="font-weight-mormal font-size-lg timeline-content text-bold pl-5">Your<strong> {{report.postedTo}}  </strong>post was <span class="text-success font-weight-bolder">successfull</span> </div>
+                             <div *ngIf="report.successStatus == 1"  class="font-weight-mormal font-size-lg timeline-content text-bold pl-5">Your<strong> {{report.postedTo}}  </strong>post was <span class="text-success font-weight-bolder">succeed</span> </div>
                              <div *ngIf="report.successStatus == 2" class="font-weight-mormal font-size-lg timeline-content text-bold pl-5">Your<strong> {{report.postedTo}}  </strong>post was <span class="text-info font-weight-bolder">pending</span></div>
            
                              
@@ -145,7 +145,7 @@
                                 <span *ngIf="facebookStats" class="font-weight-bolder">{{facebookStats.total}}</span>
                                 <span class="pulse-ring"></span>
                             </span></button>
-                            <button class="btn font-weight-bold btn-light-success mr-2">Succecced <span class="label pulse pulse-success" >
+                            <button class="btn font-weight-bold btn-light-success mr-2">Succeed <span class="label pulse pulse-success" >
                                 <span *ngIf="facebookStats" class="font-weight-bolder">{{facebookStats.succeeded}}</span>
                                 <span class="pulse-ring"></span>
                             </span></button>
@@ -172,7 +172,7 @@
                                 <span *ngIf="instagramStats" class="font-weight-bolder">{{instagramStats.total}}</span>
                                 <span class="pulse-ring"></span>
                             </span></button>
-                            <button class="btn font-weight-bold btn-light-success mr-2">Succecced<span class="label pulse pulse-success " >
+                            <button class="btn font-weight-bold btn-light-success mr-2">Succeed<span class="label pulse pulse-success " >
                                 <span *ngIf="instagramStats"  class="font-weight-bolder">{{instagramStats.succeeded}}</span>
                                 <span class="pulse-ring"></span>
                             </span></button>
@@ -198,7 +198,7 @@
                                 <span *ngIf="clubStats" class="font-weight-bolder">{{clubStats.total}}</span>
                                 <span class="pulse-ring"></span>
                             </span></button>
-                            <button class="btn font-weight-bold btn-light-success mr-2">Succecced<span class="label pulse pulse-success" >
+                            <button class="btn font-weight-bold btn-light-success mr-2">Succeed<span class="label pulse pulse-success" >
                                 <span *ngIf="clubStats"  class="font-weight-bolder">{{clubStats.succeeded}}</span>
                                 <span class="pulse-ring"></span>
                             </span></button>
