@@ -35,7 +35,7 @@ export class PublishComponent implements OnInit {
   public url: string = 'https://getstackposts.com/inc/themes/backend/default/assets/img/avatar.jpg';
   public facebookProfileUrl: string = 'https://social.teamtalkers.com/api/v1/en/media-upload/mediaFiles/123/test/6ca2499366f5b5611041fe57e2aac1ee9.svg'
   public instagramProfileUrl: string = 'https://social.teamtalkers.com/api/v1/en/media-upload/mediaFiles/123/test/113ad1ea783c7d107afd8ddc09eb6f23e.svg'
-  public file: File
+  public file: any
   public socialCaption: string = "";
   public selectedInstagram: boolean = true
   public postContent: string
@@ -78,23 +78,22 @@ export class PublishComponent implements OnInit {
 
   clear() {
     this.url = "";
-    this.socialCaption = '';
-    this.cf.detectChanges()
+    this.socialCaption = "";
+    this.file = ""
   }
 
   postedSuccessfully() {
     this.spinner.hide();
     this.url = ""
-    this.socialCaption = ""
+    this.file = ""
     this.removeSlectedItems()
-    this.cf.detectChanges();
+    this.cf.detectChanges()
   }
 
   getSignedInUser() {
     debugger;
     this._authService.getSignedInUser().pipe(take(1)).subscribe(user => {
       this.signedInUser = user;
-      console.log(this.signedInUser)
       if (this.signedInUser.FBPages.length > 0) {
         this.signedInUser.FBPages.map(item => {
           item.isSelected = false;
@@ -131,8 +130,6 @@ export class PublishComponent implements OnInit {
 
 
   search(event) {
-    console.log(this.checklist)
-    console.log(this.tempList, 'Temporary list')
     this.searchString = event
     if (this.searchString) {
       this.checklist = this.checklist.filter(item => item.name.toLowerCase().includes(this.searchString.toLowerCase()))
@@ -198,6 +195,12 @@ export class PublishComponent implements OnInit {
         this.checklist[i].isSelected = false
       }
     }
+    this.masterSelected = false;
+    this.fbPagesSelected = false;
+    this.igProfilesSelected = false;
+    this.groupSelected = false;
+    this.eventSelected = false;
+    this.checkedList = []
   }
 
   singleItemSelected() {
@@ -214,7 +217,6 @@ export class PublishComponent implements OnInit {
       if (this.checklist[i].isSelected)
         this.checkedList.push(this.checklist[i]);
     }
-    console.log(this.checkedList)
   }
 
   showSpinner(): void {
@@ -248,7 +250,6 @@ export class PublishComponent implements OnInit {
   }
 
   onSelectFile(event): void {
-    console.log(event)
     this.file = event.target.files && event.target.files[0];
     if (this.file) {
       var reader = new FileReader();
@@ -269,7 +270,6 @@ export class PublishComponent implements OnInit {
   getClubGroups() {
     debugger;
     this._clubService.getClubGroups(0, 50).subscribe((groups: any) => {
-      console.log(groups)
       groups.map(singleItem => {
         singleItem.isSelected = false
         singleItem.name = singleItem.groupName;
@@ -285,7 +285,6 @@ export class PublishComponent implements OnInit {
   getClubEvents() {
     debugger;
     this._clubService.getClubEvents(0, 50).subscribe((events: any) => {
-      console.log(events)
       events.map((sigleItem) => {
         sigleItem.isSelected = false;
         sigleItem.name = sigleItem.eventName;
@@ -299,7 +298,8 @@ export class PublishComponent implements OnInit {
   }
 
 
-  postImageContent() {
+  addImagePost() {
+    debugger;
     let selectedFacebookPages = []
     let selctedInstagramPages = []
     let selectedClubGroups = []
@@ -338,8 +338,8 @@ export class PublishComponent implements OnInit {
         selectedFacebookPages.forEach((item, index, array) => {
           this.createReport(2, '', 'Facebook')
           this._facebookService.addImagePostToFB(item.pageID, media.url, this.socialCaption, item.pageAccessToken).subscribe((FbPost: any) => {
-            console.log(FbPost);
             this.createReport(1, FbPost.id, 'Facebook')
+            
           }, (error) => {
             this.spinner.hide();
             this.toast.error(error.message);
@@ -354,6 +354,7 @@ export class PublishComponent implements OnInit {
     }
 
     if (selctedInstagramPages.length > 0) {
+      debugger;
       this.spinner.show();
       this._mediaUploadService.uploadMedia('Instagram', this.signedInUser.id, this.file).subscribe((media: any) => {
         selctedInstagramPages.forEach((item, index, array) => {
@@ -398,6 +399,7 @@ export class PublishComponent implements OnInit {
       }
 
     if (selectedClubGroups.length > 0) {
+      debugger;
       delete this.post.eventID;
       this.post.postedTo = 'Group';
       this.post.text = this.socialCaption;
@@ -424,6 +426,7 @@ export class PublishComponent implements OnInit {
     }
 
     if (selectedClubEvents.length > 0) {
+      debugger;
       delete this.post.groupID;
       this.post.postedTo = 'Event';
       this.spinner.show();
@@ -452,11 +455,10 @@ export class PublishComponent implements OnInit {
 
 
     if (selectedClub) {
-      debugger;
+      delete this.post.eventID;
+      delete this.post.groupID;
       this.spinner.show();
       this._mediaUploadService.uploadClubMedia('ClubMedia', this.signedInUser.id, this.file).subscribe((media: any) => {
-        delete this.post.eventID;
-        delete this.post.groupID;
         this.post.postedTo = 'Club';
         this.post.text = this.socialCaption;
         this.post.captureFileURL = media.url;
@@ -484,11 +486,10 @@ export class PublishComponent implements OnInit {
     this.report.successStatus = status;
     this.report.userID = localStorage.getItem('clubUid')
     this._reportService.addReport(this.report).subscribe(data => {
-      console.log(data, 'Report Created');
     })
   }
 
-  postVideoContent() {
+  addVideoPost() {
     let selectedFacebookPages = []
     let selctedInstagramPages = []
     let selectedClubGroups = []
@@ -552,7 +553,6 @@ export class PublishComponent implements OnInit {
           this._instagramService.createIgContainerForVideo(item.instagram_business_account.id, media.url, this.socialCaption, item.linkedFbPagetoken).subscribe((container: any) => {
             let interval = setInterval(() => {
               this._instagramService.getContainerStatus(container.id, item.linkedFbPagetoken).subscribe((data: any) => {
-                console.log(data, 'containerId')
                 if (data.status_code == "FINISHED") {
                   this._instagramService.publishContent(item.instagram_business_account.id, container.id, item.linkedFbPagetoken).subscribe((data: any) => {
                     this.spinner.hide()
@@ -724,7 +724,8 @@ export class PublishComponent implements OnInit {
     console.log(event.target.value)
   }
 
-  postTextContent() {
+  addTextPost() {
+  
     debugger;
     let selectedFacebookPages = []
     let selctedInstagramPages = []
@@ -783,8 +784,12 @@ export class PublishComponent implements OnInit {
         }
       })
     }
+
     this.post.type = 'text';
+    if(selectedClubEvents.length > 0 || selectedClubGroups.length > 0 || selectedClub){
+debugger;
     this._postService.hyperLinkScrapper(this.socialCaption).subscribe(data => {
+      debugger;
       hyperLinkResponse = data;
       if (hyperLinkResponse.length > 0 && hyperLinkResponse[0].hasOwnProperty('url')) {
         this.post.hyperLink = hyperLinkResponse[0].url
@@ -862,6 +867,7 @@ export class PublishComponent implements OnInit {
       })
     }
   })
+}
 
   }
 }

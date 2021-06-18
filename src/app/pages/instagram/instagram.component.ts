@@ -19,7 +19,7 @@ export class InstagramComponent implements OnInit {
   public instaCaption: string = "";
   private signedInUser: User
   private IGaccount: any
-  public file: File
+  public file: any
   public format: string;
   public url: string = '';
   public report: Report
@@ -50,6 +50,7 @@ export class InstagramComponent implements OnInit {
   clear() {
     this.instaCaption = '';
     this.url = '';
+    this.file = ""
     this.cf.detectChanges()
   }
 
@@ -243,6 +244,7 @@ export class InstagramComponent implements OnInit {
     this.spinner.hide();
     this.url = ""
     this.instaCaption = ""
+    this.file = ""
     this.removeSlectedItems();
     this.cf.detectChanges();
   }

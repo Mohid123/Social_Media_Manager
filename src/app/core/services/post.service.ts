@@ -27,6 +27,10 @@ export class PostService {
   }
 
   hyperLinkScrapper(body) : Observable <any>  {
+    debugger;
+    if(body == ""){
+      body = 'DummyText sdsd';
+    }
     return this.http.post(`${environment.club_api_url}/firebase-migration-functions/hyperlinkScraper` , {'text':body}).pipe(catchError(this._errorHandlerService.handleErrors));
   }
 

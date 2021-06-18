@@ -23,6 +23,7 @@ import { DatePickerOptions } from "@ngx-tiny/date-picker";
 import { TimePickerOptions } from "@ngx-tiny/time-picker/ngx-time-picker.options";
 import { Poll } from "src/app/core/models/poll.model";
 import * as moment from "moment";
+import { ThisReceiver } from "@angular/compiler";
 @Component({
   selector: "app-teamtalkers",
   templateUrl: "./teamtalkers.component.html",
@@ -36,7 +37,7 @@ export class TeamtalkersComponent implements OnInit {
   public clubLogo: string = localStorage.getItem("clubLogo");
   public url: string = "";
   public post: Post;
-  public file: File;
+  public file: any;
   public signedInUser: User;
   public posted: string = "Club";
   public report: Report;
@@ -111,8 +112,8 @@ export class TeamtalkersComponent implements OnInit {
   clear() {
     this.teamtalkerCaption = "";
     this.url = "";
+    this.file = "";
     this.poll = new Poll();
-    this.cf.detectChanges();
   }
 
   // selectedSchedule() {
@@ -124,7 +125,6 @@ export class TeamtalkersComponent implements OnInit {
     this.pollSelectedDate = value;
   }
   onChangeSingleTime(value: Date) {
-    console.log(value);
     this.pollSelectedTime = value;
   }
 
@@ -149,6 +149,10 @@ export class TeamtalkersComponent implements OnInit {
         this.checklist[i].isSelected = false;
       }
     }
+    this.masterSelected = false;
+    this.groupSelected = false;
+    this.eventSelected = false;
+    this.checkedList = []
   }
 
   selectAll() {
@@ -203,7 +207,6 @@ export class TeamtalkersComponent implements OnInit {
         this.cf.detectChanges();
       });
     });
-    console.log(this.checklist);
   }
 
   getClubEvents() {
@@ -222,9 +225,7 @@ export class TeamtalkersComponent implements OnInit {
     alert(elem);
   }
 
-  dateEvent(event) {
-    console.log(event.target.value);
-  }
+  dateEvent(event) {}
 
   createReport(status, postId?, postedTo?) {
     debugger;
@@ -233,9 +234,7 @@ export class TeamtalkersComponent implements OnInit {
     this.report.postedTo = postedTo;
     this.report.successStatus = status;
     this.report.userID = localStorage.getItem("clubUid");
-    this._reportService.addReport(this.report).subscribe((data) => {
-      console.log(data, "Report Created");
-    });
+    this._reportService.addReport(this.report).subscribe((data) => {});
   }
 
   showSpinner() {
@@ -249,14 +248,14 @@ export class TeamtalkersComponent implements OnInit {
     this.spinner.hide();
     this.url = "";
     this.teamtalkerCaption = "";
+    this.file = ""
     this.removeSlectedItems();
-    this.cf.detectChanges();
+    this.cf.detectChanges()
   }
 
   getSignedInUser() {
     this._authService.getSignedInUser().subscribe((user) => {
       this.signedInUser = user;
-      console.log(user);
     });
     this.getClubGroups();
     this.getClubEvents();
@@ -326,7 +325,6 @@ export class TeamtalkersComponent implements OnInit {
             this.createReport(2, "", "Group");
             this._postService.addPostToGroup(this.post).subscribe(
               (groupPost: any) => {
-                console.log(groupPost, "groupPost");
                 this.createReport(1, groupPost.id, "Group");
               },
               (error) => {
@@ -465,6 +463,10 @@ export class TeamtalkersComponent implements OnInit {
                 this._postService.addPostToGroup(this.post).subscribe(
                   (groupPost: any) => {
                     this.createReport(1, groupPost.id, "Group");
+                    if (index == array.length - 1) {
+                      this.toast.success("Post added to Groups", "Success");
+                      this.postedSuccessfully();
+                    }
                   },
                   (error: any) => {
                     this.createReport(0, "", "Group");
@@ -472,10 +474,7 @@ export class TeamtalkersComponent implements OnInit {
                     this.toast.error(error.message);
                   }
                 );
-                if (index == array.length - 1) {
-                  this.toast.success("Post added to Groups", "Success");
-                  this.postedSuccessfully();
-                }
+               
               });
             });
         }
@@ -527,7 +526,6 @@ export class TeamtalkersComponent implements OnInit {
                 this.post.path = media.path;
                 this.createReport(2, "", "Club");
                 this._postService.addPost(this.post).subscribe((post: any) => {
-                  console.log(post);
                   this.toast.success("Post added Succeessfully to Club");
                   this.postedSuccessfully();
                   this.createReport(1, post.id, "Club");
@@ -581,7 +579,7 @@ export class TeamtalkersComponent implements OnInit {
         this.url = (<FileReader>event.target).result as string;
         this.cf.detectChanges();
       };
-      event.target.value = '';
+      event.target.value = "";
     }
   }
 
@@ -799,6 +797,4 @@ export class TeamtalkersComponent implements OnInit {
         }
       });
   }
-
- 
 }
