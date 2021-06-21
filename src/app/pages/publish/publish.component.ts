@@ -91,7 +91,7 @@ export class PublishComponent implements OnInit {
   }
 
   getSignedInUser() {
-    debugger;
+    
     this._authService.getSignedInUser().pipe(take(1)).subscribe(user => {
       this.signedInUser = user;
       if (this.signedInUser.FBPages.length > 0) {
@@ -145,7 +145,7 @@ export class PublishComponent implements OnInit {
   }
 
   selectAll() {
-    debugger;
+    
     for (var i = 0; i < this.checklist.length; i++) {
       this.checklist[i].isSelected = this.masterSelected;
     }
@@ -157,7 +157,7 @@ export class PublishComponent implements OnInit {
   }
 
   selectAllGroups(){
-    debugger;
+    
     for (var i = 0; i < this.checklist.length; i++) {
       if(this.checklist[i].groupName){
         this.checklist[i].isSelected =this.groupSelected;
@@ -208,7 +208,7 @@ export class PublishComponent implements OnInit {
   }
 
   singleItemSelected() {
-    debugger;
+    
     this.masterSelected = this.checklist.every((item: any) => {
       return item.isSelected == true;
     })
@@ -273,7 +273,7 @@ export class PublishComponent implements OnInit {
   }
 
   getClubGroups() {
-    debugger;
+    
     this._clubService.getClubGroups(0, 50).subscribe((groups: any) => {
       groups.map(singleItem => {
         singleItem.isSelected = false
@@ -288,7 +288,7 @@ export class PublishComponent implements OnInit {
   }
 
   getClubEvents() {
-    debugger;
+    
     this._clubService.getClubEvents(0, 50).subscribe((events: any) => {
       events.map((sigleItem) => {
         sigleItem.isSelected = false;
@@ -304,7 +304,7 @@ export class PublishComponent implements OnInit {
 
 
   addImagePost() {
-    debugger;
+    
     let selectedFacebookPages = []
     let selctedInstagramPages = []
     let selectedClubGroups = []
@@ -344,22 +344,22 @@ export class PublishComponent implements OnInit {
           this.createReport(2, '', 'Facebook')
           this._facebookService.addImagePostToFB(item.pageID, media.url, this.socialCaption, item.pageAccessToken).subscribe((FbPost: any) => {
             this.createReport(1, FbPost.id, 'Facebook')
-            
+            if (index == array.length - 1) {
+              this.toast.success(`Post added to Facebook Pages`, 'Success');
+              this.postedSuccessfully()
+            }
           }, (error) => {
             this.spinner.hide();
             this.toast.error(error.message);
             this.createReport(0, '', 'Facebook')
           })
-          if (index == array.length - 1) {
-            this.toast.success(`Post added to Facebook Pages`, 'Success');
-            this.postedSuccessfully()
-          }
+        
         })
       })
     }
 
     if (selctedInstagramPages.length > 0) {
-      debugger;
+      
       this.spinner.show();
       this._mediaUploadService.uploadMedia('Instagram', this.signedInUser.id, this.file).subscribe((media: any) => {
         selctedInstagramPages.forEach((item, index, array) => {
@@ -379,9 +379,6 @@ export class PublishComponent implements OnInit {
             this.toast.error(error.message);
             this.createReport(0, '', 'Instagram')
           })
-          // if (index == array.length - 1) {
-          //   this.postedSuccessfully()
-          // }
         })
       })
     }
@@ -404,7 +401,7 @@ export class PublishComponent implements OnInit {
       }
 
     if (selectedClubGroups.length > 0) {
-      debugger;
+      
       delete this.post.eventID;
       this.post.postedTo = 'Group';
       this.post.text = this.socialCaption;
@@ -431,7 +428,7 @@ export class PublishComponent implements OnInit {
     }
 
     if (selectedClubEvents.length > 0) {
-      debugger;
+      
       delete this.post.groupID;
       this.post.postedTo = 'Event';
       this.spinner.show();
@@ -455,7 +452,6 @@ export class PublishComponent implements OnInit {
           }
         })
       })
-
     }
 
 
@@ -732,7 +728,7 @@ export class PublishComponent implements OnInit {
 
   addTextPost() {
   
-    debugger;
+    
     let selectedFacebookPages = []
     let selctedInstagramPages = []
     let selectedClubGroups = []
@@ -794,9 +790,9 @@ export class PublishComponent implements OnInit {
 
     this.post.type = 'text';
     if(selectedClubEvents.length > 0 || selectedClubGroups.length > 0 || selectedClub){
-debugger;
+
     this._postService.hyperLinkScrapper(this.socialCaption).subscribe(data => {
-      debugger;
+      
       hyperLinkResponse = data;
       if (hyperLinkResponse.length > 0 && hyperLinkResponse[0].hasOwnProperty('url')) {
         this.post.hyperLink = hyperLinkResponse[0].url
