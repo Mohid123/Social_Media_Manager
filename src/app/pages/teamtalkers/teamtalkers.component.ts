@@ -129,18 +129,16 @@ export class TeamtalkersComponent implements OnInit {
   }
 
   searchGroupsAndEvents(event) {
+    debugger;
     this.searchString = event;
     if (this.searchString) {
-      this.checklist = this.checklist.filter((item) =>
+      this.checklist = this.tempList.filter((item) =>
         item.name.toLowerCase().includes(this.searchString.toLowerCase())
       );
     } else if (this.searchString == "") {
       this.checklist = this.tempList;
       this.cf.detectChanges();
-    } else {
-      this.checklist = this.tempList;
-      this.cf.detectChanges();
-    }
+    } 
   }
 
   removeSlectedItems() {

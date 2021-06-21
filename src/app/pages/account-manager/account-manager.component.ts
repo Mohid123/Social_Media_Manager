@@ -31,7 +31,7 @@ export class AccountManagerComponent implements OnInit {
     private _profileService: UsersService,
     private _authService: MainAuthService,
     private _toast: ToastrService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.clubName = localStorage.getItem("club");
@@ -56,7 +56,7 @@ export class AccountManagerComponent implements OnInit {
   objectsEqual(o1, o2) {
     return typeof o1 === "object" && Object.keys(o1).length > 0
       ? Object.keys(o1).length === Object.keys(o2).length &&
-          Object.keys(o1).every((p) => this.objectsEqual(o1[p], o2[p]))
+      Object.keys(o1).every((p) => this.objectsEqual(o1[p], o2[p]))
       : o1 === o2;
   }
 
@@ -99,7 +99,7 @@ export class AccountManagerComponent implements OnInit {
               }
               this.signedInUser.FBPages = this.userFacebookPages;
               this.updateSignedInUser(this.signedInUser);
-              document.getElementById("signInFB").style.pointerEvents = "auto";
+              // document.getElementById("signInFB").style.pointerEvents = "auto";
             });
           }
         );

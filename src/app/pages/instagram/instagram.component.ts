@@ -89,9 +89,6 @@ export class InstagramComponent implements OnInit {
     this.getCheckedItemList();
   }
 
-  searchInstagramProfiles(){
-    
-  }
 
   getCheckedItemList(): void {
     this.checkedList = [];

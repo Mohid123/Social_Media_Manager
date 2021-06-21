@@ -17,6 +17,7 @@ export class InstagramService {
 
 
   createIGMediaContainer(instagramAccountID, caption, fbPageAccessToken, imageURL) {
+    caption =  encodeURIComponent(caption);
     return this.http.post(`${environment.base_url}${instagramAccountID}/media?caption=${caption}&access_token=${fbPageAccessToken}&image_url=${imageURL}`, '').pipe(catchError(this._errorHandlerService.handleErrors))
   }
 
@@ -25,14 +26,12 @@ export class InstagramService {
   }
 
   createIgContainerForVideo(instagramAccountId, videoUrl, caption, pageAccessToken) {
+    caption =  encodeURIComponent(caption);
     return this.http.post(`${environment.base_url}${instagramAccountId}/media?media_type=VIDEO&video_url=${videoUrl}&caption=${caption}&access_token=${pageAccessToken}`, '')
   }
-
-
 
   getContainerStatus(containerId, accessToken) {
     return this.http.get(`${environment.base_url}${containerId}?fields=status_code&access_token=${accessToken}`)
   }
-
 
 }
