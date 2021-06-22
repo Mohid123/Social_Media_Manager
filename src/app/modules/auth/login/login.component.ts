@@ -144,7 +144,7 @@ export class LoginComponent implements OnInit {
   searchClub(event) {
     this.searchString = event
     if (this.searchString) {
-      this.allClubs = this.allClubs.filter(i => i.clubName.toLowerCase().includes(this.searchString.toLowerCase()));
+      this.allClubs = this.tempClubs.filter(i => i.clubName.toLowerCase().includes(this.searchString.toLowerCase()));
       this.allClubs.length > 0 ? this.noClubFound = false : this.noClubFound = true;
     }
     else if (this.searchString == "") {
@@ -156,6 +156,8 @@ export class LoginComponent implements OnInit {
 
 
   onClubSelected(club) {
+    this._clubService.setClub = club;
+    // console.log(this._clubService.getClub )
     this.selectedClub = club
   }
 

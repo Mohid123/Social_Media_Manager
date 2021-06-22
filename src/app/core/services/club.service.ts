@@ -45,4 +45,12 @@ export class ClubService {
     environment.club_api_url = environment.club_api_url || localStorage.getItem('baseUrl')
     return this.http.get(`${environment.club_api_url}/event/getAllEvents?offset=${offset}&limit=${limit}`).pipe(catchError(this._errorHandlerService.handleErrors))
   }
+
+  get getClub(){
+    return this.club;
+  }
+
+  set setClub(club){
+    this.club = club;
+  }
 }
