@@ -53,7 +53,7 @@ export class DashboardComponent implements OnInit {
   public instagramStatistics: any = [0, 0, 0, 0, 0, 0, 0, 0]
   public clubStatistics: any = [0, 0, 0, 0, 0, 0, 0, 0]
   public clubName: string = localStorage.getItem('club');
-  public clubLogo : string = localStorage.getItem('clubLogo')
+  public clubLogo: string = localStorage.getItem('clubLogo')
 
   constructor(private spinner: NgxSpinnerService, private _clubService: ClubService, private _reportService: ReportService, private cf: ChangeDetectorRef) {
     // this.initializeStatsChart()
@@ -74,7 +74,7 @@ export class DashboardComponent implements OnInit {
         {
           name: "Facebook",
           data: this.facebookStatistics
-        
+
         },
         {
           name: "Instagram",
@@ -85,7 +85,7 @@ export class DashboardComponent implements OnInit {
           data: this.clubStatistics
         }
       ],
-      
+
       chart: {
         height: 400,
         type: "line"
@@ -190,17 +190,21 @@ export class DashboardComponent implements OnInit {
   }
 
   getSignedInUserStats() {
-    this._reportService.getFacebookStats(this.signedInuserID).subscribe(stats => {
-      this.facebookStats = stats
-      this.getInstagramStats().subscribe(stats => {
-        this.instagramStats = stats
-        this.getClubStats().subscribe(stats => {
-          this.clubStats = stats
+    this._reportService.getFacebookStats(this.signedInuserID).subscribe(FBstats => {
+      this.facebookStats = FBstats
+      this.getInstagramStats().subscribe(IGstats => {
+        this.instagramStats = IGstats
+        this.getClubStats().subscribe(clubStats => {
+          this.clubStats = clubStats
           this.cf.detectChanges();
         })
       })
     })
   }
+
+  formatValuestoK(num){
+    return Math.abs(num) > 999 ? Math.sign(num)*((Math.abs(num)/1000).toFixed(1) as any) + 'k' : Math.sign(num)*Math.abs(num)
+}
 
   getLastSevenDaysStats() {
     this._reportService.getLastSevenDaysStats(this.signedInuserID, 'Facebook').subscribe(facebookStats => {
@@ -210,7 +214,7 @@ export class DashboardComponent implements OnInit {
       this._reportService.getLastSevenDaysStats(this.signedInuserID, 'Instagram').subscribe(instagramStats => {
         console.log(instagramStats, 'insta stats')
         this.instagramStatistics = instagramStats;
-        this._reportService.getLastSeventDaysStatsForClub(this.signedInuserID ).subscribe(clubStats => {
+        this._reportService.getLastSeventDaysStatsForClub(this.signedInuserID).subscribe(clubStats => {
           console.log(clubStats, 'clubstats')
           this.clubStatistics = clubStats
           this.initializeStatsChart()

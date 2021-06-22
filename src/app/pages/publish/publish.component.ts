@@ -119,8 +119,8 @@ export class PublishComponent implements OnInit {
         });
       }
     })
-    this.getClubGroups()
-    this.getClubEvents()
+    this.getAllClubGroups()
+    this.getAllClubEvents()
   }
 
   getIGAccountDetails(FbPageID, FbPageAccessToken) {
@@ -266,7 +266,7 @@ export class PublishComponent implements OnInit {
     }
   }
 
-  getClubGroups() {
+  getAllClubGroups() {
 
     this._clubService.getClubGroups(0, 50).subscribe((groups: any) => {
       groups.map(singleItem => {
@@ -281,7 +281,7 @@ export class PublishComponent implements OnInit {
     this.cf.detectChanges()
   }
 
-  getClubEvents() {
+  getAllClubEvents() {
 
     this._clubService.getClubEvents(0, 50).subscribe((events: any) => {
       events.map((sigleItem) => {

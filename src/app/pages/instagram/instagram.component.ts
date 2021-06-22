@@ -60,7 +60,9 @@ export class InstagramComponent implements OnInit {
       console.log(this.signedInUser)
       if (this.signedInUser.FBPages.length > 0) {
         this.signedInUser.FBPages.forEach(item => {
+          debugger;
           this.getIGAccountDetails(item.pageID, item.pageAccessToken).subscribe((igaccount: any) => {
+
             if (igaccount.hasOwnProperty('instagram_business_account')) {
               igaccount.isSelected = false;
               igaccount.pageName = 'Instagram Account'
