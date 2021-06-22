@@ -28,8 +28,8 @@ export class PublishComponent implements OnInit {
   public eventSelected: boolean = false;
   public fbPagesSelected: boolean = false;
   public igProfilesSelected: boolean = false;
-  public checklist: any = [{ id: 1, isSelected: false, clubName: localStorage.getItem('club'), captureImageURL: localStorage.getItem('clubLogo'), name: localStorage.getItem('club') }];
-  private tempList: any = [{ id: 1, isSelected: false, clubName: localStorage.getItem('club'), captureImageURL: localStorage.getItem('clubLogo'), name: localStorage.getItem('club') }];
+  public checklist: any = [];
+  private tempList: any = [];
   private checkedList: any;
   public format: string;
   public url: string = 'https://getstackposts.com/inc/themes/backend/default/assets/img/avatar.jpg';
@@ -72,8 +72,21 @@ export class PublishComponent implements OnInit {
   ngOnInit() {
     this.showSpinner()
     this.getSignedInUser();
+    this.initializeChecklist()
     this.getCheckedItemList();
+  }
 
+  initializeChecklist(){
+    let club =  JSON.parse( localStorage.getItem('selectedClub'));
+    let obj = {
+      id :  1,
+      isSelected : false,
+      clubName : club.clubName,
+      captureImageURL : club.logoURL,
+      name : club.clubName
+    }
+    this.checklist.push(obj);
+    this.tempList.push(obj);
   }
 
   clear() {
@@ -370,7 +383,8 @@ export class PublishComponent implements OnInit {
             })
           }, error => {
             this.spinner.hide();
-            this.toast.error(error.message);
+            console.log(error)
+            this.toast.error(error.error.error.error_user_msg);
             this.createReport(0, '', 'Instagram')
           })
         })

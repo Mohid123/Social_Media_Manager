@@ -15,8 +15,8 @@ import {
   ApexTitleSubtitle,
   ApexLegend
 } from "ng-apexcharts";
-import { map } from 'rxjs/operators';
-import { Report } from 'src/app/core/models/report.model';
+import { Club } from 'src/app/core/models/club.model';
+
 
 
 export type ChartOptions = {
@@ -52,21 +52,26 @@ export class DashboardComponent implements OnInit {
   public facebookStatistics: any = [0, 0, 0, 0, 0, 0, 0, 0]
   public instagramStatistics: any = [0, 0, 0, 0, 0, 0, 0, 0]
   public clubStatistics: any = [0, 0, 0, 0, 0, 0, 0, 0]
-  public clubName: string = localStorage.getItem('club');
-  public clubLogo: string = localStorage.getItem('clubLogo')
+  public selectedClub : Club
+  // public clubName: string = localStorage.getItem('club');
+  // public clubLogo: string = localStorage.getItem('clubLogo')
 
   constructor(private spinner: NgxSpinnerService, private _clubService: ClubService, private _reportService: ReportService, private cf: ChangeDetectorRef) {
-    // this.initializeStatsChart()
   }
 
   ngOnInit() {
     this.signedInuserID = localStorage.getItem('clubUid');
+    this.getSelectedClub();
     this.getLatestReports()
     this.getSignedInUserStats()
     this.initializeStatsChart()
     this.getLastSevenDaysStats()
   }
 
+  getSelectedClub(){
+    let club = JSON.parse( localStorage.getItem('selectedClub'));
+    this.selectedClub = club;
+  }
 
   initializeStatsChart() {
     this.chartOptions = {
@@ -202,20 +207,12 @@ export class DashboardComponent implements OnInit {
     })
   }
 
-  formatValuestoK(num){
-    return Math.abs(num) > 999 ? Math.sign(num)*((Math.abs(num)/1000).toFixed(1) as any) + 'k' : Math.sign(num)*Math.abs(num)
-}
-
   getLastSevenDaysStats() {
     this._reportService.getLastSevenDaysStats(this.signedInuserID, 'Facebook').subscribe(facebookStats => {
-      console.log(facebookStats)
       this.facebookStatistics = facebookStats;
-      console.log(facebookStats, 'FB stats')
       this._reportService.getLastSevenDaysStats(this.signedInuserID, 'Instagram').subscribe(instagramStats => {
-        console.log(instagramStats, 'insta stats')
         this.instagramStatistics = instagramStats;
         this._reportService.getLastSeventDaysStatsForClub(this.signedInuserID).subscribe(clubStats => {
-          console.log(clubStats, 'clubstats')
           this.clubStatistics = clubStats
           this.initializeStatsChart()
         })

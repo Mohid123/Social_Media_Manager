@@ -70,9 +70,9 @@
       <!--TeamTalkers-->
        <li class="menu-item" aria-haspopup="true" routerLinkActive="menu-item-active" style="border-bottom: 1px solid rgba(163, 175, 183, 0.219);">
         <a class="menu-link" routerLink="/pages/team-talkers" routerLinkActive="active">
-          <img class="mr-7 rounded" style="height: auto; width: 32px; margin-left: -4px" [src]="clubLogo" alt="">
+          <img class="mr-7 rounded" style="height: auto; width: 32px; margin-left: -4px" [src]="selectedClub.logoURL" alt="">
           <!-- <i class="svg-icon menu-icon icon-xs mr-6" style="color: white; margin-left: -5px"><span ><img class="rounded" style="height: 95%; width: 95%; " [src]="clubLogo" alt=""></span></i> -->
-          <span class="menu-text" >{{clubName}}</span>
+          <span class="menu-text" >{{selectedClub.clubName}}</span>
         </a>
       </li>
 
