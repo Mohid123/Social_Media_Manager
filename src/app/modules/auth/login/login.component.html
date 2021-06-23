@@ -74,8 +74,9 @@
                 <div class="card" style="width: 85%" (click)="onClubSelected(club) ; c('Close click') ; ">
                   <img src="{{club.logoURL}}"
                     class="rounded mx-auto d-block card-img-top size d-flex justify-content-center" alt="...">
+                   
                   <ul class="list-group list-group-flush">
-                    <li class="list-group-item d-flex justify-content-center font-weight-bold">{{club.clubName}}</li>
+                    <li class="list-group-item d-flex justify-content-center font-weight-bold text-center text-truncate">{{club.clubName}}</li>
                   </ul>
                 </div>
               </div>
