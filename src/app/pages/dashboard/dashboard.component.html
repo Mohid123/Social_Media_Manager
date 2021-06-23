@@ -192,8 +192,8 @@
                     <a class="card card-custom bgi-no-repeat card-stretch gutter-b" style=" background-color: #FBAD50 !important;">
                         <!--begin::Body-->
                         <div class="card-body">
-                            <i class="svg-icon menu-icon icon-lg"><span ><img class="rounded" style="height: auto; width: 29px; " [src]="clubLogo" alt=""></span></i>
-                            <div class="text-inverse-danger font-weight-bolder font-size-h5 mb-2 mt-5">{{clubName}}</div>
+                            <i class="svg-icon menu-icon icon-lg"><span ><img class="rounded" style="height: auto; width: 29px; " [src]="selectedClub.logoURL" alt=""></span></i>
+                            <div class="text-inverse-danger font-weight-bolder font-size-h5 mb-2 mt-5">{{selectedClub.clubName}}</div>
                             <button class="btn btn-light-primary mr-2">Total<span class="label pulse pulse-primary" >
                                 <span *ngIf="clubStats" class="font-weight-bolder">{{clubStats.total}}</span>
                                 <span class="pulse-ring"></span>

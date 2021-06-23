@@ -44,24 +44,8 @@ export class TeamtalkersComponent implements OnInit {
   public userName: string = localStorage.getItem("userName");
   public profileImageUrl: string = localStorage.getItem("profileImageUrl");
   public searchString: string;
-  public tempList: any = [
-    {
-      id: 1,
-      isSelected: false,
-      clubName: localStorage.getItem("club"),
-      captureImageURL: localStorage.getItem("clubLogo"),
-      name: localStorage.getItem("club"),
-    },
-  ];
-  public checklist: any = [
-    {
-      id: 1,
-      isSelected: false,
-      clubName: localStorage.getItem("club"),
-      captureImageURL: localStorage.getItem("clubLogo"),
-      name: localStorage.getItem("club"),
-    },
-  ];
+  public tempList: any = [];
+  public checklist: any = [];
   public masterSelected: boolean;
   public groupSelected: boolean = false;
   public eventSelected: boolean = false;
@@ -106,7 +90,9 @@ export class TeamtalkersComponent implements OnInit {
     this.showSpinner();
     this.clubName = localStorage.getItem("club");
     this.getSignedInUser();
+    this.initializeChecklist()
     this.getCheckedItemList();
+
   }
 
   clear() {
@@ -120,6 +106,19 @@ export class TeamtalkersComponent implements OnInit {
   //   this.showSchedule = !this.showSchedule
   // }
 
+  initializeChecklist(){
+    let club =  JSON.parse( localStorage.getItem('selectedClub'));
+    let obj = {
+      id :  1,
+      isSelected : false,
+      clubName : club.clubName,
+      captureImageURL : club.logoURL,
+      name : club.clubName
+    }
+    this.checklist.push(obj);
+    this.tempList.push(obj);
+  }
+
   onChangeSingle(value: Date) {
     debugger;
     this.pollSelectedDate = value;
@@ -129,15 +128,13 @@ export class TeamtalkersComponent implements OnInit {
   }
 
   searchGroupsAndEvents(event) {
+    debugger;
     this.searchString = event;
     if (this.searchString) {
-      this.checklist = this.checklist.filter((item) =>
+      this.checklist = this.tempList.filter((item) =>
         item.name.toLowerCase().includes(this.searchString.toLowerCase())
       );
     } else if (this.searchString == "") {
-      this.checklist = this.tempList;
-      this.cf.detectChanges();
-    } else {
       this.checklist = this.tempList;
       this.cf.detectChanges();
     }
@@ -227,7 +224,7 @@ export class TeamtalkersComponent implements OnInit {
     alert(elem);
   }
 
-  dateEvent(event) {}
+  dateEvent(event) { }
 
   createReport(status, postId?, postedTo?) {
     debugger;
@@ -236,7 +233,7 @@ export class TeamtalkersComponent implements OnInit {
     this.report.postedTo = postedTo;
     this.report.successStatus = status;
     this.report.userID = localStorage.getItem("clubUid");
-    this._reportService.addReport(this.report).subscribe((data) => {});
+    this._reportService.addReport(this.report).subscribe((data) => { });
   }
 
   showSpinner() {

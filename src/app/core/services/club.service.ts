@@ -37,12 +37,19 @@ export class ClubService {
   }
 
   getClubGroups(offset, limit): Observable<any> {
-    environment.club_api_url =  localStorage.getItem('baseUrl')
+    debugger;
     return this.http.get(`${environment.club_api_url}/groups/getAllGroups?offset=${offset}&limit=${limit}`).pipe(catchError(this._errorHandlerService.handleErrors))
   }
 
   getClubEvents(offset, limit) {
-    environment.club_api_url = localStorage.getItem('baseUrl')
     return this.http.get(`${environment.club_api_url}/event/getAllEvents?offset=${offset}&limit=${limit}`).pipe(catchError(this._errorHandlerService.handleErrors))
+  }
+
+  get getClub(){
+    return this.club;
+  }
+
+  set setClub(club){
+    this.club = club;
   }
 }

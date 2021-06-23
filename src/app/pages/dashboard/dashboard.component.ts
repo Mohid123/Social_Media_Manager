@@ -15,8 +15,8 @@ import {
   ApexTitleSubtitle,
   ApexLegend
 } from "ng-apexcharts";
-import { map } from 'rxjs/operators';
-import { Report } from 'src/app/core/models/report.model';
+import { Club } from 'src/app/core/models/club.model';
+
 
 
 export type ChartOptions = {
@@ -52,21 +52,26 @@ export class DashboardComponent implements OnInit {
   public facebookStatistics: any = [0, 0, 0, 0, 0, 0, 0, 0]
   public instagramStatistics: any = [0, 0, 0, 0, 0, 0, 0, 0]
   public clubStatistics: any = [0, 0, 0, 0, 0, 0, 0, 0]
-  public clubName: string = localStorage.getItem('club');
-  public clubLogo : string = localStorage.getItem('clubLogo')
+  public selectedClub : Club
+  // public clubName: string = localStorage.getItem('club');
+  // public clubLogo: string = localStorage.getItem('clubLogo')
 
   constructor(private spinner: NgxSpinnerService, private _clubService: ClubService, private _reportService: ReportService, private cf: ChangeDetectorRef) {
-    // this.initializeStatsChart()
   }
 
   ngOnInit() {
     this.signedInuserID = localStorage.getItem('clubUid');
+    this.getSelectedClub();
     this.getLatestReports()
     this.getSignedInUserStats()
     this.initializeStatsChart()
     this.getLastSevenDaysStats()
   }
 
+  getSelectedClub(){
+    let club = JSON.parse( localStorage.getItem('selectedClub'));
+    this.selectedClub = club;
+  }
 
   initializeStatsChart() {
     this.chartOptions = {
@@ -74,7 +79,7 @@ export class DashboardComponent implements OnInit {
         {
           name: "Facebook",
           data: this.facebookStatistics
-        
+
         },
         {
           name: "Instagram",
@@ -85,7 +90,7 @@ export class DashboardComponent implements OnInit {
           data: this.clubStatistics
         }
       ],
-      
+
       chart: {
         height: 400,
         type: "line"
@@ -190,12 +195,12 @@ export class DashboardComponent implements OnInit {
   }
 
   getSignedInUserStats() {
-    this._reportService.getFacebookStats(this.signedInuserID).subscribe(stats => {
-      this.facebookStats = stats
-      this.getInstagramStats().subscribe(stats => {
-        this.instagramStats = stats
-        this.getClubStats().subscribe(stats => {
-          this.clubStats = stats
+    this._reportService.getFacebookStats(this.signedInuserID).subscribe(FBstats => {
+      this.facebookStats = FBstats
+      this.getInstagramStats().subscribe(IGstats => {
+        this.instagramStats = IGstats
+        this.getClubStats().subscribe(clubStats => {
+          this.clubStats = clubStats
           this.cf.detectChanges();
         })
       })
@@ -204,14 +209,10 @@ export class DashboardComponent implements OnInit {
 
   getLastSevenDaysStats() {
     this._reportService.getLastSevenDaysStats(this.signedInuserID, 'Facebook').subscribe(facebookStats => {
-      console.log(facebookStats)
       this.facebookStatistics = facebookStats;
-      console.log(facebookStats, 'FB stats')
       this._reportService.getLastSevenDaysStats(this.signedInuserID, 'Instagram').subscribe(instagramStats => {
-        console.log(instagramStats, 'insta stats')
         this.instagramStatistics = instagramStats;
-        this._reportService.getLastSeventDaysStatsForClub(this.signedInuserID ).subscribe(clubStats => {
-          console.log(clubStats, 'clubstats')
+        this._reportService.getLastSeventDaysStatsForClub(this.signedInuserID).subscribe(clubStats => {
           this.clubStatistics = clubStats
           this.initializeStatsChart()
         })

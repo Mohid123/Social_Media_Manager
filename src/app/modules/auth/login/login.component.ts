@@ -51,6 +51,7 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.selectedClub = JSON.parse(localStorage.getItem('selectedClub'));
     this.initLoginForm();
     this.getAllClubs();
   }
@@ -94,11 +95,7 @@ export class LoginComponent implements OnInit {
         localStorage.setItem('clubUid', user.loggedInUser.userID)
         localStorage.setItem('userId', user.loggedInUser.id)
         localStorage.setItem('token', user.token)
-        localStorage.setItem('club', this.selectedClub.clubName)
-        localStorage.setItem('clubId', this.selectedClub.id)
         localStorage.setItem('admin', user.user.admin)
-        localStorage.setItem('baseUrl', this.selectedClub.baseURL)
-        localStorage.setItem('clubLogo', this.selectedClub.logoURL)
         localStorage.setItem('userName', user.user.username)
         localStorage.setItem('profileImageUrl', user.user.profilePicURL)
         this.spinner.hide();
@@ -112,7 +109,6 @@ export class LoginComponent implements OnInit {
       }
 
     }, err => {
-      debugger;
       this.spinner.hide()
       if (err.message.includes('401 Unauthorized')) {
         this.toastr.error('User not registerd in this club', 'Unauthorized');
@@ -144,7 +140,7 @@ export class LoginComponent implements OnInit {
   searchClub(event) {
     this.searchString = event
     if (this.searchString) {
-      this.allClubs = this.allClubs.filter(i => i.clubName.toLowerCase().includes(this.searchString.toLowerCase()));
+      this.allClubs = this.tempClubs.filter(i => i.clubName.toLowerCase().includes(this.searchString.toLowerCase()));
       this.allClubs.length > 0 ? this.noClubFound = false : this.noClubFound = true;
     }
     else if (this.searchString == "") {
@@ -156,8 +152,8 @@ export class LoginComponent implements OnInit {
 
 
   onClubSelected(club) {
+    localStorage.setItem('selectedClub' , JSON.stringify(club));
     this.selectedClub = club
   }
-
 }
 

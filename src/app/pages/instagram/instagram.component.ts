@@ -60,17 +60,18 @@ export class InstagramComponent implements OnInit {
       console.log(this.signedInUser)
       if (this.signedInUser.FBPages.length > 0) {
         this.signedInUser.FBPages.forEach(item => {
+          debugger;
           this.getIGAccountDetails(item.pageID, item.pageAccessToken).subscribe((igaccount: any) => {
+
             if (igaccount.hasOwnProperty('instagram_business_account')) {
               igaccount.isSelected = false;
               igaccount.pageName = 'Instagram Account'
               igaccount.linkedFbPagetoken = item.pageAccessToken
               igaccount.captureImageURL = this.instagramProfileUrl;
               this.checklist.push(igaccount);
-              this.cf.detectChanges();
+              this.cf.detectChanges()
             }
             this.IGaccount = igaccount
-            console.log(this.checklist)
           })
         })
       }
@@ -89,9 +90,6 @@ export class InstagramComponent implements OnInit {
     this.getCheckedItemList();
   }
 
-  searchInstagramProfiles(){
-    
-  }
 
   getCheckedItemList(): void {
     this.checkedList = [];
@@ -216,13 +214,17 @@ export class InstagramComponent implements OnInit {
             this.postedSuccessfully();
             this.createReport(1, data.id)
           }, error => {
+            debugger;
             this.spinner.hide()
+            console.log(error)
             this.toast.error(error.message)
             this.createReport(0);
           })
         }, error => {
+          debugger;
           this.spinner.hide()
-          this.toast.error(error.message)
+          console.log(error)
+          this.toast.error(error.error.error.error_user_msg)
           this.createReport(0);
 
         })
@@ -241,6 +243,7 @@ export class InstagramComponent implements OnInit {
         this.checklist[i].isSelected = false
       }
     }
+    this.masterSelected = false;
   }
 
   postedSuccessfully() {

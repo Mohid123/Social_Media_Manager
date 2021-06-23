@@ -3,6 +3,7 @@ import { AuthService } from './../../../../modules/auth/_services/auth.service';
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { LayoutService } from '../../../../_metronic/core';
+import { Club } from 'src/app/core/models/club.model';
 
 @Component({
   selector: 'app-aside',
@@ -21,12 +22,10 @@ export class AsideComponent implements OnInit {
   brandClasses: string;
   asideMenuScroll = 1;
   asideSelfMinimizeToggle = false;
-  clubName : string
+  selectedClub : Club
   constructor(private layout: LayoutService, private loc: Location , private _authService : MainAuthService) { }
-  public clubLogo : string = localStorage.getItem('clubLogo')
 
   ngOnInit(): void {
-    this.clubName = localStorage.getItem('club');
     this.disableAsideSelfDisplay =
       this.layout.getProp('aside.self.display') === false;
     this.brandSkin = this.layout.getProp('brand.self.theme');
@@ -40,10 +39,11 @@ export class AsideComponent implements OnInit {
       'aside.self.minimize.toggle'
     );
     this.asideMenuScroll = this.layout.getProp('aside.menu.scroll') ? 1 : 0;
-    // this.asideMenuCSSClasses = `${this.asideMenuCSSClasses} ${this.asideMenuScroll === 1 ? 'scroll my-4 ps ps--active-y' : ''}`;
-    // Routing
     this.location = this.loc;
+    this.selectedClub =  JSON.parse(localStorage.getItem('selectedClub')) as Club;
   }
+
+
 
   private getLogo() {
     if (this.brandSkin === 'light') {
