@@ -20,6 +20,9 @@ import { Router } from '@angular/router';
   styleUrls: ['./topbar.component.scss'],
 })
 export class TopbarComponent implements OnInit, AfterViewInit {
+  public profileImageUrl: string = localStorage.getItem('profileImageUrl')
+  public userNameLogout: string = localStorage.getItem('userName')
+
   closeResult: string;
   userName: string
   user$: Observable<UserModel>;
