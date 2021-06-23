@@ -26,6 +26,7 @@ export class InstagramComponent implements OnInit {
   public instagramProfileUrl: string = 'https://social.teamtalkers.com/api/v1/en/media-upload/mediaFiles/123/test/113ad1ea783c7d107afd8ddc09eb6f23e.svg'
   public masterSelected: boolean;
   public checklist: any = [];
+  public tempList:any = []
   private checkedList: any;
   public userName: string = localStorage.getItem('userName')
   public profileImageUrl: string = localStorage.getItem('profileImageUrl')
@@ -69,6 +70,7 @@ export class InstagramComponent implements OnInit {
               igaccount.linkedFbPagetoken = item.pageAccessToken
               igaccount.captureImageURL = this.instagramProfileUrl;
               this.checklist.push(igaccount);
+              this.tempList.push(igaccount);
               this.cf.detectChanges()
             }
             this.IGaccount = igaccount
@@ -106,12 +108,14 @@ export class InstagramComponent implements OnInit {
     })
     this.getCheckedItemList();
   }
+
   showSpinner() {
     this.spinner.show();
     setTimeout(() => {
       this.spinner.hide();
     }, 1000);
   }
+
 
   switchTabs(event) {
     if (event.index == 0) {
@@ -237,6 +241,19 @@ export class InstagramComponent implements OnInit {
     })
   }
 
+  // searchClub(event) {
+  //   this.searchString = event
+  //   if (this.searchString) {
+  //     this.allClubs = this.tempClubs.filter(i => i.clubName.toLowerCase().includes(this.searchString.toLowerCase()));
+  //   }
+  //   else if (this.searchString == "") {
+  //     this.allClubs = this.tempClubs;
+  //     this.noClubFound = false;
+  //   }
+    
+  // }
+
+
   removeSlectedItems() {
     for (var i = 0; i < this.checklist.length; i++) {
       if (this.checklist[i].isSelected) {
@@ -257,6 +274,7 @@ export class InstagramComponent implements OnInit {
 
 
   onSelectFile(event) {
+    debugger;
     this.file = event.target.files && event.target.files[0];
     if (this.file) {
       var reader = new FileReader();
@@ -267,6 +285,7 @@ export class InstagramComponent implements OnInit {
         this.format = 'video';
       }
       reader.onload = (event) => {
+        debugger;
         this.url = (<FileReader>event.target).result as string;
         this.cf.detectChanges();
       }
