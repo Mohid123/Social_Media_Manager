@@ -174,6 +174,9 @@ export class PublishComponent implements OnInit {
     this.getCheckedItemList();
   }
 
+
+
+  
   selectAllFBPages() {
     for (var i = 0; i < this.checklist.length; i++) {
       if (this.checklist[i].pageName) {
