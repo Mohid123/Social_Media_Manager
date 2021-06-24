@@ -4,22 +4,22 @@
     }
     
     .preview-facebook-media .user-info{
-        padding: 10px 10px;
+        padding: 10px 25px;
         position: relative;
     }
     
     .preview-facebook-media .user-info img{
-        width: 40px;
+        width: 44px;
         margin-right: 5px;
         border-radius: 5px;
     }
     
     .preview-facebook-media .user-info .text{
         position: absolute;
-        top: 14px;
+        top: 20px;
         font-size: 13px;
-        left: 68px;
-        line-height: 17px;
+        left: 78px;
+        line-height: 12px;
     }
     
     .preview-facebook-media .user-info .text .name{
@@ -141,7 +141,7 @@
     }
     
     .preview-facebook-media .post-info,.preview-facebook-media .caption{
-        padding: 10px 10px;
+        padding: 10px 33px;
         word-break: break-all;
         color: #000;
     }
@@ -201,15 +201,16 @@
     
     .preview-facebook-link .user-info .text{
         position: absolute;
-        top: 14px;
+        top: 20px;
         font-size: 13px;
-        left: 68px;
-        line-height: 17px;
+        left: 78px;
+        line-height: 12px;
     }
     
     .preview-facebook-link .user-info .text .name{
         font-weight: bold;
         color: #2a5885;
+       
     }
     
     .preview-facebook-link .user-info .text span{
@@ -318,22 +319,22 @@
     }
     
     .preview-facebook-text .user-info{
-        padding: 10px 10px;
+        padding: 10px 25px;
         position: relative;
     }
     
     .preview-facebook-text .user-info img{
-        width: 40px;
+        width: 44px;
         margin-right: 5px;
         border-radius: 5px;
     }
     
     .preview-facebook-text .user-info .text{
         position: absolute;
-        top: 14px;
+        top: 20px;
         font-size: 13px;
-        left: 68px;
-        line-height: 17px;
+        left: 78px;
+        line-height: 12px;
     }
     
     .preview-facebook-text .user-info .text .name{
@@ -347,7 +348,7 @@
     }
     
     .preview-facebook-text .post-info,.preview-facebook-text .caption{
-        padding: 10px 10px;
+        padding: 10px 33px;
         word-break: break-all;
         color: #000;
     }
@@ -372,10 +373,19 @@
     
     .preview-facebook .preview-comment{
         position: relative;
-        padding: 7px 0px 12px;
-        color: #999;
-        text-align: center;
+        padding: 7px 0px 12px 25px;
+        color: black;
+        // text-align: center;
         border-top: 1px solid #eee;
+        margin: 0 10px;
+        margin-top: 10px;
+    }
+    .preview-facebook .preview-club{
+        position: relative;
+        padding: 7px 22px 12px;
+        color: #999;
+        text-align: end;
+        // border-top: 1px solid #eee;
         margin: 0 10px;
         margin-top: 10px;
     }
@@ -383,7 +393,7 @@
     .preview-facebook .preview-comment .item{
         float: left;
         margin-right: 25px;
-        font-weight: 600;
+        // font-weight: 600;
         font-size: 12px;
     }
     

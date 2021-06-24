@@ -121,7 +121,7 @@ export class TeamtalkersComponent implements OnInit {
   }
 
   onChangeSingle(value: Date) {
-    debugger;
+  
     this.pollSelectedDate = value;
   }
   onChangeSingleTime(value: Date) {
@@ -129,7 +129,7 @@ export class TeamtalkersComponent implements OnInit {
   }
 
   searchGroupsAndEvents(event) {
-    debugger;
+   
     this.searchString = event;
     if (this.searchString) {
       this.checklist = this.tempList.filter((item) =>
@@ -172,7 +172,7 @@ export class TeamtalkersComponent implements OnInit {
   }
 
   selectAllGroups() {
-    debugger;
+    
     for (var i = 0; i < this.checklist.length; i++) {
       if (this.checklist[i].groupName) {
         this.checklist[i].isSelected = this.groupSelected;
@@ -197,7 +197,7 @@ export class TeamtalkersComponent implements OnInit {
   }
 
   getClubGroups() {
-    debugger;
+    
     this._clubService.getClubGroups(0, 50).subscribe((groups: any) => {
       groups.map((singleItem) => {
         singleItem.isSelected = false;
@@ -228,7 +228,7 @@ export class TeamtalkersComponent implements OnInit {
   dateEvent(event) { }
 
   createReport(status, postId?, postedTo?) {
-    debugger;
+   
     this.report.clubID = JSON.parse(localStorage.getItem('selectedClub')).id;
     this.report.postID = postId ? postId : "";
     this.report.postedTo = postedTo;
@@ -448,7 +448,7 @@ export class TeamtalkersComponent implements OnInit {
         }
 
         if (selectedClubGroups.length > 0) {
-          debugger;
+        
           delete this.post.eventID;
           this.post.postedTo = "Group";
           this.post.text = this.teamtalkerCaption;
@@ -479,7 +479,7 @@ export class TeamtalkersComponent implements OnInit {
         }
 
         if (selectedClubEvents.length > 0) {
-          debugger;
+        
           this.spinner.show();
           this._mediaUploadService
             .uploadClubMedia("EventMedia", this.signedInUser.id, this.file)
@@ -511,7 +511,7 @@ export class TeamtalkersComponent implements OnInit {
         }
 
         if (selectedClub) {
-          debugger;
+        
           this.spinner.show();
           this._mediaUploadService
             .uploadClubMedia("ClubMedia", this.signedInUser.id, this.file)
