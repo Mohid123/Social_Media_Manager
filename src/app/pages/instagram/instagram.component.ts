@@ -27,7 +27,7 @@ export class InstagramComponent implements OnInit {
   public masterSelected: boolean;
   public checklist: any = [];
   public tempList: any = []
-  public validAspectRatios : string[] = ['2:3' , '']
+  public validAspectRatios : string[] = ['4:5' , '1:1',  '4898:6123' , '1491:1844' , '499:374' , '5128:3419' , '3:2' , '4159:5200'];
   private checkedList: any;
   public userName: string = localStorage.getItem('userName')
   public profileImageUrl: string = localStorage.getItem('profileImageUrl')
@@ -35,7 +35,7 @@ export class InstagramComponent implements OnInit {
     photo: true,
     video: false,
   }
-
+  public inValidImageFormat : boolean  ;
   constructor(private spinner: NgxSpinnerService, private cf: ChangeDetectorRef,
     private _authService: MainAuthService,
     private _instagramService: InstagramService,
@@ -55,13 +55,14 @@ export class InstagramComponent implements OnInit {
     this.file = ""
     this.cf.detectChanges()
   }
-  onLoad() {
+
+  onSelectedImageLoad() {
     const width = (this.logo.nativeElement as HTMLImageElement).naturalWidth
     const height = (this.logo.nativeElement as HTMLImageElement).naturalHeight
     console.log(width , height , 'Width&Height')
     let gcd = this.calculateAspectRatio(width , height);
     const ratio = width/gcd + ':'+ height/gcd;
-    console.log(ratio , 'AspecT Ratio')
+    this.validAspectRatios.includes(ratio) ?  this.inValidImageFormat = false : this.inValidImageFormat = true;
   }
 
   calculateAspectRatio(a,b) {
@@ -213,6 +214,8 @@ export class InstagramComponent implements OnInit {
   }
 
   addImagePost() {
+    debugger;
+    console.log(this.inValidImageFormat)
     if (!this.file) {
       this.toast.error('Please select an Image File', 'Empty File');
       return;
@@ -221,8 +224,11 @@ export class InstagramComponent implements OnInit {
       this.toast.error('No Item Selected', 'Please select items to post');
       return;
     }
+    else if(this.inValidImageFormat){
+      this.toast.error('Unsupported Image Format','Image Format not supported for Instagram');
+      return;
+    }
     this.spinner.show()
-
     this._mediaUploadService.uploadMedia('Instagram', this.signedInUser.id, this.file).subscribe((media: any) => {
       this.checkedList.forEach(item => {
         this.createReport(2)
@@ -236,7 +242,7 @@ export class InstagramComponent implements OnInit {
             debugger;
             this.spinner.hide()
             console.log(error)
-            this.toast.error(error.message)
+            this.toast.error(error.error.error.error_user_msg)
             this.createReport(0);
           })
         }, error => {
@@ -255,18 +261,6 @@ export class InstagramComponent implements OnInit {
       })
     })
   }
-
-  // searchClub(event) {
-  //   this.searchString = event
-  //   if (this.searchString) {
-  //     this.allClubs = this.tempClubs.filter(i => i.clubName.toLowerCase().includes(this.searchString.toLowerCase()));
-  //   }
-  //   else if (this.searchString == "") {
-  //     this.allClubs = this.tempClubs;
-  //     this.noClubFound = false;
-  //   }
-
-  // }
 
 
   removeSlectedItems() {
@@ -289,8 +283,6 @@ export class InstagramComponent implements OnInit {
 
  
   onSelectFile(event) {
-
-    let image:any = event.target.files[0];
     this.file = event.target.files && event.target.files[0];
     if (this.file) {
       var reader = new FileReader();
@@ -308,7 +300,5 @@ export class InstagramComponent implements OnInit {
       }
     }
   }
-
-
 
 }
