@@ -34,7 +34,7 @@ export class TeamtalkersComponent implements OnInit {
   public teamtalkerCaption: string = "";
   public poll: Poll;
   public clubName: string;
-  public clubLogo: string = localStorage.getItem("clubLogo");
+  public clubLogo: string = ""
   public url: string = "";
   public post: Post;
   public file: any;
@@ -88,7 +88,6 @@ export class TeamtalkersComponent implements OnInit {
 
   ngOnInit() {
     this.showSpinner();
-    this.clubName = localStorage.getItem("club");
     this.getSignedInUser();
     this.initializeChecklist()
     this.getCheckedItemList();
@@ -117,6 +116,8 @@ export class TeamtalkersComponent implements OnInit {
     }
     this.checklist.push(obj);
     this.tempList.push(obj);
+    this.clubName = club.clubName;
+    this.clubLogo = club.logoURL
   }
 
   onChangeSingle(value: Date) {

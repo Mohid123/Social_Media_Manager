@@ -19,10 +19,10 @@ import { User } from "src/app/core/models/user.model";
 export class AccountManagerComponent implements OnInit {
   public socialUser: SocialUser;
   public signedInUser: User;
-  public clubName: string;
+  public clubName: string = "";
   private connectedIG: boolean = false;
   private userFacebookPages: any[] = [];
-  public clubLogo: string = localStorage.getItem("clubLogo");
+  public clubLogo: string = "";
 
   constructor(
     private spinner: NgxSpinnerService,
@@ -34,7 +34,8 @@ export class AccountManagerComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.clubName = localStorage.getItem("club");
+    this.clubName = JSON.parse( localStorage.getItem("selectedClub")).clubName;
+    this.clubLogo = JSON.parse( localStorage.getItem("selectedClub")).logoURL;
     this.showSpinner();
     this.getSignedInUser();
   }
@@ -99,7 +100,6 @@ export class AccountManagerComponent implements OnInit {
               }
               this.signedInUser.FBPages = this.userFacebookPages;
               this.updateSignedInUser(this.signedInUser);
-              // document.getElementById("signInFB").style.pointerEvents = "auto";
             });
           }
         );
@@ -135,7 +135,7 @@ export class AccountManagerComponent implements OnInit {
 
   Club() {
     this._toast.success(
-      `You are logged in via ${localStorage.getItem("club")} Club`
+      `You are logged in via ${JSON.parse(localStorage.getItem("club")).clubName} Club`
     );
   }
 }
