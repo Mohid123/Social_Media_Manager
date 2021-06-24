@@ -91,8 +91,10 @@ export class TopbarComponent implements OnInit, AfterViewInit {
   }
 
   logout() {
+     let selectedClub = localStorage.getItem('selectedClub');
+     localStorage.clear();
+     localStorage.setItem('selectedClub' , selectedClub)
     this.router.navigateByUrl('/login');
-    localStorage.clear();
   }
 
   ngAfterViewInit(): void {

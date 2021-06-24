@@ -289,7 +289,7 @@ export class FacebookComponent implements OnInit {
 
 
   createReport(status, postId?) {
-    this.report.clubID = localStorage.getItem('clubId');
+    this.report.clubID = JSON.parse(localStorage.getItem('selectedClub')).id;
     this.report.postID = postId ? postId : "";
     this.report.postedTo = 'Facebook';
     this.report.successStatus = status;

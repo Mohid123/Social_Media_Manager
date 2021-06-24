@@ -490,7 +490,7 @@ export class PublishComponent implements OnInit {
 
 
   createReport(status, postId?, postedTo?) {
-    this.report.clubID = localStorage.getItem('clubId');
+    this.report.clubID =JSON.parse(localStorage.getItem('selectedClub')).id;
     this.report.postID = postId ? postId : "";
     this.report.postedTo = postedTo;
     this.report.successStatus = status;

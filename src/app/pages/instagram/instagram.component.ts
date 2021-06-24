@@ -26,7 +26,7 @@ export class InstagramComponent implements OnInit {
   public instagramProfileUrl: string = 'https://social.teamtalkers.com/api/v1/en/media-upload/mediaFiles/123/test/113ad1ea783c7d107afd8ddc09eb6f23e.svg'
   public masterSelected: boolean;
   public checklist: any = [];
-  public tempList:any = []
+  public tempList: any = []
   private checkedList: any;
   public userName: string = localStorage.getItem('userName')
   public profileImageUrl: string = localStorage.getItem('profileImageUrl')
@@ -133,7 +133,7 @@ export class InstagramComponent implements OnInit {
 
   createReport(status, postId?) {
     debugger;
-    this.report.clubID = localStorage.getItem('clubId');
+    this.report.clubID = JSON.parse(localStorage.getItem('selectedClub')).id;
     this.report.postID = postId ? postId : "";
     this.report.postedTo = 'Instagram';
     this.report.successStatus = status;
@@ -250,7 +250,7 @@ export class InstagramComponent implements OnInit {
   //     this.allClubs = this.tempClubs;
   //     this.noClubFound = false;
   //   }
-    
+
   // }
 
 

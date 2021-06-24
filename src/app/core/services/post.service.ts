@@ -15,17 +15,14 @@ export class PostService {
   
   
   addPost(body) : Observable <any> {
-    environment.club_api_url = JSON.parse(localStorage.getItem('selectedClub')).baseURL
      return this.http.post(`${environment.club_api_url}/post/AddPost` , body).pipe(catchError(this._errorHandlerService.handleErrors));
   } 
 
   addPostToGroup(body) : Observable <any> {
-    environment.club_api_url = JSON.parse(localStorage.getItem('selectedClub')).baseURL
     return this.http.post(`${environment.club_api_url}/groups/addPost/` , body).pipe(catchError(this._errorHandlerService.handleErrors));
   } 
 
   addPostToEvent(body) : Observable <any> {
-    environment.club_api_url = JSON.parse(localStorage.getItem('selectedClub')).baseURL
     return this.http.post(`${environment.club_api_url}/event/addPost` , body).pipe(catchError(this._errorHandlerService.handleErrors));
   }
 

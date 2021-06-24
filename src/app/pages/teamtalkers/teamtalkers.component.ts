@@ -105,14 +105,14 @@ export class TeamtalkersComponent implements OnInit {
   //   this.showSchedule = !this.showSchedule
   // }
 
-  initializeChecklist(){
-    let club =  JSON.parse( localStorage.getItem('selectedClub'));
+  initializeChecklist() {
+    let club = JSON.parse(localStorage.getItem('selectedClub'));
     let obj = {
-      id :  1,
-      isSelected : false,
-      clubName : club.clubName,
-      captureImageURL : club.logoURL,
-      name : club.clubName
+      id: 1,
+      isSelected: false,
+      clubName: club.clubName,
+      captureImageURL: club.logoURL,
+      name: club.clubName
     }
     this.checklist.push(obj);
     this.tempList.push(obj);
@@ -229,7 +229,7 @@ export class TeamtalkersComponent implements OnInit {
 
   createReport(status, postId?, postedTo?) {
     debugger;
-    this.report.clubID = localStorage.getItem("clubId");
+    this.report.clubID = JSON.parse(localStorage.getItem('selectedClub')).id;
     this.report.postID = postId ? postId : "";
     this.report.postedTo = postedTo;
     this.report.successStatus = status;
@@ -396,6 +396,7 @@ export class TeamtalkersComponent implements OnInit {
     let selectedClubEvents = [];
     let selectedClub: boolean = false;
     let hyperLinkResponse = [];
+    this.post.type = "image";
 
     if (!this.file) {
       this.toast.error("Please Select Image File to post", "No File Selected");
@@ -415,7 +416,7 @@ export class TeamtalkersComponent implements OnInit {
         selectedClub = true;
       }
     });
-    this.post.type = "image";
+
     this.spinner.show();
     this._postService
       .hyperLinkScrapper(this.teamtalkerCaption)
