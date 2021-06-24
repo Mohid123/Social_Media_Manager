@@ -20,8 +20,6 @@ import { Router } from '@angular/router';
   styleUrls: ['./topbar.component.scss'],
 })
 export class TopbarComponent implements OnInit, AfterViewInit {
-  public profileImageUrl: string = localStorage.getItem('profileImageUrl')
-  public userNameLogout: string = localStorage.getItem('userName')
 
   closeResult: string;
   userName: string
@@ -90,12 +88,7 @@ export class TopbarComponent implements OnInit, AfterViewInit {
     }
   }
 
-  logout() {
-     let selectedClub = localStorage.getItem('selectedClub');
-     localStorage.clear();
-     localStorage.setItem('selectedClub' , selectedClub)
-    this.router.navigateByUrl('/login');
-  }
+
 
   ngAfterViewInit(): void {
     KTUtil.ready(() => {

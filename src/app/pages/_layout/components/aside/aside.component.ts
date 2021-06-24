@@ -4,6 +4,9 @@ import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { LayoutService } from '../../../../_metronic/core';
 import { Club } from 'src/app/core/models/club.model';
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-aside',
@@ -11,6 +14,9 @@ import { Club } from 'src/app/core/models/club.model';
   styleUrls: ['./aside.component.scss'],
 })
 export class AsideComponent implements OnInit {
+  public userNameLogout: string = localStorage.getItem('userName')
+  public profileImageUrl: string = localStorage.getItem('profileImageUrl')
+  userName: string
   disableAsideSelfDisplay: boolean;
   headerLogo: string;
   brandSkin: string;
@@ -23,7 +29,8 @@ export class AsideComponent implements OnInit {
   asideMenuScroll = 1;
   asideSelfMinimizeToggle = false;
   selectedClub : Club
-  constructor(private layout: LayoutService, private loc: Location , private _authService : MainAuthService) { }
+  closeResult: string;
+  constructor(private layout: LayoutService, private loc: Location , private _authService : MainAuthService, private modalService: NgbModal, private router: Router) { }
 
   ngOnInit(): void {
     this.disableAsideSelfDisplay =
@@ -41,6 +48,30 @@ export class AsideComponent implements OnInit {
     this.asideMenuScroll = this.layout.getProp('aside.menu.scroll') ? 1 : 0;
     this.location = this.loc;
     this.selectedClub =  JSON.parse(localStorage.getItem('selectedClub')) as Club;
+  }
+
+  logout() {
+    let selectedClub = localStorage.getItem('selectedClub');
+    localStorage.clear();
+    localStorage.setItem('selectedClub' , selectedClub)
+   this.router.navigateByUrl('/login');
+ }
+
+  openVerticallyCentered(content) {
+    this.modalService.open(content, { centered: true }).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+  }
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return `with: ${reason}`;
+    }
   }
 
 
