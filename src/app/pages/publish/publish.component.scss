@@ -13,6 +13,10 @@
     padding: 10px 10px;
     position: relative;
 }
+.preview-facebook-media .user-info-tt{
+    padding: 10px 10px;
+    position: relative;
+}
 
 .preview-facebook-media .user-info img{
     width: 40px;
@@ -29,7 +33,19 @@
     line-height: 17px;
 }
 
+.preview-facebook-media .user-info-tt .tt-text{
+    position: absolute;
+    top: 20px;
+    font-size: 13px;
+    left: 78px;
+    line-height: 12px;
+}
+
 .preview-facebook-media .user-info .text .name{
+    font-weight: bold;
+    color: #365899;
+}
+.preview-facebook-media .user-info-tt .tt-text .name{
     font-weight: bold;
     color: #365899;
 }
@@ -152,6 +168,11 @@
     word-break: break-all;
     color: #000;
 }
+.preview-facebook-media .post-info,.preview-facebook-media .caption-tt{
+    padding: 10px 33px;
+    word-break: break-all;
+    color: #000;
+}
 
 .preview-facebook-media .post-info img,.preview-facebook-media .caption img{
     width: 15px;
@@ -206,6 +227,17 @@
     width: 40px;
     margin-right: 5px;
     object-fit: cover;
+    border-radius: 5px;
+}
+
+.preview-facebook-media .user-info-tt{
+    padding: 10px 25px;
+    position: relative;
+}
+
+.preview-facebook-media .user-info-tt img{
+    width: 44px;
+    margin-right: 5px;
     border-radius: 5px;
 }
 
@@ -347,6 +379,13 @@
     left: 58px;
     line-height: 17px;
 }
+.preview-facebook-text .user-info-tt .text-tt{
+    position: absolute;
+    top: 20px;
+    font-size: 13px;
+    left: 78px;
+    line-height: 12px;
+}
 
 .preview-facebook-text .user-info .text .name{
     font-weight: bold;
@@ -387,6 +426,24 @@
     padding: 7px 0px 12px;
     color: #999;
     text-align: center;
+    border-top: 1px solid #eee;
+    margin: 0 10px;
+    margin-top: 10px;
+}
+.preview-facebook .preview-club{
+    position: relative;
+    padding: 7px 22px 12px;
+    color: #999;
+    text-align: end;
+    // border-top: 1px solid #eee;
+    margin: 0 10px;
+    margin-top: 10px;
+}
+.preview-facebook .preview-tt{
+    position: relative;
+    padding: 7px 0px 12px 25px;
+    color: black;
+    // text-align: center;
     border-top: 1px solid #eee;
     margin: 0 10px;
     margin-top: 10px;
@@ -657,6 +714,7 @@
     color: #999;
     background: url(/assets/media/svg/icons/General/Heart.svg) no-repeat 20px;
 }
+
 
 .preview-instagram-carousel .preview-content .preview-comment .icon-3dot {
     width: 23px;
