@@ -351,13 +351,7 @@
                                             </div>
                                            
                                         </form>
-                                        
-    
-    
-    
-    
-    
-                                          <div class="form-group">
+                                        <div class="form-group">
                                             <textarea [(ngModel)]="socialCaption" [ngModelOptions]="{standalone: true}" class="form-control form-control-lg form-control-solid" id="exampleTextarea" rows="3" placeholder="What’s on your mind, {{userName}}?" ></textarea>
                                         </div>
                                         
@@ -582,13 +576,7 @@
                                             </div>
                                            
                                         </form>
-                                        
-    
-    
-    
-    
-    
-                                          <div class="form-group">
+                                        <div class="form-group">
                                             <textarea [(ngModel)]="socialCaption" [ngModelOptions]="{standalone: true}" class="form-control form-control-lg form-control-solid" id="exampleTextarea" rows="3" placeholder="What’s on your mind, {{userName}}?" ></textarea>
                                         </div>
                                         <!--end::Top-->
@@ -696,18 +684,17 @@
                                 <div class="card">
 
                                     <div class="card-body p-0">
-
-
-
-                                        <div class="preview-facebook preview-facebook-media item-post-type"
+                                         <div class="preview-facebook preview-facebook-media item-post-type"
                                             data-type="photo" *ngIf="showDiv.photo">
                                             <div class="user-info">
-                                                <img class="img-circle" style="height: 40px; object-fit: cover;"
+                                                <img class="img-circle" style="height: 40px; object-fit: cover; border-radius: 30px;"
                                                     [src]="profileImageUrl">
                                                 <div class="text">
                                                     <div class="name"> {{userName}}</div>
-                                                    <span> Just now . <i class="fa fa-globe"
-                                                            aria-hidden="true"></i></span>
+                                                    <span> Just now
+                                                        <!-- <i class="fa fa-globe"
+                                                            aria-hidden="true"></i> -->
+                                                    </span>
                                                 </div>
                                             </div>
                                             <div class="caption">
@@ -736,11 +723,13 @@
                                         <div class="preview-facebook preview-facebook-media item-post-type"
                                             data-type="video" *ngIf="showDiv.video">
                                             <div class="user-info">
-                                                <img class="img-circle" [src]="profileImageUrl">
+                                                <img class="img-circle" [src]="profileImageUrl" style="height: 40px; object-fit: cover; border-radius: 30px;">
                                                 <div class="text">
                                                     <div class="name"> {{userName}}</div>
-                                                    <span> Just now . <i class="fa fa-globe"
-                                                            aria-hidden="true"></i></span>
+                                                    <span> Just now 
+                                                        <!-- <i class="fa fa-globe"
+                                                            aria-hidden="true"></i> -->
+                                                    </span>
                                                 </div>
                                             </div>
                                             <div class="caption">
@@ -771,12 +760,14 @@
                                         <div class="preview-facebook preview-facebook-text item-post-type"
                                             data-type="text" *ngIf="showDiv.text">
                                             <div class="user-info">
-                                                <img class="img-circle" style="height: 40px; object-fit: cover;"
+                                                <img class="img-circle" style="height: 40px; object-fit: cover; border-radius: 30px;"
                                                     [src]="profileImageUrl">
                                                 <div class="text">
                                                     <div class="name"> {{userName}}</div>
-                                                    <span> Just now . <i class="fa fa-globe"
-                                                            aria-hidden="true"></i></span>
+                                                    <span> Just now 
+                                                        <!-- <i class="fa fa-globe"
+                                                            aria-hidden="true"></i> -->
+                                                   </span>
                                                 </div>
                                             </div>
                                             <div class="caption">
