@@ -372,7 +372,7 @@
                                                     <img class="img-circle" [src]="profileImageUrl" style="height: 40px; object-fit: cover;">
                                                     <span>{{userName}}</span>
                                                 </div>
-                                                <div class="preview-media" data-max-image="1"> <img style="height: 100%; width: 100%; object-fit: cover;" class="img-circle" [src]= url *ngIf="format==='image' && url"></div>
+                                                <div class="preview-media" data-max-image="1"> <img logo #logo  (load)="onLoad()" style="height: 100%; width: 100%; object-fit: cover;" class="img-circle" [src]= url *ngIf="format==='image' && url"></div>
                                                 <div class="post-info">
                                                     <!-- <div class="info-active pull-left"> Be the first to Like this</div> -->
                                                     <!-- <div class="pull-right">1s</div> -->

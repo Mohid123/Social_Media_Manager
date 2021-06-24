@@ -3,7 +3,7 @@ import { ReportService } from './../../core/services/report.service';
 import { MediauploadService } from './../../core/services/mediaupload.service';
 import { InstagramService } from './../../core/services/instagram.service';
 import { MainAuthService } from './../../core/services/auth.service';
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, ViewChild, ElementRef } from '@angular/core';
 import { NgxSpinnerService } from "ngx-spinner";
 import { User } from 'src/app/core/models/user.model';
 import { ToastrService } from 'ngx-toastr';
@@ -15,7 +15,7 @@ import { take } from 'rxjs/operators';
   styleUrls: ['./instagram.component.scss']
 })
 export class InstagramComponent implements OnInit {
-
+  @ViewChild('logo') logo: ElementRef;
   public instaCaption: string = "";
   private signedInUser: User
   private IGaccount: any
@@ -27,6 +27,7 @@ export class InstagramComponent implements OnInit {
   public masterSelected: boolean;
   public checklist: any = [];
   public tempList: any = []
+  public validAspectRatios : string[] = ['2:3' , '']
   private checkedList: any;
   public userName: string = localStorage.getItem('userName')
   public profileImageUrl: string = localStorage.getItem('profileImageUrl')
@@ -54,6 +55,21 @@ export class InstagramComponent implements OnInit {
     this.file = ""
     this.cf.detectChanges()
   }
+  onLoad() {
+    const width = (this.logo.nativeElement as HTMLImageElement).naturalWidth
+    const height = (this.logo.nativeElement as HTMLImageElement).naturalHeight
+    console.log(width , height , 'Width&Height')
+    let gcd = this.calculateAspectRatio(width , height);
+    const ratio = width/gcd + ':'+ height/gcd;
+    console.log(ratio , 'AspecT Ratio')
+  }
+
+  calculateAspectRatio(a,b) {
+    return (b == 0) ? a : this.calculateAspectRatio (b, a%b);
+  }
+
+
+
 
   getSignedInUser() {
     this._authService.getSignedInUser().pipe(take(1)).subscribe(user => {
@@ -115,7 +131,6 @@ export class InstagramComponent implements OnInit {
       this.spinner.hide();
     }, 1000);
   }
-
 
   switchTabs(event) {
     if (event.index == 0) {
@@ -272,9 +287,10 @@ export class InstagramComponent implements OnInit {
     this.cf.detectChanges();
   }
 
-
+ 
   onSelectFile(event) {
-    debugger;
+
+    let image:any = event.target.files[0];
     this.file = event.target.files && event.target.files[0];
     if (this.file) {
       var reader = new FileReader();
@@ -286,11 +302,13 @@ export class InstagramComponent implements OnInit {
       }
       reader.onload = (event) => {
         debugger;
-        this.url = (<FileReader>event.target).result as string;
+        this.url = (<FileReader>event.target).result as string;     
+        
         this.cf.detectChanges();
       }
-      event.target.value = '';
-
     }
   }
+
+
+
 }

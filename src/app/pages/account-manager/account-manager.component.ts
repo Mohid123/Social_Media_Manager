@@ -71,6 +71,7 @@ export class AccountManagerComponent implements OnInit {
   }
 
   async signInWithFB() {
+    debugger;
     document.getElementById("signInFB").style.pointerEvents = "none";
     const fbLoginOptions = {
       scope:
@@ -79,6 +80,7 @@ export class AccountManagerComponent implements OnInit {
     await this.authService
       .signIn(FacebookLoginProvider.PROVIDER_ID, fbLoginOptions)
       .then((socialUser) => {
+        console.log(socialUser)
         this._toast.success("Successfully logged into Facebook");
         this.socialUser = socialUser;
         this.signedInUser.FBuserID = this.socialUser.id;
