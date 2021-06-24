@@ -17,6 +17,8 @@ import { User } from "src/app/core/models/user.model";
   styleUrls: ["./account-manager.component.scss"],
 })
 export class AccountManagerComponent implements OnInit {
+  public profileImageUrl: string = localStorage.getItem('profileImageUrl')
+  public userNameLogout: string = localStorage.getItem('userName')
   public socialUser: SocialUser;
   public signedInUser: User;
   public clubName: string = "";
