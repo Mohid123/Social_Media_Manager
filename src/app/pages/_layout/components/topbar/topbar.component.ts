@@ -40,7 +40,7 @@ export class TopbarComponent implements OnInit, AfterViewInit {
   extrasLanguagesDisplay: boolean;
   extrasUserDisplay: boolean = true;
   extrasUserLayout: 'offcanvas' | 'dropdown';
-  username : string = localStorage.getItem('userName')
+  username: string = localStorage.getItem('userName')
 
   constructor(private layout: LayoutService, private auth: AuthService, private modalService: NgbModal, private router: Router) {
     this.user$ = this.auth.currentUserSubject.asObservable();
@@ -92,15 +92,15 @@ export class TopbarComponent implements OnInit, AfterViewInit {
   }
 
 
-  
+
   logout() {
     let selectedClub = localStorage.getItem('selectedClub');
     localStorage.clear();
-    localStorage.setItem('selectedClub' , selectedClub)
-   this.router.navigateByUrl('/login');
- }
+    localStorage.setItem('selectedClub', selectedClub)
+    this.router.navigateByUrl('/login');
+  }
 
- 
+
 
 
   ngAfterViewInit(): void {

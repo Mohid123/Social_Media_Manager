@@ -3,7 +3,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { UsersService } from './../../../core/services/users.service';
 import { ClubService } from './../../../core/services/club.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subscription, Observable } from 'rxjs';
 import { AuthService } from '../_services/auth.service';
@@ -36,22 +36,23 @@ export class LoginComponent implements OnInit {
   allClubs: Club[]
   tempClubs: Club[]
   selectedClub: Club
-  searchString: string 
+  searchString: string
   searchStarted: boolean = false;
   noClubFound: boolean = false;
+  public defaultClub: Club
   private unsubscribe: Subscription[] = [];
 
   constructor(
     private config: NgbModalConfig,
     private fb: FormBuilder, private authService: AuthService, private route: ActivatedRoute, private router: Router, private _clubService: ClubService,
-    private _authService: MainAuthService, private modalService: NgbModal, private _userService: UsersService, private toastr: ToastrService, private spinner: NgxSpinnerService
+    private _authService: MainAuthService, private modalService: NgbModal, private _userService: UsersService, private toastr: ToastrService, private spinner: NgxSpinnerService,
+    private cf : ChangeDetectorRef
   ) {
     config.backdrop = 'static';
     config.keyboard = false;
   }
 
   ngOnInit(): void {
-    this.selectedClub = JSON.parse(localStorage.getItem('selectedClub'));
     this.initLoginForm();
     this.getAllClubs();
   }
@@ -91,7 +92,9 @@ export class LoginComponent implements OnInit {
       password: this.loginForm.value.password
     }
     this._authService.loginByEmail(payload).subscribe(user => {
+      debugger;
       if (user.user.admin) {
+        localStorage.setItem('app-token', user.app_token.access_token)
         localStorage.setItem('clubUid', user.loggedInUser.userID)
         localStorage.setItem('userId', user.loggedInUser.id)
         localStorage.setItem('token', user.token)
@@ -123,6 +126,7 @@ export class LoginComponent implements OnInit {
     this._clubService.getAllClubs(0, 10).subscribe(clubs => {
       this.allClubs = clubs;
       this.tempClubs = clubs;
+      this.setDefaultClub()
     }, (error) => {
       this.toastr.error(error)
     })
@@ -147,13 +151,23 @@ export class LoginComponent implements OnInit {
       this.allClubs = this.tempClubs;
       this.noClubFound = false;
     }
-    
+  }
+
+  setDefaultClub() {
+    let localClub = localStorage.getItem('selectedClub');
+    if (!localClub) {
+      localStorage.setItem('selectedClub', JSON.stringify(this.allClubs[0]))
+      return;
+    }
+    else if(localClub){
+      this.selectedClub = JSON.parse(localClub);
+      this.cf.detectChanges();
+    }
   }
 
 
   onClubSelected(club) {
-    localStorage.setItem('selectedClub' , JSON.stringify(club));
+    localStorage.setItem('selectedClub', JSON.stringify(club));
     this.selectedClub = club
   }
 }
-

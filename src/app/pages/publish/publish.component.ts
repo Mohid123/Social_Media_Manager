@@ -31,7 +31,7 @@ export class PublishComponent implements OnInit {
   public checklist: any = [];
   private tempList: any = [];
   public validAspectRatios : string[] = ['4:5' , '1:1',  '4898:6123' , '1491:1844' , '499:374' , '5128:3419' , '3:2' , '4159:5200'];
-  public inValidImageFormat : boolean  ;
+  public inValidImageAspectRatio : boolean  ;
   private checkedList: any;
   public format: string;
   public url: string = 'https://getstackposts.com/inc/themes/backend/default/assets/img/avatar.jpg';
@@ -273,7 +273,7 @@ export class PublishComponent implements OnInit {
     console.log(width , height , 'Width&Height')
     let gcd = this.calculateAspectRatio(width , height);
     const ratio = width/gcd + ':'+ height/gcd;
-    this.validAspectRatios.includes(ratio) ?  this.inValidImageFormat = false : this.inValidImageFormat = true;
+    this.validAspectRatios.includes(ratio) ?  this.inValidImageAspectRatio = false : this.inValidImageAspectRatio = true;
   }
 
   calculateAspectRatio(a,b) {
@@ -366,7 +366,7 @@ export class PublishComponent implements OnInit {
       }
     })
 
-    if(this.inValidImageFormat && selctedInstagramPages.length > 0){
+    if(this.inValidImageAspectRatio && selctedInstagramPages.length > 0){
       this.toast.error('Invalid Image Aspect Ratio for Instagram');
       return;
     }

@@ -4,7 +4,7 @@ export const environment = {
   USERDATA_KEY: 'authf649fc9a5f55',
   isMockEnabled: true,
   apiUrl: 'api',
-  api_url:'https://social.teamtalkers.com/api/v1/en',   
+  api_url:'http://192.168.1.106:3005',   
   club_api_url :"",
   base_url : 'https://graph.facebook.com/',
   app_id : '844857613045687',
