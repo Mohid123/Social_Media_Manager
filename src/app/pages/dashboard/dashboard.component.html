@@ -94,10 +94,10 @@
     <div class="col-lg-9">
         <!--begin::Card-->
         <div  class="card card-custom bgi-no-repeat card-stretch gutter-b" style="background-position: right top; background-size: 30% auto; background-image: url(assets/media/svg/shapes/abstract-2.svg)">
-            <div class="card-header" style="background-color: #1e1e2d;">
+            <!-- <div class="card-header" style="background-color: #1e1e2d;">
                 <div class="card-title">
                     <h3 class="card-label">
-                        <span class="svg-icon svg-icon-primary svg-icon-2x"><!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2021-05-14-112058/theme/html/demo1/dist/../src/media/svg/icons/Media/Equalizer.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                        <span class="svg-icon svg-icon-primary svg-icon-2x"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
                             <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                                 <rect x="0" y="0" width="24" height="24"/>
                                 <rect fill="#000000" opacity="0.3" x="13" y="4" width="3" height="16" rx="1.5"/>
@@ -105,34 +105,13 @@
                                 <rect fill="#000000" x="18" y="11" width="3" height="9" rx="1.5"/>
                                 <rect fill="#000000" x="3" y="13" width="3" height="7" rx="1.5"/>
                             </g>
-                        </svg><!--end::Svg Icon--></span>
+                        </svg></span>
                       <span class="nav-text" style="color: #fff;"> &nbsp; All report</span>
                     
                     </h3>
                     
                    </div>
-            </div>
-            <div class="card-body" >
-            
-                <div id="chart" >
-                    <apx-chart
-                      [series]="chartOptions.series"
-                      [chart]="chartOptions.chart"
-                      [xaxis]="chartOptions.xaxis"
-                      [stroke]="chartOptions.stroke"
-                      [tooltip]="chartOptions.tooltip"
-                      [dataLabels]="chartOptions.dataLabels"
-                      [legend]="chartOptions.legend"
-                      [markers]="chartOptions.markers"
-                      [grid]="chartOptions.grid"
-                      [yaxis]="chartOptions.yaxis"
-                      [title]="chartOptions.title"
-                    ></apx-chart>
-                  </div>
-                  
-                  
-               
-            </div>
+            </div> -->
             <div class="row">
                 <div class="col-xl-4 col-xs-3">
                     <!--begin::Stats Widget 13-->
@@ -214,6 +193,28 @@
                     <!--end::Stats Widget 15-->
                 </div>
             </div>
+            <div class="card-body" >
+            
+                <div id="chart" >
+                    <apx-chart
+                      [series]="chartOptions.series"
+                      [chart]="chartOptions.chart"
+                      [xaxis]="chartOptions.xaxis"
+                      [stroke]="chartOptions.stroke"
+                      [tooltip]="chartOptions.tooltip"
+                      [dataLabels]="chartOptions.dataLabels"
+                      [legend]="chartOptions.legend"
+                      [markers]="chartOptions.markers"
+                      [grid]="chartOptions.grid"
+                      [yaxis]="chartOptions.yaxis"
+                      [title]="chartOptions.title"
+                    ></apx-chart>
+                  </div>
+                  
+                  
+               
+            </div>
+           
         </div>
         <!--end::Card-->
 

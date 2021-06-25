@@ -21,8 +21,11 @@ import { Router } from '@angular/router';
 })
 export class TopbarComponent implements OnInit, AfterViewInit {
 
+  public userName: string = localStorage.getItem("userName");
+  public profileImageUrl: string = localStorage.getItem("profileImageUrl");
+
   closeResult: string;
-  userName: string
+  // userNameLo: string
   user$: Observable<UserModel>;
   // tobbar extras
   extraSearchDisplay: boolean;
@@ -88,6 +91,16 @@ export class TopbarComponent implements OnInit, AfterViewInit {
     }
   }
 
+
+  
+  logout() {
+    let selectedClub = localStorage.getItem('selectedClub');
+    localStorage.clear();
+    localStorage.setItem('selectedClub' , selectedClub)
+   this.router.navigateByUrl('/login');
+ }
+
+ 
 
 
   ngAfterViewInit(): void {
