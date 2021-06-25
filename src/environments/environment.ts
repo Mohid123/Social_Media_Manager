@@ -10,4 +10,3 @@ export const environment = {
   app_id : '844857613045687',
   app_secret : '2159f936003b2d66dfa879da95a60da5'
 };
-// JSON.parse(localStorage.getItem('selectedClub')).baseURL ?  JSON.parse(localStorage.getItem('selectedClub')).baseURL : "" 
