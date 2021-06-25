@@ -432,11 +432,11 @@
 }
 .preview-facebook .preview-club{
     position: relative;
-    padding: 7px 22px 12px;
+    padding: 7px 22px;
     color: #999;
     text-align: end;
     // border-top: 1px solid #eee;
-    margin: 0 10px;
+    // margin: 0 10px;
     margin-top: 10px;
 }
 .preview-facebook .preview-tt{
@@ -446,7 +446,7 @@
     // text-align: center;
     border-top: 1px solid #eee;
     margin: 0 10px;
-    margin-top: 10px;
+    margin-top: -14px;
 }
 
 .preview-facebook .preview-comment .item{
