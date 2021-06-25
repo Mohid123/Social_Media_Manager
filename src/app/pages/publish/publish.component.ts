@@ -338,6 +338,7 @@ export class PublishComponent implements OnInit {
     let selectedClubEvents = []
     let selectedClub: boolean = false;
     let hyperLinkResponse = []
+
     if (!this.file) {
       this.toast.error('Please select an Image File', 'Empty File');
       return;
@@ -346,10 +347,7 @@ export class PublishComponent implements OnInit {
       this.toast.error('Please select atleast one Item from (Club, Group, Event, Facebook Page or Instagram Profile)');
       return;
     }
-    else if(this.inValidImageFormat){
-      this.toast.error('Unsupported Image Format','Image Format not supported for Instagram');
-      return;
-    }
+    
     this.checkedList.filter(item => {
       if (item.hasOwnProperty('pageAccessToken')) {
         selectedFacebookPages.push(item)
@@ -367,6 +365,11 @@ export class PublishComponent implements OnInit {
         selectedClub = true;
       }
     })
+
+    if(this.inValidImageFormat && selctedInstagramPages.length > 0){
+      this.toast.error('Invalid Image Aspect Ratio for Instagram');
+      return;
+    }
 
     if (selectedFacebookPages.length > 0) {
       this.spinner.show();
