@@ -1032,47 +1032,55 @@
                                             data-type="media" *ngIf="showDiv.photo">
                                             <div class="preview-content">
                                                 <div class="user-info">
-                                                    <img class="img-circle" [src]="profileImageUrl"
-                                                        style="height: 40px; object-fit: cover;">
+                                                    <img class="img-circle" [src]="profileImageUrl">
                                                     <span>{{userName}}</span>
                                                 </div>
-                                                <div class="preview-media" data-max-image="1"><img
-                                                        style="height: 100%; width: 100%; object-fit: cover;"
-                                                        [src]="url" *ngIf="format==='image' && url"></div>
+                                                <div class="preview-media" data-max-image="1"><img logo #logo  (load)="onSelectedImageLoad()" style="height: 100%; width: 100%; object-fit: cover;" class="img-circle" [src]= url *ngIf="format==='image' && url"></div>
                                                 <div class="post-info">
-
-
+                                                    <div class="info-active pull-left"> Be the first to Like this</div>
+                                                    <!-- <div class="pull-right">1s</div> -->
+                                                    <div class="clearfix"></div>
                                                 </div>
                                                 <div class="caption pt0">
                                                     <div class="line-no-text">
                                                         {{socialCaption}}
                                                     </div>
-
+                                                    <div class="line-no-text"></div>
+                                                    <div class="line-no-text w50"></div>
                                                 </div>
-
+                                                <div class="preview-comment">
+                                                    Add a comment                              
+                                                    <div class="icon-3dot"></div>
+                                                </div>
                                             </div>
                                         </div>
 
                                         <div class="preview-instagram preview-instagram-photo item-post-type"
                                             data-type="video" *ngIf="showDiv.video">
+                                          
+
                                             <div class="preview-content">
                                                 <div class="user-info">
-                                                    <img class="img-circle" style="height: 40px; object-fit: cover;"
-                                                        [src]="profileImageUrl">
+                                                    <img class="img-circle" [src]="profileImageUrl">
                                                     <span>{{userName}}</span>
                                                 </div>
-                                                <div class="preview-media" data-max-image="1"><video [src]="url"
-                                                        *ngIf="format==='video' && url"
-                                                        style="height: 100%; width: 100%; object-fit: cover;" controls
-                                                        disablepictureinpicture controlsList="nodownload"></video></div>
+                                                <div class="preview-media" data-max-image="1"><video [src]="url" *ngIf="format==='video' && url" style="height: 100%; width: 100%; object-fit: cover;"  controls disablepictureinpicture  controlsList="nodownload"></video></div>
                                                 <div class="post-info">
-
+                                                    <div class="info-active pull-left"> Be the first to Like this</div>
+                                                    <!-- <div class="pull-right">1s</div> -->
+                                                    <div class="clearfix"></div>
                                                 </div>
                                                 <div class="caption pt0">
-                                                    <div class="line-no-text"> {{socialCaption}}</div>
-
+                                                    <div class="line-no-text">
+                                                        {{socialCaption}}
+                                                    </div>
+                                                    <div class="line-no-text"></div>
+                                                    <div class="line-no-text w50"></div>
                                                 </div>
-
+                                                <div class="preview-comment">
+                                                    Add a comment                              
+                                                    <div class="icon-3dot"></div>
+                                                </div>
                                             </div>
                                         </div>
 
