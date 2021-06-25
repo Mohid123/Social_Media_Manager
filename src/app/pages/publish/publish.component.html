@@ -698,7 +698,7 @@
                                             </div>
                                         </div>
                                        
-                                        <div class="preview-media" data-max-image="5" style="margin-top: -20px"><img [src]="url" *ngIf="format==='image' && url" style="height: 100%; width: 100%; object-fit: cover; "></div>
+                                        <div class="preview-media" data-max-image="5" style="margin-top: -20px"><img logo #logo  (load)="onSelectedImageLoad()" [src]="url" *ngIf="format==='image' && url" style="height: 100%; width: 100%; object-fit: cover; "></div>
                                         <div class="caption-tt">
                                             <div class="line-no-text">{{socialCaption}}</div>
                                            
