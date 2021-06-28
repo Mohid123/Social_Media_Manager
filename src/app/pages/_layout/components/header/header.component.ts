@@ -19,6 +19,7 @@ import KTLayoutHeader from '../../../../../assets/js/layout/base/header';
 import KTLayoutHeaderMenu from '../../../../../assets/js/layout/base/header-menu';
 import { KTUtil } from '../../../../../assets/js/components/util';
 import { Subscription, Observable, BehaviorSubject } from 'rxjs';
+import { JsonpClientBackend } from '@angular/common/http';
 
 @Component({
   selector: 'app-header',
@@ -35,6 +36,7 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
   headerMenuCSSClasses: string;
   headerMenuHTMLAttributes: any = {};
   routerLoaderTimout: any;
+  showLiveStream : boolean = false ;
 
   @ViewChild('ktHeaderMenu', { static: true }) ktHeaderMenu: ElementRef;
   loader$: Observable<number>;
@@ -73,6 +75,7 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    JSON.parse( localStorage.getItem('selectedClub')).clubName == 'Levski' ? this.showLiveStream = true : this.showLiveStream = false ;
     this.headerContainerCSSClasses = this.layout.getStringCSSClasses(
       'header_container'
     );

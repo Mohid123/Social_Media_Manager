@@ -808,14 +808,15 @@ export class TeamtalkersComponent implements OnInit {
   addPollPost() {
     let selectedClubGroups = [];
     let selectedClubEvents = [];
-    let selectedClub: boolean = false;
+    delete this.poll.startTime;
+    delete this.poll.expiryTime;
 
     if (this.checkedList.length == 0) {
       this.toast.error("No Item Selected", "Nothing to Post");
       return;
     }
 
-    else if (this.teamtalkerCaption == "" || this.poll.choice1 == "" || this.poll.choice2 == "") {
+    else if (this.teamtalkerCaption == "" || this.poll.choice1.trim() == "" || this.poll.choice2.trim() == "") {
       this.toast.error("Please Enter into the poll with at least 2 choices", "error");
       return;
     }
@@ -825,11 +826,10 @@ export class TeamtalkersComponent implements OnInit {
         selectedClubGroups.push(item);
       } else if (item.hasOwnProperty("eventName")) {
         selectedClubEvents.push(item);
-      } else if (item.hasOwnProperty("clubName")) {
-        selectedClub = true;
       }
     });
-
+    
+   
     if (selectedClubGroups.length > 0) {
       this.toast.error("Poll can only be created in Club", "Error");
       return;
@@ -841,7 +841,8 @@ export class TeamtalkersComponent implements OnInit {
     }
 
     else {
-      
+      this.poll.choice3.trim() || delete this.poll.choice3 
+      this.poll.choice4.trim() || delete this.poll.choice4
       this.pollSelectedDate = new Date(this.pollSelectedDate.setHours(this.pollSelectedTime.getHours()));
       this.pollSelectedDate = new Date(this.pollSelectedDate.setMinutes(this.pollSelectedTime.getMinutes()));
       var days = moment.duration(moment(this.pollSelectedDate).diff(moment(new Date()))).days();
@@ -857,21 +858,18 @@ export class TeamtalkersComponent implements OnInit {
       this.post.postedTo = "Club";
       this.post.text = this.teamtalkerCaption;
       this.poll.expiryDate = Math.round(this.pollSelectedDate.getTime());
-      this.poll.startDate = Math.round(this.poll.startTime.getTime());
-      this.poll.expiryTime = new Date(this.poll.expiryDate);
+      this.poll.startDate = Math.round(new Date().getTime());
       this.poll.votingDays = days;
       this.poll.votingHours = hours;
       this.poll.votingMinutes = minutes;
       this.post.poll = Object.assign({}, this.poll);
       this.spinner.show();
       this._postService.addPost(this.post).subscribe((data) => {
-        this.toast.success('Poll Post Created in Club' , 'Success');
+        this.toast.success('Poll Post Created in Club' , 'Success' );
         console.log(data)
         this.resetPost()
       });
     }
 
   }
-
-
 }

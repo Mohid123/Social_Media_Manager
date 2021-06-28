@@ -47,7 +47,7 @@ export class TopbarComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    // topbar extras
+
     this.extraSearchDisplay = this.layout.getProp('extras.search.display');
     this.extrasSearchLayout = this.layout.getProp('extras.search.layout');
     this.extrasNotificationsDisplay = this.layout.getProp(
@@ -101,6 +101,7 @@ export class TopbarComponent implements OnInit, AfterViewInit {
   }
 
 
+  
 
 
   ngAfterViewInit(): void {
