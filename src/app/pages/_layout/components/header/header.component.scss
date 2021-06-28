@@ -122,3 +122,9 @@ input:checked + .slider .off
   }
    
 }
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
