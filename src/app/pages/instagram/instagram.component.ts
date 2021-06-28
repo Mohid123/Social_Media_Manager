@@ -147,18 +147,6 @@ export class InstagramComponent implements OnInit {
   }
 
 
-  createReport(status, postId?) {
-    debugger;
-    this.report.clubID = JSON.parse(localStorage.getItem('selectedClub')).id;
-    this.report.postID = postId ? postId : "";
-    this.report.postedTo = 'Instagram';
-    this.report.successStatus = status;
-    this.report.userID = localStorage.getItem('clubUid')
-    this._reportService.addReport(this.report).subscribe(data => {
-      console.log(data, 'Report Created');
-    })
-  }
-
   addVideoPost() {
     console.log(this.file)
     if (!this.file) {
@@ -182,19 +170,19 @@ export class InstagramComponent implements OnInit {
                   clearInterval(interval)
                   this.postedSuccessfully()
                   this.toast.success('Published', 'Video Post Added');
-                  this.createReport(1, data.id)
+                  this._reportService.createReport(1, data.id , 'Instagram')
                 }, error => {
                   this.spinner.hide();
                   this.toast.error(error.message);
                   clearInterval(interval)
-                  this.createReport(0)
+                  this._reportService.createReport(0 , "", 'Instagram')
                 })
               }
               else if (data.status_code == "ERROR") {
                 clearInterval(interval)
                 this.postedSuccessfully()
                 this.toast.error('Error uploding Video', 'Video Format Unsupported')
-                this.createReport(0);
+                this._reportService.createReport(0, "", 'Instagram');
               }
             })
           }, 3000)
@@ -231,32 +219,32 @@ export class InstagramComponent implements OnInit {
     this.spinner.show()
     this._mediaUploadService.uploadMedia('Instagram', this.signedInUser.id, this.file).subscribe((media: any) => {
       this.checkedList.forEach(item => {
-        this.createReport(2)
+        this._reportService.createReport(2, "", 'Instagram')
         this._instagramService.createIGMediaContainer(item.instagram_business_account.id, this.instaCaption, item.linkedFbPagetoken, media.url).subscribe((container: any) => {
           this._instagramService.publishContent(item.instagram_business_account.id, container.id, item.linkedFbPagetoken).subscribe((data: any) => {
 
             this.toast.success('Image Post Added Successfully', 'Post Added');
             this.postedSuccessfully();
-            this.createReport(1, data.id)
+            this._reportService.createReport(1, data.id , 'Instagram')
           }, error => {
             debugger;
             this.spinner.hide()
             console.log(error)
             this.toast.error(error.error.error.error_user_msg)
-            this.createReport(0);
+            this._reportService.createReport(0, "", 'Instagram');
           })
         }, error => {
           debugger;
           this.spinner.hide()
           console.log(error)
           this.toast.error(error.error.error.error_user_msg)
-          this.createReport(0);
+          this._reportService.createReport(0, "", 'Instagram');
 
         })
       }, error => {
         this.spinner.hide()
         this.toast.error(error.message)
-        this.createReport(0);
+        this._reportService.createReport(0, "", 'Instagram');
 
       })
     })

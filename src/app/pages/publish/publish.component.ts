@@ -375,9 +375,9 @@ export class PublishComponent implements OnInit {
       this.spinner.show();
       this._mediaUploadService.uploadMedia('Facebook', this.signedInUser.id, this.file).subscribe((media: any) => {
         selectedFacebookPages.forEach((item, index, array) => {
-          this.createReport(2, '', 'Facebook')
+          this._reportService.createReport(2, '', 'Facebook')
           this._facebookService.addImagePostToFB(item.pageID, media.url, this.socialCaption, item.pageAccessToken).subscribe((FbPost: any) => {
-            this.createReport(1, FbPost.id, 'Facebook')
+            this._reportService.createReport(1, FbPost.id, 'Facebook')
             if (index == array.length - 1) {
               this.toast.success(`Post added to Facebook Pages`, 'Success');
               this.postedSuccessfully()
@@ -385,7 +385,7 @@ export class PublishComponent implements OnInit {
           }, (error) => {
             this.spinner.hide();
             this.toast.error(error.message);
-            this.createReport(0, '', 'Facebook')
+            this._reportService.createReport(0, '', 'Facebook')
           })
 
         })
@@ -397,22 +397,22 @@ export class PublishComponent implements OnInit {
       this.spinner.show();
       this._mediaUploadService.uploadMedia('Instagram', this.signedInUser.id, this.file).subscribe((media: any) => {
         selctedInstagramPages.forEach((item, index, array) => {
-          this.createReport(2, '', 'Instagram')
+          this._reportService.createReport(2, '', 'Instagram')
           this._instagramService.createIGMediaContainer(item.instagram_business_account.id, this.socialCaption, item.linkedFbPagetoken, media.url).subscribe((container: any) => {
             this._instagramService.publishContent(item.instagram_business_account.id, container.id, item.linkedFbPagetoken).subscribe((IgPost: any) => {
               this.postedSuccessfully()
-              this.createReport(1, IgPost.id, 'Instagram')
+              this._reportService.createReport(1, IgPost.id, 'Instagram')
               this.toast.success(`Post added to Instagram Profile`, 'Success');
             }, (error) => {
               this.spinner.hide();
               this.toast.error(error.message);
-              this.createReport(0, '', 'Instagram')
+              this._reportService.createReport(0, '', 'Instagram')
             })
           }, error => {
             this.spinner.hide();
             console.log(error)
             this.toast.error(error.error.error.error_user_msg);
-            this.createReport(0, '', 'Instagram')
+            this._reportService.createReport(0, '', 'Instagram')
           })
         })
       })
@@ -446,13 +446,13 @@ export class PublishComponent implements OnInit {
             this.post.groupID = singleGroup.id;
             this.post.captureFileURL = media.url;
             this.post.path = media.path;
-            this.createReport(2, '', 'Group')
+            this._reportService.createReport(2, '', 'Group')
             this._postService.addPostToGroup(this.post).subscribe((groupPost: any) => {
-              this.createReport(1, groupPost.id, 'Group')
+              this._reportService.createReport(1, groupPost.id, 'Group')
             }, (error: any) => {
               this.spinner.hide();
               this.toast.error(error.message)
-              this.createReport(0, '', 'Group')
+              this._reportService.createReport(0, '', 'Group')
             })
             if (index == array.length - 1) {
               this.toast.success('Post added to all Groups', 'Success')
@@ -469,17 +469,17 @@ export class PublishComponent implements OnInit {
         this.spinner.show();
         this._mediaUploadService.uploadClubMedia('EventMedia', this.signedInUser.id, this.file).subscribe((media: any) => {
           selectedClubEvents.forEach((singleEvent: any, index, array) => {
-            this.createReport(2, '', 'Event')
+            this._reportService.createReport(2, '', 'Event')
             this.post.text = this.socialCaption;
             this.post.eventID = singleEvent.id;
             this.post.captureFileURL = media.url
             this.post.path = media.path
             this._postService.addPostToEvent(this.post).subscribe((eventPost: any) => {
-              this.createReport(1, eventPost.id, 'Event')
+              this._reportService.createReport(1, eventPost.id, 'Event')
             }, (error) => {
               this.spinner.hide();
               this.toast.error(error.message)
-              this.createReport(0, '', 'Event')
+              this._reportService.createReport(0, '', 'Event')
             })
             if (index == array.length - 1) {
               this.toast.success('Post added to all Events', 'Success')
@@ -499,31 +499,21 @@ export class PublishComponent implements OnInit {
           this.post.text = this.socialCaption;
           this.post.captureFileURL = media.url;
           this.post.path = media.path;
-          this.createReport(2, '', 'Club')
+          this._reportService.createReport(2, '', 'Club')
           this._postService.addPost(this.post).subscribe((post: any) => {
             this.postedSuccessfully()
             this.toast.success('Post added to Club');
-            this.createReport(1, post.id, 'Club')
+            this._reportService.createReport(1, post.id, 'Club')
           })
         }, (error: any) => {
           this.spinner.hide();
           this.toast.error(error.message)
-          this.createReport(0, '', 'Club')
+          this._reportService.createReport(0, '', 'Club')
         })
       }
     })
   }
 
-
-  createReport(status, postId?, postedTo?) {
-    this.report.clubID =JSON.parse(localStorage.getItem('selectedClub')).id;
-    this.report.postID = postId ? postId : "";
-    this.report.postedTo = postedTo;
-    this.report.successStatus = status;
-    this.report.userID = localStorage.getItem('clubUid')
-    this._reportService.addReport(this.report).subscribe(data => {
-    })
-  }
 
   addVideoPost() {
     let selectedFacebookPages = []
@@ -566,13 +556,13 @@ export class PublishComponent implements OnInit {
       this.spinner.show()
       this._mediaUploadService.uploadMedia('Facebook', this.signedInUser.id, this.file).subscribe((media: any) => {
         selectedFacebookPages.forEach((item, index, array) => {
-          this.createReport(2, '', 'Facebook');
+          this._reportService.createReport(2, '', 'Facebook');
           this._facebookService.addVideoPost(item.pageID, item.pageAccessToken, media.url, this.socialCaption).subscribe((FbPost: any) => {
-            this.createReport(1, FbPost.id, 'Facebook')
+            this._reportService.createReport(1, FbPost.id, 'Facebook')
           }, error => {
             this.spinner.hide()
             this.toast.error(error.message);
-            this.createReport(0, '', 'Facebook')
+            this._reportService.createReport(0, '', 'Facebook')
           })
 
           if (index == array.length - 1) {
@@ -598,19 +588,19 @@ export class PublishComponent implements OnInit {
                     this.socialCaption = "";
                     this.cf.detectChanges()
                     this.toast.success('Published', 'Video Post Added');
-                    this.createReport(1, data.id, 'Instagram')
+                    this._reportService.createReport(1, data.id, 'Instagram')
                   }, (error) => {
                     this.spinner.hide();
                     this.toast.error(error.message);
                     clearInterval(interval)
-                    this.createReport(0, '', 'Instagram')
+                    this._reportService.createReport(0, '', 'Instagram')
                   })
                 }
                 else if (data.status_code == "ERROR") {
                   clearInterval(interval)
                   this.postedSuccessfully()
                   this.toast.error('Error uploding Video', 'Video Format Unsupported')
-                  this.createReport(0, '', 'Instagram');
+                  this._reportService.createReport(0, '', 'Instagram');
                 }
               })
             }, 3000)
@@ -618,7 +608,7 @@ export class PublishComponent implements OnInit {
         }, (error) => {
           this.spinner.hide();
           this.toast.error(error.message);
-          this.createReport(0, '', 'Instagram');
+          this._reportService.createReport(0, '', 'Instagram');
 
         })
       })
@@ -657,14 +647,14 @@ export class PublishComponent implements OnInit {
               this.post.thumbnailPath = thumbnailFile.path
               this.post.thumbnailURL = thumbnailFile.url
               selectedClubGroups.forEach((singleGroup, index, array) => {
-                this.createReport(2, '', 'Group')
+                this._reportService.createReport(2, '', 'Group')
                 this.post.groupID = singleGroup.id
                 this._postService.addPostToGroup(this.post).subscribe((groupPost: any) => {
-                  this.createReport(1, groupPost.id, 'Group')
+                  this._reportService.createReport(1, groupPost.id, 'Group')
                 }, (error) => {
                   this.spinner.hide();
                   this.toast.error(error.message);
-                  this.createReport(0, '', 'Group')
+                  this._reportService.createReport(0, '', 'Group')
 
                 })
                 if (index == array.length - 1) {
@@ -693,14 +683,14 @@ export class PublishComponent implements OnInit {
               this.post.thumbnailPath = thumbnailFile.path
               this.post.thumbnailURL = thumbnailFile.url
               selectedClubEvents.forEach((singleEvent, index, array) => {
-                this.createReport(2, '', 'Event')
+                this._reportService.createReport(2, '', 'Event')
                 this.post.eventID = singleEvent.id
                 this._postService.addPostToEvent(this.post).subscribe((eventPost: any) => {
-                  this.createReport(1, eventPost.id, 'Event')
+                  this._reportService.createReport(1, eventPost.id, 'Event')
                 }, (error) => {
                   this.spinner.hide();
                   this.toast.error(error.message);
-                  this.createReport(0, '', 'Event')
+                  this._reportService.createReport(0, '', 'Event')
                 })
                 if (index == array.length - 1) {
                   this.postedSuccessfully()
@@ -728,15 +718,15 @@ export class PublishComponent implements OnInit {
             this._mediaUploadService.uploadMedia('VideoThumbnails', this.signedInUser.id, imageFile).subscribe((thumbnailFile: any) => {
               this.post.thumbnailPath = thumbnailFile.path
               this.post.thumbnailURL = thumbnailFile.url
-              this.createReport(2, '', 'Club')
+              this._reportService.createReport(2, '', 'Club')
               this._postService.addPost(this.post).subscribe((post: any) => {
                 this.toast.success('Video Post added Successfully to Club');
                 this.postedSuccessfully()
-                this.createReport(1, post.id, 'Club')
+                this._reportService.createReport(1, post.id, 'Club')
               }, error => {
                 this.spinner.hide();
                 this.toast.error(error.message);
-                this.createReport(0, '', 'Club')
+                this._reportService.createReport(0, '', 'Club')
               })
             });
           })
@@ -808,13 +798,13 @@ export class PublishComponent implements OnInit {
     if (selectedFacebookPages.length > 0) {
       this.spinner.show();
       selectedFacebookPages.forEach((item, index, array) => {
-        this.createReport(2, item.id, 'Facebook')
+        this._reportService.createReport(2, item.id, 'Facebook')
         this._facebookService.addTextPostToFB(item.pageID, this.socialCaption, item.pageAccessToken).subscribe(FbPost => {
-          this.createReport(1, FbPost.id, 'Facebook')
+          this._reportService.createReport(1, FbPost.id, 'Facebook')
         }, error => {
           this.spinner.hide();
           this.toast.error(error.message);
-          this.createReport(0, '', 'Facebook')
+          this._reportService.createReport(0, '', 'Facebook')
         })
         if (index == array.length - 1) {
           this.postedSuccessfully()
@@ -849,14 +839,14 @@ export class PublishComponent implements OnInit {
           this.post.postedTo = 'Group';
           this.post.text = this.socialCaption;
           selectedClubGroups.forEach((singleGroup, index, array) => {
-            this.createReport(2, '', 'Group')
+            this._reportService.createReport(2, '', 'Group')
             this.post.groupID = singleGroup.id;
             this._postService.addPostToGroup(this.post).subscribe((groupPost: any) => {
-              this.createReport(1, groupPost.id, 'Group')
+              this._reportService.createReport(1, groupPost.id, 'Group')
             }, (error) => {
               this.spinner.hide();
               this.toast.error(error.message);
-              this.createReport(0, '', 'Group')
+              this._reportService.createReport(0, '', 'Group')
 
             })
             if (index == array.length - 1) {
@@ -871,14 +861,14 @@ export class PublishComponent implements OnInit {
           this.post.postedTo = 'Event';
           this.post.text = this.socialCaption;
           selectedClubEvents.forEach((singleEvent, index, array) => {
-            this.createReport(2, '', 'Event')
+            this._reportService.createReport(2, '', 'Event')
             this.post.eventID = singleEvent.id;
             this._postService.addPostToEvent(this.post).subscribe((eventPost: any) => {
-              this.createReport(1, eventPost.id, 'Event')
+              this._reportService.createReport(1, eventPost.id, 'Event')
             }, (error) => {
               this.spinner.hide();
               this.toast.error(error.message);
-              this.createReport(0, '', 'Event')
+              this._reportService.createReport(0, '', 'Event')
             })
             if (index == array.length - 1) {
               this.toast.success('Post added Successfully to Events', 'Success');
@@ -893,15 +883,15 @@ export class PublishComponent implements OnInit {
           delete this.post.eventID;
           this.post.postedTo = 'Club';
           this.post.text = this.socialCaption;
-          this.createReport(2, '', 'Club')
+          this._reportService.createReport(2, '', 'Club')
           this._postService.addPost(this.post).subscribe((post: any) => {
             this.postedSuccessfully()
             this.toast.success(' Post added Successfully to Club');
-            this.createReport(1, post.id, 'Club')
+            this._reportService.createReport(1, post.id, 'Club')
           }, error => {
             this.spinner.hide();
             this.toast.error(error.message);
-            this.createReport(0, '', 'Club')
+            this._reportService.createReport(0, '', 'Club')
           })
         }
       })

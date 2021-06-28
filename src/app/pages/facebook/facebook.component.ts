@@ -193,9 +193,9 @@ export class FacebookComponent implements OnInit {
     this.spinner.show()
     this._mediaUploadService.uploadMedia('Facebook', this.signedInUser.id, this.file).subscribe((media: any) => {
       this.checkedList.forEach((item, index, array) => {
-        this.createReport(2)
+        this._reportService.createReport(2 , "" , 'Facebook')
         this._facebookService.addImagePostToFB(item.pageID, media.url, this.facebookCaption, item.pageAccessToken).subscribe(FbPost => {
-          this.createReport(1, FbPost.id)
+          this._reportService.createReport(1, FbPost.id , 'Facebook')
           if (index == array.length - 1) {
             this.toast.success('Post added to Facebook Pages', 'Success')
             this.postedSuccessfully();
@@ -204,14 +204,14 @@ export class FacebookComponent implements OnInit {
           this.spinner.hide();
           this.toast.error(error.message)
           console.log(error)
-          this.createReport(0)
+          this._reportService.createReport(0, "" , 'Facebook')
 
         })
 
       }, (error) => {
         this.spinner.hide();
         this.toast.error(error.message)
-        this.createReport(0)
+        this._reportService.createReport(0, "" , 'Facebook')
       })
     }, (err) => {
       this.spinner.hide();
@@ -231,9 +231,9 @@ export class FacebookComponent implements OnInit {
     this.spinner.show()
     this._mediaUploadService.uploadMedia('Facebook', this.signedInUser.id, this.file).subscribe((media: any) => {
       this.checkedList.forEach((item, index, array) => {
-        this.createReport(2)
+        this._reportService.createReport(2, "" , 'Facebook')
         this._facebookService.addVideoPost(item.pageID, item.pageAccessToken, media.url, this.facebookCaption).subscribe((video: any) => {
-          this.createReport(1, video.id)
+          this._reportService.createReport(1, video.id ,  'Facebook')
           if (index == array.length - 1) {
             this.toast.success('Video post added to Facebook Pages', 'Success');
             this.postedSuccessfully();
@@ -243,7 +243,7 @@ export class FacebookComponent implements OnInit {
       }, (err) => {
         this.spinner.hide()
         this.toast.error(err.message);
-        this.createReport(0)
+        this._reportService.createReport(0, "" , 'Facebook')
       })
     }, (err) => {
       this.spinner.hide()
@@ -264,10 +264,10 @@ export class FacebookComponent implements OnInit {
     }
     this.spinner.show();
     this.checkedList.forEach((item, index, array) => {
-      this.createReport(2)
+      this._reportService.createReport(2, "" , 'Facebook')
       debugger;
       this._facebookService.addTextPostToFB(item.pageID, this.facebookCaption, item.pageAccessToken).subscribe(FbPost => {
-        this.createReport(1, FbPost.id)
+        this._reportService.createReport(1, FbPost.id , 'Facebook')
         if (index == array.length - 1) {
           this.toast.success('Text post added to Facebook pages', 'Success');
           this.postedSuccessfully();
@@ -277,27 +277,17 @@ export class FacebookComponent implements OnInit {
         this.toast.error(error.message);
         console.log(error, 'error')
         this.cf.detectChanges();
-        this.createReport(0)
+        this._reportService.createReport(0, "" ,'Facebook')
       })
     }, (error) => {
       this.spinner.hide();
       this.toast.error(error.message);
       this.cf.detectChanges();
-      this.createReport(0)
+      this._reportService.createReport(0, "" , 'Facebook')
     })
   }
 
 
-  createReport(status, postId?) {
-    this.report.clubID = JSON.parse(localStorage.getItem('selectedClub')).id;
-    this.report.postID = postId ? postId : "";
-    this.report.postedTo = 'Facebook';
-    this.report.successStatus = status;
-    this.report.userID = localStorage.getItem('clubUid')
-    this._reportService.addReport(this.report).subscribe(data => {
-      console.log(data, 'Report Created');
-    })
-  }
 
 
 }

@@ -99,6 +99,7 @@ export class TeamtalkersComponent implements OnInit {
     this.url = "";
     this.file = "";
     this.poll = new Poll();
+    this.singleDate = new Date(new Date().setDate(new Date().getDate() + 1));
     this.cf.detectChanges()
     this.spinner.hide()
   }
@@ -229,15 +230,15 @@ export class TeamtalkersComponent implements OnInit {
 
   dateEvent(event) { }
 
-  createReport(status, postId?, postedTo?) {
+  // createReport(status, postId?, postedTo?) {
 
-    this.report.clubID = JSON.parse(localStorage.getItem('selectedClub')).id;
-    this.report.postID = postId ? postId : "";
-    this.report.postedTo = postedTo;
-    this.report.successStatus = status;
-    this.report.userID = localStorage.getItem("clubUid");
-    this._reportService.addReport(this.report).subscribe((data) => { });
-  }
+  //   this.report.clubID = JSON.parse(localStorage.getItem('selectedClub')).id;
+  //   this.report.postID = postId ? postId : "";
+  //   this.report.postedTo = postedTo;
+  //   this.report.successStatus = status;
+  //   this.report.userID = localStorage.getItem("clubUid");
+  //   this._reportService.addReport(this.report).subscribe((data) => { });
+  // }
 
   showSpinner() {
     this.spinner.show();
@@ -325,10 +326,10 @@ export class TeamtalkersComponent implements OnInit {
           this.post.text = this.teamtalkerCaption;
           selectedClubGroups.forEach((singleGroup, index, array) => {
             this.post.groupID = singleGroup.id;
-            this.createReport(2, "", "Group");
+            this._reportService.createReport(2, "", "Group");
             this._postService.addPostToGroup(this.post).subscribe(
               (groupPost: any) => {
-                this.createReport(1, groupPost.id, "Group");
+                this._reportService.createReport(1, groupPost.id, "Group");
                 if (index == array.length - 1) {
                   this.toast.success("Post added to Groups", "Success");
                   this.postedSuccessfully();
@@ -337,7 +338,7 @@ export class TeamtalkersComponent implements OnInit {
               (error) => {
                 this.spinner.hide();
                 this.toast.error(error.message);
-                this.createReport(0, "", "Group");
+                this._reportService.createReport(0, "", "Group");
               }
             );
           });
@@ -349,10 +350,10 @@ export class TeamtalkersComponent implements OnInit {
           this.post.text = this.teamtalkerCaption;
           selectedClubEvents.forEach((singleEvent, index, array) => {
             this.post.eventID = singleEvent.id;
-            this.createReport(2, "", "Event");
+            this._reportService.createReport(2, "", "Event");
             this._postService.addPostToEvent(this.post).subscribe(
               (eventPost: any) => {
-                this.createReport(1, eventPost.id, "Event");
+                this._reportService.createReport(1, eventPost.id, "Event");
                 if (index == array.length - 1) {
                   this.toast.success("Post added to Events", "Success");
                   this.postedSuccessfully();
@@ -361,7 +362,7 @@ export class TeamtalkersComponent implements OnInit {
               (error) => {
                 this.spinner.hide();
                 this.toast.error(error.message);
-                this.createReport(0, "", "Event");
+                this._reportService.createReport(0, "", "Event");
               }
             );
           });
@@ -372,18 +373,18 @@ export class TeamtalkersComponent implements OnInit {
           delete this.post.eventID;
           this.post.postedTo = "Club";
           this.post.text = this.teamtalkerCaption;
-          this.createReport(2, "", "Club");
+          this._reportService.createReport(2, "", "Club");
           this._postService.addPost(this.post).subscribe(
             (post: any) => {
               this.spinner.hide();
               this.toast.success(" Post added Successfully to Club");
               this.postedSuccessfully();
-              this.createReport(1, post.id, "Club");
+              this._reportService.createReport(1, post.id, "Club");
             },
             (error) => {
               this.spinner.hide();
               this.toast.error(error.message);
-              this.createReport(0, "", "Club");
+              this._reportService.createReport(0, "", "Club");
             }
           );
         }
@@ -463,17 +464,17 @@ export class TeamtalkersComponent implements OnInit {
                 this.post.groupID = singleGroup.id;
                 this.post.captureFileURL = media.url;
                 this.post.path = media.path;
-                this.createReport(2, "", "Group");
+                this._reportService.createReport(2, "", "Group");
                 this._postService.addPostToGroup(this.post).subscribe((groupPost: any) => {
                   console.log(groupPost, 'GroupPost')
-                  this.createReport(1, groupPost.id, "Group");
+                  this._reportService.createReport(1, groupPost.id, "Group");
                   if (index == array.length - 1) {
                     this.toast.success("Post added to Groups", "Success");
                     this.postedSuccessfully();
                   }
                 },
                   (error: any) => {
-                    this.createReport(0, "", "Group");
+                    this._reportService.createReport(0, "", "Group");
                     this.spinner.hide();
                     this.toast.error(error.message);
                   }
@@ -495,13 +496,13 @@ export class TeamtalkersComponent implements OnInit {
                 this.post.eventID = singleEvent.id;
                 this.post.captureFileURL = media.url;
                 this.post.path = media.path;
-                this.createReport(2, "", "Event");
+                this._reportService.createReport(2, "", "Event");
                 this._postService.addPostToEvent(this.post).subscribe(
                   (eventPost: any) => {
-                    this.createReport(1, eventPost.id, "Event");
+                    this._reportService.createReport(1, eventPost.id, "Event");
                   },
                   (error) => {
-                    this.createReport(0, "", "Event");
+                    this._reportService.createReport(0, "", "Event");
                     this.spinner.hide();
                     this.toast.error(error.message);
                   }
@@ -527,16 +528,16 @@ export class TeamtalkersComponent implements OnInit {
                 this.post.text = this.teamtalkerCaption;
                 this.post.captureFileURL = media.url;
                 this.post.path = media.path;
-                this.createReport(2, "", "Club");
+                this._reportService.createReport(2, "", "Club");
                 this._postService.addPost(this.post).subscribe((post: any) => {
                   this.toast.success("Post added Succeessfully to Club");
                   this.postedSuccessfully();
-                  this.createReport(1, post.id, "Club");
+                  this._reportService.createReport(1, post.id, "Club");
                 });
               },
               (error: any) => {
                 this.spinner.hide();
-                this.createReport(0, "", "Club");
+                this._reportService.createReport(0, "", "Club");
                 this.toast.error(error.message);
               }
             );
@@ -565,7 +566,6 @@ export class TeamtalkersComponent implements OnInit {
       this.showDiv.video = false;
       this.showDiv.text = false;
       this.showDiv.poll = true;
-
     }
   }
 
@@ -682,15 +682,15 @@ export class TeamtalkersComponent implements OnInit {
 
                     selectedClubGroups.forEach((singleGroup, index, array) => {
                       this.post.groupID = singleGroup.id;
-                      this.createReport(2, "", "Group");
+                      this._reportService.createReport(2, "", "Group");
                       this._postService.addPostToGroup(this.post).subscribe(
                         (groupPost: any) => {
-                          this.createReport(1, groupPost.id, "Group");
+                          this._reportService.createReport(1, groupPost.id, "Group");
                         },
                         (error) => {
                           this.spinner.hide();
                           this.toast.error(error.message);
-                          this.createReport(0, "", "Group");
+                          this._reportService.createReport(0, "", "Group");
                         }
                       );
                       if (index == array.length - 1) {
@@ -731,15 +731,15 @@ export class TeamtalkersComponent implements OnInit {
 
                     selectedClubEvents.forEach((singleEvent, index, array) => {
                       this.post.eventID = singleEvent.id;
-                      this.createReport(2, "", "Event");
+                      this._reportService.createReport(2, "", "Event");
                       this._postService.addPostToEvent(this.post).subscribe(
                         (eventPost: any) => {
-                          this.createReport(1, eventPost.id, "Event");
+                          this._reportService.createReport(1, eventPost.id, "Event");
                         },
                         (error) => {
                           this.spinner.hide();
                           this.toast.error(error.message);
-                          this.createReport(0, "", "Events");
+                          this._reportService.createReport(0, "", "Events");
                         }
                       );
                       if (index == array.length - 1) {
@@ -777,7 +777,7 @@ export class TeamtalkersComponent implements OnInit {
                   .subscribe((thumbnailFile: any) => {
                     this.post.thumbnailPath = thumbnailFile.path;
                     this.post.thumbnailURL = thumbnailFile.url;
-                    this.createReport(2, "", "Club");
+                    this._reportService.createReport(2, "", "Club");
                     this._postService.addPost(this.post).subscribe(
                       (post: any) => {
                         this.toast.success(
@@ -787,10 +787,10 @@ export class TeamtalkersComponent implements OnInit {
                         this.url = "";
                         this.teamtalkerCaption = "";
                         this.cf.detectChanges();
-                        this.createReport(1, post.id, "Club");
+                        this._reportService.createReport(1, post.id, "Club");
                       },
                       (error) => {
-                        this.createReport(0, "", "Club");
+                        this._reportService.createReport(0, "", "Club");
                         this.spinner.hide();
                         this.toast.error(error.message);
                       }
