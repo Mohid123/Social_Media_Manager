@@ -597,9 +597,17 @@
 .preview-instagram-photo .preview-content .preview-comment{
     position: relative;
     border-top: 1px solid #eee;
-    padding: 15px 50px;
+    padding: 15px 15px;
     color: #999;
-   background: url(/assets/media/svg/icons/General/Heart.svg) no-repeat 20px;
+//    background: url(/assets/media/svg/icons/General/Heart.svg) no-repeat 20px;
+}
+
+.preview-instagram-photo .preview-content .preview-comment-upper{
+    position: relative;
+    border-top: 1px solid #eee;
+    padding: 15px 15px;
+    color: #999;
+  
 }
 
 .preview-instagram-photo .preview-content .preview-comment .icon-3dot {
