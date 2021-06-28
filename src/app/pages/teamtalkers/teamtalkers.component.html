@@ -762,15 +762,15 @@
                                            
                                             <div class="preview-media" data-max-image="5" style="margin-top: -20px"><img [src]="url" *ngIf="format==='image' && url" style="height: 100%; width: 100%; object-fit: cover; "></div>
                                             <div class="caption">
-                                                <div class="line-no-text">{{teamtalkerCaption}}</div>
-                                               
+                                                <div >{{teamtalkerCaption}}</div>
+                                                <div class="line-no-text" *ngIf="!teamtalkerCaption">{{teamtalkerCaption}}</div>
+                                                <div class="line-no-text" *ngIf="!teamtalkerCaption"></div>
+                                                <div class="line-no-text" *ngIf="!teamtalkerCaption"></div>
                                             </div>
+                                           
+                                          
                                             <div class="preview-club">
-                                               
-                                             
-
-
-                                                <div class="d-flex bd-highlight">
+                                                 <div class="d-flex bd-highlight">
                                                     <div class="p-2 flex-fill bd-highlight">
                                                         <div class="p-2 bd-highlight"> 
                                                         <div class="row">
@@ -840,8 +840,11 @@
                                             
                                             <div class="preview-media" data-max-image="5" style="margin-top: -20px"><video [src]="url" *ngIf="format==='video' && url" style="height: 100%; width: 100%; object-fit: cover;" controls disablepictureinpicture  controlsList="nodownload"></video></div>
                                             <div class="caption">
-                                                <div class="line-no-text">{{teamtalkerCaption}}</div>
-                                         </div>
+                                                <div >{{teamtalkerCaption}}</div>
+                                                <div class="line-no-text" *ngIf="!teamtalkerCaption">{{teamtalkerCaption}}</div>
+                                                <div class="line-no-text" *ngIf="!teamtalkerCaption"></div>
+                                                <div class="line-no-text" *ngIf="!teamtalkerCaption"></div>
+                                            </div>
                                          <div class="preview-club">
                                             <div class="d-flex bd-highlight">
                                                 <div class="p-2 flex-fill bd-highlight">
@@ -907,15 +910,15 @@
                                                 <div class="text">
                                                     <div class="name"> {{userName}}</div>
                                                     <span> Just now 
-                                                        <!-- <i class="fa fa-globe"
-                                                            aria-hidden="true"></i> -->
+                                                        
                                                     </span>
                                                 </div>
                                             </div>
                                             <div class="caption">
-                                                <div class="line-no-text">{{teamtalkerCaption}}</div>
-                                                <div class="line-no-text"></div>
-                                                <div class="line-no-text w50"></div>
+                                                <div >{{teamtalkerCaption}}</div>
+                                                <div class="line-no-text" *ngIf="!teamtalkerCaption">{{teamtalkerCaption}}</div>
+                                                <div class="line-no-text" *ngIf="!teamtalkerCaption"></div>
+                                                <div class="line-no-text" *ngIf="!teamtalkerCaption"></div>
                                             </div>
 
                                             <div class="preview-club">

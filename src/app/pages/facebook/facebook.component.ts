@@ -24,7 +24,7 @@ export class FacebookComponent implements OnInit {
     this.report = new Report()
   }
 
-  public name: string = "";
+  public facebookCaption: string = "";
   public format: string;
   public url: string;
   public signedInUser: User
@@ -54,7 +54,7 @@ export class FacebookComponent implements OnInit {
 
   clear() {
     this.url = '';
-    this.name = '';
+    this.facebookCaption = '';
     this.file = ""
     this.cf.detectChanges();
   }
@@ -93,7 +93,7 @@ export class FacebookComponent implements OnInit {
   postedSuccessfully() {
     this.spinner.hide();
     this.url = ""
-    this.name = ""
+    this.facebookCaption = ""
     this.file = ""
     this.removeSlectedItems();
     this.cf.detectChanges();
@@ -194,7 +194,7 @@ export class FacebookComponent implements OnInit {
     this._mediaUploadService.uploadMedia('Facebook', this.signedInUser.id, this.file).subscribe((media: any) => {
       this.checkedList.forEach((item, index, array) => {
         this.createReport(2)
-        this._facebookService.addImagePostToFB(item.pageID, media.url, this.name, item.pageAccessToken).subscribe(FbPost => {
+        this._facebookService.addImagePostToFB(item.pageID, media.url, this.facebookCaption, item.pageAccessToken).subscribe(FbPost => {
           this.createReport(1, FbPost.id)
           if (index == array.length - 1) {
             this.toast.success('Post added to Facebook Pages', 'Success')
@@ -232,7 +232,7 @@ export class FacebookComponent implements OnInit {
     this._mediaUploadService.uploadMedia('Facebook', this.signedInUser.id, this.file).subscribe((media: any) => {
       this.checkedList.forEach((item, index, array) => {
         this.createReport(2)
-        this._facebookService.addVideoPost(item.pageID, item.pageAccessToken, media.url, this.name).subscribe((video: any) => {
+        this._facebookService.addVideoPost(item.pageID, item.pageAccessToken, media.url, this.facebookCaption).subscribe((video: any) => {
           this.createReport(1, video.id)
           if (index == array.length - 1) {
             this.toast.success('Video post added to Facebook Pages', 'Success');
@@ -254,7 +254,7 @@ export class FacebookComponent implements OnInit {
 
   addTextPost() {
     debugger;
-    if (this.name == "") {
+    if (this.facebookCaption == "") {
       this.toast.error('Please add content to post', 'No Content Added');
       return;
     }
@@ -266,7 +266,7 @@ export class FacebookComponent implements OnInit {
     this.checkedList.forEach((item, index, array) => {
       this.createReport(2)
       debugger;
-      this._facebookService.addTextPostToFB(item.pageID, this.name, item.pageAccessToken).subscribe(FbPost => {
+      this._facebookService.addTextPostToFB(item.pageID, this.facebookCaption, item.pageAccessToken).subscribe(FbPost => {
         this.createReport(1, FbPost.id)
         if (index == array.length - 1) {
           this.toast.success('Text post added to Facebook pages', 'Success');

@@ -700,8 +700,10 @@
                                        
                                         <div class="preview-media" data-max-image="5" style="margin-top: -20px"><img logo #logo  (load)="onSelectedImageLoad()" [src]="url" *ngIf="format==='image' && url" style="height: 100%; width: 100%; object-fit: cover; "></div>
                                         <div class="caption-tt">
-                                            <div class="line-no-text">{{socialCaption}}</div>
-                                           
+                                            <div >{{socialCaption}}</div>
+                                            <div class="line-no-text" *ngIf="!socialCaption">{{socialCaption}}</div>
+                                            <div class="line-no-text" *ngIf="!socialCaption"></div>
+                                            <div class="line-no-text" *ngIf="!socialCaption"></div>
                                         </div>
                                         <div class="preview-club">
                                             <div class="d-flex bd-highlight">
@@ -774,8 +776,10 @@
                                    
                                     <div class="preview-media" data-max-image="5" style="margin-top: -20px"><img [src]="url" *ngIf="format==='image' && url" style="height: 100%; width: 100%; object-fit: cover; "></div>
                                     <div class="caption-tt">
-                                        <div class="line-no-text">{{socialCaption}}</div>
-                                       
+                                        <div >{{socialCaption}}</div>
+                                        <div class="line-no-text" *ngIf="!socialCaption">{{socialCaption}}</div>
+                                        <div class="line-no-text" *ngIf="!socialCaption"></div>
+                                        <div class="line-no-text" *ngIf="!socialCaption"></div>
                                     </div>
                                     <div class="preview-club">
                                         <div class="d-flex bd-highlight">
@@ -848,8 +852,10 @@
                                
                                 <!-- <div class="preview-media" data-max-image="5" style="margin-top: -20px"><img [src]="url" *ngIf="format==='image' && url" style="height: 100%; width: 100%; object-fit: cover; "></div> -->
                                 <div class="caption-tt">
-                                    <div class="line-no-text">{{socialCaption}}</div>
-                                   
+                                    <div >{{socialCaption}}</div>
+                                    <div class="line-no-text" *ngIf="!socialCaption">{{socialCaption}}</div>
+                                    <div class="line-no-text" *ngIf="!socialCaption"></div>
+                                    <div class="line-no-text" *ngIf="!socialCaption"></div>
                                 </div>
                                 <div class="preview-club">
                                     <div class="d-flex bd-highlight">
@@ -942,8 +948,10 @@
                                                 </div>
                                             </div>
                                             <div class="caption">
-                                                <div class="line-no-text">{{socialCaption}}</div>
-
+                                                <div >{{socialCaption}}</div>
+                                                <div class="line-no-text" *ngIf="!socialCaption">{{socialCaption}}</div>
+                                                <div class="line-no-text" *ngIf="!socialCaption"></div>
+                                                <div class="line-no-text" *ngIf="!socialCaption"></div>
                                             </div>
                                             <div class="preview-media" data-max-image="5">
                                                 <img style="height: 100%; width: 100%; object-fit: cover;" [src]="url"
@@ -1004,8 +1012,10 @@
                                                 </div>
                                             </div>
                                             <div class="caption">
-                                                <div class="line-no-text">{{socialCaption}}</div>
-
+                                                <div >{{socialCaption}}</div>
+                                                <div class="line-no-text" *ngIf="!socialCaption">{{socialCaption}}</div>
+                                                <div class="line-no-text" *ngIf="!socialCaption"></div>
+                                                <div class="line-no-text" *ngIf="!socialCaption"></div>
                                             </div>
                                             <div class="preview-media" data-max-image="5"><video [src]="url"
                                                     *ngIf="format==='video' && url"
@@ -1067,10 +1077,11 @@
                                                             aria-hidden="true"></i></span>
                                                 </div>
                                             </div>
-                                            <div class="caption">
-                                                <div class="line-no-text">{{socialCaption}}</div>
-                                                <div class="line-no-text"></div>
-                                                <div class="line-no-text w50"></div>
+                                            <div class="caption-tt">
+                                                <div >{{socialCaption}}</div>
+                                                <div class="line-no-text" *ngIf="!socialCaption">{{socialCaption}}</div>
+                                                <div class="line-no-text" *ngIf="!socialCaption"></div>
+                                                <div class="line-no-text" *ngIf="!socialCaption"></div>
                                             </div>
                                             
                                             <div class="preview-fb">
@@ -1146,12 +1157,11 @@
                                                     <!-- <div class="pull-right">1s</div> -->
                                                     <div class="clearfix"></div>
                                                 </div>
-                                                <div class="caption pt0">
-                                                    <div class="line-no-text">
-                                                        {{socialCaption}}
-                                                    </div>
-                                                    <div class="line-no-text"></div>
-                                                    <div class="line-no-text w50"></div>
+                                                <div class="caption">
+                                                    <div >{{socialCaption}}</div>
+                                                    <div class="line-no-text" *ngIf="!socialCaption">{{socialCaption}}</div>
+                                                    <div class="line-no-text" *ngIf="!socialCaption"></div>
+                                                    <div class="line-no-text" *ngIf="!socialCaption"></div>
                                                 </div>
                                                 <div class="preview-comment">
                                                     Add a comment                              
@@ -1175,12 +1185,11 @@
                                                     <!-- <div class="pull-right">1s</div> -->
                                                     <div class="clearfix"></div>
                                                 </div>
-                                                <div class="caption pt0">
-                                                    <div class="line-no-text">
-                                                        {{socialCaption}}
-                                                    </div>
-                                                    <div class="line-no-text"></div>
-                                                    <div class="line-no-text w50"></div>
+                                                <div class="caption">
+                                                    <div >{{socialCaption}}</div>
+                                                    <div class="line-no-text" *ngIf="!socialCaption">{{socialCaption}}</div>
+                                                    <div class="line-no-text" *ngIf="!socialCaption"></div>
+                                                    <div class="line-no-text" *ngIf="!socialCaption"></div>
                                                 </div>
                                                 <div class="preview-comment">
                                                     Add a comment                              

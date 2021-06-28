@@ -153,12 +153,21 @@
     }
     
     
-    .preview-facebook-media .line-no-text{
+    // .preview-facebook-media .line-no-text{
+    //     margin-bottom: 3px;
+    //     height: 13px;
+    //     display: inline-block;
+    //     background: #F3F6F9;
+    // }
+
+    .preview-facebook-media .line-no-text {
         margin-bottom: 3px;
         height: 13px;
-        display: inline-block;
-        // background: #F3F6F9;
+        background: #F3F6F9;
+  
     }
+
+ 
     
     /*Preview Link*/
     .preview-facebook-link{
@@ -229,6 +238,8 @@
         position: relative;
         top: -2px;
     }
+    
+    
     
     
     .preview-facebook-link .line-no-text{
@@ -363,8 +374,8 @@
     .preview-facebook-text .line-no-text{
         margin-bottom: 3px;
         height: 13px;
-        display: inline-block;
-        // background: #F3F6F9;
+       
+        background: #F3F6F9;
     }
     
     .preview-facebook-text .preview-comment{
