@@ -165,7 +165,6 @@ export class LoginComponent implements OnInit {
     }
   }
 
-
   onClubSelected(club) {
     localStorage.setItem('selectedClub', JSON.stringify(club));
     this.selectedClub = club

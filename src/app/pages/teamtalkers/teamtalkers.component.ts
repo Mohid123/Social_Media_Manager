@@ -94,11 +94,13 @@ export class TeamtalkersComponent implements OnInit {
 
   }
 
-  clear() {
+  resetPost() {
     this.teamtalkerCaption = "";
     this.url = "";
     this.file = "";
     this.poll = new Poll();
+    this.cf.detectChanges()
+    this.spinner.hide()
   }
 
   // selectedSchedule() {
@@ -121,7 +123,7 @@ export class TeamtalkersComponent implements OnInit {
   }
 
   onChangeSingle(value: Date) {
-  
+
     this.pollSelectedDate = value;
   }
   onChangeSingleTime(value: Date) {
@@ -129,7 +131,7 @@ export class TeamtalkersComponent implements OnInit {
   }
 
   searchGroupsAndEvents(event) {
-   
+
     this.searchString = event;
     if (this.searchString) {
       this.checklist = this.tempList.filter((item) =>
@@ -172,7 +174,7 @@ export class TeamtalkersComponent implements OnInit {
   }
 
   selectAllGroups() {
-    
+
     for (var i = 0; i < this.checklist.length; i++) {
       if (this.checklist[i].groupName) {
         this.checklist[i].isSelected = this.groupSelected;
@@ -197,7 +199,7 @@ export class TeamtalkersComponent implements OnInit {
   }
 
   getClubGroups() {
-    
+
     this._clubService.getClubGroups(0, 50).subscribe((groups: any) => {
       groups.map((singleItem) => {
         singleItem.isSelected = false;
@@ -228,7 +230,7 @@ export class TeamtalkersComponent implements OnInit {
   dateEvent(event) { }
 
   createReport(status, postId?, postedTo?) {
-   
+
     this.report.clubID = JSON.parse(localStorage.getItem('selectedClub')).id;
     this.report.postID = postId ? postId : "";
     this.report.postedTo = postedTo;
@@ -251,6 +253,8 @@ export class TeamtalkersComponent implements OnInit {
     this.removeSlectedItems();
     this.cf.detectChanges();
   }
+
+
 
   getSignedInUser() {
     this._authService.getSignedInUser().subscribe((user) => {
@@ -448,7 +452,7 @@ export class TeamtalkersComponent implements OnInit {
         }
 
         if (selectedClubGroups.length > 0) {
-        
+
           delete this.post.eventID;
           this.post.postedTo = "Group";
           this.post.text = this.teamtalkerCaption;
@@ -460,14 +464,14 @@ export class TeamtalkersComponent implements OnInit {
                 this.post.captureFileURL = media.url;
                 this.post.path = media.path;
                 this.createReport(2, "", "Group");
-                this._postService.addPostToGroup(this.post).subscribe(
-                  (groupPost: any) => {
-                    this.createReport(1, groupPost.id, "Group");
-                    if (index == array.length - 1) {
-                      this.toast.success("Post added to Groups", "Success");
-                      this.postedSuccessfully();
-                    }
-                  },
+                this._postService.addPostToGroup(this.post).subscribe((groupPost: any) => {
+                  console.log(groupPost, 'GroupPost')
+                  this.createReport(1, groupPost.id, "Group");
+                  if (index == array.length - 1) {
+                    this.toast.success("Post added to Groups", "Success");
+                    this.postedSuccessfully();
+                  }
+                },
                   (error: any) => {
                     this.createReport(0, "", "Group");
                     this.spinner.hide();
@@ -479,7 +483,7 @@ export class TeamtalkersComponent implements OnInit {
         }
 
         if (selectedClubEvents.length > 0) {
-        
+
           this.spinner.show();
           this._mediaUploadService
             .uploadClubMedia("EventMedia", this.signedInUser.id, this.file)
@@ -511,7 +515,7 @@ export class TeamtalkersComponent implements OnInit {
         }
 
         if (selectedClub) {
-        
+
           this.spinner.show();
           this._mediaUploadService
             .uploadClubMedia("ClubMedia", this.signedInUser.id, this.file)
@@ -561,6 +565,7 @@ export class TeamtalkersComponent implements OnInit {
       this.showDiv.video = false;
       this.showDiv.text = false;
       this.showDiv.poll = true;
+
     }
   }
 
@@ -753,8 +758,7 @@ export class TeamtalkersComponent implements OnInit {
           this.post.postedTo = "Club";
           this.post.text = this.teamtalkerCaption;
           this._mediaUploadService
-            .uploadClubMedia("ClubMedia", this.signedInUser.id, this.file)
-            .subscribe((uploadedVideo: any) => {
+            .uploadClubMedia("ClubMedia", this.signedInUser.id, this.file).subscribe((uploadedVideo: any) => {
               this.post.captureFileURL = uploadedVideo.url;
               this.post.path = uploadedVideo.path;
               this._videoService.generateThumbnail(this.file).then((base64) => {
@@ -797,4 +801,77 @@ export class TeamtalkersComponent implements OnInit {
         }
       });
   }
+
+
+
+  
+  addPollPost() {
+    let selectedClubGroups = [];
+    let selectedClubEvents = [];
+    let selectedClub: boolean = false;
+
+    if (this.checkedList.length == 0) {
+      this.toast.error("No Item Selected", "Nothing to Post");
+      return;
+    }
+
+    else if (this.teamtalkerCaption == "" || this.poll.choice1 == "" || this.poll.choice2 == "") {
+      this.toast.error("Please Enter into the poll with at least 2 choices", "error");
+      return;
+    }
+
+    this.checkedList.filter((item) => {
+      if (item.hasOwnProperty("groupName")) {
+        selectedClubGroups.push(item);
+      } else if (item.hasOwnProperty("eventName")) {
+        selectedClubEvents.push(item);
+      } else if (item.hasOwnProperty("clubName")) {
+        selectedClub = true;
+      }
+    });
+
+    if (selectedClubGroups.length > 0) {
+      this.toast.error("Poll can only be created in Club", "Error");
+      return;
+    }
+
+    else if (selectedClubEvents.length > 0) {
+      this.toast.error("Poll can only be created in Club", "Error");
+      return;
+    }
+
+    else {
+      
+      this.pollSelectedDate = new Date(this.pollSelectedDate.setHours(this.pollSelectedTime.getHours()));
+      this.pollSelectedDate = new Date(this.pollSelectedDate.setMinutes(this.pollSelectedTime.getMinutes()));
+      var days = moment.duration(moment(this.pollSelectedDate).diff(moment(new Date()))).days();
+      var hours = moment.duration(moment(this.pollSelectedDate).diff(moment(new Date()))).hours();
+      var minutes = moment.duration(moment(this.pollSelectedDate).diff(moment(new Date()))).minutes();
+
+      if (days == 0 && hours <= 0 && minutes < 30) {
+        this.toast.error("Poll should have minimum 30 minutes time", "info");
+        return;
+      }
+
+      this.post.type = "poll";
+      this.post.postedTo = "Club";
+      this.post.text = this.teamtalkerCaption;
+      this.poll.expiryDate = Math.round(this.pollSelectedDate.getTime());
+      this.poll.startDate = Math.round(this.poll.startTime.getTime());
+      this.poll.expiryTime = new Date(this.poll.expiryDate);
+      this.poll.votingDays = days;
+      this.poll.votingHours = hours;
+      this.poll.votingMinutes = minutes;
+      this.post.poll = Object.assign({}, this.poll);
+      this.spinner.show();
+      this._postService.addPost(this.post).subscribe((data) => {
+        this.toast.success('Poll Post Created in Club' , 'Success');
+        console.log(data)
+        this.resetPost()
+      });
+    }
+
+  }
+
+
 }
