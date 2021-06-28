@@ -6,21 +6,21 @@
 
 
 <!-- <input type="checkbox" class="toggle-switch"> -->
-<div class="container pt-4">
-  <label class="switch"><input type="checkbox" />    <div></div>
-   
-    <!-- <label>Live stream</label> -->
-  
-  </label>
-  <label class="mr-5 pl-5 text-white">Live stream</label>
 
 
-  
-
+<div class="container pt-4 ">
+  <label class="switch">
+    <input type="checkbox" id="togBtn">
+    <div class="slider round ">
+     <!--ADDED HTML -->
+     <span class="on">ON</span>
+     <span class="off">OFF</span>
+     <!--END-->
+    </div>
+   </label><span class="text-white pl-5 mr-2">Live stream</span>
 </div>
 
-
-  <ng-container *ngIf="loader$ | async as _loader">
+ <ng-container *ngIf="loader$ | async as _loader">
     <ngb-progressbar
       class="loading-bar"
       height="3px"
