@@ -3,6 +3,23 @@
   [ngClass]="headerContainerCSSClasses"
   class="d-flex align-items-stretch justify-content-between" style="background-color: #1a1a27;"
 >
+
+
+<!-- <input type="checkbox" class="toggle-switch"> -->
+<div class="container pt-4">
+  <label class="switch"><input type="checkbox" />    <div></div>
+   
+    <!-- <label>Live stream</label> -->
+  
+  </label>
+  <label class="mr-5 pl-5 text-white">Live stream</label>
+
+
+  
+
+</div>
+
+
   <ng-container *ngIf="loader$ | async as _loader">
     <ngb-progressbar
       class="loading-bar"

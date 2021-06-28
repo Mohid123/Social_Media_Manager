@@ -666,7 +666,7 @@
                                                             class="btn btn-transparent-warning">Clear</button>
                                                     </div>
                                                     <div class="ml-auto p-2">
-                                                        <button (click) = "addPollPost()" type="button"
+                                                        <button  type="button"
                                                             class="btn btn-primary flex-row-reverse">Post Now</button>
                                                     </div>
                                                 </div>
@@ -960,13 +960,15 @@
                                         </div>
                                         <div class="preview-facebook preview-facebook-text item-post-type"
                                             data-type="text" *ngIf="showDiv.poll">
-                                            <div class="user-info">
-                                                <img class="img-circle" style="height: 44px; object-fit: cover;"
+                                            <div class="user-info" style="z-index: 1;">
+                                                <img class="img-circle" style="height: 44px; object-fit: cover; border-radius: 30px;"
                                                     [src]="profileImageUrl">
                                                 <div class="text">
                                                     <div class="name"> {{userName}}</div>
-                                                    <span> Just now . <i class="fa fa-globe"
-                                                            aria-hidden="true"></i></span>
+                                                    <span> Just now 
+                                                        <!-- <i class="fa fa-globe"
+                                                            aria-hidden="true"></i> -->
+                                                    </span>
                                                 </div>
                                             </div>
                                            
@@ -1000,9 +1002,8 @@
                                                               <input type="text" class="form-control" id="example3" placeholder="Enter your choice (optional)" [(ngModel)]="poll.choice3" disabled>
                                                             </div>
                                                       
-                                                            <div class="form-group">
-                                                           
-                                                              <input type="text" class="form-control" id="example4" placeholder="Enter your choice (optional)" [(ngModel)]="poll.choice4" disabled>
+                                                            <div class="form-group mb-o">
+                                                            <input type="text" class="form-control" id="example4" placeholder="Enter your choice (optional)" [(ngModel)]="poll.choice4" disabled>
                                                             </div>
                 
                                                            
