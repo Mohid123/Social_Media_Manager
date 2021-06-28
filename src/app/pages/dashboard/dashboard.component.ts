@@ -60,6 +60,7 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit() {
+
     this.signedInuserID = localStorage.getItem('clubUid');
     this.getSelectedClub();
     this.getLatestReports()
@@ -128,7 +129,6 @@ export class DashboardComponent implements OnInit {
           trim: false
         },
         categories: [
-
           new Date(new Date().setDate(new Date().getDate() - 7)).getDate() + ' ' + new Date(new Date().setDate(new Date().getDate() - 7)).toLocaleString('default', { month: 'short' }),
           new Date(new Date().setDate(new Date().getDate() - 6)).getDate() + ' ' + new Date(new Date().setDate(new Date().getDate() - 6)).toLocaleString('default', { month: 'short' }),
           new Date(new Date().setDate(new Date().getDate() - 5)).getDate() + ' ' + new Date(new Date().setDate(new Date().getDate() - 5)).toLocaleString('default', { month: 'short' }),

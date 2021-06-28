@@ -8,7 +8,7 @@
 <!-- <input type="checkbox" class="toggle-switch"> -->
 <div *ngIf="showLiveStream" class="d-flex">
   <div class="p-2 center"> <label class="switch">
-    <input type="checkbox" id="togBtn">
+    <input type="checkbox" [(ngModel)]="toggleBtn" (ngModelChange)="toggleChange($event)" id="togBtn">
     <div class="slider round ">
      <!--ADDED HTML -->
      <span class="on">ON</span>

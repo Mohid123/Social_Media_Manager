@@ -37,6 +37,7 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
   headerMenuHTMLAttributes: any = {};
   routerLoaderTimout: any;
   showLiveStream : boolean = false ;
+  public toggleBtn : any
 
   @ViewChild('ktHeaderMenu', { static: true }) ktHeaderMenu: ElementRef;
   loader$: Observable<number>;
@@ -131,4 +132,10 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
       clearTimeout(this.routerLoaderTimout);
     }
   }
+
+  toggleChange(event){
+    console.log(event)
+  }
+
+
 }
