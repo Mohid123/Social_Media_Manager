@@ -34,63 +34,78 @@
       <!-- begin::1 Level -->
       <li class="menu-item" aria-haspopup="true" routerLinkActive="menu-item-active">
         <a class="menu-link" routerLink="/pages/dashboard" routerLinkActive="active">
-            <i class="svg-icon menu-icon fas fa-chalkboard text-success icon-lg mr-5"></i>
-          <span class="menu-text" translate="MENU.DASHBOARD" ></span>
+          <i class="svg-icon menu-icon fas fa-chalkboard text-success icon-lg mr-5"></i>
+          <span class="menu-text" translate="MENU.DASHBOARD"></span>
         </a>
       </li>
       <!-- end::1 Level -->
 
       <!--PUBLISH ALL-->
-      <li class="menu-item" aria-haspopup="true" routerLinkActive="menu-item-active" style="border-bottom: 1px solid rgba(163, 175, 183, 0.219);">
+      <li class="menu-item" aria-haspopup="true" routerLinkActive="menu-item-active"
+        style="border-bottom: 1px solid rgba(163, 175, 183, 0.219);">
         <a class="menu-link" routerLink="/pages/publish-all" routerLinkActive="active">
-            <i class="svg-icon menu-icon fab fa-telegram-plane text-danger icon-lg mr-5"></i>
+          <i class="svg-icon menu-icon fab fa-telegram-plane text-danger icon-lg mr-5"></i>
           <span class="menu-text">Publish All</span>
         </a>
       </li>
-      
+
 
       <!--FACEBOOK-->
       <li class="menu-item" aria-haspopup="true" routerLinkActive="menu-item-active">
         <a class="menu-link" routerLink="/pages/facebook" routerLinkActive="active">
-            <i class="svg-icon menu-icon socicon-facebook icon-lg mr-5" style="color:rgb(0, 153, 255)"></i>
+          <i class="svg-icon menu-icon socicon-facebook icon-lg mr-5" style="color:rgb(0, 153, 255)"></i>
           <span class="menu-text">Facebook</span>
         </a>
       </li>
-    
 
-       <!--INSTAGRAM-->
+
+      <!--INSTAGRAM-->
       <li class="menu-item" aria-haspopup="true" routerLinkActive="menu-item-active">
         <a class="menu-link" routerLink="/pages/instagram" routerLinkActive="active">
-            <i class="svg-icon menu-icon socicon-instagram icon-lg mr-5" style="color: #d62976"></i>
+          <i class="svg-icon menu-icon socicon-instagram icon-lg mr-5" style="color: #d62976"></i>
           <span class="menu-text">Instagram</span>
         </a>
       </li>
 
-      
+
       <!--TeamTalkers-->
-       <li class="menu-item" aria-haspopup="true" routerLinkActive="menu-item-active" style="border-bottom: 1px solid rgba(163, 175, 183, 0.219);">
+      <li class="menu-item" aria-haspopup="true" routerLinkActive="menu-item-active"
+        style="border-bottom: 1px solid rgba(163, 175, 183, 0.219);">
         <a class="menu-link" routerLink="/pages/team-talkers" routerLinkActive="active">
-          <img class="mr-7 rounded" style="height: auto; width: 32px; margin-left: -4px" [src]="selectedClub.logoURL" alt="">
+          <img class="mr-7 rounded" style="height: auto; width: 32px; margin-left: -4px" [src]="selectedClub.logoURL"
+            alt="">
           <!-- <i class="svg-icon menu-icon icon-xs mr-6" style="color: white; margin-left: -5px"><span ><img class="rounded" style="height: 95%; width: 95%; " [src]="clubLogo" alt=""></span></i> -->
-          <span class="menu-text" >{{selectedClub.clubName}}</span>
+          <span class="menu-text">{{selectedClub.clubName}}</span>
         </a>
       </li>
 
+       <!--News feed-->
+       <!-- <li class="menu-item" aria-haspopup="true" routerLinkActive="menu-item-active">
+        <a class="menu-link" routerLink="/pages/newsfeed" routerLinkActive="active">
+          <i class="svg-icon menu-icon socicon-instagram icon-lg mr-5" style="color: #d62976"></i>
+          <span class="menu-text">News Feed</span>
+        </a>
+      </li> -->
+
       <!--Account Manager-->
-      <li class="menu-item" aria-haspopup="true" routerLinkActive="menu-item-active" >
+      <li class="menu-item" aria-haspopup="true" routerLinkActive="menu-item-active">
         <a class="menu-link" routerLink="/pages/account-manager" routerLinkActive="active">
-            <i class="svg-icon menu-icon far fa-user-circle icon-lg mr-5" style="color: #969696"></i>
+          <i class="svg-icon menu-icon far fa-user-circle icon-lg mr-5" style="color: #969696"></i>
           <span class="menu-text">Account Manager</span>
         </a>
       </li>
-      
-      <li class="menu-item" aria-haspopup="true" routerLinkActive="menu-item-active" (click)="openVerticallyCentered(content)" >
+
+      <!--Signout-->
+      <li class="menu-item" aria-haspopup="true" routerLinkActive="menu-item-active"
+        (click)="openVerticallyCentered(content)">
         <a class="menu-link">
-            <i class="svg-icon menu-icon fas fa-sign-out-alt icon-lg mr-5" style="color: #969696"></i>
+          <i class="svg-icon menu-icon fas fa-sign-out-alt icon-lg mr-5" style="color: #969696"></i>
           <span class="menu-text">Sign Out</span>
         </a>
       </li>
-      
+
+     
+
     </ul>
     <!-- end::Menu Nav -->
   </div>
@@ -98,7 +113,7 @@
 </div>
 
 <div class="example-preview ">
-  
+
   <div>
     <ng-template #content let-c="close" let-d="dismiss">
       <div class="modal-header d-flex justify-content-center" style="background-color: #1e1e2d;">
@@ -108,19 +123,19 @@
         </button>
       </div>
       <div class="modal-body d-flex justify-content-center">
-		<!-- <p class="font-size-h5 ">Are you sure, you want to logout?</p> -->
-    <div class="d-flex align-items-center mt-5">
-      <div class="symbol symbol-100 mr-5">
-        <div >
-          <img class="symbol-label" [src]="profileImageUrl" style="object-fit: cover;" alt="">
-        </div>
-        <i class="symbol-badge bg-success"></i>
-      </div>
-      <div class="d-flex flex-column">
-        <a  class="font-weight-bold font-size-h5 text-dark-75 text-hover-primary">{{userNameLogout}}</a>
-        <div class="text-muted mt-1">Admin</div>
-        <div class="navi mt-2">
-          <!-- <a  class="navi-item">
+        <!-- <p class="font-size-h5 ">Are you sure, you want to logout?</p> -->
+        <div class="d-flex align-items-center mt-5">
+          <div class="symbol symbol-100 mr-5">
+            <div>
+              <img class="symbol-label" [src]="profileImageUrl" style="object-fit: cover;" alt="">
+            </div>
+            <i class="symbol-badge bg-success"></i>
+          </div>
+          <div class="d-flex flex-column">
+            <a class="font-weight-bold font-size-h5 text-dark-75 text-hover-primary">{{userNameLogout}}</a>
+            <div class="text-muted mt-1">Admin</div>
+            <div class="navi mt-2">
+              <!-- <a  class="navi-item">
             <span class="navi-link p-0 pb-2">
               <span class="navi-icon mr-1">
                 <span class="svg-icon svg-icon-lg svg-icon-primary">
@@ -138,18 +153,19 @@
               <span class="navi-text text-muted text-hover-primary">jm@softplus.com</span>
             </span>
           </a> -->
-          <a class="btn btn-sm btn-light-primary font-weight-bolder py-2 px-5" (click)="logout() ; c('Close click')">Sign Out</a>
+              <a class="btn btn-sm btn-light-primary font-weight-bolder py-2 px-5"
+                (click)="logout() ; c('Close click')">Sign Out</a>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
       </div>
       <div class="modal-footer d-flex justify-content-center">
         <button type="button" class="btn btn-secondary" (click)="c('Close click')">Cancel</button>
         <!-- <button type="button" class="btn"  style="background-color: #1e1e2d; color: #fff;" (click)="logout() ; c('Close click')">Yes</button> -->
       </div>
     </ng-template>
-   
-  <!-- <div class="btn btn-icon btn-light w-auto btn-clean d-inline-flex align-items-center btn-lg px-2 mr-5" style="background-color: #1e1e2d; color: #fff;" (click)="openVerticallyCentered(content)">
+
+    <!-- <div class="btn btn-icon btn-light w-auto btn-clean d-inline-flex align-items-center btn-lg px-2 mr-5" style="background-color: #1e1e2d; color: #fff;" (click)="openVerticallyCentered(content)">
     <span class="text-light font-weight-bold font-size-base mr-1">Hi,</span>
     <span class="text-dark-50 font-weight-bolder font-size-base mr-3">&nbsp;{{username}}</span>
     <span class="symbol symbol-35 symbol-light-primary">

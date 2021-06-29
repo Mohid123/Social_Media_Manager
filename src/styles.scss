@@ -305,12 +305,13 @@ button.toast-close-button {
     width: 25em;
   }
 }
- 
+
 @media screen and (max-width: 991px) {
   a img{
      display: none;
      
   }
+
 }
 
 .day-background-upper.is-selected {
@@ -343,4 +344,5 @@ label{
   .mat-tab-label{
     font-size: 12px !important
  }
+
 }

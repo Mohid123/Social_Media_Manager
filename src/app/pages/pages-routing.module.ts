@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { AccountManagerComponent } from './account-manager/account-manager.component';
 import { FacebookComponent } from './facebook/facebook.component';
 import { InstagramComponent } from './instagram/instagram.component';
+import { NewsfeedComponent } from './newsfeed/newsfeed.component';
 import { PublishComponent } from './publish/publish.component';
 import { TeamtalkersComponent } from './teamtalkers/teamtalkers.component';
 import { LayoutComponent } from './_layout/layout.component';
@@ -31,6 +32,10 @@ const routes: Routes = [
       {
         path: 'account-manager', 
         component: AccountManagerComponent
+      },
+      {
+        path: 'newsfeed', 
+        component: NewsfeedComponent
       },
       {
         path: 'dashboard',

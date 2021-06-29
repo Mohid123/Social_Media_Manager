@@ -38,6 +38,7 @@ import { NgxSpinnerModule } from "ngx-spinner";
 import { FormsModule } from '@angular/forms';
 import { NgxDatePickerModule} from '@ngx-tiny/date-picker';
 import { NgxTimePickerModule } from '@ngx-tiny/time-picker';
+import { NewsfeedComponent } from './newsfeed/newsfeed.component';
 
 
 
@@ -63,6 +64,7 @@ import { NgxTimePickerModule } from '@ngx-tiny/time-picker';
     InstagramComponent,
     TeamtalkersComponent,
     AccountManagerComponent,
+    NewsfeedComponent,
 
   
   ],
