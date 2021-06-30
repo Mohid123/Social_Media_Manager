@@ -329,14 +329,14 @@
                  
                   </mat-tab-group>
                   <div>
-                    <div class="card-header ribbon ribbon-right">
+                    <div class="card-header ribbon ribbon-right" style="box-shadow: rgb(99 99 99 / 20%) 0px 2px 8px 0px;">
                      <div class="ribbon-target bg-primary" style="top: 10px; right: -2px;">Recent posts</div>
                      <h3 class="card-title">
                         <img src="../../../assets/media/logos/instagram.png">
                      </h3>
                     </div>
                     <div  class="card-body">
-                        <div *ngFor="let post of recentPosts" class="rounded pb-5 m-5">
+                        <div *ngFor="let post of recentPosts" class="rounded m-8" style="box-shadow: rgb(99 99 99 / 20%) 0px 2px 8px 0px;">
                             <div  class="preview-instagram preview-instagram-photo item-post-type" data-type="phot" >
                                 <div class="preview-content">
                                       <div class="user-info">
@@ -348,14 +348,7 @@
                                         <img *ngIf="post.media_type == 'IMAGE'" style="height: 100%; width: 100%; object-fit: cover;" class="img-circle" src="{{post.media_url}}" >
                                         <video *ngIf="post.media_type == 'VIDEO'" src="{{post.media_url}}" style="height: 100%; width: 100%; object-fit: cover;"  controls disablepictureinpicture  controlsList="nodownload"></video>
                                     </div>
-                                      <!-- <div class="post-info">
-                                          <div class="info-active pull-left"> Be the first to like this</div>
-                                          <div class="pull-right">1s</div>
-                                          <div class="clearfix"></div>
-                                      </div> -->
-                                      <!-- <div class="caption">
-                                          <div *ngIf="post.caption" >{{post.caption}}</div>
-                                      </div> -->
+                                    
                                       <div class="preview-comment-upper">
                                           <div class="row">
                                               <div class="col-12 item">
