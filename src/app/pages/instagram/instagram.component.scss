@@ -22,6 +22,14 @@
     overflow: hidden;
     position: relative;
 }
+.preview-instagram-photo .preview-content .preview-media-view{
+    // height: 368px;
+    background-size: cover;
+    background-position: center center;
+    background-color: #F3F6F9;
+    overflow: hidden;
+    position: relative;
+}
 
 .preview-instagram-photo .preview-content .preview-media .item{
     background-size: cover;
@@ -46,6 +54,10 @@
 
 .preview-instagram-photo .preview-content .post-info,.preview-instagram-photo .preview-content .caption{
     padding: 10px 20px;
+    word-break: break-all;
+}
+.preview-instagram-photo .preview-content .post-info,.preview-instagram-photo .preview-content .caption-view{
+    padding: 10px 6px;
     word-break: break-all;
 }
 

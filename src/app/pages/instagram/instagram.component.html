@@ -338,26 +338,26 @@
                  </h3>
                 </div>
                 <div  class="card-body">
-                    <div *ngFor="let post of recentPosts" class="rounded  m-2 p-3">
+                    <div *ngFor="let post of recentPosts" class="rounded pb-10">
                         <div  class="preview-instagram preview-instagram-photo item-post-type" data-type="phot" >
                             <div class="preview-content">
                                   <div class="user-info">
                                       <img class="img-circle" [src]="profileImageUrl">
                                       <span>{{userName}}</span>
                                   </div>
-                                  <div class="preview-media" data-max-image="1">
+                                  <div class="preview-media-view" data-max-image="1">
                     
                                     <img *ngIf="post.media_type == 'IMAGE'" style="height: 100%; width: 100%; object-fit: cover;" class="img-circle" src="{{post.media_url}}" >
                                     <video *ngIf="post.media_type == 'VIDEO'" src="{{post.media_url}}" style="height: 100%; width: 100%; object-fit: cover;"  controls disablepictureinpicture  controlsList="nodownload"></video>
                                 </div>
-                                  <div class="post-info">
+                                  <!-- <div class="post-info">
                                       <div class="info-active pull-left"> Be the first to like this</div>
-                                      <!-- <div class="pull-right">1s</div> -->
+                                      <div class="pull-right">1s</div>
                                       <div class="clearfix"></div>
-                                  </div>
-                                  <div class="caption">
+                                  </div> -->
+                                  <!-- <div class="caption">
                                       <div *ngIf="post.caption" >{{post.caption}}</div>
-                                  </div>
+                                  </div> -->
                                   <div class="preview-comment-upper">
                                       <div class="row">
                                           <div class="col-12 item">
@@ -374,6 +374,9 @@
                                               <div class="d-inline" style="float: right;">
                                                 <svg aria-label="Save" class="_8-yf5 " fill="#262626" height="24" viewBox="0 0 48 48" width="24"><path d="M43.5 48c-.4 0-.8-.2-1.1-.4L24 29 5.6 47.6c-.4.4-1.1.6-1.6.3-.6-.2-1-.8-1-1.4v-45C3 .7 3.7 0 4.5 0h39c.8 0 1.5.7 1.5 1.5v45c0 .6-.4 1.2-.9 1.4-.2.1-.4.1-.6.1zM24 26c.8 0 1.6.3 2.2.9l15.8 16V3H6v39.9l15.8-16c.6-.6 1.4-.9 2.2-.9z"></path></svg>
                                               </div>
+                                              <div class=".caption-view" style="color: black; padding: 10px 5px; ">
+                                                <div *ngIf="post.caption" ><b>{{userName}}</b>&nbsp; {{post.caption}}</div>
+                                              </div>
                                               <div style="padding: 8px">
                                                   <span class="text-dark font-weight-bold">1 like</span>
                                               </div>
@@ -384,6 +387,7 @@
                                          
                                       </div>
                                   </div>
+                                
                                   <div class="preview-comment">
                                       <svg aria-label="Emoji" class="_8-yf5 " fill="#262626" height="24" viewBox="0 0 48 48" width="24"><path d="M24 48C10.8 48 0 37.2 0 24S10.8 0 24 0s24 10.8 24 24-10.8 24-24 24zm0-45C12.4 3 3 12.4 3 24s9.4 21 21 21 21-9.4 21-21S35.6 3 24 3z"></path><path d="M34.9 24c0-1.4-1.1-2.5-2.5-2.5s-2.5 1.1-2.5 2.5 1.1 2.5 2.5 2.5 2.5-1.1 2.5-2.5zm-21.8 0c0-1.4 1.1-2.5 2.5-2.5s2.5 1.1 2.5 2.5-1.1 2.5-2.5 2.5-2.5-1.1-2.5-2.5zM24 37.3c-5.2 0-8-3.5-8.2-3.7-.5-.6-.4-1.6.2-2.1.6-.5 1.6-.4 2.1.2.1.1 2.1 2.5 5.8 2.5 3.7 0 5.8-2.5 5.8-2.5.5-.6 1.5-.7 2.1-.2.6.5.7 1.5.2 2.1 0 .2-2.8 3.7-8 3.7z"></path></svg>
             
