@@ -1,4 +1,4 @@
-import { filter } from 'rxjs/operators';
+import { filter, publish } from 'rxjs/operators';
 import { ReportService } from './../../core/services/report.service';
 import { Report } from './../../core/models/report.model';
 import { MediauploadService } from './../../core/services/mediaupload.service';
@@ -9,6 +9,7 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { NgxSpinnerService } from "ngx-spinner";
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { User } from 'src/app/core/models/user.model';
+import { combineLatest } from 'rxjs';
 @Component({
   selector: 'app-facebook',
   templateUrl: './facebook.component.html',
@@ -45,7 +46,7 @@ export class FacebookComponent implements OnInit {
     video: false,
     text: false
   }
-
+  public recentFBposts: any = [];
   ngOnInit() {
     this.showSpinner();
     this.getSignedInUser();
@@ -127,15 +128,27 @@ export class FacebookComponent implements OnInit {
   }
 
   getSignedInUser() {
+    let recentPostIds = []
+    let callsList = []
     this._authService.getSignedInUser().subscribe(user => {
       this.signedInUser = user;
-      this._facebookService.getPublishedPostsForFBPage( this.signedInUser.FBPages[1].pageID , this.signedInUser.FBPages[1].pageAccessToken ,).subscribe(data=>{
-        console.log(filter , 'filter')
-        this._facebookService.getSinglePagePost("109022348012375_128540162727260", this.signedInUser.FBPages[1].pageAccessToken).subscribe(data=>{
-          console.log(data,'cs')
+      for(let i = 0 ; i <= user.FBPages.length-1 ; i++){
+        this._facebookService.getPublishedPostsOnFBPages(user.FBPages[i].pageID, user.FBPages[i].pageAccessToken).subscribe((objects: any) => {
+          // this._facebookService.getSinglePagePost('107014664932268_119727710327630', user.FBPages[0].pageAccessToken).subscribe(data=>{})
+          objects.data.forEach((item, idx, self) => {
+            callsList.push(this._facebookService.getSinglePagePost(item.id, this.signedInUser.FBPages[0].pageAccessToken));
+            if (idx == self.length - 1) {
+              combineLatest(callsList).subscribe(data => {
+                this.recentFBposts = data
+                console.log(this.recentFBposts)
+                this.cf.detectChanges()
+              })
+            }
+          });
         })
-        console.log(data)
-      });
+      }
+
+
       console.log(this.signedInUser)
       if (user.FBPages.length == 0) {
         this.toast.warning('Log in via Facebook to connect your Facebook pages');
@@ -151,7 +164,7 @@ export class FacebookComponent implements OnInit {
       })
     });
 
- 
+
   }
 
   switchTabs(event) {
@@ -205,9 +218,9 @@ export class FacebookComponent implements OnInit {
     this.spinner.show()
     this._mediaUploadService.uploadMedia('Facebook', this.signedInUser.id, this.file).subscribe((media: any) => {
       this.checkedList.forEach((item, index, array) => {
-        this._reportService.createReport(2 , "" , 'Facebook')
+        this._reportService.createReport(2, "", 'Facebook')
         this._facebookService.addImagePostToFB(item.pageID, media.url, this.facebookCaption, item.pageAccessToken).subscribe(FbPost => {
-          this._reportService.createReport(1, FbPost.id , 'Facebook')
+          this._reportService.createReport(1, FbPost.id, 'Facebook')
           if (index == array.length - 1) {
             this.toast.success('Post added to Facebook Pages', 'Success')
             this.postedSuccessfully();
@@ -216,14 +229,14 @@ export class FacebookComponent implements OnInit {
           this.spinner.hide();
           this.toast.error(error.message)
           console.log(error)
-          this._reportService.createReport(0, "" , 'Facebook')
+          this._reportService.createReport(0, "", 'Facebook')
 
         })
 
       }, (error) => {
         this.spinner.hide();
         this.toast.error(error.message)
-        this._reportService.createReport(0, "" , 'Facebook')
+        this._reportService.createReport(0, "", 'Facebook')
       })
     }, (err) => {
       this.spinner.hide();
@@ -243,9 +256,9 @@ export class FacebookComponent implements OnInit {
     this.spinner.show()
     this._mediaUploadService.uploadMedia('Facebook', this.signedInUser.id, this.file).subscribe((media: any) => {
       this.checkedList.forEach((item, index, array) => {
-        this._reportService.createReport(2, "" , 'Facebook')
+        this._reportService.createReport(2, "", 'Facebook')
         this._facebookService.addVideoPost(item.pageID, item.pageAccessToken, media.url, this.facebookCaption).subscribe((video: any) => {
-          this._reportService.createReport(1, video.id ,  'Facebook')
+          this._reportService.createReport(1, video.id, 'Facebook')
           if (index == array.length - 1) {
             this.toast.success('Video post added to Facebook Pages', 'Success');
             this.postedSuccessfully();
@@ -255,7 +268,7 @@ export class FacebookComponent implements OnInit {
       }, (err) => {
         this.spinner.hide()
         this.toast.error(err.message);
-        this._reportService.createReport(0, "" , 'Facebook')
+        this._reportService.createReport(0, "", 'Facebook')
       })
     }, (err) => {
       this.spinner.hide()
@@ -276,10 +289,10 @@ export class FacebookComponent implements OnInit {
     }
     this.spinner.show();
     this.checkedList.forEach((item, index, array) => {
-      this._reportService.createReport(2, "" , 'Facebook')
+      this._reportService.createReport(2, "", 'Facebook')
       debugger;
       this._facebookService.addTextPostToFB(item.pageID, this.facebookCaption, item.pageAccessToken).subscribe(FbPost => {
-        this._reportService.createReport(1, FbPost.id , 'Facebook')
+        this._reportService.createReport(1, FbPost.id, 'Facebook')
         if (index == array.length - 1) {
           this.toast.success('Text post added to Facebook pages', 'Success');
           this.postedSuccessfully();
@@ -289,18 +302,15 @@ export class FacebookComponent implements OnInit {
         this.toast.error(error.message);
         console.log(error, 'error')
         this.cf.detectChanges();
-        this._reportService.createReport(0, "" ,'Facebook')
+        this._reportService.createReport(0, "", 'Facebook')
       })
     }, (error) => {
       this.spinner.hide();
       this.toast.error(error.message);
       this.cf.detectChanges();
-      this._reportService.createReport(0, "" , 'Facebook')
+      this._reportService.createReport(0, "", 'Facebook')
     })
   }
-
-
-
 
 }
 
