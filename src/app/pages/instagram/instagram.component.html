@@ -345,6 +345,7 @@
                                       <img class="img-circle" [src]="profileImageUrl">
                                       <span>{{userName}}</span>
                                   </div>
+                                 
                                   <div class="preview-media" data-max-image="1"><img logo #logo  (load)="onSelectedImageLoad()" style="height: 100%; width: 100%; object-fit: cover;" class="img-circle" [src]= url *ngIf="format==='image' && url"></div>
                                   <div class="post-info">
                                       <div class="info-active pull-left"> Be the first to like this</div>
