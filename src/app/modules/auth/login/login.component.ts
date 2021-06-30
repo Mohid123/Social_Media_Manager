@@ -93,8 +93,9 @@ export class LoginComponent implements OnInit {
     }
     this._authService.loginByEmail(payload).subscribe(user => {
       debugger;
+      console.log(user)
       if (user.user.admin) {
-        localStorage.setItem('app-token', user.app_token.access_token)
+        // localStorage.setItem('app-token', user.app_token.access_token)
         localStorage.setItem('clubUid', user.loggedInUser.userID)
         localStorage.setItem('userId', user.loggedInUser.id)
         localStorage.setItem('token', user.token)

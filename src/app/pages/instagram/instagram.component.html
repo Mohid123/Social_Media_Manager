@@ -337,25 +337,26 @@
                     <img src="../../../assets/media/logos/instagram.png">
                  </h3>
                 </div>
-                <div class="card-body">
-                    <div class="rounded m-7 p-6">
-                        <div class="preview-instagram preview-instagram-photo item-post-type" data-type="phot" >
+                <div  class="card-body">
+                    <div *ngFor="let post of recentPosts" class="rounded  m-2 p-3">
+                        <div  class="preview-instagram preview-instagram-photo item-post-type" data-type="phot" >
                             <div class="preview-content">
                                   <div class="user-info">
                                       <img class="img-circle" [src]="profileImageUrl">
                                       <span>{{userName}}</span>
                                   </div>
-                                  <div class="preview-media" data-max-image="1"><img logo #logo  (load)="onSelectedImageLoad()" style="height: 100%; width: 100%; object-fit: cover;" class="img-circle" [src]= url *ngIf="format==='image' && url"></div>
+                                  <div class="preview-media" data-max-image="1">
+                    
+                                    <img *ngIf="post.media_type == 'IMAGE'" style="height: 100%; width: 100%; object-fit: cover;" class="img-circle" src="{{post.media_url}}" >
+                                    <video *ngIf="post.media_type == 'VIDEO'" src="{{post.media_url}}" style="height: 100%; width: 100%; object-fit: cover;"  controls disablepictureinpicture  controlsList="nodownload"></video>
+                                </div>
                                   <div class="post-info">
                                       <div class="info-active pull-left"> Be the first to like this</div>
                                       <!-- <div class="pull-right">1s</div> -->
                                       <div class="clearfix"></div>
                                   </div>
                                   <div class="caption">
-                                      <div >{{instaCaption}}</div>
-                                      <div class="line-no-text" *ngIf="!instaCaption">{{instaCaption}}</div>
-                                      <div class="line-no-text" *ngIf="!instaCaption"></div>
-                                      <div class="line-no-text" *ngIf="!instaCaption"></div>
+                                      <div *ngIf="post.caption" >{{post.caption}}</div>
                                   </div>
                                   <div class="preview-comment-upper">
                                       <div class="row">

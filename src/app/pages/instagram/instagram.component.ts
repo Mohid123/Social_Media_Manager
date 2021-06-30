@@ -7,7 +7,7 @@ import { Component, OnInit, ChangeDetectorRef, ViewChild, ElementRef } from '@an
 import { NgxSpinnerService } from "ngx-spinner";
 import { User } from 'src/app/core/models/user.model';
 import { ToastrService } from 'ngx-toastr';
-import { take } from 'rxjs/operators';
+import { publish, take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-instagram',
@@ -27,7 +27,7 @@ export class InstagramComponent implements OnInit {
   public masterSelected: boolean;
   public checklist: any = [];
   public tempList: any = []
-  public validAspectRatios : string[] = ['4:5' , '1:1',  '4898:6123' , '1491:1844' , '499:374' , '5128:3419' , '3:2' , '4159:5200'];
+  public validAspectRatios: string[] = ['4:5', '1:1', '4898:6123', '1491:1844', '499:374', '5128:3419', '3:2', '4159:5200'];
   private checkedList: any;
   public userName: string = localStorage.getItem('userName')
   public profileImageUrl: string = localStorage.getItem('profileImageUrl')
@@ -35,7 +35,8 @@ export class InstagramComponent implements OnInit {
     photo: true,
     video: false,
   }
-  public inValidImageFormat : boolean  ;
+  public recentPosts : any = [];
+  public inValidImageFormat: boolean;
   constructor(private spinner: NgxSpinnerService, private cf: ChangeDetectorRef,
     private _authService: MainAuthService,
     private _instagramService: InstagramService,
@@ -43,6 +44,7 @@ export class InstagramComponent implements OnInit {
     private _reportService: ReportService,
     private toast: ToastrService) { this.report = new Report() }
 
+  
   ngOnInit() {
     this.showSpinner()
     this.getSignedInUser();
@@ -59,20 +61,21 @@ export class InstagramComponent implements OnInit {
   onSelectedImageLoad() {
     const width = (this.logo.nativeElement as HTMLImageElement).naturalWidth
     const height = (this.logo.nativeElement as HTMLImageElement).naturalHeight
-    console.log(width , height , 'Width&Height')
-    let gcd = this.calculateAspectRatio(width , height);
-    const ratio = width/gcd + ':'+ height/gcd;
-    this.validAspectRatios.includes(ratio) ?  this.inValidImageFormat = false : this.inValidImageFormat = true;
+    console.log(width, height, 'Width&Height')
+    let gcd = this.calculateAspectRatio(width, height);
+    const ratio = width / gcd + ':' + height / gcd;
+    this.validAspectRatios.includes(ratio) ? this.inValidImageFormat = false : this.inValidImageFormat = true;
   }
 
-  calculateAspectRatio(a,b) {
-    return (b == 0) ? a : this.calculateAspectRatio (b, a%b);
+  calculateAspectRatio(a, b) {
+    return (b == 0) ? a : this.calculateAspectRatio(b, a % b);
   }
 
 
 
 
   getSignedInUser() {
+    debugger;
     this._authService.getSignedInUser().pipe(take(1)).subscribe(user => {
       this.signedInUser = user;
       console.log(this.signedInUser)
@@ -80,8 +83,14 @@ export class InstagramComponent implements OnInit {
         this.signedInUser.FBPages.forEach(item => {
           debugger;
           this.getIGAccountDetails(item.pageID, item.pageAccessToken).subscribe((igaccount: any) => {
-
             if (igaccount.hasOwnProperty('instagram_business_account')) {
+
+              this._instagramService.getPublishedPostsForIG(igaccount.instagram_business_account.id, item.pageAccessToken).subscribe((publshedPosts:any) => {
+                this.recentPosts = publshedPosts.data;
+                this.cf.detectChanges()
+
+                console.log( this.recentPosts);
+              })
               igaccount.isSelected = false;
               igaccount.pageName = 'Instagram Account'
               igaccount.linkedFbPagetoken = item.pageAccessToken
@@ -97,6 +106,9 @@ export class InstagramComponent implements OnInit {
     })
   }
 
+  getRecentPosts(){
+    
+  }
   getIGAccountDetails(FbPageID, FbPageAccessToken) {
     return this._instagramService.getInstagramAccountID(FbPageID, FbPageAccessToken)
   }
@@ -116,7 +128,6 @@ export class InstagramComponent implements OnInit {
       if (this.checklist[i].isSelected)
         this.checkedList.push(this.checklist[i]);
     }
-    console.log(this.checkedList)
   }
 
   singleItemSelected() {
@@ -170,12 +181,12 @@ export class InstagramComponent implements OnInit {
                   clearInterval(interval)
                   this.postedSuccessfully()
                   this.toast.success('Published', 'Video Post Added');
-                  this._reportService.createReport(1, data.id , 'Instagram')
+                  this._reportService.createReport(1, data.id, 'Instagram')
                 }, error => {
                   this.spinner.hide();
                   this.toast.error(error.message);
                   clearInterval(interval)
-                  this._reportService.createReport(0 , "", 'Instagram')
+                  this._reportService.createReport(0, "", 'Instagram')
                 })
               }
               else if (data.status_code == "ERROR") {
@@ -212,8 +223,8 @@ export class InstagramComponent implements OnInit {
       this.toast.error('No Item Selected', 'Please select items to post');
       return;
     }
-    else if(this.inValidImageFormat){
-      this.toast.error('Unsupported Image Format','Image Format not supported for Instagram');
+    else if (this.inValidImageFormat) {
+      this.toast.error('Unsupported Image Format', 'Image Format not supported for Instagram');
       return;
     }
     this.spinner.show()
@@ -225,7 +236,7 @@ export class InstagramComponent implements OnInit {
 
             this.toast.success('Image Post Added Successfully', 'Post Added');
             this.postedSuccessfully();
-            this._reportService.createReport(1, data.id , 'Instagram')
+            this._reportService.createReport(1, data.id, 'Instagram')
           }, error => {
             debugger;
             this.spinner.hide()
@@ -269,7 +280,7 @@ export class InstagramComponent implements OnInit {
     this.cf.detectChanges();
   }
 
- 
+
   onSelectFile(event) {
     this.file = event.target.files && event.target.files[0];
     if (this.file) {
@@ -282,8 +293,8 @@ export class InstagramComponent implements OnInit {
       }
       reader.onload = (event) => {
         debugger;
-        this.url = (<FileReader>event.target).result as string;     
-        
+        this.url = (<FileReader>event.target).result as string;
+
         this.cf.detectChanges();
       }
     }

@@ -34,4 +34,9 @@ export class InstagramService {
     return this.http.get(`${environment.base_url}${containerId}?fields=status_code&access_token=${accessToken}`)
   }
 
+  getPublishedPostsForIG(instagramAccountId,FBPageAccessToken){
+    return this.http.get(`${environment.base_url}${instagramAccountId}/media?access_token=${FBPageAccessToken}&fields=media_url,created_time,caption,media_type`)
+    
+  }
+
 }

@@ -34,4 +34,14 @@ export class FacebookService {
     return this.http.post(`${environment.base_url}${facebookPageId}/videos?access_token=${fbPageAccessToken}&file_url=${fileUrl}&description=${videoDescription}`, '').pipe(catchError(this._errorHandlerService.handleErrors)) ;
   }
   
+  getSinglePagePost(postId , fbPageAccessToken){
+    return this.http.get(`${environment.base_url}${postId}?fields=id,message,picture,created_time&access_token=${fbPageAccessToken}`).pipe(catchError(this._errorHandlerService.handleErrors));
+  }
+
+  getPublishedPostsForFBPage(pageId , fbPageAccessToken){
+    return this.http.get(`${environment.base_url}${pageId}/published_posts?access_token=${fbPageAccessToken}`).pipe(catchError(this._errorHandlerService.handleErrors));
+  }
+
+  
+
 }

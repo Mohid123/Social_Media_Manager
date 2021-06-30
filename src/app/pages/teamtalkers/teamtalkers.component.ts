@@ -857,8 +857,8 @@ export class TeamtalkersComponent implements OnInit {
       this.post.type = "poll";
       this.post.postedTo = "Club";
       this.post.text = this.teamtalkerCaption;
-      this.poll.expiryDate = Math.round(this.pollSelectedDate.getTime());
-      this.poll.startDate = Math.round(new Date().getTime());
+      this.poll.expiryDate = Math.round(this.pollSelectedDate.getTime()) * 1000;
+      this.poll.startDate = Math.round(new Date().getTime()) * 1000;
       this.poll.votingDays = days;
       this.poll.votingHours = hours;
       this.poll.votingMinutes = minutes;

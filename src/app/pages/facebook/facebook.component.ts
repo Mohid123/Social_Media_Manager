@@ -52,6 +52,9 @@ export class FacebookComponent implements OnInit {
     this.getCheckedItemList();
   }
 
+
+
+
   clear() {
     this.url = '';
     this.facebookCaption = '';
@@ -126,6 +129,13 @@ export class FacebookComponent implements OnInit {
   getSignedInUser() {
     this._authService.getSignedInUser().subscribe(user => {
       this.signedInUser = user;
+      this._facebookService.getPublishedPostsForFBPage( this.signedInUser.FBPages[1].pageID , this.signedInUser.FBPages[1].pageAccessToken ,).subscribe(data=>{
+        console.log(filter , 'filter')
+        this._facebookService.getSinglePagePost("109022348012375_128540162727260", this.signedInUser.FBPages[1].pageAccessToken).subscribe(data=>{
+          console.log(data,'cs')
+        })
+        console.log(data)
+      });
       console.log(this.signedInUser)
       if (user.FBPages.length == 0) {
         this.toast.warning('Log in via Facebook to connect your Facebook pages');
@@ -140,6 +150,8 @@ export class FacebookComponent implements OnInit {
         this.cf.detectChanges();
       })
     });
+
+ 
   }
 
   switchTabs(event) {
