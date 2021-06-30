@@ -35,7 +35,7 @@ export class FacebookService {
   }
   
   getSinglePagePost(postId , fbPageAccessToken){
-    return this.http.get(`${environment.base_url}${postId}?fields=id,message,picture,created_time&access_token=${fbPageAccessToken}`).pipe(catchError(this._errorHandlerService.handleErrors));
+    return this.http.get(`${environment.base_url}${postId}?fields=id,message,picture,attachments,created_time&access_token=${fbPageAccessToken}`).pipe(catchError(this._errorHandlerService.handleErrors));
   }
 
   getPublishedPostsOnFBPages(pageId , fbPageAccessToken){
