@@ -24,7 +24,7 @@ export class Interceptor implements HttpInterceptor {
     else {
       customReq = request.clone()
     }
-    console.log(customReq)
+    // console.log(customReq)
     return next.handle(customReq).pipe(catchError(err => {
       debugger;
       return throwError(err)

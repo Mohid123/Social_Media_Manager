@@ -84,13 +84,7 @@ export class InstagramComponent implements OnInit {
           debugger;
           this.getIGAccountDetails(item.pageID, item.pageAccessToken).subscribe((igaccount: any) => {
             if (igaccount.hasOwnProperty('instagram_business_account')) {
-
-              this._instagramService.getPublishedPostsForIG(igaccount.instagram_business_account.id, item.pageAccessToken).subscribe((publshedPosts:any) => {
-                this.recentPosts = publshedPosts.data;
-                this.cf.detectChanges()
-
-                console.log( this.recentPosts);
-              })
+             this.getRecentPosts(igaccount.instagram_business_account.id,item.pageAccessToken);
               igaccount.isSelected = false;
               igaccount.pageName = 'Instagram Account'
               igaccount.linkedFbPagetoken = item.pageAccessToken
@@ -106,13 +100,15 @@ export class InstagramComponent implements OnInit {
     })
   }
 
-  getRecentPosts(){
-    
+  getRecentPosts(IGaccountID , FBpageaccessToken){
+  return  this._instagramService.getPublishedPostsForIG(IGaccountID , FBpageaccessToken).subscribe((publishedPosts:any)=>{
+    this.recentPosts = publishedPosts.data;
+    this.cf.detectChanges();
+  })
   }
   getIGAccountDetails(FbPageID, FbPageAccessToken) {
     return this._instagramService.getInstagramAccountID(FbPageID, FbPageAccessToken)
   }
-
 
   selectAll() {
     for (var i = 0; i < this.checklist.length; i++) {
@@ -120,7 +116,6 @@ export class InstagramComponent implements OnInit {
     }
     this.getCheckedItemList();
   }
-
 
   getCheckedItemList(): void {
     this.checkedList = [];
@@ -218,7 +213,7 @@ export class InstagramComponent implements OnInit {
     if (!this.file) {
       this.toast.error('Please select an Image File', 'Empty File');
       return;
-    }
+    }    
     else if (this.checkedList.length == 0) {
       this.toast.error('No Item Selected', 'Please select items to post');
       return;
@@ -229,13 +224,17 @@ export class InstagramComponent implements OnInit {
     }
     this.spinner.show()
     this._mediaUploadService.uploadMedia('Instagram', this.signedInUser.id, this.file).subscribe((media: any) => {
-      this.checkedList.forEach(item => {
+      this.checkedList.forEach((item,idx,self) => {
         this._reportService.createReport(2, "", 'Instagram')
         this._instagramService.createIGMediaContainer(item.instagram_business_account.id, this.instaCaption, item.linkedFbPagetoken, media.url).subscribe((container: any) => {
           this._instagramService.publishContent(item.instagram_business_account.id, container.id, item.linkedFbPagetoken).subscribe((data: any) => {
-
-            this.toast.success('Image Post Added Successfully', 'Post Added');
-            this.postedSuccessfully();
+            if(idx==self.length-1){
+              this.toast.success('Image Post Added Successfully', 'Post Added');
+              this.postedSuccessfully();
+           
+            }
+          
+          
             this._reportService.createReport(1, data.id, 'Instagram')
           }, error => {
             debugger;
@@ -252,6 +251,7 @@ export class InstagramComponent implements OnInit {
           this._reportService.createReport(0, "", 'Instagram');
 
         })
+
       }, error => {
         this.spinner.hide()
         this.toast.error(error.message)
