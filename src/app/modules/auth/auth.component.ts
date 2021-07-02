@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Club } from 'src/app/core/models/club.model';
+import { ClubService } from './../../core/services/club.service';
 
 @Component({
   selector: 'app-auth',
@@ -8,10 +10,27 @@ import { Component, OnInit } from '@angular/core';
 export class AuthComponent implements OnInit {
 
   today: Date = new Date();
-
-  constructor() { }
+  allClubs : Club[] = []
+  constructor(private _clubService : ClubService) { }
 
   ngOnInit(): void {
+    // this.getAllClubs()
   }
 
+
+  getAllClubs() {
+    this._clubService.getAllClubs(0, 10).subscribe(clubs => {
+      this.allClubs = clubs;
+      this.setDefaultClub()
+    }, (error) => {
+    })
+  }
+
+  setDefaultClub() {
+    let localClub = localStorage.getItem('selectedClub');
+    if (!localClub) {
+      localStorage.setItem('selectedClub', JSON.stringify(this.allClubs[0]))
+      return;
+    }
+  }
 }

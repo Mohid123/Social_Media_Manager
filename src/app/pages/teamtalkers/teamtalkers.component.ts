@@ -34,8 +34,8 @@ export class TeamtalkersComponent implements OnInit {
   public teamtalkerCaption: string = "";
   public poll: Poll;
   public clubName: string;
-  public clubLogo: string = ""
-  public url: string = "";
+  public clubLogo: string;
+  public url: string;
   public post: Post;
   public file: any;
   public signedInUser: User;
@@ -50,6 +50,7 @@ export class TeamtalkersComponent implements OnInit {
   public groupSelected: boolean = false;
   public eventSelected: boolean = false;
   private checkedList: any;
+  public recentClubPosts: Post[] = []
   public showDiv = {
     photo: true,
     video: false,
@@ -91,7 +92,32 @@ export class TeamtalkersComponent implements OnInit {
     this.getSignedInUser();
     this.initializeChecklist()
     this.getCheckedItemList();
+    this.getRecentClubPosts();
 
+
+
+  }
+
+  getRecentClubPosts() {
+  
+    debugger;
+    let tempPosts = []
+    this._postService.getClubPosts('Club', 0, 15).subscribe((clubPosts: Post[]) => {
+      clubPosts.map((singleClubPost:any,idx,self)=>{
+        this._postService.getPostCommentsAndReactions(singleClubPost.id , 0 ,5).subscribe((reactionsAndComments:any)=>{
+          singleClubPost.reactionCount = reactionsAndComments.count.reactionCount;
+          singleClubPost.commentsCount = reactionsAndComments.count.commentsCount;
+          singleClubPost.reactions = reactionsAndComments.reaction;
+          singleClubPost.postedDate = moment(singleClubPost.postedDate).fromNow();
+          tempPosts.push(singleClubPost)
+          if(idx == self.length-1){
+            this.recentClubPosts = tempPosts;
+            this.cf.detectChanges();
+           console.log(this.recentClubPosts , 'recentClubPosts')
+          }
+        })
+      })
+    })
   }
 
   resetPost() {
@@ -103,10 +129,6 @@ export class TeamtalkersComponent implements OnInit {
     this.cf.detectChanges()
     this.spinner.hide()
   }
-
-  // selectedSchedule() {
-  //   this.showSchedule = !this.showSchedule
-  // }
 
   initializeChecklist() {
     let club = JSON.parse(localStorage.getItem('selectedClub'));
@@ -223,22 +245,13 @@ export class TeamtalkersComponent implements OnInit {
       });
     });
   }
+
   getDateTime() {
     var elem = document.getElementById("dt");
     alert(elem);
   }
 
   dateEvent(event) { }
-
-  // createReport(status, postId?, postedTo?) {
-
-  //   this.report.clubID = JSON.parse(localStorage.getItem('selectedClub')).id;
-  //   this.report.postID = postId ? postId : "";
-  //   this.report.postedTo = postedTo;
-  //   this.report.successStatus = status;
-  //   this.report.userID = localStorage.getItem("clubUid");
-  //   this._reportService.addReport(this.report).subscribe((data) => { });
-  // }
 
   showSpinner() {
     this.spinner.show();
@@ -804,7 +817,7 @@ export class TeamtalkersComponent implements OnInit {
 
 
 
-  
+
   addPollPost() {
     let selectedClubGroups = [];
     let selectedClubEvents = [];
@@ -828,8 +841,8 @@ export class TeamtalkersComponent implements OnInit {
         selectedClubEvents.push(item);
       }
     });
-    
-   
+
+
     if (selectedClubGroups.length > 0) {
       this.toast.error("Poll can only be created in Club", "Error");
       return;
@@ -841,7 +854,7 @@ export class TeamtalkersComponent implements OnInit {
     }
 
     else {
-      this.poll.choice3.trim() || delete this.poll.choice3 
+      this.poll.choice3.trim() || delete this.poll.choice3
       this.poll.choice4.trim() || delete this.poll.choice4
       this.pollSelectedDate = new Date(this.pollSelectedDate.setHours(this.pollSelectedTime.getHours()));
       this.pollSelectedDate = new Date(this.pollSelectedDate.setMinutes(this.pollSelectedTime.getMinutes()));
@@ -865,7 +878,7 @@ export class TeamtalkersComponent implements OnInit {
       this.post.poll = Object.assign({}, this.poll);
       this.spinner.show();
       this._postService.addPost(this.post).subscribe((data) => {
-        this.toast.success('Poll Post Created in Club' , 'Success' );
+        this.toast.success('Poll Post Created in Club', 'Success');
         console.log(data)
         this.resetPost()
       });
@@ -873,3 +886,9 @@ export class TeamtalkersComponent implements OnInit {
 
   }
 }
+
+
+
+  // selectedSchedule() {
+  //   this.showSchedule = !this.showSchedule
+  // }

@@ -12,7 +12,9 @@ import { Injectable } from '@angular/core';
 export class ClubService {
   private club: any
 
-  constructor(private _apiService: ApiService, private http: HttpClient, private _errorHandlerService: ErrorhandlerService) { }
+  constructor(private _apiService: ApiService, private http: HttpClient, private _errorHandlerService: ErrorhandlerService) {
+    environment.club_api_url = JSON.parse( localStorage.getItem('selectedClub')).baseURL;
+   }
 
   getAllClubs(offset, limit): Observable<any> {
     limit = parseInt(limit) < 1 ? 10 : limit;
@@ -37,14 +39,17 @@ export class ClubService {
   }
 
   getClubGroups(offset, limit): Observable<any> {
-    environment.club_api_url = JSON.parse( localStorage.getItem('selectedClub')).baseURL;
+    limit = parseInt(limit) < 1 ? 10 : limit;
+    offset = parseInt(offset) < 0 ? 0 : offset;
     return this.http.get(`${environment.club_api_url}/groups/getAllGroups?offset=${offset}&limit=${limit}`).pipe(catchError(this._errorHandlerService.handleErrors))
   }
 
   getClubEvents(offset, limit) {
-    environment.club_api_url = JSON.parse( localStorage.getItem('selectedClub')).baseURL;
+    limit = parseInt(limit) < 1 ? 10 : limit;
+    offset = parseInt(offset) < 0 ? 0 : offset;
     return this.http.get(`${environment.club_api_url}/event/getAllEvents?offset=${offset}&limit=${limit}`).pipe(catchError(this._errorHandlerService.handleErrors))
   }
+
 
   get getClub(){
     return this.club;

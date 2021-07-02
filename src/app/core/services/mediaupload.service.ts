@@ -10,7 +10,10 @@ import { Injectable } from '@angular/core';
 })
 export class MediauploadService {
 
-  constructor(private _apiService: ApiService, private http: HttpClient, private _errorHandlerService: ErrorhandlerService) { }
+  constructor(private _apiService: ApiService, private http: HttpClient, private _errorHandlerService: ErrorhandlerService) { 
+    environment.club_api_url = JSON.parse( localStorage.getItem('selectedClub')).baseURL;
+
+  }
 
 
   uploadMedia(folderName, fieldName, file) {
@@ -21,7 +24,6 @@ export class MediauploadService {
 
 
   uploadClubMedia(folderName , fieldName , file){
-    environment.club_api_url = JSON.parse( localStorage.getItem('selectedClub')).baseURL;
     const formData: FormData = new FormData();
     formData.append('file', file, file.name);
     return this.http.post(`${environment.club_api_url}/media-upload/mediaFiles/${folderName}/${fieldName}`, formData).pipe(catchError(this._errorHandlerService.handleErrors))

@@ -129,7 +129,7 @@ export class LoginComponent implements OnInit {
       this.tempClubs = clubs;
       this.setDefaultClub()
     }, (error) => {
-      this.toastr.error(error)
+      this.toastr.error(error.message)
     })
   }
 
