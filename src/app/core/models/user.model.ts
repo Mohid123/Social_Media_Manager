@@ -8,4 +8,7 @@ export class User {
     userID : string // For his club
     FBUserAuthToken : string
     FBuserID : string
+    userFacebookProfile: any
+    userInstaProfile: any
+    userClubProfile: any
 }

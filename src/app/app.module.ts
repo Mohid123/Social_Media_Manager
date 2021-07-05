@@ -1,6 +1,6 @@
 import { Interceptor } from './core/interceptors/http-interceptor';
 import { NgModule, APP_INITIALIZER } from '@angular/core';
-import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -27,6 +27,7 @@ import {
   FacebookLoginProvider
 } from 'angularx-social-login';
 import { VideoProcessingService } from './core/services/video-service/video-processing.service';
+import { GlobalConstants } from './app.constatns';
 
 
 
@@ -62,12 +63,12 @@ function appInitializer(authService: AuthService) {
       })
       : [],
     AppRoutingModule,
-    ToastrModule.forRoot( {positionClass: 'toast-top-right'} ),
+    ToastrModule.forRoot({ positionClass: 'toast-top-right' }),
     InlineSVGModule.forRoot(),
     NgbModule,
     MatTabsModule,
 
-  
+
 
   ],
   providers: [
@@ -86,13 +87,14 @@ function appInitializer(authService: AuthService) {
           typescript: () => import('highlight.js/lib/languages/typescript'),
           scss: () => import('highlight.js/lib/languages/scss'),
           json: () => import('highlight.js/lib/languages/json')
-        },
+        }
+
       },
     },
     {
-      provide : HTTP_INTERCEPTORS,
-      useClass : Interceptor,
-      multi : true
+      provide: HTTP_INTERCEPTORS,
+      useClass: Interceptor,
+      multi: true
     },
     {
       provide: 'SocialAuthServiceConfig',
@@ -108,6 +110,6 @@ function appInitializer(authService: AuthService) {
     }
   ],
   bootstrap: [AppComponent],
-  schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule { }
