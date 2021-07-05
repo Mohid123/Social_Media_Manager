@@ -27,7 +27,6 @@ import {
   FacebookLoginProvider
 } from 'angularx-social-login';
 import { VideoProcessingService } from './core/services/video-service/video-processing.service';
-import { GlobalConstants } from './app.constatns';
 
 
 

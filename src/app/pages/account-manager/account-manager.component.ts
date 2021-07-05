@@ -93,12 +93,7 @@ export class AccountManagerComponent implements OnInit {
   }
 
   async signInWithFB() {
-    // let userFacebookProfile = {
-    //   name: '',
-    //   email: '',
-    //   profilePicUrl: ''
-
-    // };
+  
     document.getElementById("signInFB").style.pointerEvents = "none";
     const fbLoginOptions = {
       scope:

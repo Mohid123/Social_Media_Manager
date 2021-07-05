@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { ApiService } from './api.service';
 import { Injectable } from '@angular/core';
+import { constants } from 'src/app/app.constatns';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ import { Injectable } from '@angular/core';
 export class MediauploadService {
 
   constructor(private _apiService: ApiService, private http: HttpClient, private _errorHandlerService: ErrorhandlerService) { 
-    environment.club_api_url = JSON.parse( localStorage.getItem('selectedClub')).baseURL;
+    // environment.club_api_url = JSON.parse( localStorage.getItem('selectedClub')).baseURL;
 
   }
 
@@ -19,14 +20,14 @@ export class MediauploadService {
   uploadMedia(folderName, fieldName, file) {
     const formData: FormData = new FormData();
     formData.append('file', file, file.name);
-    return this.http.post(`${environment.api_url}/media-upload/mediaFiles/${folderName}/${fieldName}`, formData).pipe(catchError(this._errorHandlerService.handleErrors))
+    return this.http.post(`${constants.api_url}/media-upload/mediaFiles/${folderName}/${fieldName}`, formData).pipe(catchError(this._errorHandlerService.handleErrors))
   }
 
 
   uploadClubMedia(folderName , fieldName , file){
     const formData: FormData = new FormData();
     formData.append('file', file, file.name);
-    return this.http.post(`${environment.club_api_url}/media-upload/mediaFiles/${folderName}/${fieldName}`, formData).pipe(catchError(this._errorHandlerService.handleErrors))
+    return this.http.post(`${constants.clubApiUrl}/media-upload/mediaFiles/${folderName}/${fieldName}`, formData).pipe(catchError(this._errorHandlerService.handleErrors))
   }
 
 }

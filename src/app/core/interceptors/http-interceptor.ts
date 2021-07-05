@@ -2,13 +2,12 @@ import { catchError } from 'rxjs/operators';
 import { Observable, throwError } from 'rxjs';
 import { Injectable } from "@angular/core";
 import { HttpInterceptor, HttpHandler, HttpRequest, HttpEvent } from "@angular/common/http";
-
+import { constants } from 'src/app/app.constatns';
 @Injectable()
 export class Interceptor implements HttpInterceptor {
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     let customReq;
-
-    let clubBaseUrl = JSON.parse(localStorage.getItem('selectedClub')).baseURL;
+    let clubBaseUrl =constants.clubApiUrl;
     if(request.url.includes('getAllClubs') || request.url.includes('loginByEmail') ){
       customReq = request.clone()
     }                                       
@@ -17,7 +16,7 @@ export class Interceptor implements HttpInterceptor {
         headers: request.headers.set('Authorization', localStorage.getItem('app-token'))
       });
     }
-    else if(request.url.includes(clubBaseUrl)){
+    else if(request.url.includes(constants.clubApiUrl)){
       customReq = request.clone({
         headers: request.headers.set('Authorization', localStorage.getItem('club-token'))
       });

@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { throwError, Observable } from 'rxjs';
 import { catchError  } from 'rxjs/operators';
+import { constants } from 'src/app/app.constatns';
 
 @Injectable({
   providedIn: 'root'
@@ -18,26 +19,26 @@ export class ApiService {
   }
 
   get(path: string){
-    return this.http.get(`${environment.api_url}${path}`)
+    return this.http.get(`${constants.api_url}${path}`)
       .pipe(catchError(this.handleErrors));
   }
 
   put(path: string, body: Object = {}){
     return this.http.put(
-      `${environment.api_url}${path}`,
+      `${constants.api_url}${path}`,
       JSON.stringify(body)
     ).pipe(catchError(this.handleErrors));
   }
 
   post(path: string, payload) {
     return this.http.post(
-      `${environment.api_url}${path}`,  payload
+      `${constants.api_url}${path}`,  payload
     ).pipe(catchError(this.handleErrors));
   }
 
   delete(path ) {
     return this.http.delete(
-      `${environment.api_url}${path}`
+      `${constants.api_url}${path}`
     ).pipe(catchError(this.handleErrors));
   }
 }
