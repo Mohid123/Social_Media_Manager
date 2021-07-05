@@ -4,7 +4,8 @@ import { MainAuthService } from "./../../core/services/auth.service";
 import { UsersService } from "./../../core/services/users.service";
 import { FacebookService } from "./../../core/services/facebook.service";
 import { Component, OnInit } from "@angular/core";
-import { FacebookProfileModel } from "src/app/modules/auth/_models/facebook-profile";
+import { FacebookProfileModel } from "src/app/core/models/facebook-profile";
+import { ClubProfileModel } from "src/app/core/models/club-profile";
 import {
   FacebookLoginProvider,
   SocialAuthService,
@@ -13,6 +14,7 @@ import {
 import { NgxSpinnerService } from "ngx-spinner";
 import { User } from "src/app/core/models/user.model";
 import { ExtrasModule } from './../../_metronic/partials/layout/extras/extras.module';
+import { ChangeDetectorRef } from "@angular/core";
 @Component({
   selector: "app-account-manager",
   templateUrl: "./account-manager.component.html",
@@ -26,8 +28,8 @@ export class AccountManagerComponent implements OnInit {
   private connectedIG: boolean = false;
   private userFacebookPages: any[] = [];
   public clubLogo: string = "";
-
-  
+  public userFBprofile : FacebookProfileModel
+  public userClubProfile : ClubProfileModel
 
 
   constructor(
@@ -36,8 +38,12 @@ export class AccountManagerComponent implements OnInit {
     private _facebookService: FacebookService,
     private _profileService: UsersService,
     private _authService: MainAuthService,
-    private _toast: ToastrService
-  ) { }
+    private _toast: ToastrService,
+    private cf : ChangeDetectorRef
+  ) {
+    this.userFBprofile = new FacebookProfileModel();
+    this.userClubProfile = new ClubProfileModel();
+   }
 
 
 
@@ -52,7 +58,16 @@ export class AccountManagerComponent implements OnInit {
     debugger;
     this._authService.getSignedInUser().subscribe((user) => {
       this.signedInUser = user;
+      this.setFbProfile(user.userFacebookProfile.fbEmail , user.userFacebookProfile.fbUserName ,  user.userFacebookProfile.fbProfileImageUrl);
+      this.setClubprofile(user.userClubProfile.clubEmail , user.userClubProfile.clubUsername , user.userClubProfile.clubProfileImageUrl);
     });
+  }
+
+  setFbProfile(email , username , profileImageUrl){
+    this.userFBprofile.fbEmail = email;
+    this.userFBprofile.fbUserName = username;
+    this.userFBprofile.fbProfileImageUrl = profileImageUrl;
+    this.cf.detectChanges();
   }
 
   showSpinner() {
@@ -61,6 +76,7 @@ export class AccountManagerComponent implements OnInit {
       this.spinner.hide();
     }, 1000);
   }
+
 
   objectsEqual(o1, o2) {
     return typeof o1 === "object" && Object.keys(o1).length > 0
@@ -77,12 +93,12 @@ export class AccountManagerComponent implements OnInit {
   }
 
   async signInWithFB() {
-    let userFacebookProfile = {
-      name: '',
-      email: '',
-      profilePicUrl: ''
+    // let userFacebookProfile = {
+    //   name: '',
+    //   email: '',
+    //   profilePicUrl: ''
 
-    };
+    // };
     document.getElementById("signInFB").style.pointerEvents = "none";
     const fbLoginOptions = {
       scope:
@@ -95,10 +111,11 @@ export class AccountManagerComponent implements OnInit {
         this._toast.success("Successfully logged into Facebook");
         this.socialUser = socialUser;
         this.signedInUser.FBuserID = this.socialUser.id;
-        userFacebookProfile.email = this.socialUser.response.email;
-        userFacebookProfile.name = this.socialUser.response.name;
-        userFacebookProfile.profilePicUrl = this.socialUser.response.picture.data.url;
-        this.signedInUser.userFacebookProfile = Object.assign({}, userFacebookProfile)
+        this.userFBprofile.fbEmail = this.socialUser.response.email;
+        this.userFBprofile.fbUserName = this.socialUser.response.name;
+        this.userFBprofile.fbProfileImageUrl = this.socialUser.response.picture.data.url;
+        this.cf.detectChanges();
+        this.signedInUser.userFacebookProfile = Object.assign({}, this.userFBprofile)
         this.getLongLivedFBUserToken(this.socialUser.authToken).subscribe(
           (data) => {
             console.log(data, "long access token");
@@ -128,8 +145,17 @@ export class AccountManagerComponent implements OnInit {
       .catch((err) => console.log(err));
   }
 
-  updateUserFBProfile(userName , email , profileImageUrl){
+  signOutOfClub(){
+    this._authService.logoutSignedInUser()
+  }
 
+
+  setClubprofile(email , userName , profileImageUrl){
+    debugger;
+    this.userClubProfile.clubEmail = email,
+    this.userClubProfile.clubUsername = userName;
+    this.userClubProfile.clubProfileImageURL = profileImageUrl;
+    this.cf.detectChanges()
   }
 
   getLongLivedFBUserToken(userToken): Observable<any> {

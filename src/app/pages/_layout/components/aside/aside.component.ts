@@ -28,9 +28,9 @@ export class AsideComponent implements OnInit {
   brandClasses: string;
   asideMenuScroll = 1;
   asideSelfMinimizeToggle = false;
-  selectedClub : Club
+  selectedClub: Club
   closeResult: string;
-  constructor(private layout: LayoutService, private loc: Location , private _authService : MainAuthService, private modalService: NgbModal, private router: Router) { }
+  constructor(private layout: LayoutService, private loc: Location, private _authService: MainAuthService, private modalService: NgbModal, private router: Router) { }
 
   ngOnInit(): void {
     this.disableAsideSelfDisplay =
@@ -47,15 +47,12 @@ export class AsideComponent implements OnInit {
     );
     this.asideMenuScroll = this.layout.getProp('aside.menu.scroll') ? 1 : 0;
     this.location = this.loc;
-    this.selectedClub =  JSON.parse(localStorage.getItem('selectedClub')) as Club;
+    this.selectedClub = JSON.parse(localStorage.getItem('selectedClub')) as Club;
   }
 
   logout() {
-    let selectedClub = localStorage.getItem('selectedClub');
-    localStorage.clear();
-    localStorage.setItem('selectedClub' , selectedClub)
-   this.router.navigateByUrl('/login');
- }
+    this._authService.logoutSignedInUser()
+  }
 
   openVerticallyCentered(content) {
     this.modalService.open(content, { centered: true }).result.then((result) => {

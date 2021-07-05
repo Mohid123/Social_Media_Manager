@@ -44,9 +44,17 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private config: NgbModalConfig,
-    private fb: FormBuilder, private authService: AuthService, private route: ActivatedRoute, private router: Router, private _clubService: ClubService,
-    private _authService: MainAuthService, private modalService: NgbModal, private _userService: UsersService, private toastr: ToastrService, private spinner: NgxSpinnerService,
-    private cf : ChangeDetectorRef
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private _clubService: ClubService,
+    private _authService: MainAuthService,
+    private modalService: NgbModal,
+    private _userService: UsersService, 
+    private toastr: ToastrService, 
+    private spinner: NgxSpinnerService,
+    private cf: ChangeDetectorRef
   ) {
     config.backdrop = 'static';
     config.keyboard = false;
@@ -80,7 +88,7 @@ export class LoginComponent implements OnInit {
   }
 
   loginByEmail() {
-
+    debugger;
     if (!this.selectedClub) {
       this.toastr.error('Please Select Club', 'Empty Club')
       return;
@@ -95,16 +103,23 @@ export class LoginComponent implements OnInit {
       debugger;
       console.log(user)
       if (user.user.admin) {
-        // localStorage.setItem('app-token', user.app_token.access_token)
+        localStorage.setItem('app-token', user.app_token.access_token)
         localStorage.setItem('clubUid', user.loggedInUser.userID)
         localStorage.setItem('userId', user.loggedInUser.id)
-        localStorage.setItem('token', user.token)
+        localStorage.setItem('club-token', user.token)
         localStorage.setItem('admin', user.user.admin)
         localStorage.setItem('userName', user.user.username)
         localStorage.setItem('profileImageUrl', user.user.profilePicURL)
         this.spinner.hide();
         this.toastr.success('Login Success', 'Logged In Successfully');
         this.router.navigateByUrl('/pages/dashboard');
+        user.loggedInUser.userClubProfile.clubEmail = user.user.email;
+        user.loggedInUser.userClubProfile.clubUsername = user.user.username;
+        user.loggedInUser.userClubProfile.clubProfileImageUrl = user.user.profilePicURL; 
+
+        this._userService.updateUser(user.loggedInUser).subscribe(data=>{
+          console.log(data)
+        });
       }
       else {
         this.spinner.hide();
@@ -121,6 +136,10 @@ export class LoginComponent implements OnInit {
       }
       this.toastr.error(err.message);
     })
+  }
+
+  updateLoggedInUser(email , username , profileImageUrl){
+
   }
 
   getAllClubs() {
@@ -160,7 +179,7 @@ export class LoginComponent implements OnInit {
       localStorage.setItem('selectedClub', JSON.stringify(this.allClubs[0]))
       return;
     }
-    else if(localClub){
+    else if (localClub) {
       this.selectedClub = JSON.parse(localClub);
       this.cf.detectChanges();
     }

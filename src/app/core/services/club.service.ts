@@ -13,8 +13,8 @@ export class ClubService {
   private club: any
 
   constructor(private _apiService: ApiService, private http: HttpClient, private _errorHandlerService: ErrorhandlerService) {
-    environment.club_api_url = JSON.parse( localStorage.getItem('selectedClub')).baseURL;
-   }
+    environment.club_api_url = JSON.parse(localStorage.getItem('selectedClub')).baseURL;
+  }
 
   getAllClubs(offset, limit): Observable<any> {
     limit = parseInt(limit) < 1 ? 10 : limit;
@@ -50,12 +50,21 @@ export class ClubService {
     return this.http.get(`${environment.club_api_url}/event/getAllEvents?offset=${offset}&limit=${limit}`).pipe(catchError(this._errorHandlerService.handleErrors))
   }
 
+  clubProfile(email, username, profileImageUrl) {
+    let clubProfile = {
+      email: email,
+      username: username,
+      profileImageUrl: profileImageUrl
+    }
+    return clubProfile
+  }
 
-  get getClub(){
+
+  get getClub() {
     return this.club;
   }
 
-  set setClub(club){
+  set setClub(club) {
     this.club = club;
   }
 }

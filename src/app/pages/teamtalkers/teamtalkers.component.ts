@@ -102,7 +102,7 @@ export class TeamtalkersComponent implements OnInit {
   
     debugger;
     let tempPosts = []
-    this._postService.getClubPosts('Club', 0, 15).subscribe((clubPosts: Post[]) => {
+    this._postService.getClubPosts('Club', 0, 10).subscribe((clubPosts: Post[]) => {
       clubPosts.map((singleClubPost:any,idx,self)=>{
         this._postService.getPostCommentsAndReactions(singleClubPost.id , 0 ,5).subscribe((reactionsAndComments:any)=>{
           singleClubPost.reactionCount = reactionsAndComments.count.reactionCount;

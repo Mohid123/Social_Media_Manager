@@ -13,6 +13,7 @@ import KTLayoutHeaderTopbar from '../../../../../assets/js/layout/base/header-to
 import { KTUtil } from '../../../../../assets/js/components/util';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
+import { MainAuthService } from 'src/app/core/services/auth.service';
 
 @Component({
   selector: 'app-topbar',
@@ -42,7 +43,7 @@ export class TopbarComponent implements OnInit, AfterViewInit {
   extrasUserLayout: 'offcanvas' | 'dropdown';
   username: string = localStorage.getItem('userName')
 
-  constructor(private layout: LayoutService, private auth: AuthService, private modalService: NgbModal, private router: Router) {
+  constructor(private layout: LayoutService, private auth: AuthService, private modalService: NgbModal, private router: Router , private _authService : MainAuthService) {
     this.user$ = this.auth.currentUserSubject.asObservable();
   }
 
@@ -92,17 +93,10 @@ export class TopbarComponent implements OnInit, AfterViewInit {
   }
 
 
-
-  logout() {
-    let selectedClub = localStorage.getItem('selectedClub');
-    localStorage.clear();
-    localStorage.setItem('selectedClub', selectedClub)
-    this.router.navigateByUrl('/login');
+  logout(){
+    this._authService.logoutSignedInUser()
   }
-
-
-  
-
+ 
 
   ngAfterViewInit(): void {
     KTUtil.ready(() => {
