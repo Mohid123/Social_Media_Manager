@@ -141,6 +141,9 @@ export class FacebookComponent implements OnInit {
             if (idx == self.length - 1) {
               combineLatest(callsList).subscribe(facebookPosts => {
                 facebookPosts.map((singleItem:any)=>{
+                  // if(singleItem.){
+                  //   singleItem.videUrl = singleItem.attachments.data[0].media.source;
+                  // }
                   singleItem.created_time = moment(singleItem.created_time).fromNow()
                   singleItem.pageName = user.FBPages[i].pageName
                 })

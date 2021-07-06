@@ -796,12 +796,12 @@
                                             <div class="text" style="right: -94px !important; top: 17px !important;">
                                                 <div class="name"> {{userName}}</div>
                                                 <span> {{post.postedDate}}
-                                                   
+
                                                 </span>
                                             </div>
                                         </div>
-                                    </div> 
-                               
+                                    </div>
+
                                     <!-- <div class="col text-right">
                                         <div ngbDropdown class="d-inline-block">
                                             <button class="btn" id="dropdownBasic1" ngbDropdownToggle><i
@@ -820,10 +820,10 @@
                                 <img *ngIf="post.type === 'image'" src="{{post.captureFileURL}}" style="height: 100%; width: 100%; object-fit: cover; ">                                
                                 <video *ngIf="post.type === 'video'"  src="{{post.captureFileURL}}" style="height: 100%; width: 100%; object-fit: cover;" controls  disablepictureinpicture controlsList="nodownload"></video> 
                                 </div> -->
-                                <div *ngIf="post.type!=='text'" class="preview-media" data-max-image="5"
-                                    style="margin-top: -20px">
-                                    <img *ngIf="post.type == 'hyperlink'" src="{{post.hyperlinkCaptureFileURL}}"
-                                    style="height: 100%; width: 100%; object-fit: cover; ">
+                                <div *ngIf="post.type!=='text' && post.type!== 'hyperlink' " class="preview-media"
+                                    data-max-image="5" style="margin-top: -20px">
+                                    <!-- <img *ngIf="post.type == 'hyperlink'" src="{{post.hyperlinkCaptureFileURL}}"
+                                    style="height: 100%; width: 100%; object-fit: cover; "> -->
                                     <img *ngIf="post.type == 'image'" src="{{post.captureFileURL}}"
                                         style="height: 100%; width: 100%; object-fit: cover; ">
                                     <video *ngIf="post.type == 'video'" src="{{post.captureFileURL}}"
@@ -832,29 +832,58 @@
                                 </div>
 
                                 <!--HYPERLINK POST DESIGN-->
-                                <div class="card card-custom mb-8 mb-lg-0 rounded border mt-3 ml-3 mr-3">
+                                <div *ngIf="post.hyperLink != ''"
+                                    class="card card-custom mb-8 mb-lg-0 rounded border mt-3 ml-3 mr-3">
                                     <div class="card-body p-0">
-                                     <div class="d-flex align-items-center p-5">
-                                      <div class="mr-6">
-                                       <span class="svg-icon svg-icon-4x">
-                                        <div class="symbol symbol-40 symbol-light mr-2" style="padding-left: 10px">
-                                            <span class="symbol-label">
-                                                <img src="../../../assets/media/logos/trophy.png" class="h-100 align-self-end" style="object-fit: cover;" alt="" />
-                                            </span>
+                                        <div class="d-flex align-items-center p-5">
+                                            <div class="mr-6">
+                                                <span class="svg-icon svg-icon-4x rounded">
+                                                    <div class="symbol symbol-40 symbol-light mr-2 "
+                                                        style="padding-left: 10px">
+                                                        <span class="symbol-label rounded">
+                                                            <img *ngIf="post.type == 'hyperlink' && post.captureFileURL === '' "
+                                                                src="https://api.teamtalkers.com/api/v1/en/media-upload/mediaFiles/html/html/7bd046a8c10bcfba8800951fc2a9063f9.jpg"
+                                                                class="h-100 align-self-end rounded" style="object-fit: cover;"
+                                                                alt="" />
+                                                            <img *ngIf="post.type != 'hyperlink' && post.hyperlinkCaptureFileURL === '' "
+                                                                src="https://api.teamtalkers.com/api/v1/en/media-upload/mediaFiles/html/html/7bd046a8c10bcfba8800951fc2a9063f9.jpg"
+                                                                class="h-100 align-self-end rounded" style="object-fit: cover;"
+                                                                alt="" />
+
+                                                            <img *ngIf="post.type == 'hyperlink' && post.captureFileURL"
+                                                                src="{{post.captureFileURL}}"
+                                                                class="h-100 align-self-end rounded" style="object-fit: cover;"
+                                                                alt="" />
+                                                            <img *ngIf="post.type != 'hyperlink' && post.hyperlinkCaptureFileURL"
+                                                                src="{{post.hyperlinkCaptureFileURL}}"
+                                                                class="h-100 align-self-end rounded" style="object-fit: cover;"
+                                                                alt="" />
+
+                                                        </span>
+                                                    </div>
+                                                </span>
+                                            </div>
+                                            <div class="d-flex flex-column">
+                                                <a href={{post.hyperLink}} target="_blank"
+                                                    class="font-weight-normal font-size-h4 mb-3">
+                                                    <div *ngIf="post.type == 'hyperlink'" class="text-dark">
+                                                        {{post.textFirst}}
+                                                    </div>
+                                                    <div *ngIf="post.type == 'hyperlink'" class="text-muted font-size-sm">
+                                                        {{post.textSecond}}
+                                                    </div>
+
+                                                    <div *ngIf="post.type != 'hyperlink'">
+                                                        {{post.hyperlinkTextFirst}}
+                                                    </div>
+                                                    <div *ngIf="post.type != 'hyperlink'" class="text-muted font-size-sm">
+                                                        {{post.hyperlinkTextSecond}}
+                                                    </div>
+                                                </a>
+                                            </div>
                                         </div>
-                                       </span>
-                                      </div>
-                                      <div class="d-flex flex-column">
-                                       <a href="#" class="text-dark text-hover-primary font-weight-bold font-size-h4 mb-3">
-                                           Tutorials
-                                       </a>
-                                       <div class="text-dark-75">
-                                        Add link here shaeel
-                                       </div>
-                                      </div>
-                                     </div>
                                     </div>
-                              </div>
+                                </div>
                                 <div class="caption">
                                     <div *ngIf="post.text">{{post.text}}</div>
                                 </div>
@@ -1019,7 +1048,7 @@
                                                 <div class="line-no-text" *ngIf="!teamtalkerCaption"></div>
                                             </div>
 
-<!-- 
+                                            <!-- 
                                             <div class="preview-club">
                                                 <div class="d-flex bd-highlight">
                                                     <div class="p-2 flex-fill bd-highlight">
@@ -1198,8 +1227,8 @@
                                                     </div>
                                                 </div>
                                             </div> -->
-                                          
-                                            
+
+
                                             <div class="preview-club">
                                                 <div class="d-flex bd-highlight">
                                                     <div class="p-2 flex-grow-1 bd-highlight">
@@ -1323,8 +1352,8 @@
                                                     </div>
                                                 </div>
                                             </div> -->
-                                            
-                                            
+
+
                                             <div class="preview-club">
                                                 <div class="d-flex bd-highlight">
                                                     <div class="p-2 flex-grow-1 bd-highlight">
