@@ -254,7 +254,12 @@
                     <mat-tab>
                         <ng-template mat-tab-label>
 
-                            <mat-icon><i class="far fa-images icon-lg" style="color: #3699FF;"></i></mat-icon>&nbsp;
+                            <mat-icon>
+                                <!-- <i class="far fa-images icon-lg" style="color: #3699FF;"></i> -->
+                                <i data-visualcompletion="css-img"
+                                    style="background-image:url('https://static.xx.fbcdn.net/rsrc.php/v3/yG/r/1j-f6O0Xtyf.png?_nc_eui2=AeG_ziBgWuKTlexxWVF9hOlyxCA0FsPulJTEIDQWw-6UlCrJ5n7cV9jq2XE66KcW3LTtFYAod1eQ9c8TCxxlL1Mj');background-position:0 -125px;background-size:auto;width:24px;height:24px;background-repeat:no-repeat;display:inline-block"></i>
+
+                            </mat-icon>&nbsp;
                             &nbsp;Photo
                         </ng-template>
                         <div class="card-body">
@@ -394,7 +399,12 @@
                     <mat-tab
                         (click)="showDiv.video = true ; showDiv.photo = false ; showDiv.text = false ; showDiv.poll= false">
                         <ng-template mat-tab-label>
-                            <mat-icon><i class="fas fa-video icon-lg" style="color: #3699FF;"></i></mat-icon>&nbsp;
+                            <mat-icon>
+                                <!-- <i class="fas fa-video icon-lg" style="color: #3699FF;"></i> -->
+                                <i data-visualcompletion="css-img"
+                                    style="background-image:url('https://static.xx.fbcdn.net/rsrc.php/v3/yG/r/1j-f6O0Xtyf.png?_nc_eui2=AeG_ziBgWuKTlexxWVF9hOlyxCA0FsPulJTEIDQWw-6UlCrJ5n7cV9jq2XE66KcW3LTtFYAod1eQ9c8TCxxlL1Mj');background-position:0 0;background-size:auto;width:24px;height:24px;background-repeat:no-repeat;display:inline-block"></i>
+
+                            </mat-icon>&nbsp;
                             &nbsp;Video
 
                         </ng-template>
@@ -530,7 +540,7 @@
                     <mat-tab
                         (click)="showDiv.text = true ; showDiv.photo = false ; showDiv.video = false; showDiv.poll= false">
                         <ng-template mat-tab-label>
-                            <mat-icon><i class="far fa-file-alt icon-lg" style="color: #3699FF;"></i></mat-icon>
+                            <mat-icon><i class="far fa-file-alt icon-lg" style="color: #EAB026;"></i></mat-icon>
                             &nbsp;Text
 
                         </ng-template>
@@ -626,7 +636,7 @@
                     <mat-tab
                         (click)="showDiv.poll = true ; showDiv.photo = false ; showDiv.video = false; showDiv.text = false">
                         <ng-template mat-tab-label>
-                            <mat-icon><i class="fas fa-poll icon-lg" style="color: #3699FF;"></i></mat-icon>
+                            <mat-icon><i class="fas fa-poll icon-lg" style="color: #0080ff;"></i></mat-icon>
                             &nbsp;Poll
 
                         </ng-template>
@@ -778,6 +788,7 @@
                             style="box-shadow: rgb(99 99 99 / 20%) 0px 2px 8px 0px;">
                             <div class="preview-facebook preview-facebook-media item-post-type" data-type="photo">
                                 <div class="row pt-5">
+<<<<<<< HEAD
                                     <!-- <div class="col csss" style="z-index: 1;">
 
                                         <div class="user-info-view d-inline-block" >
@@ -785,6 +796,15 @@
                                                 [src]="profileImageUrl">
                                             <div class="text" style="float: right;">
                                                 <div class="name text-primary font-weight-bold"> {{userName}}</div>
+=======
+                                    <div class="col">
+                                        <div class="user-info d-inline-block" style="z-index: 1;">
+                                            <img class="img-circle"
+                                                style="height: 44px; object-fit: cover; border-radius: 30px;"
+                                                [src]="profileImageUrl">
+                                            <div class="text" style="right: -94px !important; top: 17px !important;">
+                                                <div class="name"> {{userName}}</div>
+>>>>>>> abe2de516612589cbb97cc957606a0367317bf16
                                                 <span> {{post.postedDate}}
                                                    
                                                 </span>
@@ -834,7 +854,7 @@
                                 </div>
 
 
-                                <div class="preview-club">
+                                <!-- <div class="preview-club">
                                     <div class="d-flex bd-highlight">
                                         <div class="p-2 flex-fill bd-highlight">
                                             <div class="p-2 bd-highlight">
@@ -846,8 +866,12 @@
                                                                 <img alt="Pic" src="{{reaction.user.profilePicURL}}" />
                                                             </div>
 
+<<<<<<< HEAD
 
                                                             <span class="symbol-label"></span>
+=======
+                                                            <span class="symbol-label">{{post.reactionCount}} like</span>
+>>>>>>> abe2de516612589cbb97cc957606a0367317bf16
                                                         </div>
 
                                                     </div>
@@ -860,8 +884,35 @@
                                             <div class="p-2 bd-highlight">{{post.commentsCount}} Comments</div>
                                         </div>
                                         <div class="p-2 flex-fill bd-highlight">
-                                            <div class="p-2 bd-highlight">{{post.reactionCount}} Reactions</div>
+                                            <div class="p-2 bd-highlight">1 Share</div>
                                         </div>
+                                        
+                                    </div>
+                                </div> -->
+
+                                <div class="preview-club">
+                                    <div class="d-flex bd-highlight">
+                                        <div class="p-2 flex-grow-1 bd-highlight">
+                                            <div class="row">
+                                                <div class="col item">
+                                                    <div class=" symbol-group symbol-hover">
+
+                                                        <div *ngFor="let reaction of post.reactions"
+                                                            class="symbol symbol-circle symbol-20 symbol-sm-2">
+                                                            <img alt="Pic" src="{{reaction.user.profilePicURL}}" />
+                                                        </div>
+
+
+                                                        <span class="symbol-label">{{post.reactionCount}} likes</span>
+                                                    </div>
+
+                                                </div>
+
+
+                                            </div>
+                                        </div>
+                                        <div class="p-2 bd-highlight">1 comment</div>
+                                        <div class="p-2 bd-highlight">1 share</div>
                                     </div>
                                 </div>
                                 <div class="preview-comment">
@@ -967,7 +1018,7 @@
                                                 <div class="line-no-text" *ngIf="!teamtalkerCaption"></div>
                                             </div>
 
-
+<!-- 
                                             <div class="preview-club">
                                                 <div class="d-flex bd-highlight">
                                                     <div class="p-2 flex-fill bd-highlight">
@@ -1012,6 +1063,45 @@
                                                     <div class="p-2 flex-fill bd-highlight">
                                                         <div class="p-2 bd-highlight">3 Shares</div>
                                                     </div>
+                                                </div>
+                                            </div> -->
+
+
+                                            <div class="preview-club">
+                                                <div class="d-flex bd-highlight">
+                                                    <div class="p-2 flex-grow-1 bd-highlight">
+                                                        <div class="row">
+                                                            <div class="col item">
+                                                                <div class=" symbol-group symbol-hover">
+
+                                                                    <div
+                                                                        class="symbol symbol-circle symbol-20 symbol-sm-2">
+                                                                        <img alt="Pic"
+                                                                            src="../../../assets/media/users/100_14.jpg" />
+                                                                    </div>
+                                                                    <div
+                                                                        class="symbol symbol-circle symbol-20 symbol-sm-2">
+                                                                        <img alt="Pic"
+                                                                            src="../../../assets/media/users/100_6.jpg" />
+                                                                    </div>
+                                                                    <div
+                                                                        class="symbol symbol-circle symbol-20 symbol-sm-2">
+                                                                        <img alt="Pic"
+                                                                            src="../../../assets/media/users/100_11.jpg" />
+                                                                    </div>
+
+
+                                                                    <span class="symbol-label">{{post.reactionCount}}
+                                                                        likes</span>
+                                                                </div>
+
+                                                            </div>
+
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="p-2 bd-highlight">1 comment</div>
+                                                    <div class="p-2 bd-highlight">1 share</div>
                                                 </div>
                                             </div>
                                             <div class="preview-comment">
@@ -1052,7 +1142,8 @@
                                             <div class="preview-media" data-max-image="5" style="margin-top: -20px">
                                                 <video [src]="url" *ngIf="format==='video' && url"
                                                     style="height: 100%; width: 100%; object-fit: cover;" controls
-                                                    disablepictureinpicture controlsList="nodownload"></video></div>
+                                                    disablepictureinpicture controlsList="nodownload"></video>
+                                            </div>
                                             <div class="caption">
                                                 <div>{{teamtalkerCaption}}</div>
                                                 <div class="line-no-text" *ngIf="!teamtalkerCaption">
@@ -1060,7 +1151,7 @@
                                                 <div class="line-no-text" *ngIf="!teamtalkerCaption"></div>
                                                 <div class="line-no-text" *ngIf="!teamtalkerCaption"></div>
                                             </div>
-                                            <div class="preview-club">
+                                            <!-- <div class="preview-club">
                                                 <div class="d-flex bd-highlight">
                                                     <div class="p-2 flex-fill bd-highlight">
                                                         <div class="p-2 bd-highlight">
@@ -1104,6 +1195,45 @@
                                                     <div class="p-2 flex-fill bd-highlight">
                                                         <div class="p-2 bd-highlight">3 Shares</div>
                                                     </div>
+                                                </div>
+                                            </div> -->
+                                          
+                                            
+                                            <div class="preview-club">
+                                                <div class="d-flex bd-highlight">
+                                                    <div class="p-2 flex-grow-1 bd-highlight">
+                                                        <div class="row">
+                                                            <div class="col item">
+                                                                <div class=" symbol-group symbol-hover">
+
+                                                                    <div
+                                                                        class="symbol symbol-circle symbol-20 symbol-sm-2">
+                                                                        <img alt="Pic"
+                                                                            src="../../../assets/media/users/100_14.jpg" />
+                                                                    </div>
+                                                                    <div
+                                                                        class="symbol symbol-circle symbol-20 symbol-sm-2">
+                                                                        <img alt="Pic"
+                                                                            src="../../../assets/media/users/100_6.jpg" />
+                                                                    </div>
+                                                                    <div
+                                                                        class="symbol symbol-circle symbol-20 symbol-sm-2">
+                                                                        <img alt="Pic"
+                                                                            src="../../../assets/media/users/100_11.jpg" />
+                                                                    </div>
+
+
+                                                                    <span class="symbol-label">{{post.reactionCount}}
+                                                                        likes</span>
+                                                                </div>
+
+                                                            </div>
+
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="p-2 bd-highlight">1 comment</div>
+                                                    <div class="p-2 bd-highlight">1 share</div>
                                                 </div>
                                             </div>
                                             <div class="preview-comment">
@@ -1146,7 +1276,7 @@
                                                 <div class="line-no-text" *ngIf="!teamtalkerCaption"></div>
                                             </div>
 
-                                            <div class="preview-club">
+                                            <!-- <div class="preview-club">
                                                 <div class="d-flex bd-highlight">
                                                     <div class="p-2 flex-fill bd-highlight">
                                                         <div class="p-2 bd-highlight">
@@ -1190,6 +1320,45 @@
                                                     <div class="p-2 flex-fill bd-highlight">
                                                         <div class="p-2 bd-highlight">3 Shares</div>
                                                     </div>
+                                                </div>
+                                            </div> -->
+                                            
+                                            
+                                            <div class="preview-club">
+                                                <div class="d-flex bd-highlight">
+                                                    <div class="p-2 flex-grow-1 bd-highlight">
+                                                        <div class="row">
+                                                            <div class="col item">
+                                                                <div class=" symbol-group symbol-hover">
+
+                                                                    <div
+                                                                        class="symbol symbol-circle symbol-20 symbol-sm-2">
+                                                                        <img alt="Pic"
+                                                                            src="../../../assets/media/users/100_14.jpg" />
+                                                                    </div>
+                                                                    <div
+                                                                        class="symbol symbol-circle symbol-20 symbol-sm-2">
+                                                                        <img alt="Pic"
+                                                                            src="../../../assets/media/users/100_6.jpg" />
+                                                                    </div>
+                                                                    <div
+                                                                        class="symbol symbol-circle symbol-20 symbol-sm-2">
+                                                                        <img alt="Pic"
+                                                                            src="../../../assets/media/users/100_11.jpg" />
+                                                                    </div>
+
+
+                                                                    <span class="symbol-label">{{post.reactionCount}}
+                                                                        likes</span>
+                                                                </div>
+
+                                                            </div>
+
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="p-2 bd-highlight">1 comment</div>
+                                                    <div class="p-2 bd-highlight">1 share</div>
                                                 </div>
                                             </div>
                                             <div class="preview-comment">
