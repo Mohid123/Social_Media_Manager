@@ -36,7 +36,7 @@ export class InstagramService {
   }
 
   getPublishedPostsForIG(instagramAccountId,FBPageAccessToken){
-    return this.http.get(`${constants.base_url}${instagramAccountId}/media?access_token=${FBPageAccessToken}&fields=media_url,created_time,caption,media_type`)
+    return this.http.get(`${constants.base_url}${instagramAccountId}/media?access_token=${FBPageAccessToken}&fields=media_url,timestamp,caption,media_type`)
     
   }
 

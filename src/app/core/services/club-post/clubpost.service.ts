@@ -147,4 +147,59 @@ export class ClubpostService {
   }
 
 
+  createVideoPost(postedText, postedTo, selectedList, userID, MediaFile){
+    let hyperLinkResponse = []
+    this.post.type = 'video'
+    this.post.text = postedText;
+    this.post.postedTo = postedTo;
+
+    
+    if (postedTo == 'Group') {
+      delete this.post.eventID;
+    }
+    else if (postedTo == 'Event') {
+      delete this.post.groupID;
+    }
+    else {
+      delete this.post.eventID;
+      delete this.post.groupID;
+    }
+
+    this._postService.hyperLinkScrapper(postedText).subscribe((data) => {
+      hyperLinkResponse = data;
+      if (
+        hyperLinkResponse.length > 0 &&
+        hyperLinkResponse[0].hasOwnProperty("url")
+      ) {
+        this.post.hyperLink = hyperLinkResponse[0].url;
+      }
+      if (
+        hyperLinkResponse.length > 0 &&
+        hyperLinkResponse[0].hasOwnProperty("title")
+      ) {
+        this.post.hyperlinkTextFirst = hyperLinkResponse[0].title;
+      }
+      if (
+        hyperLinkResponse.length > 0 &&
+        hyperLinkResponse[0].hasOwnProperty("description")
+      ) {
+        this.post.hyperlinkTextSecond = hyperLinkResponse[0].description;
+      }
+      if (
+        hyperLinkResponse.length > 0 &&
+        hyperLinkResponse[0].hasOwnProperty("image")
+      ) {
+        this.post.hyperlinkCaptureFileURL = hyperLinkResponse[0].image;
+      }
+      this._mediaUploadService.uploadClubMedia("GroupMedia", userID, MediaFile).subscribe((uploadedVideo: any) => {
+        this.post.captureFileURL = uploadedVideo.url;
+        this.post.path = uploadedVideo.path;
+      })
+
+
+
+  })
+}
+
+
 }

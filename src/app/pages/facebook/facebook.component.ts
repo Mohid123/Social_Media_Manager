@@ -10,6 +10,7 @@ import { NgxSpinnerService } from "ngx-spinner";
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { User } from 'src/app/core/models/user.model';
 import { combineLatest } from 'rxjs';
+import * as moment from 'moment';
 @Component({
   selector: 'app-facebook',
   templateUrl: './facebook.component.html',
@@ -48,6 +49,7 @@ export class FacebookComponent implements OnInit {
   }
   public recentFBposts: any = [];
   ngOnInit() {
+    console.log(moment('2021-06-23T06:30:27+0000').fromNow() , 'sd' )
     this.showSpinner();
     this.getSignedInUser();
     this.getCheckedItemList();
@@ -138,7 +140,9 @@ export class FacebookComponent implements OnInit {
             callsList.push(this._facebookService.getSinglePagePost(item.id, user.FBPages[i].pageAccessToken));
             if (idx == self.length - 1) {
               combineLatest(callsList).subscribe(data => {
+                console.log(data)
                 data.map((singleItem:any)=>{
+                  singleItem.created_time = moment(singleItem.created_time).fromNow()
                   singleItem.pageName = user.FBPages[i].pageName
                 })
                 this.recentFBposts = data

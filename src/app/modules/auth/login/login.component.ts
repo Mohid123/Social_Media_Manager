@@ -13,7 +13,7 @@ import { Club } from '../../../core/models/club.model'
 import { MainAuthService } from '../../../core/services/auth.service'
 import { ToastrService } from 'ngx-toastr';
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
-
+import { constants } from 'src/app/app.constatns';
 
 
 @Component({
@@ -61,6 +61,7 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.spinner.hide();
     this.initLoginForm();
     this.getAllClubs();
   }
@@ -188,5 +189,6 @@ export class LoginComponent implements OnInit {
   onClubSelected(club) {
     localStorage.setItem('selectedClub', JSON.stringify(club));
     this.selectedClub = club
+    constants.clubApiUrl = club.baseURL;
   }
 }
