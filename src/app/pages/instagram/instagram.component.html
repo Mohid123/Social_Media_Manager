@@ -371,10 +371,10 @@
                                             </div>
                                         </div> -->
                                     </div>
-                                      <div class="preview-media-view" data-max-image="1">
+                                      <div class="preview-media" data-max-image="1">
                         
-                                        <img *ngIf="post.media_type == 'IMAGE'" style="height: 100%; width: 100%; object-fit: cover;" class="img-circle" src="{{post.media_url}}" >
-                                        <video *ngIf="post.media_type == 'VIDEO'" src="{{post.media_url}}" style="height: 100%; width: 100%; object-fit: cover;"  controls disablepictureinpicture  controlsList="nodownload"></video>
+                                        <img *ngIf="post.media_type == 'IMAGE' && post.media_url" style="height: 100%; width: 100%; object-fit: cover;" class="img-circle" src="{{post.media_url}}" >
+                                        <video *ngIf="post.media_type == 'VIDEO' && post.media_url" src="{{post.media_url}}" style="height: 100%; width: 100%; object-fit: cover;"  controls disablepictureinpicture  controlsList="nodownload"></video>
                                     </div>
                                     
                                       <div class="preview-comment-upper">
