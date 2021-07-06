@@ -40,7 +40,6 @@ export class QuickPanelOffcanvasComponent implements OnInit {
   }
 
   setActiveTabId(tabId) {
-    debugger;
     this.activeTabId = tabId;
   }
 

@@ -109,13 +109,13 @@ export class LoginComponent implements OnInit {
         localStorage.setItem('userId', user.loggedInUser.id)
         localStorage.setItem('club-token', user.token)
         localStorage.setItem('admin', user.user.admin)
-        localStorage.setItem('userName', user.user.username)
+        localStorage.setItem('userName', user.user.fullName)
         localStorage.setItem('profileImageUrl', user.user.profilePicURL)
         this.spinner.hide();
         this.toastr.success('Login Success', 'Logged In Successfully');
         this.router.navigateByUrl('/pages/dashboard');
         user.loggedInUser.userClubProfile.clubEmail = user.user.email;
-        user.loggedInUser.userClubProfile.clubUsername = user.user.username;
+        user.loggedInUser.userClubProfile.clubUsername = user.user.fullName;
         user.loggedInUser.userClubProfile.clubProfileImageUrl = user.user.profilePicURL; 
 
         this._userService.updateUser(user.loggedInUser).subscribe(data=>{

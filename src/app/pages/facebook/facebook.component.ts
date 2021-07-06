@@ -130,22 +130,23 @@ export class FacebookComponent implements OnInit {
   }
 
   getSignedInUser() {
-    let recentPostIds = []
     let callsList = []
     this._authService.getSignedInUser().subscribe(user => {
       this.signedInUser = user;
       for(let i = 0 ; i <= user.FBPages.length-1 ; i++){
-        this._facebookService.getPublishedPostsOnFBPages(user.FBPages[i].pageID, user.FBPages[i].pageAccessToken).subscribe((objects: any) => {
-          objects.data.forEach((item, idx, self) => {
+        debugger;
+        this._facebookService.getPublishedPostsOnFBPages(user.FBPages[i].pageID, user.FBPages[i].pageAccessToken).subscribe((postObjects: any) => {
+          postObjects.data.forEach((item, idx, self) => {
             callsList.push(this._facebookService.getSinglePagePost(item.id, user.FBPages[i].pageAccessToken));
             if (idx == self.length - 1) {
-              combineLatest(callsList).subscribe(data => {
-                console.log(data)
-                data.map((singleItem:any)=>{
+              combineLatest(callsList).subscribe(facebookPosts => {
+                facebookPosts.map((singleItem:any)=>{
                   singleItem.created_time = moment(singleItem.created_time).fromNow()
                   singleItem.pageName = user.FBPages[i].pageName
                 })
-                this.recentFBposts = data
+
+                this.recentFBposts = facebookPosts
+                console.log(this.recentFBposts , 'lsd')
                 this.cf.detectChanges();
                 // console.log(this.recentFBposts)
               })
@@ -153,7 +154,6 @@ export class FacebookComponent implements OnInit {
           });
         })
       }
-      // console.log(this.signedInUser)
       if (user.FBPages.length == 0) {
         this.toast.warning('Log in via Facebook to connect your Facebook pages');
         return;

@@ -299,7 +299,6 @@ export class InstagramComponent implements OnInit {
       reader.onload = (event) => {
         debugger;
         this.url = (<FileReader>event.target).result as string;
-
         this.cf.detectChanges();
       }
     }

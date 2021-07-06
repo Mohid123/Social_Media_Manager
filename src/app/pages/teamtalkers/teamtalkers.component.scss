@@ -7,6 +7,11 @@
         padding: 10px 25px;
         position: relative;
     }
+
+    .preview-facebook-media .user-info-view{
+        padding: 10px 25px;
+        // position: relative;
+    }
     
     .preview-facebook-media .user-info img{
         width: 44px;
@@ -214,6 +219,12 @@
         position: relative;
     }
     
+    .csss
+{
+    z-index: 1;
+}    
+
+
     .preview-facebook-link .user-info img{
         width: 40px;
         margin-right: 5px;
