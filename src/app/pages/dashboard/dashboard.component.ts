@@ -16,6 +16,7 @@ import {
   ApexLegend
 } from "ng-apexcharts";
 import { Club } from 'src/app/core/models/club.model';
+import { constants } from 'src/app/app.constatns';
 
 
 
@@ -52,7 +53,7 @@ export class DashboardComponent implements OnInit {
   public facebookStatistics: any = [0, 0, 0, 0, 0, 0, 0, 0]
   public instagramStatistics: any = [0, 0, 0, 0, 0, 0, 0, 0]
   public clubStatistics: any = [0, 0, 0, 0, 0, 0, 0, 0]
-  public selectedClub : Club
+  public selectedClub: Club
   // public clubName: string = localStorage.getItem('club');
   // public clubLogo: string = localStorage.getItem('clubLogo')
 
@@ -60,7 +61,6 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit() {
-
     this.signedInuserID = localStorage.getItem('clubUid');
     this.getSelectedClub();
     this.getLatestReports()
@@ -69,8 +69,8 @@ export class DashboardComponent implements OnInit {
     this.getLastSevenDaysStats()
   }
 
-  getSelectedClub(){
-    let club = JSON.parse( localStorage.getItem('selectedClub'));
+  getSelectedClub() {
+    let club = JSON.parse(localStorage.getItem('selectedClub'));
     this.selectedClub = club;
   }
 

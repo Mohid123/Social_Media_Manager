@@ -64,6 +64,7 @@ export class AccountManagerComponent implements OnInit {
   }
 
   setFbProfile(email , username , profileImageUrl){
+    debugger;
     this.userFBprofile.fbEmail = email;
     this.userFBprofile.fbUserName = username;
     this.userFBprofile.fbProfileImageUrl = profileImageUrl;
@@ -177,6 +178,16 @@ export class AccountManagerComponent implements OnInit {
     this._toast.warning(
       "Sign in via Facebook to connect your Instagram Accounts"
     );
+  }
+
+  signOutFB(){
+    debugger;
+    this.authService.signOut();
+    this.signedInUser.userFacebookProfile.fbEmail = ""
+    this.signedInUser.userFacebookProfile.fbUserName = ""
+    this.signedInUser.userFacebookProfile.fbProfileImageUrl = ""
+    this.setFbProfile("Email","Username","https://social.teamtalkers.com/api/v1/en/media-upload/mediaFiles/test/123/b448db445dab8728bb3fc822243e58f10.png")
+    this.updateSignedInUser(this.signedInUser);
   }
 
   Club() {

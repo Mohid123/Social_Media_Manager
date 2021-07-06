@@ -94,12 +94,12 @@
                                                 <div class="symbol-label"><span><img class="symbol-label" [src]="userFBprofile.fbProfileImageUrl" style="object-fit: cover;" alt=""></span></div>
                                                 <i class="symbol-badge symbol-badge-bottom bg-success"></i>
                                             </div>
-                                            <h4 class="font-weight-bold font-size-sm my-2">{{userFBprofile.fbEmail}}</h4>
+                                            <!-- <h4 class="font-weight-bold font-size-sm my-2">{{userFBprofile.fbEmail}}</h4> -->
                                             <div class="text-muted mb-2">{{userFBprofile.fbUserName}}</div>
                                             <span class="label label-light-primary label-inline font-weight-bold label-lg">Facebook</span>
                                         </div>
                                       
-                                        <a class="btn btn-light-primary btn-hover-primary font-weight-bold py-3 px-6 mb-2 text-center btn-block ">Sign Out</a>
+                                        <a (click) = "signOutFB()" class="btn btn-light-primary btn-hover-primary font-weight-bold py-3 px-6 mb-2 text-center btn-block ">Sign Out</a>
                                     
                                         
                                         <!--end::Nav-->
@@ -168,12 +168,12 @@
                                                 <div class="symbol-label"><span><img class="symbol-label" [src]="userClubProfile.clubProfileImageURL" style="object-fit: cover;" alt=""></span></div>
                                                 <i class="symbol-badge symbol-badge-bottom bg-success"></i>
                                             </div>
-                                            <h4 class="font-weight-bold font-size-sm  my-2">{{userClubProfile.clubEmail}}</h4>
+                                            <!-- <h4 class="font-weight-bold font-size-sm  my-2">{{userClubProfile.clubEmail}}</h4> -->
                                             <div class="text-muted mb-2">{{userClubProfile.clubUsername}}</div>
                                             <span class="label label-light-warning label-inline font-weight-bold label-lg">{{clubName}}</span>
                                         </div>
                                       
-                                        <a  class="btn btn-light-primary btn-hover-primary font-weight-bold py-3 px-6 mb-2 text-center btn-block " (click) = "signOutOfClub()"> Sign Out</a>
+                                        <!-- <a  class="btn btn-light-primary btn-hover-primary font-weight-bold py-3 px-6 mb-2 text-center btn-block " (click) = "signOutOfClub()"> Sign Out</a> -->
                                     
                                         
                                         <!--end::Nav-->

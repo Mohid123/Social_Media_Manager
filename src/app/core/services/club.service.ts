@@ -5,7 +5,8 @@ import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ApiService } from './api.service';
 import { Injectable } from '@angular/core';
-import { constants } from 'src/app/app.constatns';  
+import { constants } from 'src/app/app.constatns';
+import { ClubApiService } from './club_api.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,8 +14,10 @@ import { constants } from 'src/app/app.constatns';
 export class ClubService {
   private club: any
 
-  constructor(private _apiService: ApiService, private http: HttpClient, private _errorHandlerService: ErrorhandlerService) {
-    // environment.club_api_url = JSON.parse(localStorage.getItem('selectedClub')).baseURL;
+  constructor(private _apiService: ApiService, private http: HttpClient, private _errorHandlerService: ErrorhandlerService , private _clubApiService : ClubApiService) {
+    // constants.clubApiUrl == "" && localStorage.getItem('selectedClub') ? constants.clubApiUrl = JSON.parse(localStorage.getItem('selectedClub')).baseURL : constants.clubApiUrl =  JSON.parse(localStorage.getItem('selectedClub')).baseURL;
+    // constants.clubApiUrl =  JSON.parse(localStorage.getItem('selectedClub')).baseURL;
+
   }
 
   getAllClubs(offset, limit): Observable<any> {
@@ -40,15 +43,18 @@ export class ClubService {
   }
 
   getClubGroups(offset, limit): Observable<any> {
+
     limit = parseInt(limit) < 1 ? 10 : limit;
     offset = parseInt(offset) < 0 ? 0 : offset;
-    return this.http.get(`${constants.clubApiUrl}/groups/getAllGroups?offset=${offset}&limit=${limit}`).pipe(catchError(this._errorHandlerService.handleErrors))
+    return this._clubApiService.get(`/groups/getAllGroups?offset=${offset}&limit=${limit}`);
+    // return this.http.get(`${constants.clubApiUrl}/groups/getAllGroups?offset=${offset}&limit=${limit}`).pipe(catchError(this._errorHandlerService.handleErrors))
   }
 
   getClubEvents(offset, limit) {
     limit = parseInt(limit) < 1 ? 10 : limit;
     offset = parseInt(offset) < 0 ? 0 : offset;
-    return this.http.get(`${constants.clubApiUrl}/event/getAllEvents?offset=${offset}&limit=${limit}`).pipe(catchError(this._errorHandlerService.handleErrors))
+    return this._clubApiService.get(`/event/getAllEvents?offset=${offset}&limit=${limit}`);
+    // return this.http.get(`${constants.clubApiUrl}/event/getAllEvents?offset=${offset}&limit=${limit}`).pipe(catchError(this._errorHandlerService.handleErrors))
   }
 
 

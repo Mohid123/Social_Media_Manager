@@ -7,7 +7,8 @@ import { Component, OnInit, ChangeDetectorRef, ViewChild, ElementRef } from '@an
 import { NgxSpinnerService } from "ngx-spinner";
 import { User } from 'src/app/core/models/user.model';
 import { ToastrService } from 'ngx-toastr';
-import { publish, take } from 'rxjs/operators';
+import { publish, take, map } from 'rxjs/operators';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-instagram',
@@ -102,6 +103,10 @@ export class InstagramComponent implements OnInit {
 
   getRecentPosts(IGaccountID , FBpageaccessToken){
   return  this._instagramService.getPublishedPostsForIG(IGaccountID , FBpageaccessToken).subscribe((publishedPosts:any)=>{
+    publishedPosts.data.map(item=>{
+      item.timestamp = moment(item.timestamp).fromNow()
+    })
+    console.log(publishedPosts)
     this.recentPosts = publishedPosts.data;
     this.cf.detectChanges();
   })
