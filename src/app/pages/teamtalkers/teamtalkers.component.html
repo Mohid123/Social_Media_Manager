@@ -822,6 +822,8 @@
                                 </div> -->
                                 <div *ngIf="post.type!=='text'" class="preview-media" data-max-image="5"
                                     style="margin-top: -20px">
+                                    <img *ngIf="post.type == 'hyperlink'" src="{{post.hyperlinkCaptureFileURL}}"
+                                    style="height: 100%; width: 100%; object-fit: cover; ">
                                     <img *ngIf="post.type == 'image'" src="{{post.captureFileURL}}"
                                         style="height: 100%; width: 100%; object-fit: cover; ">
                                     <video *ngIf="post.type == 'video'" src="{{post.captureFileURL}}"
