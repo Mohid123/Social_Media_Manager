@@ -254,7 +254,11 @@
                     <mat-tab>
                         <ng-template mat-tab-label>
 
-                            <mat-icon><i class="far fa-images icon-lg" style="color: #3699FF;"></i></mat-icon>&nbsp;
+                            <mat-icon>
+                                <!-- <i class="far fa-images icon-lg" style="color: #3699FF;"></i> -->
+                           <i data-visualcompletion="css-img" style="background-image:url('https://static.xx.fbcdn.net/rsrc.php/v3/yG/r/1j-f6O0Xtyf.png?_nc_eui2=AeG_ziBgWuKTlexxWVF9hOlyxCA0FsPulJTEIDQWw-6UlCrJ5n7cV9jq2XE66KcW3LTtFYAod1eQ9c8TCxxlL1Mj');background-position:0 -125px;background-size:auto;width:24px;height:24px;background-repeat:no-repeat;display:inline-block"></i>
+
+                            </mat-icon>&nbsp;
                             &nbsp;Photo
                         </ng-template>
                         <div class="card-body">
@@ -394,7 +398,11 @@
                     <mat-tab
                         (click)="showDiv.video = true ; showDiv.photo = false ; showDiv.text = false ; showDiv.poll= false">
                         <ng-template mat-tab-label>
-                            <mat-icon><i class="fas fa-video icon-lg" style="color: #3699FF;"></i></mat-icon>&nbsp;
+                            <mat-icon>
+                                <!-- <i class="fas fa-video icon-lg" style="color: #3699FF;"></i> -->
+                                <i data-visualcompletion="css-img" style="background-image:url('https://static.xx.fbcdn.net/rsrc.php/v3/yG/r/1j-f6O0Xtyf.png?_nc_eui2=AeG_ziBgWuKTlexxWVF9hOlyxCA0FsPulJTEIDQWw-6UlCrJ5n7cV9jq2XE66KcW3LTtFYAod1eQ9c8TCxxlL1Mj');background-position:0 0;background-size:auto;width:24px;height:24px;background-repeat:no-repeat;display:inline-block"></i>
+
+                            </mat-icon>&nbsp;
                             &nbsp;Video
 
                         </ng-template>
@@ -530,7 +538,7 @@
                     <mat-tab
                         (click)="showDiv.text = true ; showDiv.photo = false ; showDiv.video = false; showDiv.poll= false">
                         <ng-template mat-tab-label>
-                            <mat-icon><i class="far fa-file-alt icon-lg" style="color: #3699FF;"></i></mat-icon>
+                            <mat-icon><i class="far fa-file-alt icon-lg" style="color: #EAB026;"></i></mat-icon>
                             &nbsp;Text
 
                         </ng-template>
@@ -626,7 +634,7 @@
                     <mat-tab
                         (click)="showDiv.poll = true ; showDiv.photo = false ; showDiv.video = false; showDiv.text = false">
                         <ng-template mat-tab-label>
-                            <mat-icon><i class="fas fa-poll icon-lg" style="color: #3699FF;"></i></mat-icon>
+                            <mat-icon><i class="fas fa-poll icon-lg" style="color: #0080ff;"></i></mat-icon>
                             &nbsp;Poll
 
                         </ng-template>
@@ -781,7 +789,7 @@
                                         <div class="user-info d-inline-block" style="z-index: 1;">
                                             <img class="img-circle" style="height: 44px; object-fit: cover; border-radius: 30px;"
                                                 [src]="profileImageUrl">
-                                            <div class="text" >
+                                            <div class="text" style="right: -94px !important; top: 17px !important;">
                                                 <div class="name"> {{userName}}</div>
                                                 <span> {{post.postedDate}}
                                                     <!-- <i class="fa fa-globe"
@@ -822,7 +830,7 @@
                                                                     src="{{reaction.user.profilePicURL}}" />
                                                             </div>
 
-                                                            <span class="symbol-label"></span>
+                                                            <span class="symbol-label">{{post.reactionCount}} like</span>
                                                         </div>
 
                                                     </div>
@@ -835,8 +843,11 @@
                                             <div class="p-2 bd-highlight">{{post.commentsCount}} Comments</div>
                                         </div>
                                         <div class="p-2 flex-fill bd-highlight">
-                                            <div class="p-2 bd-highlight">{{post.reactionCount}} Reactions</div>
+                                            <div class="p-2 bd-highlight">1 Share</div>
                                         </div>
+                                        <!-- <div class="p-2 flex-fill bd-highlight">
+                                            <div class="p-2 bd-highlight">{{post.reactionCount}} Reactions</div>
+                                        </div> -->
                                     </div>
                                 </div>
                                 <div class="preview-comment">
