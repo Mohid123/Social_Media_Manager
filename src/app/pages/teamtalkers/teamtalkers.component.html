@@ -795,13 +795,6 @@
                                                 [src]="profileImageUrl">
                                             <div class="text" style="right: -94px !important; top: 17px !important;">
                                                 <div class="name"> {{userName}}</div>
-                                    <!-- <div class="col csss" style="z-index: 1;">
-
-                                        <div class="user-info-view d-inline-block" >
-                                            <img class="img-circle" style="height: 44px; object-fit: cover; border-radius: 30px;"
-                                                [src]="profileImageUrl">
-                                            <div class="text" style="float: right;">
-                                                <div class="name text-primary font-weight-bold"> {{userName}}</div>
                                                 <span> {{post.postedDate}}
                                                    
                                                 </span>
@@ -822,6 +815,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                <!-- 
                                 <div *ngIf="post.type!=='text'" class="preview-media-post" data-max-image="5" style="margin-top: -20px">  
                                 <img *ngIf="post.type === 'image'" src="{{post.captureFileURL}}" style="height: 100%; width: 100%; object-fit: cover; ">                                
                                 <video *ngIf="post.type === 'video'"  src="{{post.captureFileURL}}" style="height: 100%; width: 100%; object-fit: cover;" controls  disablepictureinpicture controlsList="nodownload"></video> 
@@ -851,8 +845,7 @@
                                                                 <img alt="Pic" src="{{reaction.user.profilePicURL}}" />
                                                             </div>
 
-
-                                                            <span class="symbol-label"></span>
+                                                            <span class="symbol-label">{{post.reactionCount}} like</span>
                                                         </div>
 
                                                     </div>
