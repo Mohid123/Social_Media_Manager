@@ -74,6 +74,8 @@
             </div>
             <div class="card-body">
                 <div class="row">
+
+                    <!--Facebook-->
                     <div class="col-lg-4">
                         <div class="card">
                             <div class="card-header">
@@ -86,15 +88,15 @@
                             </div>
                             <div class="card-body">
                                 <div class="card-custom">
-                                    <!--begin::Body-->
+                                   
                                     <div class="card-body pt-15">
-                                        <!--begin::User-->
+                                       
                                         <div class="text-center mb-10">
                                             <div class="symbol symbol-60 symbol-circle symbol-xl-90">
                                                 <div class="symbol-label"><span><img class="symbol-label" [src]="userFBprofile.fbProfileImageUrl" style="object-fit: cover;" alt=""></span></div>
                                                 <i class="symbol-badge symbol-badge-bottom bg-success"></i>
                                             </div>
-                                            <!-- <h4 class="font-weight-bold font-size-sm my-2">{{userFBprofile.fbEmail}}</h4> -->
+                                          
                                             <div class="text-muted mb-2">{{userFBprofile.fbUserName}}</div>
                                             <span class="label label-light-primary label-inline font-weight-bold label-lg">Facebook</span>
                                         </div>
@@ -102,14 +104,17 @@
                                         <a (click) = "signOutFB()" class="btn btn-light-primary btn-hover-primary font-weight-bold py-3 px-6 mb-2 text-center btn-block ">Sign Out</a>
                                     
                                         
-                                        <!--end::Nav-->
+                                     
                                     </div>
-                                    <!--end::Body-->
+                                 
                                 </div>
                             </div>
                            </div>
                     </div>
-                    <div class="col-lg-4">
+
+                    <!--INSTA-->
+
+                    <!-- <div class="col-lg-4">
                         <div class="card">
                             <div class="card-header">
                              <div class="card-title">
@@ -121,9 +126,9 @@
                             </div>
                             <div class="card-body">
                                 <div class="card-custom">
-                                    <!--begin::Body-->
+                                  
                                     <div class="card-body pt-15">
-                                        <!--begin::User-->
+                                      
                                         <div class="text-center mb-10">
                                             <div class="symbol symbol-60 symbol-circle symbol-xl-90">
                                                 <div class="symbol-label"><span><img class="symbol-label" [src]="profileImageUrl" style="object-fit: cover;" alt=""></span></div>
@@ -137,22 +142,22 @@
                                         <a class="btn btn-light-primary btn-hover-primary font-weight-bold py-3 px-6 mb-2 text-center btn-block ">Sign Out</a>
                                     
                                         
-                                        <!--end::Nav-->
+                                      
                                     </div>
-                                    <!--end::Body-->
+                                   
                                 </div>
                             </div>
                            </div>
-                    </div>
+                    </div> -->
+
+                    <!--CLUB-->
                     <div class="col-lg-4">
                         <div class="card ">
                             <div class="card-header">
                              <div class="card-title">
                               <h5 class="card-label">
                                 <span><img style="height: 100%; width: 20px;" [src]="clubLogo" alt=""></span>&nbsp;
-                                    <!-- <span><a  class="btn btn-icon btn-sm" >
-                                        <i class="svg-icon menu-icon icon-sm "><span><img style="height: 100%; width: 80%;" [src]="clubLogo" alt=""></span></i>
-                                    </a></span> -->
+                                  
                                {{clubName}}
                                
                               </h5>
@@ -160,25 +165,22 @@
                             </div>
                             <div class="card-body">
                                 <div class="card-custom">
-                                    <!--begin::Body-->
+                                 
                                     <div class="card-body pt-15">
-                                        <!--begin::User-->
+                                  
                                         <div class="text-center mb-10">
                                             <div class="symbol symbol-60 symbol-circle symbol-xl-90">
                                                 <div class="symbol-label"><span><img class="symbol-label" [src]="userClubProfile.clubProfileImageURL" style="object-fit: cover;" alt=""></span></div>
                                                 <i class="symbol-badge symbol-badge-bottom bg-success"></i>
                                             </div>
-                                            <!-- <h4 class="font-weight-bold font-size-sm  my-2">{{userClubProfile.clubEmail}}</h4> -->
+                                         
                                             <div class="text-muted mb-2">{{userClubProfile.clubUsername}}</div>
                                             <span class="label label-light-warning label-inline font-weight-bold label-lg">{{clubName}}</span>
                                         </div>
                                       
-                                        <!-- <a  class="btn btn-light-primary btn-hover-primary font-weight-bold py-3 px-6 mb-2 text-center btn-block " (click) = "signOutOfClub()"> Sign Out</a> -->
-                                    
                                         
-                                        <!--end::Nav-->
                                     </div>
-                                    <!--end::Body-->
+                                  
                                 </div>
                             </div>
                            </div>
