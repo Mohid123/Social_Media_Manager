@@ -49,7 +49,6 @@ export class FacebookComponent implements OnInit {
   }
   public recentFBposts: any = [];
   ngOnInit() {
-    console.log(moment('2021-06-23T06:30:27+0000').fromNow() , 'sd' )
     this.showSpinner();
     this.getSignedInUser();
     this.getCheckedItemList();
@@ -149,7 +148,6 @@ export class FacebookComponent implements OnInit {
                 })
 
                 this.recentFBposts = facebookPosts
-                console.log(this.recentFBposts , 'lsd')
                 this.cf.detectChanges();
                 // console.log(this.recentFBposts)
               })

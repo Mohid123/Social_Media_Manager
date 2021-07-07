@@ -102,7 +102,6 @@ export class LoginComponent implements OnInit {
     }
     this._authService.loginByEmail(payload).subscribe(user => {
       debugger;
-      console.log(user)
       if (user.user.admin) {
         localStorage.setItem('app-token', user.app_token.access_token)
         localStorage.setItem('clubUid', user.loggedInUser.userID)
@@ -119,7 +118,6 @@ export class LoginComponent implements OnInit {
         user.loggedInUser.userClubProfile.clubProfileImageUrl = user.user.profilePicURL; 
 
         this._userService.updateUser(user.loggedInUser).subscribe(data=>{
-          console.log(data)
         });
       }
       else {
