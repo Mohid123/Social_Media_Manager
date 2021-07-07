@@ -456,12 +456,23 @@
 }
 .preview-facebook .preview-club{
     position: relative;
-    padding: 0px 9px;
+    // padding: 0px 9px;
+    padding: 5px 22px 13px 22px;
     color: #999;
     text-align: end;
     // border-top: 1px solid #eee;
     // margin: 0 10px;
     
+}
+.preview-facebook .preview-club-tt{
+    position: relative;
+    // padding: 13px 22px;
+    padding: 5px 22px 13px 22px;
+    color: #999;
+    text-align: end;
+    // border-top: 1px solid #eee;
+    // margin: 0 10px;
+    margin-top: 10px;
 }
 .preview-facebook .preview-tt{
     position: relative;
