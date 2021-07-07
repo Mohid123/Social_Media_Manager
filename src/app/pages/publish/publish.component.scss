@@ -391,6 +391,7 @@
 
 .preview-facebook-text .user-info img{
     width: 44px;
+    height: 44px;
     margin-right: 5px;
     object-fit: cover;
     border-radius: 5px;
@@ -558,6 +559,8 @@
 
 .preview-instagram-photo .preview-content .user-info img{
     width: 40px;
+    height: 40px;
+    object-fit: cover;
     margin-right: 5px;
     border-radius: 5px;
 }
