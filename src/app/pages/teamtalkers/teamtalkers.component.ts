@@ -815,8 +815,11 @@ export class TeamtalkersComponent implements OnInit {
       });
   }
 
+  pauseVideo(){}
 
-
+  playVideo(sd){
+    
+  }
 
   addPollPost() {
     let selectedClubGroups = [];
@@ -886,6 +889,7 @@ export class TeamtalkersComponent implements OnInit {
 
   }
 }
+
 
 
 
