@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { Error5Component } from '../modules/errors/error5/error5.component';
 import { AccountManagerComponent } from './account-manager/account-manager.component';
+import { ComingSoonIgComponent } from './coming-soon-ig/coming-soon-ig.component';
 import { CommingSoonFbComponent } from './comming-soon-fb/comming-soon-fb.component';
 import { FacebookComponent } from './facebook/facebook.component';
 import { InstagramComponent } from './instagram/instagram.component';
@@ -30,6 +31,10 @@ const routes: Routes = [
       {
         path: 'comming-soon-fb', 
         component: CommingSoonFbComponent 
+      },
+      {
+        path: 'comming-soon-ig', 
+        component: ComingSoonIgComponent 
       },
       {
         path: 'team-talkers', 
