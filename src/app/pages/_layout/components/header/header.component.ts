@@ -76,7 +76,7 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    JSON.parse( localStorage.getItem('selectedClub')).clubName == 'Levski' ? this.showLiveStream = true : this.showLiveStream = false ;
+    JSON.parse( localStorage.getItem('selectedClub')).id == '60a1f5fb764e4033cc10f7d5' ? this.showLiveStream = true : this.showLiveStream = false ;
     this.headerContainerCSSClasses = this.layout.getStringCSSClasses(
       'header_container'
     );

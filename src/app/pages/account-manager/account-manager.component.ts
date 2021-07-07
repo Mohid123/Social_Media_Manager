@@ -181,12 +181,14 @@ export class AccountManagerComponent implements OnInit {
   }
 
   signOutFB(){
+    
     debugger;
+    let fbProfileImageUrl = "https://social.teamtalkers.com/api/v1/en/media-upload/mediaFiles/test/123/b448db445dab8728bb3fc822243e58f10.png"
     this.authService.signOut();
-    this.signedInUser.userFacebookProfile.fbEmail = ""
-    this.signedInUser.userFacebookProfile.fbUserName = ""
-    this.signedInUser.userFacebookProfile.fbProfileImageUrl = ""
-    this.setFbProfile("Email","Username","https://social.teamtalkers.com/api/v1/en/media-upload/mediaFiles/test/123/b448db445dab8728bb3fc822243e58f10.png")
+    this.signedInUser.userFacebookProfile.fbEmail = 'Email'
+    this.signedInUser.userFacebookProfile.fbUserName = 'Username'
+    this.signedInUser.userFacebookProfile.fbProfileImageUrl = fbProfileImageUrl
+    this.setFbProfile("Email","Username", fbProfileImageUrl)
     this.updateSignedInUser(this.signedInUser);
   }
 
