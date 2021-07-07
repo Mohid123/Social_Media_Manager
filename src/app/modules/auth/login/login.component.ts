@@ -89,7 +89,6 @@ export class LoginComponent implements OnInit {
   }
 
   loginByEmail() {
-    debugger;
     if (!this.selectedClub) {
       this.toastr.error('Please Select Club', 'Empty Club')
       return;
@@ -101,7 +100,6 @@ export class LoginComponent implements OnInit {
       password: this.loginForm.value.password
     }
     this._authService.loginByEmail(payload).subscribe(user => {
-      debugger;
       if (user.user.admin) {
         localStorage.setItem('app-token', user.app_token.access_token)
         localStorage.setItem('clubUid', user.loggedInUser.userID)

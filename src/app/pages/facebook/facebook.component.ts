@@ -75,7 +75,7 @@ export class FacebookComponent implements OnInit {
     this.searchString = keyword
     let res;
     if (this.searchString !== "") {
-      debugger;
+      ;
       this.checklist = this.tempList.filter(item =>
         res = item.pageName.toLowerCase().includes(this.searchString.toLowerCase()))
       return res;
@@ -133,7 +133,7 @@ export class FacebookComponent implements OnInit {
     this._authService.getSignedInUser().subscribe(user => {
       this.signedInUser = user;
       for(let i = 0 ; i <= user.FBPages.length-1 ; i++){
-        debugger;
+        ;
         this._facebookService.getPublishedPostsOnFBPages(user.FBPages[i].pageID, user.FBPages[i].pageAccessToken).subscribe((postObjects: any) => {
           postObjects.data.forEach((item, idx, self) => {
             callsList.push(this._facebookService.getSinglePagePost(item.id, user.FBPages[i].pageAccessToken));
@@ -211,7 +211,6 @@ export class FacebookComponent implements OnInit {
   }
 
   addImagePost() {
-    debugger;
     if (!this.file) {
       this.toast.error('Please select an Image File', 'Empty File');
       return;
@@ -283,7 +282,7 @@ export class FacebookComponent implements OnInit {
 
 
   addTextPost() {
-    debugger;
+    ;
     if (this.facebookCaption == "") {
       this.toast.error('Please add content to post', 'No Content Added');
       return;
@@ -295,7 +294,7 @@ export class FacebookComponent implements OnInit {
     this.spinner.show();
     this.checkedList.forEach((item, index, array) => {
       this._reportService.createReport(2, "", 'Facebook')
-      debugger;
+      ;
       this._facebookService.addTextPostToFB(item.pageID, this.facebookCaption, item.pageAccessToken).subscribe(FbPost => {
         this._reportService.createReport(1, FbPost.id, 'Facebook')
         if (index == array.length - 1) {

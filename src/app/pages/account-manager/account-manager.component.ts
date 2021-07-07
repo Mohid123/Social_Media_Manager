@@ -54,7 +54,7 @@ export class AccountManagerComponent implements OnInit {
   }
 
   getSignedInUser() {
-    debugger;
+    ;
     this._authService.getSignedInUser().subscribe((user) => {
       this.signedInUser = user;
       // this.setFbProfile(user.userFacebookProfile.fbEmail , user.userFacebookProfile.fbUserName ,  user.userFacebookProfile.fbProfileImageUrl);
@@ -63,7 +63,7 @@ export class AccountManagerComponent implements OnInit {
   }
 
   setFbProfile(email , username , profileImageUrl){
-    debugger;
+    ;
     this.userFBprofile.fbEmail = email;
     this.userFBprofile.fbUserName = username;
     this.userFBprofile.fbProfileImageUrl = profileImageUrl;
@@ -147,7 +147,7 @@ export class AccountManagerComponent implements OnInit {
 
 
   setClubprofile(email , userName , profileImageUrl){
-    debugger;
+    ;
     this.userClubProfile.clubEmail = email,
     this.userClubProfile.clubUsername = userName;
     this.userClubProfile.clubProfileImageURL = profileImageUrl;
@@ -163,7 +163,7 @@ export class AccountManagerComponent implements OnInit {
   }
 
   updateSignedInUser(user): void {
-    debugger;
+    ;
     this._profileService.updateUser(user).subscribe(
       (updatedUser) => {
         console.log("User Updated");
@@ -182,7 +182,7 @@ export class AccountManagerComponent implements OnInit {
 
   signOutFB(){
     
-    // debugger;
+    // ;
     // let fbProfileImageUrl = "https://social.teamtalkers.com/api/v1/en/media-upload/mediaFiles/test/123/b448db445dab8728bb3fc822243e58f10.png"
     // this.authService.signOut();
     // this.signedInUser.userFacebookProfile.fbEmail = 'Email'

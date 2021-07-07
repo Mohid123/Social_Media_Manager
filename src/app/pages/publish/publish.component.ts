@@ -234,7 +234,6 @@ export class PublishComponent implements OnInit {
       if (this.checklist[i].isSelected)
         this.checkedList.push(this.checklist[i]);
     }
-    console.log(this.checkedList)
   }
 
   showSpinner(): void {
@@ -270,7 +269,6 @@ export class PublishComponent implements OnInit {
   onSelectedImageLoad() {
     const width = (this.logo.nativeElement as HTMLImageElement).naturalWidth
     const height = (this.logo.nativeElement as HTMLImageElement).naturalHeight
-    console.log(width , height , 'Width&Height')
     let gcd = this.calculateAspectRatio(width , height);
     const ratio = width/gcd + ':'+ height/gcd;
     this.validAspectRatios.includes(ratio) ?  this.inValidImageAspectRatio = false : this.inValidImageAspectRatio = true;

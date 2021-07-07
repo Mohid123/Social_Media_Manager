@@ -75,12 +75,12 @@ export class InstagramComponent implements OnInit {
 
 
   getSignedInUser() {
-    debugger;
+    ;
     this._authService.getSignedInUser().pipe(take(1)).subscribe(user => {
       this.signedInUser = user;
       if (this.signedInUser.FBPages.length > 0) {
         this.signedInUser.FBPages.forEach(item => {
-          debugger;
+          ;
           this.getIGAccountDetails(item.pageID, item.pageAccessToken).subscribe((igaccount: any) => {
             if (igaccount.hasOwnProperty('instagram_business_account')) {
              this.getRecentPosts(igaccount.instagram_business_account.id,item.pageAccessToken);
@@ -206,7 +206,7 @@ export class InstagramComponent implements OnInit {
   }
 
   addImagePost() {
-    debugger;
+    ;
     if (!this.file) {
       this.toast.error('Please select an Image File', 'Empty File');
       return;
@@ -234,14 +234,14 @@ export class InstagramComponent implements OnInit {
           
             this._reportService.createReport(1, data.id, 'Instagram')
           }, error => {
-            debugger;
+            ;
             this.spinner.hide()
             console.log(error)
             this.toast.error(error.error.error.error_user_msg)
             this._reportService.createReport(0, "", 'Instagram');
           })
         }, error => {
-          debugger;
+          ;
           this.spinner.hide()
           console.log(error)
           this.toast.error(error.error.error.error_user_msg)
@@ -289,7 +289,7 @@ export class InstagramComponent implements OnInit {
         this.format = 'video';
       }
       reader.onload = (event) => {
-        debugger;
+        ;
         this.url = (<FileReader>event.target).result as string;
         this.cf.detectChanges();
       }

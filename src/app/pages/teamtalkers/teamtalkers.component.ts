@@ -126,7 +126,7 @@ export class TeamtalkersComponent implements OnInit {
 
 
   getRecentClubPosts() {
-    debugger;
+    
     let tempPosts = []
     this._postService.getClubPosts('Club', 0, 15).subscribe((clubPosts: Post[]) => {
       clubPosts.map((singleClubPost: any, idx, self) => {
@@ -571,7 +571,7 @@ export class TeamtalkersComponent implements OnInit {
         }
 
         if (selectedClub) {
-          debugger;
+          
           this.spinner.show();
           this._mediaUploadService
             .uploadClubMedia("ClubMedia", this.signedInUser.id, this.file)
