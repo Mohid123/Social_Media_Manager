@@ -826,10 +826,37 @@
                                     style="height: 100%; width: 100%; object-fit: cover; "> -->
                                     <img *ngIf="post.type == 'image'" src="{{post.captureFileURL}}"
                                         style="height: 100%; width: 100%; object-fit: cover; ">
-                                    <video *ngIf="post.type == 'video'" src="{{post.captureFileURL}}"
+                                    <div  style="position: relative;cursor: pointer;" (click)="playVideo(post)"
+                                        data-toggle="modal" data-target="#video-modal">
+                                        <img *ngIf="post.type == 'video'" class="img-responsive" [src]=post.thumbnailURL
+                                            alt="Photo"
+                                            style="height: 350px;margin: 0 auto;-webkit-filter: brightness(75%);filter: brightness(75%);">
+                                        <h1 class="playBtn"><i class="fa fa-play-circle" aria-hidden="true"></i>
+                                        </h1>
+                                    </div>
+                                    <!-- <video *ngIf="post.type == 'video'" src="{{post.captureFileURL}}"
                                         style="height: 100%; width: 100%; object-fit: cover;" controls
-                                        disablepictureinpicture controlsList="nodownload"></video>
+                                        disablepictureinpicture controlsList="nodownload"></video> -->
                                 </div>
+
+                                <div class="modal fade" id="video-modal" data-backdrop="static" data-keyboard="false">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                    (click)="pauseVideo()" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span></button>
+                                                <h4 class="modal-title">Video </h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <video id="clubVideo" width="100%" height="360" controls autoplay
+                                                    disablePictureInPicture oncanplay="this.play()"
+                                                    controlsList="nodownload"></video>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
 
                                 <!--HYPERLINK POST DESIGN-->
                                 <div *ngIf="post.hyperLink != ''"
@@ -843,21 +870,21 @@
                                                         <span class="symbol-label rounded">
                                                             <img *ngIf="post.type == 'hyperlink' && post.captureFileURL === '' "
                                                                 src="https://api.teamtalkers.com/api/v1/en/media-upload/mediaFiles/html/html/7bd046a8c10bcfba8800951fc2a9063f9.jpg"
-                                                                class="h-100 align-self-end rounded" style="object-fit: cover;"
-                                                                alt="" />
+                                                                class="h-100 align-self-end rounded"
+                                                                style="object-fit: cover;" alt="" />
                                                             <img *ngIf="post.type != 'hyperlink' && post.hyperlinkCaptureFileURL === '' "
                                                                 src="https://api.teamtalkers.com/api/v1/en/media-upload/mediaFiles/html/html/7bd046a8c10bcfba8800951fc2a9063f9.jpg"
-                                                                class="h-100 align-self-end rounded" style="object-fit: cover;"
-                                                                alt="" />
+                                                                class="h-100 align-self-end rounded"
+                                                                style="object-fit: cover;" alt="" />
 
                                                             <img *ngIf="post.type == 'hyperlink' && post.captureFileURL"
                                                                 src="{{post.captureFileURL}}"
-                                                                class="h-100 align-self-end rounded" style="object-fit: cover;"
-                                                                alt="" />
+                                                                class="h-100 align-self-end rounded"
+                                                                style="object-fit: cover;" alt="" />
                                                             <img *ngIf="post.type != 'hyperlink' && post.hyperlinkCaptureFileURL"
                                                                 src="{{post.hyperlinkCaptureFileURL}}"
-                                                                class="h-100 align-self-end rounded" style="object-fit: cover;"
-                                                                alt="" />
+                                                                class="h-100 align-self-end rounded"
+                                                                style="object-fit: cover;" alt="" />
 
                                                         </span>
                                                     </div>
@@ -869,14 +896,16 @@
                                                     <div *ngIf="post.type == 'hyperlink'" class="text-dark">
                                                         {{post.textFirst}}
                                                     </div>
-                                                    <div *ngIf="post.type == 'hyperlink'" class="text-muted font-size-sm">
+                                                    <div *ngIf="post.type == 'hyperlink'"
+                                                        class="text-muted font-size-sm">
                                                         {{post.textSecond}}
                                                     </div>
 
                                                     <div *ngIf="post.type != 'hyperlink'">
                                                         {{post.hyperlinkTextFirst}}
                                                     </div>
-                                                    <div *ngIf="post.type != 'hyperlink'" class="text-muted font-size-sm">
+                                                    <div *ngIf="post.type != 'hyperlink'"
+                                                        class="text-muted font-size-sm">
                                                         {{post.hyperlinkTextSecond}}
                                                     </div>
                                                 </a>

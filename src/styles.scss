@@ -346,3 +346,20 @@ label{
  }
 
 }
+
+.playBtn {
+  position: absolute;
+  width: 96px;
+  height: 96px;
+  left: 50%;
+  top: 50%;
+  margin-left: -48px;
+  /*half of the width */
+  margin-top: -48px;
+  /*half of the height */
+  text-align: center;
+  font-size: 90px;
+  color: white;
+  text-shadow: 2px 2px 4px #000000;
+  cursor: pointer;
+}
