@@ -81,7 +81,7 @@
                             <div class="card-header">
                              <div class="card-title">
                               <h5 class="card-label">
-                                <i class="socicon-facebook text-primary mr-5"></i>Facebook profiles
+                                <i class="socicon-facebook text-primary mr-5"></i>Facebook profile
                                
                               </h5>
                              </div>
@@ -113,42 +113,41 @@
                     </div>
 
                     <!--INSTA-->
-
-                    <!-- <div class="col-lg-4">
-                        <div class="card">
+                    <div class="col-lg-4">
+                        <div class="card" style="height: 442px;">
                             <div class="card-header">
                              <div class="card-title">
                               <h5 class="card-label">
-                                <i class="socicon-instagram mr-5" style="color: #d62976;"></i>Instagram profiles
+                                <i class="socicon-instagram mr-5" style="color: #d62976;"></i>Instagram profile
                                
                               </h5>
                              </div>
                             </div>
                             <div class="card-body">
                                 <div class="card-custom">
-                                  
+                                   
                                     <div class="card-body pt-15">
-                                      
+                                       
                                         <div class="text-center mb-10">
                                             <div class="symbol symbol-60 symbol-circle symbol-xl-90">
-                                                <div class="symbol-label"><span><img class="symbol-label" [src]="profileImageUrl" style="object-fit: cover;" alt=""></span></div>
+                                                <div class="symbol-label"><span><img class="symbol-label" src="../../../assets/media/users/mockfbImage.png" style="object-fit: cover;" alt=""></span></div>
                                                 <i class="symbol-badge symbol-badge-bottom bg-success"></i>
                                             </div>
-                                            <h4 class="font-weight-bold my-2"></h4>
-                                            <div class="text-muted mb-2">Admin</div>
-                                            <span class="label label-light-danger label-inline font-weight-bold label-lg">Instagram</span>
+                                          
+                                            <div class="text-muted mb-2">{{userFBprofile.fbUserName}}</div>
+                                            <span class="label label-light-primary label-inline font-weight-bold label-lg">Instagram</span>
                                         </div>
                                       
-                                        <a class="btn btn-light-primary btn-hover-primary font-weight-bold py-3 px-6 mb-2 text-center btn-block ">Sign Out</a>
+                                        <a diabled (click) = "signOutFB()" class="btn btn-light-primary btn-hover-primary font-weight-bold py-3 px-6 mb-2 text-center btn-block ">Sign Out</a>
                                     
                                         
-                                      
+                                     
                                     </div>
-                                   
+                                 
                                 </div>
                             </div>
                            </div>
-                    </div> -->
+                    </div>
 
                     <!--CLUB-->
                     <div class="col-lg-4">
@@ -170,7 +169,8 @@
                                   
                                         <div class="text-center mb-10">
                                             <div class="symbol symbol-60 symbol-circle symbol-xl-90">
-                                                <div class="symbol-label"><span><img class="symbol-label" [src]="userClubProfile.clubProfileImageURL" style="object-fit: cover;" alt=""></span></div>
+                                                <div class="symbol-label"><span>
+                                                    <img class="symbol-label" [src]="userClubProfile.clubProfileImageURL" style="object-fit: cover;" alt=""></span></div>
                                                 <i class="symbol-badge symbol-badge-bottom bg-success"></i>
                                             </div>
                                          

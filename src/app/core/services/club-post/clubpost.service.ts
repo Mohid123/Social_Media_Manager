@@ -85,7 +85,6 @@ export class ClubpostService {
 
 
   createImagePost(postedText, postedTo, userID, MediaFile , selectedList?) {
-    debugger;
     let hyperLinkResponse = []
     this.post.type = 'image'
     this.post.text = postedText;

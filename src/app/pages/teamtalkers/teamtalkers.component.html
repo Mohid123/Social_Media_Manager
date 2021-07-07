@@ -793,7 +793,7 @@
                                         position: relative;">
                                             <img class="img-circle"
                                                 style="height: 44px; width: 44px; object-fit: cover; border-radius: 30px;"
-                                                [src]="profileImageUrl">
+                                                [src]="post.user.profilePicURL">
                                             <div class="text" style="    right: -150px !important;
                                             top: 16px !important;
                                             position: absolute;
@@ -803,7 +803,7 @@
                                             line-height: 12px;
                                         ">
                                                 <div class="name" style="font-weight: bold;
-                                                color: #365899;"> {{userName}}</div>
+                                                color: #365899;"> {{post.user.fullName}}</div>
                                                 <span style="color: #90949c;
                                                 font-size: 12px;"> {{post.postedDate | dateFormat }}
 
@@ -821,8 +821,9 @@
                                         data-toggle="modal" data-target="#video-modal">
                                         <img *ngIf="post.type == 'video'" class="img-responsive" [src]=post.thumbnailURL
                                             alt="Photo"
-                                            style="height: auto; width: 100%; margin: 0 auto;-webkit-filter: brightness(75%);filter: brightness(75%);  filter: blur(2px); width: 100%;
-                                            ">
+                                            style="margin: 0 auto; -webkit-filter: brightness(75%);
+                                            filter: brightness(75%); filter: blur(2px); width: 420px; object-fit: contain;
+                                            height: 360px; justify-content: center; display: block">
                                         <h1 class="playBtn" style="backdrop-filter: blur(0px);"><i class="far fa-play-circle icon-xl" aria-hidden="true" style="font-size: 7.75rem !important; color: #fff;"></i>
                                         </h1>
                                     </div>
@@ -844,7 +845,7 @@
           </button>
         </div>
         <div class="modal-body d-flex justify-content-center" style="padding: 0px;">
-            <video id="clubVideo" src="{{playingVideo}}" style="width: 100%; height: 420px" controls autoplay disablePictureInPicture
+            <video id="clubVideo" src="{{playingVideo}}"  style="height: 420px;" width="100%" controls autoplay disablePictureInPicture
             oncanplay="this.play()" (ended) = "vidEnded()" controlsList="nodownload"></video>
       <!-- <div class="d-flex align-items-center">
      
@@ -962,11 +963,13 @@
 
                                                         <div *ngFor="let reaction of post.reactions"
                                                             class="symbol symbol-circle symbol-20 symbol-sm-2">
-                                                            <img alt="Pic" src="{{reaction.user.profilePicURL}}" />
+                                                            <img *ngIf="reaction.user.profilePicURL !== '' " alt="Pic" src="{{reaction.user.profilePicURL}}" />
+                                                            <img *ngIf="reaction.user.profilePicURL == ''" alt="Pic" src="../../../assets/media/users/mockfbImage.png" />
+
                                                         </div>
 
 
-                                                        <span class="symbol-label">{{post.reactionCount}} likes</span>
+                                                        <span class="symbol-label">{{post.reactionCount}} Reactions</span>
                                                     </div>
 
                                                 </div>
@@ -1111,7 +1114,7 @@
                                                                         </div>
 
 
-                                                                        <span class="symbol-label">5 Likes</span>
+                                                                        <span class="symbol-label">5 Reactions</span>
                                                                     </div>
 
                                                                 </div>
@@ -1154,8 +1157,7 @@
                                                                     </div>
 
 
-                                                                    <span class="symbol-label">2
-                                                                        likes</span>
+                                                                    <span class="symbol-label">2 Reactions</span>
                                                                 </div>
 
                                                             </div>
@@ -1243,7 +1245,7 @@
                                                                         </div>
 
 
-                                                                        <span class="symbol-label">5 Likes</span>
+                                                                        <span class="symbol-label">5 Reactions</span>
                                                                     </div>
 
                                                                 </div>
@@ -1286,8 +1288,7 @@
                                                                     </div>
 
 
-                                                                    <span class="symbol-label">2
-                                                                        likes</span>
+                                                                    <span class="symbol-label">2 Reactions</span>
                                                                 </div>
 
                                                             </div>
@@ -1368,7 +1369,7 @@
                                                                         </div>
 
 
-                                                                        <span class="symbol-label">5 Likes</span>
+                                                                        <span class="symbol-label">5 Reactions</span>
                                                                     </div>
 
                                                                 </div>
@@ -1411,8 +1412,7 @@
                                                                     </div>
 
 
-                                                                    <span class="symbol-label">2
-                                                                        likes</span>
+                                                                    <span class="symbol-label">2 Reactions</span>
                                                                 </div>
 
                                                             </div>
@@ -1536,8 +1536,7 @@
                                                                     </div>
 
 
-                                                                    <span class="symbol-label">2
-                                                                        likes</span>
+                                                                    <span class="symbol-label">2 Reactions</span>
                                                                 </div>
 
                                                             </div>

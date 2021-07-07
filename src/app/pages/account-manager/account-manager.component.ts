@@ -176,7 +176,7 @@ export class AccountManagerComponent implements OnInit {
 
   showFBPopup() {
     this._toast.warning(
-      "Sign in via Facebook to connect your Instagram Accounts"
+      "Comming Soon"
     );
   }
 

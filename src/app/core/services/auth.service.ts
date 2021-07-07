@@ -19,7 +19,6 @@ export class MainAuthService {
 
 
   getSignedInUser(){
-    debugger;
     let id = localStorage.getItem('userId');
     return this._profileService.getUserById(id)
   }
