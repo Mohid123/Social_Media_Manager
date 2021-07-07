@@ -815,13 +815,13 @@
                                 <div *ngIf="post.type!=='text' && post.type!== 'hyperlink' " class="preview-media"
                                     data-max-image="5" style="margin-top: -20px">
                                     <img *ngIf="post.type == 'image'" src="{{post.captureFileURL}}"
-                                        style="height: 600px; width: 100%; object-fit: cover; ">
+                                        style="height: auto; width: 100%; object-fit: cover; ">
 
                                     <div *ngIf="post.type == 'video'" style="position: relative;cursor: pointer;" (click)="openVerticallyCentered(content, post)"
                                         data-toggle="modal" data-target="#video-modal">
                                         <img *ngIf="post.type == 'video'" class="img-responsive" [src]=post.thumbnailURL
                                             alt="Photo"
-                                            style="height: 350px; width: 100%; margin: 0 auto;-webkit-filter: brightness(75%);filter: brightness(75%);  filter: blur(2px); width: 100%;
+                                            style="height: auto; width: 100%; margin: 0 auto;-webkit-filter: brightness(75%);filter: brightness(75%);  filter: blur(2px); width: 100%;
                                             ">
                                         <h1 class="playBtn" style="backdrop-filter: blur(0px);"><i class="far fa-play-circle icon-xl" aria-hidden="true" style="font-size: 7.75rem !important; color: #fff;"></i>
                                         </h1>
@@ -844,7 +844,7 @@
           </button>
         </div>
         <div class="modal-body d-flex justify-content-center" style="padding: 0px;">
-            <video id="clubVideo" src="{{playingVideo}}" width="100%" height="100%" controls autoplay disablePictureInPicture
+            <video id="clubVideo" src="{{playingVideo}}" style="width: 100%; height: 420px" controls autoplay disablePictureInPicture
             oncanplay="this.play()" (ended) = "vidEnded()" controlsList="nodownload"></video>
       <!-- <div class="d-flex align-items-center">
      
