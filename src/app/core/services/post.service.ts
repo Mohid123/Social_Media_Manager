@@ -45,6 +45,19 @@ export class PostService {
   }
 
   
+  createClubPost(postedTo , post){
+    if(postedTo == 'Group'){
+      return this._clubApiService.post(`/groups/addPost/` , post);
+    }
+    else if(postedTo == 'Event'){
+      return this._clubApiService.post(`/event/addPost` , post);
+    }
+    else {
+      return this._clubApiService.post(`/post/AddPost` , post);
+    }
+  }
+
+
   getClubPosts(postedTo,offset,limit){
     limit = parseInt(limit) < 1 ? 10 : limit;
     offset = parseInt(offset) < 0 ? 0 : offset;

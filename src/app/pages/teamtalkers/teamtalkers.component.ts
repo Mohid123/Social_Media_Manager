@@ -26,6 +26,7 @@ import { TimePickerOptions } from "@ngx-tiny/time-picker/ngx-time-picker.options
 import { Poll } from "src/app/core/models/poll.model";
 import * as moment from "moment";
 import { ThisReceiver } from "@angular/compiler";
+import { ClubpostService } from './../../core/services/club-post/clubpost.service';
 @Component({
   selector: "app-teamtalkers",
   templateUrl: "./teamtalkers.component.html",
@@ -86,6 +87,7 @@ export class TeamtalkersComponent implements OnInit {
     private _reportService: ReportService,
     private _clubService: ClubService,
     private modalService: NgbModal,
+    private _genericPostService : ClubpostService
   ) {
     this.post = new Post();
     this.report = new Report();
@@ -437,7 +439,7 @@ export class TeamtalkersComponent implements OnInit {
   addImagePost() {
     let selectedClubGroups = [];
     let selectedClubEvents = [];
-    let selectedClub: boolean = false;
+    let selectedClub = []
     let hyperLinkResponse = [];
     this.post.type = "image";
 
@@ -456,10 +458,21 @@ export class TeamtalkersComponent implements OnInit {
       } else if (item.hasOwnProperty("eventName")) {
         selectedClubEvents.push(item);
       } else if (item.hasOwnProperty("clubName")) {
-        selectedClub = true;
+        selectedClub.push(item) 
       }
     });
 
+    // if(selectedClub){
+    //   this._genericPostService.createImagePost(this.teamtalkerCaption , 'Club' , this.signedInUser.id  , this.file , selectedClub );
+    // }
+
+    // if(selectedClubGroups){
+    //   this._genericPostService.createImagePost(this.teamtalkerCaption , 'Group' , this.signedInUser.id  , this.file , selectedClubGroups)
+    // }
+
+    // if(selectedClubEvents){
+    //   this._genericPostService.createImagePost(this.teamtalkerCaption , 'Event' , this.signedInUser.id  , this.file , selectedClubEvents)
+    // }
     this.spinner.show();
     this._postService
       .hyperLinkScrapper(this.teamtalkerCaption)
