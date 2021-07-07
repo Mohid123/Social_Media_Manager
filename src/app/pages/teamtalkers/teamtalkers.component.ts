@@ -5,6 +5,8 @@ import { BaseModel } from "./../../_metronic/shared/crud-table/models/base.model
 import { VideoProcessingService } from "./../../core/services/video-service/video-processing.service";
 import { MediauploadService } from "./../../core/services/mediaupload.service";
 import { PostService } from "./../../core/services/post.service";
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+
 import {
   Component,
   OnInit,
@@ -51,12 +53,14 @@ export class TeamtalkersComponent implements OnInit {
   public eventSelected: boolean = false;
   private checkedList: any;
   public recentClubPosts: Post[] = []
+  playingVideo: string;
   public showDiv = {
     photo: true,
     video: false,
     text: false,
     poll: false,
   };
+  closeResult: string;
   pollSelectedDate: Date;
   pollSelectedTime: Date;
   datetimelocalObject: any;
@@ -80,7 +84,8 @@ export class TeamtalkersComponent implements OnInit {
     private _authService: MainAuthService,
     private _videoService: VideoProcessingService,
     private _reportService: ReportService,
-    private _clubService: ClubService
+    private _clubService: ClubService,
+    private modalService: NgbModal,
   ) {
     this.post = new Post();
     this.report = new Report();
@@ -98,8 +103,28 @@ export class TeamtalkersComponent implements OnInit {
 
   }
 
+
+  openVerticallyCentered(content, post) {
+    this.playingVideo = post.captureFileURL;
+    console.log(post, 'pos')
+    this.modalService.open(content, { centered: true }).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+  }
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return `with: ${reason}`;
+    }
+  }
+
+
   getRecentClubPosts() {
-  
     debugger;
     let tempPosts = []
     this._postService.getClubPosts('Club', 0, 10).subscribe((clubPosts: Post[]) => {

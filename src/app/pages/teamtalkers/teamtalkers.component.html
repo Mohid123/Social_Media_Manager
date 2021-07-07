@@ -793,7 +793,7 @@
                                             <img class="img-circle"
                                                 style="height: 44px; object-fit: cover; border-radius: 30px;"
                                                 [src]="profileImageUrl">
-                                            <div class="text" style="right: -94px !important; top: 17px !important;">
+                                            <div class="text" style="right: -150px !important; top: 17px !important;">
                                                 <div class="name"> {{userName}}</div>
                                                 <span> {{post.postedDate}}
 
@@ -815,23 +815,17 @@
                                         </div>
                                     </div> -->
                                 </div>
-                                <!-- 
-                                <div *ngIf="post.type!=='text'" class="preview-media-post" data-max-image="5" style="margin-top: -20px">  
-                                <img *ngIf="post.type === 'image'" src="{{post.captureFileURL}}" style="height: 100%; width: 100%; object-fit: cover; ">                                
-                                <video *ngIf="post.type === 'video'"  src="{{post.captureFileURL}}" style="height: 100%; width: 100%; object-fit: cover;" controls  disablepictureinpicture controlsList="nodownload"></video> 
-                                </div> -->
                                 <div *ngIf="post.type!=='text' && post.type!== 'hyperlink' " class="preview-media"
                                     data-max-image="5" style="margin-top: -20px">
-                                    <!-- <img *ngIf="post.type == 'hyperlink'" src="{{post.hyperlinkCaptureFileURL}}"
-                                    style="height: 100%; width: 100%; object-fit: cover; "> -->
                                     <img *ngIf="post.type == 'image'" src="{{post.captureFileURL}}"
                                         style="height: 100%; width: 100%; object-fit: cover; ">
-                                    <div  style="position: relative;cursor: pointer;" (click)="playVideo(post)"
+
+                                    <div *ngIf="post.type == 'video'" style="position: relative;cursor: pointer;" (click)="openVerticallyCentered(content, post)"
                                         data-toggle="modal" data-target="#video-modal">
                                         <img *ngIf="post.type == 'video'" class="img-responsive" [src]=post.thumbnailURL
                                             alt="Photo"
-                                            style="height: 350px;margin: 0 auto;-webkit-filter: brightness(75%);filter: brightness(75%);">
-                                        <h1 class="playBtn"><i class="fa fa-play-circle" aria-hidden="true"></i>
+                                            style="height: 350px; width: 100%; margin: 0 auto;-webkit-filter: brightness(75%);filter: brightness(75%);">
+                                        <h1 class="playBtn"><i class="far fa-play-circle icon-xl" aria-hidden="true" style="font-size: 8.75rem !important; color: #fff;"></i>
                                         </h1>
                                     </div>
                                     <!-- <video *ngIf="post.type == 'video'" src="{{post.captureFileURL}}"
@@ -856,6 +850,33 @@
                                         </div>
                                     </div>
                                 </div>
+
+
+                                
+<div class="example-preview ">
+    <div>
+      <ng-template #content let-c="close" let-d="dismiss">
+        <div class="modal-header d-flex justify-content-center" style="background-color: #1e1e2d; border-bottom: none;">
+          <h4 class="modal-title" style="color: #fff;">Video</h4>
+          <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body d-flex justify-content-center" style="padding: 0px;">
+            <video id="clubVideo" src="{{playingVideo}}" width="100%" height="100%" controls autoplay disablePictureInPicture
+            oncanplay="this.play()" controlsList="nodownload"></video>
+      <!-- <div class="d-flex align-items-center">
+     
+       
+      </div> -->
+        </div>
+        <div class="modal-footer d-flex justify-content-center">
+          <button type="button" class="btn btn-secondary" (click)="c('Close click')">Close</button>
+         
+        </div>
+      </ng-template>
+      </div>
+  </div>
 
 
                                 <!--HYPERLINK POST DESIGN-->
