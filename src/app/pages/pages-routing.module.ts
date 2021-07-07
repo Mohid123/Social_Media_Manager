@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { Error5Component } from '../modules/errors/error5/error5.component';
 import { AccountManagerComponent } from './account-manager/account-manager.component';
 import { FacebookComponent } from './facebook/facebook.component';
 import { InstagramComponent } from './instagram/instagram.component';
@@ -36,6 +37,10 @@ const routes: Routes = [
       {
         path: 'newsfeed', 
         component: NewsfeedComponent
+      },
+      {
+        path: 'error', 
+        component: Error5Component
       },
       {
         path: 'dashboard',

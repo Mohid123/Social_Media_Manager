@@ -29,10 +29,10 @@ const routes: Routes = [
         path: 'error-4',
         component: Error4Component,
       },
-      {
-        path: 'error-5',
-        component: Error5Component,
-      },
+      // {
+      //   path: 'error-5',
+      //   component: Error5Component,
+      // },
       { path: '', redirectTo: 'error-1', pathMatch: 'full' },
       {
         path: '**',

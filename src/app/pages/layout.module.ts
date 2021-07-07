@@ -40,6 +40,7 @@ import { NgxDatePickerModule} from '@ngx-tiny/date-picker';
 import { NgxTimePickerModule } from '@ngx-tiny/time-picker';
 import { NewsfeedComponent } from './newsfeed/newsfeed.component';
 import { MomentPipe } from '../core/pipes/datetransform.pipe';
+import { Error5Component } from '../modules/errors/error5/error5.component';
 
 
 
@@ -66,6 +67,7 @@ import { MomentPipe } from '../core/pipes/datetransform.pipe';
     TeamtalkersComponent,
     AccountManagerComponent,
     NewsfeedComponent,
+    Error5Component,
     MomentPipe
 
   

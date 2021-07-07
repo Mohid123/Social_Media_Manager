@@ -792,9 +792,9 @@
                                         <div class="user-info d-inline-block" style="z-index: 1;">
                                             <img class="img-circle"
                                                 style="height: 44px; object-fit: cover; border-radius: 30px;"
-                                                [src]="profileImageUrl">
+                                                src="{{post.user.profilePicURL}}">
                                             <div class="text" style="right: -150px !important; top: 17px !important;">
-                                                <div class="name"> {{userName}}</div>
+                                                <div class="name"> {{post.user.fullName}}</div>
                                                 <span> {{post.postedDate | dateFormat}}
 
                                                 </span>
@@ -848,7 +848,7 @@
         </div>
         <div class="modal-body d-flex justify-content-center" style="padding: 0px;">
             <video id="clubVideo" src="{{playingVideo}}" width="100%" height="100%" controls autoplay disablePictureInPicture
-            oncanplay="this.play()" controlsList="nodownload"></video>
+            oncanplay="this.play()" (ended) = "vidEnded()" controlsList="nodownload"></video>
       <!-- <div class="d-flex align-items-center">
      
        

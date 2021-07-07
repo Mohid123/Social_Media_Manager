@@ -87,7 +87,7 @@ export class TeamtalkersComponent implements OnInit {
     private _reportService: ReportService,
     private _clubService: ClubService,
     private modalService: NgbModal,
-    private _genericPostService : ClubpostService
+    private _genericPostService: ClubpostService
   ) {
     this.post = new Post();
     this.report = new Report();
@@ -108,7 +108,6 @@ export class TeamtalkersComponent implements OnInit {
 
   openVerticallyCentered(content, post) {
     this.playingVideo = post.captureFileURL;
-    console.log(post, 'pos')
     this.modalService.open(content, { centered: true }).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
@@ -129,18 +128,21 @@ export class TeamtalkersComponent implements OnInit {
   getRecentClubPosts() {
     debugger;
     let tempPosts = []
-    this._postService.getClubPosts('Club', 0, 10).subscribe((clubPosts: Post[]) => {
-      clubPosts.map((singleClubPost:any,idx,self)=>{
-        this._postService.getPostCommentsAndReactions(singleClubPost.id , 0 ,4).subscribe((reactionsAndComments:any)=>{
+    this._postService.getClubPosts('Club', 0, 15).subscribe((clubPosts: Post[]) => {
+      clubPosts.map((singleClubPost: any, idx, self) => {
+        this._postService.getPostCommentsAndReactions(singleClubPost.id, 0, 4).subscribe((reactionsAndComments: any) => {
           singleClubPost.reactionCount = reactionsAndComments.count.reactionCount;
           singleClubPost.commentsCount = reactionsAndComments.count.commentsCount;
           singleClubPost.reactions = reactionsAndComments.reaction;
-          // singleClubPost.postedDate = moment(singleClubPost.postedDate).fromNow();
           tempPosts.push(singleClubPost)
-          if(idx == self.length-1){
+          if (idx == self.length - 1) {
+            tempPosts.sort(function compare(a, b) {
+              const dateA = new Date(a.postedDate) as any;
+              const dateB = new Date(b.postedDate) as any;
+              return dateB - dateA;
+            });
             this.recentClubPosts = tempPosts;
             this.cf.detectChanges();
-          //  console.log(this.recentClubPosts , 'recentClubPosts')
           }
         })
       })
@@ -418,6 +420,8 @@ export class TeamtalkersComponent implements OnInit {
             (post: any) => {
               this.spinner.hide();
               this.toast.success(" Post added Successfully to Club");
+              this.getRecentClubPosts()
+              this.clearCaption()
               this.postedSuccessfully();
               this._reportService.createReport(1, post.id, "Club");
             },
@@ -458,7 +462,7 @@ export class TeamtalkersComponent implements OnInit {
       } else if (item.hasOwnProperty("eventName")) {
         selectedClubEvents.push(item);
       } else if (item.hasOwnProperty("clubName")) {
-        selectedClub.push(item) 
+        selectedClub.push(item)
       }
     });
 
@@ -567,7 +571,7 @@ export class TeamtalkersComponent implements OnInit {
         }
 
         if (selectedClub) {
-
+          debugger;
           this.spinner.show();
           this._mediaUploadService
             .uploadClubMedia("ClubMedia", this.signedInUser.id, this.file)
@@ -582,6 +586,8 @@ export class TeamtalkersComponent implements OnInit {
                 this._reportService.createReport(2, "", "Club");
                 this._postService.addPost(this.post).subscribe((post: any) => {
                   this.toast.success("Post added Succeessfully to Club");
+                  this.getRecentClubPosts()
+                  this.clearCaption()
                   this.postedSuccessfully();
                   this._reportService.createReport(1, post.id, "Club");
                 });
@@ -834,6 +840,8 @@ export class TeamtalkersComponent implements OnInit {
                         this.toast.success(
                           "Video Post added Successfully to Club"
                         );
+                        this.getRecentClubPosts()
+                        this.clearCaption()
                         this.spinner.hide();
                         this.url = "";
                         this.teamtalkerCaption = "";
@@ -853,10 +861,21 @@ export class TeamtalkersComponent implements OnInit {
       });
   }
 
-  pauseVideo(){}
+  pauseVideo() { }
 
-  playVideo(sd){
-    
+  playVideo(sd) {
+
+  }
+
+  vidEnded() {
+    this.modalService.dismissAll()
+  }
+
+  clearCaption() {
+    setTimeout(() => {
+      this.teamtalkerCaption = ""
+      this.cf.detectChanges()
+    }, 2000);
   }
 
   addPollPost() {
@@ -919,6 +938,7 @@ export class TeamtalkersComponent implements OnInit {
       this.post.poll = Object.assign({}, this.poll);
       this.spinner.show();
       this._postService.addPost(this.post).subscribe((data) => {
+        this.clearCaption()
         this.toast.success('Poll Post Created in Club', 'Success');
         // console.log(data)
         this.resetPost()

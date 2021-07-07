@@ -12,7 +12,7 @@ import {Error6Component} from './error6/error6.component';
 
 
 @NgModule({
-  declarations: [ ErrorsComponent, Error1Component, Error2Component, Error3Component, Error4Component, Error5Component, Error6Component ],
+  declarations: [ ErrorsComponent, Error1Component, Error2Component, Error3Component, Error4Component, Error6Component ],
   imports: [
     CommonModule,
     ErrorsRoutingModule
