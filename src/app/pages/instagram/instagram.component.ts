@@ -62,7 +62,6 @@ export class InstagramComponent implements OnInit {
   onSelectedImageLoad() {
     const width = (this.logo.nativeElement as HTMLImageElement).naturalWidth
     const height = (this.logo.nativeElement as HTMLImageElement).naturalHeight
-    console.log(width, height, 'Width&Height')
     let gcd = this.calculateAspectRatio(width, height);
     const ratio = width / gcd + ':' + height / gcd;
     this.validAspectRatios.includes(ratio) ? this.inValidImageFormat = false : this.inValidImageFormat = true;
@@ -79,7 +78,6 @@ export class InstagramComponent implements OnInit {
     debugger;
     this._authService.getSignedInUser().pipe(take(1)).subscribe(user => {
       this.signedInUser = user;
-      console.log(this.signedInUser)
       if (this.signedInUser.FBPages.length > 0) {
         this.signedInUser.FBPages.forEach(item => {
           debugger;
@@ -106,7 +104,6 @@ export class InstagramComponent implements OnInit {
     publishedPosts.data.map(item=>{
       item.timestamp = moment(item.timestamp).fromNow()
     })
-    console.log(publishedPosts)
     this.recentPosts = publishedPosts.data;
     this.cf.detectChanges();
   })
@@ -159,7 +156,6 @@ export class InstagramComponent implements OnInit {
 
 
   addVideoPost() {
-    console.log(this.file)
     if (!this.file) {
       this.toast.error('Please select an Video File', 'Empty File');
       return;
@@ -172,10 +168,8 @@ export class InstagramComponent implements OnInit {
     this._mediaUploadService.uploadMedia('InstagramTest', '123', this.file).subscribe((media: any) => {
       this.checkedList.forEach(item => {
         this._instagramService.createIgContainerForVideo(item.instagram_business_account.id, media.url, this.instaCaption, item.linkedFbPagetoken).subscribe((container: any) => {
-          console.log(container)
           let interval = setInterval(() => {
             this._instagramService.getContainerStatus(container.id, item.linkedFbPagetoken).subscribe((data: any) => {
-              console.log(data, 'containerId')
               if (data.status_code == "FINISHED") {
                 this._instagramService.publishContent(item.instagram_business_account.id, container.id, item.linkedFbPagetoken).subscribe((data: any) => {
                   clearInterval(interval)
@@ -204,7 +198,6 @@ export class InstagramComponent implements OnInit {
         })
 
       })
-      console.log(media.url)
 
     }, (error) => {
       this.spinner.hide();
@@ -214,7 +207,6 @@ export class InstagramComponent implements OnInit {
 
   addImagePost() {
     debugger;
-    console.log(this.inValidImageFormat)
     if (!this.file) {
       this.toast.error('Please select an Image File', 'Empty File');
       return;

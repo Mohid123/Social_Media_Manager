@@ -27,6 +27,7 @@ import {
   FacebookLoginProvider
 } from 'angularx-social-login';
 import { VideoProcessingService } from './core/services/video-service/video-processing.service';
+import { MomentPipe } from './core/pipes/datetransform.pipe';
 
 
 
@@ -87,6 +88,7 @@ function appInitializer(authService: AuthService) {
           scss: () => import('highlight.js/lib/languages/scss'),
           json: () => import('highlight.js/lib/languages/json')
         }
+
 
       },
     },

@@ -135,12 +135,12 @@ export class TeamtalkersComponent implements OnInit {
           singleClubPost.reactionCount = reactionsAndComments.count.reactionCount;
           singleClubPost.commentsCount = reactionsAndComments.count.commentsCount;
           singleClubPost.reactions = reactionsAndComments.reaction;
-          singleClubPost.postedDate = moment(singleClubPost.postedDate).fromNow();
+          // singleClubPost.postedDate = moment(singleClubPost.postedDate).fromNow();
           tempPosts.push(singleClubPost)
           if(idx == self.length-1){
             this.recentClubPosts = tempPosts;
             this.cf.detectChanges();
-           console.log(this.recentClubPosts , 'recentClubPosts')
+          //  console.log(this.recentClubPosts , 'recentClubPosts')
           }
         })
       })
@@ -517,7 +517,7 @@ export class TeamtalkersComponent implements OnInit {
                 this.post.path = media.path;
                 this._reportService.createReport(2, "", "Group");
                 this._postService.addPostToGroup(this.post).subscribe((groupPost: any) => {
-                  console.log(groupPost, 'GroupPost')
+                  // console.log(groupPost, 'GroupPost')
                   this._reportService.createReport(1, groupPost.id, "Group");
                   if (index == array.length - 1) {
                     this.toast.success("Post added to Groups", "Success");
@@ -920,7 +920,7 @@ export class TeamtalkersComponent implements OnInit {
       this.spinner.show();
       this._postService.addPost(this.post).subscribe((data) => {
         this.toast.success('Poll Post Created in Club', 'Success');
-        console.log(data)
+        // console.log(data)
         this.resetPost()
       });
     }
