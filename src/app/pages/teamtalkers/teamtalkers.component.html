@@ -786,39 +786,36 @@
                     <div class="card-body">
                         <div *ngFor="let post of recentClubPosts" class="border rounded m-12"
                             style="box-shadow: rgb(99 99 99 / 20%) 0px 2px 8px 0px;">
-                            <div class="preview-facebook preview-facebook-media item-post-type" data-type="photo">
+                            <div class="preview-facebook preview-media-post item-post-type" data-type="photo">
                                 <div class="row pt-5">
                                     <div class="col">
-                                        <div class="user-info d-inline-block" style="z-index: 1;">
+                                        <div class="user-info d-inline-block" style="z-index: 1;     padding: 10px 25px;
+                                        position: relative;">
                                             <img class="img-circle"
-                                                style="height: 44px; object-fit: cover; border-radius: 30px;"
+                                                style="height: 44px; width: 44px; object-fit: cover; border-radius: 30px;"
                                                 [src]="profileImageUrl">
-                                            <div class="text" style="right: -150px !important; top: 17px !important;">
-                                                <div class="name"> {{userName}}</div>
-                                                <span> {{post.postedDate}}
+                                            <div class="text" style="    right: -150px !important;
+                                            top: 16px !important;
+                                            position: absolute;
+                                          
+                                            font-size: 13px;
+                                            left: 78px;
+                                            line-height: 12px;
+                                        ">
+                                                <div class="name" style="font-weight: bold;
+                                                color: #365899;"> {{userName}}</div>
+                                                <span style="color: #90949c;
+                                                font-size: 12px;"> {{post.postedDate}}
 
                                                 </span>
                                             </div>
                                         </div>
                                     </div>
-
-                                    <!-- <div class="col text-right">
-                                        <div ngbDropdown class="d-inline-block">
-                                            <button class="btn" id="dropdownBasic1" ngbDropdownToggle><i
-                                                    class="ki ki-bold-more-hor" style="color:black"></i></button>
-                                            <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                                                <button ngbDropdownItem><i
-                                                        class="fas fa-edit mr-2 text-dark"></i>Edit</button>
-                                                <button ngbDropdownItem><i
-                                                        class="fas fa-trash-alt mr-2 text-dark"></i>Delete</button>
-                                            </div>
-                                        </div>
-                                    </div> -->
                                 </div>
                                 <div *ngIf="post.type!=='text' && post.type!== 'hyperlink' " class="preview-media"
                                     data-max-image="5" style="margin-top: -20px">
                                     <img *ngIf="post.type == 'image'" src="{{post.captureFileURL}}"
-                                        style="height: 100%; width: 100%; object-fit: cover; ">
+                                        style="height: 600px; width: 100%; object-fit: cover; ">
 
                                     <div *ngIf="post.type == 'video'" style="position: relative;cursor: pointer;" (click)="openVerticallyCentered(content, post)"
                                         data-toggle="modal" data-target="#video-modal">
@@ -847,7 +844,7 @@
           </button>
         </div>
         <div class="modal-body d-flex justify-content-center" style="padding: 0px;">
-            <video id="clubVideo" src="{{playingVideo}}" width="100%" height="100%" controls autoplay disablePictureInPicture
+            <video id="clubVideo" src="{{playingVideo}}" width="100%" height="600px" controls autoplay disablePictureInPicture
             oncanplay="this.play()" controlsList="nodownload"></video>
       <!-- <div class="d-flex align-items-center">
      
@@ -876,20 +873,20 @@
                                                             <img *ngIf="post.type == 'hyperlink' && post.captureFileURL === '' "
                                                                 src="https://api.teamtalkers.com/api/v1/en/media-upload/mediaFiles/html/html/7bd046a8c10bcfba8800951fc2a9063f9.jpg"
                                                                 class="h-100 align-self-end rounded"
-                                                                style="object-fit: cover;" alt="" />
+                                                                style="object-fit: cover;    width: -webkit-fill-available;" alt="" />
                                                             <img *ngIf="post.type != 'hyperlink' && post.hyperlinkCaptureFileURL === '' "
                                                                 src="https://api.teamtalkers.com/api/v1/en/media-upload/mediaFiles/html/html/7bd046a8c10bcfba8800951fc2a9063f9.jpg"
                                                                 class="h-100 align-self-end rounded"
-                                                                style="object-fit: cover;" alt="" />
+                                                                style="object-fit: cover;    width: -webkit-fill-available;" alt="" />
 
                                                             <img *ngIf="post.type == 'hyperlink' && post.captureFileURL"
                                                                 src="{{post.captureFileURL}}"
                                                                 class="h-100 align-self-end rounded"
-                                                                style="object-fit: cover;" alt="" />
+                                                                style="object-fit: cover;    width: -webkit-fill-available;" alt="" />
                                                             <img *ngIf="post.type != 'hyperlink' && post.hyperlinkCaptureFileURL"
                                                                 src="{{post.hyperlinkCaptureFileURL}}"
                                                                 class="h-100 align-self-end rounded"
-                                                                style="object-fit: cover;" alt="" />
+                                                                style="object-fit: cover;    width: -webkit-fill-available;" alt="" />
 
                                                         </span>
                                                     </div>
@@ -918,7 +915,9 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="caption">
+                                <div class="caption" style="    padding: 10px 33px;
+                                word-break: break-all;
+                                color: #000;">
                                     <div *ngIf="post.text">{{post.text}}</div>
                                 </div>
 
