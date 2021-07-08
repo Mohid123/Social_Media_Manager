@@ -58,14 +58,13 @@ export class ReportService {
   }
 
   createReport(status, postId?, postedTo?) {
-    
     this.report.clubID = JSON.parse(localStorage.getItem('selectedClub')).id; ;
     this.report.postID = postId ? postId : "";
     this.report.postedTo = postedTo;
     this.report.successStatus = status;
     this.report.userID = localStorage.getItem("clubUid");
-    this.addReport(this.report).subscribe((data) => { 
-      console.log(data ,  'Report Created')
+    this.addReport(this.report).subscribe((report) => { 
+      console.log(report ,  'Report Created')
     });
   }
   

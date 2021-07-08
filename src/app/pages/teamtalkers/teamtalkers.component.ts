@@ -441,6 +441,7 @@ export class TeamtalkersComponent implements OnInit {
   }
 
   addImagePost() {
+    debugger;
     let selectedClubGroups = [];
     let selectedClubEvents = [];
     let selectedClub = []
@@ -465,141 +466,141 @@ export class TeamtalkersComponent implements OnInit {
         selectedClub.push(item)
       }
     });
+    debugger;
+    if(selectedClub.length > 0){
+      this._genericPostService.createImagePost(this.teamtalkerCaption , 'Club' , this.signedInUser.id  , this.file , selectedClub );
+    }
 
-    // if(selectedClub){
-    //   this._genericPostService.createImagePost(this.teamtalkerCaption , 'Club' , this.signedInUser.id  , this.file , selectedClub );
-    // }
+    if(selectedClubGroups.length > 0){
+      this._genericPostService.createImagePost(this.teamtalkerCaption , 'Group' , this.signedInUser.id  , this.file , selectedClubGroups)
+    }
 
-    // if(selectedClubGroups){
-    //   this._genericPostService.createImagePost(this.teamtalkerCaption , 'Group' , this.signedInUser.id  , this.file , selectedClubGroups)
-    // }
+    if(selectedClubEvents.length > 0){
+      this._genericPostService.createImagePost(this.teamtalkerCaption , 'Event' , this.signedInUser.id  , this.file , selectedClubEvents)
+    }
+    // this.spinner.show();
+    // this._postService
+    //   .hyperLinkScrapper(this.teamtalkerCaption)
+    //   .subscribe((data) => {
+    //     hyperLinkResponse = data;
+    //     if (
+    //       hyperLinkResponse.length > 0 &&
+    //       hyperLinkResponse[0].hasOwnProperty("url")
+    //     ) {
+    //       this.post.hyperLink = hyperLinkResponse[0].url;
+    //     }
+    //     if (
+    //       hyperLinkResponse.length > 0 &&
+    //       hyperLinkResponse[0].hasOwnProperty("title")
+    //     ) {
+    //       this.post.hyperlinkTextFirst = hyperLinkResponse[0].title;
+    //     }
+    //     if (
+    //       hyperLinkResponse.length > 0 &&
+    //       hyperLinkResponse[0].hasOwnProperty("description")
+    //     ) {
+    //       this.post.hyperlinkTextSecond = hyperLinkResponse[0].description;
+    //     }
+    //     if (
+    //       hyperLinkResponse.length > 0 &&
+    //       hyperLinkResponse[0].hasOwnProperty("image")
+    //     ) {
+    //       this.post.hyperlinkCaptureFileURL = hyperLinkResponse[0].image;
+    //     }
 
-    // if(selectedClubEvents){
-    //   this._genericPostService.createImagePost(this.teamtalkerCaption , 'Event' , this.signedInUser.id  , this.file , selectedClubEvents)
-    // }
-    this.spinner.show();
-    this._postService
-      .hyperLinkScrapper(this.teamtalkerCaption)
-      .subscribe((data) => {
-        hyperLinkResponse = data;
-        if (
-          hyperLinkResponse.length > 0 &&
-          hyperLinkResponse[0].hasOwnProperty("url")
-        ) {
-          this.post.hyperLink = hyperLinkResponse[0].url;
-        }
-        if (
-          hyperLinkResponse.length > 0 &&
-          hyperLinkResponse[0].hasOwnProperty("title")
-        ) {
-          this.post.hyperlinkTextFirst = hyperLinkResponse[0].title;
-        }
-        if (
-          hyperLinkResponse.length > 0 &&
-          hyperLinkResponse[0].hasOwnProperty("description")
-        ) {
-          this.post.hyperlinkTextSecond = hyperLinkResponse[0].description;
-        }
-        if (
-          hyperLinkResponse.length > 0 &&
-          hyperLinkResponse[0].hasOwnProperty("image")
-        ) {
-          this.post.hyperlinkCaptureFileURL = hyperLinkResponse[0].image;
-        }
+    //     if (selectedClubGroups.length > 0) {
 
-        if (selectedClubGroups.length > 0) {
+    //       delete this.post.eventID;
+    //       this.post.postedTo = "Group";
+    //       this.post.text = this.teamtalkerCaption;
+    //       this._mediaUploadService
+    //         .uploadClubMedia("GroupMedia", this.signedInUser.id, this.file)
+    //         .subscribe((media: any) => {
+    //           selectedClubGroups.forEach((singleGroup, index, array) => {
+    //             this.post.groupID = singleGroup.id;
+    //             this.post.captureFileURL = media.url;
+    //             this.post.path = media.path;
+    //             this._reportService.createReport(2, "", "Group");
+    //             this._postService.addPostToGroup(this.post).subscribe((groupPost: any) => {
+    //               // console.log(groupPost, 'GroupPost')
+    //               this._reportService.createReport(1, groupPost.id, "Group");
+    //               if (index == array.length - 1) {
+    //                 this.toast.success("Post added to Groups", "Success");
+    //                 this.postedSuccessfully();
+    //               }
+    //             },
+    //               (error: any) => {
+    //                 this._reportService.createReport(0, "", "Group");
+    //                 this.spinner.hide();
+    //                 this.toast.error(error.message);
+    //               }
+    //             );
+    //           });
+    //         });
+    //     }
 
-          delete this.post.eventID;
-          this.post.postedTo = "Group";
-          this.post.text = this.teamtalkerCaption;
-          this._mediaUploadService
-            .uploadClubMedia("GroupMedia", this.signedInUser.id, this.file)
-            .subscribe((media: any) => {
-              selectedClubGroups.forEach((singleGroup, index, array) => {
-                this.post.groupID = singleGroup.id;
-                this.post.captureFileURL = media.url;
-                this.post.path = media.path;
-                this._reportService.createReport(2, "", "Group");
-                this._postService.addPostToGroup(this.post).subscribe((groupPost: any) => {
-                  // console.log(groupPost, 'GroupPost')
-                  this._reportService.createReport(1, groupPost.id, "Group");
-                  if (index == array.length - 1) {
-                    this.toast.success("Post added to Groups", "Success");
-                    this.postedSuccessfully();
-                  }
-                },
-                  (error: any) => {
-                    this._reportService.createReport(0, "", "Group");
-                    this.spinner.hide();
-                    this.toast.error(error.message);
-                  }
-                );
-              });
-            });
-        }
+    //     if (selectedClubEvents.length > 0) {
 
-        if (selectedClubEvents.length > 0) {
+    //       this.spinner.show();
+    //       this._mediaUploadService
+    //         .uploadClubMedia("EventMedia", this.signedInUser.id, this.file)
+    //         .subscribe((media: any) => {
+    //           selectedClubEvents.forEach((singleEvent: any, index, array) => {
+    //             delete this.post.groupID;
+    //             this.post.postedTo = "Event";
+    //             this.post.text = this.teamtalkerCaption;
+    //             this.post.eventID = singleEvent.id;
+    //             this.post.captureFileURL = media.url;
+    //             this.post.path = media.path;
+    //             this._reportService.createReport(2, "", "Event");
+    //             this._postService.addPostToEvent(this.post).subscribe(
+    //               (eventPost: any) => {
+    //                 this._reportService.createReport(1, eventPost.id, "Event");
+    //               },
+    //               (error) => {
+    //                 this._reportService.createReport(0, "", "Event");
+    //                 this.spinner.hide();
+    //                 this.toast.error(error.message);
+    //               }
+    //             );
+    //             if (index == array.length - 1) {
+    //               this.toast.success("Post added to Events", "Success");
+    //               this.postedSuccessfully();
+    //             }
+    //           });
+    //         });
+    //     }
 
-          this.spinner.show();
-          this._mediaUploadService
-            .uploadClubMedia("EventMedia", this.signedInUser.id, this.file)
-            .subscribe((media: any) => {
-              selectedClubEvents.forEach((singleEvent: any, index, array) => {
-                delete this.post.groupID;
-                this.post.postedTo = "Event";
-                this.post.text = this.teamtalkerCaption;
-                this.post.eventID = singleEvent.id;
-                this.post.captureFileURL = media.url;
-                this.post.path = media.path;
-                this._reportService.createReport(2, "", "Event");
-                this._postService.addPostToEvent(this.post).subscribe(
-                  (eventPost: any) => {
-                    this._reportService.createReport(1, eventPost.id, "Event");
-                  },
-                  (error) => {
-                    this._reportService.createReport(0, "", "Event");
-                    this.spinner.hide();
-                    this.toast.error(error.message);
-                  }
-                );
-                if (index == array.length - 1) {
-                  this.toast.success("Post added to Events", "Success");
-                  this.postedSuccessfully();
-                }
-              });
-            });
-        }
-
-        if (selectedClub) {
+    //     if (selectedClub) {
           
-          this.spinner.show();
-          this._mediaUploadService
-            .uploadClubMedia("ClubMedia", this.signedInUser.id, this.file)
-            .subscribe(
-              (media: any) => {
-                delete this.post.eventID;
-                delete this.post.groupID;
-                this.post.postedTo = "Club";
-                this.post.text = this.teamtalkerCaption;
-                this.post.captureFileURL = media.url;
-                this.post.path = media.path;
-                this._reportService.createReport(2, "", "Club");
-                this._postService.addPost(this.post).subscribe((post: any) => {
-                  this.toast.success("Post added Succeessfully to Club");
-                  this.getRecentClubPosts()
-                  this.clearCaption()
-                  this.postedSuccessfully();
-                  this._reportService.createReport(1, post.id, "Club");
-                });
-              },
-              (error: any) => {
-                this.spinner.hide();
-                this._reportService.createReport(0, "", "Club");
-                this.toast.error(error.message);
-              }
-            );
-        }
-      });
+    //       this.spinner.show();
+    //       this._mediaUploadService
+    //         .uploadClubMedia("ClubMedia", this.signedInUser.id, this.file)
+    //         .subscribe(
+    //           (media: any) => {
+    //             delete this.post.eventID;
+    //             delete this.post.groupID;
+    //             this.post.postedTo = "Club";
+    //             this.post.text = this.teamtalkerCaption;
+    //             this.post.captureFileURL = media.url;
+    //             this.post.path = media.path;
+    //             this._reportService.createReport(2, "", "Club");
+    //             this._postService.addPost(this.post).subscribe((post: any) => {
+    //               this.toast.success("Post added Succeessfully to Club");
+    //               this.getRecentClubPosts()
+    //               this.clearCaption()
+    //               this.postedSuccessfully();
+    //               this._reportService.createReport(1, post.id, "Club");
+    //             });
+    //           },
+    //           (error: any) => {
+    //             this.spinner.hide();
+    //             this._reportService.createReport(0, "", "Club");
+    //             this.toast.error(error.message);
+    //           }
+    //         );
+    //     }
+    //   });
   }
 
   switchTabs(event) {
@@ -658,7 +659,7 @@ export class TeamtalkersComponent implements OnInit {
   addVideoPost() {
     let selectedClubGroups = [];
     let selectedClubEvents = [];
-    let selectedClub: boolean = false;
+    let selectedClub = []
     let file;
     let hyperLinkResponse = [];
 
@@ -677,188 +678,200 @@ export class TeamtalkersComponent implements OnInit {
       } else if (item.hasOwnProperty("eventName")) {
         selectedClubEvents.push(item);
       } else if (item.hasOwnProperty("clubName")) {
-        selectedClub = true;
+        selectedClub.push(item)  
       }
     });
-    this.post.type = "video";
-    this.spinner.show();
-    this._postService
-      .hyperLinkScrapper(this.teamtalkerCaption)
-      .subscribe((data) => {
-        hyperLinkResponse = data;
-        if (
-          hyperLinkResponse.length > 0 &&
-          hyperLinkResponse[0].hasOwnProperty("url")
-        ) {
-          this.post.hyperLink = hyperLinkResponse[0].url;
-        }
-        if (
-          hyperLinkResponse.length > 0 &&
-          hyperLinkResponse[0].hasOwnProperty("title")
-        ) {
-          this.post.hyperlinkTextFirst = hyperLinkResponse[0].title;
-        }
-        if (
-          hyperLinkResponse.length > 0 &&
-          hyperLinkResponse[0].hasOwnProperty("description")
-        ) {
-          this.post.hyperlinkTextSecond = hyperLinkResponse[0].description;
-        }
-        if (
-          hyperLinkResponse.length > 0 &&
-          hyperLinkResponse[0].hasOwnProperty("image")
-        ) {
-          this.post.hyperlinkCaptureFileURL = hyperLinkResponse[0].image;
-        }
+    // this.post.type = "video";
+    // this.spinner.show();
 
-        if (selectedClubGroups.length > 0) {
-          delete this.post.eventID;
-          this.post.postedTo = "Group";
-          this.post.text = this.teamtalkerCaption;
-          this._mediaUploadService
-            .uploadClubMedia("GroupMedia", this.signedInUser.id, this.file)
-            .subscribe((uploadedVideo: any) => {
-              this.post.captureFileURL = uploadedVideo.url;
-              this.post.path = uploadedVideo.path;
-              this._videoService.generateThumbnail(this.file).then((base64) => {
-                file = base64;
-                file = file.replace("data:image/png;base64,", "");
-                const imageBlob = this.dataURItoBlob(file.toString());
-                const imageFile = new File([imageBlob], "thumbnail.jpeg", {
-                  type: "image/jpeg",
-                });
-                this._mediaUploadService
-                  .uploadClubMedia(
-                    "VideoThumbnails",
-                    this.signedInUser.id,
-                    imageFile
-                  )
-                  .subscribe((thumbnailFile: any) => {
-                    this.post.thumbnailPath = thumbnailFile.path;
-                    this.post.thumbnailURL = thumbnailFile.url;
+    if(selectedClub.length > 0){
+      this._genericPostService.createVideoPost(this.teamtalkerCaption , 'Club' , this.signedInUser.id  , this.file , selectedClub );
+    }
 
-                    selectedClubGroups.forEach((singleGroup, index, array) => {
-                      this.post.groupID = singleGroup.id;
-                      this._reportService.createReport(2, "", "Group");
-                      this._postService.addPostToGroup(this.post).subscribe(
-                        (groupPost: any) => {
-                          this._reportService.createReport(1, groupPost.id, "Group");
-                        },
-                        (error) => {
-                          this.spinner.hide();
-                          this.toast.error(error.message);
-                          this._reportService.createReport(0, "", "Group");
-                        }
-                      );
-                      if (index == array.length - 1) {
-                        this.toast.success("Post added to Groups", "Success");
-                        this.postedSuccessfully();
-                      }
-                    });
-                  });
-              });
-            });
-        }
+    if(selectedClubGroups.length > 0){
+      this._genericPostService.createVideoPost(this.teamtalkerCaption , 'Group' , this.signedInUser.id  , this.file , selectedClubGroups)
+    }
 
-        if (selectedClubEvents.length > 0) {
-          delete this.post.groupID;
-          this.post.postedTo = "Event";
-          this.post.text = this.teamtalkerCaption;
-          this._mediaUploadService
-            .uploadClubMedia("EventMedia", this.signedInUser.id, this.file)
-            .subscribe((uploadedVideo: any) => {
-              this.post.captureFileURL = uploadedVideo.url;
-              this.post.path = uploadedVideo.path;
-              this._videoService.generateThumbnail(this.file).then((base64) => {
-                file = base64;
-                file = file.replace("data:image/png;base64,", "");
-                const imageBlob = this.dataURItoBlob(file.toString());
-                const imageFile = new File([imageBlob], "thumbnail.jpeg", {
-                  type: "image/jpeg",
-                });
-                this._mediaUploadService
-                  .uploadClubMedia(
-                    "VideoThumbnails",
-                    this.signedInUser.id,
-                    imageFile
-                  )
-                  .subscribe((thumbnailFile: any) => {
-                    this.post.thumbnailPath = thumbnailFile.path;
-                    this.post.thumbnailURL = thumbnailFile.url;
+    if(selectedClubEvents.length > 0){
+      this._genericPostService.createVideoPost(this.teamtalkerCaption , 'Event' , this.signedInUser.id  , this.file , selectedClubEvents)
+    }
+    // this._postService
+    //   .hyperLinkScrapper(this.teamtalkerCaption)
+    //   .subscribe((data) => {
+    //     hyperLinkResponse = data;
+    //     if (
+    //       hyperLinkResponse.length > 0 &&
+    //       hyperLinkResponse[0].hasOwnProperty("url")
+    //     ) {
+    //       this.post.hyperLink = hyperLinkResponse[0].url;
+    //     }
+    //     if (
+    //       hyperLinkResponse.length > 0 &&
+    //       hyperLinkResponse[0].hasOwnProperty("title")
+    //     ) {
+    //       this.post.hyperlinkTextFirst = hyperLinkResponse[0].title;
+    //     }
+    //     if (
+    //       hyperLinkResponse.length > 0 &&
+    //       hyperLinkResponse[0].hasOwnProperty("description")
+    //     ) {
+    //       this.post.hyperlinkTextSecond = hyperLinkResponse[0].description;
+    //     }
+    //     if (
+    //       hyperLinkResponse.length > 0 &&
+    //       hyperLinkResponse[0].hasOwnProperty("image")
+    //     ) {
+    //       this.post.hyperlinkCaptureFileURL = hyperLinkResponse[0].image;
+    //     }
 
-                    selectedClubEvents.forEach((singleEvent, index, array) => {
-                      this.post.eventID = singleEvent.id;
-                      this._reportService.createReport(2, "", "Event");
-                      this._postService.addPostToEvent(this.post).subscribe(
-                        (eventPost: any) => {
-                          this._reportService.createReport(1, eventPost.id, "Event");
-                        },
-                        (error) => {
-                          this.spinner.hide();
-                          this.toast.error(error.message);
-                          this._reportService.createReport(0, "", "Events");
-                        }
-                      );
-                      if (index == array.length - 1) {
-                        this.toast.success("Post added to Events", "Success");
-                        this.postedSuccessfully();
-                      }
-                    });
-                  });
-              });
-            });
-        }
+    //     if (selectedClubGroups.length > 0) {
+    //       delete this.post.eventID;
+    //       this.post.postedTo = "Group";
+    //       this.post.text = this.teamtalkerCaption;
+    //       this._mediaUploadService
+    //         .uploadClubMedia("GroupMedia", this.signedInUser.id, this.file)
+    //         .subscribe((uploadedVideo: any) => {
+    //           this.post.captureFileURL = uploadedVideo.url;
+    //           this.post.path = uploadedVideo.path;
+    //           this._videoService.generateThumbnail(this.file).then((base64) => {
+    //             file = base64;
+    //             file = file.replace("data:image/png;base64,", "");
+    //             const imageBlob = this.dataURItoBlob(file.toString());
+    //             const imageFile = new File([imageBlob], "thumbnail.jpeg", {
+    //               type: "image/jpeg",
+    //             });
+    //             this._mediaUploadService
+    //               .uploadClubMedia(
+    //                 "VideoThumbnails",
+    //                 this.signedInUser.id,
+    //                 imageFile
+    //               )
+    //               .subscribe((thumbnailFile: any) => {
+    //                 this.post.thumbnailPath = thumbnailFile.path;
+    //                 this.post.thumbnailURL = thumbnailFile.url;
 
-        if (selectedClub) {
-          delete this.post.eventID;
-          delete this.post.groupID;
-          this.post.postedTo = "Club";
-          this.post.text = this.teamtalkerCaption;
-          this._mediaUploadService
-            .uploadClubMedia("ClubMedia", this.signedInUser.id, this.file).subscribe((uploadedVideo: any) => {
-              this.post.captureFileURL = uploadedVideo.url;
-              this.post.path = uploadedVideo.path;
-              this._videoService.generateThumbnail(this.file).then((base64) => {
-                file = base64;
-                file = file.replace("data:image/png;base64,", "");
-                const imageBlob = this.dataURItoBlob(file.toString());
-                const imageFile = new File([imageBlob], "thumbnail.jpeg", {
-                  type: "image/jpeg",
-                });
-                this._mediaUploadService
-                  .uploadClubMedia(
-                    "VideoThumbnails",
-                    this.signedInUser.id,
-                    imageFile
-                  )
-                  .subscribe((thumbnailFile: any) => {
-                    this.post.thumbnailPath = thumbnailFile.path;
-                    this.post.thumbnailURL = thumbnailFile.url;
-                    this._reportService.createReport(2, "", "Club");
-                    this._postService.addPost(this.post).subscribe(
-                      (post: any) => {
-                        this.toast.success(
-                          "Video Post added Successfully to Club"
-                        );
-                        this.getRecentClubPosts()
-                        this.clearCaption()
-                        this.spinner.hide();
-                        this.url = "";
-                        this.teamtalkerCaption = "";
-                        this.cf.detectChanges();
-                        this._reportService.createReport(1, post.id, "Club");
-                      },
-                      (error) => {
-                        this._reportService.createReport(0, "", "Club");
-                        this.spinner.hide();
-                        this.toast.error(error.message);
-                      }
-                    );
-                  });
-              });
-            });
-        }
-      });
+    //                 selectedClubGroups.forEach((singleGroup, index, array) => {
+    //                   this.post.groupID = singleGroup.id;
+    //                   this._reportService.createReport(2, "", "Group");
+    //                   this._postService.addPostToGroup(this.post).subscribe(
+    //                     (groupPost: any) => {
+    //                       this._reportService.createReport(1, groupPost.id, "Group");
+    //                     },
+    //                     (error) => {
+    //                       this.spinner.hide();
+    //                       this.toast.error(error.message);
+    //                       this._reportService.createReport(0, "", "Group");
+    //                     }
+    //                   );
+    //                   if (index == array.length - 1) {
+    //                     this.toast.success("Post added to Groups", "Success");
+    //                     this.postedSuccessfully();
+    //                   }
+    //                 });
+    //               });
+    //           });
+    //         });
+    //     }
+
+    //     if (selectedClubEvents.length > 0) {
+    //       delete this.post.groupID;
+    //       this.post.postedTo = "Event";
+    //       this.post.text = this.teamtalkerCaption;
+    //       this._mediaUploadService
+    //         .uploadClubMedia("EventMedia", this.signedInUser.id, this.file)
+    //         .subscribe((uploadedVideo: any) => {
+    //           this.post.captureFileURL = uploadedVideo.url;
+    //           this.post.path = uploadedVideo.path;
+    //           this._videoService.generateThumbnail(this.file).then((base64) => {
+    //             file = base64;
+    //             file = file.replace("data:image/png;base64,", "");
+    //             const imageBlob = this.dataURItoBlob(file.toString());
+    //             const imageFile = new File([imageBlob], "thumbnail.jpeg", {
+    //               type: "image/jpeg",
+    //             });
+    //             this._mediaUploadService
+    //               .uploadClubMedia(
+    //                 "VideoThumbnails",
+    //                 this.signedInUser.id,
+    //                 imageFile
+    //               )
+    //               .subscribe((thumbnailFile: any) => {
+    //                 this.post.thumbnailPath = thumbnailFile.path;
+    //                 this.post.thumbnailURL = thumbnailFile.url;
+
+    //                 selectedClubEvents.forEach((singleEvent, index, array) => {
+    //                   this.post.eventID = singleEvent.id;
+    //                   this._reportService.createReport(2, "", "Event");
+    //                   this._postService.addPostToEvent(this.post).subscribe(
+    //                     (eventPost: any) => {
+    //                       this._reportService.createReport(1, eventPost.id, "Event");
+    //                     },
+    //                     (error) => {
+    //                       this.spinner.hide();
+    //                       this.toast.error(error.message);
+    //                       this._reportService.createReport(0, "", "Events");
+    //                     }
+    //                   );
+    //                   if (index == array.length - 1) {
+    //                     this.toast.success("Post added to Events", "Success");
+    //                     this.postedSuccessfully();
+    //                   }
+    //                 });
+    //               });
+    //           });
+    //         });
+    //     }
+
+    //     if (selectedClub) {
+    //       delete this.post.eventID;
+    //       delete this.post.groupID;
+    //       this.post.postedTo = "Club";
+    //       this.post.text = this.teamtalkerCaption;
+    //       this._mediaUploadService
+    //         .uploadClubMedia("ClubMedia", this.signedInUser.id, this.file).subscribe((uploadedVideo: any) => {
+    //           this.post.captureFileURL = uploadedVideo.url;
+    //           this.post.path = uploadedVideo.path;
+    //           this._videoService.generateThumbnail(this.file).then((base64) => {
+    //             file = base64;
+    //             file = file.replace("data:image/png;base64,", "");
+    //             const imageBlob = this.dataURItoBlob(file.toString());
+    //             const imageFile = new File([imageBlob], "thumbnail.jpeg", {
+    //               type: "image/jpeg",
+    //             });
+    //             this._mediaUploadService
+    //               .uploadClubMedia(
+    //                 "VideoThumbnails",
+    //                 this.signedInUser.id,
+    //                 imageFile
+    //               )
+    //               .subscribe((thumbnailFile: any) => {
+    //                 this.post.thumbnailPath = thumbnailFile.path;
+    //                 this.post.thumbnailURL = thumbnailFile.url;
+    //                 this._reportService.createReport(2, "", "Club");
+    //                 this._postService.addPost(this.post).subscribe(
+    //                   (post: any) => {
+    //                     this.toast.success(
+    //                       "Video Post added Successfully to Club"
+    //                     );
+    //                     this.getRecentClubPosts()
+    //                     this.clearCaption()
+    //                     this.spinner.hide();
+    //                     this.url = "";
+    //                     this.teamtalkerCaption = "";
+    //                     this.cf.detectChanges();
+    //                     this._reportService.createReport(1, post.id, "Club");
+    //                   },
+    //                   (error) => {
+    //                     this._reportService.createReport(0, "", "Club");
+    //                     this.spinner.hide();
+    //                     this.toast.error(error.message);
+    //                   }
+    //                 );
+    //               });
+    //           });
+    //         });
+    //     }
+    //   });
   }
 
   pauseVideo() { }

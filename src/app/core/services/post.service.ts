@@ -46,13 +46,17 @@ export class PostService {
 
   
   createClubPost(postedTo , post){
+    debugger;
     if(postedTo == 'Group'){
+      post.postedTo = postedTo;
       return this._clubApiService.post(`/groups/addPost/` , post);
     }
     else if(postedTo == 'Event'){
+      post.postedTo = postedTo;
       return this._clubApiService.post(`/event/addPost` , post);
     }
     else {
+      post.postedTo = postedTo;
       return this._clubApiService.post(`/post/AddPost` , post);
     }
   }

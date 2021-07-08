@@ -7,13 +7,3 @@ export const constants = {
     app_id: '844857613045687',
     app_secret: '2159f936003b2d66dfa879da95a60da5'
 }
-
-// function getClubBaseUrl(){
-// let localClub = localStorage.getItem('selectedClub');
-// if(localClub){
-//     return JSON.parse(localClub).baseURL;
-// }
-// else {
-//     return "";
-// }
-// }

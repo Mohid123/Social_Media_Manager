@@ -72,7 +72,9 @@ function appInitializer(authService: AuthService) {
 
   ],
   providers: [
+    VideoProcessingService,
     {
+   
       provide: APP_INITIALIZER,
       useFactory: appInitializer,
       multi: true,
