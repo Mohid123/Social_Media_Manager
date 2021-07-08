@@ -775,7 +775,7 @@
                     </mat-tab>
                 </mat-tab-group>
                 <div>
-                    <div [(ngModel)]="clubPrimaryColor" [ngStyle]="{'background-color': clubPrimaryColor}" class="card-header ribbon ribbon-right m-15 " 
+                    <div name = "fieldName" ngDefaultControl [(ngModel)]="clubPrimaryColor" [ngStyle]="{'background-color': clubPrimaryColor}" class="card-header ribbon ribbon-right m-15 " 
                         style="box-shadow: rgb(99 99 99 / 20%) 0px 2px 8px 0px; border-radius: 7px;">
                         <div class="ribbon-target bg-primary" style="top: 10px; right: -2px;">Recent posts</div>
                         <h1 class="card-title text-light" style=" background-color: rgba(255, 255, 255, 0.95);
@@ -797,7 +797,7 @@
                                         <div class="user-info d-inline-block" style="z-index: 1; padding: 10px 25px;
                                         position: relative;">
                                             <img class="img-circle"
-                                                style="height: 44px; width: 44px; object-fit: cover; border-radius: 30px;" [(ngModel)]="clubPrimaryColor" [ngStyle]="{'border': '3px solid' + clubPrimaryColor}"
+                                                style="height: 44px; width: 44px; object-fit: cover; border-radius: 30px;" name = "fieldName" ngDefaultControl [(ngModel)]="clubPrimaryColor" [ngStyle]="{'border': '3px solid' + clubPrimaryColor}"
                                                 [src]="profileImageUrl">
                                             <div class="text" style="    right: -150px !important;
                                             top: 16px !important;
@@ -1067,7 +1067,7 @@
                                             data-type="photo" *ngIf="showDiv.photo">
                                             <div class="user-info" style="z-index: 1;">
                                                 <img class="img-circle"
-                                                    style="height: 44px; object-fit: cover; border-radius: 30px;" [(ngModel)]="clubPrimaryColor" [ngStyle]="{'border': '3px solid' + clubPrimaryColor}"
+                                                    style="height: 44px; object-fit: cover; border-radius: 30px;" name = "fieldName" ngDefaultControl [(ngModel)]="clubPrimaryColor" [ngStyle]="{'border': '3px solid' + clubPrimaryColor}"
                                                     [src]="profileImageUrl">
                                                 <div class="text">
                                                     <div class="name"> {{userName}}</div>
@@ -1198,7 +1198,7 @@
                                             data-type="video" *ngIf="showDiv.video">
                                             <div class="user-info" style="z-index: 1;">
                                                 <img class="img-circle"
-                                                    style="height: 44px; object-fit: cover; border-radius: 30px;" [(ngModel)]="clubPrimaryColor" [ngStyle]="{'border': '3px solid' + clubPrimaryColor}"
+                                                    style="height: 44px; object-fit: cover; border-radius: 30px;"  ngDefaultControl name="fieldName"  [(ngModel)]="clubPrimaryColor" [ngStyle]="{'border': '3px solid' + clubPrimaryColor}"
                                                     [src]="profileImageUrl">
                                                 <div class="text">
                                                     <div class="name"> {{userName}}</div>
@@ -1329,7 +1329,7 @@
                                             data-type="text" *ngIf="showDiv.text">
                                             <div class="user-info">
                                                 <img class="img-circle"
-                                                    style="height: 44px; object-fit: cover; border-radius: 30px;" [(ngModel)]="clubPrimaryColor" [ngStyle]="{'border': '3px solid' + clubPrimaryColor}"
+                                                    style="height: 44px; object-fit: cover; border-radius: 30px;" ngDefaultControl name = "fieldName" [(ngModel)]="clubPrimaryColor" [ngStyle]="{'border': '3px solid' + clubPrimaryColor}"
                                                     [src]="profileImageUrl">
                                                 <div class="text">
                                                     <div class="name"> {{userName}}</div>
@@ -1453,7 +1453,7 @@
                                             data-type="text" *ngIf="showDiv.poll">
                                             <div class="user-info" style="z-index: 1;">
                                                 <img class="img-circle"
-                                                    style="height: 44px; object-fit: cover; border-radius: 30px;" [(ngModel)]="clubPrimaryColor" [ngStyle]="{'border': '3px solid' + clubPrimaryColor}"
+                                                    style="height: 44px; object-fit: cover; border-radius: 30px;"  ngDefaultControl name = "fieldName" [(ngModel)]="clubPrimaryColor" [ngStyle]="{'border': '3px solid' + clubPrimaryColor}"
                                                     [src]="profileImageUrl">
                                                 <div class="text">
                                                     <div class="name"> {{userName}}</div>
