@@ -61,6 +61,7 @@ export class TeamtalkersComponent implements OnInit {
     text: false,
     poll: false,
   };
+  public clubPrimaryColor: string;
   closeResult: string;
   pollSelectedDate: Date;
   pollSelectedTime: Date;
@@ -93,6 +94,7 @@ export class TeamtalkersComponent implements OnInit {
     this.report = new Report();
     this.poll = new Poll();
   }
+  
 
   ngOnInit() {
     this.showSpinner();
@@ -100,6 +102,7 @@ export class TeamtalkersComponent implements OnInit {
     this.initializeChecklist()
     this.getCheckedItemList();
     this.getRecentClubPosts();
+    this.clubPrimaryColor = JSON.parse(localStorage.getItem('selectedClub')).clubColor;
 
 
 
