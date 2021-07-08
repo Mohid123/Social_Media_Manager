@@ -44,8 +44,8 @@ export class TeamtalkersComponent implements OnInit {
   public signedInUser: User;
   public posted: string = "Club";
   public report: Report;
-  public userName: string = localStorage.getItem("userName");
-  public profileImageUrl: string = localStorage.getItem("profileImageUrl");
+  public userName: string  
+  public profileImageUrl: string
   public searchString: string;
   public tempList: any = [];
   public checklist: any = [];
@@ -102,10 +102,6 @@ export class TeamtalkersComponent implements OnInit {
     this.initializeChecklist()
     this.getCheckedItemList();
     this.getRecentClubPosts();
-    this.clubPrimaryColor = JSON.parse(localStorage.getItem('selectedClub')).clubColor;
-
-
-
   }
 
 
@@ -117,7 +113,14 @@ export class TeamtalkersComponent implements OnInit {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
     });
   }
-  private getDismissReason(reason: any): string {
+
+  //  getServiceEmitter(){
+  //    debugger;
+  //    let value =  this._genericPostService.getAfterPosted;
+  //    console.log(value , 'chas')
+  // }
+
+  getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
       return 'by pressing ESC';
     } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
@@ -129,7 +132,6 @@ export class TeamtalkersComponent implements OnInit {
 
 
   getRecentClubPosts() {
-    
     let tempPosts = []
     this._postService.getClubPosts('Club', 0, 15).subscribe((clubPosts: Post[]) => {
       clubPosts.map((singleClubPost: any, idx, self) => {
@@ -159,7 +161,7 @@ export class TeamtalkersComponent implements OnInit {
     this.poll = new Poll();
     this.singleDate = new Date(new Date().setDate(new Date().getDate() + 1));
     this.cf.detectChanges()
-    this.spinner.hide()
+    // this.spinner.hide()
   }
 
   initializeChecklist() {
@@ -175,10 +177,12 @@ export class TeamtalkersComponent implements OnInit {
     this.tempList.push(obj);
     this.clubName = club.clubName;
     this.clubLogo = club.logoURL
+    this.clubPrimaryColor = club.clubColor;
+    this.userName = localStorage.getItem("userName");
+    this.profileImageUrl =  localStorage.getItem("profileImageUrl");
   }
 
   onChangeSingle(value: Date) {
-
     this.pollSelectedDate = value;
   }
   onChangeSingleTime(value: Date) {
@@ -186,7 +190,6 @@ export class TeamtalkersComponent implements OnInit {
   }
 
   searchGroupsAndEvents(event) {
-
     this.searchString = event;
     if (this.searchString) {
       this.checklist = this.tempList.filter((item) =>
@@ -299,8 +302,6 @@ export class TeamtalkersComponent implements OnInit {
     this.removeSlectedItems();
     this.cf.detectChanges();
   }
-
-
 
   getSignedInUser() {
     this._authService.getSignedInUser().subscribe((user) => {
@@ -471,15 +472,21 @@ export class TeamtalkersComponent implements OnInit {
     });
     debugger;
     if(selectedClub.length > 0){
-      this._genericPostService.createImagePost(this.teamtalkerCaption , 'Club' , this.signedInUser.id  , this.file , selectedClub );
+      this._genericPostService.createImagePost(this.teamtalkerCaption , 'Club' , this.signedInUser.id  , this.file , selectedClub ).then(success=>{
+        this.resetPost()
+      }) ;
     }
 
     if(selectedClubGroups.length > 0){
-      this._genericPostService.createImagePost(this.teamtalkerCaption , 'Group' , this.signedInUser.id  , this.file , selectedClubGroups)
+      this._genericPostService.createImagePost(this.teamtalkerCaption , 'Group' , this.signedInUser.id  , this.file , selectedClubGroups).then(success=>{
+        this.resetPost()
+      }) ;
     }
 
     if(selectedClubEvents.length > 0){
-      this._genericPostService.createImagePost(this.teamtalkerCaption , 'Event' , this.signedInUser.id  , this.file , selectedClubEvents)
+      this._genericPostService.createImagePost(this.teamtalkerCaption , 'Event' , this.signedInUser.id  , this.file , selectedClubEvents).then(success=>{
+        this.resetPost()
+      }) ;
     }
     // this.spinner.show();
     // this._postService
@@ -956,7 +963,6 @@ export class TeamtalkersComponent implements OnInit {
       this._postService.addPost(this.post).subscribe((data) => {
         this.clearCaption()
         this.toast.success('Poll Post Created in Club', 'Success');
-        // console.log(data)
         this.resetPost()
       });
     }

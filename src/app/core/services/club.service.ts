@@ -15,9 +15,6 @@ export class ClubService {
   private club: any
 
   constructor(private _apiService: ApiService, private http: HttpClient, private _errorHandlerService: ErrorhandlerService , private _clubApiService : ClubApiService) {
-    // constants.clubApiUrl == "" && localStorage.getItem('selectedClub') ? constants.clubApiUrl = JSON.parse(localStorage.getItem('selectedClub')).baseURL : constants.clubApiUrl =  JSON.parse(localStorage.getItem('selectedClub')).baseURL;
-    // constants.clubApiUrl =  JSON.parse(localStorage.getItem('selectedClub')).baseURL;
-
   }
 
   getAllClubs(offset, limit): Observable<any> {
@@ -47,17 +44,15 @@ export class ClubService {
     limit = parseInt(limit) < 1 ? 10 : limit;
     offset = parseInt(offset) < 0 ? 0 : offset;
     return this._clubApiService.get(`/groups/getAllGroups?offset=${offset}&limit=${limit}`);
-    // return this.http.get(`${constants.clubApiUrl}/groups/getAllGroups?offset=${offset}&limit=${limit}`).pipe(catchError(this._errorHandlerService.handleErrors))
   }
 
   getClubEvents(offset, limit) {
     limit = parseInt(limit) < 1 ? 10 : limit;
     offset = parseInt(offset) < 0 ? 0 : offset;
     return this._clubApiService.get(`/event/getAllEvents?offset=${offset}&limit=${limit}`);
-    // return this.http.get(`${constants.clubApiUrl}/event/getAllEvents?offset=${offset}&limit=${limit}`).pipe(catchError(this._errorHandlerService.handleErrors))
   }
 
-
+  
   get getClub() {
     return this.club;
   }

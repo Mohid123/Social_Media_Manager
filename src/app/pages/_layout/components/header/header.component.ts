@@ -133,7 +133,7 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  toggleChange(event){
+  setLiveStreamBit(event){
     console.log(event)
   }
 

@@ -39,7 +39,6 @@ export class PublishComponent implements OnInit {
   public instagramProfileUrl: string = 'https://social.teamtalkers.com/api/v1/en/media-upload/mediaFiles/123/test/113ad1ea783c7d107afd8ddc09eb6f23e.svg'
   public file: any
   public socialCaption: string = "";
-  public selectedInstagram: boolean = true
   public postContent: string
   public IGaccount: any
   public posted: string = "";
@@ -56,6 +55,8 @@ export class PublishComponent implements OnInit {
     video: false,
     text: false
   }
+  public selectedFacebook : boolean = false; // initally the value was set to false
+  public selectedInstagram: boolean = false // was previousely set to true
 
   constructor(private spinner: NgxSpinnerService, private cf: ChangeDetectorRef,
     private toast: ToastrService, private _facebookService: FacebookService,
@@ -244,25 +245,26 @@ export class PublishComponent implements OnInit {
   }
 
   switchTabs(event) {
+    debugger;
     if (event.index == 0) {
       this.showDiv.photo = true;
       this.showDiv.video = false;
       this.showDiv.text = false;
-      this.selectedInstagram = true;
+      // this.selectedInstagram = true;
 
     }
     else if (event.index == 1) {
       this.showDiv.photo = false;
       this.showDiv.video = true;
       this.showDiv.text = false;
-      this.selectedInstagram = true;
+      // this.selectedInstagram = true;
 
     }
     else {
       this.showDiv.photo = false;
       this.showDiv.video = false;
       this.showDiv.text = true;
-      this.selectedInstagram = false;
+      // this.selectedInstagram = false;s
     }
   }
 
@@ -750,7 +752,6 @@ export class PublishComponent implements OnInit {
   }
 
   addTextPost() {
-
 
     let selectedFacebookPages = []
     let selctedInstagramPages = []

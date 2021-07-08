@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { ReportService } from 'src/app/core/services/report.service';
@@ -13,6 +13,7 @@ import { VideoProcessingService } from '../video-service/video-processing.servic
 })
 export class ClubpostService {
   private post: Post
+  public postedSuccessfully: EventEmitter<any> = new EventEmitter();
   constructor(private _reportService: ReportService,
     private _postService: PostService,
     private spinner: NgxSpinnerService,
@@ -22,7 +23,6 @@ export class ClubpostService {
   ) {
     this.post = new Post()
   }
-
 
   createTextPost(postedText, postedTo, selectedList) {
     let hyperLinkResponse = []
@@ -85,6 +85,7 @@ export class ClubpostService {
 
 
   createImagePost(postedText, postedTo, userID, MediaFile, selectedList?) {
+    return new Promise((resolve, reject) => {
     let hyperLinkResponse = []
     this.post.type = 'image'
     this.post.text = postedText;
@@ -135,6 +136,7 @@ export class ClubpostService {
             if (idx == self.length - 1) {
               this.toast.success(`Post added successfully to ${postedTo}`)
               this.spinner.hide();
+              resolve('success');
             }
           }, error => {
             this.spinner.hide();
@@ -143,6 +145,7 @@ export class ClubpostService {
           })
         });
       })
+    })
     })
 
   }

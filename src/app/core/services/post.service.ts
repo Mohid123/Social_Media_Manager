@@ -19,29 +19,25 @@ export class PostService {
   
   addPost(body) : Observable <any> {
     return this._clubApiService.post(`/post/AddPost` , body);
-    //  return this.http.post(`${constants.clubApiUrl}/post/AddPost` , body).pipe(catchError(this._errorHandlerService.handleErrors));
   } 
 
   addPostToGroup(body) : Observable <any> {
     return this._clubApiService.post(`/groups/addPost/` , body);
 
-    // return this.http.post(`${constants.clubApiUrl}/groups/addPost/` , body).pipe(catchError(this._errorHandlerService.handleErrors));
   } 
 
   addPostToEvent(body) : Observable <any> {
     return this._clubApiService.post(`/event/addPost` , body);
     
-    // return this.http.post(`${constants.clubApiUrl}/event/addPost` , body).pipe(catchError(this._errorHandlerService.handleErrors));
   }
 
-  hyperLinkScrapper(body) : Observable <any>  {
- 
-    if(body == ""){
-      body = 'MockPayloadScrapper';
-    }
-    return this._clubApiService.post(`/firebase-migration-functions/hyperlinkScraper` , {'text':body});
-    
-    // return this.http.post(`${constants.clubApiUrl}/firebase-migration-functions/hyperlinkScraper` , {'text':body}).pipe(catchError(this._errorHandlerService.handleErrors));
+  hyperLinkScrapper(postedText) : Observable <any>  {
+
+    // if(postedText == ""){
+    //   postedText = 'MockPayloadScrapper';
+    // }
+    postedText == "" ? postedText = 'MockPayloadScrapper' : postedText =postedText
+    return this._clubApiService.post(`/firebase-migration-functions/hyperlinkScraper` , {'text':postedText});    
   }
 
   
@@ -61,21 +57,24 @@ export class PostService {
     }
   }
 
-
   getClubPosts(postedTo,offset,limit){
     limit = parseInt(limit) < 1 ? 10 : limit;
     offset = parseInt(offset) < 0 ? 0 : offset;
     return this._clubApiService.get(`/post/getAllPosts/${postedTo}?offset=${offset}&limit=${limit}`);
-    
-    // return this.http.get(`${constants.clubApiUrl}/post/getAllPosts/${postedTo}?offset=${offset}&limit=${limit}`)
   }
 
   getPostCommentsAndReactions(postId , offset , limit){
     limit = parseInt(limit) < 1 ? 10 : limit;
     offset = parseInt(offset) < 0 ? 0 : offset;
-    return this._clubApiService.get(`/post-reaction/getPostReactionswithCount/${postId}?offset=${offset}&limit=${limit}`);
-    
-    // return this.http.get(`${constants.clubApiUrl}/post-reaction/getPostReactionswithCount/${postId}?offset=${offset}&limit=${limit}`)
+    return this._clubApiService.get(`/post-reaction/getPostReactionswithCount/${postId}?offset=${offset}&limit=${limit}`);    
+  }
+
+  getLiveStreamBit(){
+    return this._clubApiService.get(`/firebase-migration-functions/getLiveStreamValue`);
+  }
+
+  changeLiveStreamBit(liveStreamBit){
+    return this._clubApiService.get(`/firebase-migration-functions/changeLiveStreamBit/${liveStreamBit}`);
   }
 
 }
