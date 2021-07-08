@@ -24,7 +24,7 @@ export class InstagramComponent implements OnInit {
   public format: string;
   public url: string = '';
   public report: Report
-  public instagramProfileUrl: string = 'https://social.teamtalkers.com/api/v1/en/media-upload/mediaFiles/123/test/113ad1ea783c7d107afd8ddc09eb6f23e.svg'
+  public instagramProfileUrl: string = 'https://socialapi.solissol.com/api/v1/en/media-upload/mediaFiles/123/test/113ad1ea783c7d107afd8ddc09eb6f23e.svg'
   public masterSelected: boolean;
   public checklist: any = [];
   public tempList: any = []

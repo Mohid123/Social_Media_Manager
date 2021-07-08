@@ -5,6 +5,7 @@ import {
   ElementRef,
   AfterViewInit,
   OnDestroy,
+  ChangeDetectorRef,
 } from '@angular/core';
 import {
   Router,
@@ -20,6 +21,7 @@ import KTLayoutHeaderMenu from '../../../../../assets/js/layout/base/header-menu
 import { KTUtil } from '../../../../../assets/js/components/util';
 import { Subscription, Observable, BehaviorSubject } from 'rxjs';
 import { JsonpClientBackend } from '@angular/common/http';
+import { ClubService } from './../../../../core/services/club.service';
 
 @Component({
   selector: 'app-header',
@@ -36,8 +38,8 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
   headerMenuCSSClasses: string;
   headerMenuHTMLAttributes: any = {};
   routerLoaderTimout: any;
-  showLiveStream : boolean = false ;
-  public toggleBtn : any
+  showLiveStream : boolean;
+  public toggleBtn : boolean = false ;
 
   @ViewChild('ktHeaderMenu', { static: true }) ktHeaderMenu: ElementRef;
   loader$: Observable<number>;
@@ -45,14 +47,12 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
   private loaderSubject: BehaviorSubject<number> = new BehaviorSubject<number>(
     0
   );
-  private unsubscribe: Subscription[] = []; // Read more: => https://brianflove.com/2016/12/11/anguar-2-unsubscribe-observables/
+  private unsubscribe: Subscription[] = []; 
 
-  constructor(private layout: LayoutService, private router: Router) {
+  constructor(private layout: LayoutService, private router: Router , private _clubService : ClubService , private cf : ChangeDetectorRef) {
     this.loader$ = this.loaderSubject;
-    // page progress bar percentage
     const routerSubscription = this.router.events.subscribe((event) => {
       if (event instanceof NavigationStart) {
-        // set page progress bar loading to start on NavigationStart event router
         this.loaderSubject.next(10);
       }
       if (event instanceof RouteConfigLoadStart) {
@@ -62,7 +62,6 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
         this.loaderSubject.next(90);
       }
       if (event instanceof NavigationEnd || event instanceof NavigationCancel) {
-        // set page progress bar loading to end on NavigationEnd event router
         this.loaderSubject.next(100);
         if (this.routerLoaderTimout) {
           clearTimeout(this.routerLoaderTimout);
@@ -76,7 +75,28 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    JSON.parse( localStorage.getItem('selectedClub')).id == '60a1f5fb764e4033cc10f7d5' ? this.showLiveStream = true : this.showLiveStream = false ;
+   this.setHeaderContainerCSS();
+   this.getLiveStreamBit();
+  }
+
+  ngAfterViewInit(): void {
+    if (this.ktHeaderMenu) {
+      for (const key in this.headerMenuHTMLAttributes) {
+        if (this.headerMenuHTMLAttributes.hasOwnProperty(key)) {
+          this.ktHeaderMenu.nativeElement.attributes[
+            key
+          ] = this.headerMenuHTMLAttributes[key];
+        }
+      }
+    }
+
+    KTUtil.ready(() => {
+      KTLayoutHeader.init('kt_header', 'kt_header_mobile');
+      KTLayoutHeaderMenu.init('kt_header_menu', 'kt_header_menu_wrapper');
+    });
+  }
+
+  setHeaderContainerCSS(){
     this.headerContainerCSSClasses = this.layout.getStringCSSClasses(
       'header_container'
     );
@@ -107,34 +127,36 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
     return `./assets/media/logos/${result}`;
   }
 
-  ngAfterViewInit(): void {
-    if (this.ktHeaderMenu) {
-      for (const key in this.headerMenuHTMLAttributes) {
-        if (this.headerMenuHTMLAttributes.hasOwnProperty(key)) {
-          this.ktHeaderMenu.nativeElement.attributes[
-            key
-          ] = this.headerMenuHTMLAttributes[key];
-        }
-      }
-    }
 
-    KTUtil.ready(() => {
-      // Init Desktop & Mobile Headers
-      KTLayoutHeader.init('kt_header', 'kt_header_mobile');
-      // Init Header Menu
-      KTLayoutHeaderMenu.init('kt_header_menu', 'kt_header_menu_wrapper');
-    });
+  setLiveStreamBit(bit){
+    // this._clubService.changeLiveStreamBit(bit).subscribe(data=>{
+    //   console.log(data);
+    // })
+    // console.log(bit)
   }
 
+  getLiveStreamBit(){
+    let club = JSON.parse(localStorage.getItem('selectedClub'));
+    if(club.id == '60a1f5fb764e4033cc10f7d5'){
+      this.showLiveStream = true;
+      // this._clubService.getLiveStreamBit().subscribe((data:any)=>{
+      //   console.log(data)
+      //  this.toggleBtn = data.liveStreamBit;
+      //  this.cf.detectChanges();
+      // })
+    }
+    else {
+      this.showLiveStream = false;
+    }
+   
+  }
+
+  
   ngOnDestroy() {
     this.unsubscribe.forEach((sb) => sb.unsubscribe());
     if (this.routerLoaderTimout) {
       clearTimeout(this.routerLoaderTimout);
     }
-  }
-
-  setLiveStreamBit(event){
-    console.log(event)
   }
 
 

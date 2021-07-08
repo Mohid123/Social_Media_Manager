@@ -183,7 +183,7 @@ export class AccountManagerComponent implements OnInit {
   signOutFB(){
     
     // ;
-    // let fbProfileImageUrl = "https://social.teamtalkers.com/api/v1/en/media-upload/mediaFiles/test/123/b448db445dab8728bb3fc822243e58f10.png"
+    // let fbProfileImageUrl = "https://socialapi.solissol.com/api/v1/en/media-upload/mediaFiles/test/123/b448db445dab8728bb3fc822243e58f10.png"
     // this.authService.signOut();
     // this.signedInUser.userFacebookProfile.fbEmail = 'Email'
     // this.signedInUser.userFacebookProfile.fbUserName = 'Username'

@@ -161,6 +161,7 @@ export class TeamtalkersComponent implements OnInit {
     this.poll = new Poll();
     this.singleDate = new Date(new Date().setDate(new Date().getDate() + 1));
     this.cf.detectChanges()
+    this.unCheckSlectedItems()
     // this.spinner.hide()
   }
 
@@ -201,7 +202,7 @@ export class TeamtalkersComponent implements OnInit {
     }
   }
 
-  removeSlectedItems() {
+  unCheckSlectedItems() {
     for (var i = 0; i < this.checklist.length; i++) {
       if (this.checklist[i].isSelected) {
         this.checklist[i].isSelected = false;
@@ -299,7 +300,7 @@ export class TeamtalkersComponent implements OnInit {
     this.spinner.hide();
     this.url = "";
     this.file = "";
-    this.removeSlectedItems();
+    this.unCheckSlectedItems();
     this.cf.detectChanges();
   }
 
@@ -695,15 +696,21 @@ export class TeamtalkersComponent implements OnInit {
     // this.spinner.show();
 
     if(selectedClub.length > 0){
-      this._genericPostService.createVideoPost(this.teamtalkerCaption , 'Club' , this.signedInUser.id  , this.file , selectedClub );
+      this._genericPostService.createVideoPost(this.teamtalkerCaption , 'Club' , this.signedInUser.id  , this.file , selectedClub ).then(()=>{
+        this.resetPost();
+      });
     }
 
     if(selectedClubGroups.length > 0){
-      this._genericPostService.createVideoPost(this.teamtalkerCaption , 'Group' , this.signedInUser.id  , this.file , selectedClubGroups)
+      this._genericPostService.createVideoPost(this.teamtalkerCaption , 'Group' , this.signedInUser.id  , this.file , selectedClubGroups).then(()=>{
+        this.resetPost();
+      });
     }
 
     if(selectedClubEvents.length > 0){
-      this._genericPostService.createVideoPost(this.teamtalkerCaption , 'Event' , this.signedInUser.id  , this.file , selectedClubEvents)
+      this._genericPostService.createVideoPost(this.teamtalkerCaption , 'Event' , this.signedInUser.id  , this.file , selectedClubEvents).then(()=>{
+        this.resetPost();
+      });
     }
     // this._postService
     //   .hyperLinkScrapper(this.teamtalkerCaption)

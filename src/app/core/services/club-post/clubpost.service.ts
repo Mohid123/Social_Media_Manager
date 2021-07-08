@@ -152,6 +152,8 @@ export class ClubpostService {
 
 
   createVideoPost(postedText, postedTo, userID, MediaFile , selectedList) {
+
+    return new Promise((resolve, reject) => {
     let hyperLinkResponse = [];
     let file;
     this.post.type = 'video';
@@ -226,6 +228,7 @@ export class ClubpostService {
                     if (idx == self.length - 1) {
                       this.spinner.hide();
                       this.toast.success(`Post added to ${postedTo}`, "Success");
+                      resolve('success')
                     }},
                   (error) => {
                     this.spinner.hide();
@@ -238,6 +241,8 @@ export class ClubpostService {
         });
       });
     })
+  })
+
   }
   
   dataURItoBlob(dataURI) {

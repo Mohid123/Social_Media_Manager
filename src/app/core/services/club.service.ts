@@ -52,12 +52,13 @@ export class ClubService {
     return this._clubApiService.get(`/event/getAllEvents?offset=${offset}&limit=${limit}`);
   }
 
-  
-  get getClub() {
-    return this.club;
+  getLiveStreamBit(){
+    return this._clubApiService.get(`/firebase-migration-functions/getLiveStreamValue`);
   }
 
-  set setClub(club) {
-    this.club = club;
+  changeLiveStreamBit(liveStreamBit){
+    return this._clubApiService.get(`/firebase-migration-functions/changeLiveStreamBit/${liveStreamBit}`);
   }
+
+
 }

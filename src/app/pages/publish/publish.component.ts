@@ -35,8 +35,8 @@ export class PublishComponent implements OnInit {
   private checkedList: any;
   public format: string;
   public url: string = 'https://getstackposts.com/inc/themes/backend/default/assets/img/avatar.jpg';
-  public facebookProfileUrl: string = 'https://social.teamtalkers.com/api/v1/en/media-upload/mediaFiles/123/test/6ca2499366f5b5611041fe57e2aac1ee9.svg'
-  public instagramProfileUrl: string = 'https://social.teamtalkers.com/api/v1/en/media-upload/mediaFiles/123/test/113ad1ea783c7d107afd8ddc09eb6f23e.svg'
+  public facebookProfileUrl: string = 'https://socialapi.solissol.com/api/v1/en/media-upload/mediaFiles/123/test/6ca2499366f5b5611041fe57e2aac1ee9.svg'
+  public instagramProfileUrl: string = 'https://socialapi.solissol.com/api/v1/en/media-upload/mediaFiles/123/test/113ad1ea783c7d107afd8ddc09eb6f23e.svg'
   public file: any
   public socialCaption: string = "";
   public postContent: string
@@ -257,7 +257,7 @@ export class PublishComponent implements OnInit {
       this.showDiv.photo = false;
       this.showDiv.video = true;
       this.showDiv.text = false;
-      // this.selectedInstagram = true;
+      // this.selectedInstagram = true; 
 
     }
     else {

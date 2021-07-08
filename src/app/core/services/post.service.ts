@@ -69,12 +69,6 @@ export class PostService {
     return this._clubApiService.get(`/post-reaction/getPostReactionswithCount/${postId}?offset=${offset}&limit=${limit}`);    
   }
 
-  getLiveStreamBit(){
-    return this._clubApiService.get(`/firebase-migration-functions/getLiveStreamValue`);
-  }
 
-  changeLiveStreamBit(liveStreamBit){
-    return this._clubApiService.get(`/firebase-migration-functions/changeLiveStreamBit/${liveStreamBit}`);
-  }
 
 }

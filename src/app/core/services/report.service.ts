@@ -64,7 +64,7 @@ export class ReportService {
     this.report.successStatus = status;
     this.report.userID = localStorage.getItem("clubUid");
     this.addReport(this.report).subscribe((report) => { 
-      console.log(report ,  'Report Created')
+      // console.log(report ,  'Report Created')
     });
   }
   
