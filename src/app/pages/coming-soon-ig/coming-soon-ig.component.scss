@@ -78,6 +78,16 @@
     
   }
 
+  .resp{
+    height: 400px;
+  }
+
+
+  @media screen and (max-width: 474px){
+    .resp{
+      height: 190px;
+    }
+  }
 
 
 
