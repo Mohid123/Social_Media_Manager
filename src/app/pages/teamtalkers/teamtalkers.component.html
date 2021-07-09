@@ -358,7 +358,9 @@
                                                     </div>
                                                     <div class="ml-auto p-2">
                                                         <button (click)="addImagePost()" type="button"
-                                                            class="btn btn-primary flex-row-reverse" style="background-color: #3b5998; border-color: #3b5998;">Post Now</button>
+                                                            class="btn btn-primary flex-row-reverse"
+                                                            style="background-color: #3b5998; border-color: #3b5998;">Post
+                                                            Now</button>
                                                     </div>
                                                 </div>
 
@@ -659,7 +661,6 @@
                                             <div class="d-flex flex-column flex-grow-1 font-weight-bold">
                                                 <a
                                                     class="text-dark text-hover-primary mb-1 font-size-lg pb-12">{{userName}}</a>
-
                                             </div>
 
                                         </form>
@@ -674,7 +675,7 @@
                                         <div>
 
                                             <div class="form-group">
-                                                <input  maxlength="25" type="text" class="form-control" id="example1"
+                                                <input maxlength="25" type="text" class="form-control" id="example1"
                                                     placeholder="Enter your choice" [(ngModel)]="poll.choice1">
                                             </div>
 
@@ -775,10 +776,14 @@
                     </mat-tab>
                 </mat-tab-group>
                 <div>
-                    
-                    <div  class="card-header ribbon ribbon-right " 
-                        style="box-shadow: rgb(99 99 99 / 20%) 0px 2px 8px 0px; border-radius: 7px; " name = "fieldName" ngDefaultControl [(ngModel)]="clubPrimaryColor" [ngStyle]="{'border-top': '5px solid' + clubPrimaryColor}">
-                        <div name = "fieldName" ngDefaultControl [(ngModel)]="clubPrimaryColor" [ngStyle]="{'background-color': clubPrimaryColor}" class="ribbon-target" style="top: 10px; right: -2px;">Recent posts</div>
+
+                    <div class="card-header ribbon ribbon-right "
+                        style="box-shadow: rgb(99 99 99 / 20%) 0px 2px 8px 0px; border-radius: 7px; " name="fieldName"
+                        ngDefaultControl [(ngModel)]="clubPrimaryColor"
+                        [ngStyle]="{'border-top': '5px solid' + clubPrimaryColor}">
+                        <div name="fieldName" ngDefaultControl [(ngModel)]="clubPrimaryColor"
+                            [ngStyle]="{'background-color': clubPrimaryColor}" class="ribbon-target"
+                            style="top: 10px; right: -2px;">Recent posts</div>
                         <h1 class="card-title text-dark" style=" background-color: rgba(255, 255, 255, 0.95);
                         border-radius: 5px;
                         color: #333; width: fit-content;
@@ -788,9 +793,9 @@
                             <!-- <img class="rounded" style="height: auto; width: 44px; " [src]="clubLogo" alt=""> -->
                             {{clubName}}
                         </h1>
-                        
+
                     </div>
-                    
+
                     <div class="card-body">
                         <div *ngFor="let post of recentClubPosts" class="border rounded m-6"
                             style="box-shadow: rgb(99 99 99 / 20%) 0px 2px 8px 0px;">
@@ -800,7 +805,9 @@
                                         <div class="user-info d-inline-block" style="z-index: 1; padding: 10px 25px;
                                         position: relative;">
                                             <img class="img-circle"
-                                                style="height: 44px; width: 44px; object-fit: cover; border-radius: 30px;" name = "fieldName" ngDefaultControl [(ngModel)]="clubPrimaryColor" [ngStyle]="{'border': '3px solid' + clubPrimaryColor}"
+                                                style="height: 44px; width: 44px; object-fit: cover; border-radius: 30px;"
+                                                name="fieldName" ngDefaultControl [(ngModel)]="clubPrimaryColor"
+                                                [ngStyle]="{'border': '3px solid' + clubPrimaryColor}"
                                                 [src]="profileImageUrl">
                                             <div class="text" style="    right: -150px !important;
                                             top: 16px !important;
@@ -820,70 +827,170 @@
                                         </div>
                                     </div>
 
+                                    <!-- EDIT & DELETE -->
 
-
-                                    <!-- <div class="col text-right">
+                                    <div class="col text-right">
                                         <div ngbDropdown class="d-inline-block">
                                             <button class="btn" id="dropdownBasic1" ngbDropdownToggle><i
                                                     class="ki ki-bold-more-hor" style="color:black"></i></button>
                                             <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                                                <button ngbDropdownItem><i
+                                                <button (click)="editPost(editPostDialog , post)" ngbDropdownItem><i
                                                         class="fas fa-edit mr-2 text-dark"></i>Edit</button>
-                                                <button ngbDropdownItem><i
+                                                <button (click)="deletePost(post)" ngbDropdownItem><i
                                                         class="fas fa-trash-alt mr-2 text-dark"></i>Delete</button>
                                             </div>
                                         </div>
-                                    </div> -->
-
-                                   
+                                    </div>
                                 </div>
+
+
+                                <div class="example-preview ">
+                                    <div>
+                                        <ng-template #editPostDialog let-c="close" let-d="dismiss">
+                                            <div class="modal-header d-flex justify-content-center"
+                                                style="background-color: #1e1e2d; border-bottom: none;">
+                                                <h4 class="modal-title" style="color: #fff;">Edit Post</h4>
+                                                <button type="button" class="close" aria-label="Close"
+                                                    (click)="d('Cross click')">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+
+                                            <div class="preview-facebook preview-facebook-media item-post-type"
+                                                data-type="photo">
+                                                <div class="user-info" style="z-index: 1;">
+                                                    <img class="img-circle"
+                                                        style="height: 44px; object-fit: cover; border-radius: 30px;"
+                                                        name="fieldName" ngDefaultControl [(ngModel)]="clubPrimaryColor"
+                                                        [ngStyle]="{'border': '3px solid' + clubPrimaryColor}"
+                                                        src="{{post.user.profilePicURL}}">
+                                                    <div class="text">
+                                                        <div class="name"> {{post.user.fullName}}</div>
+                                                        <span> {{post.postedDate | dateFormat}}
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div *ngIf="post.type == 'text'" >
+                                                    <textarea style="height: 150px;" class="form-control form-control-xl form-control-solid"
+                                                    id="exampleTextarea" rows="3"
+                                                    placeholder="What’s on your mind, {{userName}}?">{{post.text}}</textarea>
+                                                </div>
+
+                                                <div *ngIf="post.type == 'image' || post.type == 'video'" class="preview-media" data-max-image="5" style="margin-top: -20px">
+                                                    <img *ngIf="post.type == 'image' && post.captureFileURL "
+                                                        src="{{post.captureFileURL}}"
+                                                        style="height: 100%; width: 100%; object-fit: cover; ">
+
+                                                    <video *ngIf="post.type == 'video' && post.captureFileURL"
+                                                        id="clubVideo" src="{{post.captureFileURL}}"
+                                                        style="height: 420px;" width="100%" controls autoplay
+                                                        disablePictureInPicture oncanplay="this.play()"
+                                                        (ended)="onVideoEnded()" controlsList="nodownload"></video>
+                                                 
+                                                </div>
+                                                <div *ngIf="post.type == 'image' || post.type == 'video'" class="form-group m-3">
+                                                    <textarea style="height: 100px;" class="form-control form-control-lg form-control-solid"
+                                                        id="exampleTextarea" rows="3"
+                                                        placeholder="What’s on your mind, {{userName}}?">{{post.text}}</textarea>
+                                                </div>
+
+                                                <div class="preview-club">
+                                                    <div class="d-flex bd-highlight">
+                                                        <div class="p-2 flex-grow-1 bd-highlight">
+                                                            <div class="row">
+                                                                <div class="col item">
+                                                                    <div class=" symbol-group symbol-hover">
+
+                                                                        <div *ngFor="let reaction of post.reactions"
+                                                                            class="symbol symbol-circle symbol-20 symbol-sm-2">
+                                                                            <img *ngIf="reaction.user.profilePicURL !== '' " alt="Pic"
+                                                                                src="{{reaction.user.profilePicURL}}" />
+                                                                                <img *ngIf="reaction.user.profilePicURL == '' " alt="Pic"
+                                                                                src="../../../assets/media/users/mockfbImage.png" />  
+                                                                        </div>
+                                                                        <span class="symbol-label"> {{post.reactionCount}} Reactions</span>
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="p-2 bd-highlight"> {{post.commentsCount}} comment</div>
+                                                        <div class="p-2 bd-highlight"> {{ post.repostCount }}share</div>
+                                                    </div>
+                                                </div>
+                                                <div class="preview-comment">
+                                                    <div class="row">
+                                                        <div class="col-12 item">
+                                                            <i class="far fa-heart mr-2" style="color: black;"></i>Like
+                                                            &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
+                                                            <i class="far fa-comment-dots mr-2"
+                                                                style="color: black;"></i>Comment &nbsp;
+                                                            &nbsp;&nbsp;&nbsp;&nbsp;
+                                                            <i class="fas fa-share mr-2" style="color: black;"></i>Share
+                                                        </div>
+                                                        <div class="col item">
+                                                        </div>
+                                                        <div class="col item">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="modal-footer d-flex justify-content-center">
+                                                <button type="button" class="btn btn-primary"
+                                                    (click)="c('Close click')">Post</button>
+
+                                            </div>
+                                        </ng-template>
+                                    </div>
+                                </div>
+
+
                                 <div *ngIf="post.type!=='text' && post.type!== 'hyperlink' " class="preview-media"
                                     data-max-image="5" style="margin-top: -20px">
                                     <img *ngIf="post.type == 'image'" src="{{post.captureFileURL}}"
                                         style="height: auto; width: 100%; object-fit: cover; ">
 
-                                    <div *ngIf="post.type == 'video'" style="position: relative;cursor: pointer;" (click)="openVerticallyCentered(content, post)"
-                                        data-toggle="modal" data-target="#video-modal">
+                                    <div *ngIf="post.type == 'video'" style="position: relative;cursor: pointer;"
+                                        (click)="openVerticallyCentered(content, post)" data-toggle="modal"
+                                        data-target="#video-modal">
                                         <img *ngIf="post.type == 'video'" class="img-responsive" [src]=post.thumbnailURL
-                                            alt="Photo"
-                                            style="margin: 0 auto; -webkit-filter: brightness(75%);
+                                            alt="Photo" style="margin: 0 auto; -webkit-filter: brightness(75%);
                                             filter: brightness(75%); filter: blur(2px); width: 420px; object-fit: contain;
                                             height: 360px; justify-content: center; display: block">
-                                        <h1 class="playBtn" style="backdrop-filter: blur(0px);"><i class="far fa-play-circle icon-xl" aria-hidden="true" style="font-size: 7.75rem !important; color: #fff;"></i>
+                                        <h1 class="playBtn" style="backdrop-filter: blur(0px);"><i
+                                                class="far fa-play-circle icon-xl" aria-hidden="true"
+                                                style="font-size: 7.75rem !important; color: #fff;"></i>
                                         </h1>
                                     </div>
-                                    <!-- <video *ngIf="post.type == 'video'" src="{{post.captureFileURL}}"
-                                        style="height: 100%; width: 100%; object-fit: cover;" controls
-                                        disablepictureinpicture controlsList="nodownload"></video> -->
                                 </div>
 
 
+                                <div class="example-preview ">
+                                    <div>
+                                        <ng-template #content let-c="close" let-d="dismiss">
+                                            <div class="modal-header d-flex justify-content-center"
+                                                style="background-color: #1e1e2d; border-bottom: none;">
+                                                <h4 class="modal-title" style="color: #fff;">Video</h4>
+                                                <button type="button" class="close" aria-label="Close"
+                                                    (click)="d('Cross click')">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body d-flex justify-content-center" style="padding: 0px;">
+                                                <video id="clubVideo" src="{{playingVideo}}" style="height: 420px;"
+                                                    width="100%" controls autoplay disablePictureInPicture
+                                                    oncanplay="this.play()" (ended)="onVideoEnded()"
+                                                    controlsList="nodownload"></video>
+                                            </div>
+                                            <div class="modal-footer d-flex justify-content-center">
+                                                <button type="button" class="btn btn-secondary"
+                                                    (click)="c('Close click')">Close</button>
 
-                                
-<div class="example-preview ">
-    <div>
-      <ng-template #content let-c="close" let-d="dismiss">
-        <div class="modal-header d-flex justify-content-center" style="background-color: #1e1e2d; border-bottom: none;">
-          <h4 class="modal-title" style="color: #fff;">Video</h4>
-          <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body d-flex justify-content-center" style="padding: 0px;">
-            <video id="clubVideo" src="{{playingVideo}}"  style="height: 420px;" width="100%" controls autoplay disablePictureInPicture
-            oncanplay="this.play()" (ended) = "vidEnded()" controlsList="nodownload"></video>
-      <!-- <div class="d-flex align-items-center">
-     
-       
-      </div> -->
-        </div>
-        <div class="modal-footer d-flex justify-content-center">
-          <button type="button" class="btn btn-secondary" (click)="c('Close click')">Close</button>
-         
-        </div>
-      </ng-template>
-      </div>
-  </div>
+                                            </div>
+                                        </ng-template>
+                                    </div>
+                                </div>
 
 
                                 <!--HYPERLINK POST DESIGN-->
@@ -899,20 +1006,24 @@
                                                             <img *ngIf="post.type == 'hyperlink' && post.captureFileURL === '' "
                                                                 src="https://api.teamtalkers.com/api/v1/en/media-upload/mediaFiles/html/html/7bd046a8c10bcfba8800951fc2a9063f9.jpg"
                                                                 class="h-100 align-self-end rounded"
-                                                                style="object-fit: cover;    width: -webkit-fill-available;" alt="" />
+                                                                style="object-fit: cover;    width: -webkit-fill-available;"
+                                                                alt="" />
                                                             <img *ngIf="post.type != 'hyperlink' && post.hyperlinkCaptureFileURL === '' "
                                                                 src="https://api.teamtalkers.com/api/v1/en/media-upload/mediaFiles/html/html/7bd046a8c10bcfba8800951fc2a9063f9.jpg"
                                                                 class="h-100 align-self-end rounded"
-                                                                style="object-fit: cover;    width: -webkit-fill-available;" alt="" />
+                                                                style="object-fit: cover;    width: -webkit-fill-available;"
+                                                                alt="" />
 
                                                             <img *ngIf="post.type == 'hyperlink' && post.captureFileURL"
                                                                 src="{{post.captureFileURL}}"
                                                                 class="h-100 align-self-end rounded"
-                                                                style="object-fit: cover;    width: -webkit-fill-available;" alt="" />
+                                                                style="object-fit: cover;    width: -webkit-fill-available;"
+                                                                alt="" />
                                                             <img *ngIf="post.type != 'hyperlink' && post.hyperlinkCaptureFileURL"
                                                                 src="{{post.hyperlinkCaptureFileURL}}"
                                                                 class="h-100 align-self-end rounded"
-                                                                style="object-fit: cover;    width: -webkit-fill-available;" alt="" />
+                                                                style="object-fit: cover;    width: -webkit-fill-available;"
+                                                                alt="" />
 
                                                         </span>
                                                     </div>
@@ -988,13 +1099,16 @@
 
                                                         <div *ngFor="let reaction of post.reactions"
                                                             class="symbol symbol-circle symbol-20 symbol-sm-2">
-                                                            <img *ngIf="reaction.user.profilePicURL !== '' " alt="Pic" src="{{reaction.user.profilePicURL}}" />
-                                                            <img *ngIf="reaction.user.profilePicURL == ''" alt="Pic" src="../../../assets/media/users/mockfbImage.png" />
+                                                            <img *ngIf="reaction.user.profilePicURL !== '' " alt="Pic"
+                                                                src="{{reaction.user.profilePicURL}}" />
+                                                            <img *ngIf="reaction.user.profilePicURL == ''" alt="Pic"
+                                                                src="../../../assets/media/users/mockfbImage.png" />
 
                                                         </div>
 
 
-                                                        <span class="symbol-label">{{post.reactionCount}} Reactions</span>
+                                                        <span class="symbol-label">{{post.reactionCount}}
+                                                            Reactions</span>
                                                     </div>
 
                                                 </div>
@@ -1087,7 +1201,9 @@
                                             data-type="photo" *ngIf="showDiv.photo">
                                             <div class="user-info" style="z-index: 1;">
                                                 <img class="img-circle"
-                                                    style="height: 44px; object-fit: cover; border-radius: 30px;" name = "fieldName" ngDefaultControl [(ngModel)]="clubPrimaryColor" [ngStyle]="{'border': '3px solid' + clubPrimaryColor}"
+                                                    style="height: 44px; object-fit: cover; border-radius: 30px;"
+                                                    name="fieldName" ngDefaultControl [(ngModel)]="clubPrimaryColor"
+                                                    [ngStyle]="{'border': '3px solid' + clubPrimaryColor}"
                                                     [src]="profileImageUrl">
                                                 <div class="text">
                                                     <div class="name"> {{userName}}</div>
@@ -1218,7 +1334,9 @@
                                             data-type="video" *ngIf="showDiv.video">
                                             <div class="user-info" style="z-index: 1;">
                                                 <img class="img-circle"
-                                                    style="height: 44px; object-fit: cover; border-radius: 30px;"  ngDefaultControl name="fieldName"  [(ngModel)]="clubPrimaryColor" [ngStyle]="{'border': '3px solid' + clubPrimaryColor}"
+                                                    style="height: 44px; object-fit: cover; border-radius: 30px;"
+                                                    ngDefaultControl name="fieldName" [(ngModel)]="clubPrimaryColor"
+                                                    [ngStyle]="{'border': '3px solid' + clubPrimaryColor}"
                                                     [src]="profileImageUrl">
                                                 <div class="text">
                                                     <div class="name"> {{userName}}</div>
@@ -1349,7 +1467,9 @@
                                             data-type="text" *ngIf="showDiv.text">
                                             <div class="user-info">
                                                 <img class="img-circle"
-                                                    style="height: 44px; object-fit: cover; border-radius: 30px;" ngDefaultControl name = "fieldName" [(ngModel)]="clubPrimaryColor" [ngStyle]="{'border': '3px solid' + clubPrimaryColor}"
+                                                    style="height: 44px; object-fit: cover; border-radius: 30px;"
+                                                    ngDefaultControl name="fieldName" [(ngModel)]="clubPrimaryColor"
+                                                    [ngStyle]="{'border': '3px solid' + clubPrimaryColor}"
                                                     [src]="profileImageUrl">
                                                 <div class="text">
                                                     <div class="name"> {{userName}}</div>
@@ -1473,7 +1593,9 @@
                                             data-type="text" *ngIf="showDiv.poll">
                                             <div class="user-info" style="z-index: 1;">
                                                 <img class="img-circle"
-                                                    style="height: 44px; object-fit: cover; border-radius: 30px;"  ngDefaultControl name = "fieldName" [(ngModel)]="clubPrimaryColor" [ngStyle]="{'border': '3px solid' + clubPrimaryColor}"
+                                                    style="height: 44px; object-fit: cover; border-radius: 30px;"
+                                                    ngDefaultControl name="fieldName" [(ngModel)]="clubPrimaryColor"
+                                                    [ngStyle]="{'border': '3px solid' + clubPrimaryColor}"
                                                     [src]="profileImageUrl">
                                                 <div class="text">
                                                     <div class="name"> {{userName}}</div>
@@ -1505,7 +1627,7 @@
 
                                                             <div class="form-group">
 
-                                                                <input type="text" class="form-control" id="example1" 
+                                                                <input type="text" class="form-control" id="example1"
                                                                     placeholder="Enter your choice"
                                                                     [(ngModel)]="poll.choice1" disabled>
                                                             </div>

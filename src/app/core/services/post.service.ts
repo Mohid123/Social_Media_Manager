@@ -32,10 +32,7 @@ export class PostService {
   }
 
   hyperLinkScrapper(postedText) : Observable <any>  {
-
-    // if(postedText == ""){
-    //   postedText = 'MockPayloadScrapper';
-    // }
+    
     postedText == "" ? postedText = 'MockPayloadScrapper' : postedText =postedText
     return this._clubApiService.post(`/firebase-migration-functions/hyperlinkScraper` , {'text':postedText});    
   }
