@@ -44,7 +44,7 @@ export class TeamtalkersComponent implements OnInit {
   public signedInUser: User;
   public posted: string = "Club";
   public report: Report;
-  public userName: string  
+  public userName: string
   public profileImageUrl: string
   public searchString: string;
   public tempList: any = [];
@@ -94,7 +94,7 @@ export class TeamtalkersComponent implements OnInit {
     this.report = new Report();
     this.poll = new Poll();
   }
-  
+
 
   ngOnInit() {
     this.showSpinner();
@@ -114,11 +114,6 @@ export class TeamtalkersComponent implements OnInit {
     });
   }
 
-  //  getServiceEmitter(){
-  //    debugger;
-  //    let value =  this._genericPostService.getAfterPosted;
-  //    console.log(value , 'chas')
-  // }
 
   getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
@@ -162,7 +157,7 @@ export class TeamtalkersComponent implements OnInit {
     this.singleDate = new Date(new Date().setDate(new Date().getDate() + 1));
     this.cf.detectChanges()
     this.unCheckSlectedItems()
-    // this.spinner.hide()
+    this.getRecentClubPosts()
   }
 
   initializeChecklist() {
@@ -180,7 +175,7 @@ export class TeamtalkersComponent implements OnInit {
     this.clubLogo = club.logoURL
     this.clubPrimaryColor = club.clubColor;
     this.userName = localStorage.getItem("userName");
-    this.profileImageUrl =  localStorage.getItem("profileImageUrl");
+    this.profileImageUrl = localStorage.getItem("profileImageUrl");
   }
 
   onChangeSingle(value: Date) {
@@ -313,10 +308,9 @@ export class TeamtalkersComponent implements OnInit {
   }
 
   addTextPost() {
-    let selectedClubGroups = [];
-    let selectedClubEvents = [];
-    let selectedClub: boolean = false;
-    let hyperLinkResponse = [];
+    let groups = [];
+    let events = [];
+    let club = []
 
     if (this.teamtalkerCaption == "") {
       this.toast.error("Please add content to post", "No Content Added");
@@ -328,166 +322,181 @@ export class TeamtalkersComponent implements OnInit {
 
     this.checkedList.filter((item) => {
       if (item.hasOwnProperty("groupName")) {
-        selectedClubGroups.push(item);
+        groups.push(item);
       } else if (item.hasOwnProperty("eventName")) {
-        selectedClubEvents.push(item);
+        events.push(item);
       } else if (item.hasOwnProperty("clubName")) {
-        selectedClub = true;
+        club.push(item)
       }
     });
 
-    this.post.type = "text";
-    this.spinner.show();
-    this._postService.hyperLinkScrapper(this.teamtalkerCaption).subscribe(
-      (data) => {
-        hyperLinkResponse = data;
-        if (
-          hyperLinkResponse.length > 0 &&
-          hyperLinkResponse[0].hasOwnProperty("url")
-        ) {
-          this.post.hyperLink = hyperLinkResponse[0].url;
-          this.post.type = "hyperlink";
-        }
-        if (
-          hyperLinkResponse.length > 0 &&
-          hyperLinkResponse[0].hasOwnProperty("title")
-        ) {
-          this.post.textFirst = hyperLinkResponse[0].title;
-        }
-        if (
-          hyperLinkResponse.length > 0 &&
-          hyperLinkResponse[0].hasOwnProperty("description")
-        ) {
-          this.post.textSecond = hyperLinkResponse[0].description;
-        }
-        if (
-          hyperLinkResponse.length > 0 &&
-          hyperLinkResponse[0].hasOwnProperty("image")
-        ) {
-          this.post.captureFileURL = hyperLinkResponse[0].image;
-        }
+    if (club.length > 0) {
+      this._genericPostService.createTextPost(this.teamtalkerCaption, 'Club', club).then(success => {
+        this.resetPost()
+      });
+    }
 
-        if (selectedClubGroups.length > 0) {
-          delete this.post.eventID;
-          this.post.postedTo = "Group";
-          this.post.text = this.teamtalkerCaption;
-          selectedClubGroups.forEach((singleGroup, index, array) => {
-            this.post.groupID = singleGroup.id;
-            this._reportService.createReport(2, "", "Group");
-            this._postService.addPostToGroup(this.post).subscribe(
-              (groupPost: any) => {
-                this._reportService.createReport(1, groupPost.id, "Group");
-                if (index == array.length - 1) {
-                  this.toast.success("Post added to Groups", "Success");
-                  this.postedSuccessfully();
-                }
-              },
-              (error) => {
-                this.spinner.hide();
-                this.toast.error(error.message);
-                this._reportService.createReport(0, "", "Group");
-              }
-            );
-          });
-        }
+    if (groups.length > 0) {
+      this._genericPostService.createTextPost(this.teamtalkerCaption, 'Group', groups).then(success => {
+        this.resetPost()
+      });
+    }
 
-        if (selectedClubEvents.length > 0) {
-          delete this.post.groupID;
-          this.post.postedTo = "Event";
-          this.post.text = this.teamtalkerCaption;
-          selectedClubEvents.forEach((singleEvent, index, array) => {
-            this.post.eventID = singleEvent.id;
-            this._reportService.createReport(2, "", "Event");
-            this._postService.addPostToEvent(this.post).subscribe(
-              (eventPost: any) => {
-                this._reportService.createReport(1, eventPost.id, "Event");
-                if (index == array.length - 1) {
-                  this.toast.success("Post added to Events", "Success");
-                  this.postedSuccessfully();
-                }
-              },
-              (error) => {
-                this.spinner.hide();
-                this.toast.error(error.message);
-                this._reportService.createReport(0, "", "Event");
-              }
-            );
-          });
-        }
+    if (events.length > 0) {
+      this._genericPostService.createTextPost(this.teamtalkerCaption, 'Event', events).then(success => {
+        this.resetPost()
+      });
+    }
 
-        if (selectedClub) {
-          delete this.post.groupID;
-          delete this.post.eventID;
-          this.post.postedTo = "Club";
-          this.post.text = this.teamtalkerCaption;
-          this._reportService.createReport(2, "", "Club");
-          this._postService.addPost(this.post).subscribe(
-            (post: any) => {
-              this.spinner.hide();
-              this.toast.success(" Post added Successfully to Club");
-              this.getRecentClubPosts()
-              this.clearCaption()
-              this.postedSuccessfully();
-              this._reportService.createReport(1, post.id, "Club");
-            },
-            (error) => {
-              this.spinner.hide();
-              this.toast.error(error.message);
-              this._reportService.createReport(0, "", "Club");
-            }
-          );
-        }
-      },
-      (error) => {
-        this.spinner.hide();
-        this.toast.error(error.message);
-      }
-    );
+    // this.post.type = "text";
+    // this.spinner.show();
+    // this._postService.hyperLinkScrapper(this.teamtalkerCaption).subscribe(
+    //   (data) => {
+    //     hyperLinkResponse = data;
+    //     if (
+    //       hyperLinkResponse.length > 0 &&
+    //       hyperLinkResponse[0].hasOwnProperty("url")
+    //     ) {
+    //       this.post.hyperLink = hyperLinkResponse[0].url;
+    //       this.post.type = "hyperlink";
+    //     }
+    //     if (
+    //       hyperLinkResponse.length > 0 &&
+    //       hyperLinkResponse[0].hasOwnProperty("title")
+    //     ) {
+    //       this.post.textFirst = hyperLinkResponse[0].title;
+    //     }
+    //     if (
+    //       hyperLinkResponse.length > 0 &&
+    //       hyperLinkResponse[0].hasOwnProperty("description")
+    //     ) {
+    //       this.post.textSecond = hyperLinkResponse[0].description;
+    //     }
+    //     if (
+    //       hyperLinkResponse.length > 0 &&
+    //       hyperLinkResponse[0].hasOwnProperty("image")
+    //     ) {
+    //       this.post.captureFileURL = hyperLinkResponse[0].image;
+    //     }
+
+    //     if (selectedClubGroups.length > 0) {
+    //       delete this.post.eventID;
+    //       this.post.postedTo = "Group";
+    //       this.post.text = this.teamtalkerCaption;
+    //       selectedClubGroups.forEach((singleGroup, index, array) => {
+    //         this.post.groupID = singleGroup.id;
+    //         this._reportService.createReport(2, "", "Group");
+    //         this._postService.addPostToGroup(this.post).subscribe(
+    //           (groupPost: any) => {
+    //             this._reportService.createReport(1, groupPost.id, "Group");
+    //             if (index == array.length - 1) {
+    //               this.toast.success("Post added to Groups", "Success");
+    //               this.postedSuccessfully();
+    //             }
+    //           },
+    //           (error) => {
+    //             this.spinner.hide();
+    //             this.toast.error(error.message);
+    //             this._reportService.createReport(0, "", "Group");
+    //           }
+    //         );
+    //       });
+    //     }
+
+    //     if (selectedClubEvents.length > 0) {
+    //       delete this.post.groupID;
+    //       this.post.postedTo = "Event";
+    //       this.post.text = this.teamtalkerCaption;
+    //       selectedClubEvents.forEach((singleEvent, index, array) => {
+    //         this.post.eventID = singleEvent.id;
+    //         this._reportService.createReport(2, "", "Event");
+    //         this._postService.addPostToEvent(this.post).subscribe(
+    //           (eventPost: any) => {
+    //             this._reportService.createReport(1, eventPost.id, "Event");
+    //             if (index == array.length - 1) {
+    //               this.toast.success("Post added to Events", "Success");
+    //               this.postedSuccessfully();
+    //             }
+    //           },
+    //           (error) => {
+    //             this.spinner.hide();
+    //             this.toast.error(error.message);
+    //             this._reportService.createReport(0, "", "Event");
+    //           }
+    //         );
+    //       });
+    //     }
+
+    //     if (selectedClub) {
+    //       delete this.post.groupID;
+    //       delete this.post.eventID;
+    //       this.post.postedTo = "Club";
+    //       this.post.text = this.teamtalkerCaption;
+    //       this._reportService.createReport(2, "", "Club");
+    //       this._postService.addPost(this.post).subscribe(
+    //         (post: any) => {
+    //           this.spinner.hide();
+    //           this.toast.success(" Post added Successfully to Club");
+    //           this.getRecentClubPosts()
+    //           this.clearCaption()
+    //           this.postedSuccessfully();
+    //           this._reportService.createReport(1, post.id, "Club");
+    //         },
+    //         (error) => {
+    //           this.spinner.hide();
+    //           this.toast.error(error.message);
+    //           this._reportService.createReport(0, "", "Club");
+    //         }
+    //       );
+    //     }
+    //   },
+    //   (error) => {
+    //     this.spinner.hide();
+    //     this.toast.error(error.message);
+    //   }
+    // );
   }
 
   addImagePost() {
     debugger;
-    let selectedClubGroups = [];
-    let selectedClubEvents = [];
-    let selectedClub = []
-    let hyperLinkResponse = [];
-    this.post.type = "image";
+    let groups = [];
+    let events = [];
+    let club = []
 
     if (!this.file) {
       this.toast.error("Please Select Image File to post", "No File Selected");
       return;
     } else if (this.checkedList.length == 0) {
       this.toast.error('Please select atleast one Item from (Club, Group or Event)');
-
       return;
     }
 
     this.checkedList.filter((item) => {
       if (item.hasOwnProperty("groupName")) {
-        selectedClubGroups.push(item);
+        groups.push(item);
       } else if (item.hasOwnProperty("eventName")) {
-        selectedClubEvents.push(item);
+        events.push(item);
       } else if (item.hasOwnProperty("clubName")) {
-        selectedClub.push(item)
+        club.push(item)
       }
     });
     debugger;
-    if(selectedClub.length > 0){
-      this._genericPostService.createImagePost(this.teamtalkerCaption , 'Club' , this.signedInUser.id  , this.file , selectedClub ).then(success=>{
+    if (club.length > 0) {
+      this._genericPostService.createImagePost(this.teamtalkerCaption, 'Club', this.signedInUser.id, this.file, club).then(success => {
         this.resetPost()
-      }) ;
+      })
     }
 
-    if(selectedClubGroups.length > 0){
-      this._genericPostService.createImagePost(this.teamtalkerCaption , 'Group' , this.signedInUser.id  , this.file , selectedClubGroups).then(success=>{
+    if (groups.length > 0) {
+      this._genericPostService.createImagePost(this.teamtalkerCaption, 'Group', this.signedInUser.id, this.file, groups).then(success => {
         this.resetPost()
-      }) ;
+      });
     }
 
-    if(selectedClubEvents.length > 0){
-      this._genericPostService.createImagePost(this.teamtalkerCaption , 'Event' , this.signedInUser.id  , this.file , selectedClubEvents).then(success=>{
+    if (events.length > 0) {
+      this._genericPostService.createImagePost(this.teamtalkerCaption, 'Event', this.signedInUser.id, this.file, events).then(success => {
         this.resetPost()
-      }) ;
+      });
     }
     // this.spinner.show();
     // this._postService
@@ -583,7 +592,7 @@ export class TeamtalkersComponent implements OnInit {
     //     }
 
     //     if (selectedClub) {
-          
+
     //       this.spinner.show();
     //       this._mediaUploadService
     //         .uploadClubMedia("ClubMedia", this.signedInUser.id, this.file)
@@ -671,15 +680,12 @@ export class TeamtalkersComponent implements OnInit {
     let selectedClubGroups = [];
     let selectedClubEvents = [];
     let selectedClub = []
-    let file;
-    let hyperLinkResponse = [];
 
     if (!this.file) {
       this.toast.error("Please select a Video File", "Empty File");
       return;
     } else if (this.checkedList.length == 0) {
       this.toast.error('Please select atleast one Item from (Club, Group or Event)');
-
       return;
     }
 
@@ -689,26 +695,24 @@ export class TeamtalkersComponent implements OnInit {
       } else if (item.hasOwnProperty("eventName")) {
         selectedClubEvents.push(item);
       } else if (item.hasOwnProperty("clubName")) {
-        selectedClub.push(item)  
+        selectedClub.push(item)
       }
     });
-    // this.post.type = "video";
-    // this.spinner.show();
 
-    if(selectedClub.length > 0){
-      this._genericPostService.createVideoPost(this.teamtalkerCaption , 'Club' , this.signedInUser.id  , this.file , selectedClub ).then(()=>{
+    if (selectedClub.length > 0) {
+      this._genericPostService.createVideoPost(this.teamtalkerCaption, 'Club', this.signedInUser.id, this.file, selectedClub).then(() => {
         this.resetPost();
       });
     }
 
-    if(selectedClubGroups.length > 0){
-      this._genericPostService.createVideoPost(this.teamtalkerCaption , 'Group' , this.signedInUser.id  , this.file , selectedClubGroups).then(()=>{
+    if (selectedClubGroups.length > 0) {
+      this._genericPostService.createVideoPost(this.teamtalkerCaption, 'Group', this.signedInUser.id, this.file, selectedClubGroups).then(() => {
         this.resetPost();
       });
     }
 
-    if(selectedClubEvents.length > 0){
-      this._genericPostService.createVideoPost(this.teamtalkerCaption , 'Event' , this.signedInUser.id  , this.file , selectedClubEvents).then(()=>{
+    if (selectedClubEvents.length > 0) {
+      this._genericPostService.createVideoPost(this.teamtalkerCaption, 'Event', this.signedInUser.id, this.file, selectedClubEvents).then(() => {
         this.resetPost();
       });
     }
@@ -901,12 +905,6 @@ export class TeamtalkersComponent implements OnInit {
     this.modalService.dismissAll()
   }
 
-  clearCaption() {
-    setTimeout(() => {
-      this.teamtalkerCaption = ""
-      this.cf.detectChanges()
-    }, 2000);
-  }
 
   addPollPost() {
     let selectedClubGroups = [];
@@ -968,7 +966,6 @@ export class TeamtalkersComponent implements OnInit {
       this.post.poll = Object.assign({}, this.poll);
       this.spinner.show();
       this._postService.addPost(this.post).subscribe((data) => {
-        this.clearCaption()
         this.toast.success('Poll Post Created in Club', 'Success');
         this.resetPost()
       });

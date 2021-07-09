@@ -19,12 +19,12 @@ export class ClubpostService {
     private spinner: NgxSpinnerService,
     private toast: ToastrService,
     private _videoService: VideoProcessingService,
-    private _mediaUploadService: MediauploadService
-  ) {
+    private _mediaUploadService: MediauploadService) {
     this.post = new Post()
   }
 
-  createTextPost(postedText, postedTo, selectedList) {
+  createTextPost(postedText, postedTo , selectedList) {
+    return new Promise((resolve, reject) => {
     let hyperLinkResponse = []
     this.post.type = 'text'
     this.post.text = postedText;
@@ -68,11 +68,12 @@ export class ClubpostService {
           this.post.eventID = element.id;
         }
         this._reportService.createReport(2, "", postedTo);
-        this._postService.addPostToGroup(this.post).subscribe((post: Post) => {
+        this._postService.createClubPost(postedTo , this.post).subscribe((post: Post) => {
           this._reportService.createReport(1, post.id, postedTo);
           if (idx == self.length - 1) {
             this.toast.success(`Post added successfully to ${postedTo}`)
             this.spinner.hide();
+            resolve('success')
           }
         }, error => {
           this.spinner.hide();
@@ -81,6 +82,7 @@ export class ClubpostService {
         })
       });
     })
+  })
   }
 
 
@@ -139,6 +141,7 @@ export class ClubpostService {
               resolve('success');
             }
           }, error => {
+    
             this.spinner.hide();
             this.toast.error(error.message);
             this._reportService.createReport(0, "", postedTo);
@@ -147,12 +150,10 @@ export class ClubpostService {
       })
     })
     })
-
   }
 
 
   createVideoPost(postedText, postedTo, userID, MediaFile , selectedList) {
-
     return new Promise((resolve, reject) => {
     let hyperLinkResponse = [];
     let file;
