@@ -34,7 +34,9 @@ export class Post {
   backgroundColorHex: any;
 
   constructor() {
-    (this.id = ""), (this.userID = ""), (this.eventID = "");
+    this.id = "",
+    this.userID = "", 
+    this.eventID = "";
     this.byUser = "";
     this.type = "";
     this.textFirst = "";
