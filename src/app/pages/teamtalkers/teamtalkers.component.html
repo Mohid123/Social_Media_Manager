@@ -788,7 +788,9 @@
                             <!-- <img class="rounded" style="height: auto; width: 44px; " [src]="clubLogo" alt=""> -->
                             {{clubName}}
                         </h1>
+                        
                     </div>
+                    
                     <div class="card-body">
                         <div *ngFor="let post of recentClubPosts" class="border rounded m-6"
                             style="box-shadow: rgb(99 99 99 / 20%) 0px 2px 8px 0px;">
@@ -817,6 +819,23 @@
                                             </div>
                                         </div>
                                     </div>
+
+
+
+                                    <!-- <div class="col text-right">
+                                        <div ngbDropdown class="d-inline-block">
+                                            <button class="btn" id="dropdownBasic1" ngbDropdownToggle><i
+                                                    class="ki ki-bold-more-hor" style="color:black"></i></button>
+                                            <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                                                <button ngbDropdownItem><i
+                                                        class="fas fa-edit mr-2 text-dark"></i>Edit</button>
+                                                <button ngbDropdownItem><i
+                                                        class="fas fa-trash-alt mr-2 text-dark"></i>Delete</button>
+                                            </div>
+                                        </div>
+                                    </div> -->
+
+                                   
                                 </div>
                                 <div *ngIf="post.type!=='text' && post.type!== 'hyperlink' " class="preview-media"
                                     data-max-image="5" style="margin-top: -20px">
