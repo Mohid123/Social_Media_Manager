@@ -90,7 +90,12 @@ align-items: center;
 .title{
   margin-top: 1rem;
 }
-
+.responsive{
+  float: right; position: absolute; left: 593px;
+}
+.resp-card{
+  width: 85%; height: 200px;
+}
 @media screen and (max-width:1600px){
   .media{
     height: 400px !important
@@ -101,6 +106,17 @@ align-items: center;
 
   .custom-height{
     height: 200px !important;
+  }
+}
+
+@media screen and (max-width: 474px){
+  .responsive{
+    float: right;
+    // position: absolute;
+    left: 242px;
+  }
+  .resp-card{
+    width: 100%; height: auto;
   }
 }
 

@@ -358,7 +358,7 @@
                                                     </div>
                                                     <div class="ml-auto p-2">
                                                         <button (click)="addImagePost()" type="button"
-                                                            class="btn btn-primary flex-row-reverse">Post Now</button>
+                                                            class="btn btn-primary flex-row-reverse" style="background-color: #3b5998; border-color: #3b5998;">Post Now</button>
                                                     </div>
                                                 </div>
 
@@ -775,15 +775,16 @@
                     </mat-tab>
                 </mat-tab-group>
                 <div>
-                    <div name = "fieldName" ngDefaultControl [(ngModel)]="clubPrimaryColor" [ngStyle]="{'background-color': clubPrimaryColor}" class="card-header ribbon ribbon-right m-15 " 
-                        style="box-shadow: rgb(99 99 99 / 20%) 0px 2px 8px 0px; border-radius: 7px;">
-                        <div class="ribbon-target bg-primary" style="top: 10px; right: -2px;">Recent posts</div>
-                        <h1 class="card-title text-light" style=" background-color: rgba(255, 255, 255, 0.95);
+                    
+                    <div  class="card-header ribbon ribbon-right " 
+                        style="box-shadow: rgb(99 99 99 / 20%) 0px 2px 8px 0px; border-radius: 7px; " name = "fieldName" ngDefaultControl [(ngModel)]="clubPrimaryColor" [ngStyle]="{'border-top': '5px solid' + clubPrimaryColor}">
+                        <div name = "fieldName" ngDefaultControl [(ngModel)]="clubPrimaryColor" [ngStyle]="{'background-color': clubPrimaryColor}" class="ribbon-target" style="top: 10px; right: -2px;">Recent posts</div>
+                        <h1 class="card-title text-dark" style=" background-color: rgba(255, 255, 255, 0.95);
                         border-radius: 5px;
                         color: #333; width: fit-content;
                         padding: 1rem 2rem;  -webkit-backdrop-filter: blur(10px);
                         backdrop-filter: blur(10px);
-                        background-color: rgba(255, 255, 255, 0.5); ">
+                        background-color: #F3F6F9 ">
                             <!-- <img class="rounded" style="height: auto; width: 44px; " [src]="clubLogo" alt=""> -->
                             {{clubName}}
                         </h1>
