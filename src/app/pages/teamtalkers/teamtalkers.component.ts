@@ -35,6 +35,7 @@ import { ClubpostService } from './../../core/services/club-post/clubpost.servic
 export class TeamtalkersComponent implements OnInit {
   public format: string;
   public teamtalkerCaption: string = "";
+  public editedPostText: string
   public poll: Poll;
   public clubName: string;
   public clubLogo: string;
@@ -100,7 +101,7 @@ export class TeamtalkersComponent implements OnInit {
     this.getSignedInUser();
     this.initializeChecklist()
     this.getCheckedItemList();
-    this.getRecentClubPosts();
+    this.getLatestClubPosts();
   }
 
 
@@ -127,7 +128,7 @@ export class TeamtalkersComponent implements OnInit {
   }
 
 
-  getRecentClubPosts() {
+  getLatestClubPosts() {
     let tempPosts = []
     this._postService.getClubPosts('Club', 0, 15).subscribe((clubPosts: Post[]) => {
       clubPosts.map((singleClubPost: any, idx, self) => {
@@ -157,7 +158,7 @@ export class TeamtalkersComponent implements OnInit {
     this.poll = new Poll();
     this.singleDate = new Date(new Date().setDate(new Date().getDate() + 1));
     this.unCheckSlectedItems()
-    this.getRecentClubPosts()
+    this.getLatestClubPosts()
   }
 
   initializeChecklist() {
@@ -189,17 +190,36 @@ export class TeamtalkersComponent implements OnInit {
     this.modalService.dismissAll()
   }
 
-  editPost(editPostDialog , post) {
-  this.modalService.open(editPostDialog, { centered: true }).result.then((result) => {
+  openEditPostDaialog(editPostDialog, post) {
+    this.modalService.open(editPostDialog, { centered: true }).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
     });
+    this.editedPostText = post.text;
     console.log(post)
   }
 
+  saveEditPost(post) {
+    post.text = this.editedPostText;
+    this.spinner.show();
+    this._postService.updateClubPost(post).subscribe(data => {
+      this.spinner.hide();
+      this.toast.success('Post updated', 'Succeess');
+      this.getLatestClubPosts()
+    })
+  }
+
   deletePost(post) {
-    console.log(post)
+    this.spinner.show();
+    this._postService.deleteClubPost(post.id).subscribe(data => {
+      setTimeout(() => {
+        this.spinner.hide();
+        this.getLatestClubPosts();
+        this.toast.success('Post deleted', 'Success')
+      }, 500);
+
+    })
   }
 
   searchGroupsAndEvents(event) {
@@ -399,7 +419,7 @@ export class TeamtalkersComponent implements OnInit {
         this.resetPost()
       });
     }
- 
+
   }
 
   switchTabs(event) {
