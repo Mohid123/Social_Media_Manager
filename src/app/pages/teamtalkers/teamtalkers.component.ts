@@ -197,13 +197,12 @@ export class TeamtalkersComponent implements OnInit {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
     });
     this.editedPostText = post.text;
-    console.log(post)
   }
 
   saveEditPost(post) {
     post.text = this.editedPostText;
     this.spinner.show();
-    this._postService.updateClubPost(post).subscribe(data => {
+    this._postService.updateClubPost(Object.assign({} , post)).subscribe(data => {
       this.spinner.hide();
       this.toast.success('Post updated', 'Succeess');
       this.getLatestClubPosts()
