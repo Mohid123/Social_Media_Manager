@@ -132,7 +132,7 @@ export class TeamtalkersComponent implements OnInit {
       this.showSchedule = !this.showSchedule
     }
 
-  getRecentClubPosts() {
+  getLatestClubPosts() {
     let tempPosts = []
     this._postService.getClubPosts('Club', 0, 15).subscribe((clubPosts: Post[]) => {
       clubPosts.map((singleClubPost: any, idx, self) => {
