@@ -127,6 +127,10 @@ export class TeamtalkersComponent implements OnInit {
   }
 
 
+  selectedSchedule() {
+      this.showSchedule = !this.showSchedule
+    }
+
   getRecentClubPosts() {
     let tempPosts = []
     this._postService.getClubPosts('Club', 0, 15).subscribe((clubPosts: Post[]) => {
@@ -408,7 +412,7 @@ export class TeamtalkersComponent implements OnInit {
       this.showDiv.video = false;
       this.showDiv.text = false;
       this.showDiv.poll = false;
-    } else if (event.index == 1) {
+    } else if (event.index == 1 ) {
       this.showDiv.photo = false;
       this.showDiv.video = true;
       this.showDiv.text = false;

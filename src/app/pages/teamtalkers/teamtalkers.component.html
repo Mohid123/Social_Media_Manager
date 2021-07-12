@@ -292,13 +292,13 @@
                                                 placeholder="What’s on your mind, {{userName}}?"></textarea>
                                         </div>
 
-                                        <!-- <label class="checkbox checkbox-sm checkbox-inline">
+                                        <label class="checkbox checkbox-sm checkbox-inline">
                                             <input  name="list_name" value="m1" (click)="selectedSchedule()" type="checkbox" value="1"/>
                                         
-                                            <span></span>
-                                         <label  class="pl-5 pt-3" style="color: #74788d; font-size: 14px; font-weight: 400; font-family: poppins">Schedule</label>
+                                            <span></span> 
+                                         <label  class="pl-5 pt-3  mb-2" style="color: #74788d; font-size: 14px; font-weight: 400; font-family: 'Poppins, sans-serif'; " >Schedule</label>
                                          
-                                          </label> -->
+                                        </label>
 
                                         <form id="kt_forms_widget_2_form" class="pt-10 ql-quil ql-quil-plain">
 
@@ -307,9 +307,7 @@
                                             <!--end::Editor-->
                                             <div class="border-top my-5"></div>
                                             <!--begin::Toolbar-->
-                                            <div id="kt_forms_widget_2_editor_toolbar"
-                                                class="ql-toolbar d-flex align-items-center justify-content-between"
-                                                *ngIf="!showSchedule">
+                                            <div *ngIf="!showSchedule" id="kt_forms_widget_2_editor_toolbar" class="ql-toolbar d-flex align-items-center justify-content-between">
 
                                                 <div class="d-flex">
 
@@ -345,7 +343,7 @@
                                                     </div>
 
                                                 </div>
-                                                <div class="d-flex">
+                                                 <div class="d-flex">
                                                     <div class="p-2">
 
                                                     </div>
@@ -366,28 +364,125 @@
 
                                             </div>
 
-                                            <div class="d-flex" *ngIf="showSchedule">
-
-                                                <div class="p-2">
-                                                    <!-- <label>Timepost</label>
-                                                    <input type="datetime-local" id="dt"  class="form-control"> -->
-
+                                            <div *ngIf="showSchedule" class="ql-toolbar align-items-center justify-content-between">
+                                                
+                                            <div class="row d-block">
+                                                <div class="col-md-6 d-inline-block">
+                                                    <div class="form-group">
+                                                        <label>Schedule Date</label>
+                                                        <input readonly style="background-color:white;"
+                                                            class="form-control" placeholder="Select Date"
+                                                            [ngxDatePicker]="dateInstanceSingle" [value]="singleDate"
+                                                            (valueChange)="onChangeSingle($event)">
+                                                        <ngx-date-picker #dateInstanceSingle
+                                                            [options]="singleDatePickerOptions"></ngx-date-picker>
+                                                    </div>
                                                 </div>
-                                                <div class="p-2">
-
-                                                </div>
-                                                <div class="ml-auto p-2 pt-10">
-                                                    <!-- <button (click) = "clear()" type="button"
-                                                        class="btn btn-transparent-warning">Clear</button> -->
-
-                                                </div>
-                                                <div class="ml-auto p-2">
-
-                                                    <button type="button" class="btn btn-primary flex-row-reverse"
-                                                        (click)="dateEvent($event)">Schedule</button>
+                                                <div class="col-md-6 d-inline-block">
+                                                    <div class="form-group">
+                                                        <label>Time </label>
+                                                        <input class="form-control" style="background-color:white;"
+                                                            readonly placeholder="Select Time"
+                                                            [ngxTimePicker]="timeInstanceOne" [value]="singleTime"
+                                                            (valueChange)="onChangeSingleTime($event)" required>
+                                                        <ngx-time-picker #timeInstanceOne
+                                                            [options]="singleTimePickerOptions"></ngx-time-picker>
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <!--end::Toolbar-->
+
+                                            <div class="row d-block">
+                                                <div id="kt_forms_widget_2_editor_toolbar"
+                                                class="ql-toolbar d-flex align-items-center justify-content-between">
+                                                 <div class="d-flex" *ngIf="showDiv.photo" >
+                                                     <div class="p-2">
+                                                        <div class="p-2">
+                                                            <div class="image-upload">
+                                                                <label for="file-input">
+    
+                                                                    <div class="btn btn-icon btn-light w-auto btn-clean d-inline-flex align-items-center btn-lg px-2 mr-5">
+                                                                        <span
+                                                                            class="symbol symbol-35 symbol-light-primary">
+                                                                            <span class="symbol-label"><a
+                                                                                    class="btn btn-icon btn-sm ">
+                                                                                    <i class="fas fa-upload icon-lg"
+                                                                                        style="cursor: pointer;"></i>
+                                                                                </a></span>
+                                                                        </span>
+                                                                        <span
+                                                                            class="btn text-dark-50 font-weight-normal font-size-base">
+                                                                            &nbsp;Select image</span>
+    
+                                                                    </div>
+                                                                </label>
+    
+                                                                <input id="file-input" type="file" accept="image/*"
+                                                                    name="myfile" (change)="onSelectFile($event)"
+                                                                    multiple />
+                                                            </div>
+    
+                                                        </div>
+                                                    </div>
+    
+                                                </div>
+                                                <div class="d-flex" *ngIf="showDiv.video">
+                                                    <div class="p-2">
+                                                        <div class="p-2">
+                                                            <div class="image-upload">
+                                                                <label for="file-input">
+
+                                                                    <div
+                                                                        class="btn btn-icon btn-light w-auto btn-clean d-inline-flex align-items-center btn-lg px-2 mr-5">
+                                                                        <span
+                                                                            class="symbol symbol-35 symbol-light-primary">
+                                                                            <span class="symbol-label"><a
+                                                                                    class="btn btn-icon btn-sm ">
+                                                                                    <i class="fas fa-video icon-lg"
+                                                                                        style="cursor: pointer;"></i>
+                                                                                </a></span>
+                                                                        </span>
+                                                                        <span
+                                                                            class="btn text-dark-50 font-weight-normal font-size-base">
+                                                                            &nbsp;select video</span>
+
+                                                                    </div>
+                                                                </label>
+
+                                                                <input id="file-input" type="file" accept="video/*"
+                                                                    name="myfile" (change)="onSelectFile($event)"
+                                                                    multiple />
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="p-2">
+
+                                                    </div>
+                                                    <div class="ml-auto p-2"></div>
+                                                </div>
+                                                 <div class="d-flex">
+                                                    <div class="p-2">
+    
+                                                    </div>
+                                                    <div class="p-2">
+    
+                                                    </div>
+                                                    <div class="ml-auto p-2 ">
+                                                        <button (click)="resetPost()" type="button"
+                                                            class="btn btn-transparent-warning">Clear</button>
+                                                    </div>
+                                                    <div class="ml-auto p-2">
+                                                        <button (click)="addImagePost()" type="button"
+                                                            class="btn btn-primary flex-row-reverse"
+                                                            style="background-color: #3b5998; border-color: #3b5998;">Schedule</button>
+                                                    </div>
+                                                </div>
+    
+    
+                                            </div>
+                                            </div>
+                                            </div>
+
                                         </form>
 
                                         <!--end::Form-->
@@ -439,23 +534,22 @@
                                                 id="exampleTextarea" rows="3"
                                                 placeholder="What’s on your mind, {{userName}}?"></textarea>
                                         </div>
-                                        <!--end::Top-->
-                                        <!--begin::Form-->
-                                        <!-- <label class="checkbox checkbox-sm checkbox-inline">
+
+
+                                        <label class="checkbox checkbox-sm checkbox-inline">
                                             <input  name="list_name" value="m1" (click)="selectedSchedule()" type="checkbox" value="1"/>
                                         
-                                            <span></span>
-                                         <label  class="pl-5 pt-3" style="color: #74788d; font-size: 14px; font-weight: 400; font-family: poppins">Schedule</label>
+                                            <span></span> 
+                                         <label  class="pl-5 pt-3 mb-2" style="color: #74788d; font-size: 14px; font-weight: 400; font-family: 'Poppins, sans-serif'; " >Schedule</label>
                                          
-                                          </label> -->
+                                        </label>
+                                      
                                         <form id="kt_forms_widget_2_form" class="pt-10 ql-quil ql-quil-plain">
 
-                                            <!--begin::Editor-->
-                                            <div id="kt_forms_widget_2_editor">
-                                            </div>
-                                            <!--end::Editor-->
+                                          
+                                            
                                             <div class="border-top my-5"></div>
-                                            <!--begin::Toolbar-->
+                                           
                                             <div id="kt_forms_widget_2_editor_toolbar"
                                                 class="ql-toolbar d-flex align-items-center justify-content-between"
                                                 *ngIf="!showSchedule">
@@ -507,27 +601,94 @@
                                                     </div>
                                                     <div class="ml-auto p-2">
                                                         <button (click)="addVideoPost()" type="button"
-                                                            class="btn btn-primary flex-row-reverse">Post Now</button>
+                                                            class="btn btn-primary flex-row-reverse" style="background-color: #3b5998; border-color: #3b5998;">Post Now</button>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="d-flex" *ngIf="showSchedule">
-                                                <div class="p-2">
-
+                                          
+                                            <div *ngIf="showSchedule" class="ql-toolbar align-items-center justify-content-between">
+                                                
+                                                <div class="row d-block">
+                                                    <div class="col-md-6 d-inline-block">
+                                                        <div class="form-group">
+                                                            <label>Schedule Date</label>
+                                                            <input readonly style="background-color:white;"
+                                                                class="form-control" placeholder="Select Date"
+                                                                [ngxDatePicker]="dateInstanceSingle" [value]="singleDate"
+                                                                (valueChange)="onChangeSingle($event)">
+                                                            <ngx-date-picker #dateInstanceSingle
+                                                                [options]="singleDatePickerOptions"></ngx-date-picker>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 d-inline-block">
+                                                        <div class="form-group">
+                                                            <label>Time </label>
+                                                            <input class="form-control" style="background-color:white;"
+                                                                readonly placeholder="Select Time"
+                                                                [ngxTimePicker]="timeInstanceOne" [value]="singleTime"
+                                                                (valueChange)="onChangeSingleTime($event)" required>
+                                                            <ngx-time-picker #timeInstanceOne
+                                                                [options]="singleTimePickerOptions"></ngx-time-picker>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                                <div class="p-2">
-
+    
+                                                <div class="row d-block">
+                                                    <div id="kt_forms_widget_2_editor_toolbar"
+                                                    class="ql-toolbar d-flex align-items-center justify-content-between">
+                                                     <div class="d-flex">
+                                                         <div class="p-2">
+                                                            <div class="p-2">
+                                                                <div class="image-upload">
+                                                                    <label for="file-input">
+        
+                                                                        <div class="btn btn-icon btn-light w-auto btn-clean d-inline-flex align-items-center btn-lg px-2 mr-5">
+                                                                            <span
+                                                                                class="symbol symbol-35 symbol-light-primary">
+                                                                                <span class="symbol-label"><a
+                                                                                        class="btn btn-icon btn-sm ">
+                                                                                        <i class="fas fa-upload icon-lg"
+                                                                                            style="cursor: pointer;"></i>
+                                                                                    </a></span>
+                                                                            </span>
+                                                                            <span
+                                                                                class="btn text-dark-50 font-weight-normal font-size-base">
+                                                                                &nbsp;Select video</span>
+        
+                                                                        </div>
+                                                                    </label>
+        
+                                                                    <input id="file-input" type="file" accept="image/*"
+                                                                        name="myfile" (change)="onSelectFile($event)"
+                                                                        multiple />
+                                                                </div>
+        
+                                                            </div>
+                                                        </div>
+        
+                                                    </div>
+                                                     <div class="d-flex">
+                                                        <div class="p-2">
+        
+                                                        </div>
+                                                        <div class="p-2">
+        
+                                                        </div>
+                                                        <div class="ml-auto p-2 ">
+                                                            <button (click)="resetPost()" type="button"
+                                                                class="btn btn-transparent-warning">Clear</button>
+                                                        </div>
+                                                        <div class="ml-auto p-2">
+                                                            <button (click)="addVideoPost()" type="button"
+                                                                class="btn btn-primary flex-row-reverse"
+                                                                style="background-color: #3b5998; border-color: #3b5998;">Schedule</button>
+                                                        </div>
+                                                    </div>
+        
+        
                                                 </div>
-                                                <div class="ml-auto p-2">
-                                                    <button (click)="resetPost()" type="button"
-                                                        class="btn btn-transparent-warning">Clear</button>
                                                 </div>
-                                                <div class="ml-auto p-2">
-                                                    <button (click)="addVideoPost()" type="button"
-                                                        class="btn btn-primary flex-row-reverse">Post Now</button>
-                                                </div>
-                                            </div>
-                                            <!--end::Toolbar-->
+                                         </div>
                                         </form>
 
 
@@ -576,17 +737,18 @@
                                                 id="exampleTextarea" rows="3"
                                                 placeholder="What’s on your mind, {{userName}}?"></textarea>
                                         </div>
-                                        <!--end::Top-->
-                                        <!--begin::Form-->
+                                        <label class="checkbox checkbox-sm checkbox-inline">
+                                            <input  name="list_name" value="m1" (click)="selectedSchedule()" type="checkbox" value="1"/>
+                                        
+                                            <span></span> 
+                                         <label  class="pl-5 pt-3 mb-2" style="color: #74788d; font-size: 14px; font-weight: 400; font-family: 'Poppins, sans-serif'; " >Schedule</label>
+                                         
+                                        </label>
                                         <form id="kt_forms_widget_2_form" class="pt-10 ql-quil ql-quil-plain">
 
-                                            <!--begin::Editor-->
-                                            <div id="kt_forms_widget_2_editor">
-                                            </div>
-                                            <!--end::Editor-->
                                             <div class="border-top my-5"></div>
                                             <!--begin::Toolbar-->
-                                            <div id="kt_forms_widget_2_editor_toolbar"
+                                            <div *ngIf="!showSchedule" id="kt_forms_widget_2_editor_toolbar"
                                                 class="ql-toolbar d-flex align-items-center justify-content-between">
                                                 <div class="d-flex">
                                                     <div class="p-2">
@@ -619,10 +781,75 @@
                                                     </div>
                                                     <div class="ml-auto p-2">
                                                         <button (click)="addTextPost()" type="button"
-                                                            class="btn btn-primary flex-row-reverse">Post Now</button>
+                                                            class="btn btn-primary flex-row-reverse" style="background-color: #3b5998; border-color: #3b5998;">Post Now</button>
                                                     </div>
                                                 </div>
                                             </div>
+                                            <div *ngIf="showSchedule" id="kt_forms_widget_2_editor_toolbar"
+                                                class="ql-toolbar align-items-center justify-content-between">
+                                                <div class="row d-block">
+                                                    <div class="col-md-6 d-inline-block">
+                                                        <div class="form-group">
+                                                            <label>Schedule Date</label>
+                                                            <input readonly style="background-color:white;"
+                                                                class="form-control" placeholder="Select Date"
+                                                                [ngxDatePicker]="dateInstanceSingle" [value]="singleDate"
+                                                                (valueChange)="onChangeSingle($event)">
+                                                            <ngx-date-picker #dateInstanceSingle
+                                                                [options]="singleDatePickerOptions"></ngx-date-picker>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 d-inline-block">
+                                                        <div class="form-group">
+                                                            <label>Time </label>
+                                                            <input class="form-control" style="background-color:white;"
+                                                                readonly placeholder="Select Time"
+                                                                [ngxTimePicker]="timeInstanceOne" [value]="singleTime"
+                                                                (valueChange)="onChangeSingleTime($event)" required>
+                                                            <ngx-time-picker #timeInstanceOne
+                                                                [options]="singleTimePickerOptions"></ngx-time-picker>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row d-block mb-10">
+                                                    <div class="d-flex" >
+                                                        <div class="p-2">
+                                                            <div class="p-2">
+                                                                <!-- <span class="btn btn-icon btn-sm btn-hover-icon-primary">
+                                                                    <i class="flaticon2-clip-symbol icon-ms"></i>
+                                                                </span> -->
+                                                            </div>
+    
+                                                        </div>
+                                                        <div class="p-2">
+                                                            <div class="p-2">
+                                                                <!-- <span class="btn btn-icon btn-sm btn-hover-icon-primary">
+                                                                    <i class="flaticon2-pin icon-ms"></i>
+                                                                </span> -->
+                                                            </div>
+                                                        </div>
+                                                        <div class="ml-auto p-2"></div>
+                                                    </div>
+                                                    <div class="d-flex" style="float: right;">
+                                                        <div class="p-2">
+    
+                                                        </div>
+                                                        <div class="p-2">
+    
+                                                        </div>
+                                                        <div class="ml-auto p-2">
+                                                            <button (click)="resetPost()" type="button"
+                                                                class="btn btn-transparent-warning">Clear</button>
+                                                        </div>
+                                                        <div class="ml-auto p-2">
+                                                            <button (click)="addTextPost()" type="button"
+                                                                class="btn btn-primary flex-row-reverse" style="background-color: #3b5998; border-color: #3b5998;">Schedule</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                
+                                            </div>
+
                                             <!--end::Toolbar-->
                                         </form>
 
@@ -671,7 +898,7 @@
                                                 id="exampleTextarea" rows="3"
                                                 placeholder="What’s on your mind, {{userName}}?"></textarea>
                                         </div>
-
+                                       
                                         <div>
 
                                             <div class="form-group">
@@ -725,29 +952,102 @@
                                             </div>
 
                                         </div>
+                                        <label class="checkbox checkbox-sm checkbox-inline">
+                                            <input  class="d-inline" name="list_name" value="m1" (click)="selectedSchedule()" type="checkbox" value="1"/>
+                                        
+                                            <span></span> 
+                                         <label  class="pl-5 pt-3 mb-2" style="color: #74788d; font-size: 14px; font-weight: 400; font-family: 'Poppins, sans-serif'; " >Schedule</label>
+                                         
+                                        </label>
 
                                         <form id="kt_forms_widget_2_form" class="pt-10 ql-quil ql-quil-plain">
 
                                             <div id="kt_forms_widget_2_editor">
                                             </div>
                                             <div class="border-top my-5"></div>
-                                            <div id="kt_forms_widget_2_editor_toolbar"
-                                                class="ql-toolbar d-flex align-items-center justify-content-between">
-                                                <div class="d-flex">
+                                            <div *ngIf="!showSchedule" id="kt_forms_widget_2_editor_toolbar"
+                                            class="ql-toolbar d-flex align-items-center justify-content-between">
+                                            <div class="d-flex">
+                                                <div class="p-2">
+                                                    <div class="p-2">
+                                                        <!-- <span class="btn btn-icon btn-sm btn-hover-icon-primary">
+                                                            <i class="flaticon2-clip-symbol icon-ms"></i>
+                                                        </span> -->
+                                                    </div>
+
+                                                </div>
+                                                <div class="p-2">
+                                                    <div class="p-2">
+                                                        <!-- <span class="btn btn-icon btn-sm btn-hover-icon-primary">
+                                                            <i class="flaticon2-pin icon-ms"></i>
+                                                        </span> -->
+                                                    </div>
+                                                </div>
+                                                <div class="ml-auto p-2"></div>
+                                            </div>
+                                            <div class="d-flex">
+                                                <div class="p-2">
+
+                                                </div>
+                                                <div class="p-2">
+
+                                                </div>
+                                                <div class="ml-auto p-2">
+                                                    <button (click)="resetPost()" type="button"
+                                                        class="btn btn-transparent-warning">Clear</button>
+                                                </div>
+                                                <div class="ml-auto p-2">
+                                                    <button (click)="addTextPost()" type="button"
+                                                        class="btn btn-primary flex-row-reverse" style="background-color: #3b5998; border-color: #3b5998;">Post Now</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div *ngIf="showSchedule" id="kt_forms_widget_2_editor_toolbar"
+                                            class="ql-toolbar align-items-center justify-content-between">
+                                            <div class="row d-block">
+                                                <div class="col-md-6 d-inline-block">
+                                                    <div class="form-group">
+                                                        <label>Schedule Date</label>
+                                                        <input readonly style="background-color:white;"
+                                                            class="form-control" placeholder="Select Date"
+                                                            [ngxDatePicker]="dateInstanceSingle" [value]="singleDate"
+                                                            (valueChange)="onChangeSingle($event)">
+                                                        <ngx-date-picker #dateInstanceSingle
+                                                            [options]="singleDatePickerOptions"></ngx-date-picker>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 d-inline-block">
+                                                    <div class="form-group">
+                                                        <label>Time </label>
+                                                        <input class="form-control" style="background-color:white;"
+                                                            readonly placeholder="Select Time"
+                                                            [ngxTimePicker]="timeInstanceOne" [value]="singleTime"
+                                                            (valueChange)="onChangeSingleTime($event)" required>
+                                                        <ngx-time-picker #timeInstanceOne
+                                                            [options]="singleTimePickerOptions"></ngx-time-picker>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row d-block mb-10">
+                                                <div class="d-flex" >
                                                     <div class="p-2">
                                                         <div class="p-2">
-
+                                                            <!-- <span class="btn btn-icon btn-sm btn-hover-icon-primary">
+                                                                <i class="flaticon2-clip-symbol icon-ms"></i>
+                                                            </span> -->
                                                         </div>
 
                                                     </div>
                                                     <div class="p-2">
                                                         <div class="p-2">
-
+                                                            <!-- <span class="btn btn-icon btn-sm btn-hover-icon-primary">
+                                                                <i class="flaticon2-pin icon-ms"></i>
+                                                            </span> -->
                                                         </div>
                                                     </div>
                                                     <div class="ml-auto p-2"></div>
                                                 </div>
-                                                <div class="d-flex">
+                                                <div class="d-flex" style="float: right;">
                                                     <div class="p-2">
 
                                                     </div>
@@ -759,11 +1059,13 @@
                                                             class="btn btn-transparent-warning">Clear</button>
                                                     </div>
                                                     <div class="ml-auto p-2">
-                                                        <button (click)="addPollPost()" type="button"
-                                                            class="btn btn-primary flex-row-reverse">Post Now</button>
+                                                        <button (click)="addTextPost()" type="button"
+                                                            class="btn btn-primary flex-row-reverse" style="background-color: #3b5998; border-color: #3b5998;">Schedule</button>
                                                     </div>
                                                 </div>
                                             </div>
+                                            
+                                        </div>
 
                                         </form>
 
