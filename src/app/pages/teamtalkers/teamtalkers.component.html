@@ -1136,7 +1136,7 @@
                                             <button class="btn" id="dropdownBasic1" ngbDropdownToggle><i
                                                     class="ki ki-bold-more-hor" style="color:black"></i></button>
                                             <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                                                <button (click)="editPost(editPostDialog , post)" ngbDropdownItem><i
+                                                <button (click)="openEditPostDaialog(editPostDialog , post)" ngbDropdownItem><i
                                                         class="fas fa-edit mr-2 text-dark"></i>Edit</button>
                                                 <button (click)="deletePost(post)" ngbDropdownItem><i
                                                         class="fas fa-trash-alt mr-2 text-dark"></i>Delete</button>
@@ -1173,7 +1173,7 @@
                                                     </div>
                                                 </div>
                                                 <div *ngIf="post.type == 'text'" >
-                                                    <textarea style="height: 150px;" class="form-control form-control-xl form-control-solid"
+                                                    <textarea [(ngModel)]="editedPostText" style="height: 150px;" class="form-control form-control-xl form-control-solid"
                                                     id="exampleTextarea" rows="3"
                                                     placeholder="What’s on your mind, {{userName}}?">{{post.text}}</textarea>
                                                 </div>
@@ -1191,7 +1191,7 @@
                                                  
                                                 </div>
                                                 <div *ngIf="post.type == 'image' || post.type == 'video'" class="form-group m-3">
-                                                    <textarea style="height: 100px;" class="form-control form-control-lg form-control-solid"
+                                                    <textarea [(ngModel)]="editedPostText" style="height: 100px;" class="form-control form-control-lg form-control-solid"
                                                         id="exampleTextarea" rows="3"
                                                         placeholder="What’s on your mind, {{userName}}?">{{post.text}}</textarea>
                                                 </div>
@@ -1240,7 +1240,7 @@
 
                                             <div class="modal-footer d-flex justify-content-center">
                                                 <button type="button" class="btn btn-primary"
-                                                    (click)="c('Close click')"  style="background-color: #3b5998; border-color: #3b5998;">Post</button>
+                                                    (click)="saveEditPost(post); c('Close click');"  style="background-color: #3b5998; border-color: #3b5998;">Post</button>
 
                                             </div>
                                         </ng-template>

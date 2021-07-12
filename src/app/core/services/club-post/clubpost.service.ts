@@ -122,7 +122,6 @@ export class ClubpostService {
       }
 
       this._mediaUploadService.uploadClubMedia(postedTo, userID, MediaFile).subscribe((media: any) => {
-        console.log(media, 'mediauploaded')
         this.post.captureFileURL = media.url
         this.post.path = media.path;
         selectedList.forEach((element, idx, self) => {
@@ -224,7 +223,6 @@ export class ClubpostService {
                 }
                 this._reportService.createReport(2, "", postedTo);
                 this._postService.createClubPost(postedTo , this.post).subscribe((post: any) => {
-                  console.log(post);
                     this._reportService.createReport(1, post.id, postedTo);
                     if (idx == self.length - 1) {
                       this.spinner.hide();
