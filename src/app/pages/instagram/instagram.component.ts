@@ -62,6 +62,7 @@ export class InstagramComponent implements OnInit {
   onSelectedImageLoad() {
     const width = (this.logo.nativeElement as HTMLImageElement).naturalWidth
     const height = (this.logo.nativeElement as HTMLImageElement).naturalHeight
+    
     let gcd = this.calculateAspectRatio(width, height);
     const ratio = width / gcd + ':' + height / gcd;
     this.validAspectRatios.includes(ratio) ? this.inValidImageFormat = false : this.inValidImageFormat = true;
@@ -206,7 +207,6 @@ export class InstagramComponent implements OnInit {
   }
 
   addImagePost() {
-    ;
     if (!this.file) {
       this.toast.error('Please select an Image File', 'Empty File');
       return;

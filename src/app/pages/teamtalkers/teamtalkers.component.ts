@@ -6,7 +6,6 @@ import { VideoProcessingService } from "./../../core/services/video-service/vide
 import { MediauploadService } from "./../../core/services/mediaupload.service";
 import { PostService } from "./../../core/services/post.service";
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
-
 import {
   Component,
   OnInit,
@@ -27,6 +26,9 @@ import { Poll } from "src/app/core/models/poll.model";
 import * as moment from "moment";
 import { ThisReceiver } from "@angular/compiler";
 import { ClubpostService } from './../../core/services/club-post/clubpost.service';
+import { mixinColor } from "@angular/material/core";
+
+
 @Component({
   selector: "app-teamtalkers",
   templateUrl: "./teamtalkers.component.html",
@@ -102,8 +104,17 @@ export class TeamtalkersComponent implements OnInit {
     this.initializeChecklist()
     this.getCheckedItemList();
     this.getLatestClubPosts();
+    // this.getDominantColorForImage();
   }
 
+  // getDominantColorForImage(){
+  //   let imgPath = 'https://socialapi.solissol.com/api/v1/en/media-upload/mediaFiles/test/123/9a4a30c392d3cb38f827ae9345105f11e.jpg'
+  //   color(imgPath, function(err, color){
+  //     // hex color by default
+  //     console.log(color , 'Background-Color-hex') // '5b6c6e'
+  //   })
+
+  // }
 
   openVerticallyCentered(content, post) {
     this.playingVideo = post.captureFileURL;
@@ -129,8 +140,8 @@ export class TeamtalkersComponent implements OnInit {
 
 
   selectedSchedule() {
-      this.showSchedule = !this.showSchedule
-    }
+    this.showSchedule = !this.showSchedule
+  }
 
   getLatestClubPosts() {
     let tempPosts = []
@@ -206,7 +217,7 @@ export class TeamtalkersComponent implements OnInit {
   saveEditPost(post) {
     post.text = this.editedPostText;
     this.spinner.show();
-    this._postService.updateClubPost(Object.assign({} , post)).subscribe(data => {
+    this._postService.updateClubPost(Object.assign({}, post)).subscribe(data => {
       this.spinner.hide();
       this.toast.success('Post updated', 'Succeess');
       this.getLatestClubPosts()
@@ -431,21 +442,28 @@ export class TeamtalkersComponent implements OnInit {
       this.showDiv.video = false;
       this.showDiv.text = false;
       this.showDiv.poll = false;
-    } else if (event.index == 1 ) {
+      this.showSchedule = false;
+
+    } else if (event.index == 1) {
       this.showDiv.photo = false;
       this.showDiv.video = true;
       this.showDiv.text = false;
       this.showDiv.poll = false;
+      this.showSchedule = false;
     } else if (event.index == 2) {
       this.showDiv.photo = false;
       this.showDiv.video = false;
       this.showDiv.text = true;
       this.showDiv.poll = false;
+      this.showSchedule = false;
+
     } else {
       this.showDiv.photo = false;
       this.showDiv.video = false;
       this.showDiv.text = false;
       this.showDiv.poll = true;
+      this.showSchedule = false;
+
     }
   }
 
@@ -461,6 +479,12 @@ export class TeamtalkersComponent implements OnInit {
       }
       reader.onload = (event) => {
         this.url = (<FileReader>event.target).result as string;
+        console.log(this.url)
+        this._videoService.getAverageRGB(this.url).then(data => {
+          console.log(data, 'rgb')
+        })
+       
+
         this.cf.detectChanges();
       };
       event.target.value = "";
@@ -523,6 +547,7 @@ export class TeamtalkersComponent implements OnInit {
 
 
   addPollPost() {
+    debugger;
     let selectedClubGroups = [];
     let selectedClubEvents = [];
     delete this.poll.startTime;

@@ -1,5 +1,6 @@
 import { Injectable, Inject } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
+import { he } from 'date-fns/locale';
 
 @Injectable()
 export class VideoProcessingService {
@@ -46,4 +47,89 @@ export class VideoProcessingService {
       resolve(new File([u8arr], filename, { type: 'image/jpeg' }));
     })
   }
+
+  rgbToHex = (r, g, b) => '#' + [r, g, b].map(x => {
+    const hex = x.toString(16)
+    return hex.length === 1 ? '0' + hex : hex
+  }).join('')
+
+  // console.log(rgbToHex(0, 51, 255)); // '#0033ff'
+
+
+
+  get_average_rgb(img) {
+    return new Promise((resolve, reject) => {
+      var context = document.createElement('canvas').getContext('2d');
+      if (typeof img == 'string') {
+        var src = img;
+        img = new Image;
+        img.setAttribute('crossOrigin', '');
+        img.src = src;
+      }
+      context.imageSmoothingEnabled = true;
+      context.drawImage(img, 0, 0, 1, 1);
+      let imageData = context.getImageData(0, 0, 1, 1).data.slice(0, 3);
+      resolve(imageData);
+    })
+  }
+
+  getAverageRGB(imgEl) {
+    return new Promise((resolve, reject) => {
+      var blockSize = 5; // only visit every 5 pixels
+      let defaultRGB = { r: 0, g: 0, b: 0 }; // for non-supporting envs
+      let canvas = document.createElement('canvas')
+      let context = canvas.getContext('2d');
+      let data;
+      let width;
+      let height;
+      let i = -4;
+      let length;
+      let rgb = { r: 0, g: 0, b: 0 };
+      let count = 0;
+      if (typeof imgEl == 'string') {
+        var src = imgEl;
+        imgEl = new Image;
+        imgEl.setAttribute('crossOrigin', '');
+        imgEl.src = src;
+      }
+
+      if (!context) {
+        return defaultRGB;
+      }
+
+      height = canvas.height 
+      width = canvas.width 
+      console.log(height , width ,'sd')
+
+      context.imageSmoothingEnabled = true;
+      
+      context.drawImage(imgEl, 0, 0, 1, 1);
+
+      try {
+        data = context.getImageData(0, 0, width, height);
+      } catch (e) {
+        /* security error, img on diff domain */
+        return defaultRGB;
+      }
+
+      length = data.data.length;
+
+      while ((i += blockSize * 4) < length) {
+        ++count;
+        rgb.r += data.data[i];
+        rgb.g += data.data[i + 1];
+        rgb.b += data.data[i + 2];
+      }
+
+      // ~~ used to floor values
+      rgb.r = ~~(rgb.r / count);
+      rgb.g = ~~(rgb.g / count);
+      rgb.b = ~~(rgb.b / count);
+
+      resolve(rgb);
+    })
+  }
+
+
+
 }

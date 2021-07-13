@@ -94,51 +94,51 @@ export class AccountManagerComponent implements OnInit {
 
   async signInWithFB() {
   
-    this._toast.warning('Comming Soon')
-    // document.getElementById("signInFB").style.pointerEvents = "none";
-    // const fbLoginOptions = {
-    //   scope:
-    //     "pages_messaging,pages_messaging_subscriptions,email,pages_show_list,instagram_basic,instagram_content_publish, publish_video ,pages_read_engagement,publish_to_groups , pages_manage_posts",
-    // };
-    // await this.authService
-    //   .signIn(FacebookLoginProvider.PROVIDER_ID, fbLoginOptions)
-    //   .then((socialUser) => {
-    //     console.log(socialUser, 'soc')
-    //     this._toast.success("Successfully logged into Facebook");
-    //     this.socialUser = socialUser;
-    //     this.signedInUser.FBuserID = this.socialUser.id;
-    //     this.userFBprofile.fbEmail = this.socialUser.response.email;
-    //     this.userFBprofile.fbUserName = this.socialUser.response.name;
-    //     this.userFBprofile.fbProfileImageUrl = this.socialUser.response.picture.data.url;
-    //     this.cf.detectChanges();
-    //     this.signedInUser.userFacebookProfile = Object.assign({}, this.userFBprofile)
-    //     this.getLongLivedFBUserToken(this.socialUser.authToken).subscribe(
-    //       (data) => {
-    //         console.log(data, "long access token");
-    //         this.signedInUser.FBUserAuthToken = data.access_token;
-    //         this.getFacebookPages(
-    //           this.socialUser.id,
-    //           data.access_token
-    //         ).subscribe((FbPages) => {
-    //           console.log(FbPages , 'Fbpages')
-    //           if (FbPages.data.length) {
-    //             FbPages.data.forEach((item) => {
-    //               let obj = {
-    //                 pageAccessToken: item.access_token,
-    //                 pageID: item.id,
-    //                 pageName: item.name,
-    //               };
-    //               this.userFacebookPages.push(obj);
-    //             });
-    //           }
-    //           this.signedInUser.FBPages = this.userFacebookPages;
-    //           console.log(this.signedInUser, 'updateduser')
-    //           this.updateSignedInUser(this.signedInUser);
-    //         });
-    //       }
-    //     );
-    //   })
-    //   .catch((err) => console.log(err));
+    // this._toast.warning('Comming Soon')
+    document.getElementById("signInFB").style.pointerEvents = "none";
+    const fbLoginOptions = {
+      scope:
+        "pages_messaging,pages_messaging_subscriptions,email,pages_show_list,instagram_basic,instagram_content_publish, publish_video ,pages_read_engagement,publish_to_groups , pages_manage_posts",
+    };
+    await this.authService
+      .signIn(FacebookLoginProvider.PROVIDER_ID, fbLoginOptions)
+      .then((socialUser) => {
+        console.log(socialUser, 'soc')
+        this._toast.success("Successfully logged into Facebook");
+        this.socialUser = socialUser;
+        this.signedInUser.FBuserID = this.socialUser.id;
+        this.userFBprofile.fbEmail = this.socialUser.response.email;
+        this.userFBprofile.fbUserName = this.socialUser.response.name;
+        this.userFBprofile.fbProfileImageUrl = this.socialUser.response.picture.data.url;
+        this.cf.detectChanges();
+        this.signedInUser.userFacebookProfile = Object.assign({}, this.userFBprofile)
+        this.getLongLivedFBUserToken(this.socialUser.authToken).subscribe(
+          (data) => {
+            console.log(data, "long access token");
+            this.signedInUser.FBUserAuthToken = data.access_token;
+            this.getFacebookPages(
+              this.socialUser.id,
+              data.access_token
+            ).subscribe((FbPages) => {
+              console.log(FbPages , 'Fbpages')
+              if (FbPages.data.length) {
+                FbPages.data.forEach((item) => {
+                  let obj = {
+                    pageAccessToken: item.access_token,
+                    pageID: item.id,
+                    pageName: item.name,
+                  };
+                  this.userFacebookPages.push(obj);
+                });
+              }
+              this.signedInUser.FBPages = this.userFacebookPages;
+              console.log(this.signedInUser, 'updateduser')
+              this.updateSignedInUser(this.signedInUser);
+            });
+          }
+        );
+      })
+      .catch((err) => console.log(err));
   }
 
   signOutOfClub(){
