@@ -1172,7 +1172,7 @@
                                                         </span>
                                                     </div>
                                                 </div>
-                                                <div *ngIf="post.type == 'text'" >
+                                                <div *ngIf="post.type == 'text'" class="m-3" >
                                                     <textarea [(ngModel)]="editedPostText" style="height: 150px;" class="form-control form-control-xl form-control-solid"
                                                     id="exampleTextarea" rows="3"
                                                     placeholder="What’s on your mind, {{userName}}?">{{post.text}}</textarea>
@@ -1220,7 +1220,7 @@
                                                         <div class="p-2 bd-highlight"> {{ post.repostCount }}share</div>
                                                     </div>
                                                 </div>
-                                                <div class="preview-comment">
+                                                <!-- <div class="preview-comment">
                                                     <div class="row">
                                                         <div class="col-12 item">
                                                             <i class="far fa-heart mr-2" style="color: black;"></i>Like
@@ -1235,7 +1235,7 @@
                                                         <div class="col item">
                                                         </div>
                                                     </div>
-                                                </div>
+                                                </div> -->
                                             </div>
 
                                             <div class="modal-footer d-flex justify-content-center">
@@ -1249,17 +1249,18 @@
 
 
                                 <div *ngIf="post.type!=='text' && post.type!== 'hyperlink' " class="preview-media"
-                                    data-max-image="5" style="margin-top: -20px">
+                                    data-max-image="5" style="margin-top: -20px ; background: #F3F6F9;" >
+                       
                                     <img *ngIf="post.type == 'image'" src="{{post.captureFileURL}}"
-                                        style="height: auto; width: 100%; object-fit: cover; ">
+                                          style="height: auto; width: 100%; object-fit: cover; margin-right: auto; margin-left: auto; width: 50%; display: block; ">
 
                                     <div *ngIf="post.type == 'video'" style="position: relative;cursor: pointer;"
                                         (click)="openVerticallyCentered(content, post)" data-toggle="modal"
                                         data-target="#video-modal">
                                         <img *ngIf="post.type == 'video'" class="img-responsive" [src]=post.thumbnailURL
-                                            alt="Photo" style="margin: 0 auto; -webkit-filter: brightness(75%);
-                                            filter: brightness(75%); filter: blur(2px); width: 420px; object-fit: contain;
-                                            height: 360px; justify-content: center; display: block">
+                                            alt="Photo" style=" -webkit-filter: brightness(75%);
+                                            filter: brightness(75%); filter: blur(2px); display: block; margin-left: auto; margin-right: auto; width: 70%;
+                                            ">
                                         <h1 class="playBtn" style="backdrop-filter: blur(0px);"><i
                                                 class="far fa-play-circle icon-xl" aria-hidden="true"
                                                 style="font-size: 7.75rem !important; color: #fff;"></i>
