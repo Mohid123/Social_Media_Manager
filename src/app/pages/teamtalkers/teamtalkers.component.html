@@ -293,11 +293,13 @@
                                         </div>
 
                                         <label class="checkbox checkbox-sm checkbox-inline">
-                                            <input  name="list_name" value="m1" (click)="selectedSchedule()" type="checkbox" value="1"/>
-                                        
-                                            <span></span> 
-                                         <label  class="pl-5 pt-3  mb-2" style="color: #74788d; font-size: 14px; font-weight: 400; font-family: 'Poppins, sans-serif'; " >Schedule</label>
-                                         
+                                            <input name="list_name" value="m1" (click)="selectedSchedule()"
+                                                type="checkbox" value="1" />
+
+                                            <span></span>
+                                            <label class="pl-5 pt-3  mb-2"
+                                                style="color: #74788d; font-size: 14px; font-weight: 400; font-family: 'Poppins, sans-serif'; ">Schedule</label>
+
                                         </label>
 
                                         <form id="kt_forms_widget_2_form" class="pt-10 ql-quil ql-quil-plain">
@@ -307,7 +309,8 @@
                                             <!--end::Editor-->
                                             <div class="border-top my-5"></div>
                                             <!--begin::Toolbar-->
-                                            <div *ngIf="!showSchedule" id="kt_forms_widget_2_editor_toolbar" class="ql-toolbar d-flex align-items-center justify-content-between">
+                                            <div *ngIf="!showSchedule" id="kt_forms_widget_2_editor_toolbar"
+                                                class="ql-toolbar d-flex align-items-center justify-content-between">
 
                                                 <div class="d-flex">
 
@@ -343,7 +346,7 @@
                                                     </div>
 
                                                 </div>
-                                                 <div class="d-flex">
+                                                <div class="d-flex">
                                                     <div class="p-2">
 
                                                     </div>
@@ -364,123 +367,126 @@
 
                                             </div>
 
-                                            <div *ngIf="showSchedule" class="ql-toolbar align-items-center justify-content-between">
-                                                
-                                            <div class="row d-block">
-                                                <div class="col-md-6 d-inline-block">
-                                                    <div class="form-group">
-                                                        <label>Schedule Date</label>
-                                                        <input readonly style="background-color:white;"
-                                                            class="form-control" placeholder="Select Date"
-                                                            [ngxDatePicker]="dateInstanceSingle" [value]="singleDate"
-                                                            (valueChange)="onChangeSingle($event)">
-                                                        <ngx-date-picker #dateInstanceSingle
-                                                            [options]="singleDatePickerOptions"></ngx-date-picker>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6 d-inline-block">
-                                                    <div class="form-group">
-                                                        <label>Time </label>
-                                                        <input class="form-control" style="background-color:white;"
-                                                            readonly placeholder="Select Time"
-                                                            [ngxTimePicker]="timeInstanceOne" [value]="singleTime"
-                                                            (valueChange)="onChangeSingleTime($event)" required>
-                                                        <ngx-time-picker #timeInstanceOne
-                                                            [options]="singleTimePickerOptions"></ngx-time-picker>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            <div *ngIf="showSchedule"
+                                                class="ql-toolbar align-items-center justify-content-between">
 
-                                            <div class="row d-block">
-                                                <div id="kt_forms_widget_2_editor_toolbar"
-                                                class="ql-toolbar d-flex align-items-center justify-content-between">
-                                                 <div class="d-flex" *ngIf="showDiv.photo" >
-                                                     <div class="p-2">
-                                                        <div class="p-2">
-                                                            <div class="image-upload">
-                                                                <label for="file-input">
-    
-                                                                    <div class="btn btn-icon btn-light w-auto btn-clean d-inline-flex align-items-center btn-lg px-2 mr-5">
-                                                                        <span
-                                                                            class="symbol symbol-35 symbol-light-primary">
-                                                                            <span class="symbol-label"><a
-                                                                                    class="btn btn-icon btn-sm ">
-                                                                                    <i class="fas fa-upload icon-lg"
-                                                                                        style="cursor: pointer;"></i>
-                                                                                </a></span>
-                                                                        </span>
-                                                                        <span
-                                                                            class="btn text-dark-50 font-weight-normal font-size-base">
-                                                                            &nbsp;Select image</span>
-    
-                                                                    </div>
-                                                                </label>
-    
-                                                                <input id="file-input" type="file" accept="image/*"
-                                                                    name="myfile" (change)="onSelectFile($event)"
-                                                                    multiple />
-                                                            </div>
-    
+                                                <div class="row d-block">
+                                                    <div class="col-md-6 d-inline-block">
+                                                        <div class="form-group">
+                                                            <label>Schedule Date</label>
+                                                            <input readonly style="background-color:white;"
+                                                                class="form-control" placeholder="Select Date"
+                                                                [ngxDatePicker]="dateInstanceSingle"
+                                                                [value]="singleDate"
+                                                                (valueChange)="onChangeSingle($event)">
+                                                            <ngx-date-picker #dateInstanceSingle
+                                                                [options]="singleDatePickerOptions"></ngx-date-picker>
                                                         </div>
                                                     </div>
-    
+                                                    <div class="col-md-6 d-inline-block">
+                                                        <div class="form-group">
+                                                            <label>Time </label>
+                                                            <input class="form-control" style="background-color:white;"
+                                                                readonly placeholder="Select Time"
+                                                                [ngxTimePicker]="timeInstanceOne" [value]="singleTime"
+                                                                (valueChange)="onChangeSingleTime($event)" required>
+                                                            <ngx-time-picker #timeInstanceOne
+                                                                [options]="singleTimePickerOptions"></ngx-time-picker>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                                <div class="d-flex" *ngIf="showDiv.video">
-                                                    <div class="p-2">
-                                                        <div class="p-2">
-                                                            <div class="image-upload">
-                                                                <label for="file-input">
 
-                                                                    <div
-                                                                        class="btn btn-icon btn-light w-auto btn-clean d-inline-flex align-items-center btn-lg px-2 mr-5">
-                                                                        <span
-                                                                            class="symbol symbol-35 symbol-light-primary">
-                                                                            <span class="symbol-label"><a
-                                                                                    class="btn btn-icon btn-sm ">
-                                                                                    <i class="fas fa-video icon-lg"
-                                                                                        style="cursor: pointer;"></i>
-                                                                                </a></span>
-                                                                        </span>
-                                                                        <span
-                                                                            class="btn text-dark-50 font-weight-normal font-size-base">
-                                                                            &nbsp;select video</span>
+                                                <div class="row d-block">
+                                                    <div id="kt_forms_widget_2_editor_toolbar"
+                                                        class="ql-toolbar d-flex align-items-center justify-content-between">
+                                                        <div class="d-flex" *ngIf="showDiv.photo">
+                                                            <div class="p-2">
+                                                                <div class="p-2">
+                                                                    <div class="image-upload">
+                                                                        <label for="file-input">
 
+                                                                            <div
+                                                                                class="btn btn-icon btn-light w-auto btn-clean d-inline-flex align-items-center btn-lg px-2 mr-5">
+                                                                                <span
+                                                                                    class="symbol symbol-35 symbol-light-primary">
+                                                                                    <span class="symbol-label"><a
+                                                                                            class="btn btn-icon btn-sm ">
+                                                                                            <i class="fas fa-upload icon-lg"
+                                                                                                style="cursor: pointer;"></i>
+                                                                                        </a></span>
+                                                                                </span>
+                                                                                <span
+                                                                                    class="btn text-dark-50 font-weight-normal font-size-base">
+                                                                                    &nbsp;Select image</span>
+
+                                                                            </div>
+                                                                        </label>
+
+                                                                        <input id="file-input" type="file"
+                                                                            accept="image/*" name="myfile"
+                                                                            (change)="onSelectFile($event)" multiple />
                                                                     </div>
-                                                                </label>
 
-                                                                <input id="file-input" type="file" accept="video/*"
-                                                                    name="myfile" (change)="onSelectFile($event)"
-                                                                    multiple />
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="d-flex" *ngIf="showDiv.video">
+                                                            <div class="p-2">
+                                                                <div class="p-2">
+                                                                    <div class="image-upload">
+                                                                        <label for="file-input">
+
+                                                                            <div
+                                                                                class="btn btn-icon btn-light w-auto btn-clean d-inline-flex align-items-center btn-lg px-2 mr-5">
+                                                                                <span
+                                                                                    class="symbol symbol-35 symbol-light-primary">
+                                                                                    <span class="symbol-label"><a
+                                                                                            class="btn btn-icon btn-sm ">
+                                                                                            <i class="fas fa-video icon-lg"
+                                                                                                style="cursor: pointer;"></i>
+                                                                                        </a></span>
+                                                                                </span>
+                                                                                <span
+                                                                                    class="btn text-dark-50 font-weight-normal font-size-base">
+                                                                                    &nbsp;select video</span>
+
+                                                                            </div>
+                                                                        </label>
+
+                                                                        <input id="file-input" type="file"
+                                                                            accept="video/*" name="myfile"
+                                                                            (change)="onSelectFile($event)" multiple />
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+                                                            <div class="p-2">
+
+                                                            </div>
+                                                            <div class="ml-auto p-2"></div>
+                                                        </div>
+                                                        <div class="d-flex">
+                                                            <div class="p-2">
+
+                                                            </div>
+                                                            <div class="p-2">
+
+                                                            </div>
+                                                            <div class="ml-auto p-2 ">
+                                                                <button (click)="resetPost()" type="button"
+                                                                    class="btn btn-transparent-warning">Clear</button>
+                                                            </div>
+                                                            <div class="ml-auto p-2">
+                                                                <button (click)="addImagePost()" type="button"
+                                                                    class="btn btn-primary flex-row-reverse"
+                                                                    style="background-color: #3b5998; border-color: #3b5998;">Schedule</button>
                                                             </div>
                                                         </div>
 
-                                                    </div>
-                                                    <div class="p-2">
 
                                                     </div>
-                                                    <div class="ml-auto p-2"></div>
                                                 </div>
-                                                 <div class="d-flex">
-                                                    <div class="p-2">
-    
-                                                    </div>
-                                                    <div class="p-2">
-    
-                                                    </div>
-                                                    <div class="ml-auto p-2 ">
-                                                        <button (click)="resetPost()" type="button"
-                                                            class="btn btn-transparent-warning">Clear</button>
-                                                    </div>
-                                                    <div class="ml-auto p-2">
-                                                        <button (click)="addImagePost()" type="button"
-                                                            class="btn btn-primary flex-row-reverse"
-                                                            style="background-color: #3b5998; border-color: #3b5998;">Schedule</button>
-                                                    </div>
-                                                </div>
-    
-    
-                                            </div>
-                                            </div>
                                             </div>
 
                                         </form>
@@ -537,19 +543,21 @@
 
 
                                         <label class="checkbox checkbox-sm checkbox-inline">
-                                            <input  name="list_name" value="m1" (click)="selectedSchedule()" type="checkbox" value="1"/>
-                                        
-                                            <span></span> 
-                                         <label  class="pl-5 pt-3 mb-2" style="color: #74788d; font-size: 14px; font-weight: 400; font-family: 'Poppins, sans-serif'; " >Schedule</label>
-                                         
+                                            <input name="list_name" value="m1" (click)="selectedSchedule()"
+                                                type="checkbox" value="1" />
+
+                                            <span></span>
+                                            <label class="pl-5 pt-3 mb-2"
+                                                style="color: #74788d; font-size: 14px; font-weight: 400; font-family: 'Poppins, sans-serif'; ">Schedule</label>
+
                                         </label>
-                                      
+
                                         <form id="kt_forms_widget_2_form" class="pt-10 ql-quil ql-quil-plain">
 
-                                          
-                                            
+
+
                                             <div class="border-top my-5"></div>
-                                           
+
                                             <div id="kt_forms_widget_2_editor_toolbar"
                                                 class="ql-toolbar d-flex align-items-center justify-content-between"
                                                 *ngIf="!showSchedule">
@@ -601,20 +609,24 @@
                                                     </div>
                                                     <div class="ml-auto p-2">
                                                         <button (click)="addVideoPost()" type="button"
-                                                            class="btn btn-primary flex-row-reverse" style="background-color: #3b5998; border-color: #3b5998;">Post Now</button>
+                                                            class="btn btn-primary flex-row-reverse"
+                                                            style="background-color: #3b5998; border-color: #3b5998;">Post
+                                                            Now</button>
                                                     </div>
                                                 </div>
                                             </div>
-                                          
-                                            <div *ngIf="showSchedule" class="ql-toolbar align-items-center justify-content-between">
-                                                
+
+                                            <div *ngIf="showSchedule"
+                                                class="ql-toolbar align-items-center justify-content-between">
+
                                                 <div class="row d-block">
                                                     <div class="col-md-6 d-inline-block">
                                                         <div class="form-group">
                                                             <label>Schedule Date</label>
                                                             <input readonly style="background-color:white;"
                                                                 class="form-control" placeholder="Select Date"
-                                                                [ngxDatePicker]="dateInstanceSingle" [value]="singleDate"
+                                                                [ngxDatePicker]="dateInstanceSingle"
+                                                                [value]="singleDate"
                                                                 (valueChange)="onChangeSingle($event)">
                                                             <ngx-date-picker #dateInstanceSingle
                                                                 [options]="singleDatePickerOptions"></ngx-date-picker>
@@ -632,63 +644,64 @@
                                                         </div>
                                                     </div>
                                                 </div>
-    
+
                                                 <div class="row d-block">
                                                     <div id="kt_forms_widget_2_editor_toolbar"
-                                                    class="ql-toolbar d-flex align-items-center justify-content-between">
-                                                     <div class="d-flex">
-                                                         <div class="p-2">
+                                                        class="ql-toolbar d-flex align-items-center justify-content-between">
+                                                        <div class="d-flex">
                                                             <div class="p-2">
-                                                                <div class="image-upload">
-                                                                    <label for="file-input">
-        
-                                                                        <div class="btn btn-icon btn-light w-auto btn-clean d-inline-flex align-items-center btn-lg px-2 mr-5">
-                                                                            <span
-                                                                                class="symbol symbol-35 symbol-light-primary">
-                                                                                <span class="symbol-label"><a
-                                                                                        class="btn btn-icon btn-sm ">
-                                                                                        <i class="fas fa-upload icon-lg"
-                                                                                            style="cursor: pointer;"></i>
-                                                                                    </a></span>
-                                                                            </span>
-                                                                            <span
-                                                                                class="btn text-dark-50 font-weight-normal font-size-base">
-                                                                                &nbsp;Select video</span>
-        
-                                                                        </div>
-                                                                    </label>
-        
-                                                                    <input id="file-input" type="file" accept="image/*"
-                                                                        name="myfile" (change)="onSelectFile($event)"
-                                                                        multiple />
+                                                                <div class="p-2">
+                                                                    <div class="image-upload">
+                                                                        <label for="file-input">
+
+                                                                            <div
+                                                                                class="btn btn-icon btn-light w-auto btn-clean d-inline-flex align-items-center btn-lg px-2 mr-5">
+                                                                                <span
+                                                                                    class="symbol symbol-35 symbol-light-primary">
+                                                                                    <span class="symbol-label"><a
+                                                                                            class="btn btn-icon btn-sm ">
+                                                                                            <i class="fas fa-upload icon-lg"
+                                                                                                style="cursor: pointer;"></i>
+                                                                                        </a></span>
+                                                                                </span>
+                                                                                <span
+                                                                                    class="btn text-dark-50 font-weight-normal font-size-base">
+                                                                                    &nbsp;Select video</span>
+
+                                                                            </div>
+                                                                        </label>
+
+                                                                        <input id="file-input" type="file"
+                                                                            accept="image/*" name="myfile"
+                                                                            (change)="onSelectFile($event)" multiple />
+                                                                    </div>
+
                                                                 </div>
-        
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="d-flex">
+                                                            <div class="p-2">
+
+                                                            </div>
+                                                            <div class="p-2">
+
+                                                            </div>
+                                                            <div class="ml-auto p-2 ">
+                                                                <button (click)="resetPost()" type="button"
+                                                                    class="btn btn-transparent-warning">Clear</button>
+                                                            </div>
+                                                            <div class="ml-auto p-2">
+                                                                <button (click)="addVideoPost()" type="button"
+                                                                    class="btn btn-primary flex-row-reverse"
+                                                                    style="background-color: #3b5998; border-color: #3b5998;">Schedule</button>
                                                             </div>
                                                         </div>
-        
+
+
                                                     </div>
-                                                     <div class="d-flex">
-                                                        <div class="p-2">
-        
-                                                        </div>
-                                                        <div class="p-2">
-        
-                                                        </div>
-                                                        <div class="ml-auto p-2 ">
-                                                            <button (click)="resetPost()" type="button"
-                                                                class="btn btn-transparent-warning">Clear</button>
-                                                        </div>
-                                                        <div class="ml-auto p-2">
-                                                            <button (click)="addVideoPost()" type="button"
-                                                                class="btn btn-primary flex-row-reverse"
-                                                                style="background-color: #3b5998; border-color: #3b5998;">Schedule</button>
-                                                        </div>
-                                                    </div>
-        
-        
                                                 </div>
-                                                </div>
-                                         </div>
+                                            </div>
                                         </form>
 
 
@@ -738,11 +751,13 @@
                                                 placeholder="What’s on your mind, {{userName}}?"></textarea>
                                         </div>
                                         <label class="checkbox checkbox-sm checkbox-inline">
-                                            <input  name="list_name" value="m1" (click)="selectedSchedule()" type="checkbox" value="1"/>
-                                        
-                                            <span></span> 
-                                         <label  class="pl-5 pt-3 mb-2" style="color: #74788d; font-size: 14px; font-weight: 400; font-family: 'Poppins, sans-serif'; " >Schedule</label>
-                                         
+                                            <input name="list_name" value="m1" (click)="selectedSchedule()"
+                                                type="checkbox" value="1" />
+
+                                            <span></span>
+                                            <label class="pl-5 pt-3 mb-2"
+                                                style="color: #74788d; font-size: 14px; font-weight: 400; font-family: 'Poppins, sans-serif'; ">Schedule</label>
+
                                         </label>
                                         <form id="kt_forms_widget_2_form" class="pt-10 ql-quil ql-quil-plain">
 
@@ -781,7 +796,9 @@
                                                     </div>
                                                     <div class="ml-auto p-2">
                                                         <button (click)="addTextPost()" type="button"
-                                                            class="btn btn-primary flex-row-reverse" style="background-color: #3b5998; border-color: #3b5998;">Post Now</button>
+                                                            class="btn btn-primary flex-row-reverse"
+                                                            style="background-color: #3b5998; border-color: #3b5998;">Post
+                                                            Now</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -793,7 +810,8 @@
                                                             <label>Schedule Date</label>
                                                             <input readonly style="background-color:white;"
                                                                 class="form-control" placeholder="Select Date"
-                                                                [ngxDatePicker]="dateInstanceSingle" [value]="singleDate"
+                                                                [ngxDatePicker]="dateInstanceSingle"
+                                                                [value]="singleDate"
                                                                 (valueChange)="onChangeSingle($event)">
                                                             <ngx-date-picker #dateInstanceSingle
                                                                 [options]="singleDatePickerOptions"></ngx-date-picker>
@@ -812,14 +830,14 @@
                                                     </div>
                                                 </div>
                                                 <div class="row d-block mb-10">
-                                                    <div class="d-flex" >
+                                                    <div class="d-flex">
                                                         <div class="p-2">
                                                             <div class="p-2">
                                                                 <!-- <span class="btn btn-icon btn-sm btn-hover-icon-primary">
                                                                     <i class="flaticon2-clip-symbol icon-ms"></i>
                                                                 </span> -->
                                                             </div>
-    
+
                                                         </div>
                                                         <div class="p-2">
                                                             <div class="p-2">
@@ -832,10 +850,10 @@
                                                     </div>
                                                     <div class="d-flex" style="float: right;">
                                                         <div class="p-2">
-    
+
                                                         </div>
                                                         <div class="p-2">
-    
+
                                                         </div>
                                                         <div class="ml-auto p-2">
                                                             <button (click)="resetPost()" type="button"
@@ -843,11 +861,12 @@
                                                         </div>
                                                         <div class="ml-auto p-2">
                                                             <button (click)="addTextPost()" type="button"
-                                                                class="btn btn-primary flex-row-reverse" style="background-color: #3b5998; border-color: #3b5998;">Schedule</button>
+                                                                class="btn btn-primary flex-row-reverse"
+                                                                style="background-color: #3b5998; border-color: #3b5998;">Schedule</button>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                
+
                                             </div>
 
                                             <!--end::Toolbar-->
@@ -898,7 +917,7 @@
                                                 id="exampleTextarea" rows="3"
                                                 placeholder="What’s on your mind, {{userName}}?"></textarea>
                                         </div>
-                                       
+
                                         <div>
 
                                             <div class="form-group">
@@ -953,11 +972,13 @@
 
                                         </div>
                                         <label class="checkbox checkbox-sm checkbox-inline">
-                                            <input  class="d-inline" name="list_name" value="m1" (click)="selectedSchedule()" type="checkbox" value="1"/>
-                                        
-                                            <span></span> 
-                                         <label  class="pl-5 pt-3 mb-2" style="color: #74788d; font-size: 14px; font-weight: 400; font-family: 'Poppins, sans-serif'; " >Schedule</label>
-                                         
+                                            <input class="d-inline" name="list_name" value="m1"
+                                                (click)="selectedSchedule()" type="checkbox" value="1" />
+
+                                            <span></span>
+                                            <label class="pl-5 pt-3 mb-2"
+                                                style="color: #74788d; font-size: 14px; font-weight: 400; font-family: 'Poppins, sans-serif'; ">Schedule</label>
+
                                         </label>
 
                                         <form id="kt_forms_widget_2_form" class="pt-10 ql-quil ql-quil-plain">
@@ -966,88 +987,26 @@
                                             </div>
                                             <div class="border-top my-5"></div>
                                             <div *ngIf="!showSchedule" id="kt_forms_widget_2_editor_toolbar"
-                                            class="ql-toolbar d-flex align-items-center justify-content-between">
-                                            <div class="d-flex">
-                                                <div class="p-2">
-                                                    <div class="p-2">
-                                                        <!-- <span class="btn btn-icon btn-sm btn-hover-icon-primary">
-                                                            <i class="flaticon2-clip-symbol icon-ms"></i>
-                                                        </span> -->
-                                                    </div>
-
-                                                </div>
-                                                <div class="p-2">
-                                                    <div class="p-2">
-                                                        <!-- <span class="btn btn-icon btn-sm btn-hover-icon-primary">
-                                                            <i class="flaticon2-pin icon-ms"></i>
-                                                        </span> -->
-                                                    </div>
-                                                </div>
-                                                <div class="ml-auto p-2"></div>
-                                            </div>
-                                            <div class="d-flex">
-                                                <div class="p-2">
-
-                                                </div>
-                                                <div class="p-2">
-
-                                                </div>
-                                                <div class="ml-auto p-2">
-                                                    <button (click)="resetPost()" type="button"
-                                                        class="btn btn-transparent-warning">Clear</button>
-                                                </div>
-                                                <div class="ml-auto p-2">
-                                                    <button (click)="addTextPost()" type="button"
-                                                        class="btn btn-primary flex-row-reverse" style="background-color: #3b5998; border-color: #3b5998;">Post Now</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div *ngIf="showSchedule" id="kt_forms_widget_2_editor_toolbar"
-                                            class="ql-toolbar align-items-center justify-content-between">
-                                            <div class="row d-block">
-                                                <div class="col-md-6 d-inline-block">
-                                                    <div class="form-group">
-                                                        <label>Schedule Date</label>
-                                                        <input readonly style="background-color:white;"
-                                                            class="form-control" placeholder="Select Date"
-                                                            [ngxDatePicker]="dateInstanceSingle" [value]="singleDate"
-                                                            (valueChange)="onChangeSingle($event)">
-                                                        <ngx-date-picker #dateInstanceSingle
-                                                            [options]="singleDatePickerOptions"></ngx-date-picker>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6 d-inline-block">
-                                                    <div class="form-group">
-                                                        <label>Time </label>
-                                                        <input class="form-control" style="background-color:white;"
-                                                            readonly placeholder="Select Time"
-                                                            [ngxTimePicker]="timeInstanceOne" [value]="singleTime"
-                                                            (valueChange)="onChangeSingleTime($event)" required>
-                                                        <ngx-time-picker #timeInstanceOne
-                                                            [options]="singleTimePickerOptions"></ngx-time-picker>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row d-block mb-10">
-                                                <div class="d-flex" >
+                                                class="ql-toolbar d-flex align-items-center justify-content-between">
+                                                <div class="d-flex">
                                                     <div class="p-2">
                                                         <div class="p-2">
                                                             <!-- <span class="btn btn-icon btn-sm btn-hover-icon-primary">
-                                                                <i class="flaticon2-clip-symbol icon-ms"></i>
-                                                            </span> -->
+                                                            <i class="flaticon2-clip-symbol icon-ms"></i>
+                                                        </span> -->
                                                         </div>
 
                                                     </div>
                                                     <div class="p-2">
                                                         <div class="p-2">
                                                             <!-- <span class="btn btn-icon btn-sm btn-hover-icon-primary">
-                                                                <i class="flaticon2-pin icon-ms"></i>
-                                                            </span> -->
+                                                            <i class="flaticon2-pin icon-ms"></i>
+                                                        </span> -->
                                                         </div>
                                                     </div>
                                                     <div class="ml-auto p-2"></div>
                                                 </div>
-                                                <div class="d-flex" style="float: right;">
+                                                <div class="d-flex">
                                                     <div class="p-2">
 
                                                     </div>
@@ -1060,12 +1019,78 @@
                                                     </div>
                                                     <div class="ml-auto p-2">
                                                         <button (click)="addTextPost()" type="button"
-                                                            class="btn btn-primary flex-row-reverse" style="background-color: #3b5998; border-color: #3b5998;">Schedule</button>
+                                                            class="btn btn-primary flex-row-reverse"
+                                                            style="background-color: #3b5998; border-color: #3b5998;">Post
+                                                            Now</button>
                                                     </div>
                                                 </div>
                                             </div>
-                                            
-                                        </div>
+                                            <div *ngIf="showSchedule" id="kt_forms_widget_2_editor_toolbar"
+                                                class="ql-toolbar align-items-center justify-content-between">
+                                                <div class="row d-block">
+                                                    <div class="col-md-6 d-inline-block">
+                                                        <div class="form-group">
+                                                            <label>Schedule Date</label>
+                                                            <input readonly style="background-color:white;"
+                                                                class="form-control" placeholder="Select Date"
+                                                                [ngxDatePicker]="dateInstanceSingle"
+                                                                [value]="singleDate"
+                                                                (valueChange)="onChangeSingle($event)">
+                                                            <ngx-date-picker #dateInstanceSingle
+                                                                [options]="singleDatePickerOptions"></ngx-date-picker>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 d-inline-block">
+                                                        <div class="form-group">
+                                                            <label>Time </label>
+                                                            <input class="form-control" style="background-color:white;"
+                                                                readonly placeholder="Select Time"
+                                                                [ngxTimePicker]="timeInstanceOne" [value]="singleTime"
+                                                                (valueChange)="onChangeSingleTime($event)" required>
+                                                            <ngx-time-picker #timeInstanceOne
+                                                                [options]="singleTimePickerOptions"></ngx-time-picker>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row d-block mb-10">
+                                                    <div class="d-flex">
+                                                        <div class="p-2">
+                                                            <div class="p-2">
+                                                                <!-- <span class="btn btn-icon btn-sm btn-hover-icon-primary">
+                                                                <i class="flaticon2-clip-symbol icon-ms"></i>
+                                                            </span> -->
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="p-2">
+                                                            <div class="p-2">
+                                                                <!-- <span class="btn btn-icon btn-sm btn-hover-icon-primary">
+                                                                <i class="flaticon2-pin icon-ms"></i>
+                                                            </span> -->
+                                                            </div>
+                                                        </div>
+                                                        <div class="ml-auto p-2"></div>
+                                                    </div>
+                                                    <div class="d-flex" style="float: right;">
+                                                        <div class="p-2">
+
+                                                        </div>
+                                                        <div class="p-2">
+
+                                                        </div>
+                                                        <div class="ml-auto p-2">
+                                                            <button (click)="resetPost()" type="button"
+                                                                class="btn btn-transparent-warning">Clear</button>
+                                                        </div>
+                                                        <div class="ml-auto p-2">
+                                                            <button (click)="addTextPost()" type="button"
+                                                                class="btn btn-primary flex-row-reverse"
+                                                                style="background-color: #3b5998; border-color: #3b5998;">Schedule</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
 
                                         </form>
 
@@ -1136,7 +1161,8 @@
                                             <button class="btn" id="dropdownBasic1" ngbDropdownToggle><i
                                                     class="ki ki-bold-more-hor" style="color:black"></i></button>
                                             <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                                                <button (click)="openEditPostDaialog(editPostDialog , post)" ngbDropdownItem><i
+                                                <button (click)="openEditPostDaialog(editPostDialog , post)"
+                                                    ngbDropdownItem><i
                                                         class="fas fa-edit mr-2 text-dark"></i>Edit</button>
                                                 <button (click)="deletePost(post)" ngbDropdownItem><i
                                                         class="fas fa-trash-alt mr-2 text-dark"></i>Delete</button>
@@ -1172,13 +1198,15 @@
                                                         </span>
                                                     </div>
                                                 </div>
-                                                <div *ngIf="post.type == 'text'" >
-                                                    <textarea [(ngModel)]="editedPostText" style="height: 150px;" class="form-control form-control-xl form-control-solid"
-                                                    id="exampleTextarea" rows="3"
-                                                    placeholder="What’s on your mind, {{userName}}?">{{post.text}}</textarea>
+                                                <div *ngIf="post.type == 'text'" class="m-3">
+                                                    <textarea [(ngModel)]="editedPostText" style="height: 150px;"
+                                                        class="form-control form-control-xl form-control-solid "
+                                                        id="exampleTextarea" rows="3"
+                                                        placeholder="What’s on your mind, {{userName}}?">{{post.text}}</textarea>
                                                 </div>
 
-                                                <div *ngIf="post.type == 'image' || post.type == 'video'" class="preview-media" data-max-image="5" style="margin-top: -20px">
+                                                <div *ngIf="post.type == 'image' || post.type == 'video'"
+                                                    class="preview-media" data-max-image="5" style="margin-top: -20px; ">
                                                     <img *ngIf="post.type == 'image' && post.captureFileURL "
                                                         src="{{post.captureFileURL}}"
                                                         style="height: 100%; width: 100%; object-fit: cover; ">
@@ -1188,10 +1216,12 @@
                                                         style="height: 420px;" width="100%" controls autoplay
                                                         disablePictureInPicture oncanplay="this.play()"
                                                         (ended)="onVideoEnded()" controlsList="nodownload"></video>
-                                                 
+
                                                 </div>
-                                                <div *ngIf="post.type == 'image' || post.type == 'video'" class="form-group m-3">
-                                                    <textarea [(ngModel)]="editedPostText" style="height: 100px;" class="form-control form-control-lg form-control-solid"
+                                                <div *ngIf="post.type == 'image' || post.type == 'video'"
+                                                    class="form-group m-3">
+                                                    <textarea [(ngModel)]="editedPostText" style="height: 100px;"
+                                                        class="form-control form-control-lg form-control-solid"
                                                         id="exampleTextarea" rows="3"
                                                         placeholder="What’s on your mind, {{userName}}?">{{post.text}}</textarea>
                                                 </div>
@@ -1205,22 +1235,26 @@
 
                                                                         <div *ngFor="let reaction of post.reactions"
                                                                             class="symbol symbol-circle symbol-20 symbol-sm-2">
-                                                                            <img *ngIf="reaction.user.profilePicURL !== '' " alt="Pic"
+                                                                            <img *ngIf="reaction.user.profilePicURL !== '' "
+                                                                                alt="Pic"
                                                                                 src="{{reaction.user.profilePicURL}}" />
-                                                                                <img *ngIf="reaction.user.profilePicURL == '' " alt="Pic"
-                                                                                src="../../../assets/media/users/mockfbImage.png" />  
+                                                                            <img *ngIf="reaction.user.profilePicURL == '' "
+                                                                                alt="Pic"
+                                                                                src="../../../assets/media/users/mockfbImage.png" />
                                                                         </div>
-                                                                        <span class="symbol-label"> {{post.reactionCount}} Reactions</span>
+                                                                        <span class="symbol-label">
+                                                                            {{post.reactionCount}} Reactions</span>
                                                                     </div>
 
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="p-2 bd-highlight"> {{post.commentsCount}} comment</div>
+                                                        <div class="p-2 bd-highlight"> {{post.commentsCount}} comment
+                                                        </div>
                                                         <div class="p-2 bd-highlight"> {{ post.repostCount }}share</div>
                                                     </div>
                                                 </div>
-                                                <div class="preview-comment">
+                                                <!-- <div class="preview-comment">
                                                     <div class="row">
                                                         <div class="col-12 item">
                                                             <i class="far fa-heart mr-2" style="color: black;"></i>Like
@@ -1235,31 +1269,33 @@
                                                         <div class="col item">
                                                         </div>
                                                     </div>
-                                                </div>
+                                                </div> -->
                                             </div>
 
                                             <div class="modal-footer d-flex justify-content-center">
                                                 <button type="button" class="btn btn-primary"
-                                                    (click)="saveEditPost(post); c('Close click');"  style="background-color: #3b5998; border-color: #3b5998;">Post</button>
+                                                    (click)="saveEditPost(post); c('Close click');"
+                                                    style="background-color: #3b5998; border-color: #3b5998;">Update</button>
 
                                             </div>
                                         </ng-template>
                                     </div>
                                 </div>
 
-
+                                <!--RECENT POST VIEW-->
                                 <div *ngIf="post.type!=='text' && post.type!== 'hyperlink' " class="preview-media"
-                                    data-max-image="5" style="margin-top: -20px">
-                                    <img *ngIf="post.type == 'image'" src="{{post.captureFileURL}}"
-                                        style="height: auto; width: 100%; object-fit: cover; ">
+                                    data-max-image="5" style="margin-top: -20px;     background: #F3F6F9;">
+                                    <img *ngIf="post.type == 'image'" src="{{post.captureFileURL}}" style="display: block;
+                                        margin-left: auto;
+                                        margin-right: auto;
+                                        width: 50%; ">
 
                                     <div *ngIf="post.type == 'video'" style="position: relative;cursor: pointer;"
                                         (click)="openVerticallyCentered(content, post)" data-toggle="modal"
                                         data-target="#video-modal">
                                         <img *ngIf="post.type == 'video'" class="img-responsive" [src]=post.thumbnailURL
-                                            alt="Photo" style="margin: 0 auto; -webkit-filter: brightness(75%);
-                                            filter: brightness(75%); filter: blur(2px); width: 420px; object-fit: contain;
-                                            height: 360px; justify-content: center; display: block">
+                                            alt="Photo" style="-webkit-filter: brightness(75%);
+                                            filter: brightness(75%); filter: blur(2px);     filter: blur(2px);display: block; margin-left: auto; margin-right: auto; width: 70%;">
                                         <h1 class="playBtn" style="backdrop-filter: blur(0px);"><i
                                                 class="far fa-play-circle icon-xl" aria-hidden="true"
                                                 style="font-size: 7.75rem !important; color: #fff;"></i>
