@@ -399,3 +399,14 @@ label{
   cursor: pointer;
 }
 
+.ngx-date-picker-calendar-container {
+  background: #fff;
+  border: 1px solid #dfe3e9;
+  border-radius: 4px;
+  box-shadow: 0 10px 14px 10px rgb(0 0 0 / 8%);
+  max-width: 100vw;
+  position: relative !important;
+  width: 300px;
+  z-index: 100;
+  
+}
