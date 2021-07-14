@@ -1,6 +1,6 @@
 <ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "default" color = "#fff" type = "ball-spin" [fullScreen] = "true"><p style="color: white" > D I V I D I S </p></ngx-spinner>
 <div class="row">
-    <div class="col-lg-2">
+    <div class="col-lg-3">
         <!--begin::Card-->
         <div class="card card-custom card-stretch">
             <div class="card-header" style="background-color: #1e1e2d;">
@@ -109,7 +109,7 @@
 
 
 
-    <div class="col-lg-6">
+    <div class="col-lg-5">
         <!--begin::Card-->
         <div class="card card-custom card-stretch">
             <div class="card-header" style="background-color: #1e1e2d;">
@@ -158,7 +158,7 @@
                                         <div class="symbol symbol-50 symbol-light mr-5 pb-5" >
                                             <span class="symbol-label">
                                                 <img [src]="profileImageUrl"
-                                                    class="h-100 align-self-center rounded" style="object-fit: cover; width: 100%" alt="" />
+                                                    class="h-100 align-self-center rounded" style="height: 44px; width: 44px; object-fit: cover; width: 100%" alt="" />
                                             </span>
                                         </div>
                                       
@@ -177,13 +177,20 @@
                                       <div class="form-group">
                                         <textarea [(ngModel)]="instaCaption" [ngModelOptions]="{standalone: true}" class="form-control form-control-lg form-control-solid" id="exampleTextarea" rows="3" placeholder="What’s on your mind, {{userName}}?" ></textarea>
                                     </div>
+                                    <label class="checkbox checkbox-sm checkbox-inline">
+                                        <input  name="list_name" value="m1" (click)="selectedSchedule()" type="checkbox" value="1"/>
+                                    
+                                        <span></span> 
+                                     <label  class="pl-5 pt-3  mb-2" style="color: #74788d; font-size: 14px; font-weight: 400; font-family: 'Poppins, sans-serif'; " >Schedule</label>
+                                     
+                                    </label>
                                   
                                     <form id="kt_forms_widget_2_form" class="pt-10 ql-quil ql-quil-plain">
                                         
                                        
                                         <div class="border-top my-5"></div>
                                         <!--begin::Toolbar-->
-                                        <div id="kt_forms_widget_2_editor_toolbar"
+                                        <div *ngIf="!showSchedule" id="kt_forms_widget_2_editor_toolbar"
                                             class="ql-toolbar d-flex align-items-center justify-content-between">
                                             <div class="d-flex">
                                                 <div class="p-2">
@@ -223,6 +230,78 @@
                                                 </div>
                                               </div>
                                         </div>
+                                        <div *ngIf="showSchedule"id="kt_forms_widget_2_editor_toolbar"
+                                            class="ql-toolbar">
+
+                                            <div class="row d-block">
+                                                <div class="col-md-6 d-inline-block">
+                                                    <div class="form-group">
+                                                        <label>Schedule Date</label>
+                                                        <input readonly style="background-color:white;"
+                                                            class="form-control" placeholder="Select Date"
+                                                            [ngxDatePicker]="dateInstanceSingle" [value]="singleDate"
+                                                            (valueChange)="onChangeSingle($event)">
+                                                        <ngx-date-picker #dateInstanceSingle
+                                                            [options]="singleDatePickerOptions"></ngx-date-picker>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 d-inline-block">
+                                                    <div class="form-group">
+                                                        <label>Time </label>
+                                                        <input class="form-control" style="background-color:white;"
+                                                            readonly placeholder="Select Time"
+                                                            [ngxTimePicker]="timeInstanceOne" [value]="singleTime"
+                                                            (valueChange)="onChangeSingleTime($event)" required>
+                                                        <ngx-time-picker #timeInstanceOne
+                                                            [options]="singleTimePickerOptions"></ngx-time-picker>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row d-block">
+                                                <div class="d-flex" style="float: left; margin-bottom: 40px;">
+                                                    <div class="p-2">
+                                                        <div class="p-2">
+                                                            <div class="image-upload">
+                                                                <label for="file-input">
+                                                                    
+                                                                    <div class="btn btn-icon btn-light w-auto btn-clean d-inline-flex align-items-center btn-lg px-2 mr-5">
+                                                                        <span class="symbol symbol-35 symbol-light-primary">
+                                                                            <span class="symbol-label"><a  class="btn btn-icon btn-sm ">
+                                                                                <i class="fas fa-upload icon-lg" style="cursor: pointer;"></i>
+                                                                            </a></span>
+                                                                        </span>
+                                                                        <span class="btn text-dark-50 font-weight-normal font-size-base"> &nbsp;Select image</span>
+                                                                        
+                                                                    </div>
+                                                                </label>
+    
+                                                                <input id="file-input" accept="image/*" (change)="onSelectFile($event)" type="file" name="myfile" multiple/> 
+                                                            </div>
+                                                   </div>
+                                                      
+                                                    </div>
+                                                  
+                                                   
+                                                  </div>
+                                                <div class="d-flex" style="float: right; margin-top: 10px;">
+                                                   
+                                        
+                                                    <div class="ml-auto p-2">
+                                                        <button (click) = "clear()" type="button"
+                                                            class="btn btn-transparent-warning">Clear</button>
+                                                    </div>
+                                                    <div class="ml-auto p-2">
+                                                        <button (click) = "addImagePost()" type="button" 
+                                                        class="btn btn-primary flex-row-reverse" style="background-color: #3b5998; border-color: #3b5998;">Schedule</button>
+                                                    </div>
+                                                  </div>
+                                            </div>
+
+                                           
+
+                                            
+                                        </div>
                                         <!--end::Toolbar-->
                                     </form>
 
@@ -243,7 +322,7 @@
                         </mat-icon>&nbsp; &nbsp;Video
                         
                       </ng-template>
-                      <div class="card-body">
+                      <div class="card card-body">
                         <div class="tab-content">
                             <div class="tab-pane fade show active" role="tabpanel"
                                 aria-labelledby="kt_tab_pane_7_1">
@@ -267,6 +346,14 @@
                                     <div class="form-group">
                                         <textarea [(ngModel)]="instaCaption" [ngModelOptions]="{standalone: true}" class="form-control form-control-lg form-control-solid" id="exampleTextarea" rows="3" placeholder="What’s on your mind, {{userName}}?" ></textarea>
                                     </div>
+
+                                    <label class="checkbox checkbox-sm checkbox-inline">
+                                        <input  name="list_name" value="m1" (click)="selectedSchedule()" type="checkbox" value="1"/>
+                                    
+                                        <span></span> 
+                                     <label  class="pl-5 pt-3  mb-2" style="color: #74788d; font-size: 14px; font-weight: 400; font-family: 'Poppins, sans-serif'; " >Schedule</label>
+                                     
+                                    </label>
                                     <!--end::Top-->
                                     <!--begin::Form-->
                                     <form id="kt_forms_widget_2_form" class="pt-10 ql-quil ql-quil-plain">
@@ -277,7 +364,7 @@
                                         <!--end::Editor-->
                                         <div class="border-top my-5"></div>
                                         <!--begin::Toolbar-->
-                                        <div id="kt_forms_widget_2_editor_toolbar"
+                                        <div *ngIf="!showSchedule" id="kt_forms_widget_2_editor_toolbar"
                                             class="ql-toolbar d-flex align-items-center justify-content-between">
                                             <div class="d-flex">
                                                 <div class="p-2">
@@ -325,6 +412,73 @@
                                                 </div>
                                               </div>
                                         </div>
+                                        <div *ngIf="showSchedule"id="kt_forms_widget_2_editor_toolbar"
+                                            class="ql-toolbar ">
+                                            <div class="row d-block">
+                                                <div class="col-md-6 d-inline-block">
+                                                    <div class="form-group">
+                                                        <label>Schedule Date</label>
+                                                        <input readonly style="background-color:white;"
+                                                            class="form-control" placeholder="Select Date"
+                                                            [ngxDatePicker]="dateInstanceSingle" [value]="singleDate"
+                                                            (valueChange)="onChangeSingle($event)">
+                                                        <ngx-date-picker #dateInstanceSingle
+                                                            [options]="singleDatePickerOptions"></ngx-date-picker>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 d-inline-block">
+                                                    <div class="form-group">
+                                                        <label>Time </label>
+                                                        <input class="form-control" style="background-color:white;"
+                                                            readonly placeholder="Select Time"
+                                                            [ngxTimePicker]="timeInstanceOne" [value]="singleTime"
+                                                            (valueChange)="onChangeSingleTime($event)" required>
+                                                        <ngx-time-picker #timeInstanceOne
+                                                            [options]="singleTimePickerOptions"></ngx-time-picker>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row d-block">
+                                                <div class="d-flex" style="float: left; margin-bottom: 40px;">
+                                                    <div class="p-2">
+                                                        <div class="p-2">
+                                                            <div class="image-upload">
+                                                                <label for="file-input">
+                                                                    
+                                                                    <div class="btn btn-icon btn-light w-auto btn-clean d-inline-flex align-items-center btn-lg px-2 mr-5">
+                                                                        <span class="symbol symbol-35 symbol-light-primary">
+                                                                            <span class="symbol-label"><a  class="btn btn-icon btn-sm ">
+                                                                                <i class="fas fa-upload icon-lg" style="cursor: pointer;"></i>
+                                                                            </a></span>
+                                                                        </span>
+                                                                        <span class="btn text-dark-50 font-weight-normal font-size-base"> &nbsp;Select Video</span>
+                                                                        
+                                                                    </div>
+                                                                </label>
+    
+                                                                <input id="file-input" accept="video/*" (change)="onSelectFile($event)" type="file" name="myfile" multiple/> 
+                                                            </div>
+                                                   </div>
+                                                      
+                                                    </div>
+                                                  
+                                                   
+                                                  </div>
+                                                <div class="d-flex" style="float: right; margin-top: 10px;">
+                                                   
+                                        
+                                                    <div class="ml-auto p-2">
+                                                        <button (click) = "clear()" type="button"
+                                                            class="btn btn-transparent-warning">Clear</button>
+                                                    </div>
+                                                    <div class="ml-auto p-2">
+                                                        <button (click) = "addVideoPost()" type="button" 
+                                                        class="btn btn-primary flex-row-reverse" style="background-color: #3b5998; border-color: #3b5998;">Schedule</button>
+                                                    </div>
+                                                  </div>
+                                            </div>
+                                        </div>
                                         <!--end::Toolbar-->
                                     </form>
 
@@ -338,14 +492,23 @@
                  
                   </mat-tab-group>
                   <div>
-                    <div class="card-header ribbon ribbon-right" style="box-shadow: rgb(99 99 99 / 20%) 0px 2px 8px 0px;">
-                     <div class="ribbon-target bg-primary" style="top: 10px; right: -2px;">Recent posts</div>
-                     <h3 class="card-title">
+                    <div class="card-header ribbon ribbon-right" style="box-shadow: rgb(99 99 99 / 20%) 0px 2px 8px 0px; border-radius: 7px; border-top: 5px solid #F14D5A">
+                     <div class="ribbon-target" style="top: 10px; right: -2px; background-color: #F14D5A;">Recent posts</div>
+                     <!-- <h3 class="card-title">
                         <img src="../../../assets/media/logos/instagram.png">
-                     </h3>
+                     </h3> -->
+                     <h1 class="card-title " style=" background-color: rgba(255, 255, 255, 0.95);
+                        border-radius: 5px;
+                        color: #F14D5A; width: fit-content;
+                        padding: 1rem 2rem;  -webkit-backdrop-filter: blur(10px);
+                        backdrop-filter: blur(10px);
+                        background-color: #F3F6F9 ">
+                            <!-- <img class="rounded" style="height: auto; width: 44px; " [src]="clubLogo" alt=""> -->
+                           Instagram
+                        </h1>
                     </div>
                     <div  class="card-body">
-                        <div *ngFor="let post of recentPosts" class="rounded m-12" style="box-shadow: rgb(99 99 99 / 20%) 0px 2px 8px 0px;">
+                        <div *ngFor="let post of recentPosts" class="rounded m-6" style="box-shadow: rgb(99 99 99 / 20%) 0px 2px 8px 0px;">
                             <div  class="preview-instagram preview-instagram-photo item-post-type" data-type="phot" >
                                 <div class="preview-content">
                                       <!-- <div class="user-info">
@@ -354,12 +517,12 @@
                                       </div> -->
 
 
-                                      <div class="row pt-5">
+                                      <div class="row">
                                         <div class="col">
                                             <div class="user-info d-inline-block">
-                                                <img class="img-circle" style="height: 44px; object-fit: cover; border-radius: 30px;"
+                                                <img class="img-circle" style="height: 44px; width: 44px; object-fit: cover; border-radius: 50px;"
                                                     [src]="profileImageUrl">
-                                                    <span>{{userName}}</span>
+                                                    <span> <b>{{userName}}</b></span>
                                                
                                             </div>
                                         </div>
@@ -375,9 +538,75 @@
                                     </div>
                                       <div class="preview-media" data-max-image="1">
                         
-                                        <img *ngIf="post.media_type == 'IMAGE' && post.media_url" style="height: 100%; width: 100%; object-fit: cover;" class="img-circle" src="{{post.media_url}}" >
-                                        <video *ngIf="post.media_type == 'VIDEO' && post.media_url" src="{{post.media_url}}" style="height: 100%; width: 100%; object-fit: cover;"  controls disablepictureinpicture  controlsList="nodownload"></video>
+                                        <img *ngIf="post.media_type == 'IMAGE' && post.media_url" style="object-fit: cover;
+                                        margin-right: auto;
+                                        margin-left: auto;
+                                        width: 50%; height: 100%;
+                                        display: block;" class="img-circle" src="{{post.media_url}}" >
+                                        <video *ngIf="post.media_type == 'VIDEO' && post.media_url" src="{{post.media_url}}" style="object-fit: cover;
+                                        margin-right: auto;
+                                        margin-left: auto;
+                                        width: 70%; height: 100%; -webkit-filter: brightness(75%);
+                                            filter: brightness(75%); filter: blur(2px);
+                                        display: block;"   
+                                                        disablePictureInPicture 
+                                                        (ended)="onVideoEnded()" data-toggle="modal"
+                                        data-target="#content"></video>
+                                         <h1 *ngIf="post.media_type == 'VIDEO' && post.media_url" class="playBtn" style="backdrop-filter: blur(0px);"><i
+                                            class="far fa-play-circle icon-xl" aria-hidden="true"  (click)="openVerticallyCentered(content, post)" 
+                                            style="font-size: 7.75rem !important; color: #fff;"></i>
+                                    </h1>
                                     </div>
+                                    <!-- <div  class="preview-media"
+                                    data-max-image="5" style=" background: #F3F6F9;" >
+                       
+                                    <img *ngIf="post.media_type == 'IMAGE' && post.media_url" src="{{post.media_url}}"
+                                    style="object-fit: cover;
+                                    margin-right: auto;
+                                    margin-left: auto;
+                                    width: 50%; height: 100%;
+                                    display: block;" class="img-circle">
+
+                                    <div *ngIf="post.media_type == 'VIDEO' && post.media_url" style="cursor: pointer;"
+                                        (click)="openVerticallyCentered(content, post)" data-toggle="modal"
+                                        data-target="#">
+                                        <img *ngIf="post.type == 'video'" class="img-responsive" src="{{post.media_url}}"
+                                            alt="Photo" style=" -webkit-filter: brightness(75%); 
+                                            filter: brightness(75%); filter: blur(2px); display: block; margin-left: auto; margin-right: auto; width: 70%;
+                                            ">
+                                        <h1 class="playBtn" style="backdrop-filter: blur(0px);"><i
+                                                class="far fa-play-circle icon-xl" aria-hidden="true"
+                                                style="font-size: 7.75rem !important; color: #fff;"></i>
+                                        </h1>
+                                    </div>
+                                </div> -->
+
+
+                                <div class="example-preview ">
+                                    <div>
+                                        <ng-template #content let-c="close" let-d="dismiss">
+                                            <div class="modal-header d-flex justify-content-center"
+                                                style="background-color: #1e1e2d; border-bottom: none;">
+                                                <h4 class="modal-title" style="color: #fff;">Video</h4>
+                                                <button type="button" class="close" aria-label="Close"
+                                                    (click)="d('Cross click')">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body d-flex justify-content-center" style="padding: 0px;">
+                                                <video id="clubVideo"src="{{post.media_url}}" style="height: 420px;"
+                                                    width="100%" controls autoplay disablePictureInPicture
+                                                    oncanplay="this.play()" (ended)="onVideoEnded()"
+                                                    controlsList="nodownload"></video>
+                                            </div>
+                                            <div class="modal-footer d-flex justify-content-center">
+                                                <button type="button" class="btn btn-secondary"
+                                                    (click)="c('Close click')">Close</button>
+
+                                            </div>
+                                        </ng-template>
+                                    </div>
+                                </div>
                                     
                                       <div class="preview-comment-upper">
                                           <div class="row">
@@ -469,8 +698,8 @@
                                         <div class="preview-instagram preview-instagram-photo item-post-type" data-type="phot" *ngIf="showDiv.photo">
                                           <div class="preview-content">
                                                 <div class="user-info">
-                                                    <img class="img-circle" [src]="profileImageUrl">
-                                                    <span>{{userName}}</span>
+                                                    <img class="img-circle" [src]="profileImageUrl" style="width: 44px; height: 44px; object-fit: cover; border-radius: 50px;">
+                                                    <span><b>{{userName}}</b></span>
                                                 </div>
                                                 <div class="preview-media" data-max-image="1"><img logo #logo  (load)="onSelectedImageLoad()" style="height: 100%; width: 100%; object-fit: cover;" class="img-circle" [src]= url *ngIf="format==='image' && url"></div>
                                                 <div class="post-info">
@@ -525,8 +754,8 @@
                                         <div class="preview-instagram preview-instagram-photo item-post-type" data-type="video" *ngIf="showDiv.video">
                                           <div class="preview-content">
                                                 <div class="user-info">
-                                                    <img class="img-circle" [src]="profileImageUrl">
-                                                    <span>{{userName}}</span>
+                                                    <img class="img-circle" [src]="profileImageUrl" style="width: 44px; height: 44px; object-fit: cover; border-radius: 50px;">
+                                                    <span><strong>{{userName}}</strong></span>
                                                 </div>
                                                 <div class="preview-media" data-max-image="1"><video [src]="url" *ngIf="format==='video' && url" style="height: 100%; width: 100%; object-fit: cover;"  controls disablepictureinpicture  controlsList="nodownload"></video></div>
                                                 <div class="post-info">

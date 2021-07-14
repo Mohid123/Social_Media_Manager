@@ -9,6 +9,9 @@ import { User } from 'src/app/core/models/user.model';
 import { ToastrService } from 'ngx-toastr';
 import { publish, take, map } from 'rxjs/operators';
 import * as moment from 'moment';
+import { DatePickerOptions } from "@ngx-tiny/date-picker";
+import { TimePickerOptions } from "@ngx-tiny/time-picker/ngx-time-picker.options";
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-instagram',
@@ -36,14 +39,27 @@ export class InstagramComponent implements OnInit {
     photo: true,
     video: false,
   }
+  public showSchedule: boolean = false;
+  closeResult: string;
   public recentPosts : any = [];
   public inValidImageFormat: boolean;
+  singleDate: Date = new Date(new Date().setDate(new Date().getDate() + 1));
+  singleTime: Date = new Date(new Date().setDate(new Date().getDate() + 1));
+  singleDatePickerOptions: DatePickerOptions = {
+    minDate: new Date(new Date().setDate(new Date().getDate() - 1)), // Minimum is selecting a week ago
+    maxDate: new Date(new Date().setDate(new Date().getDate() + 7)), // Maximum date is selecting today
+  };
+  singleTimePickerOptions: TimePickerOptions = {
+    military: true,
+  };
   constructor(private spinner: NgxSpinnerService, private cf: ChangeDetectorRef,
     private _authService: MainAuthService,
     private _instagramService: InstagramService,
     private _mediaUploadService: MediauploadService,
     private _reportService: ReportService,
-    private toast: ToastrService) { this.report = new Report() }
+    private modalService: NgbModal,
+    private toast: ToastrService) { this.report = new Report()
+     }
 
   
   ngOnInit() {
@@ -58,10 +74,40 @@ export class InstagramComponent implements OnInit {
     this.file = ""
     this.cf.detectChanges()
   }
+  onChangeSingle(value: Date) {
+   
+  }
+  onChangeSingleTime(value: Date) {
+    
+  }
+
+  openVerticallyCentered(content, post) {
+    // this.playingVideo = post.captureFileURL;
+    this.modalService.open(content, { centered: true }).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+  }
+
+
+
+
+  getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return `with: ${reason}`;
+    }
+  }
+
 
   onSelectedImageLoad() {
     const width = (this.logo.nativeElement as HTMLImageElement).naturalWidth
     const height = (this.logo.nativeElement as HTMLImageElement).naturalHeight
+    
     let gcd = this.calculateAspectRatio(width, height);
     const ratio = width / gcd + ':' + height / gcd;
     this.validAspectRatios.includes(ratio) ? this.inValidImageFormat = false : this.inValidImageFormat = true;
@@ -71,7 +117,9 @@ export class InstagramComponent implements OnInit {
     return (b == 0) ? a : this.calculateAspectRatio(b, a % b);
   }
 
-
+  selectedSchedule() {
+    this.showSchedule = !this.showSchedule
+  }
 
 
   getSignedInUser() {
@@ -105,6 +153,7 @@ export class InstagramComponent implements OnInit {
       item.timestamp = moment(item.timestamp).fromNow()
     })
     this.recentPosts = publishedPosts.data;
+    console.log(this.recentPosts)
     this.cf.detectChanges();
   })
   }
@@ -154,8 +203,11 @@ export class InstagramComponent implements OnInit {
     }
   }
 
-
+  onVideoEnded() {
+    this.modalService.dismissAll()
+  }
   addVideoPost() {
+    debugger;
     if (!this.file) {
       this.toast.error('Please select an Video File', 'Empty File');
       return;
@@ -168,10 +220,13 @@ export class InstagramComponent implements OnInit {
     this._mediaUploadService.uploadMedia('InstagramTest', '123', this.file).subscribe((media: any) => {
       this.checkedList.forEach(item => {
         this._instagramService.createIgContainerForVideo(item.instagram_business_account.id, media.url, this.instaCaption, item.linkedFbPagetoken).subscribe((container: any) => {
+          console.log(container , 'container')
           let interval = setInterval(() => {
             this._instagramService.getContainerStatus(container.id, item.linkedFbPagetoken).subscribe((data: any) => {
+              console.log(data , 'status')
               if (data.status_code == "FINISHED") {
                 this._instagramService.publishContent(item.instagram_business_account.id, container.id, item.linkedFbPagetoken).subscribe((data: any) => {
+
                   clearInterval(interval)
                   this.postedSuccessfully()
                   this.toast.success('Published', 'Video Post Added');
@@ -193,6 +248,7 @@ export class InstagramComponent implements OnInit {
           }, 3000)
 
         }, (error) => {
+          debugger;
           this.spinner.hide();
           this.toast.error(error.message)
         })
@@ -206,7 +262,6 @@ export class InstagramComponent implements OnInit {
   }
 
   addImagePost() {
-    ;
     if (!this.file) {
       this.toast.error('Please select an Image File', 'Empty File');
       return;

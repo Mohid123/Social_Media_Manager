@@ -43,6 +43,7 @@ import { MomentPipe } from '../core/pipes/datetransform.pipe';
 import { Error5Component } from '../modules/errors/error5/error5.component';
 import { CommingSoonFbComponent } from './comming-soon-fb/comming-soon-fb.component';
 import { ComingSoonIgComponent } from './coming-soon-ig/coming-soon-ig.component';
+import { AdvertisementComponent } from './advertisement/advertisement.component';
 
 
 
@@ -72,7 +73,8 @@ import { ComingSoonIgComponent } from './coming-soon-ig/coming-soon-ig.component
     Error5Component,
     MomentPipe,
     CommingSoonFbComponent,
-    ComingSoonIgComponent
+    ComingSoonIgComponent,
+    AdvertisementComponent
 
   
   ],

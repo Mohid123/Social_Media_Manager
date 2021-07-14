@@ -30,9 +30,25 @@ export class AsideComponent implements OnInit {
   asideSelfMinimizeToggle = false;
   selectedClub: Club
   closeResult: string;
+  socialFlag: boolean = false;
   constructor(private layout: LayoutService, private loc: Location, private _authService: MainAuthService, private modalService: NgbModal, private router: Router) { }
 
+
   ngOnInit(): void {
+    this.setProp();
+    this.set_socialFlag_after_getting_club()
+  }
+
+  logout() {
+    this._authService.logoutSignedInUser()
+  }
+
+  set_socialFlag_after_getting_club(){
+    this.selectedClub = JSON.parse(localStorage.getItem('selectedClub')) as Club;
+    this.selectedClub.clubName == "Solis Solution" && this.selectedClub.id == "60db0c52723416289b31f1d9" ? this.socialFlag = true : this.socialFlag = false;
+  }
+
+  setProp() {
     this.disableAsideSelfDisplay =
       this.layout.getProp('aside.self.display') === false;
     this.brandSkin = this.layout.getProp('brand.self.theme');
@@ -47,11 +63,6 @@ export class AsideComponent implements OnInit {
     );
     this.asideMenuScroll = this.layout.getProp('aside.menu.scroll') ? 1 : 0;
     this.location = this.loc;
-    this.selectedClub = JSON.parse(localStorage.getItem('selectedClub')) as Club;
-  }
-
-  logout() {
-    this._authService.logoutSignedInUser()
   }
 
   openVerticallyCentered(content) {

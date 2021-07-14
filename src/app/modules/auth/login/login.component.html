@@ -69,7 +69,7 @@
                 </h3> 
               </div>
             </div>
-             <div class="row row-cols-1 row-cols-md-4 g-4" id="items">
+             <div class="row row-cols-1 row-cols-md-4 g-4" id="items" >
                <div class="col" *ngFor="let club of allClubs" id="items">
                 <div class="card resp-card"  (click)="onClubSelected(club) ; c('Close click') ; " >
                   <img src="{{club.logoURL}} " 

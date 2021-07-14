@@ -58,5 +58,12 @@ export const DynamicAsideMenuConfig = {
       page: '/builder',
       svg: './assets/media/svg/icons/Home/Library.svg'
     },
+    {
+      title: 'Advertisement',
+      root: true,
+      icon: 'flaticon2-expand',
+      page: '/builder',
+      svg: './assets/media/svg/icons/Home/Library.svg'
+    },
   ]
 };
