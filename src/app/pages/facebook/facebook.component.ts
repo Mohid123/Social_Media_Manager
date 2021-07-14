@@ -132,6 +132,7 @@ export class FacebookComponent implements OnInit {
     let callsList = []
     this._authService.getSignedInUser().subscribe(user => {
       this.signedInUser = user;
+      console.log(this.signedInUser)
       for(let i = 0 ; i <= user.FBPages.length-1 ; i++){
         ;
         this._facebookService.getPublishedPostsOnFBPages(user.FBPages[i].pageID, user.FBPages[i].pageAccessToken).subscribe((postObjects: any) => {
@@ -140,16 +141,11 @@ export class FacebookComponent implements OnInit {
             if (idx == self.length - 1) {
               combineLatest(callsList).subscribe(facebookPosts => {
                 facebookPosts.map((singleItem:any)=>{
-                  // if(singleItem.){
-                  //   singleItem.videUrl = singleItem.attachments.data[0].media.source;
-                  // }
                   singleItem.created_time = moment(singleItem.created_time).fromNow()
                   singleItem.pageName = user.FBPages[i].pageName
                 })
-
                 this.recentFBposts = facebookPosts
                 this.cf.detectChanges();
-                // console.log(this.recentFBposts)
               })
             }
           });
@@ -211,6 +207,7 @@ export class FacebookComponent implements OnInit {
   }
 
   addImagePost() {
+    debugger;
     if (!this.file) {
       this.toast.error('Please select an Image File', 'Empty File');
       return;
@@ -222,6 +219,7 @@ export class FacebookComponent implements OnInit {
     this.spinner.show()
     this._mediaUploadService.uploadMedia('Facebook', this.signedInUser.id, this.file).subscribe((media: any) => {
       this.checkedList.forEach((item, index, array) => {
+        console.log(item)
         this._reportService.createReport(2, "", 'Facebook')
         this._facebookService.addImagePostToFB(item.pageID, media.url, this.facebookCaption, item.pageAccessToken).subscribe(FbPost => {
           this._reportService.createReport(1, FbPost.id, 'Facebook')

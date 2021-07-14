@@ -84,10 +84,7 @@ export class TeamtalkersComponent implements OnInit {
     private cf: ChangeDetectorRef,
     private toast: ToastrService,
     private _postService: PostService,
-    private _mediaUploadService: MediauploadService,
-    private _authService: MainAuthService,
-    private _videoService: VideoProcessingService,
-    private _reportService: ReportService,
+    private _authService: MainAuthService,   
     private _clubService: ClubService,
     private modalService: NgbModal,
     private _genericPostService: ClubpostService
@@ -104,17 +101,9 @@ export class TeamtalkersComponent implements OnInit {
     this.initializeChecklist()
     this.getCheckedItemList();
     this.getLatestClubPosts();
-    // this.getDominantColorForImage();
   }
 
-  // getDominantColorForImage(){
-  //   let imgPath = 'https://socialapi.solissol.com/api/v1/en/media-upload/mediaFiles/test/123/9a4a30c392d3cb38f827ae9345105f11e.jpg'
-  //   color(imgPath, function(err, color){
-  //     // hex color by default
-  //     console.log(color , 'Background-Color-hex') // '5b6c6e'
-  //   })
 
-  // }
 
   openVerticallyCentered(content, post) {
     this.playingVideo = post.captureFileURL;
@@ -124,8 +113,6 @@ export class TeamtalkersComponent implements OnInit {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
     });
   }
-
-
 
 
   getDismissReason(reason: any): string {
@@ -195,10 +182,10 @@ export class TeamtalkersComponent implements OnInit {
   }
 
   onChangeSingle(value: Date) {
-    this.pollSelectedDate = value;
+    // console.log(value)
   }
   onChangeSingleTime(value: Date) {
-    this.pollSelectedTime = value;
+    // console.log(value)
   }
 
   onVideoEnded() {
@@ -437,32 +424,42 @@ export class TeamtalkersComponent implements OnInit {
   }
 
   switchTabs(event) {
+    debugger;
     if (event.index == 0) {
       this.showDiv.photo = true;
       this.showDiv.video = false;
       this.showDiv.text = false;
       this.showDiv.poll = false;
-      this.showSchedule = false;
-
+      this.showSchedule = this.showSchedule;
+      this.cf.detectChanges()
     } else if (event.index == 1) {
       this.showDiv.photo = false;
       this.showDiv.video = true;
       this.showDiv.text = false;
       this.showDiv.poll = false;
-      this.showSchedule = false;
+      this.showSchedule = this.showSchedule;
+      this.cf.detectChanges()
+
+      // this.showSchedule = false;
     } else if (event.index == 2) {
       this.showDiv.photo = false;
       this.showDiv.video = false;
       this.showDiv.text = true;
       this.showDiv.poll = false;
-      this.showSchedule = false;
+      this.showSchedule = this.showSchedule;
+      this.cf.detectChanges()
+
+      // this.showSchedule = false;
 
     } else {
       this.showDiv.photo = false;
       this.showDiv.video = false;
       this.showDiv.text = false;
       this.showDiv.poll = true;
-      this.showSchedule = false;
+      this.showSchedule = this.showSchedule;
+      this.cf.detectChanges()
+
+      // this.showSchedule = false;
 
     }
   }
@@ -479,12 +476,7 @@ export class TeamtalkersComponent implements OnInit {
       }
       reader.onload = (event) => {
         this.url = (<FileReader>event.target).result as string;
-        console.log(this.url)
-        this._videoService.get_average_rgb(this.url).then(data => {
-          console.log(data, 'rgb')
-        })
-       
-
+        // console.log(this.url)
         this.cf.detectChanges();
       };
       event.target.value = "";
@@ -544,6 +536,39 @@ export class TeamtalkersComponent implements OnInit {
     }
   }
 
+  schedulePost(postType) {
+    let selectedClubGroups = [];
+    let selectedClubEvents = [];
+    let selectedClub = []
+
+    if (postType == 'image' && !this.file) {
+      this.toast.error("Please select a Media File", "Empty File");
+      return;
+    }
+    else if (postType == 'video' && !this.file) {
+      this.toast.error("Please select a Media File", "Empty File");
+      return;
+    }
+    else if (postType == 'text' && this.teamtalkerCaption.trim().length == 0) {
+      this.toast.error("Please add Textto post", "Empty File");
+      return;
+    }
+
+    else if (this.checkedList.length == 0) {
+      this.toast.error('Please select atleast one Item from (Club, Group or Event)');
+      return;
+    }
+
+    this.checkedList.filter((item) => {
+      if (item.hasOwnProperty("groupName")) {
+        selectedClubGroups.push(item);
+      } else if (item.hasOwnProperty("eventName")) {
+        selectedClubEvents.push(item);
+      } else if (item.hasOwnProperty("clubName")) {
+        selectedClub.push(item)
+      }
+    });
+  }
 
 
   addPollPost() {

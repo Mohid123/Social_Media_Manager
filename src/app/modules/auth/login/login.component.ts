@@ -35,11 +35,12 @@ export class LoginComponent implements OnInit {
   isLoading$: Observable<boolean>;
   allClubs: Club[]
   tempClubs: Club[]
-  selectedClub: Club
+  selectedClub: any
   searchString: string
   searchStarted: boolean = false;
   noClubFound: boolean = false;
   public defaultClub: Club
+  public userClub
   private unsubscribe: Subscription[] = [];
 
   constructor(
@@ -88,7 +89,17 @@ export class LoginComponent implements OnInit {
     });
   }
 
+  updateUserClub(club){
+    this._clubService.updateClub(club).subscribe(data=>{
+      console.log(data)
+    })
+  }
+  // getUserClub(){
+  //   this.userClub = localStorage.getItem('selectedClub')
+  // }
+
   loginByEmail() {
+    var self = this;
     if (!this.selectedClub) {
       this.toastr.error('Please Select Club', 'Empty Club')
       return;
@@ -111,12 +122,16 @@ export class LoginComponent implements OnInit {
         this.spinner.hide();
         this.toastr.success('Login Success', 'Logged In Successfully');
         this.router.navigateByUrl('/pages/dashboard');
-        user.loggedInUser.userClubProfile.clubEmail = user.user.email;
-        user.loggedInUser.userClubProfile.clubUsername = user.user.fullName;
-        user.loggedInUser.userClubProfile.clubProfileImageUrl = user.user.profilePicURL; 
+        this.selectedClub.userClubProfile.clubEmail = user.user.email;
+        this.selectedClub.userClubProfile.clubUsername = user.user.fullName;
+        this.selectedClub.userClubProfile.clubProfileImageUrl = user.user.profilePicURL
+        this.updateUserClub(this.selectedClub)
+        // user.loggedInUser.userClubProfile.clubEmail = user.user.email;
+        // user.loggedInUser.userClubProfile.clubUsername = user.user.fullName;
+        // user.loggedInUser.userClubProfile.clubProfileImageUrl = user.user.profilePicURL; 
 
-        this._userService.updateUser(user.loggedInUser).subscribe(data=>{
-        });
+        // this._userService.updateUser(user.loggedInUser).subscribe(data=>{
+        // });
       }
       else {
         this.spinner.hide();

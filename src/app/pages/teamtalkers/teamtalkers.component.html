@@ -291,14 +291,14 @@
                                                 id="exampleTextarea" rows="3"
                                                 placeholder="What’s on your mind, {{userName}}?"></textarea>
                                         </div>
-
+<!-- 
                                         <label class="checkbox checkbox-sm checkbox-inline">
-                                            <input  name="list_name" value="m1" (click)="selectedSchedule()" type="checkbox" value="1"/>
-                                        
+                                            <input [(ngModel)]="showSchedule" name="list_name" value="m1" (click)="selectedSchedule()" type="checkbox" value="1"/>
+                                    
                                             <span></span> 
                                          <label  class="pl-5 pt-3  mb-2" style="color: #74788d; font-size: 14px; font-weight: 400; font-family: 'Poppins, sans-serif'; " >Schedule</label>
                                          
-                                        </label>
+                                        </label> -->
 
                                         <form id="kt_forms_widget_2_form" class="pt-10 ql-quil ql-quil-plain">
 
@@ -472,7 +472,7 @@
                                                             class="btn btn-transparent-warning">Clear</button>
                                                     </div>
                                                     <div class="ml-auto p-2">
-                                                        <button (click)="addImagePost()" type="button"
+                                                        <button (click)="schedulePost('image')" type="button"
                                                             class="btn btn-primary flex-row-reverse"
                                                             style="background-color: #3b5998; border-color: #3b5998;">Schedule</button>
                                                     </div>
@@ -536,14 +536,14 @@
                                         </div>
 
 
-                                        <label class="checkbox checkbox-sm checkbox-inline">
+                                        <!-- <label class="checkbox checkbox-sm checkbox-inline">
                                             <input  name="list_name" value="m1" (click)="selectedSchedule()" type="checkbox" value="1"/>
                                         
                                             <span></span> 
                                          <label  class="pl-5 pt-3 mb-2" style="color: #74788d; font-size: 14px; font-weight: 400; font-family: 'Poppins, sans-serif'; " >Schedule</label>
                                          
                                         </label>
-                                      
+                                       -->
                                         <form id="kt_forms_widget_2_form" class="pt-10 ql-quil ql-quil-plain">
 
                                           
@@ -679,7 +679,7 @@
                                                                 class="btn btn-transparent-warning">Clear</button>
                                                         </div>
                                                         <div class="ml-auto p-2">
-                                                            <button (click)="addVideoPost()" type="button"
+                                                            <button (click)="schedulePost('video')" type="button"
                                                                 class="btn btn-primary flex-row-reverse"
                                                                 style="background-color: #3b5998; border-color: #3b5998;">Schedule</button>
                                                         </div>
@@ -737,13 +737,13 @@
                                                 id="exampleTextarea" rows="3"
                                                 placeholder="What’s on your mind, {{userName}}?"></textarea>
                                         </div>
-                                        <label class="checkbox checkbox-sm checkbox-inline">
+                                        <!-- <label class="checkbox checkbox-sm checkbox-inline">
                                             <input  name="list_name" value="m1" (click)="selectedSchedule()" type="checkbox" value="1"/>
                                         
                                             <span></span> 
                                          <label  class="pl-5 pt-3 mb-2" style="color: #74788d; font-size: 14px; font-weight: 400; font-family: 'Poppins, sans-serif'; " >Schedule</label>
                                          
-                                        </label>
+                                        </label> -->
                                         <form id="kt_forms_widget_2_form" class="pt-10 ql-quil ql-quil-plain">
 
                                             <div class="border-top my-5"></div>
@@ -842,7 +842,7 @@
                                                                 class="btn btn-transparent-warning">Clear</button>
                                                         </div>
                                                         <div class="ml-auto p-2">
-                                                            <button (click)="addTextPost()" type="button"
+                                                            <button (click)="schedulePost('text')" type="button"
                                                                 class="btn btn-primary flex-row-reverse" style="background-color: #3b5998; border-color: #3b5998;">Schedule</button>
                                                         </div>
                                                     </div>
@@ -952,13 +952,13 @@
                                             </div>
 
                                         </div>
-                                        <label class="checkbox checkbox-sm checkbox-inline">
+                                        <!-- <label class="checkbox checkbox-sm checkbox-inline">
                                             <input  class="d-inline" name="list_name" value="m1" (click)="selectedSchedule()" type="checkbox" value="1"/>
                                         
                                             <span></span> 
                                          <label  class="pl-5 pt-3 mb-2" style="color: #74788d; font-size: 14px; font-weight: 400; font-family: 'Poppins, sans-serif'; " >Schedule</label>
                                          
-                                        </label>
+                                        </label> -->
 
                                         <form id="kt_forms_widget_2_form" class="pt-10 ql-quil ql-quil-plain">
 
@@ -1059,7 +1059,7 @@
                                                             class="btn btn-transparent-warning">Clear</button>
                                                     </div>
                                                     <div class="ml-auto p-2">
-                                                        <button (click)="addTextPost()" type="button"
+                                                        <button (click)="schedulePost('poll')" type="button"
                                                             class="btn btn-primary flex-row-reverse" style="background-color: #3b5998; border-color: #3b5998;">Schedule</button>
                                                     </div>
                                                 </div>
