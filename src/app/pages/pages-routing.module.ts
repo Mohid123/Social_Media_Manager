@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { Error5Component } from '../modules/errors/error5/error5.component';
 import { AccountManagerComponent } from './account-manager/account-manager.component';
+import { AdvertisementComponent } from './advertisement/advertisement.component';
 import { ComingSoonIgComponent } from './coming-soon-ig/coming-soon-ig.component';
 import { CommingSoonFbComponent } from './comming-soon-fb/comming-soon-fb.component';
 import { FacebookComponent } from './facebook/facebook.component';
@@ -51,6 +52,10 @@ const routes: Routes = [
       {
         path: 'error', 
         component: Error5Component
+      },
+      {
+        path: 'advertisement', 
+        component: AdvertisementComponent
       },
       {
         path: 'dashboard',
