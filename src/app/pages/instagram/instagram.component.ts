@@ -157,6 +157,7 @@ export class InstagramComponent implements OnInit {
 
 
   addVideoPost() {
+    debugger;
     if (!this.file) {
       this.toast.error('Please select an Video File', 'Empty File');
       return;
@@ -169,10 +170,13 @@ export class InstagramComponent implements OnInit {
     this._mediaUploadService.uploadMedia('InstagramTest', '123', this.file).subscribe((media: any) => {
       this.checkedList.forEach(item => {
         this._instagramService.createIgContainerForVideo(item.instagram_business_account.id, media.url, this.instaCaption, item.linkedFbPagetoken).subscribe((container: any) => {
+          console.log(container , 'container')
           let interval = setInterval(() => {
             this._instagramService.getContainerStatus(container.id, item.linkedFbPagetoken).subscribe((data: any) => {
+              console.log(data , 'status')
               if (data.status_code == "FINISHED") {
                 this._instagramService.publishContent(item.instagram_business_account.id, container.id, item.linkedFbPagetoken).subscribe((data: any) => {
+
                   clearInterval(interval)
                   this.postedSuccessfully()
                   this.toast.success('Published', 'Video Post Added');
@@ -194,6 +198,7 @@ export class InstagramComponent implements OnInit {
           }, 3000)
 
         }, (error) => {
+          debugger;
           this.spinner.hide();
           this.toast.error(error.message)
         })

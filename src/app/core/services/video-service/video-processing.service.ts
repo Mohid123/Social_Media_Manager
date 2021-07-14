@@ -67,7 +67,7 @@ export class VideoProcessingService {
         img.src = src;
       }
       context.imageSmoothingEnabled = true;
-      context.drawImage(img, 0, 0, 1, 1);
+      context.drawImage(img, 0, 0, 100, 100);
       let imageData = context.getImageData(0, 0, 1, 1).data.slice(0, 3);
       resolve(imageData);
     })
@@ -86,6 +86,7 @@ export class VideoProcessingService {
       let length;
       let rgb = { r: 0, g: 0, b: 0 };
       let count = 0;
+      console.log(typeof imgEl);
       if (typeof imgEl == 'string') {
         var src = imgEl;
         imgEl = new Image;
@@ -103,7 +104,7 @@ export class VideoProcessingService {
 
       context.imageSmoothingEnabled = true;
       
-      context.drawImage(imgEl, 0, 0, 1, 1);
+      context.drawImage(imgEl, 0, 0, 20, 12);
 
       try {
         data = context.getImageData(0, 0, width, height);
@@ -115,6 +116,7 @@ export class VideoProcessingService {
       length = data.data.length;
 
       while ((i += blockSize * 4) < length) {
+
         ++count;
         rgb.r += data.data[i];
         rgb.g += data.data[i + 1];

@@ -480,7 +480,7 @@ export class TeamtalkersComponent implements OnInit {
       reader.onload = (event) => {
         this.url = (<FileReader>event.target).result as string;
         console.log(this.url)
-        this._videoService.getAverageRGB(this.url).then(data => {
+        this._videoService.get_average_rgb(this.url).then(data => {
           console.log(data, 'rgb')
         })
        
