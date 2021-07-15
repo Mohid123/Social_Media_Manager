@@ -536,28 +536,55 @@ export class TeamtalkersComponent implements OnInit {
     }
   }
 
-  schedulePost(postType) {
+  scheduleTextPost(postType) {
     let selectedClubGroups = [];
     let selectedClubEvents = [];
     let selectedClub = []
 
-    if (postType == 'image' && !this.file) {
-      this.toast.error("Please select a Media File", "Empty File");
-      return;
-    }
-    else if (postType == 'video' && !this.file) {
-      this.toast.error("Please select a Media File", "Empty File");
-      return;
-    }
-    else if (postType == 'text' && this.teamtalkerCaption.trim().length == 0) {
-      this.toast.error("Please add Textto post", "Empty File");
-      return;
-    }
+    this.checkedList.filter((item) => {
+      if (item.hasOwnProperty("groupName")) {
+        selectedClubGroups.push(item);
+      } else if (item.hasOwnProperty("eventName")) {
+        selectedClubEvents.push(item);
+      } else if (item.hasOwnProperty("clubName")) {
+        selectedClub.push(item)
+      }
+    });
+  }
+  scheduleImagePost(postType) {
+    let selectedClubGroups = [];
+    let selectedClubEvents = [];
+    let selectedClub = []
 
-    else if (this.checkedList.length == 0) {
-      this.toast.error('Please select atleast one Item from (Club, Group or Event)');
-      return;
-    }
+    this.checkedList.filter((item) => {
+      if (item.hasOwnProperty("groupName")) {
+        selectedClubGroups.push(item);
+      } else if (item.hasOwnProperty("eventName")) {
+        selectedClubEvents.push(item);
+      } else if (item.hasOwnProperty("clubName")) {
+        selectedClub.push(item)
+      }
+    });
+  }
+  scheduleVideoPost(postType) {
+    let selectedClubGroups = [];
+    let selectedClubEvents = [];
+    let selectedClub = []
+
+    this.checkedList.filter((item) => {
+      if (item.hasOwnProperty("groupName")) {
+        selectedClubGroups.push(item);
+      } else if (item.hasOwnProperty("eventName")) {
+        selectedClubEvents.push(item);
+      } else if (item.hasOwnProperty("clubName")) {
+        selectedClub.push(item)
+      }
+    });
+  }
+  schedulePollPost(postType) {
+    let selectedClubGroups = [];
+    let selectedClubEvents = [];
+    let selectedClub = []
 
     this.checkedList.filter((item) => {
       if (item.hasOwnProperty("groupName")) {
