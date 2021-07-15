@@ -178,7 +178,7 @@
                                         <textarea [(ngModel)]="instaCaption" [ngModelOptions]="{standalone: true}" class="form-control form-control-lg form-control-solid" id="exampleTextarea" rows="3" placeholder="What’s on your mind, {{userName}}?" ></textarea>
                                     </div>
                                     <label class="checkbox checkbox-sm checkbox-inline">
-                                        <input  name="list_name" value="m1" (click)="selectedSchedule()" type="checkbox" value="1"/>
+                                        <input  [(ngModel)]="showSchedule" name="list_name" value="m1" (click)="selectedSchedule()" type="checkbox" value="1"/>
                                     
                                         <span></span> 
                                         <div class="btn btn-icon btn-light w-auto btn-clean d-inline-flex align-items-center btn-lg px-2 mr-5 ml-2">
@@ -357,7 +357,7 @@
                                     </div>
 
                                     <label class="checkbox checkbox-sm checkbox-inline">
-                                        <input  name="list_name" value="m1" (click)="selectedSchedule()" type="checkbox" value="1"/>
+                                        <input [(ngModel)]="showSchedule"  name="list_name" value="m1" (click)="selectedSchedule()" type="checkbox" value="1"/>
                                     
                                         <span></span> 
                                         <div class="btn btn-icon btn-light w-auto btn-clean d-inline-flex align-items-center btn-lg px-2 mr-5 ml-2">

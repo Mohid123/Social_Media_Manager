@@ -91,12 +91,10 @@ export class LoginComponent implements OnInit {
 
   updateUserClub(club){
     this._clubService.updateClub(club).subscribe(data=>{
-      console.log(data)
+      // console.log(data)
     })
   }
-  // getUserClub(){
-  //   this.userClub = localStorage.getItem('selectedClub')
-  // }
+
 
   loginByEmail() {
     var self = this;

@@ -241,6 +241,7 @@ export class FacebookComponent implements OnInit {
         console.log(item)
         this._reportService.createReport(2, "", 'Facebook')
         this._facebookService.addImagePostToFB(item.pageID, media.url, this.facebookCaption, item.pageAccessToken).subscribe(FbPost => {
+          console.log(FbPost , 'post')
           this._reportService.createReport(1, FbPost.id, 'Facebook')
           if (index == array.length - 1) {
             this.toast.success('Post added to Facebook Pages', 'Success')

@@ -545,7 +545,7 @@
 
 
                                         <label class="checkbox checkbox-sm checkbox-inline">
-                                            <input  name="list_name" value="m1" (click)="selectedSchedule()" type="checkbox" value="1"/>
+                                            <input [(ngModel)]="showSchedule"  name="list_name" value="m1" (click)="selectedSchedule()" type="checkbox" value="1"/>
                                         
                                             <span></span> 
                                             <div class="btn btn-icon btn-light w-auto btn-clean d-inline-flex align-items-center btn-lg px-2 mr-5 ml-2">
@@ -755,7 +755,7 @@
                                                 placeholder="What’s on your mind, {{userName}}?"></textarea>
                                         </div>
                                         <label class="checkbox checkbox-sm checkbox-inline">
-                                            <input  name="list_name" value="m1" (click)="selectedSchedule()" type="checkbox" value="1"/>
+                                            <input [(ngModel)]="showSchedule" name="list_name" value="m1" (click)="selectedSchedule()" type="checkbox" value="1"/>
                                         
                                             <span></span> 
                                             <div class="btn btn-icon btn-light w-auto btn-clean d-inline-flex align-items-center btn-lg px-2 mr-5 ml-2">
@@ -979,7 +979,7 @@
 
                                         </div>
                                         <label class="checkbox checkbox-sm checkbox-inline">
-                                            <input  class="d-inline" name="list_name" value="m1" (click)="selectedSchedule()" type="checkbox" value="1"/>
+                                            <input [(ngModel)]="showSchedule"  class="d-inline" name="list_name" value="m1" (click)="selectedSchedule()" type="checkbox" value="1"/>
                                         
                                             <span></span> 
                                             <div class="btn btn-icon btn-light w-auto btn-clean d-inline-flex align-items-center btn-lg px-2 mr-5 ml-2">
@@ -1121,15 +1121,15 @@
                         <div name="fieldName" ngDefaultControl [(ngModel)]="clubPrimaryColor"
                             [ngStyle]="{'background-color': clubPrimaryColor}" class="ribbon-target"
                             style="top: 10px; right: -2px;">Recent posts</div>
-                        <h1 class="card-title text-dark" style=" background-color: rgba(255, 255, 255, 0.95);
-                        border-radius: 5px;
-                        color: #333; width: fit-content;
-                        padding: 1rem 2rem;  -webkit-backdrop-filter: blur(10px);
-                        backdrop-filter: blur(10px);
-                        background-color: #F3F6F9 ">
-                            <!-- <img class="rounded" style="height: auto; width: 44px; " [src]="clubLogo" alt=""> -->
-                            {{clubName}}
-                        </h1>
+                            <h1 class="card-title" style=" background-color: rgba(255, 255, 255, 0.95);
+                            border-radius: 5px;
+                            width: fit-content;
+                            padding: 1rem 2rem;  -webkit-backdrop-filter: blur(10px);
+                            backdrop-filter: blur(10px);
+                            background-color: #F3F6F9 " [ngStyle]="{'color': clubPrimaryColor}" [(ngModel)]="clubPrimaryColor">
+                                <!-- <img class="rounded" style="height: auto; width: 44px; " [src]="clubLogo" alt=""> -->
+                                {{clubName}}
+                            </h1>
 
                     </div>
 
