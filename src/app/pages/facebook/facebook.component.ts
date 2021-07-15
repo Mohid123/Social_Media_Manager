@@ -9,6 +9,8 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { NgxSpinnerService } from "ngx-spinner";
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { User } from 'src/app/core/models/user.model';
+import { DatePickerOptions } from "@ngx-tiny/date-picker";
+import { TimePickerOptions } from "@ngx-tiny/time-picker/ngx-time-picker.options";
 import { combineLatest } from 'rxjs';
 import * as moment from 'moment';
 @Component({
@@ -25,7 +27,7 @@ export class FacebookComponent implements OnInit {
     private _reportService: ReportService) {
     this.report = new Report()
   }
-
+  public showSchedule: boolean = false;
   public facebookCaption: string = "";
   public format: string;
   public url: string;
@@ -48,6 +50,15 @@ export class FacebookComponent implements OnInit {
     text: false
   }
   public recentFBposts: any = [];
+  singleDate: Date = new Date(new Date().setDate(new Date().getDate() + 1));
+  singleTime: Date = new Date(new Date().setDate(new Date().getDate() + 1));
+  singleDatePickerOptions: DatePickerOptions = {
+    minDate: new Date(new Date().setDate(new Date().getDate() - 1)), // Minimum is selecting a week ago
+    maxDate: new Date(new Date().setDate(new Date().getDate() + 7)), // Maximum date is selecting today
+  };
+  singleTimePickerOptions: TimePickerOptions = {
+    military: true,
+  };
   ngOnInit() {
     this.showSpinner();
     this.getSignedInUser();
@@ -55,7 +66,15 @@ export class FacebookComponent implements OnInit {
   }
 
 
-
+  selectedSchedule() {
+    this.showSchedule = !this.showSchedule
+  }
+  onChangeSingle(value: Date) {
+    // console.log(value)
+  }
+  onChangeSingleTime(value: Date) {
+    // console.log(value)
+  }
 
   clear() {
     this.url = '';
