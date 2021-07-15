@@ -79,30 +79,36 @@ export class DashboardComponent implements OnInit {
       series: [
         {
           name: "Facebook",
-          data: this.facebookStatistics
+          data: this.facebookStatistics,
+          color: "#3b5998"
 
         },
         {
           name: "Instagram",
-          data: this.instagramStatistics
+          data: this.instagramStatistics,
+          color: "#D62976"
         },
         {
           name: "Club",
-          data: this.clubStatistics
+          data: this.clubStatistics,
+          color: "#FBAD50"
         }
       ],
-
+      
       chart: {
         height: 400,
         type: "line"
       },
       dataLabels: {
-        enabled: false
+        enabled: false,
+        
       },
       stroke: {
         width: 5,
-        curve: "straight",
-        dashArray: [0, 8, 5]
+        curve: "smooth",
+        dashArray: [0, 8, 9],
+        
+        colors: ['#3b5998', '#D62976', '#FBAD50', '#FBAD50', '#FBAD50']
       },
       title: {
         text: "Page Statistics",
@@ -127,6 +133,7 @@ export class DashboardComponent implements OnInit {
       xaxis: {
         labels: {
           trim: false
+        
         },
         categories: [
           new Date(new Date().setDate(new Date().getDate() - 7)).getDate() + ' ' + new Date(new Date().setDate(new Date().getDate() - 7)).toLocaleString('default', { month: 'short' }),
