@@ -377,11 +377,11 @@
                                             <div class="row d-block" >
                                                 <div class="col-md-6 d-inline-block">
                                                     <div class="form-group">
-                                                        <label>Schedule Date</label>
+                                                        <label>Schedule Date </label>
                                                         <input readonly style="background-color:white;"
                                                             class="form-control" placeholder="Select Date"
                                                             [ngxDatePicker]="dateInstanceSingle" [value]="singleDate"
-                                                            (valueChange)="onChangeSingle($event)">
+                                                            (valueChange)="onChangeScheduleDate($event)">
                                                         <ngx-date-picker #dateInstanceSingle
                                                             [options]="singleDatePickerOptions"></ngx-date-picker>
                                                     </div>
@@ -392,7 +392,7 @@
                                                         <input class="form-control" style="background-color:white;"
                                                             readonly placeholder="Select Time"
                                                             [ngxTimePicker]="timeInstanceOne" [value]="singleTime"
-                                                            (valueChange)="onChangeSingleTime($event)" required>
+                                                            (valueChange)="onChangeScheduleTime($event)" required>
                                                         <ngx-time-picker #timeInstanceOne
                                                             [options]="singleTimePickerOptions"></ngx-time-picker>
                                                     </div>
@@ -632,7 +632,7 @@
                                                             <input readonly style="background-color:white;"
                                                                 class="form-control" placeholder="Select Date"
                                                                 [ngxDatePicker]="dateInstanceSingle" [value]="singleDate"
-                                                                (valueChange)="onChangeSingle($event)">
+                                                                (valueChange)="onChangeScheduleDate($event)">
                                                             <ngx-date-picker #dateInstanceSingle
                                                                 [options]="singleDatePickerOptions"></ngx-date-picker>
                                                         </div>
@@ -643,7 +643,7 @@
                                                             <input class="form-control" style="background-color:white;"
                                                                 readonly placeholder="Select Time"
                                                                 [ngxTimePicker]="timeInstanceOne" [value]="singleTime"
-                                                                (valueChange)="onChangeSingleTime($event)" required>
+                                                                (valueChange)="onChangeScheduleTime($event)" required>
                                                             <ngx-time-picker #timeInstanceOne
                                                                 [options]="singleTimePickerOptions"></ngx-time-picker>
                                                         </div>
@@ -820,7 +820,7 @@
                                                             <input readonly style="background-color:white;"
                                                                 class="form-control" placeholder="Select Date"
                                                                 [ngxDatePicker]="dateInstanceSingle" [value]="singleDate"
-                                                                (valueChange)="onChangeSingle($event)">
+                                                                (valueChange)="onChangeScheduleDate($event)">
                                                             <ngx-date-picker #dateInstanceSingle
                                                                 [options]="singleDatePickerOptions"></ngx-date-picker>
                                                         </div>
@@ -831,7 +831,7 @@
                                                             <input class="form-control" style="background-color:white;"
                                                                 readonly placeholder="Select Time"
                                                                 [ngxTimePicker]="timeInstanceOne" [value]="singleTime"
-                                                                (valueChange)="onChangeSingleTime($event)" required>
+                                                                (valueChange)="onChangeScheduleTime($event)" required>
                                                             <ngx-time-picker #timeInstanceOne
                                                                 [options]="singleTimePickerOptions"></ngx-time-picker>
                                                         </div>
@@ -1046,7 +1046,7 @@
                                                         <input readonly style="background-color:white;"
                                                             class="form-control" placeholder="Select Date"
                                                             [ngxDatePicker]="dateInstanceSingle" [value]="singleDate"
-                                                            (valueChange)="onChangeSingle($event)">
+                                                            (valueChange)="onChangeScheduleDate($event)">
                                                         <ngx-date-picker #dateInstanceSingle
                                                             [options]="singleDatePickerOptions"></ngx-date-picker>
                                                     </div>
@@ -1057,7 +1057,7 @@
                                                         <input class="form-control" style="background-color:white;"
                                                             readonly placeholder="Select Time"
                                                             [ngxTimePicker]="timeInstanceOne" [value]="singleTime"
-                                                            (valueChange)="onChangeSingleTime($event)" required>
+                                                            (valueChange)="onChangeScheduleTime($event)" required>
                                                         <ngx-time-picker #timeInstanceOne
                                                             [options]="singleTimePickerOptions"></ngx-time-picker>
                                                     </div>
@@ -1126,7 +1126,7 @@
                             width: fit-content;
                             padding: 1rem 2rem;  -webkit-backdrop-filter: blur(10px);
                             backdrop-filter: blur(10px);
-                            background-color: #F3F6F9 " [ngStyle]="{'color': clubPrimaryColor}" [(ngModel)]="clubPrimaryColor">
+                            background-color: #F3F6F9 " [ngStyle]="{'color': clubPrimaryColor}" >
                                 <!-- <img class="rounded" style="height: auto; width: 44px; " [src]="clubLogo" alt=""> -->
                                 {{clubName}}
                             </h1>

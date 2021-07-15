@@ -63,13 +63,15 @@ export class TeamtalkersComponent implements OnInit {
     text: false,
     poll: false,
   };
+  scheduleSelectedDate: any;
+  scheduleSelectedTime: Date;
   public clubPrimaryColor: string;
   closeResult: string;
   pollSelectedDate: Date;
   pollSelectedTime: Date;
   datetimelocalObject: any;
   public show: boolean = false;
-  singleDate: Date = new Date(new Date().setDate(new Date().getDate() + 1));
+  singleDate: Date = new Date(new Date().setDate(new Date().getDate()));
   singleTime: Date = new Date(new Date().setDate(new Date().getDate() + 1));
   singleDatePickerOptions: DatePickerOptions = {
     minDate: new Date(new Date().setDate(new Date().getDate() - 1)), // Minimum is selecting a week ago
@@ -84,7 +86,7 @@ export class TeamtalkersComponent implements OnInit {
     private cf: ChangeDetectorRef,
     private toast: ToastrService,
     private _postService: PostService,
-    private _authService: MainAuthService,   
+    private _authService: MainAuthService,
     private _clubService: ClubService,
     private modalService: NgbModal,
     private _genericPostService: ClubpostService
@@ -182,10 +184,18 @@ export class TeamtalkersComponent implements OnInit {
   }
 
   onChangeSingle(value: Date) {
-    // console.log(value)
+    this.pollSelectedDate = value;
   }
   onChangeSingleTime(value: Date) {
-    // console.log(value)
+    this.pollSelectedTime = value
+  }
+
+  onChangeScheduleDate(value: Date) {
+    this.scheduleSelectedDate = value;
+  }
+
+  onChangeScheduleTime(value: Date) {
+    this.scheduleSelectedTime = value
   }
 
   onVideoEnded() {
@@ -442,7 +452,7 @@ export class TeamtalkersComponent implements OnInit {
       this.showDiv.video = false;
       this.showDiv.text = true;
       this.showDiv.poll = false;
-  
+
       this.cf.detectChanges()
 
 
@@ -548,17 +558,19 @@ export class TeamtalkersComponent implements OnInit {
 
 
   scheduleImagePost(postType) {
+    debugger;
     let selectedClubGroups = [];
     let selectedClubEvents = [];
     let selectedClub = []
+    let currentDate  = new Date()
 
-    if (!this.file) {
-      this.toast.error("Please Select Image File to post", "No File Selected");
-      return;
-    } else if (this.checkedList.length == 0) {
-      this.toast.error('Please select atleast one Item from (Club, Group or Event)');
-      return;
-    }
+    // if (!this.file) {
+    //   this.toast.error("Please Select Image File to post", "No File Selected");
+    //   return;
+    // } else if (this.checkedList.length == 0) {
+    //   this.toast.error('Please select atleast one Item from (Club, Group or Event)');
+    //   return;
+    // }
 
     this.checkedList.filter((item) => {
       if (item.hasOwnProperty("groupName")) {
@@ -569,6 +581,20 @@ export class TeamtalkersComponent implements OnInit {
         selectedClub.push(item)
       }
     });
+    this.scheduleSelectedDate = new Date(this.scheduleSelectedDate.setHours(this.scheduleSelectedTime.getHours()));
+    this.scheduleSelectedDate = new Date(this.scheduleSelectedDate.setMinutes(this.scheduleSelectedTime.getMinutes()))
+    var days = moment.duration(moment(this.scheduleSelectedDate).diff(moment(new Date()))).days();
+    var hours = moment.duration(moment(this.scheduleSelectedDate).diff(moment(new Date()))).hours();
+    var minutes = moment.duration(moment(this.scheduleSelectedDate).diff(moment(new Date()))).minutes();
+    
+    if (days == 0 && hours <= 0 && minutes < 5) {
+      this.toast.error("Schedule should have minimum 30 minutes time", "info");
+      return;
+    }
+
+
+
+
   }
 
 

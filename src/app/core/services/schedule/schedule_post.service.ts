@@ -84,12 +84,14 @@ export class SchedulePostService {
   }
 
 
-  scheduleImagePost(postedText, postedTo, userID, MediaFile, selectedList?) {
+  scheduleImagePost(postedText, postedTo, userID, MediaFile, scheduleDate , selectedList?  ) {
+    
     return new Promise((resolve, reject) => {
     let hyperLinkResponse = []
     this.post.type = 'image'
     this.post.text = postedText;
     this.post.postedTo = postedTo;
+    // this.post.scheduleDate = scheduleDate
 
     if (postedTo == 'Group') {
       delete this.post.eventID;
