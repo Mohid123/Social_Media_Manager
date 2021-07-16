@@ -27,6 +27,9 @@ import * as moment from "moment";
 import { ThisReceiver } from "@angular/compiler";
 import { ClubpostService } from './../../core/services/club-post/clubpost.service';
 import { mixinColor } from "@angular/material/core";
+import { tr } from "date-fns/locale";
+import { SchedulePostService } from './../../core/services/schedule/schedule_post.service';
+import { ScheduleService } from './../../core/services/schedule.service';
 
 
 @Component({
@@ -71,7 +74,7 @@ export class TeamtalkersComponent implements OnInit {
   pollSelectedTime: Date;
   datetimelocalObject: any;
   public show: boolean = false;
-  singleDate: Date = new Date(new Date().setDate(new Date().getDate()));
+  singleDate: Date = new Date(new Date().setDate(new Date().getDate() + 1));
   singleTime: Date = new Date(new Date().setDate(new Date().getDate() + 1));
   singleDatePickerOptions: DatePickerOptions = {
     minDate: new Date(new Date().setDate(new Date().getDate() - 1)), // Minimum is selecting a week ago
@@ -89,7 +92,9 @@ export class TeamtalkersComponent implements OnInit {
     private _authService: MainAuthService,
     private _clubService: ClubService,
     private modalService: NgbModal,
-    private _genericPostService: ClubpostService
+    private _genericPostService: ClubpostService,
+    private _schedulePostService: SchedulePostService,
+    private _scheduleService: ScheduleService
   ) {
     this.post = new Post();
     this.report = new Report();
@@ -126,7 +131,6 @@ export class TeamtalkersComponent implements OnInit {
       return `with: ${reason}`;
     }
   }
-
 
   selectedSchedule() {
     this.showSchedule = !this.showSchedule
@@ -439,13 +443,12 @@ export class TeamtalkersComponent implements OnInit {
       this.showDiv.video = false;
       this.showDiv.text = false;
       this.showDiv.poll = false;
-      this.cf.detectChanges()
+
     } else if (event.index == 1) {
       this.showDiv.photo = false;
       this.showDiv.video = true;
       this.showDiv.text = false;
       this.showDiv.poll = false;
-      this.cf.detectChanges()
 
     } else if (event.index == 2) {
       this.showDiv.photo = false;
@@ -453,17 +456,11 @@ export class TeamtalkersComponent implements OnInit {
       this.showDiv.text = true;
       this.showDiv.poll = false;
 
-      this.cf.detectChanges()
-
-
     } else {
       this.showDiv.photo = false;
       this.showDiv.video = false;
       this.showDiv.text = false;
       this.showDiv.poll = true;
-      this.showSchedule = this.showSchedule;
-      this.cf.detectChanges()
-
 
     }
   }
@@ -530,9 +527,9 @@ export class TeamtalkersComponent implements OnInit {
   }
 
   scheduleTextPost(postType) {
-    let selectedClubGroups = [];
-    let selectedClubEvents = [];
-    let selectedClub = []
+    let groups = [];
+    let events = [];
+    let club = []
 
 
     if (this.teamtalkerCaption == "") {
@@ -546,64 +543,82 @@ export class TeamtalkersComponent implements OnInit {
 
     this.checkedList.filter((item) => {
       if (item.hasOwnProperty("groupName")) {
-        selectedClubGroups.push(item);
+        groups.push(item);
       } else if (item.hasOwnProperty("eventName")) {
-        selectedClubEvents.push(item);
+        events.push(item);
       } else if (item.hasOwnProperty("clubName")) {
-        selectedClub.push(item)
+        club.push(item)
       }
     });
+
+    if (this._scheduleService.validateScheduleDate(this.scheduleSelectedDate, this.scheduleSelectedTime)) {
+
+      if (groups.length > 0) {
+        this._schedulePostService.scheduleTextPost(this.teamtalkerCaption, 'Group', this._scheduleService.getScheduleEpox, groups)
+      }
+
+      if (events.length > 0) {
+        this._schedulePostService.scheduleTextPost(this.teamtalkerCaption, 'Event', this._scheduleService.getScheduleEpox, events)
+      }
+
+      if (club.length > 0) {
+        this._schedulePostService.scheduleTextPost(this.teamtalkerCaption, 'Club', this._scheduleService.getScheduleEpox, club)
+      }
+    }
+    else {
+      this.toast.error("Schedule should be 5 minutes ahead of current time", "info");
+    }
   }
 
 
 
   scheduleImagePost(postType) {
     debugger;
-    let selectedClubGroups = [];
-    let selectedClubEvents = [];
-    let selectedClub = []
-    let currentDate  = new Date()
+    let groups = [];
+    let events = [];
+    let club = []
 
-    // if (!this.file) {
-    //   this.toast.error("Please Select Image File to post", "No File Selected");
-    //   return;
-    // } else if (this.checkedList.length == 0) {
-    //   this.toast.error('Please select atleast one Item from (Club, Group or Event)');
-    //   return;
-    // }
-
-    this.checkedList.filter((item) => {
-      if (item.hasOwnProperty("groupName")) {
-        selectedClubGroups.push(item);
-      } else if (item.hasOwnProperty("eventName")) {
-        selectedClubEvents.push(item);
-      } else if (item.hasOwnProperty("clubName")) {
-        selectedClub.push(item)
-      }
-    });
-    this.scheduleSelectedDate = new Date(this.scheduleSelectedDate.setHours(this.scheduleSelectedTime.getHours()));
-    this.scheduleSelectedDate = new Date(this.scheduleSelectedDate.setMinutes(this.scheduleSelectedTime.getMinutes()))
-    var days = moment.duration(moment(this.scheduleSelectedDate).diff(moment(new Date()))).days();
-    var hours = moment.duration(moment(this.scheduleSelectedDate).diff(moment(new Date()))).hours();
-    var minutes = moment.duration(moment(this.scheduleSelectedDate).diff(moment(new Date()))).minutes();
-    
-    if (days == 0 && hours <= 0 && minutes < 5) {
-      this.toast.error("Schedule should have minimum 30 minutes time", "info");
+    if (!this.file) {
+      this.toast.error("Please Select Image File to post", "No File Selected");
+      return;
+    } else if (this.checkedList.length == 0) {
+      this.toast.error('Please select atleast one Item from (Club, Group or Event)');
       return;
     }
 
+    this.checkedList.filter((item) => {
+      if (item.hasOwnProperty("groupName")) {
+        groups.push(item);
+      } else if (item.hasOwnProperty("eventName")) {
+        events.push(item);
+      } else if (item.hasOwnProperty("clubName")) {
+        club.push(item)
+      }
+    });
 
+    if (this._scheduleService.validateScheduleDate(this.scheduleSelectedDate, this.scheduleSelectedTime)) {
 
+      if (groups.length > 0) {
+        this._schedulePostService.scheduleImagePost(this.teamtalkerCaption, 'Group', this.signedInUser.id, this.file, this._scheduleService.getScheduleEpox, groups)
+      }
 
+      if (events.length > 0) {
+        this._schedulePostService.scheduleImagePost(this.teamtalkerCaption, 'Event', this.signedInUser.id, this.file, this._scheduleService.getScheduleEpox, events)
+      }
+
+      if (club.length > 0) {
+        this._schedulePostService.scheduleImagePost(this.teamtalkerCaption, 'Club', this.signedInUser.id, this.file, this._scheduleService.getScheduleEpox, club)
+      }
+    }
+    else {
+      this.toast.error("Schedule should be 5 minutes ahead of current time", "info");
+    }
   }
 
-
-
-
   scheduleVideoPost(postType) {
-    let selectedClubGroups = [];
-    let selectedClubEvents = [];
-    let selectedClub = []
+    let groups = [];
+    let events = [];
+    let club = []
 
     if (!this.file) {
       this.toast.error("Please select a Video File", "Empty File");
@@ -615,13 +630,33 @@ export class TeamtalkersComponent implements OnInit {
 
     this.checkedList.filter((item) => {
       if (item.hasOwnProperty("groupName")) {
-        selectedClubGroups.push(item);
+        groups.push(item);
       } else if (item.hasOwnProperty("eventName")) {
-        selectedClubEvents.push(item);
+        events.push(item);
       } else if (item.hasOwnProperty("clubName")) {
-        selectedClub.push(item)
+        club.push(item)
       }
     });
+
+    if (this._scheduleService.validateScheduleDate(this.scheduleSelectedDate, this.scheduleSelectedTime)) {
+
+      if (groups.length > 0) {
+        this._schedulePostService.scheduleVideoPost(this.teamtalkerCaption, 'Group', this.signedInUser.id, this.file, this._scheduleService.getScheduleEpox, groups)
+      }
+
+      if (events.length > 0) {
+        this._schedulePostService.scheduleVideoPost(this.teamtalkerCaption, 'Event', this.signedInUser.id, this.file, this._scheduleService.getScheduleEpox, events)
+      }
+
+      if (club.length > 0) {
+        this._schedulePostService.scheduleVideoPost(this.teamtalkerCaption, 'Club', this.signedInUser.id, this.file, this._scheduleService.getScheduleEpox, club)
+      }
+    }
+    else {
+      this.toast.error("Schedule should be 5 minutes ahead of current time", "info");
+    }
+
+
   }
 
 
