@@ -28,7 +28,7 @@ import { ThisReceiver } from "@angular/compiler";
 import { ClubpostService } from './../../core/services/club-post/clubpost.service';
 import { mixinColor } from "@angular/material/core";
 import { tr } from "date-fns/locale";
-import { SchedulePostService } from './../../core/services/schedule/schedule_post.service';
+import { ScheduleClubPostService } from '../../core/services/schedule/schedule_club_post.service';
 import { ScheduleService } from './../../core/services/schedule.service';
 
 
@@ -93,7 +93,7 @@ export class TeamtalkersComponent implements OnInit {
     private _clubService: ClubService,
     private modalService: NgbModal,
     private _genericPostService: ClubpostService,
-    private _schedulePostService: SchedulePostService,
+    private _scheduleClubPostService: ScheduleClubPostService,
     private _scheduleService: ScheduleService
   ) {
     this.post = new Post();
@@ -554,15 +554,15 @@ export class TeamtalkersComponent implements OnInit {
     if (this._scheduleService.validateScheduleDate(this.scheduleSelectedDate, this.scheduleSelectedTime)) {
 
       if (groups.length > 0) {
-        this._schedulePostService.scheduleTextPost(this.teamtalkerCaption, 'Group', this._scheduleService.getScheduleEpox, groups)
+        this._scheduleClubPostService.scheduleTextPost(this.teamtalkerCaption, 'Group', this._scheduleService.getScheduleEpox, groups)
       }
 
       if (events.length > 0) {
-        this._schedulePostService.scheduleTextPost(this.teamtalkerCaption, 'Event', this._scheduleService.getScheduleEpox, events)
+        this._scheduleClubPostService.scheduleTextPost(this.teamtalkerCaption, 'Event', this._scheduleService.getScheduleEpox, events)
       }
 
       if (club.length > 0) {
-        this._schedulePostService.scheduleTextPost(this.teamtalkerCaption, 'Club', this._scheduleService.getScheduleEpox, club)
+        this._scheduleClubPostService.scheduleTextPost(this.teamtalkerCaption, 'Club', this._scheduleService.getScheduleEpox, club)
       }
     }
     else {
@@ -599,15 +599,15 @@ export class TeamtalkersComponent implements OnInit {
     if (this._scheduleService.validateScheduleDate(this.scheduleSelectedDate, this.scheduleSelectedTime)) {
 
       if (groups.length > 0) {
-        this._schedulePostService.scheduleImagePost(this.teamtalkerCaption, 'Group', this.signedInUser.id, this.file, this._scheduleService.getScheduleEpox, groups)
+        this._scheduleClubPostService.scheduleImagePost(this.teamtalkerCaption, 'Group', this.signedInUser.id, this.file, this._scheduleService.getScheduleEpox, groups)
       }
 
       if (events.length > 0) {
-        this._schedulePostService.scheduleImagePost(this.teamtalkerCaption, 'Event', this.signedInUser.id, this.file, this._scheduleService.getScheduleEpox, events)
+        this._scheduleClubPostService.scheduleImagePost(this.teamtalkerCaption, 'Event', this.signedInUser.id, this.file, this._scheduleService.getScheduleEpox, events)
       }
 
       if (club.length > 0) {
-        this._schedulePostService.scheduleImagePost(this.teamtalkerCaption, 'Club', this.signedInUser.id, this.file, this._scheduleService.getScheduleEpox, club)
+        this._scheduleClubPostService.scheduleImagePost(this.teamtalkerCaption, 'Club', this.signedInUser.id, this.file, this._scheduleService.getScheduleEpox, club)
       }
     }
     else {
@@ -641,15 +641,15 @@ export class TeamtalkersComponent implements OnInit {
     if (this._scheduleService.validateScheduleDate(this.scheduleSelectedDate, this.scheduleSelectedTime)) {
 
       if (groups.length > 0) {
-        this._schedulePostService.scheduleVideoPost(this.teamtalkerCaption, 'Group', this.signedInUser.id, this.file, this._scheduleService.getScheduleEpox, groups)
+        this._scheduleClubPostService.scheduleVideoPost(this.teamtalkerCaption, 'Group', this.signedInUser.id, this.file, this._scheduleService.getScheduleEpox, groups)
       }
 
       if (events.length > 0) {
-        this._schedulePostService.scheduleVideoPost(this.teamtalkerCaption, 'Event', this.signedInUser.id, this.file, this._scheduleService.getScheduleEpox, events)
+        this._scheduleClubPostService.scheduleVideoPost(this.teamtalkerCaption, 'Event', this.signedInUser.id, this.file, this._scheduleService.getScheduleEpox, events)
       }
 
       if (club.length > 0) {
-        this._schedulePostService.scheduleVideoPost(this.teamtalkerCaption, 'Club', this.signedInUser.id, this.file, this._scheduleService.getScheduleEpox, club)
+        this._scheduleClubPostService.scheduleVideoPost(this.teamtalkerCaption, 'Club', this.signedInUser.id, this.file, this._scheduleService.getScheduleEpox, club)
       }
     }
     else {

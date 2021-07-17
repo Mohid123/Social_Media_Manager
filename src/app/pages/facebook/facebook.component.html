@@ -250,7 +250,7 @@
                                                             <input readonly style="background-color:white;"
                                                                 class="form-control" placeholder="Select Date"
                                                                 [ngxDatePicker]="dateInstanceSingle" [value]="singleDate"
-                                                                (valueChange)="onChangeSingle($event)">
+                                                                (valueChange)="onChangeScheduleDate($event)">
                                                             <ngx-date-picker #dateInstanceSingle
                                                                 [options]="singleDatePickerOptions"></ngx-date-picker>
                                                         </div>
@@ -261,7 +261,7 @@
                                                             <input class="form-control" style="background-color:white;"
                                                                 readonly placeholder="Select Time"
                                                                 [ngxTimePicker]="timeInstanceOne" [value]="singleTime"
-                                                                (valueChange)="onChangeSingleTime($event)" required>
+                                                                (valueChange)="onChangeScheduleTime($event)" required>
                                                             <ngx-time-picker #timeInstanceOne
                                                                 [options]="singleTimePickerOptions"></ngx-time-picker>
                                                         </div>
@@ -308,7 +308,7 @@
                                                                 class="btn btn-transparent-warning">Clear</button>
                                                         </div>
                                                         <div class="ml-auto p-2" >
-                                                            <button (click) = "addImagePost()" type="button"
+                                                            <button (click) = "scheduleImagePostForFB()" type="button"
                                             
                                                             class="btn btn-primary flex-row-reverse" style="background-color: #3b5998; border-color: #3b5998;">Schedule</button>
                                                         </div>
@@ -445,7 +445,7 @@
                                                             <input readonly style="background-color:white;"
                                                                 class="form-control" placeholder="Select Date"
                                                                 [ngxDatePicker]="dateInstanceSingle" [value]="singleDate"
-                                                                (valueChange)="onChangeSingle($event)">
+                                                                (valueChange)="onChangeScheduleDate($event)">
                                                             <ngx-date-picker #dateInstanceSingle
                                                                 [options]="singleDatePickerOptions"></ngx-date-picker>
                                                         </div>
@@ -456,7 +456,7 @@
                                                             <input class="form-control" style="background-color:white;"
                                                                 readonly placeholder="Select Time"
                                                                 [ngxTimePicker]="timeInstanceOne" [value]="singleTime"
-                                                                (valueChange)="onChangeSingleTime($event)" required>
+                                                                (valueChange)="onChangeScheduleTime($event)" required>
                                                             <ngx-time-picker #timeInstanceOne
                                                                 [options]="singleTimePickerOptions"></ngx-time-picker>
                                                         </div>
@@ -503,7 +503,7 @@
                                                                 class="btn btn-transparent-warning">Clear</button>
                                                         </div>
                                                         <div class="ml-auto p-2" >
-                                                            <button (click) = "addVideoPost()" type="button"
+                                                            <button (click) = "scheduleVideoPostForFB()" type="button"
                                             
                                                             class="btn btn-primary flex-row-reverse" style="background-color: #3b5998; border-color: #3b5998;">Schedule</button>
                                                         </div>
@@ -611,7 +611,7 @@
                                                             <input readonly style="background-color:white;"
                                                                 class="form-control" placeholder="Select Date"
                                                                 [ngxDatePicker]="dateInstanceSingle" [value]="singleDate"
-                                                                (valueChange)="onChangeSingle($event)">
+                                                                (valueChange)="onChangeScheduleDate($event)">
                                                             <ngx-date-picker #dateInstanceSingle
                                                                 [options]="singleDatePickerOptions"></ngx-date-picker>
                                                         </div>
@@ -622,7 +622,7 @@
                                                             <input class="form-control" style="background-color:white;"
                                                                 readonly placeholder="Select Time"
                                                                 [ngxTimePicker]="timeInstanceOne" [value]="singleTime"
-                                                                (valueChange)="onChangeSingleTime($event)" required>
+                                                                (valueChange)="onChangeScheduleTime($event)" required>
                                                             <ngx-time-picker #timeInstanceOne
                                                                 [options]="singleTimePickerOptions"></ngx-time-picker>
                                                         </div>
@@ -637,7 +637,7 @@
                                                                 class="btn btn-transparent-warning">Clear</button>
                                                         </div>
                                                         <div class="ml-auto p-2" style="margin-bottom: 45px;">
-                                                            <button (click)="addTextPost()" type="button"
+                                                            <button (click)="scheduleTextPostForFB()" type="button"
                                                             class="btn btn-primary flex-row-reverse" style="background-color: #3b5998; border-color: #3b5998;">Schedule</button>
                                                           
                                                         </div>

@@ -6,13 +6,13 @@ import { MediauploadService } from '../mediaupload.service';
 import { PostService } from '../post.service';
 import { ReportService } from '../report.service';
 import { VideoProcessingService } from '../video-service/video-processing.service';
-import { ScheduleService } from './../schedule.service';
+import { ScheduleService } from '../schedule.service';
 import { Club } from 'src/app/core/models/club.model';
 
 @Injectable({
   providedIn: 'root'
 })
-export class SchedulePostService {
+export class ScheduleClubPostService {
   public post;
   clubID: string
   clubToken: string

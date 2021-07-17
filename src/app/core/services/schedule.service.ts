@@ -19,6 +19,7 @@ export class ScheduleService {
   }
 
   scheduleFacebookPost(FBpost) {
+    debugger;
     return this._apiService.post('/schedule/scheduleFacebookPost', FBpost)
   }
 
