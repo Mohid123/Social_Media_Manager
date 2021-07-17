@@ -17,6 +17,7 @@ import { ExtrasModule } from './../../_metronic/partials/layout/extras/extras.mo
 import { ChangeDetectorRef } from "@angular/core";
 import { ClubService } from './../../core/services/club.service';
 import { Club } from './../../core/models/club.model';
+import { take } from "rxjs/operators";
 @Component({
   selector: "app-account-manager",
   templateUrl: "./account-manager.component.html",
@@ -62,11 +63,11 @@ export class AccountManagerComponent implements OnInit {
   }
 
   getSignedInUser() {
-    ;
     this._authService.getSignedInUser().subscribe((user) => {
       this.signedInUser = user;
+      this.updateClubProfile();
       // this.setFbProfile(user.userFacebookProfile.fbEmail , user.userFacebookProfile.fbUserName ,  user.userFacebookProfile.fbProfileImageUrl);
-      this.setClubprofile(user.userClubProfile.clubEmail, user.userClubProfile.clubUsername, user.userClubProfile.clubProfileImageUrl);
+      // this.setClubprofile(user.userClubProfile.clubEmail, user.userClubProfile.clubUsername, user.userClubProfile.clubProfileImageUrl);
     });
   }
 
@@ -83,6 +84,19 @@ export class AccountManagerComponent implements OnInit {
     setTimeout(() => {
       this.spinner.hide();
     }, 1000);
+  }
+
+  
+  updateClubProfile(){
+    debugger;
+    let userId = localStorage.getItem('clubUid');
+    this._clubService.getUserClubProfile(userId).pipe(take(1)).subscribe((data:any)=>{
+      this.userClubProfile.clubEmail = data.email,
+      this.userClubProfile.clubProfileImageURL = data.profilePicURL;
+      this.userClubProfile.clubUsername = data.fullName;
+      this.cf.detectChanges();
+    })
+
   }
 
 
@@ -164,13 +178,13 @@ export class AccountManagerComponent implements OnInit {
   }
 
 
-  setClubprofile(email, userName, profileImageUrl) {
-    ;
-    this.userClubProfile.clubEmail = email,
-      this.userClubProfile.clubUsername = userName;
-    this.userClubProfile.clubProfileImageURL = profileImageUrl;
-    this.cf.detectChanges()
-  }
+  // setClubprofile(email, userName, profileImageUrl) {
+
+  //   this.userClubProfile.clubEmail = email,
+  //     this.userClubProfile.clubUsername = userName;
+  //   this.userClubProfile.clubProfileImageURL = profileImageUrl;
+  //   this.cf.detectChanges()
+  // }
 
   getLongLivedFBUserToken(userToken): Observable<any> {
     return this._facebookService.getLongLivedFBAccessToken(userToken);
