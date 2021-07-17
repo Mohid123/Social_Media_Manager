@@ -16,6 +16,7 @@ import { User } from "src/app/core/models/user.model";
 import { ExtrasModule } from './../../_metronic/partials/layout/extras/extras.module';
 import { ChangeDetectorRef } from "@angular/core";
 import { ClubService } from './../../core/services/club.service';
+import { Club } from './../../core/models/club.model';
 @Component({
   selector: "app-account-manager",
   templateUrl: "./account-manager.component.html",
@@ -31,6 +32,8 @@ export class AccountManagerComponent implements OnInit {
   public userFBprofile: FacebookProfileModel
   public userClubProfile: ClubProfileModel
   public club: any
+  public selectedClub: Club
+  socialFlag: boolean = false
 
   constructor(
     private spinner: NgxSpinnerService,
@@ -40,7 +43,8 @@ export class AccountManagerComponent implements OnInit {
     private _authService: MainAuthService,
     private _toast: ToastrService,
     private cf: ChangeDetectorRef,
-    private _clubService : ClubService
+    private _clubService: ClubService,
+
   ) {
     this.userFBprofile = new FacebookProfileModel();
     this.userClubProfile = new ClubProfileModel();
@@ -54,6 +58,7 @@ export class AccountManagerComponent implements OnInit {
     this.clubLogo = this.club.logoURL;
     this.showSpinner();
     this.getSignedInUser();
+    this.set_socialFlag_after_getting_club()
   }
 
   getSignedInUser() {
@@ -61,7 +66,7 @@ export class AccountManagerComponent implements OnInit {
     this._authService.getSignedInUser().subscribe((user) => {
       this.signedInUser = user;
       // this.setFbProfile(user.userFacebookProfile.fbEmail , user.userFacebookProfile.fbUserName ,  user.userFacebookProfile.fbProfileImageUrl);
-      this.setClubprofile(user.userClubProfile.clubEmail , user.userClubProfile.clubUsername , user.userClubProfile.clubProfileImageUrl);
+      this.setClubprofile(user.userClubProfile.clubEmail, user.userClubProfile.clubUsername, user.userClubProfile.clubProfileImageUrl);
     });
   }
 
@@ -97,7 +102,7 @@ export class AccountManagerComponent implements OnInit {
 
   async signInWithFB() {
 
-    this._toast.warning('Comming Soon')
+    // this._toast.warning('Comming Soon')
     document.getElementById("signInFB").style.pointerEvents = "none";
     const fbLoginOptions = {
       scope:
@@ -105,7 +110,7 @@ export class AccountManagerComponent implements OnInit {
     };
     // ,, " "email,,
     await this.authService
-      .signIn(FacebookLoginProvider.PROVIDER_ID ,  fbLoginOptions)
+      .signIn(FacebookLoginProvider.PROVIDER_ID, fbLoginOptions)
       .then((socialUser) => {
         this._toast.success("Successfully logged into Facebook");
         this.socialUser = socialUser;
@@ -148,9 +153,14 @@ export class AccountManagerComponent implements OnInit {
     this._authService.logoutSignedInUser()
   }
 
-  updateUserClub(club){
-    this._clubService.updateClub(club).subscribe(data=>{
+  updateUserClub(club) {
+    this._clubService.updateClub(club).subscribe(data => {
     })
+  }
+
+  set_socialFlag_after_getting_club() {
+    this.selectedClub = JSON.parse(localStorage.getItem('selectedClub')) as Club;
+    this.selectedClub.clubName == "Solis Solution" && this.selectedClub.id == "60db0c52723416289b31f1d9" ? this.socialFlag = true : this.socialFlag = false;
   }
 
 
@@ -185,6 +195,10 @@ export class AccountManagerComponent implements OnInit {
     this._toast.warning(
       "Comming Soon"
     );
+  }
+
+  signInWithFacebook(){
+    this._toast.warning('Comming Soon');
   }
 
   signOutFB() {
