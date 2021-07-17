@@ -98,49 +98,50 @@ export class AccountManagerComponent implements OnInit {
   async signInWithFB() {
 
     this._toast.warning('Comming Soon')
-    // document.getElementById("signInFB").style.pointerEvents = "none";
-    // const fbLoginOptions = {
-    //   scope:
-    //     "pages_messaging,pages_messaging_subscriptions,email,pages_show_list,instagram_basic,instagram_content_publish, publish_video ,pages_read_engagement,publish_to_groups , pages_manage_posts",
-    // };
-    // await this.authService
-    //   .signIn(FacebookLoginProvider.PROVIDER_ID, fbLoginOptions)
-    //   .then((socialUser) => {
-    //     this._toast.success("Successfully logged into Facebook");
-    //     this.socialUser = socialUser;
-    //     this.club.FBuserID = this.socialUser.id;
+    document.getElementById("signInFB").style.pointerEvents = "none";
+    const fbLoginOptions = {
+      scope:
+        "pages_show_list , pages_manage_posts , instagram_basic,instagram_content_publish"
+    };
+    // ,, " "email,,
+    await this.authService
+      .signIn(FacebookLoginProvider.PROVIDER_ID ,  fbLoginOptions)
+      .then((socialUser) => {
+        this._toast.success("Successfully logged into Facebook");
+        this.socialUser = socialUser;
+        this.club.FBuserID = this.socialUser.id;
 
 
-    //     // this.signedInUser.FBuserID = this.socialUser.id;
-    //     this.userFBprofile.fbEmail = this.socialUser.response.email;
-    //     this.userFBprofile.fbUserName = this.socialUser.response.name;
-    //     this.userFBprofile.fbProfileImageUrl = this.socialUser.response.picture.data.url;
-    //     this.cf.detectChanges();
-    //     this.club.userFacebookProfile = Object.assign({}, this.userFBprofile)
-    //     this.getLongLivedFBUserToken(this.socialUser.authToken).subscribe(
-    //       (data) => {
-    //         this.club.FBUserAuthToken = data.access_token;
-    //         this.getFacebookPages(
-    //           this.socialUser.id,
-    //           data.access_token
-    //         ).subscribe((FbPages) => {
-    //           if (FbPages.data.length) {
-    //             FbPages.data.forEach((item) => {
-    //               let obj = {
-    //                 pageAccessToken: item.access_token,
-    //                 pageID: item.id,
-    //                 pageName: item.name,
-    //               };
-    //               this.userFacebookPages.push(obj);
-    //             });
-    //           }
-    //           this.club.FBPages = this.userFacebookPages;
-    //           this.updateUserClub(this.club);
-    //         });
-    //       }
-    //     );
-    //   })
-    //   .catch((err) => console.log(err));
+        // this.signedInUser.FBuserID = this.socialUser.id;
+        this.userFBprofile.fbEmail = this.socialUser.response.email;
+        this.userFBprofile.fbUserName = this.socialUser.response.name;
+        this.userFBprofile.fbProfileImageUrl = this.socialUser.response.picture.data.url;
+        this.cf.detectChanges();
+        this.club.userFacebookProfile = Object.assign({}, this.userFBprofile)
+        this.getLongLivedFBUserToken(this.socialUser.authToken).subscribe(
+          (data) => {
+            this.club.FBUserAuthToken = data.access_token;
+            this.getFacebookPages(
+              this.socialUser.id,
+              data.access_token
+            ).subscribe((FbPages) => {
+              if (FbPages.data.length) {
+                FbPages.data.forEach((item) => {
+                  let obj = {
+                    pageAccessToken: item.access_token,
+                    pageID: item.id,
+                    pageName: item.name,
+                  };
+                  this.userFacebookPages.push(obj);
+                });
+              }
+              this.club.FBPages = this.userFacebookPages;
+              this.updateUserClub(this.club);
+            });
+          }
+        );
+      })
+      .catch((err) => console.log(err));
   }
 
   signOutOfClub() {

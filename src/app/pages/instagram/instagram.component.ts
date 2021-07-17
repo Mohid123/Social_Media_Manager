@@ -57,7 +57,9 @@ export class InstagramComponent implements OnInit {
   singleTimePickerOptions: TimePickerOptions = {
     military: true,
   };
-  constructor(private spinner: NgxSpinnerService, private cf: ChangeDetectorRef,
+  constructor(
+    private spinner: NgxSpinnerService, 
+    private cf: ChangeDetectorRef,
     private _authService: MainAuthService,
     private _instagramService: InstagramService,
     private _mediaUploadService: MediauploadService,
@@ -66,8 +68,6 @@ export class InstagramComponent implements OnInit {
     private toast: ToastrService,
     private _scheduleService: ScheduleService,
     private _scheduleSocialPostService: ScheduleSocialPostService
-
-
   ) {
     this.report = new Report()
   }
@@ -100,9 +100,7 @@ export class InstagramComponent implements OnInit {
     this.scheduleSelectedTime = value
   }
 
-
   openVerticallyCentered(content, post) {
-    // this.playingVideo = post.captureFileURL;
     this.modalService.open(content, { centered: true }).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
@@ -143,12 +141,10 @@ export class InstagramComponent implements OnInit {
 
 
   getSignedInUser() {
-    ;
     this._authService.getSignedInUser().pipe(take(1)).subscribe(user => {
       this.signedInUser = user;
       if (this.signedInUser.FBPages.length > 0) {
         this.signedInUser.FBPages.forEach(item => {
-          ;
           this.getIGAccountDetails(item.pageID, item.pageAccessToken).subscribe((igaccount: any) => {
             if (igaccount.hasOwnProperty('instagram_business_account')) {
               this.getRecentPosts(igaccount.instagram_business_account.id, item.pageAccessToken);
@@ -304,8 +300,6 @@ export class InstagramComponent implements OnInit {
               this.postedSuccessfully();
 
             }
-
-
             this._reportService.createReport(1, data.id, 'Instagram')
           }, error => {
             ;
@@ -372,6 +366,7 @@ export class InstagramComponent implements OnInit {
     }
 
   }
+
   scheduleInstagramVideoPost() {
     debugger;
     let selectedList = this.checkedList;
@@ -396,7 +391,6 @@ export class InstagramComponent implements OnInit {
   onSelectFile(event) {
     debugger;
     this.file = event.target.files && event.target.files[0];
-
     if (this.file) {
       var reader = new FileReader();
       reader.readAsDataURL(this.file);

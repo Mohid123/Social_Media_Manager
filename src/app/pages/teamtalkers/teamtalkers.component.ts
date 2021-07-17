@@ -329,6 +329,56 @@ export class TeamtalkersComponent implements OnInit {
     });
   }
 
+  switchTabs(event) {
+    if (event.index == 0) {
+      this.showDiv.photo = true;
+      this.showDiv.video = false;
+      this.showDiv.text = false;
+      this.showDiv.poll = false;
+
+    } else if (event.index == 1) {
+      this.showDiv.photo = false;
+      this.showDiv.video = true;
+      this.showDiv.text = false;
+      this.showDiv.poll = false;
+
+    } else if (event.index == 2) {
+      this.showDiv.photo = false;
+      this.showDiv.video = false;
+      this.showDiv.text = true;
+      this.showDiv.poll = false;
+
+    } else {
+      this.showDiv.photo = false;
+      this.showDiv.video = false;
+      this.showDiv.text = false;
+      this.showDiv.poll = true;
+
+    }
+  }
+
+  onSelectFile(event) {
+    let fileSize;
+    this.file = event.target.files && event.target.files[0];
+    fileSize  = (this.file.size / (1024*1024)).toFixed(2) + 'MB';
+    this.file.fileSize = fileSize
+    // console.log(this.file)
+    if (this.file) {
+      var reader = new FileReader();
+      reader.readAsDataURL(this.file);
+      if (this.file.type.indexOf("image") > -1) {
+        this.format = "image";
+      } else if (this.file.type.indexOf("video") > -1) {
+        this.format = "video";
+      }
+      reader.onload = (event) => {
+        this.url = (<FileReader>event.target).result as string;
+        this.cf.detectChanges();
+      };
+      event.target.value = "";
+    }
+  }
+
   getDateTime() {
     var elem = document.getElementById("dt");
     alert(elem);
@@ -394,7 +444,7 @@ export class TeamtalkersComponent implements OnInit {
   }
 
   addImagePost() {
-    debugger;
+    
     let groups = [];
     let events = [];
     let club = []
@@ -416,7 +466,7 @@ export class TeamtalkersComponent implements OnInit {
         club.push(item)
       }
     });
-    debugger;
+    ;
     if (club.length > 0) {
       this._genericPostService.createImagePost(this.teamtalkerCaption, 'Club', this.signedInUser.id, this.file, club).then(success => {
         this.resetPost()
@@ -437,57 +487,11 @@ export class TeamtalkersComponent implements OnInit {
 
   }
 
-  switchTabs(event) {
-    if (event.index == 0) {
-      this.showDiv.photo = true;
-      this.showDiv.video = false;
-      this.showDiv.text = false;
-      this.showDiv.poll = false;
-
-    } else if (event.index == 1) {
-      this.showDiv.photo = false;
-      this.showDiv.video = true;
-      this.showDiv.text = false;
-      this.showDiv.poll = false;
-
-    } else if (event.index == 2) {
-      this.showDiv.photo = false;
-      this.showDiv.video = false;
-      this.showDiv.text = true;
-      this.showDiv.poll = false;
-
-    } else {
-      this.showDiv.photo = false;
-      this.showDiv.video = false;
-      this.showDiv.text = false;
-      this.showDiv.poll = true;
-
-    }
-  }
-
-  onSelectFile(event) {
-    this.file = event.target.files && event.target.files[0];
-    if (this.file) {
-      var reader = new FileReader();
-      reader.readAsDataURL(this.file);
-      if (this.file.type.indexOf("image") > -1) {
-        this.format = "image";
-      } else if (this.file.type.indexOf("video") > -1) {
-        this.format = "video";
-      }
-      reader.onload = (event) => {
-        this.url = (<FileReader>event.target).result as string;
-        this.cf.detectChanges();
-      };
-      event.target.value = "";
-    }
-  }
-
-
   addVideoPost() {
-    let selectedClubGroups = [];
-    let selectedClubEvents = [];
-    let selectedClub = []
+    debugger;
+    let groups = [];
+    let events = [];
+    let club = []
 
     if (!this.file) {
       this.toast.error("Please select a Video File", "Empty File");
@@ -496,31 +500,35 @@ export class TeamtalkersComponent implements OnInit {
       this.toast.error('Please select atleast one Item from (Club, Group or Event)');
       return;
     }
+    else if(this.file.fileSize > '500'){
+      this.toast.error('Video Size must be less than 500MB' , 'info');
+      return;
+    }
 
     this.checkedList.filter((item) => {
       if (item.hasOwnProperty("groupName")) {
-        selectedClubGroups.push(item);
+        groups.push(item);
       } else if (item.hasOwnProperty("eventName")) {
-        selectedClubEvents.push(item);
+        events.push(item);
       } else if (item.hasOwnProperty("clubName")) {
-        selectedClub.push(item)
+        club.push(item)
       }
     });
 
-    if (selectedClub.length > 0) {
-      this._genericPostService.createVideoPost(this.teamtalkerCaption, 'Club', this.signedInUser.id, this.file, selectedClub).then(() => {
+    if (club.length > 0) {
+      this._genericPostService.createVideoPost(this.teamtalkerCaption, 'Club', this.signedInUser.id, this.file, club).then(() => {
         this.resetPost();
       });
     }
 
-    if (selectedClubGroups.length > 0) {
-      this._genericPostService.createVideoPost(this.teamtalkerCaption, 'Group', this.signedInUser.id, this.file, selectedClubGroups).then(() => {
+    if (groups.length > 0) {
+      this._genericPostService.createVideoPost(this.teamtalkerCaption, 'Group', this.signedInUser.id, this.file, groups).then(() => {
         this.resetPost();
       });
     }
 
-    if (selectedClubEvents.length > 0) {
-      this._genericPostService.createVideoPost(this.teamtalkerCaption, 'Event', this.signedInUser.id, this.file, selectedClubEvents).then(() => {
+    if (events.length > 0) {
+      this._genericPostService.createVideoPost(this.teamtalkerCaption, 'Event', this.signedInUser.id, this.file, events).then(() => {
         this.resetPost();
       });
     }
@@ -531,7 +539,6 @@ export class TeamtalkersComponent implements OnInit {
     let events = [];
     let club = []
 
-
     if (this.teamtalkerCaption == "") {
       this.toast.error("Please add content to post", "No Content Added");
       return;
@@ -539,7 +546,6 @@ export class TeamtalkersComponent implements OnInit {
       this.toast.error('Please select atleast one Item from (Club, Group or Event)');
       return;
     }
-
 
     this.checkedList.filter((item) => {
       if (item.hasOwnProperty("groupName")) {
@@ -571,9 +577,7 @@ export class TeamtalkersComponent implements OnInit {
   }
 
 
-
   scheduleImagePost(postType) {
-    debugger;
     let groups = [];
     let events = [];
     let club = []
@@ -656,12 +660,10 @@ export class TeamtalkersComponent implements OnInit {
       this.toast.error("Schedule should be 5 minutes ahead of current time", "info");
     }
 
-
   }
 
 
   addPollPost() {
-    debugger;
     let selectedClubGroups = [];
     let selectedClubEvents = [];
     delete this.poll.startTime;
@@ -738,6 +740,5 @@ export class TeamtalkersComponent implements OnInit {
       }
     });
   }
-
 
 }
