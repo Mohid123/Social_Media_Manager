@@ -410,3 +410,48 @@ label{
   z-index: 100;
   
 }
+.ngx-time-picker-container {
+  background-color: #fff;
+  border: 1px solid #DFE3E9;
+  border-radius: 5px;
+  margin-top: 5px;
+  padding: 10px;
+  position: relative !important;
+  width: 160px;
+}
+
+// .mat-tab-label {
+//   height: 48px;
+//   padding: 0 24px;
+//   cursor: pointer;
+//   box-sizing: border-box;
+//   opacity: 0.4 !important;
+//   min-width: 160px;
+//   text-align: center;
+//   display: inline-flex;
+//   justify-content: center;
+//   align-items: center;
+//   white-space: nowrap;
+//   position: relative;
+// }
+
+.mat-tab-label.mat-tab-label-active:not(.mat-tab-disabled), .mat-tab-label.mat-tab-label-active.cdk-keyboard-focused:not(.mat-tab-disabled) {
+  font-weight: 500;
+  color: black;
+  background: #F3F6F9;
+  opacity: 1;
+  border-radius: 10px;
+ 
+}
+
+.mat-icon {
+  background-repeat: no-repeat;
+  display: inline-block;
+  fill: currentColor;
+  height: auto !important;
+  width: 24px;
+}
+
+.aside-menu .menu-nav > .menu-item.menu-item-active > .menu-heading, .aside-menu .menu-nav > .menu-item.menu-item-active > .menu-link {
+  background-color: #454550c2;
+}

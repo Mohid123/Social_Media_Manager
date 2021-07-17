@@ -12,6 +12,8 @@ import * as moment from 'moment';
 import { DatePickerOptions } from "@ngx-tiny/date-picker";
 import { TimePickerOptions } from "@ngx-tiny/time-picker/ngx-time-picker.options";
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { ScheduleService } from './../../core/services/schedule.service';
+import { ScheduleSocialPostService } from 'src/app/core/services/schedule/schedule-social-post.service';
 
 @Component({
   selector: 'app-instagram',
@@ -39,9 +41,12 @@ export class InstagramComponent implements OnInit {
     photo: true,
     video: false,
   }
+  scheduleSelectedDate: any
+  scheduleSelectedTime: any
+
   public showSchedule: boolean = false;
   closeResult: string;
-  public recentPosts : any = [];
+  public recentPosts: any = [];
   public inValidImageFormat: boolean;
   singleDate: Date = new Date(new Date().setDate(new Date().getDate() + 1));
   singleTime: Date = new Date(new Date().setDate(new Date().getDate() + 1));
@@ -52,16 +57,22 @@ export class InstagramComponent implements OnInit {
   singleTimePickerOptions: TimePickerOptions = {
     military: true,
   };
-  constructor(private spinner: NgxSpinnerService, private cf: ChangeDetectorRef,
+  constructor(
+    private spinner: NgxSpinnerService, 
+    private cf: ChangeDetectorRef,
     private _authService: MainAuthService,
     private _instagramService: InstagramService,
     private _mediaUploadService: MediauploadService,
     private _reportService: ReportService,
     private modalService: NgbModal,
-    private toast: ToastrService) { this.report = new Report()
-     }
+    private toast: ToastrService,
+    private _scheduleService: ScheduleService,
+    private _scheduleSocialPostService: ScheduleSocialPostService
+  ) {
+    this.report = new Report()
+  }
 
-  
+
   ngOnInit() {
     this.showSpinner()
     this.getSignedInUser();
@@ -75,14 +86,21 @@ export class InstagramComponent implements OnInit {
     this.cf.detectChanges()
   }
   onChangeSingle(value: Date) {
-   
+
   }
   onChangeSingleTime(value: Date) {
-    
+
+  }
+
+  onChangeScheduleDate(value: Date) {
+    this.scheduleSelectedDate = value;
+  }
+
+  onChangeScheduleTime(value: Date) {
+    this.scheduleSelectedTime = value
   }
 
   openVerticallyCentered(content, post) {
-    // this.playingVideo = post.captureFileURL;
     this.modalService.open(content, { centered: true }).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
@@ -107,7 +125,7 @@ export class InstagramComponent implements OnInit {
   onSelectedImageLoad() {
     const width = (this.logo.nativeElement as HTMLImageElement).naturalWidth
     const height = (this.logo.nativeElement as HTMLImageElement).naturalHeight
-    
+
     let gcd = this.calculateAspectRatio(width, height);
     const ratio = width / gcd + ':' + height / gcd;
     this.validAspectRatios.includes(ratio) ? this.inValidImageFormat = false : this.inValidImageFormat = true;
@@ -123,15 +141,13 @@ export class InstagramComponent implements OnInit {
 
 
   getSignedInUser() {
-    ;
     this._authService.getSignedInUser().pipe(take(1)).subscribe(user => {
       this.signedInUser = user;
       if (this.signedInUser.FBPages.length > 0) {
         this.signedInUser.FBPages.forEach(item => {
-          ;
           this.getIGAccountDetails(item.pageID, item.pageAccessToken).subscribe((igaccount: any) => {
             if (igaccount.hasOwnProperty('instagram_business_account')) {
-             this.getRecentPosts(igaccount.instagram_business_account.id,item.pageAccessToken);
+              this.getRecentPosts(igaccount.instagram_business_account.id, item.pageAccessToken);
               igaccount.isSelected = false;
               igaccount.pageName = 'Instagram Account'
               igaccount.linkedFbPagetoken = item.pageAccessToken
@@ -147,15 +163,14 @@ export class InstagramComponent implements OnInit {
     })
   }
 
-  getRecentPosts(IGaccountID , FBpageaccessToken){
-  return  this._instagramService.getPublishedPostsForIG(IGaccountID , FBpageaccessToken).subscribe((publishedPosts:any)=>{
-    publishedPosts.data.map(item=>{
-      item.timestamp = moment(item.timestamp).fromNow()
+  getRecentPosts(IGaccountID, FBpageaccessToken) {
+    return this._instagramService.getPublishedPostsForIG(IGaccountID, FBpageaccessToken).subscribe((publishedPosts: any) => {
+      publishedPosts.data.map(item => {
+        item.timestamp = moment(item.timestamp).fromNow()
+      })
+      this.recentPosts = publishedPosts.data;
+      this.cf.detectChanges();
     })
-    this.recentPosts = publishedPosts.data;
-    console.log(this.recentPosts)
-    this.cf.detectChanges();
-  })
   }
   getIGAccountDetails(FbPageID, FbPageAccessToken) {
     return this._instagramService.getInstagramAccountID(FbPageID, FbPageAccessToken)
@@ -220,10 +235,10 @@ export class InstagramComponent implements OnInit {
     this._mediaUploadService.uploadMedia('InstagramTest', '123', this.file).subscribe((media: any) => {
       this.checkedList.forEach(item => {
         this._instagramService.createIgContainerForVideo(item.instagram_business_account.id, media.url, this.instaCaption, item.linkedFbPagetoken).subscribe((container: any) => {
-          console.log(container , 'container')
+          console.log(container, 'container')
           let interval = setInterval(() => {
             this._instagramService.getContainerStatus(container.id, item.linkedFbPagetoken).subscribe((data: any) => {
-              console.log(data , 'status')
+              console.log(data, 'status')
               if (data.status_code == "FINISHED") {
                 this._instagramService.publishContent(item.instagram_business_account.id, container.id, item.linkedFbPagetoken).subscribe((data: any) => {
 
@@ -265,7 +280,7 @@ export class InstagramComponent implements OnInit {
     if (!this.file) {
       this.toast.error('Please select an Image File', 'Empty File');
       return;
-    }    
+    }
     else if (this.checkedList.length == 0) {
       this.toast.error('No Item Selected', 'Please select items to post');
       return;
@@ -276,17 +291,15 @@ export class InstagramComponent implements OnInit {
     }
     this.spinner.show()
     this._mediaUploadService.uploadMedia('Instagram', this.signedInUser.id, this.file).subscribe((media: any) => {
-      this.checkedList.forEach((item,idx,self) => {
+      this.checkedList.forEach((item, idx, self) => {
         this._reportService.createReport(2, "", 'Instagram')
         this._instagramService.createIGMediaContainer(item.instagram_business_account.id, this.instaCaption, item.linkedFbPagetoken, media.url).subscribe((container: any) => {
           this._instagramService.publishContent(item.instagram_business_account.id, container.id, item.linkedFbPagetoken).subscribe((data: any) => {
-            if(idx==self.length-1){
+            if (idx == self.length - 1) {
               this.toast.success('Image Post Added Successfully', 'Post Added');
               this.postedSuccessfully();
-           
+
             }
-          
-          
             this._reportService.createReport(1, data.id, 'Instagram')
           }, error => {
             ;
@@ -332,8 +345,51 @@ export class InstagramComponent implements OnInit {
     this.cf.detectChanges();
   }
 
+  scheduleInstagramImagePost() {
+    debugger;
+    let selectedList = this.checkedList;
+    console.log(selectedList)
+    if (!this.file) {
+      this.toast.error('Please select any Image File', 'Empty File');
+      return;
+    }
+    else if (this.checkedList.length == 0) {
+      this.toast.error('No Page Selected', 'Please select Facebook Pages to post');
+      return;
+    }
+    else if (this._scheduleService.validateScheduleDate(this.scheduleSelectedDate, this.scheduleSelectedTime)) {
+      this._scheduleSocialPostService.scheduleInstagramImagePost(this.instaCaption, this._scheduleService.getScheduleEpox, this.file, selectedList)
+    }
+
+    else {
+      this.toast.error("Schedule should be 5 minutes ahead of current time", "info");
+    }
+
+  }
+
+  scheduleInstagramVideoPost() {
+    debugger;
+    let selectedList = this.checkedList;
+    console.log(selectedList)
+    if (!this.file) {
+      this.toast.error('Please select any Video File', 'Empty File');
+      return;
+    }
+    else if (this.checkedList.length == 0) {
+      this.toast.error('No Page Selected', 'Please select Facebook Pages to post');
+      return;
+    }
+    else if (this._scheduleService.validateScheduleDate(this.scheduleSelectedDate, this.scheduleSelectedTime)) {
+      this._scheduleSocialPostService.scheduleInstagramVideoPost(this.instaCaption, this._scheduleService.getScheduleEpox, this.file, selectedList)
+    }
+
+    else {
+      this.toast.error("Schedule should be 5 minutes ahead of current time", "info");
+    }
+  }
 
   onSelectFile(event) {
+    debugger;
     this.file = event.target.files && event.target.files[0];
     if (this.file) {
       var reader = new FileReader();

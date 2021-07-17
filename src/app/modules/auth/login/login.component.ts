@@ -91,14 +91,13 @@ export class LoginComponent implements OnInit {
 
   updateUserClub(club){
     this._clubService.updateClub(club).subscribe(data=>{
-      console.log(data)
+      // console.log(data)
     })
   }
-  // getUserClub(){
-  //   this.userClub = localStorage.getItem('selectedClub')
-  // }
+
 
   loginByEmail() {
+    debugger;
     var self = this;
     if (!this.selectedClub) {
       this.toastr.error('Please Select Club', 'Empty Club')
@@ -122,10 +121,10 @@ export class LoginComponent implements OnInit {
         this.spinner.hide();
         this.toastr.success('Login Success', 'Logged In Successfully');
         this.router.navigateByUrl('/pages/dashboard');
-        this.selectedClub.userClubProfile.clubEmail = user.user.email;
-        this.selectedClub.userClubProfile.clubUsername = user.user.fullName;
-        this.selectedClub.userClubProfile.clubProfileImageUrl = user.user.profilePicURL
-        this.updateUserClub(this.selectedClub)
+        // this.selectedClub.userClubProfile.clubEmail = user.user.email;
+        // this.selectedClub.userClubProfile.clubUsername = user.user.fullName;
+        // this.selectedClub.userClubProfile.clubProfileImageUrl = user.user.profilePicURL
+        // this.updateUserClub(this.selectedClub)
         // user.loggedInUser.userClubProfile.clubEmail = user.user.email;
         // user.loggedInUser.userClubProfile.clubUsername = user.user.fullName;
         // user.loggedInUser.userClubProfile.clubProfileImageUrl = user.user.profilePicURL; 
@@ -163,6 +162,8 @@ export class LoginComponent implements OnInit {
       this.toastr.error(error.message)
     })
   }
+
+
 
 
   openVerticallyCentered(content) {

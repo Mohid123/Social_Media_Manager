@@ -45,7 +45,7 @@
         style="border-bottom: 1px solid rgba(163, 175, 183, 0.219);">
         <a class="menu-link" routerLink="/pages/publish-all" routerLinkActive="active">
           <i class="svg-icon menu-icon fab fa-telegram-plane text-danger icon-lg mr-5"></i>
-          <span class="menu-text">Publish All</span>
+          <span class="menu-text">Create Content</span>
         </a>
       </li>
 
@@ -137,7 +137,7 @@
     <ng-template #content let-c="close" let-d="dismiss">
       <div class="modal-header d-flex justify-content-center" style="background-color: #1e1e2d;">
         <h4 class="modal-title" style="color: #fff;">Log out</h4>
-        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+        <button type="button" class="close ml-auto" aria-label="Close" (click)="d('Cross click')"> <i class="ki ki-bold-close icon-sm" style="color:rgba(255, 255, 255, 0.877)"></i>
           <span aria-hidden="true">&times;</span>
         </button>
       </div>

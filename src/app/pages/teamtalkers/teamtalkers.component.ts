@@ -27,6 +27,9 @@ import * as moment from "moment";
 import { ThisReceiver } from "@angular/compiler";
 import { ClubpostService } from './../../core/services/club-post/clubpost.service';
 import { mixinColor } from "@angular/material/core";
+import { tr } from "date-fns/locale";
+import { ScheduleClubPostService } from '../../core/services/schedule/schedule_club_post.service';
+import { ScheduleService } from './../../core/services/schedule.service';
 
 
 @Component({
@@ -63,6 +66,8 @@ export class TeamtalkersComponent implements OnInit {
     text: false,
     poll: false,
   };
+  scheduleSelectedDate: any;
+  scheduleSelectedTime: Date;
   public clubPrimaryColor: string;
   closeResult: string;
   pollSelectedDate: Date;
@@ -84,10 +89,12 @@ export class TeamtalkersComponent implements OnInit {
     private cf: ChangeDetectorRef,
     private toast: ToastrService,
     private _postService: PostService,
-    private _authService: MainAuthService,   
+    private _authService: MainAuthService,
     private _clubService: ClubService,
     private modalService: NgbModal,
-    private _genericPostService: ClubpostService
+    private _genericPostService: ClubpostService,
+    private _scheduleClubPostService: ScheduleClubPostService,
+    private _scheduleService: ScheduleService
   ) {
     this.post = new Post();
     this.report = new Report();
@@ -124,7 +131,6 @@ export class TeamtalkersComponent implements OnInit {
       return `with: ${reason}`;
     }
   }
-
 
   selectedSchedule() {
     this.showSchedule = !this.showSchedule
@@ -182,10 +188,18 @@ export class TeamtalkersComponent implements OnInit {
   }
 
   onChangeSingle(value: Date) {
-    // console.log(value)
+    this.pollSelectedDate = value;
   }
   onChangeSingleTime(value: Date) {
-    // console.log(value)
+    this.pollSelectedTime = value
+  }
+
+  onChangeScheduleDate(value: Date) {
+    this.scheduleSelectedDate = value;
+  }
+
+  onChangeScheduleTime(value: Date) {
+    this.scheduleSelectedTime = value
   }
 
   onVideoEnded() {
@@ -315,6 +329,56 @@ export class TeamtalkersComponent implements OnInit {
     });
   }
 
+  switchTabs(event) {
+    if (event.index == 0) {
+      this.showDiv.photo = true;
+      this.showDiv.video = false;
+      this.showDiv.text = false;
+      this.showDiv.poll = false;
+
+    } else if (event.index == 1) {
+      this.showDiv.photo = false;
+      this.showDiv.video = true;
+      this.showDiv.text = false;
+      this.showDiv.poll = false;
+
+    } else if (event.index == 2) {
+      this.showDiv.photo = false;
+      this.showDiv.video = false;
+      this.showDiv.text = true;
+      this.showDiv.poll = false;
+
+    } else {
+      this.showDiv.photo = false;
+      this.showDiv.video = false;
+      this.showDiv.text = false;
+      this.showDiv.poll = true;
+
+    }
+  }
+
+  onSelectFile(event) {
+    let fileSize;
+    this.file = event.target.files && event.target.files[0];
+    fileSize  = (this.file.size / (1024*1024)).toFixed(2) + 'MB';
+    this.file.fileSize = fileSize
+    // console.log(this.file)
+    if (this.file) {
+      var reader = new FileReader();
+      reader.readAsDataURL(this.file);
+      if (this.file.type.indexOf("image") > -1) {
+        this.format = "image";
+      } else if (this.file.type.indexOf("video") > -1) {
+        this.format = "video";
+      }
+      reader.onload = (event) => {
+        this.url = (<FileReader>event.target).result as string;
+        this.cf.detectChanges();
+      };
+      event.target.value = "";
+    }
+  }
+
   getDateTime() {
     var elem = document.getElementById("dt");
     alert(elem);
@@ -380,7 +444,7 @@ export class TeamtalkersComponent implements OnInit {
   }
 
   addImagePost() {
-    debugger;
+    
     let groups = [];
     let events = [];
     let club = []
@@ -402,7 +466,7 @@ export class TeamtalkersComponent implements OnInit {
         club.push(item)
       }
     });
-    debugger;
+    ;
     if (club.length > 0) {
       this._genericPostService.createImagePost(this.teamtalkerCaption, 'Club', this.signedInUser.id, this.file, club).then(success => {
         this.resetPost()
@@ -423,81 +487,142 @@ export class TeamtalkersComponent implements OnInit {
 
   }
 
-  switchTabs(event) {
-    debugger;
-    if (event.index == 0) {
-      this.showDiv.photo = true;
-      this.showDiv.video = false;
-      this.showDiv.text = false;
-      this.showDiv.poll = false;
-      this.showSchedule = this.showSchedule;
-      this.cf.detectChanges()
-    } else if (event.index == 1) {
-      this.showDiv.photo = false;
-      this.showDiv.video = true;
-      this.showDiv.text = false;
-      this.showDiv.poll = false;
-      this.showSchedule = this.showSchedule;
-      this.cf.detectChanges()
-
-      // this.showSchedule = false;
-    } else if (event.index == 2) {
-      this.showDiv.photo = false;
-      this.showDiv.video = false;
-      this.showDiv.text = true;
-      this.showDiv.poll = false;
-      this.showSchedule = this.showSchedule;
-      this.cf.detectChanges()
-
-      // this.showSchedule = false;
-
-    } else {
-      this.showDiv.photo = false;
-      this.showDiv.video = false;
-      this.showDiv.text = false;
-      this.showDiv.poll = true;
-      this.showSchedule = this.showSchedule;
-      this.cf.detectChanges()
-
-      // this.showSchedule = false;
-
-    }
-  }
-
-  onSelectFile(event) {
-    this.file = event.target.files && event.target.files[0];
-    if (this.file) {
-      var reader = new FileReader();
-      reader.readAsDataURL(this.file);
-      if (this.file.type.indexOf("image") > -1) {
-        this.format = "image";
-      } else if (this.file.type.indexOf("video") > -1) {
-        this.format = "video";
-      }
-      reader.onload = (event) => {
-        this.url = (<FileReader>event.target).result as string;
-        // console.log(this.url)
-        this.cf.detectChanges();
-      };
-      event.target.value = "";
-    }
-  }
-
-  dataURItoBlob(dataURI) {
-    const byteString = window.atob(dataURI);
-    const arrayBuffer = new ArrayBuffer(byteString.length);
-    const int8Array = new Uint8Array(arrayBuffer);
-    for (let i = 0; i < byteString.length; i++) {
-      int8Array[i] = byteString.charCodeAt(i);
-    }
-    const blob = new Blob([int8Array], { type: "image/jpeg" });
-    return blob;
-  }
-
   addVideoPost() {
-    let selectedClubGroups = [];
-    let selectedClubEvents = [];
-    let selectedClub = []
+    debugger;
+    let groups = [];
+    let events = [];
+    let club = []
+
+    if (!this.file) {
+      this.toast.error("Please select a Video File", "Empty File");
+      return;
+    } else if (this.checkedList.length == 0) {
+      this.toast.error('Please select atleast one Item from (Club, Group or Event)');
+      return;
+    }
+    else if(this.file.fileSize > '500'){
+      this.toast.error('Video Size must be less than 500MB' , 'info');
+      return;
+    }
+
+    this.checkedList.filter((item) => {
+      if (item.hasOwnProperty("groupName")) {
+        groups.push(item);
+      } else if (item.hasOwnProperty("eventName")) {
+        events.push(item);
+      } else if (item.hasOwnProperty("clubName")) {
+        club.push(item)
+      }
+    });
+
+    if (club.length > 0) {
+      this._genericPostService.createVideoPost(this.teamtalkerCaption, 'Club', this.signedInUser.id, this.file, club).then(() => {
+        this.resetPost();
+      });
+    }
+
+    if (groups.length > 0) {
+      this._genericPostService.createVideoPost(this.teamtalkerCaption, 'Group', this.signedInUser.id, this.file, groups).then(() => {
+        this.resetPost();
+      });
+    }
+
+    if (events.length > 0) {
+      this._genericPostService.createVideoPost(this.teamtalkerCaption, 'Event', this.signedInUser.id, this.file, events).then(() => {
+        this.resetPost();
+      });
+    }
+  }
+
+  scheduleTextPost(postType) {
+    let groups = [];
+    let events = [];
+    let club = []
+
+    if (this.teamtalkerCaption == "") {
+      this.toast.error("Please add content to post", "No Content Added");
+      return;
+    } else if (this.checkedList.length == 0) {
+      this.toast.error('Please select atleast one Item from (Club, Group or Event)');
+      return;
+    }
+
+    this.checkedList.filter((item) => {
+      if (item.hasOwnProperty("groupName")) {
+        groups.push(item);
+      } else if (item.hasOwnProperty("eventName")) {
+        events.push(item);
+      } else if (item.hasOwnProperty("clubName")) {
+        club.push(item)
+      }
+    });
+
+    if (this._scheduleService.validateScheduleDate(this.scheduleSelectedDate, this.scheduleSelectedTime)) {
+
+      if (groups.length > 0) {
+        this._scheduleClubPostService.scheduleTextPost(this.teamtalkerCaption, 'Group', this._scheduleService.getScheduleEpox, groups)
+      }
+
+      if (events.length > 0) {
+        this._scheduleClubPostService.scheduleTextPost(this.teamtalkerCaption, 'Event', this._scheduleService.getScheduleEpox, events)
+      }
+
+      if (club.length > 0) {
+        this._scheduleClubPostService.scheduleTextPost(this.teamtalkerCaption, 'Club', this._scheduleService.getScheduleEpox, club)
+      }
+    }
+    else {
+      this.toast.error("Schedule should be 5 minutes ahead of current time", "info");
+    }
+  }
+
+
+  scheduleImagePost(postType) {
+    let groups = [];
+    let events = [];
+    let club = []
+
+    if (!this.file) {
+      this.toast.error("Please Select Image File to post", "No File Selected");
+      return;
+    } else if (this.checkedList.length == 0) {
+      this.toast.error('Please select atleast one Item from (Club, Group or Event)');
+      return;
+    }
+
+    this.checkedList.filter((item) => {
+      if (item.hasOwnProperty("groupName")) {
+        groups.push(item);
+      } else if (item.hasOwnProperty("eventName")) {
+        events.push(item);
+      } else if (item.hasOwnProperty("clubName")) {
+        club.push(item)
+      }
+    });
+
+    if (this._scheduleService.validateScheduleDate(this.scheduleSelectedDate, this.scheduleSelectedTime)) {
+
+      if (groups.length > 0) {
+        this._scheduleClubPostService.scheduleImagePost(this.teamtalkerCaption, 'Group', this.signedInUser.id, this.file, this._scheduleService.getScheduleEpox, groups)
+      }
+
+      if (events.length > 0) {
+        this._scheduleClubPostService.scheduleImagePost(this.teamtalkerCaption, 'Event', this.signedInUser.id, this.file, this._scheduleService.getScheduleEpox, events)
+      }
+
+      if (club.length > 0) {
+        this._scheduleClubPostService.scheduleImagePost(this.teamtalkerCaption, 'Club', this.signedInUser.id, this.file, this._scheduleService.getScheduleEpox, club)
+      }
+    }
+    else {
+      this.toast.error("Schedule should be 5 minutes ahead of current time", "info");
+    }
+  }
+
+  scheduleVideoPost(postType) {
+    let groups = [];
+    let events = [];
+    let club = []
 
     if (!this.file) {
       this.toast.error("Please select a Video File", "Empty File");
@@ -509,70 +634,36 @@ export class TeamtalkersComponent implements OnInit {
 
     this.checkedList.filter((item) => {
       if (item.hasOwnProperty("groupName")) {
-        selectedClubGroups.push(item);
+        groups.push(item);
       } else if (item.hasOwnProperty("eventName")) {
-        selectedClubEvents.push(item);
+        events.push(item);
       } else if (item.hasOwnProperty("clubName")) {
-        selectedClub.push(item)
+        club.push(item)
       }
     });
 
-    if (selectedClub.length > 0) {
-      this._genericPostService.createVideoPost(this.teamtalkerCaption, 'Club', this.signedInUser.id, this.file, selectedClub).then(() => {
-        this.resetPost();
-      });
-    }
+    if (this._scheduleService.validateScheduleDate(this.scheduleSelectedDate, this.scheduleSelectedTime)) {
 
-    if (selectedClubGroups.length > 0) {
-      this._genericPostService.createVideoPost(this.teamtalkerCaption, 'Group', this.signedInUser.id, this.file, selectedClubGroups).then(() => {
-        this.resetPost();
-      });
-    }
-
-    if (selectedClubEvents.length > 0) {
-      this._genericPostService.createVideoPost(this.teamtalkerCaption, 'Event', this.signedInUser.id, this.file, selectedClubEvents).then(() => {
-        this.resetPost();
-      });
-    }
-  }
-
-  schedulePost(postType) {
-    let selectedClubGroups = [];
-    let selectedClubEvents = [];
-    let selectedClub = []
-
-    if (postType == 'image' && !this.file) {
-      this.toast.error("Please select a Media File", "Empty File");
-      return;
-    }
-    else if (postType == 'video' && !this.file) {
-      this.toast.error("Please select a Media File", "Empty File");
-      return;
-    }
-    else if (postType == 'text' && this.teamtalkerCaption.trim().length == 0) {
-      this.toast.error("Please add Textto post", "Empty File");
-      return;
-    }
-
-    else if (this.checkedList.length == 0) {
-      this.toast.error('Please select atleast one Item from (Club, Group or Event)');
-      return;
-    }
-
-    this.checkedList.filter((item) => {
-      if (item.hasOwnProperty("groupName")) {
-        selectedClubGroups.push(item);
-      } else if (item.hasOwnProperty("eventName")) {
-        selectedClubEvents.push(item);
-      } else if (item.hasOwnProperty("clubName")) {
-        selectedClub.push(item)
+      if (groups.length > 0) {
+        this._scheduleClubPostService.scheduleVideoPost(this.teamtalkerCaption, 'Group', this.signedInUser.id, this.file, this._scheduleService.getScheduleEpox, groups)
       }
-    });
+
+      if (events.length > 0) {
+        this._scheduleClubPostService.scheduleVideoPost(this.teamtalkerCaption, 'Event', this.signedInUser.id, this.file, this._scheduleService.getScheduleEpox, events)
+      }
+
+      if (club.length > 0) {
+        this._scheduleClubPostService.scheduleVideoPost(this.teamtalkerCaption, 'Club', this.signedInUser.id, this.file, this._scheduleService.getScheduleEpox, club)
+      }
+    }
+    else {
+      this.toast.error("Schedule should be 5 minutes ahead of current time", "info");
+    }
+
   }
 
 
   addPollPost() {
-    debugger;
     let selectedClubGroups = [];
     let selectedClubEvents = [];
     delete this.poll.startTime;
@@ -597,12 +688,7 @@ export class TeamtalkersComponent implements OnInit {
     });
 
 
-    if (selectedClubGroups.length > 0) {
-      this.toast.error("Poll can only be created in Club", "Error");
-      return;
-    }
-
-    else if (selectedClubEvents.length > 0) {
+    if (selectedClubGroups.length > 0 || selectedClubEvents.length > 0) {
       this.toast.error("Poll can only be created in Club", "Error");
       return;
     }
@@ -638,6 +724,22 @@ export class TeamtalkersComponent implements OnInit {
         this.resetPost()
       });
     }
-
   }
+
+  schedulePollPost(postType) {
+    let selectedClubGroups = [];
+    let selectedClubEvents = [];
+    let selectedClub = []
+
+    this.checkedList.filter((item) => {
+      if (item.hasOwnProperty("groupName")) {
+        selectedClubGroups.push(item);
+      } else if (item.hasOwnProperty("eventName")) {
+        selectedClubEvents.push(item);
+      } else if (item.hasOwnProperty("clubName")) {
+        selectedClub.push(item)
+      }
+    });
+  }
+
 }

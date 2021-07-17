@@ -9,8 +9,13 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { NgxSpinnerService } from "ngx-spinner";
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { User } from 'src/app/core/models/user.model';
+import { DatePickerOptions } from "@ngx-tiny/date-picker";
+import { TimePickerOptions } from "@ngx-tiny/time-picker/ngx-time-picker.options";
 import { combineLatest } from 'rxjs';
 import * as moment from 'moment';
+import { ScheduleClubPostService } from 'src/app/core/services/schedule/schedule_club_post.service';
+import { ScheduleService } from './../../core/services/schedule.service';
+import { ScheduleSocialPostService } from 'src/app/core/services/schedule/schedule-social-post.service';
 @Component({
   selector: 'app-facebook',
   templateUrl: './facebook.component.html',
@@ -22,10 +27,13 @@ export class FacebookComponent implements OnInit {
     private _facebookService: FacebookService,
     private _authService: MainAuthService,
     private _mediaUploadService: MediauploadService,
-    private _reportService: ReportService) {
+    private _reportService: ReportService,
+    private _scheduleSocialPostService: ScheduleSocialPostService,
+    private _scheduleService: ScheduleService
+  ) {
     this.report = new Report()
   }
-
+  public showSchedule: boolean = false;
   public facebookCaption: string = "";
   public format: string;
   public url: string;
@@ -47,7 +55,18 @@ export class FacebookComponent implements OnInit {
     video: false,
     text: false
   }
+  scheduleSelectedDate: any;
+  scheduleSelectedTime: Date;
   public recentFBposts: any = [];
+  singleDate: Date = new Date(new Date().setDate(new Date().getDate() + 1));
+  singleTime: Date = new Date(new Date().setDate(new Date().getDate() + 1));
+  singleDatePickerOptions: DatePickerOptions = {
+    minDate: new Date(new Date().setDate(new Date().getDate() - 1)), // Minimum is selecting a week ago
+    maxDate: new Date(new Date().setDate(new Date().getDate() + 7)), // Maximum date is selecting today
+  };
+  singleTimePickerOptions: TimePickerOptions = {
+    military: true,
+  };
   ngOnInit() {
     this.showSpinner();
     this.getSignedInUser();
@@ -55,7 +74,23 @@ export class FacebookComponent implements OnInit {
   }
 
 
+  selectedSchedule() {
+    this.showSchedule = !this.showSchedule
+  }
+  onChangeSingle(value: Date) {
+    // console.log(value)
+  }
+  onChangeSingleTime(value: Date) {
+    // console.log(value)
+  }
 
+  onChangeScheduleDate(value: Date) {
+    this.scheduleSelectedDate = value;
+  }
+
+  onChangeScheduleTime(value: Date) {
+    this.scheduleSelectedTime = value
+  }
 
   clear() {
     this.url = '';
@@ -133,14 +168,14 @@ export class FacebookComponent implements OnInit {
     this._authService.getSignedInUser().subscribe(user => {
       this.signedInUser = user;
       console.log(this.signedInUser)
-      for(let i = 0 ; i <= user.FBPages.length-1 ; i++){
+      for (let i = 0; i <= user.FBPages.length - 1; i++) {
         ;
         this._facebookService.getPublishedPostsOnFBPages(user.FBPages[i].pageID, user.FBPages[i].pageAccessToken).subscribe((postObjects: any) => {
           postObjects.data.forEach((item, idx, self) => {
             callsList.push(this._facebookService.getSinglePagePost(item.id, user.FBPages[i].pageAccessToken));
             if (idx == self.length - 1) {
               combineLatest(callsList).subscribe(facebookPosts => {
-                facebookPosts.map((singleItem:any)=>{
+                facebookPosts.map((singleItem: any) => {
                   singleItem.created_time = moment(singleItem.created_time).fromNow()
                   singleItem.pageName = user.FBPages[i].pageName
                 })
@@ -222,6 +257,7 @@ export class FacebookComponent implements OnInit {
         console.log(item)
         this._reportService.createReport(2, "", 'Facebook')
         this._facebookService.addImagePostToFB(item.pageID, media.url, this.facebookCaption, item.pageAccessToken).subscribe(FbPost => {
+          console.log(FbPost, 'post')
           this._reportService.createReport(1, FbPost.id, 'Facebook')
           if (index == array.length - 1) {
             this.toast.success('Post added to Facebook Pages', 'Success')
@@ -280,7 +316,7 @@ export class FacebookComponent implements OnInit {
 
 
   addTextPost() {
-    ;
+
     if (this.facebookCaption == "") {
       this.toast.error('Please add content to post', 'No Content Added');
       return;
@@ -292,7 +328,7 @@ export class FacebookComponent implements OnInit {
     this.spinner.show();
     this.checkedList.forEach((item, index, array) => {
       this._reportService.createReport(2, "", 'Facebook')
-      ;
+
       this._facebookService.addTextPostToFB(item.pageID, this.facebookCaption, item.pageAccessToken).subscribe(FbPost => {
         this._reportService.createReport(1, FbPost.id, 'Facebook')
         if (index == array.length - 1) {
@@ -313,6 +349,72 @@ export class FacebookComponent implements OnInit {
       this._reportService.createReport(0, "", 'Facebook')
     })
   }
+
+
+
+  scheduleTextPostForFB() {
+    debugger;
+    let selectedList = this.checkedList;
+    if (this.facebookCaption == "") {
+      this.toast.error('Please add content to post', 'No Content Added');
+      return;
+    }
+    else if (selectedList.length == 0) {
+      this.toast.error('No Page Selected', 'Please select Facebook Pages to post');
+      return;
+    }
+    else if (this._scheduleService.validateScheduleDate(this.scheduleSelectedDate, this.scheduleSelectedTime)) {
+      this._scheduleSocialPostService.scheduleFacebookTextPost(this.facebookCaption, this._scheduleService.getScheduleEpox, selectedList)
+    }
+  }
+
+
+  scheduleImagePostForFB() {
+    debugger;
+    let selectedList = this.checkedList;
+
+    if (!this.file) {
+      this.toast.error('Please select an Image File', 'Empty File');
+      return;
+    }
+    else if (this.checkedList.length == 0) {
+      this.toast.error('No Page Selected', 'Please select Facebook Pages to post');
+      return;
+    }
+    else if (this._scheduleService.validateScheduleDate(this.scheduleSelectedDate, this.scheduleSelectedTime)) {
+      this._scheduleSocialPostService.scheduleFacebookImagePost(this.facebookCaption, this._scheduleService.getScheduleEpox, this.file, selectedList)
+    }
+
+  }
+
+
+  scheduleVideoPostForFB() {
+    debugger;
+    let selectedList = this.checkedList;
+
+    if (!this.file) {
+      this.toast.error('Please select any Video File', 'Empty File');
+      return;
+    }
+    else if (this.checkedList.length == 0) {
+      this.toast.error('No Page Selected', 'Please select Facebook Pages to post');
+      return;
+    }
+    else if (this._scheduleService.validateScheduleDate(this.scheduleSelectedDate, this.scheduleSelectedTime)) {
+      this._scheduleSocialPostService.scheduleFacebookVideoPost(this.facebookCaption, this._scheduleService.getScheduleEpox, this.file, selectedList)
+    } 
+
+    else {
+      this.toast.error("Schedule should be 5 minutes ahead of current time", "info");
+    }
+
+  }
+
+
+
+
+
+
 
 }
 

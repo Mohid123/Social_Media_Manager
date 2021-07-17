@@ -60,5 +60,9 @@ export class ClubService {
     return this._clubApiService.get(`/firebase-migration-functions/changeLiveStreamBit/${liveStreamBit}`);
   }
 
+  getUserClubProfile(userId){
+    return this._clubApiService.get(`/profile/getProfileById/${userId}`);
+  }
+
 
 }
