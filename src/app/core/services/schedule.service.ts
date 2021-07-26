@@ -13,7 +13,6 @@ export class ScheduleService {
   scheduleEpox : number;
 
   schduleClubPost(postedTo , clubID, post) {
-    debugger;
     post.postedTo = postedTo
     return this._apiService.post(`/schedule/scheduleClubPost/${clubID}`, post);
   }

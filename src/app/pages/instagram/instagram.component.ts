@@ -165,13 +165,12 @@ export class InstagramComponent implements OnInit {
 
   getRecentPosts(IGaccountID, FBpageaccessToken) {
     return this._instagramService.getPublishedPostsForIG(IGaccountID, FBpageaccessToken).subscribe((publishedPosts: any) => {
-      publishedPosts.data.map(item => {
-        item.timestamp = moment(item.timestamp).fromNow()
-      })
       this.recentPosts = publishedPosts.data;
+      console.log(this.recentPosts)
       this.cf.detectChanges();
     })
   }
+  
   getIGAccountDetails(FbPageID, FbPageAccessToken) {
     return this._instagramService.getInstagramAccountID(FbPageID, FbPageAccessToken)
   }

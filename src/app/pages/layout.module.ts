@@ -44,6 +44,7 @@ import { Error5Component } from '../modules/errors/error5/error5.component';
 import { CommingSoonFbComponent } from './comming-soon-fb/comming-soon-fb.component';
 import { ComingSoonIgComponent } from './coming-soon-ig/coming-soon-ig.component';
 import { AdvertisementComponent } from './advertisement/advertisement.component';
+import { MomentPipeIG } from '../core/pipes/datetransformIG.pipe';
 
 
 
@@ -72,6 +73,7 @@ import { AdvertisementComponent } from './advertisement/advertisement.component'
     NewsfeedComponent,
     Error5Component,
     MomentPipe,
+    MomentPipeIG,
     CommingSoonFbComponent,
     ComingSoonIgComponent,
     AdvertisementComponent
@@ -79,7 +81,7 @@ import { AdvertisementComponent } from './advertisement/advertisement.component'
   
   ],
   imports: [
-    CommonModule,
+  CommonModule,
     PagesRoutingModule,
     TranslationModule,
     InlineSVGModule,
