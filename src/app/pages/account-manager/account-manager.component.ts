@@ -65,7 +65,7 @@ export class AccountManagerComponent implements OnInit {
   getSignedInUser() {
     this._authService.getSignedInUser().subscribe((user) => {
       this.signedInUser = user;
-      this.updateClubProfile();
+      this.setClubProfile();
       // this.setFbProfile(user.userFacebookProfile.fbEmail , user.userFacebookProfile.fbUserName ,  user.userFacebookProfile.fbProfileImageUrl);
       // this.setClubprofile(user.userClubProfile.clubEmail, user.userClubProfile.clubUsername, user.userClubProfile.clubProfileImageUrl);
     });
@@ -87,8 +87,7 @@ export class AccountManagerComponent implements OnInit {
   }
 
   
-  updateClubProfile(){
-    debugger;
+  setClubProfile(){
     let userId = localStorage.getItem('clubUid');
     this._clubService.getUserClubProfile(userId).pipe(take(1)).subscribe((data:any)=>{
       this.userClubProfile.clubEmail = data.email,
@@ -122,15 +121,12 @@ export class AccountManagerComponent implements OnInit {
       scope:
         "pages_show_list , pages_manage_posts , instagram_basic,instagram_content_publish"
     };
-    // ,, " "email,,
     await this.authService
       .signIn(FacebookLoginProvider.PROVIDER_ID, fbLoginOptions)
       .then((socialUser) => {
         this._toast.success("Successfully logged into Facebook");
         this.socialUser = socialUser;
         this.club.FBuserID = this.socialUser.id;
-
-
         // this.signedInUser.FBuserID = this.socialUser.id;
         this.userFBprofile.fbEmail = this.socialUser.response.email;
         this.userFBprofile.fbUserName = this.socialUser.response.name;

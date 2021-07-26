@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { ApiService } from './api.service';
 import { Injectable } from '@angular/core';
-import { constants } from 'src/app/app.constatns';
+import { constants } from 'src/app/app.constants';
 import { Club } from './../models/club.model';
 import { ClubApiService } from './club_api.service';
 

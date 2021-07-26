@@ -2,7 +2,7 @@ import { catchError } from 'rxjs/operators';
 import { Observable, throwError } from 'rxjs';
 import { Injectable } from "@angular/core";
 import { HttpInterceptor, HttpHandler, HttpRequest, HttpEvent } from "@angular/common/http";
-import { constants } from 'src/app/app.constatns';
+import { constants } from 'src/app/app.constants';
 @Injectable()
 export class Interceptor implements HttpInterceptor {
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {

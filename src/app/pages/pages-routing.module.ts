@@ -8,7 +8,7 @@ import { CommingSoonFbComponent } from './comming-soon-fb/comming-soon-fb.compon
 import { FacebookComponent } from './facebook/facebook.component';
 import { InstagramComponent } from './instagram/instagram.component';
 import { NewsfeedComponent } from './newsfeed/newsfeed.component';
-import { PublishComponent } from './publish/publish.component';
+import { PublishComponent } from './publish-all/publish.component';
 import { TeamtalkersComponent } from './teamtalkers/teamtalkers.component';
 import { LayoutComponent } from './_layout/layout.component';
 

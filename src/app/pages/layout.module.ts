@@ -25,7 +25,7 @@ import { CoreModule } from '../_metronic/core';
 import { SubheaderModule } from '../_metronic/partials/layout/subheader/subheader.module';
 import { AsideDynamicComponent } from './_layout/components/aside-dynamic/aside-dynamic.component';
 import { HeaderMenuDynamicComponent } from './_layout/components/header/header-menu-dynamic/header-menu-dynamic.component';
-import { PublishComponent } from './publish/publish.component';
+import { PublishComponent } from './publish-all/publish.component';
 import { FacebookComponent } from './facebook/facebook.component';
 import { InstagramComponent } from './instagram/instagram.component';
 import { TeamtalkersComponent } from './teamtalkers/teamtalkers.component';

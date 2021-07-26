@@ -5,7 +5,7 @@ import { ApiService } from './api.service';
 import { ErrorHandler, Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
-import { constants } from 'src/app/app.constatns';
+import { constants } from 'src/app/app.constants';
 import { ClubApiService } from './club_api.service';
 @Injectable({
   providedIn: 'root'

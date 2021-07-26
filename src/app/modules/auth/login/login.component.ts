@@ -13,7 +13,7 @@ import { Club } from '../../../core/models/club.model'
 import { MainAuthService } from '../../../core/services/auth.service'
 import { ToastrService } from 'ngx-toastr';
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
-import { constants } from 'src/app/app.constatns';
+import { constants } from 'src/app/app.constants';
 
 
 @Component({
@@ -162,8 +162,6 @@ export class LoginComponent implements OnInit {
       this.toastr.error(error.message)
     })
   }
-
-
 
 
   openVerticallyCentered(content) {

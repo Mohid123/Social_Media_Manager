@@ -16,7 +16,7 @@ import {
   ApexLegend
 } from "ng-apexcharts";
 import { Club } from 'src/app/core/models/club.model';
-import { constants } from 'src/app/app.constatns';
+import { constants } from 'src/app/app.constants';
 
 
 

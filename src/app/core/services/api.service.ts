@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { throwError, Observable } from 'rxjs';
 import { catchError  } from 'rxjs/operators';
-import { constants } from 'src/app/app.constatns';
+import { constants } from 'src/app/app.constants';
 
 @Injectable({
   providedIn: 'root'
