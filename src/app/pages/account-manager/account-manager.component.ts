@@ -66,16 +66,15 @@ export class AccountManagerComponent implements OnInit {
     this._authService.getSignedInUser().subscribe((user) => {
       this.signedInUser = user;
       this.setClubProfile();
-      // this.setFbProfile(user.userFacebookProfile.fbEmail , user.userFacebookProfile.fbUserName ,  user.userFacebookProfile.fbProfileImageUrl);
-      // this.setClubprofile(user.userClubProfile.clubEmail, user.userClubProfile.clubUsername, user.userClubProfile.clubProfileImageUrl);
+      this.setFbProfile();
     });
   }
 
 
-  setFbProfile(email, username, profileImageUrl) {
-    this.userFBprofile.fbEmail = email;
-    this.userFBprofile.fbUserName = username;
-    this.userFBprofile.fbProfileImageUrl = profileImageUrl;
+  setFbProfile() {
+    let FBprofile = JSON.parse(localStorage.getItem('selectedClub')).userFacebookProfile;
+    this.userFBprofile.fbUserName = FBprofile.fbUserName;
+    this.userFBprofile.fbProfileImageUrl = FBprofile.fbProfileImageUrl;
     this.cf.detectChanges();
   }
 
@@ -114,8 +113,7 @@ export class AccountManagerComponent implements OnInit {
   }
 
   async signInWithFB() {
-
-    // this._toast.warning('Comming Soon')
+    debugger;
     document.getElementById("signInFB").style.pointerEvents = "none";
     const fbLoginOptions = {
       scope:
@@ -127,7 +125,6 @@ export class AccountManagerComponent implements OnInit {
         this._toast.success("Successfully logged into Facebook");
         this.socialUser = socialUser;
         this.club.FBuserID = this.socialUser.id;
-        // this.signedInUser.FBuserID = this.socialUser.id;
         this.userFBprofile.fbEmail = this.socialUser.response.email;
         this.userFBprofile.fbUserName = this.socialUser.response.name;
         this.userFBprofile.fbProfileImageUrl = this.socialUser.response.picture.data.url;
@@ -152,11 +149,13 @@ export class AccountManagerComponent implements OnInit {
               }
               this.club.FBPages = this.userFacebookPages;
               this.updateUserClub(this.club);
+              localStorage.setItem('selectedClub' , JSON.stringify(this.club));
+              this.setFbProfile();
             });
           }
         );
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.log(err , 'err obj'));
   }
 
   signOutOfClub() {
@@ -201,13 +200,17 @@ export class AccountManagerComponent implements OnInit {
     );
   }
 
-  showFBPopup() {
+  showIGLoginPopup() {
     this._toast.warning(
-      "Comming Soon"
+      "Sign in via Facebook to connect your Instagram Accounts"
     );
   }
 
-  signInWithFacebook(){
+  showIGCommingSoonPopup(){
+    this._toast.warning("Comming Soon")
+  }
+
+  showFBCommingSoonPopup(){
     this._toast.warning('Comming Soon');
   }
 

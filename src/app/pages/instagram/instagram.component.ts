@@ -7,7 +7,7 @@ import { Component, OnInit, ChangeDetectorRef, ViewChild, ElementRef } from '@an
 import { NgxSpinnerService } from "ngx-spinner";
 import { User } from 'src/app/core/models/user.model';
 import { ToastrService } from 'ngx-toastr';
-import { publish, take, map } from 'rxjs/operators';
+import {  take } from 'rxjs/operators';
 import * as moment from 'moment';
 import { DatePickerOptions } from "@ngx-tiny/date-picker";
 import { TimePickerOptions } from "@ngx-tiny/time-picker/ngx-time-picker.options";
@@ -170,7 +170,7 @@ export class InstagramComponent implements OnInit {
       this.cf.detectChanges();
     })
   }
-  
+
   getIGAccountDetails(FbPageID, FbPageAccessToken) {
     return this._instagramService.getInstagramAccountID(FbPageID, FbPageAccessToken)
   }
