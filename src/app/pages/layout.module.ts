@@ -45,6 +45,7 @@ import { CommingSoonFbComponent } from './comming-soon-fb/comming-soon-fb.compon
 import { ComingSoonIgComponent } from './coming-soon-ig/coming-soon-ig.component';
 import { AdvertisementComponent } from './advertisement/advertisement.component';
 import { MomentPipeIG } from '../core/pipes/datetransformIG.pipe';
+import { ScheduleComponent } from './schedule/schedule.component';
 
 
 
@@ -76,7 +77,8 @@ import { MomentPipeIG } from '../core/pipes/datetransformIG.pipe';
     MomentPipeIG,
     CommingSoonFbComponent,
     ComingSoonIgComponent,
-    AdvertisementComponent
+    AdvertisementComponent,
+    ScheduleComponent
 
   
   ],

@@ -9,6 +9,7 @@ import { FacebookComponent } from './facebook/facebook.component';
 import { InstagramComponent } from './instagram/instagram.component';
 import { NewsfeedComponent } from './newsfeed/newsfeed.component';
 import { PublishComponent } from './publish-all/publish.component';
+import { ScheduleComponent } from './schedule/schedule.component';
 import { TeamtalkersComponent } from './teamtalkers/teamtalkers.component';
 import { LayoutComponent } from './_layout/layout.component';
 
@@ -56,6 +57,10 @@ const routes: Routes = [
       {
         path: 'advertisement', 
         component: AdvertisementComponent
+      },
+      {
+        path: 'schedule', 
+        component: ScheduleComponent 
       },
       {
         path: 'dashboard',
