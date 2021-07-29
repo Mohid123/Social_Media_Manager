@@ -47,8 +47,14 @@ import { AdvertisementComponent } from './advertisement/advertisement.component'
 import { MomentPipeIG } from '../core/pipes/datetransformIG.pipe';
 import { ScheduleComponent } from './schedule/schedule.component';
 
+import { FullCalendarModule } from '@fullcalendar/angular';
+import dayGridPlugin from '@fullcalendar/daygrid'; // a plugin!
+import interactionPlugin from '@fullcalendar/interaction'; // a plugin!
 
-
+FullCalendarModule.registerPlugins([ // register FullCalendar plugins
+  dayGridPlugin,
+  interactionPlugin
+]);
 
 
 
@@ -83,6 +89,7 @@ import { ScheduleComponent } from './schedule/schedule.component';
   
   ],
   imports: [
+    FullCalendarModule,
   CommonModule,
     PagesRoutingModule,
     TranslationModule,
@@ -99,7 +106,8 @@ import { ScheduleComponent } from './schedule/schedule.component';
     NgxSpinnerModule,
     FormsModule,
     NgxDatePickerModule,
-    NgxTimePickerModule
+    NgxTimePickerModule,
+    
      
   ],
   providers: [VideoProcessingService], 
