@@ -30,10 +30,5 @@ export class ScheduleComponent implements OnInit  {
     })
   }
 
-  // ngAfterViewInit(){
-  //   this.getSchedulesByPostedTo()
-  // }
-  
-
 
 }

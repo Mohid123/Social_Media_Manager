@@ -3,6 +3,7 @@ import { constants } from 'src/app/app.constants';
 import { ClubApiService } from './club_api.service';
 import { ApiService } from './api.service';
 import * as moment from "moment";
+import { Observable, ObservedValueOf } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -12,25 +13,37 @@ export class ScheduleService {
   constructor(private _apiService: ApiService) { }
   scheduleEpox : number;
 
-  getSchedulesByPostedTo(offset , limit , postedTo){
+  getSchedulesByPostedTo(offset , limit , postedTo) : Observable <any>{
 
     offset = parseInt(offset) < 0 ? 0 : offset;
     limit = parseInt(limit) < 1 ? 10 : limit;
     return this._apiService.get(`/schedule/getScheduleByPostedTo/${postedTo}?offset=${offset}&limit=${limit}`);
   }
 
-  schduleClubPost(postedTo , clubID, post) {
+  schduleClubPost(postedTo , clubID, post) : Observable <any> {
     post.postedTo = postedTo
     return this._apiService.post(`/schedule/scheduleClubPost/${clubID}`, post);
   }
 
-  scheduleFacebookPost(FBpost) {
+  scheduleFacebookPost(FBpost) : Observable <any>{
     debugger;
     return this._apiService.post('/schedule/scheduleFacebookPost', FBpost)
   }
 
-  scheduleInstagramPost(IGpost) {
+  scheduleInstagramPost(IGpost) : Observable <any> {
     return this._apiService.post('/schedule/scheduleInstagramPost', IGpost)
+  }
+
+  getQueuedSchedules() : Observable <any>{
+    return this._apiService.get(`/schedule/getQueuedSchedules`)
+  }
+
+  getPublishedSchedules(): Observable <any> {
+    return this._apiService.get(`/schedule/getPublishedSchedules`)
+  }
+
+  getUnPublishedSchedules() : Observable <any> {
+    return this._apiService.get(`/schedule/getUnPublishedSchedules`)
   }
 
   validateScheduleDate(selectedDate, selectedTime) {
