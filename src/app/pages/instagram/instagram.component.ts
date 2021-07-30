@@ -166,7 +166,6 @@ export class InstagramComponent implements OnInit {
   getRecentPosts(IGaccountID, FBpageaccessToken) {
     return this._instagramService.getPublishedPostsForIG(IGaccountID, FBpageaccessToken).subscribe((publishedPosts: any) => {
       this.recentPosts = publishedPosts.data;
-      console.log(this.recentPosts)
       this.cf.detectChanges();
     })
   }

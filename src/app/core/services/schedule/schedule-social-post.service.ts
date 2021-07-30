@@ -55,6 +55,7 @@ export class ScheduleSocialPostService {
         selectedList.map(item => {
           delete item.pageName;
           delete item.isSelected;
+          delete item.captureImageURL
           item.imageURL = media.url
           item.caption = postedText;
           item.scheduleDate = scheduledDate
@@ -85,6 +86,7 @@ export class ScheduleSocialPostService {
         selectedList.map(item => {
           delete item.pageName;
           delete item.isSelected;
+          delete item.captureImageURL
           item.videoUrl = media.url
           item.videoDescription = postedText;
           item.scheduleDate = scheduledDate

@@ -49,7 +49,8 @@ import { ScheduleComponent } from './schedule/schedule.component';
 
 import { FullCalendarModule } from '@fullcalendar/angular';
 import dayGridPlugin from '@fullcalendar/daygrid'; // a plugin!
-import interactionPlugin from '@fullcalendar/interaction'; // a plugin!
+import interactionPlugin from '@fullcalendar/interaction';
+import { CalendarComponent } from './schedule/calendar/calendar.component'; // a plugin!
 
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
   dayGridPlugin,
@@ -84,7 +85,8 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     CommingSoonFbComponent,
     ComingSoonIgComponent,
     AdvertisementComponent,
-    ScheduleComponent
+    ScheduleComponent,
+    CalendarComponent
 
   
   ],

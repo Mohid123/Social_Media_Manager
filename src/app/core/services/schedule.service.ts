@@ -12,6 +12,13 @@ export class ScheduleService {
   constructor(private _apiService: ApiService) { }
   scheduleEpox : number;
 
+  getSchedulesByPostedTo(offset , limit , postedTo){
+
+    offset = parseInt(offset) < 0 ? 0 : offset;
+    limit = parseInt(limit) < 1 ? 10 : limit;
+    return this._apiService.get(`/schedule/getScheduleByPostedTo/${postedTo}?offset=${offset}&limit=${limit}`);
+  }
+
   schduleClubPost(postedTo , clubID, post) {
     post.postedTo = postedTo
     return this._apiService.post(`/schedule/scheduleClubPost/${clubID}`, post);
