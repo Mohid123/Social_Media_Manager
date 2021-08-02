@@ -41,6 +41,7 @@
     "bootstrap": "^4.6.0",
     "chart.js": "^2.9.3",
     "clipboard": "^2.0.6",
+    "crypto-js": "^4.1.1",
     "date-fns": "^2.22.1",
     "highlight.js": "^10.4.0",
     "highlightjs-line-numbers.js": "^2.8.0",
