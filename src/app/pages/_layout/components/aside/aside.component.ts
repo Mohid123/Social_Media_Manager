@@ -75,7 +75,7 @@ export class AsideComponent implements OnInit {
     let token = localStorage.getItem('club-token');
     let encrypted = CryptoJS.AES.encrypt(token, 'secretkey123').toString();
     let encoded =  encodeURIComponent(encrypted);
-    let sponsorPanelUrl = `http://localhost:4300/login?value=${encoded}`;
+    let sponsorPanelUrl = `http://localhost:4300/loading?value=${encoded}`;
     window.open(sponsorPanelUrl)
   }
 

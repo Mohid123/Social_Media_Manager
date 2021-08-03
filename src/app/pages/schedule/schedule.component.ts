@@ -17,7 +17,7 @@ export class ScheduleComponent implements OnInit  {
   }
 
   getSchedulesByPostedTo() {
-    this._scheduleService.getSchedulesByPostedTo(0, 10, 'Facebook').subscribe((schedules: any) => {
+    this._scheduleService.getSchedulesByPostedTo(0, 10, 'Instagram').subscribe((schedules: any) => {
       const response = schedules.map((schedule, idx) => {
         return {
           id: idx,
@@ -30,5 +30,18 @@ export class ScheduleComponent implements OnInit  {
     })
   }
 
+  getQueuedSchedueles(){
+    this._scheduleService.getQueuedSchedules().subscribe(data=>{
+      console.log(data)
+    })
+  }
+
+  getPublishedSchedules(){
+
+  }
+
+  getUnpublishedSchedules(){
+    
+  }
 
 }

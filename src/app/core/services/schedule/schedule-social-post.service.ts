@@ -111,9 +111,11 @@ export class ScheduleSocialPostService {
   }
 
   scheduleInstagramImagePost(postedText, scheduledDate, mediaFile, selectedList) {
+    this.spinner.show();
     return new Promise((resolve, reject) => {
       this._mediaUploadService.uploadMedia('Instagram', '123', mediaFile).subscribe((media: any) => {
         selectedList.map(item => {
+          
           item.instagramAccountID = item.instagram_business_account.id
           item.pageAccessToken = item.linkedFbPagetoken
           item.caption = postedText;

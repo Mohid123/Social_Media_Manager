@@ -121,15 +121,15 @@ export class PublishComponent implements OnInit {
           this.cf.detectChanges();
         })
         this.facebookPages.forEach(item => {
-          this.getIGAccountDetails(item.pageID, item.pageAccessToken).subscribe((igAccount: any) => {
-            if (igAccount.hasOwnProperty('instagram_business_account')) {
-              igAccount.isSelected = false;
-              igAccount.igProfileName = 'Instagram Account'
-              igAccount.name = 'Instagram Account'
-              igAccount.linkedFbPagetoken = item.pageAccessToken
-              igAccount.captureImageURL = this.instagramProfileUrl;
-              this.checklist.push(igAccount);
-              this.tempList.push(igAccount);
+          this.getIGAccountDetails(item.pageID, item.pageAccessToken).subscribe((account: any) => {
+            if (account.hasOwnProperty('instagram_business_account')) {
+              account.isSelected = false;
+              account.igProfileName = 'Instagram Account'
+              account.name = 'Instagram Account'
+              account.linkedFbPagetoken = item.pageAccessToken
+              account.captureImageURL = this.instagramProfileUrl;
+              this.checklist.push(account);
+              this.tempList.push(account);
               this.cf.detectChanges()
             }
           })
@@ -487,7 +487,7 @@ export class PublishComponent implements OnInit {
             }
           })
         })
-      }
+      }http://example.com/index.html?url=
 
 
       if (selectedClub) {

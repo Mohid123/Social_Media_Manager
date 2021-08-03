@@ -352,7 +352,7 @@ export class InstagramComponent implements OnInit {
       return;
     }
     else if (this.checkedList.length == 0) {
-      this.toast.error('No Page Selected', 'Please select Facebook Pages to post');
+      this.toast.error('No Page Selected', 'Please select Instagram account to post');
       return;
     }
     else if (this._scheduleService.validateScheduleDate(this.scheduleSelectedDate, this.scheduleSelectedTime)) {
