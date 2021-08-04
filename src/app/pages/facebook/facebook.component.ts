@@ -1,4 +1,4 @@
-import { filter, publish } from 'rxjs/operators';
+import { filter, publish, take } from 'rxjs/operators';
 import { ReportService } from './../../core/services/report.service';
 import { Report } from './../../core/models/report.model';
 import { MediauploadService } from './../../core/services/mediaupload.service';
@@ -167,7 +167,6 @@ export class FacebookComponent implements OnInit {
     let callsList = []
     this._authService.getSignedInUser().subscribe(user => {
       this.signedInUser = user;
-      console.log(this.signedInUser)
       for (let i = 0; i <= user.FBPages.length - 1; i++) {
         ;
         this._facebookService.getPublishedPostsOnFBPages(user.FBPages[i].pageID, user.FBPages[i].pageAccessToken).subscribe((postObjects: any) => {
@@ -295,7 +294,7 @@ export class FacebookComponent implements OnInit {
     this._mediaUploadService.uploadMedia('Facebook', this.signedInUser.id, this.file).subscribe((media: any) => {
       this.checkedList.forEach((item, index, array) => {
         this._reportService.createReport(2, "", 'Facebook')
-        this._facebookService.addVideoPost(item.pageID, item.pageAccessToken, media.url, this.facebookCaption).subscribe((video: any) => {
+        this._facebookService.addVideoPost(item.pageID, item.pageAccessToken, media.url, this.facebookCaption).pipe(take(1)).subscribe((video: any) => {
           this._reportService.createReport(1, video.id, 'Facebook')
           if (index == array.length - 1) {
             this.toast.success('Video post added to Facebook Pages', 'Success');

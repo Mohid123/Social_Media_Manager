@@ -13,7 +13,10 @@ export class ScheduleComponent implements OnInit  {
   
 
   ngOnInit() {
-    this.getSchedulesByPostedTo()
+    this.getUnpublishedSchedules()
+    // this.getPublishedSchedules()
+    // this.getSchedulesByPostedTo()
+    // this.getQueuedSchedueles()
   }
 
   getSchedulesByPostedTo() {
@@ -32,16 +35,48 @@ export class ScheduleComponent implements OnInit  {
 
   getQueuedSchedueles(){
     this._scheduleService.getQueuedSchedules().subscribe(data=>{
-      console.log(data)
+     let res =  data.map(((item , idx , self)=>{
+       return {
+         id : idx,
+         title : item.postedTo,
+         start : new Date(item.scheduleDate).toISOString().slice(0, 10)
+       }
+     }))
+     this.events = res;
+     this.cf.detectChanges();
+    
     })
   }
 
   getPublishedSchedules(){
-
+    this._scheduleService.getUnPublishedSchedules().subscribe(data=>{
+      let res =  data.map(((item , idx , self)=>{
+        return {
+          id : idx,
+          title : item.postedTo,
+          start : new Date(item.scheduleDate).toISOString().slice(0, 10),
+          // color:'red'
+        }
+      }))
+      console.log(res)
+      this.events = res;
+      this.cf.detectChanges();
+     })
   }
 
   getUnpublishedSchedules(){
-    
+    this._scheduleService.getPublishedSchedules().subscribe(data=>{
+      let res =  data.map(((item , idx , self)=>{
+        return {
+          id : idx,
+          title : item.postedTo,
+          start : new Date(item.scheduleDate).toISOString().slice(0, 10)
+        }
+      }))
+      console.log(res)
+      // this.events = res;
+      // this.cf.detectChanges();
+     })
   }
 
 }

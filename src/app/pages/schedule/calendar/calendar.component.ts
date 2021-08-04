@@ -23,8 +23,14 @@ export class CalendarComponent implements OnInit {
   }
 
   ngOnChanges() {
+    debugger;
+    this.spinner.show()
+    setTimeout(() => {
       this.calendarOptions.events = this.schedules;
       this.cf.detectChanges();
+      this.spinner.hide()
+    }, 1000);
+      
   }
 
   handleDateClick(arg) {
