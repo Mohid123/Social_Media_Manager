@@ -56,7 +56,7 @@ export class ScheduleService {
   }
   
   getClubSchedules(clubID){
-    return this._apiService.get(`/schedule/ClubSchedules`)
+    return this._apiService.get(`/schedule/getClubSchedules/${clubID}`)
 
   }
 

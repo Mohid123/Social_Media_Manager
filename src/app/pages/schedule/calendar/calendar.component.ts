@@ -11,13 +11,19 @@ export class CalendarComponent implements OnInit {
   @Input() schedules: any[];
 
   public options: any
+
   calendarOptions: CalendarOptions = {
     initialView: 'dayGridMonth',
+    // headerToolbar: {
+    //   left: 'prev,next, today',
+    //   center: 'title',
+    //   right: 'dayGridMonth,listWeek'
+    // },
+    
+    
   };
 
   constructor(private spinner: NgxSpinnerService, private cf: ChangeDetectorRef) { }
-
-
   ngOnInit(): void {
     this.showSpinner();
   }
@@ -31,10 +37,6 @@ export class CalendarComponent implements OnInit {
       this.spinner.hide()
     }, 1000);
       
-  }
-
-  handleDateClick(arg) {
-    alert('date click! ' + arg.dateStr)
   }
 
   showSpinner() {
