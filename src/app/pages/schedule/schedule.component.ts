@@ -40,7 +40,7 @@ export class ScheduleComponent implements OnInit  {
     this._scheduleService.getQueuedSchedules().pipe(take(1)).subscribe(data=>{
      let res =  data.map(((item , idx , self)=>{
        return {
-         id : idx,
+         id : item.id,
          title : item.postedTo,
          start : new Date(item.scheduleDate).toISOString().slice(0, 10)
        }

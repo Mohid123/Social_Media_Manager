@@ -19,7 +19,13 @@ export class CalendarComponent implements OnInit {
     //   center: 'title',
     //   right: 'dayGridMonth,listWeek'
     // },
-    
+    eventClick:function(arg){
+      // console.log(arg.event.title)
+      // console.log(arg.event.id)
+      console.log(arg.event._def)
+      // alert(arg.event.start)
+    },
+         
     
   };
 
@@ -38,6 +44,10 @@ export class CalendarComponent implements OnInit {
     }, 1000);
       
   }
+
+  // eventClick(event) {
+  //   console.log(event)
+  // }
 
   showSpinner() {
     this.spinner.show();
