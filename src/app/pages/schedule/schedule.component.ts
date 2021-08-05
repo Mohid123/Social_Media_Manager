@@ -9,16 +9,20 @@ import { Schedule } from './../../core/models/schedule.model';
   templateUrl: './schedule.component.html',
   styleUrls: ['./schedule.component.scss']
 })
-export class ScheduleComponent implements OnInit  {
-  public events: any[] 
+export class ScheduleComponent implements OnInit {
+  public events: any[]
+  clubID: string
 
-  constructor(private _scheduleService: ScheduleService ,  private cf : ChangeDetectorRef) { }
-  
+  constructor(private _scheduleService: ScheduleService, private cf: ChangeDetectorRef) { }
+
 
   ngOnInit() {
-    // this.getUnpublishedSchedules()
-    // this.getPublishedSchedules()
-    // this.getSchedulesByPostedTo()
+    this.getUserClub()
+  }
+
+  getUserClub() {
+    let club = JSON.parse(localStorage.getItem('selectedClub'));
+    this.clubID = club.id;
     this.getQueuedSchedueles()
   }
 
@@ -36,76 +40,76 @@ export class ScheduleComponent implements OnInit  {
     })
   }
 
-  getQueuedSchedueles(){
-    this._scheduleService.getQueuedSchedules().pipe(take(1)).subscribe(data=>{
-     let res =  data.map(((item , idx , self)=>{
-       return {
-         id : item.id,
-         title : item.postedTo,
-         start : new Date(item.scheduleDate).toISOString().slice(0, 10)
-       }
-     }))
-     this.events = res;
-     this.cf.detectChanges();
+  getQueuedSchedueles() {
+    let clubId = JSON.parse(localStorage.getItem('selectedClub')).id;
+    this._scheduleService.getQueuedSchedules(clubId).pipe(take(1)).subscribe(data => {
+      let res = data.map(((item, idx, self) => {
+        return {
+          id: item.id,
+          title: item.postedTo,
+          start: new Date(item.scheduleDate).toISOString().slice(0, 10)
+        }
+      }))
+      this.events = res;
+      this.cf.detectChanges();
     })
   }
 
-  getPublishedSchedules(){
-    this._scheduleService.getUnPublishedSchedules().pipe(take(1)).subscribe(data=>{
-      let res =  data.map(((item , idx , self)=>{
+  getPublishedSchedules() {
+    this._scheduleService.getUnPublishedSchedules(this.clubID).pipe(take(1)).subscribe(data => {
+      let res = data.map(((item, idx, self) => {
         return {
-          id : idx,
-          title : item.postedTo,
-          start : new Date(item.scheduleDate).toISOString().slice(0, 10),
+          id: item.id,
+          title: item.postedTo,
+          start: new Date(item.scheduleDate).toISOString().slice(0, 10),
           // color:'red'
         }
       }))
       console.log(res)
       this.events = res;
       this.cf.detectChanges();
-     })
+    })
   }
 
-  getUnpublishedSchedules(){
-    this._scheduleService.getPublishedSchedules().pipe(take(1)).subscribe(data=>{
-      let res =  data.map(((item , idx , self)=>{
+  getUnpublishedSchedules() {
+    this._scheduleService.getPublishedSchedules(this.clubID).pipe(take(1)).subscribe(data => {
+      let res = data.map(((item, idx, self) => {
         return {
-          id : idx,
-          title : item.postedTo,
-          start : new Date(item.scheduleDate).toISOString().slice(0, 10)
+          id: item.id,
+          title: item.postedTo,
+          start: new Date(item.scheduleDate).toISOString().slice(0, 10)
         }
       }))
       console.log(res)
       this.events = res;
       this.cf.detectChanges();
-     })
+    })
   }
 
-  getFacebookSchedule(){
-          this._scheduleService.getFacebookSchedules().pipe(take(1)).subscribe((data:any)=>{
-      let res =  data.map(((item , idx , self)=>{
+  getFacebookSchedule() {
+    this._scheduleService.getFacebookSchedules(this.clubID).pipe(take(1)).subscribe((data: any) => {
+      let res = data.map(((item, idx, self) => {
         return {
-          id : idx,
-          title : item.postedTo,
-          start : new Date(item.scheduleDate).toISOString().slice(0, 10),
+          id: item.id,
+          title: item.postedTo,
+          start: new Date(item.scheduleDate).toISOString().slice(0, 10),
           color: '#3B5998'
         }
       }))
       console.log(res)
       this.events = res;
       this.cf.detectChanges();
-     })
+    })
   }
 
-  getInstagramSchedule(){
-  
-    this._scheduleService.getInstagramSchedules().pipe(take(1)).subscribe((data:any)=>{
-      let res = data.map (((item, idx, self)=>{
+  getInstagramSchedule() {
+    this._scheduleService.getInstagramSchedules(this.clubID).pipe(take(1)).subscribe((data: any) => {
+      let res = data.map(((item, idx, self) => {
         return {
-          id: idx,
+          id: item.id,
           title: item.postedTo,
-          start: new Date(item.scheduleDate).toISOString().slice(0,10),
-          color:'#D62976'
+          start: new Date(item.scheduleDate).toISOString().slice(0, 10),
+          color: '#D62976'
         }
       }))
       console.log(res)
@@ -115,13 +119,12 @@ export class ScheduleComponent implements OnInit  {
   }
 
   getClubSchedule() {
-    let clubId = JSON.parse(localStorage.getItem("selectedClub")).id;
-    this._scheduleService.getClubSchedules(clubId).pipe(take(1)).subscribe((data:any)=>{
-      let res = data.map (((item, idx, self)=>{
+    this._scheduleService.getClubSchedules(this.clubID).pipe(take(1)).subscribe((data: any) => {
+      let res = data.map(((item, idx, self) => {
         return {
-          id: idx,
+          id: item.id,
           title: item.postedTo,
-          start: new Date(item.scheduleDate).toISOString().slice(0,10),
+          start: new Date(item.scheduleDate).toISOString().slice(0, 10),
           color: '#FBAD50'
         }
       }))
@@ -130,9 +133,4 @@ export class ScheduleComponent implements OnInit  {
       this.cf.detectChanges();
     })
   }
-
-  
-
-
-  
 }

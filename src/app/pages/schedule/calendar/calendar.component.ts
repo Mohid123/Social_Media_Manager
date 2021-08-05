@@ -14,19 +14,12 @@ export class CalendarComponent implements OnInit {
 
   calendarOptions: CalendarOptions = {
     initialView: 'dayGridMonth',
-    // headerToolbar: {
-    //   left: 'prev,next, today',
-    //   center: 'title',
-    //   right: 'dayGridMonth,listWeek'
-    // },
-    eventClick:function(arg){
-      // console.log(arg.event.title)
-      // console.log(arg.event.id)
+
+    eventClick: function (arg) {
       console.log(arg.event._def)
-      // alert(arg.event.start)
     },
-         
-    
+
+
   };
 
   constructor(private spinner: NgxSpinnerService, private cf: ChangeDetectorRef) { }
@@ -35,19 +28,14 @@ export class CalendarComponent implements OnInit {
   }
 
   ngOnChanges() {
-    debugger;
     this.spinner.show()
     setTimeout(() => {
       this.calendarOptions.events = this.schedules;
       this.cf.detectChanges();
       this.spinner.hide()
     }, 1000);
-      
-  }
 
-  // eventClick(event) {
-  //   console.log(event)
-  // }
+  }
 
   showSpinner() {
     this.spinner.show();

@@ -34,24 +34,24 @@ export class ScheduleService {
     return this._apiService.post('/schedule/scheduleInstagramPost', IGpost)
   }
 
-  getQueuedSchedules() : Observable <any>{
-    return this._apiService.get(`/schedule/getQueuedSchedules`)
+  getQueuedSchedules(clubID) : Observable <any>{
+    return this._apiService.get(`/schedule/getQueuedSchedules/${clubID}`)
   }
 
-  getPublishedSchedules(): Observable <any> {
-    return this._apiService.get(`/schedule/getPublishedSchedules`)
+  getPublishedSchedules(clubID): Observable <any> {
+    return this._apiService.get(`/schedule/getPublishedSchedules/${clubID}`)
   }
 
-  getUnPublishedSchedules() : Observable <any> {
-    return this._apiService.get(`/schedule/getUnPublishedSchedules`)
+  getUnPublishedSchedules(clubID) : Observable <any> {
+    return this._apiService.get(`/schedule/getUnPublishedSchedules/${clubID}`)
   }
 
-  getFacebookSchedules(){
-    return this._apiService.get(`/schedule/getFacebookSchedules`)
+  getFacebookSchedules(clubID){
+    return this._apiService.get(`/schedule/getFacebookSchedules/${clubID}`)
   }
 
-  getInstagramSchedules(){
-    return this._apiService.get(`/schedule/getInstagramSchedules`)
+  getInstagramSchedules(clubID){
+    return this._apiService.get(`/schedule/getInstagramSchedules/${clubID}`)
 
   }
   
