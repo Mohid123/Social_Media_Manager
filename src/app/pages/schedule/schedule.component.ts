@@ -1,5 +1,6 @@
 
 import { Component, OnInit, AfterViewInit, ChangeDetectorRef } from '@angular/core';
+import { take } from 'rxjs/operators';
 import { ScheduleService } from './../../core/services/schedule.service';
 
 @Component({
@@ -20,7 +21,7 @@ export class ScheduleComponent implements OnInit  {
   }
 
   getSchedulesByPostedTo() {
-    this._scheduleService.getSchedulesByPostedTo(0, 10, 'Instagram').subscribe((schedules: any) => {
+    this._scheduleService.getSchedulesByPostedTo(0, 10, 'Instagram').pipe(take(1)).subscribe((schedules: any) => {
       const response = schedules.map((schedule, idx) => {
         return {
           id: idx,
@@ -34,7 +35,7 @@ export class ScheduleComponent implements OnInit  {
   }
 
   getQueuedSchedueles(){
-    this._scheduleService.getQueuedSchedules().subscribe(data=>{
+    this._scheduleService.getQueuedSchedules().pipe(take(1)).subscribe(data=>{
      let res =  data.map(((item , idx , self)=>{
        return {
          id : idx,
@@ -44,12 +45,11 @@ export class ScheduleComponent implements OnInit  {
      }))
      this.events = res;
      this.cf.detectChanges();
-    
     })
   }
 
   getPublishedSchedules(){
-    this._scheduleService.getUnPublishedSchedules().subscribe(data=>{
+    this._scheduleService.getUnPublishedSchedules().pipe(take(1)).subscribe(data=>{
       let res =  data.map(((item , idx , self)=>{
         return {
           id : idx,
@@ -65,7 +65,7 @@ export class ScheduleComponent implements OnInit  {
   }
 
   getUnpublishedSchedules(){
-    this._scheduleService.getPublishedSchedules().subscribe(data=>{
+    this._scheduleService.getPublishedSchedules().pipe(take(1)).subscribe(data=>{
       let res =  data.map(((item , idx , self)=>{
         return {
           id : idx,
@@ -74,9 +74,9 @@ export class ScheduleComponent implements OnInit  {
         }
       }))
       console.log(res)
-      // this.events = res;
-      // this.cf.detectChanges();
+      this.events = res;
+      this.cf.detectChanges();
      })
   }
-
+  
 }

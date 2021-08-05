@@ -46,6 +46,20 @@ export class ScheduleService {
     return this._apiService.get(`/schedule/getUnPublishedSchedules`)
   }
 
+  getFacebookSchedules(){
+    return this._apiService.get(`/schedule/getFacebookSchedules`)
+  }
+
+  getInstagramSchedules(){
+    return this._apiService.get(`/schedule/getInstagramSchedules`)
+
+  }
+  
+  getClubSchedules(clubID){
+    return this._apiService.get(`/schedule/ClubSchedules`)
+
+  }
+
   validateScheduleDate(selectedDate, selectedTime) {
 
     selectedDate = new Date(selectedDate.setHours(selectedTime.getHours()));
