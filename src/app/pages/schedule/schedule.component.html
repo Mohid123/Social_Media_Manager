@@ -185,13 +185,13 @@
                 </div>
             </div>
             <div class="card-body">
-                <app-calendar [schedules] = "events" (click)="openVerticallyCentered(content)"></app-calendar>
+                <app-calendar  (selectedSchedule) = "getSelectedSchedule($event)" [schedules] = "events"></app-calendar>
 
 
                 <div class="example-preview ">
 
                     <div>
-                      <ng-template #content let-c="close" let-d="dismiss">
+                      <ng-template #content *ngIf="selectedEvent"   let-c="close" let-d="dismiss">
                         <div class="modal-header d-flex justify-content-center" style="background-color: #1e1e2d;">
                           <h4 class="modal-title" style="color: #fff;">Preview</h4>
                           <button type="button" class="close ml-auto" aria-label="Close" (click)="d('Cross click')"> <i class="ki ki-bold-close icon-sm" style="color:rgba(255, 255, 255, 0.877)"></i>
@@ -232,7 +232,7 @@
                                      
                                     </div>
                                     <div>
-                                        <a href="#" class="font-weight-bold font-size-h5 text-dark-75 text-hover-primary">James Jones</a>
+                                        <a href="#" class="font-weight-bold font-size-h5 text-dark-75 text-hover-primary">{{selectedEvent.id}}</a>
                                         <div class="text-muted">Application Developer</div>
                                      
                                     </div>
@@ -244,7 +244,7 @@
                                         <a  class="text-dark-50 text-hover-primary font-weight-bold mr-lg-8 mb-lg-0 mb-2">
                                   
                                         <i class="far fa-calendar-alt mr-2 font-size-lg"></i>
-                                        02/08/2021 8:00 AM</a>
+                                        </a>
                                       
                                     </div>
                                    

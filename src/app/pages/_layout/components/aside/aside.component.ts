@@ -29,9 +29,10 @@ export class AsideComponent implements OnInit {
   brandClasses: string;
   asideMenuScroll = 1;
   asideSelfMinimizeToggle = false;
-  selectedClub: Club
+  selectedClub
   closeResult: string;
   socialFlag: boolean = false;
+  sponsorPanelExists: boolean = false;
   constructor(private layout: LayoutService,
     private loc: Location,
     private _authService: MainAuthService,
@@ -50,8 +51,14 @@ export class AsideComponent implements OnInit {
   }
 
   set_socialFlag_after_getting_club() {
-    this.selectedClub = JSON.parse(localStorage.getItem('selectedClub')) as Club;
+    this.selectedClub = JSON.parse(localStorage.getItem('selectedClub'));
     this.selectedClub.clubName == "Solis Solution" && this.selectedClub.id == "60db0c52723416289b31f1d9" ? this.socialFlag = true : this.socialFlag = false;
+    if (!this.selectedClub.sponsorPanelUrl) {
+      this.sponsorPanelExists = false
+    }
+    else {
+      this.sponsorPanelExists = true;
+    }
   }
 
   setProp() {
@@ -72,11 +79,13 @@ export class AsideComponent implements OnInit {
   }
 
   routeToSponsorPanel() {
-    let token = localStorage.getItem('club-token');
-    let encrypted = CryptoJS.AES.encrypt(token, 'secretkey123').toString();
-    let encoded =  encodeURIComponent(encrypted);
-    let sponsorPanelUrl = `http://localhost:4300/loading?value=${encoded}`;
-    window.open(sponsorPanelUrl)
+    let sponsorPanelBaseUrl, token, encrypted, encoded, url
+    sponsorPanelBaseUrl = this.selectedClub.sponsorPanelUrl
+    token = localStorage.getItem('club-token');
+    encrypted = CryptoJS.AES.encrypt(token, 'secretkey123').toString();
+    encoded = encodeURIComponent(encrypted);
+    url = `${sponsorPanelBaseUrl}/loading?value=${encoded}`;
+    window.open(url)
   }
 
 

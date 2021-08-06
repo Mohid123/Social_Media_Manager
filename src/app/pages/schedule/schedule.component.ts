@@ -1,9 +1,10 @@
 
-import { Component, OnInit, AfterViewInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ChangeDetectorRef, ViewChild, TemplateRef } from '@angular/core';
 import { take } from 'rxjs/operators';
 import { ScheduleService } from './../../core/services/schedule.service';
 import { Schedule } from './../../core/models/schedule.model';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ModalOptions } from 'angular-bootstrap-md';
 
 @Component({
   selector: 'app-schedule',
@@ -14,18 +15,38 @@ export class ScheduleComponent implements OnInit {
   public events: any[]
   clubID: string
   closeResult: string;
+  selectedEvent: any
+  @ViewChild("content" , { static: false }) modalContent: TemplateRef<any>;
+  private modalConfig: ModalOptions = {
+    backdrop: 'static',
+    keyboard: true,
+    class: 'modal-md',
+  };
 
-  constructor(private _scheduleService: ScheduleService, private cf: ChangeDetectorRef,  private modalService: NgbModal) { }
+
+  constructor(private _scheduleService: ScheduleService, private cf: ChangeDetectorRef, private modalService: NgbModal) {
+    
+   }
 
 
   ngOnInit() {
+    
     this.getUserClub()
   }
 
-  getSelectedSchedule(e) {
+  getSelectedSchedule(event) {
     debugger;
-    
-    console.log(e, 'selectedSchedule')
+    let res = this.events.find(item => {
+      return item.id === event
+    })
+    if (res) {
+      this.selectedEvent = res
+      this.modalService.open(this.modalContent ,  )
+      // this.openVerticallyCentered(this.modalContent ,options:)
+    }
+    else {
+      return ;
+    }
   }
 
 
@@ -39,8 +60,8 @@ export class ScheduleComponent implements OnInit {
     console.log(event)
   }
 
-  openVerticallyCentered(content) {
-    this.modalService.open(content, { centered: true }).result.then((result) => {
+  openVerticallyCentered(previewSelectedSchedule) {
+    this.modalService.open(previewSelectedSchedule, { centered: true }).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;

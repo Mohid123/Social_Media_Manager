@@ -16,13 +16,17 @@ export class CalendarComponent implements OnInit {
 
   calendarOptions: CalendarOptions = {
     initialView: 'dayGridMonth',
-
-    eventClick:  function(arg) {
-      // debugger;
-      console.log(this);
-      
-      // this.selectedSchedule.emit(arg.event._def.publicId)
+    dayMaxEventRows: true, // for all non-TimeGrid views
+    views: {
+      timeGrid: {
+        dayMaxEventRows: 6 // adjust to 6 only for timeGridWeek/timeGridDay
+      }
     },
+    
+    // eventClick:  (arg) => {
+    //   this.selectedSchedule.emit(arg.event._def.publicId)
+    // },
+    
   };
 
   constructor(private spinner: NgxSpinnerService, private cf: ChangeDetectorRef) { }
