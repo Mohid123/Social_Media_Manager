@@ -56,7 +56,7 @@ export class ScheduleComponent implements OnInit {
   }
 
   getPublishedSchedules() {
-    this._scheduleService.getUnPublishedSchedules(this.clubID).pipe(take(1)).subscribe(data => {
+    this._scheduleService.getPublishedSchedules(this.clubID).pipe(take(1)).subscribe(data => {
       let res = data.map(((item, idx, self) => {
         return {
           id: item.id,
@@ -72,7 +72,7 @@ export class ScheduleComponent implements OnInit {
   }
 
   getUnpublishedSchedules() {
-    this._scheduleService.getPublishedSchedules(this.clubID).pipe(take(1)).subscribe(data => {
+    this._scheduleService.getUnPublishedSchedules(this.clubID).pipe(take(1)).subscribe(data => {
       let res = data.map(((item, idx, self) => {
         return {
           id: item.id,

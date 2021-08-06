@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, ChangeDetectorRef, OnChanges } from '@angular/core';
 import { CalendarOptions } from '@fullcalendar/angular';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { scheduled } from 'rxjs';
 
 @Component({
   selector: 'app-calendar',
@@ -16,7 +17,8 @@ export class CalendarComponent implements OnInit {
     initialView: 'dayGridMonth',
 
     eventClick: function (arg) {
-      console.log(arg.event._def)
+      // console.log(this.schedules , 'this')
+      // console.log(arg.event._def)
     },
 
 
@@ -25,6 +27,7 @@ export class CalendarComponent implements OnInit {
   constructor(private spinner: NgxSpinnerService, private cf: ChangeDetectorRef) { }
   ngOnInit(): void {
     this.showSpinner();
+    // console.log(this.schedules)
   }
 
   ngOnChanges() {
