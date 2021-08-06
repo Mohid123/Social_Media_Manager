@@ -3,6 +3,7 @@ import { Component, OnInit, AfterViewInit, ChangeDetectorRef } from '@angular/co
 import { take } from 'rxjs/operators';
 import { ScheduleService } from './../../core/services/schedule.service';
 import { Schedule } from './../../core/models/schedule.model';
+import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-schedule',
@@ -12,8 +13,9 @@ import { Schedule } from './../../core/models/schedule.model';
 export class ScheduleComponent implements OnInit {
   public events: any[]
   clubID: string
+  closeResult: string;
 
-  constructor(private _scheduleService: ScheduleService, private cf: ChangeDetectorRef) { }
+  constructor(private _scheduleService: ScheduleService, private cf: ChangeDetectorRef,  private modalService: NgbModal) { }
 
 
   ngOnInit() {
@@ -31,6 +33,27 @@ export class ScheduleComponent implements OnInit {
     let club = JSON.parse(localStorage.getItem('selectedClub'));
     this.clubID = club.id;
     this.getQueuedSchedueles()
+  }
+
+  eventClick(event) {
+    console.log(event)
+  }
+
+  openVerticallyCentered(content) {
+    this.modalService.open(content, { centered: true }).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+  }
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return `with: ${reason}`;
+    }
   }
 
   getSchedulesByPostedTo() {
