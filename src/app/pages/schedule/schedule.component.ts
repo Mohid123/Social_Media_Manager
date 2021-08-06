@@ -20,6 +20,13 @@ export class ScheduleComponent implements OnInit {
     this.getUserClub()
   }
 
+  getSelectedSchedule(e) {
+    debugger;
+    
+    console.log(e, 'selectedSchedule')
+  }
+
+
   getUserClub() {
     let club = JSON.parse(localStorage.getItem('selectedClub'));
     this.clubID = club.id;
@@ -41,6 +48,7 @@ export class ScheduleComponent implements OnInit {
   }
 
   getQueuedSchedueles() {
+    debugger;
     let clubId = JSON.parse(localStorage.getItem('selectedClub')).id;
     this._scheduleService.getQueuedSchedules(clubId).pipe(take(1)).subscribe(data => {
       let res = data.map(((item, idx, self) => {

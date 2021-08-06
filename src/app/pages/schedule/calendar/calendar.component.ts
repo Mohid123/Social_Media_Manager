@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ChangeDetectorRef, OnChanges } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectorRef, OnChanges, Output, EventEmitter } from '@angular/core';
 import { CalendarOptions } from '@fullcalendar/angular';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { scheduled } from 'rxjs';
@@ -10,24 +10,23 @@ import { scheduled } from 'rxjs';
 })
 export class CalendarComponent implements OnInit {
   @Input() schedules: any[];
+  @Output() selectedSchedule: EventEmitter<any> =   new EventEmitter();
 
   public options: any
 
   calendarOptions: CalendarOptions = {
     initialView: 'dayGridMonth',
 
-    eventClick: function (arg) {
-      // console.log(this.schedules , 'this')
-      // console.log(arg.event._def)
+    eventClick:  function(arg) {
+      // debugger;
+      console.log(this);
+      
+      // this.selectedSchedule.emit(arg.event._def.publicId)
     },
-
-
   };
 
   constructor(private spinner: NgxSpinnerService, private cf: ChangeDetectorRef) { }
   ngOnInit(): void {
-    this.showSpinner();
-    // console.log(this.schedules)
   }
 
   ngOnChanges() {
