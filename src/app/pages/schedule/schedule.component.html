@@ -10,23 +10,14 @@
             <div class="card-header" style="background-color: #1e1e2d;">
                 <div class="card-title">
                     <h3 class="card-label">
-                        <span class="svg-icon svg-icon-primary svg-icon-2x">
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                                width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                    <rect x="0" y="0" width="24" height="24" />
-                                    <path
-                                        d="M14.2928932,16.7071068 C13.9023689,16.3165825 13.9023689,15.6834175 14.2928932,15.2928932 C14.6834175,14.9023689 15.3165825,14.9023689 15.7071068,15.2928932 L19.7071068,19.2928932 C20.0976311,19.6834175 20.0976311,20.3165825 19.7071068,20.7071068 C19.3165825,21.0976311 18.6834175,21.0976311 18.2928932,20.7071068 L14.2928932,16.7071068 Z"
-                                        fill="#fff" fill-rule="nonzero" opacity="0.3" />
-                                    <path
-                                        d="M11,16 C13.7614237,16 16,13.7614237 16,11 C16,8.23857625 13.7614237,6 11,6 C8.23857625,6 6,8.23857625 6,11 C6,13.7614237 8.23857625,16 11,16 Z M11,18 C7.13400675,18 4,14.8659932 4,11 C4,7.13400675 7.13400675,4 11,4 C14.8659932,4 18,7.13400675 18,11 C18,14.8659932 14.8659932,18 11,18 Z"
-                                        fill="#fff" fill-rule="nonzero" />
-                                </g>
-                            </svg>
-                            
-                        </span>
-                        <span class="nav-text" style="color: #fff;"> &nbsp; Search</span>
+                        <span class="svg-icon svg-icon-primary svg-icon-2x"><!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2021-05-14-112058/theme/html/demo1/dist/../src/media/svg/icons/Home/Commode1.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                <rect x="0" y="0" width="24" height="24"/>
+                                <path d="M5.5,4 L18.5,4 C19.3284271,4 20,4.67157288 20,5.5 L20,9.5 C20,10.3284271 19.3284271,11 18.5,11 L5.5,11 C4.67157288,11 4,10.3284271 4,9.5 L4,5.5 C4,4.67157288 4.67157288,4 5.5,4 Z M11,6 C10.4477153,6 10,6.44771525 10,7 C10,7.55228475 10.4477153,8 11,8 L13,8 C13.5522847,8 14,7.55228475 14,7 C14,6.44771525 13.5522847,6 13,6 L11,6 Z" fill="#000000" opacity="0.3"/>
+                                <path d="M5.5,13 L18.5,13 C19.3284271,13 20,13.6715729 20,14.5 L20,18.5 C20,19.3284271 19.3284271,20 18.5,20 L5.5,20 C4.67157288,20 4,19.3284271 4,18.5 L4,14.5 C4,13.6715729 4.67157288,13 5.5,13 Z M11,15 C10.4477153,15 10,15.4477153 10,16 C10,16.5522847 10.4477153,17 11,17 L13,17 C13.5522847,17 14,16.5522847 14,16 C14,15.4477153 13.5522847,15 13,15 L11,15 Z" fill="#000000"/>
+                            </g>
+                        </svg><!--end::Svg Icon--></span>
+                        <span class="nav-text" style="color: #fff;"> &nbsp; Category</span>
 
                     </h3>
                 </div>
@@ -35,12 +26,12 @@
 
                 <div class="card-scroll custom-scrollbar-css p-2 padd">
                     <div class="card-header border-0 pt-5">
-                        <form class="form-inline md-form form-sm d-flex justify-content-center">
+                        <!-- <form class="form-inline md-form form-sm d-flex justify-content-center">
                             <mdb-icon fas icon="search" aria-hidden="true"></mdb-icon>
                             <input 
                                  class="form-control form-control-sm ml-3 w-75"
                                 type="text" placeholder="Search" aria-label="Search" mdbInput>
-                        </form>
+                        </form> -->
 
                     </div>
                     <button (click) = "getQueuedSchedueles()" type="button" class="btn btn-secondary btn-lg btn-block text-left"> <i class="fas fa-circle-notch  "></i>
@@ -48,28 +39,28 @@
                     <span class="font-weight-bolder font-size-base ml-3" style="text-align: -webkit-left;"> Queue</span></button>
                     <button (click) = "getPublishedSchedules()" type="button" class="btn btn-secondary btn-lg btn-block text-left"> <i class="fas fa-check-double"></i>
                     <span class="font-weight-bolder font-size-base ml-3" style="text-align: -webkit-left;"> Published</span></button>
-                    <button type="button" class="btn btn-secondary btn-lg btn-block text-left"><i class="fas fa-exclamation-circle"></i>
+                    <button (click) = "getUnpublishedSchedules()" type="button" class="btn btn-secondary btn-lg btn-block text-left"><i class="fas fa-exclamation-circle"></i>
                     <span class="font-weight-bolder font-size-base ml-3" style="text-align: -webkit-left;"> Unpublished</span></button>
                    
 
 
                     <div class="card-body py-0" style="padding: 0px;">
                       
-                        <div>
+                        <div class="form-group">
 
 
                             <table class="table table-head-custom " id="kt_advance_table_widget_1">
 
                                 <tr class="text-left ">
                                     <td style="width: 20px">
-                                        <label class="checkbox checkbox-sm checkbox-inline">
+                                        <!-- <label class="checkbox checkbox-sm checkbox-inline">
                                             <input 
-                                                type="checkbox" value="1" />
+                                                type="radio" value="1" />
 
                                             <span></span>
                                             <label style="padding-left: 10px;" class="font-weight-bolder ">All schedules</label>
 
-                                        </label>
+                                        </label> -->
 
                                     </td>
                                 </tr>
@@ -83,72 +74,16 @@
                                     <tr >
                                         <ng-container >
                                             <td class="pr-0">
-                                                <div class="d-flex align-items-center ">
-                                                    <label class="checkbox checkbox-sm checkbox-inline">
-                                                        <input type="checkbox" 
-                                                             />
-                                                        <span></span>
-                                                        <div class="symbol symbol-30 symbol-light mr-2"
-                                                            style="padding-left: 10px">
-                                                            <span class="symbol-label">
-                                                                <img src="https://www.freepnglogos.com/uploads/facebook-logo-icon/facebook-logo-icon-file-facebook-icon-svg-wikimedia-commons-4.png"
-                                                                    class="h-100 align-self-end rounded"
-                                                                    style="object-fit: cover; width: 100%" alt="" />
-                                                            </span>
-                                                        </div>
+                                         
+                                                <div class="form-group">
+                                                   
+                                                    <div class="radio-list">
 
-                                                        <div class="d-flex flex-column flex-grow-1 font-weight-bold">
-                                                            <a class="text-dark text-hover-primary font-size-sm text-truncate"
-                                                                style="cursor: pointer;     max-width: 145px;">Facebook</a>
-                                                            <span class="text-muted font-size-sm">Post</span>
-                                                        </div>
-                                                    </label>
-
-
-
-                                                </div>
-                                            </td>
-                                        </ng-container>
-                                    </tr>
-                                    <tr >
-                                        <ng-container >
-                                            <td class="pr-0">
-                                                <div class="d-flex align-items-center ">
-                                                    <label class="checkbox checkbox-sm checkbox-inline">
-                                                        <input type="checkbox" 
-                                                             />
-                                                        <span></span>
-                                                        <div class="symbol symbol-30 symbol-light mr-2"
-                                                            style="padding-left: 10px">
-                                                            <span class="symbol-label">
-                                                                <img src="https://socialapi.solissol.com/api/v1/en/media-upload/mediaFiles/123/test/113ad1ea783c7d107afd8ddc09eb6f23e.svg"
-                                                                    class="h-100 align-self-end rounded"
-                                                                    style="object-fit: cover; width: 100%" alt="" />
-                                                            </span>
-                                                        </div>
-
-                                                        <div class="d-flex flex-column flex-grow-1 font-weight-bold">
-                                                            <a class="text-dark text-hover-primary font-size-sm text-truncate"
-                                                                style="cursor: pointer;     max-width: 145px;">Instagram</a>
-                                                            <span class="text-muted font-size-sm">Post</span>
-                                                        </div>
-                                                    </label>
-
-
-
-                                                </div>
-                                            </td>
-                                        </ng-container>
-                                    </tr>
-                                    <tr >
-                                        <ng-container >
-                                            <td class="pr-0">
-                                                <div class="d-flex align-items-center ">
-                                                    <label class="checkbox checkbox-sm checkbox-inline">
-                                                        <input type="checkbox" 
-                                                             />
-                                                        <span></span>
-                                                        <div class="symbol symbol-30 symbol-light mr-2"
+                                                           <!--CLUB-->
+                                                           <label class="radio">
+                                                            <input type="radio"  name="radios1" (click)="getClubSchedule()"/>
+                                                            <span></span>
+                                                            <div class="symbol symbol-30 symbol-light"
                                                             style="padding-left: 10px">
                                                             <span class="symbol-label">
                                                                 <img src="https://socialapi.solissol.com/api/v1/en/media-upload/mediaFiles/test/123/a7c3ac8096922590b66bbfd21fef66c8.jpg"
@@ -162,20 +97,55 @@
                                                                 style="cursor: pointer;     max-width: 145px;">Solis Solutions</a>
                                                             <span class="text-muted font-size-sm">Post</span>
                                                         </div>
-                                                    </label>
+                                                        </label>
 
+                                                        <!--FACEBOOK-->
+                                                        <label class="radio">
+                                                            <input type="radio" name="radios1" (click)="getFacebookSchedule()"/>
+                                                            <span></span>
+                                                            <div class="symbol symbol-30 symbol-light "
+                                                            style="padding-left: 10px">
+                                                            <span class="symbol-label">
+                                                                <img src="https://www.freepnglogos.com/uploads/facebook-logo-icon/facebook-logo-icon-file-facebook-icon-svg-wikimedia-commons-4.png"
+                                                                    class="h-100 align-self-end rounded"
+                                                                    style="object-fit: cover; width: 100%" alt="" />
+                                                            </span>
+                                                        </div>
 
+                                                        <div class="d-flex flex-column flex-grow-1 font-weight-bold">
+                                                            <a class="text-dark text-hover-primary font-size-sm text-truncate"
+                                                                style="cursor: pointer;     max-width: 145px;">Facebook</a>
+                                                            <span class="text-muted font-size-sm">Post</span>
+                                                        </div>
+                                                        </label>
 
+                                                        <!--INSTA-->
+                                                        <label class="radio radio">
+                                                            <input type="radio"  name="radios1" (click)="getInstagramSchedule()"/>
+                                                            <span></span>
+                                                            <div class="symbol symbol-30 symbol-light"
+                                                            style="padding-left: 10px">
+                                                            <span class="symbol-label">
+                                                                <img src="https://socialapi.solissol.com/api/v1/en/media-upload/mediaFiles/123/test/113ad1ea783c7d107afd8ddc09eb6f23e.svg"
+                                                                    class="h-100 align-self-end rounded"
+                                                                    style="object-fit: cover; width: 100%" alt="" />
+                                                            </span>
+                                                        </div>
+
+                                                        <div class="d-flex flex-column flex-grow-1 font-weight-bold">
+                                                            <a class="text-dark text-hover-primary font-size-sm text-truncate"
+                                                                style="cursor: pointer;     max-width: 145px;">Instagram</a>
+                                                            <span class="text-muted font-size-sm">Post</span>
+                                                        </div>
+                                                        </label>
+
+                                                     
+                                                    </div>
                                                 </div>
                                             </td>
                                         </ng-container>
                                     </tr>
-
-                                    
-
-
-
-
+                              
                                 </tbody>
                             </table>
                         </div>
@@ -186,6 +156,7 @@
         </div>
 
     </div>
+
 
 
 
@@ -208,7 +179,10 @@
                 </div>
             </div>
             <div class="card-body">
-                <app-calendar [schedules] = "events"></app-calendar>
+                <app-calendar [schedules] = "events" ></app-calendar>
+
+                
+               
             </div>
         </div>
       
@@ -240,10 +214,110 @@
                 </div>
             </div>
             <div class="card-body">
+         
+                <div class="d-flex rounded m-2 p-5" style=" border: 0.5px solid #eeeeee">
+                
+                    <div class="flex-shrink-0 mr-7 mt-lg-0 mt-3">
+                        <div class="symbol symbol-40 ">
+                            <img src="https://socialapi.solissol.com/api/v1/en/media-upload/mediaFiles/test/123/a7c3ac8096922590b66bbfd21fef66c8.jpg"
+                                                                    class="h-100 align-self-end rounded"
+                                                                    style="object-fit: cover; width: 100%" alt="" />
+                        </div>
+                   
+                    </div>
+               
+                    <div class="flex-grow-1">
+                   
+                        <div class="d-flex justify-content-between flex-wrap mt-1">
+                            <div class="d-flex mr-3">
+                                <a  class="text-dark-75 text-hover-primary font-size-h5 font-weight-bold mr-3">Jason Muller</a>
+                                <a >
+                                    <i class="flaticon2-correct text-success font-size-h5"></i>
+                                </a>
+                            </div>
+                            <div class="my-lg-0 my-3">
+                               
+                                <a href="#" class="btn btn-sm btn-danger font-weight-bolder text-uppercase">delete</a>
+                            </div>
+                        </div>
+                     
+                        <div class="d-flex flex-wrap justify-content-between mt-1">
+                            <div class="d-flex flex-column flex-grow-1 pr-8">
+                                <div class="d-flex flex-wrap mb-4">
+                                    <a href="#" class="text-dark-50 text-hover-primary font-weight-bold mr-lg-8 mr-5 mb-lg-0 mb-2">
+                              
+                                    <i class="far fa-calendar-alt mr-2 font-size-lg"></i>
+                                    02/08/2021 8:00 AM</a>
+                                  
+                                </div>
+                                <span class="font-weight-bold text-dark-50">I distinguish three main text objectives could be merely to inform people.</span>
+                               
+                            </div>
+                        
+                        </div>
+                      
+                    </div>
+                  
+                </div>
               
 
+
+
+                <div class="card" style="padding: 0px;">
+                   
+                    <div class="card-body1 p-5">
+                     
+                        <div class="d-flex justify-content-end">
+                            <div class="col text-right">
+                                <div ngbDropdown class="d-inline-block">
+                                    <button class="btn" id="dropdownBasic1" ngbDropdownToggle><i
+                                            class="ki ki-bold-more-hor" style="color:black"></i></button>
+                                    <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                                        <button  ngbDropdownItem><i
+                                                class="fas fa-edit mr-2 text-dark"></i>Edit</button>
+                                        <button  ngbDropdownItem><i
+                                                class="fas fa-trash-alt mr-2 text-dark"></i>Delete</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                      
+                        <div class="d-flex align-items-center">
+                            <div class="symbol symbol-60 symbol-xxl-100 mr-5 align-self-start align-self-xxl-center">
+                                <div class="symbol-label">
+                                    <img src="https://socialapi.solissol.com/api/v1/en/media-upload/mediaFiles/test/123/a7c3ac8096922590b66bbfd21fef66c8.jpg"
+                                                                    class="h-100 align-self-end rounded"
+                                                                    style="object-fit: cover; width: 100%" alt="" />
+                                </div>
+                                <i class="symbol-badge bg-success"></i>
+                            </div>
+                            <div>
+                                <a href="#" class="font-weight-bold font-size-h5 text-dark-75 text-hover-primary">James Jones</a>
+                                <div class="text-muted">Application Developer</div>
+                             
+                            </div>
+                        </div>
+                      
+                     
+                        <div class="pt-8 pb-6">
+                            <div class="d-flex flex-wrap mb-4">
+                                <a href="#" class="text-dark-50 text-hover-primary font-weight-bold mr-lg-8 mr-5 mb-lg-0 mb-2">
+                          
+                                <i class="far fa-calendar-alt mr-2 font-size-lg"></i>
+                                02/08/2021 8:00 AM</a>
+                              
+                            </div>
+                           
+                        </div>
+                    
+                        <div class="pb-6">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical.</div>
+                 
+                    </div>
+                   
+                </div>
+               
             </div>
         </div>
      
-    </div> -->
+    </div>  -->
 </div>
