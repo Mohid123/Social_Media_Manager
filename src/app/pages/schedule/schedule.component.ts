@@ -1,8 +1,10 @@
 
-import { Component, OnInit, AfterViewInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ChangeDetectorRef, ViewChild, TemplateRef } from '@angular/core';
 import { take } from 'rxjs/operators';
 import { ScheduleService } from './../../core/services/schedule.service';
 import { Schedule } from './../../core/models/schedule.model';
+import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ModalOptions } from 'angular-bootstrap-md';
 
 @Component({
   selector: 'app-schedule',
@@ -12,18 +14,67 @@ import { Schedule } from './../../core/models/schedule.model';
 export class ScheduleComponent implements OnInit {
   public events: any[]
   clubID: string
+  closeResult: string;
+  selectedEvent: any
+  @ViewChild("content" , { static: false }) modalContent: TemplateRef<any>;
+  private modalConfig: ModalOptions = {
+    backdrop: 'static',
+    keyboard: true,
+    class: 'modal-md',
+  };
 
-  constructor(private _scheduleService: ScheduleService, private cf: ChangeDetectorRef) { }
+
+  constructor(private _scheduleService: ScheduleService, private cf: ChangeDetectorRef, private modalService: NgbModal) {
+    
+   }
 
 
   ngOnInit() {
+    
     this.getUserClub()
   }
+
+  getSelectedSchedule(event) {
+    debugger;
+    let res = this.events.find(item => {
+      return item.id === event
+    })
+    if (res) {
+      this.selectedEvent = res
+      this.modalService.open(this.modalContent ,  )
+      // this.openVerticallyCentered(this.modalContent ,options:)
+    }
+    else {
+      return ;
+    }
+  }
+
 
   getUserClub() {
     let club = JSON.parse(localStorage.getItem('selectedClub'));
     this.clubID = club.id;
     this.getQueuedSchedueles()
+  }
+
+  eventClick(event) {
+    console.log(event)
+  }
+
+  openVerticallyCentered(previewSelectedSchedule) {
+    this.modalService.open(previewSelectedSchedule, { centered: true }).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+  }
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return `with: ${reason}`;
+    }
   }
 
   getSchedulesByPostedTo() {
@@ -41,6 +92,7 @@ export class ScheduleComponent implements OnInit {
   }
 
   getQueuedSchedueles() {
+    debugger;
     let clubId = JSON.parse(localStorage.getItem('selectedClub')).id;
     this._scheduleService.getQueuedSchedules(clubId).pipe(take(1)).subscribe(data => {
       let res = data.map(((item, idx, self) => {

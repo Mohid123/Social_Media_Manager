@@ -52,7 +52,7 @@ import dayGridPlugin from '@fullcalendar/daygrid'; // a plugin!
 import interactionPlugin from '@fullcalendar/interaction';
 import { CalendarComponent } from './schedule/calendar/calendar.component'; // a plugin!
 
-FullCalendarModule.registerPlugins([ // register FullCalendar plugins
+FullCalendarModule.registerPlugins([ 
   dayGridPlugin,
   interactionPlugin
 ]);
