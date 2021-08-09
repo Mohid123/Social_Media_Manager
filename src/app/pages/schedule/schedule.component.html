@@ -53,8 +53,8 @@
 
                                 <tr class="text-left ">
                                     <td style="width: 20px; padding: 20px;" >
-                                        <label class="radio">
-                                            <input type="radio"  name="radios1" checked/>
+                                        <label class="checkbox">
+                                            <input type="checkbox"  name="radios1" checked (click)="getAllSchedule()"/>
                                             <span></span>
                                             <div class="symbol symbol-30 symbol-light"
                                             style="padding-left: 10px">
@@ -83,16 +83,16 @@
                                          
                                                 <div class="form-group">
                                                    
-                                                    <div class="radio-list">
+                                                    <div class="checkbox-list">
 
                                                            <!--CLUB-->
-                                                           <label class="radio">
-                                                            <input type="radio"  name="radios1" (click)="getClubSchedule()"/>
+                                                           <label class="checkbox">
+                                                            <input type="checkbox"  name="radios1" (click)="getClubSchedule()"/>
                                                             <span></span>
                                                             <div class="symbol symbol-30 symbol-light"
-                                                            style="padding-left: 10px">
+                                                            >
                                                             <span class="symbol-label">
-                                                                <img src="https://socialapi.solissol.com/api/v1/en/media-upload/mediaFiles/test/123/a7c3ac8096922590b66bbfd21fef66c8.jpg"
+                                                                <img [src]="selectedClub.logoURL"
                                                                     class="h-100 align-self-end rounded"
                                                                     style="object-fit: cover; width: 100%" alt="" />
                                                             </span>
@@ -100,17 +100,16 @@
 
                                                         <div class="d-flex flex-column flex-grow-1 font-weight-bold">
                                                             <a class="text-dark text-hover-primary font-size-sm text-truncate"
-                                                                style="cursor: pointer;     max-width: 145px;">Solis Solutions</a>
+                                                                style="cursor: pointer;     max-width: 145px;">{{selectedClub.clubName}}</a>
                                                             <span class="text-muted font-size-sm">Post</span>
                                                         </div>
                                                         </label>
 
                                                         <!--FACEBOOK-->
-                                                        <label class="radio">
-                                                            <input type="radio" name="radios1" (click)="getFacebookSchedule()"/>
+                                                        <label class="checkbox">
+                                                            <input type="checkbox" name="radios1" (click)="getFacebookSchedule()"/>
                                                             <span></span>
-                                                            <div class="symbol symbol-30 symbol-light "
-                                                            style="padding-left: 10px">
+                                                            <div class="symbol symbol-30 symbol-light " >
                                                             <span class="symbol-label">
                                                                 <img src="https://www.freepnglogos.com/uploads/facebook-logo-icon/facebook-logo-icon-file-facebook-icon-svg-wikimedia-commons-4.png"
                                                                     class="h-100 align-self-end rounded"
@@ -126,11 +125,10 @@
                                                         </label>
 
                                                         <!--INSTA-->
-                                                        <label class="radio radio">
-                                                            <input type="radio"  name="radios1" (click)="getInstagramSchedule()"/>
+                                                        <label class="checkbox">
+                                                            <input type="checkbox"  name="radios1" (click)="getInstagramSchedule()"/>
                                                             <span></span>
-                                                            <div class="symbol symbol-30 symbol-light"
-                                                            style="padding-left: 10px">
+                                                            <div class="symbol symbol-30 symbol-light">
                                                             <span class="symbol-label">
                                                                 <img src="https://socialapi.solissol.com/api/v1/en/media-upload/mediaFiles/123/test/113ad1ea783c7d107afd8ddc09eb6f23e.svg"
                                                                     class="h-100 align-self-end rounded"

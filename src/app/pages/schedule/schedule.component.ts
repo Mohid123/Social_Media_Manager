@@ -5,6 +5,7 @@ import { ScheduleService } from './../../core/services/schedule.service';
 import { Schedule } from './../../core/models/schedule.model';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ModalOptions } from 'angular-bootstrap-md';
+import { Club } from 'src/app/core/models/club.model';
 
 @Component({
   selector: 'app-schedule',
@@ -13,6 +14,7 @@ import { ModalOptions } from 'angular-bootstrap-md';
 })
 export class ScheduleComponent implements OnInit {
   public events: any[]
+  public selectedClub : Club
   clubID: string
   closeResult: string;
   selectedEvent: any
@@ -22,6 +24,9 @@ export class ScheduleComponent implements OnInit {
     keyboard: true,
     class: 'modal-md',
   };
+
+
+
 
 
   constructor(private _scheduleService: ScheduleService, private cf: ChangeDetectorRef, private modalService: NgbModal) {
@@ -51,8 +56,10 @@ export class ScheduleComponent implements OnInit {
 
 
   getUserClub() {
-    let club = JSON.parse(localStorage.getItem('selectedClub'));
-    this.clubID = club.id;
+  // public selectedClub: Club = JSON.parse(localStorage.getItem('selectedClub'));
+
+    this.selectedClub =  JSON.parse(localStorage.getItem('selectedClub')) as Club;
+    this.clubID = this.selectedClub.id 
     this.getQueuedSchedueles()
   }
 
@@ -99,7 +106,8 @@ export class ScheduleComponent implements OnInit {
         return {
           id: item.id,
           title: item.postedTo,
-          start: new Date(item.scheduleDate).toISOString().slice(0, 10)
+          start: new Date(item.scheduleDate).toISOString().slice(0, 10),
+          
         }
       }))
       this.events = res;
@@ -177,12 +185,17 @@ export class ScheduleComponent implements OnInit {
           id: item.id,
           title: item.postedTo,
           start: new Date(item.scheduleDate).toISOString().slice(0, 10),
-          color: '#FBAD50'
+          color: JSON.parse(localStorage.getItem('selectedClub')).clubColor
         }
       }))
       console.log(res)
       this.events = res;
       this.cf.detectChanges();
     })
+  }
+
+
+  getAllSchedule(){
+   
   }
 }
