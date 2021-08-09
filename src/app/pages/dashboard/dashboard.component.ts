@@ -54,6 +54,7 @@ export class DashboardComponent implements OnInit {
   public instagramStatistics: any = [0, 0, 0, 0, 0, 0, 0, 0]
   public clubStatistics: any = [0, 0, 0, 0, 0, 0, 0, 0]
   public selectedClub: Club
+  clubPrimaryColor : string 
   // public clubName: string = localStorage.getItem('club');
   // public clubLogo: string = localStorage.getItem('clubLogo')
 
@@ -72,6 +73,7 @@ export class DashboardComponent implements OnInit {
   getSelectedClub() {
     let club = JSON.parse(localStorage.getItem('selectedClub'));
     this.selectedClub = club;
+    this.clubPrimaryColor = this.selectedClub.clubColor;
   }
 
   initializeStatsChart() {
