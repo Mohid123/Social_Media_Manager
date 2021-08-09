@@ -22,6 +22,7 @@ export class ScheduleService {
   }
 
   schduleClubPost(postedTo , clubID, post) : Observable <any> {
+    debugger;
     post.postedTo = postedTo
     return this._apiService.post(`/schedule/scheduleClubPost/${clubID}`, post);
   }

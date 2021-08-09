@@ -166,6 +166,12 @@ export class ScheduleClubPostService {
   }
 
 
+  schedulePollPost(post){
+    post.jwtToken =  this.clubToken
+   return this._scheduleService.schduleClubPost('Club' , this.clubID , post )
+  }
+
+
   scheduleVideoPost(postedText, postedTo, userID, MediaFile, scheduledDate, selectedList) {
     return new Promise((resolve, reject) => {
       let hyperLinkResponse = [];

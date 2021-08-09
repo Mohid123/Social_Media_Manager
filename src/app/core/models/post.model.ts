@@ -32,7 +32,7 @@ export class Post {
   poll: Poll;
   pinPost: boolean;
   backgroundColorHex: any;
-
+  scheduleDate : any
   constructor() {
     this.id = "",
     this.userID = "", 
