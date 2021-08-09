@@ -420,7 +420,7 @@ export class TeamtalkersComponent implements OnInit {
     let events = [];
     let club = []
 
-    if (this.teamtalkerCaption == "") {
+    if (this.teamtalkerCaption.trim() == "") {
       this.toast.error("Please add content to post", "No Content Added");
       return;
     } else if (this.checkedList.length == 0) {
@@ -553,7 +553,7 @@ export class TeamtalkersComponent implements OnInit {
     let events = [];
     let club = []
 
-    if (this.teamtalkerCaption == "") {
+    if (this.teamtalkerCaption.trim() == "") {
       this.toast.error("Please add content to post", "No Content Added");
       return;
     } else if (this.checkedList.length == 0) {
@@ -757,6 +757,7 @@ export class TeamtalkersComponent implements OnInit {
           this.post.scheduleDate = this._scheduleService.getScheduleEpox;
           this._scheduleClubPostService.schedulePollPost(this.post).subscribe(data => {
             this.toast.success('Poll Post Scheduled Successfully');
+            this.resetSchedulePost()
           })
           return
         }

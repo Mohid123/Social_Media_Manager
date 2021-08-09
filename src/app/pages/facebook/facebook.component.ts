@@ -135,6 +135,7 @@ export class FacebookComponent implements OnInit {
     this.url = ""
     this.facebookCaption = ""
     this.file = ""
+    this.showSchedule = false;
     this.removeSlectedItems();
     this.cf.detectChanges();
   }
@@ -316,7 +317,7 @@ export class FacebookComponent implements OnInit {
 
   addTextPost() {
 
-    if (this.facebookCaption == "") {
+    if (this.facebookCaption.trim() == "") {
       this.toast.error('Please add content to post', 'No Content Added');
       return;
     }
@@ -354,7 +355,7 @@ export class FacebookComponent implements OnInit {
   scheduleTextPostForFB() {
     debugger;
     let selectedList = this.checkedList;
-    if (this.facebookCaption == "") {
+    if (this.facebookCaption.trim() == "") {
       this.toast.error('Please add content to post', 'No Content Added');
       return;
     }
@@ -363,7 +364,12 @@ export class FacebookComponent implements OnInit {
       return;
     }
     else if (this._scheduleService.validateScheduleDate(this.scheduleSelectedDate, this.scheduleSelectedTime)) {
-      this._scheduleSocialPostService.scheduleFacebookTextPost(this.facebookCaption, this._scheduleService.getScheduleEpox, selectedList)
+      this._scheduleSocialPostService.scheduleFacebookTextPost(this.facebookCaption, this._scheduleService.getScheduleEpox, selectedList).then(()=>{
+        this.postedSuccessfully()
+      })
+    }
+    else {
+      this.toast.error("Schedule should be 5 minutes ahead of current time", "info");
     }
   }
 
@@ -381,7 +387,12 @@ export class FacebookComponent implements OnInit {
       return;
     }
     else if (this._scheduleService.validateScheduleDate(this.scheduleSelectedDate, this.scheduleSelectedTime)) {
-      this._scheduleSocialPostService.scheduleFacebookImagePost(this.facebookCaption, this._scheduleService.getScheduleEpox, this.file, selectedList)
+      this._scheduleSocialPostService.scheduleFacebookImagePost(this.facebookCaption, this._scheduleService.getScheduleEpox, this.file, selectedList).then(()=>{
+        this.postedSuccessfully()
+      })
+    }
+    else {
+      this.toast.error("Schedule should be 5 minutes ahead of current time", "info");
     }
 
   }
@@ -400,7 +411,9 @@ export class FacebookComponent implements OnInit {
       return;
     }
     else if (this._scheduleService.validateScheduleDate(this.scheduleSelectedDate, this.scheduleSelectedTime)) {
-      this._scheduleSocialPostService.scheduleFacebookVideoPost(this.facebookCaption, this._scheduleService.getScheduleEpox, this.file, selectedList)
+      this._scheduleSocialPostService.scheduleFacebookVideoPost(this.facebookCaption, this._scheduleService.getScheduleEpox, this.file, selectedList).then(()=>{
+        this.postedSuccessfully()
+      })
     } 
 
     else {

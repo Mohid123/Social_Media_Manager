@@ -51,6 +51,7 @@ export class ScheduleSocialPostService {
   }
 
   scheduleFacebookImagePost(postedText, scheduledDate, mediaFile, selectedList) {
+    debugger;
     this.spinner.show()
     return new Promise((resolve, reject) => {
       this._mediaUploadService.uploadMedia('Facebook', '123', mediaFile).subscribe((media: any) => {
