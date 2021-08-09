@@ -14,52 +14,44 @@ import { Club } from 'src/app/core/models/club.model';
 })
 export class ScheduleComponent implements OnInit {
   public events: any[]
-  public selectedClub : Club
+  public selectedClub: Club
   clubID: string
   closeResult: string;
   selectedEvent: any
-  @ViewChild("content" , { static: false }) modalContent: TemplateRef<any>;
+  @ViewChild("content", { static: false }) modalContent: TemplateRef<any>;
   private modalConfig: ModalOptions = {
     backdrop: 'static',
     keyboard: true,
     class: 'modal-md',
   };
 
-
-
-
-
-  constructor(private _scheduleService: ScheduleService, private cf: ChangeDetectorRef, private modalService: NgbModal) {
-    
-   }
+  constructor(
+    private _scheduleService: ScheduleService,
+    private cf: ChangeDetectorRef,
+    private modalService: NgbModal) {}
 
 
   ngOnInit() {
-    
     this.getUserClub()
   }
 
   getSelectedSchedule(event) {
-    debugger;
     let res = this.events.find(item => {
       return item.id === event
     })
     if (res) {
       this.selectedEvent = res
-      this.modalService.open(this.modalContent ,  )
-      // this.openVerticallyCentered(this.modalContent ,options:)
+      this.modalService.open(this.modalContent)
     }
     else {
-      return ;
+      return;
     }
   }
 
 
   getUserClub() {
-  // public selectedClub: Club = JSON.parse(localStorage.getItem('selectedClub'));
-
-    this.selectedClub =  JSON.parse(localStorage.getItem('selectedClub')) as Club;
-    this.clubID = this.selectedClub.id 
+    this.selectedClub = JSON.parse(localStorage.getItem('selectedClub')) as Club;
+    this.clubID = this.selectedClub.id
     this.getQueuedSchedueles()
   }
 
@@ -99,7 +91,6 @@ export class ScheduleComponent implements OnInit {
   }
 
   getQueuedSchedueles() {
-    debugger;
     let clubId = JSON.parse(localStorage.getItem('selectedClub')).id;
     this._scheduleService.getQueuedSchedules(clubId).pipe(take(1)).subscribe(data => {
       let res = data.map(((item, idx, self) => {
@@ -107,7 +98,7 @@ export class ScheduleComponent implements OnInit {
           id: item.id,
           title: item.postedTo,
           start: new Date(item.scheduleDate).toISOString().slice(0, 10),
-          
+
         }
       }))
       this.events = res;
@@ -147,11 +138,12 @@ export class ScheduleComponent implements OnInit {
   }
 
   getFacebookSchedule() {
+    debugger;
     this._scheduleService.getFacebookSchedules(this.clubID).pipe(take(1)).subscribe((data: any) => {
       let res = data.map(((item, idx, self) => {
         return {
           id: item.id,
-          title: item.postedTo,
+          title: item.postedTo + ':' + item.post.pageName,
           start: new Date(item.scheduleDate).toISOString().slice(0, 10),
           color: '#3B5998'
         }
@@ -195,7 +187,7 @@ export class ScheduleComponent implements OnInit {
   }
 
 
-  getAllSchedule(){
-   
+  getAllSchedule() {
+
   }
 }

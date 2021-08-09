@@ -3,7 +3,8 @@ import { constants } from 'src/app/app.constants';
 import { ClubApiService } from './club_api.service';
 import { ApiService } from './api.service';
 import * as moment from "moment";
-import { Observable, ObservedValueOf } from 'rxjs';
+import { Observable, ObservedValueOf, scheduled } from 'rxjs';
+import { Schedule } from './../models/schedule.model';
 
 @Injectable({
   providedIn: 'root'
@@ -52,7 +53,10 @@ export class ScheduleService {
 
   getInstagramSchedules(clubID){
     return this._apiService.get(`/schedule/getInstagramSchedules/${clubID}`)
+  }
 
+  deleteSchedule(scheduleId){
+    return this._apiService.get(`/schedule/deleteSchedule/${scheduleId}`);
   }
   
   getClubSchedules(clubID){
