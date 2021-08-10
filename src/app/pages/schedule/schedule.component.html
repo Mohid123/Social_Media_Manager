@@ -228,23 +228,15 @@
                    
                     <div class="card-body1 p-5">
                      
-                        <div class="d-flex justify-content-end" style="position: relative;
+                        <!-- <div class="d-flex justify-content-end" style="position: relative;
                         float: right;
                         left: 30px;
                         top: -18px;">
-                            <div class="col text-right">
-                                <div ngbDropdown class="d-inline-block">
-                                    <button class="btn" id="dropdownBasic1" ngbDropdownToggle><i
-                                            class="ki ki-bold-more-hor" style="color:black"></i></button>
-                                    <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                                        <button  ngbDropdownItem><i
-                                                class="fas fa-edit mr-2 text-dark"></i>Edit</button>
-                                        <button (click) = "deleteSelectedSchedule()"  ngbDropdownItem><i
-                                                class="fas fa-trash-alt mr-2 text-dark"></i>Delete</button>
-                                    </div>
-                                </div>
+                            <div class="col text-right mt-5">
+                                <button class="btn btn-danger"(click) = "deleteSelectedSchedule()"  ngbDropdownItem><i
+                                    class="fas fa-trash-alt mr-2 text-dark"></i>Delete</button>
                             </div>
-                        </div>
+                        </div> -->
                       
                         <div class="d-flex align-items-center">
                             <div class="symbol symbol-40 mr-5 align-self-start align-self-xxl-center">
@@ -276,6 +268,10 @@
                     
                         <div class="pb-0 text-truncate">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical. popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical</div>
                  
+                    </div>
+                    <div class="text-center m-5">
+                        <button class="btn btn-danger btn-block"(click) = "deleteSelectedSchedule()"  ><i
+                            class="fas fa-trash-alt mr-2 " style="color: white"></i>Delete</button>
                     </div>
                    
                 </div> 
