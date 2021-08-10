@@ -187,90 +187,6 @@
                 <app-calendar  (selectedSchedule) = "getSelectedSchedule($event)" [schedules] = "events"></app-calendar>
 
 
-                <div class="example-preview ">
-
-                    <div>
-                      <ng-template #content *ngIf="selectedEvent"   let-c="close" let-d="dismiss">
-                        <div class="modal-header d-flex justify-content-center" style="background-color: #1e1e2d;">
-                          <h4 class="modal-title" style="color: #fff;">Preview</h4>
-                          <button type="button" class="close ml-auto" aria-label="Close" (click)="d('Cross click')"> <i class="ki ki-bold-close icon-sm" style="color:rgba(255, 255, 255, 0.877)"></i>
-                            <span aria-hidden="true">&times;</span>
-                          </button>
-                        </div>
-                        <div class="modal-body d-flex justify-content-center" style="padding:0px">
-                          <!-- <p class="font-size-h5 ">Are you sure, you want to logout?</p> -->
-                          <div class="card m-1" >
-                   
-                            <div class="card-body1 p-5">
-                             
-                                <div class="d-flex justify-content-end" style="position: relative;
-                                float: right;
-                                left: 30px;
-                                top: -18px;">
-                                    <div class="col text-right">
-                                        <div ngbDropdown class="d-inline-block">
-                                            <button class="btn" id="dropdownBasic1" ngbDropdownToggle><i
-                                                    class="ki ki-bold-more-hor" style="color:black"></i></button>
-                                            <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                                                <!-- <button  ngbDropdownItem><i
-                                                        class="fas fa-edit mr-2 text-dark"></i>Edit</button> -->
-                                                <button  ngbDropdownItem><i
-                                                        class="fas fa-trash-alt mr-2 text-dark"></i>Delete</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                              
-                                <div class="d-flex align-items-center">
-                                    <div class="symbol symbol-60 symbol-xxl-100 mr-5 align-self-start align-self-xxl-center">
-                                        <div class="symbol-label">
-                                            <img src="https://socialapi.solissol.com/api/v1/en/media-upload/mediaFiles/test/123/a7c3ac8096922590b66bbfd21fef66c8.jpg"
-                                                                            class="h-100 align-self-end rounded"
-                                                                            style="object-fit: cover; width: 100%" alt="" />
-                                        </div>
-                                     
-                                    </div>
-                                    <div>
-                                        <a href="#" class="font-weight-bold font-size-h5 text-dark-75 text-hover-primary">{{selectedEvent.id}}</a>
-                                        <div class="text-muted">Application Developer</div>
-                                     
-                                    </div>
-                                </div>
-                              
-                             
-                                <div class="pt-3 pb-0">
-                                    <div class="d-flex flex-wrap mb-4">
-                                        <a  class="text-dark-50 text-hover-primary font-weight-bold mr-lg-8 mb-lg-0 mb-2">
-                                  
-                                        <i class="far fa-calendar-alt mr-2 font-size-lg"></i>
-                                        </a>
-                                      
-                                    </div>
-                                   
-                                </div>
-                            
-                                <div class="pb-0 text-truncate">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical. popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical</div>
-                         
-                            </div>
-                           
-                        </div> 
-                        </div>
-                        <div class="modal-footer d-flex justify-content-center">
-                          <button type="button" class="btn btn-light" (click)="c('Close click')">Cancel</button>
-                          <!-- <button type="button" class="btn"  style="background-color: #1e1e2d; color: #fff;" (click)="logout() ; c('Close click')">Yes</button> -->
-                        </div>
-                      </ng-template>
-                  
-                      <!-- <div class="btn btn-icon btn-light w-auto btn-clean d-inline-flex align-items-center btn-lg px-2 mr-5" style="background-color: #1e1e2d; color: #fff;" (click)="openVerticallyCentered(content)">
-                      <span class="text-light font-weight-bold font-size-base mr-1">Hi,</span>
-                      <span class="text-dark-50 font-weight-bolder font-size-base mr-3">&nbsp;{{username}}</span>
-                      <span class="symbol symbol-35 symbol-light-primary">
-                          <span class="symbol-label font-size-h5 font-weight-bold"><i class="fas fa-sign-out-alt" style="color: #1e1e2d;"></i></span>
-                      </span>
-                  </div> -->
-                    </div>
-                  </div>
-
                 
                
             </div>
@@ -305,10 +221,10 @@
             </div>
             <div class="card-body2">
          
-              
+              <!-- PREVIEW SELECTED SCHEDULE -->
 
 
-                <div class="card m-5" >
+                <div class="card m-5" *ngIf="selectedEvent" >
                    
                     <div class="card-body1 p-5">
                      
@@ -323,7 +239,7 @@
                                     <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
                                         <button  ngbDropdownItem><i
                                                 class="fas fa-edit mr-2 text-dark"></i>Edit</button>
-                                        <button  ngbDropdownItem><i
+                                        <button (click) = "deleteSelectedSchedule()"  ngbDropdownItem><i
                                                 class="fas fa-trash-alt mr-2 text-dark"></i>Delete</button>
                                     </div>
                                 </div>
