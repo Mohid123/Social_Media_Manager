@@ -339,6 +339,7 @@ export class InstagramComponent implements OnInit {
     this.url = ""
     this.instaCaption = ""
     this.file = ""
+    this.showSchedule = false;
     this.removeSlectedItems();
     this.cf.detectChanges();
   }
@@ -356,7 +357,9 @@ export class InstagramComponent implements OnInit {
       return;
     }
     else if (this._scheduleService.validateScheduleDate(this.scheduleSelectedDate, this.scheduleSelectedTime)) {
-      this._scheduleSocialPostService.scheduleInstagramImagePost(this.instaCaption, this._scheduleService.getScheduleEpox, this.file, selectedList)
+      this._scheduleSocialPostService.scheduleInstagramImagePost(this.instaCaption, this._scheduleService.getScheduleEpox, this.file, selectedList).then(()=>{
+        this.postedSuccessfully()
+      })
     }
 
     else {
@@ -378,7 +381,9 @@ export class InstagramComponent implements OnInit {
       return;
     }
     else if (this._scheduleService.validateScheduleDate(this.scheduleSelectedDate, this.scheduleSelectedTime)) {
-      this._scheduleSocialPostService.scheduleInstagramVideoPost(this.instaCaption, this._scheduleService.getScheduleEpox, this.file, selectedList)
+      this._scheduleSocialPostService.scheduleInstagramVideoPost(this.instaCaption, this._scheduleService.getScheduleEpox, this.file, selectedList).then(()=>{
+        this.postedSuccessfully()
+      })
     }
 
     else {

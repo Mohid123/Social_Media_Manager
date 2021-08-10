@@ -23,11 +23,11 @@ export class CalendarComponent implements OnInit {
       }
     },
     
-    eventClick:  (arg) => {
-      console.log('event click called')
-      debugger;
-      this.selectedSchedule.emit(arg.event._def.publicId)
-    }
+    // eventClick:  (arg) => {
+    //   console.log('event click called')
+    //   debugger;
+    //   this.selectedSchedule.emit(arg.event._def.publicId)
+    // }
     
   };
 
