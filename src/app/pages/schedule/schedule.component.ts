@@ -6,6 +6,7 @@ import { Schedule } from './../../core/models/schedule.model';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ModalOptions } from 'angular-bootstrap-md';
 import { Club } from 'src/app/core/models/club.model';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-schedule',
@@ -14,17 +15,20 @@ import { Club } from 'src/app/core/models/club.model';
 })
 export class ScheduleComponent implements OnInit {
   public events: any[]
-  public mutatedEvents : any[]
+  public mutatedEvents: any[]
   public selectedClub: Club
   clubID: string
   closeResult: string;
   selectedEvent: any
+  wow: boolean
   @ViewChild("content", { static: false }) modalContent: TemplateRef<any>;
-  
+
   constructor(
     private _scheduleService: ScheduleService,
     private cf: ChangeDetectorRef,
-    private modalService: NgbModal) { }
+    private modalService: NgbModal,
+    private toast : ToastrService
+    ) { }
 
 
   ngOnInit() {
@@ -36,18 +40,22 @@ export class ScheduleComponent implements OnInit {
       return item.id === event
     })
     if (res) {
-    this.selectedEvent = res
-    console.log(this.selectedEvent)
-    this.deleteSelectedSchedule() 
-  }
-  else {
-    return
-  }
+      this.selectedEvent = res
+      console.log(this.selectedEvent)
+    }
+    else {
+      return
+    }
   }
 
-  deleteSelectedSchedule(){
-    this._scheduleService.deleteSchedule(this.selectedEvent.id).subscribe(events=>{
-      console.log(events)
+  deleteSelectedSchedule() {
+    this._scheduleService.deleteSchedule(this.selectedEvent.id).subscribe(res => {
+      console.log(res);
+      setTimeout(() => {
+      this.toast.success('Schedule Deleted','Success')
+      }, 1000);
+      this.selectedEvent = ''
+      this.getQueuedSchedueles()
     })
   }
 
@@ -102,7 +110,8 @@ export class ScheduleComponent implements OnInit {
           title: item.postedTo,
           start: new Date(item.scheduleDate).toISOString().slice(0, 10),
           post: item.post,
-          index : idx
+          index: idx,
+          status: item.status
         }
       }))
       this.events = res;
@@ -118,7 +127,9 @@ export class ScheduleComponent implements OnInit {
           id: item.id,
           title: item.postedTo,
           start: new Date(item.scheduleDate).toISOString().slice(0, 10),
-          post : item.post
+          post: item.post,
+          status: item.status
+
           // color:'red'
         }
       }))
@@ -135,7 +146,9 @@ export class ScheduleComponent implements OnInit {
           id: item.id,
           title: item.postedTo,
           start: new Date(item.scheduleDate).toISOString().slice(0, 10),
-          post: item.post
+          post: item.post,
+          status: item.status
+
 
         }
       }))
@@ -154,6 +167,8 @@ export class ScheduleComponent implements OnInit {
           title: item.postedTo + ':' + item.post.pageName,
           start: new Date(item.scheduleDate).toISOString().slice(0, 10),
           post: item.post,
+          status: item.status,
+
 
           color: '#3B5998'
         }
@@ -172,7 +187,9 @@ export class ScheduleComponent implements OnInit {
           title: item.postedTo,
           start: new Date(item.scheduleDate).toISOString().slice(0, 10),
           color: '#D62976',
-          post: item.post
+          post: item.post,
+          status: item.status
+
 
         }
       }))
@@ -190,7 +207,9 @@ export class ScheduleComponent implements OnInit {
           title: item.postedTo,
           start: new Date(item.scheduleDate).toISOString().slice(0, 10),
           color: JSON.parse(localStorage.getItem('selectedClub')).clubColor,
-          post: item.post
+          post: item.post,
+          status: item.status
+
         }
       }))
       console.log(res)
