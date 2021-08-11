@@ -46,7 +46,6 @@ export class ScheduleComponent implements OnInit {
     })
     if (res) {
       this.selectedEvent = res
-      console.log(this.selectedEvent)
     }
     else {
       return
@@ -121,7 +120,6 @@ export class ScheduleComponent implements OnInit {
       }))
       this.events = res;
       this.showDeleteBtn = true;
-      console.log(this.events)
       this.cf.detectChanges();
     })
   }
@@ -139,7 +137,6 @@ export class ScheduleComponent implements OnInit {
           // color:'red'
         }
       }))
-      console.log(res)
       this.showDeleteBtn = false;
 
       this.events = res;
