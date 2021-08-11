@@ -6,6 +6,7 @@ import { Schedule } from './../../core/models/schedule.model';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ModalOptions } from 'angular-bootstrap-md';
 import { Club } from 'src/app/core/models/club.model';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-schedule',
@@ -14,38 +15,53 @@ import { Club } from 'src/app/core/models/club.model';
 })
 export class ScheduleComponent implements OnInit {
   public events: any[]
+  public mutatedEvents: any[]
   public selectedClub: Club
   clubID: string
   closeResult: string;
   selectedEvent: any
+  showDeleteBtn: boolean = false
+  radios1: any = null
   @ViewChild("content", { static: false }) modalContent: TemplateRef<any>;
-  private modalConfig: ModalOptions = {
-    backdrop: 'static',
-    keyboard: true,
-    class: 'modal-md',
-  };
 
   constructor(
     private _scheduleService: ScheduleService,
     private cf: ChangeDetectorRef,
-    private modalService: NgbModal) {}
+    private modalService: NgbModal,
+    private toast: ToastrService
+  ) { }
 
 
   ngOnInit() {
     this.getUserClub()
+    this.getFacebookSchedule()
+    this.getInstagramSchedule()
+    this.getClubSchedule()
   }
 
   getSelectedSchedule(event) {
+    debugger;
     let res = this.events.find(item => {
       return item.id === event
     })
     if (res) {
       this.selectedEvent = res
-      this.modalService.open(this.modalContent)
+      console.log(this.selectedEvent)
     }
     else {
-      return;
+      return
     }
+  }
+
+  deleteSelectedSchedule() {
+    this._scheduleService.deleteSchedule(this.selectedEvent.id).subscribe(res => {
+      console.log(res);
+      setTimeout(() => {
+        this.toast.success('Schedule Deleted', 'Success')
+      }, 1000);
+      this.selectedEvent = ''
+      this.getQueuedSchedueles()
+    })
   }
 
 
@@ -80,7 +96,7 @@ export class ScheduleComponent implements OnInit {
     this._scheduleService.getSchedulesByPostedTo(0, 10, 'Instagram').pipe(take(1)).subscribe((schedules: any) => {
       const response = schedules.map((schedule, idx) => {
         return {
-          id: idx,
+          id: schedule.id,
           title: schedule.postedTo,
           start: new Date(schedule.createdAt).toISOString().slice(0, 10)
         }
@@ -98,10 +114,14 @@ export class ScheduleComponent implements OnInit {
           id: item.id,
           title: item.postedTo,
           start: new Date(item.scheduleDate).toISOString().slice(0, 10),
-
+          post: item.post,
+          index: idx,
+          status: item.status
         }
       }))
       this.events = res;
+      this.showDeleteBtn = true;
+      console.log(this.events)
       this.cf.detectChanges();
     })
   }
@@ -113,10 +133,15 @@ export class ScheduleComponent implements OnInit {
           id: item.id,
           title: item.postedTo,
           start: new Date(item.scheduleDate).toISOString().slice(0, 10),
+          post: item.post,
+          status: item.status
+
           // color:'red'
         }
       }))
       console.log(res)
+      this.showDeleteBtn = false;
+
       this.events = res;
       this.cf.detectChanges();
     })
@@ -128,10 +153,13 @@ export class ScheduleComponent implements OnInit {
         return {
           id: item.id,
           title: item.postedTo,
-          start: new Date(item.scheduleDate).toISOString().slice(0, 10)
+          start: new Date(item.scheduleDate).toISOString().slice(0, 10),
+          post: item.post,
+          status: item.status
         }
       }))
-      console.log(res)
+      this.showDeleteBtn = false;
+
       this.events = res;
       this.cf.detectChanges();
     })
@@ -145,11 +173,15 @@ export class ScheduleComponent implements OnInit {
           id: item.id,
           title: item.postedTo + ':' + item.post.pageName,
           start: new Date(item.scheduleDate).toISOString().slice(0, 10),
+          post: item.post,
+          status: item.status,
           color: '#3B5998'
         }
       }))
-      console.log(res)
+      localStorage.setItem('fbsch', encodeURIComponent(JSON.stringify(res)))
       this.events = res;
+      this.showDeleteBtn = false;
+
       this.cf.detectChanges();
     })
   }
@@ -161,11 +193,15 @@ export class ScheduleComponent implements OnInit {
           id: item.id,
           title: item.postedTo,
           start: new Date(item.scheduleDate).toISOString().slice(0, 10),
-          color: '#D62976'
+          color: '#D62976',
+          post: item.post,
+          status: item.status
         }
       }))
-      console.log(res)
+      localStorage.setItem('igsch', encodeURIComponent(JSON.stringify(res)))
       this.events = res;
+      this.showDeleteBtn = false;
+
       this.cf.detectChanges();
     })
   }
@@ -177,17 +213,33 @@ export class ScheduleComponent implements OnInit {
           id: item.id,
           title: item.postedTo,
           start: new Date(item.scheduleDate).toISOString().slice(0, 10),
-          color: JSON.parse(localStorage.getItem('selectedClub')).clubColor
+          color: JSON.parse(localStorage.getItem('selectedClub')).clubColor,
+          post: item.post,
+          status: item.status
+
         }
       }))
-      console.log(res)
+      localStorage.setItem('clubsch', encodeURIComponent(JSON.stringify(res)))
       this.events = res;
+      this.showDeleteBtn = false;
+
       this.cf.detectChanges();
     })
   }
 
+  clearFilter() {
+    // console.log(this.radioList)
+  }
 
   getAllSchedule() {
+    let clubSch, fbSch, igSch, spread
+    clubSch = JSON.parse(decodeURIComponent(localStorage.getItem('clubsch')));
+    fbSch = JSON.parse(decodeURIComponent(localStorage.getItem('fbsch')));
+    igSch = JSON.parse(decodeURIComponent(localStorage.getItem('igsch')));
+    spread = [...clubSch, ...fbSch, ...igSch];
+    this.events = spread;
+    this.showDeleteBtn = false;
 
+    this.cf.detectChanges()
   }
 }

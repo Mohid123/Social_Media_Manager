@@ -31,13 +31,25 @@
             <div class="card-body" style="padding: 0px;">
                 <div class="card-scroll custom-scrollbar-css p-2" style="height: 660px;">
                     <div class="card-header border-0 pt-5">
-                        <form class="form-inline md-form form-sm d-flex justify-content-center">
+                        <!-- <form class="form-inline md-form form-sm d-flex justify-content-center">
                             <mdb-icon fas icon="search" aria-hidden="true"></mdb-icon>
                             <input [(ngModel)]="searchString" [ngModelOptions]="{standalone: true}"
                                 (ngModelChange)="searchFacebookPages($event)"
                                 class="form-control form-control-sm ml-3 w-75" type="text" placeholder="Search"
                                 aria-label="Search" mdbInput>
-                        </form>
+                        </form> -->
+
+                        <div class="main">
+                             <div class="input-group">
+                              <input [(ngModel)]="searchString" (ngModelChange)="searchFacebookPages($event)" type="text" class="form-control" placeholder="Search" >
+                              <div class="input-group-append">
+                                <button class="btn btn-secondary" type="button">
+                                  <i class="fa fa-search"></i>
+                                </button>
+                               
+                              </div>
+                            </div>
+                        </div>
 
                     </div>
 

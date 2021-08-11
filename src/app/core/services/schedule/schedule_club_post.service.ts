@@ -27,6 +27,7 @@ export class ScheduleClubPostService {
     this.post = new Post()
     this.clubID = JSON.parse(localStorage.getItem('selectedClub')).id
     this.clubToken = localStorage.getItem('club-token');
+    
 
   }
 

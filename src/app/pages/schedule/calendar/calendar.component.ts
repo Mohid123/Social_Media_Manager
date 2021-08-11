@@ -23,11 +23,9 @@ export class CalendarComponent implements OnInit {
       }
     },
     
-    // eventClick:  (arg) => {
-    //   console.log('event click called')
-    //   debugger;
-    //   this.selectedSchedule.emit(arg.event._def.publicId)
-    // }
+    eventClick:  (arg) => {
+      this.selectedSchedule.emit(arg.event._def.publicId)
+    }
     
   };
 
@@ -36,6 +34,7 @@ export class CalendarComponent implements OnInit {
   }
 
   ngOnChanges() {
+    console.log('ngonchanges called')
     this.spinner.show()
     setTimeout(() => {
       this.calendarOptions.events = this.schedules;

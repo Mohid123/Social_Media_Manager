@@ -91,9 +91,9 @@ export class DashboardComponent implements OnInit {
           color: "#D62976"
         },
         {
-          name: "Club",
+          name: this.selectedClub.clubName,
           data: this.clubStatistics,
-          color: "#FBAD50"
+          color: this.selectedClub.clubColor
         }
       ],
       

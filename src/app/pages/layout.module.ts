@@ -51,6 +51,7 @@ import { FullCalendarModule } from '@fullcalendar/angular';
 import dayGridPlugin from '@fullcalendar/daygrid'; // a plugin!
 import interactionPlugin from '@fullcalendar/interaction';
 import { CalendarComponent } from './schedule/calendar/calendar.component'; // a plugin!
+import { ScheduleDateTransform } from '../core/pipes/scheduleDateTransform.pipe';
 
 FullCalendarModule.registerPlugins([ 
   dayGridPlugin,
@@ -82,6 +83,7 @@ FullCalendarModule.registerPlugins([
     Error5Component,
     MomentPipe,
     MomentPipeIG,
+    ScheduleDateTransform,
     CommingSoonFbComponent,
     ComingSoonIgComponent,
     AdvertisementComponent,
@@ -91,7 +93,7 @@ FullCalendarModule.registerPlugins([
   
   ],
   imports: [
-    FullCalendarModule,
+  FullCalendarModule,
   CommonModule,
     PagesRoutingModule,
     TranslationModule,

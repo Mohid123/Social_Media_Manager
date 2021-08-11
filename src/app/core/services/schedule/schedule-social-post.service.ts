@@ -32,6 +32,7 @@ export class ScheduleSocialPostService {
         item.scheduleDate = scheduledDate;
         item.postType = 'text'
         item.clubID = this.clubID
+        item.color = '#3B5998'
       })
       this.spinner.show();
       selectedList.forEach((element, idx, self) => {
@@ -64,6 +65,7 @@ export class ScheduleSocialPostService {
           item.scheduleDate = scheduledDate
           item.postType = 'image'
           item.clubID = this.clubID
+          item.color = '#3B5998'
 
         });
         selectedList.forEach((element, idx, self) => {
@@ -98,6 +100,7 @@ export class ScheduleSocialPostService {
           item.scheduleDate = scheduledDate
           item.postType = 'video'
           item.clubID = this.clubID
+          item.color = '#3B5998'
 
         });
         selectedList.forEach((element, idx, self) => {
@@ -136,6 +139,7 @@ export class ScheduleSocialPostService {
           item.scheduleDate = scheduledDate
           item.postType = 'image'
           item.clubID = this.clubID
+          item.color = '#D62976'
 
         });
         selectedList.forEach((element, idx, self) => {
@@ -168,6 +172,7 @@ export class ScheduleSocialPostService {
           item.scheduleDate = scheduledDate
           item.postType = 'video'
           item.clubID = this.clubID
+          item.color = '#D62976'
 
           delete item.instagram_business_account.id;
           delete item.linkedFbPagetoken;
