@@ -35,7 +35,8 @@ export class ScheduleComponent implements OnInit {
     this.getUserClub()
   }
 
-  getSelectedSchedule(event) {
+  getSelectedSchedule(event)
+   {
     let res = this.events.find(item => {
       return item.id === event
     })
