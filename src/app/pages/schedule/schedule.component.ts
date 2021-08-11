@@ -20,7 +20,8 @@ export class ScheduleComponent implements OnInit {
   clubID: string
   closeResult: string;
   selectedEvent: any
-  radios1 : any = null
+  showDeleteBtn: boolean = false
+  radios1: any = null
   @ViewChild("content", { static: false }) modalContent: TemplateRef<any>;
 
   constructor(
@@ -39,6 +40,7 @@ export class ScheduleComponent implements OnInit {
   }
 
   getSelectedSchedule(event) {
+    debugger;
     let res = this.events.find(item => {
       return item.id === event
     })
@@ -118,6 +120,7 @@ export class ScheduleComponent implements OnInit {
         }
       }))
       this.events = res;
+      this.showDeleteBtn = true;
       console.log(this.events)
       this.cf.detectChanges();
     })
@@ -137,6 +140,8 @@ export class ScheduleComponent implements OnInit {
         }
       }))
       console.log(res)
+      this.showDeleteBtn = false;
+
       this.events = res;
       this.cf.detectChanges();
     })
@@ -153,6 +158,8 @@ export class ScheduleComponent implements OnInit {
           status: item.status
         }
       }))
+      this.showDeleteBtn = false;
+
       this.events = res;
       this.cf.detectChanges();
     })
@@ -173,6 +180,8 @@ export class ScheduleComponent implements OnInit {
       }))
       localStorage.setItem('fbsch', encodeURIComponent(JSON.stringify(res)))
       this.events = res;
+      this.showDeleteBtn = false;
+
       this.cf.detectChanges();
     })
   }
@@ -191,6 +200,8 @@ export class ScheduleComponent implements OnInit {
       }))
       localStorage.setItem('igsch', encodeURIComponent(JSON.stringify(res)))
       this.events = res;
+      this.showDeleteBtn = false;
+
       this.cf.detectChanges();
     })
   }
@@ -210,6 +221,8 @@ export class ScheduleComponent implements OnInit {
       }))
       localStorage.setItem('clubsch', encodeURIComponent(JSON.stringify(res)))
       this.events = res;
+      this.showDeleteBtn = false;
+
       this.cf.detectChanges();
     })
   }
@@ -225,6 +238,8 @@ export class ScheduleComponent implements OnInit {
     igSch = JSON.parse(decodeURIComponent(localStorage.getItem('igsch')));
     spread = [...clubSch, ...fbSch, ...igSch];
     this.events = spread;
+    this.showDeleteBtn = false;
+
     this.cf.detectChanges()
   }
 }
