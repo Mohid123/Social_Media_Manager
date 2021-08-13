@@ -1,6 +1,8 @@
 <!--begin::Signin-->
 
-<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "default" color = "#fff" type = "ball-spin" [fullScreen] = "true"><p style="color: white" >Please wait..</p></ngx-spinner>
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="default" color="#fff" type="ball-spin" [fullScreen]="true">
+  <p style="color: white">Please wait..</p>
+</ngx-spinner>
 
 <div class="login-form login-signin">
   <h2 class="font-weight-bolder  font-size-h2" style="color: #000000; letter-spacing: 1px;">
@@ -11,88 +13,77 @@
   <div class="example-preview">
     <div>
       <ng-template #content6 let-c="close" let-d="dismiss">
-        <div class="modal-header d-flex justify-content-between" style="background-color: #1e1e2d; padding-bottom: 10px;">
+        <div class="modal-header d-flex justify-content-between"
+          style="background-color: #1e1e2d; padding-bottom: 10px;">
 
           <form>
             <div class="form-group d-flex flex-row" style="float: left;">
-              <label for="exampleInputEmail1" class=" font-size-h2"
-                style="color: #fff;">Select club</label>
-              
+              <label for="exampleInputEmail1" class=" font-size-h2" style="color: #fff;">Select club</label>
+
             </div>
-            
+
             <div class="form-group d-flex flex-row-reverse responsive">
-              <button type="button" class="btn"
-              (click)="c('Close click');searchStarted = false;  " data-toggle="tooltip" title="close window">
-              <i class="ki ki-bold-close icon-sm" style="color:rgba(255, 255, 255, 0.877)"></i>
-            </button>
-            <!-- <button type="button" class="btn-close btn-close-white" aria-label="Close"></button> -->
-           
+              <button type="button" class="btn" (click)="c('Close click');searchStarted = false;  "
+                data-toggle="tooltip" title="close window">
+                <i class="ki ki-bold-close icon-sm" style="color:rgba(255, 255, 255, 0.877)"></i>
+              </button>
+              <!-- <button type="button" class="btn-close btn-close-white" aria-label="Close"></button> -->
+
               <input class="form-control bg-primary-o-30" [ngModelOptions]="{standalone: true}"
                 [(ngModel)]="searchString" (ngModelChange)="searchClub($event)" style="color: #fff;"
                 id="exampleInputEmail1" placeholder="search">
-               
-
             </div>
-            <!-- <div class="form-group d-flex flex-row-reverse" style="float: right; position: absolute; left: 593px">
-              <button type="button" class="btn"
-              (click)="c('Close click');searchStarted = false"><span class="svg-icon svg-icon-primary svg-icon-2x"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                    <g transform="translate(12.000000, 12.000000) rotate(-45.000000) translate(-12.000000, -12.000000) translate(4.000000, 4.000000)" fill="#000000">
-                        <rect x="0" y="7" width="16" height="2" rx="1"/>
-                        <rect opacity="0.3" transform="translate(8.000000, 8.000000) rotate(-270.000000) translate(-8.000000, -8.000000) " x="0" y="7" width="16" height="2" rx="1"/>
-                    </g>
-                </g>
-            </svg></span></button>
-              <input class="form-control bg-primary-o-30" [ngModelOptions]="{standalone: true}"
-                [(ngModel)]="searchString" (ngModelChange)="searchClub($event)" style="color: #fff;"
-                id="exampleInputEmail1" placeholder="Search">
-               
-
-            </div> -->
-        
-
           </form>
           <button type="button" class="close" aria-label="Close" (click)="d('Cross click') ; searchStarted = false">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body d-flex justify-content-center">
-          
+
           <perfect-scrollbar class="media" style="height: 600px">
-            
-            <div *ngIf="noClubFound" class="custom-height d-flex align-items-center justify-content-center" style="width: 100% "> <div class="d-flex flex-column-auto flex-column ">
-                <a  class="text-center">
-                  <img src="./assets/media/bg/app________app____.jpg"  alt="" />
+
+            <div *ngIf="noClubFound" class="custom-height d-flex align-items-center justify-content-center"
+              style="width: 100% ">
+              <div class="d-flex flex-column-auto flex-column ">
+                <a class="text-center">
+                  <img src="./assets/media/bg/app________app____.jpg" alt="" />
                 </a>
-                <h3 class="text-center" >
+                <h3 class="text-center">
                   No record found
-                </h3> 
+                </h3>
               </div>
             </div>
-             <div class="row row-cols-1 row-cols-md-4 g-4" id="items" >
-               <div class="col" *ngFor="let club of allClubs" id="items">
-                <div class="card resp-card"  (click)="onClubSelected(club) ; c('Close click') ; " >
-                  <img src="{{club.logoURL}} " 
+            <div class="row row-cols-1 row-cols-md-4 g-4" id="items">
+              <div class="col" *ngFor="let club of allClubs" id="items">
+                <div class="card resp-card" (click)="onClubSelected(club) ">
+                  <img src="{{club.logoURL}} "
                     class="rounded mx-auto d-block card-img-top size d-flex justify-content-center" alt="...">
-                   
+
                   <ul class="list-group list-group-flush" style="width: 100%;">
-                    <li class="list-group-item d-flex justify-content-center font-weight-bold text-center text-truncate">{{club.clubName}}</li>
+                    <li
+                      class="list-group-item d-flex justify-content-center font-weight-bold text-center text-truncate">
+                      {{club.clubName}}</li>
                   </ul>
                 </div>
               </div>
             </div>
           </perfect-scrollbar>
+        
         </div>
         <div class="modal-footer d-flex justify-content-center">
           <button type="button" class="btn btn-secondary"
             (click)="c('Close click');searchStarted = false">Close</button>
+            
+            <button type="button" class="btn btn-secondary"
+            (click)="showPreviousClubs();searchStarted = false">Back</button>
 
           <!-- <button type="button" class="btn" style="background-color: #1e1e2d; color: #fff;">Save changes</button> -->
         </div>
       </ng-template>
 
       <div class="btn btn-icon btn-light w-auto btn-clean d-inline-flex align-items-center btn-lg px-2 mr-5"
-        (click)="openVerticallyCentered(content6)" data-toggle="tooltip" title="select club before login" style="background-color: #1e1e2d;">
+        (click)="openVerticallyCentered(content6)" data-toggle="tooltip" title="select club before login"
+        style="background-color: #1e1e2d;">
         <span class="svg-icon svg-icon-primary svg-icon-2x">
           <!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2021-05-14-112058/theme/html/demo1/dist/../src/media/svg/icons/Design/Select.svg--><svg
             xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
@@ -109,14 +100,14 @@
           </svg>
           <!--end::Svg Icon-->
         </span>
-        <span class="text-light font-weight-bolder font-size-base mr-3"  >&nbsp;&nbsp;Select club</span>
+        <span class="text-light font-weight-bolder font-size-base mr-3">&nbsp;&nbsp;Select club</span>
 
       </div>
     </div>
   </div>
 
 
- 
+
 
   <!--begin::Form-->
 
@@ -136,18 +127,22 @@
 
     <!--begin::Form group-->
 
-    <div class="alert alert-custom alert-white shadow-sm fade show" role="alert" *ngIf="selectedClub" >
-      <div class="alert-icon"><img src="{{selectedClub.logoURL}}" class="rounded mx-auto d-block card-img-top" style="width: 70px; height: 70px; object-fit: cover;" alt="..."></div>
-    
-      <div class="alert-text"><h3><small>Selected club:&nbsp; </small> {{selectedClub.clubName}}</h3></div>
-      
-  </div>
+    <div class="alert alert-custom alert-white shadow-sm fade show" role="alert" *ngIf="selectedClub">
+      <div class="alert-icon"><img src="{{selectedClub.logoURL}}" class="rounded mx-auto d-block card-img-top"
+          style="width: 70px; height: 70px; object-fit: cover;" alt="..."></div>
+
+      <div class="alert-text">
+        <h3><small>Selected club:&nbsp; </small> {{selectedClub.clubName}}</h3>
+      </div>
+
+    </div>
 
 
     <div class="form-group">
       <label class="font-size-h6 font-weight-bolder text-dark">Email</label>
       <input class="form-control form-control-solid h-auto py-7 px-6 rounded-lg" type="email" name="email"
-        formControlName="email" autocomplete="off" [ngClass]="{ 'is-in valid': loginForm.controls['email'].invalid }" placeholder="e.g johndoe@gmail.com"/>
+        formControlName="email" autocomplete="off" [ngClass]="{ 'is-in valid': loginForm.controls['email'].invalid }"
+        placeholder="e.g johndoe@gmail.com" />
       <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
           validation: 'required',
           message: 'Email is required',
@@ -178,7 +173,8 @@
 
       <input class="form-control form-control-solid h-auto py-7 px-6 rounded-lg" type="password" name="password"
         autocomplete="off" formControlName="password"
-        [ngClass]="{ 'is-in valid': loginForm.controls['password'].invalid }" placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;"/>
+        [ngClass]="{ 'is-in valid': loginForm.controls['password'].invalid }"
+        placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;" />
       <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
           validation: 'required',
           message: 'Password is required',

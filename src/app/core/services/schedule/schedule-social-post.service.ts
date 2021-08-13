@@ -25,7 +25,6 @@ export class ScheduleSocialPostService {
     this.spinner.show()
     return new Promise((resolve, reject) => {
       selectedList.map(item => {
-        // delete item.pageName;
         delete item.isSelected;
         delete item.captureImageURL
         item.caption = postedText;
@@ -57,7 +56,6 @@ export class ScheduleSocialPostService {
     return new Promise((resolve, reject) => {
       this._mediaUploadService.uploadMedia('Facebook', '123', mediaFile).subscribe((media: any) => {
         selectedList.map(item => {
-          // delete item.pageName;
           delete item.isSelected;
           delete item.captureImageURL
           item.imageURL = media.url
@@ -92,7 +90,6 @@ export class ScheduleSocialPostService {
     return new Promise((resolve, reject) => {
       this._mediaUploadService.uploadMedia('Facebook', '123', mediaFile).subscribe((media: any) => {
         selectedList.map(item => {
-          // delete item.pageName;
           delete item.isSelected;
           delete item.captureImageURL
           item.videoUrl = media.url
@@ -165,6 +162,8 @@ export class ScheduleSocialPostService {
     return new Promise((resolve, reject) => {
       this._mediaUploadService.uploadMedia('Instagram', '123', mediaFile).subscribe((media: any) => {
         selectedList.map(item => {
+
+
           item.instagramAccountID = item.instagram_business_account.id
           item.pageAccessToken = item.linkedFbPagetoken
           item.caption = postedText;
