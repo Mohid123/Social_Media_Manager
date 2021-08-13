@@ -44,12 +44,14 @@ export class FacebookComponent implements OnInit {
   public facebookPages: any[] = []
   public tempList: any[] = []
   public masterSelected: boolean
-  public facebookProfileUrl: string = 'https://socialapi.solissol.com/api/v1/en/media-upload/mediaFiles/123/test/6ca2499366f5b5611041fe57e2aac1ee9.svg'
+  public facebookPageImageUrl: string = 'https://socialapi.solissol.com/api/v1/en/media-upload/mediaFiles/123/test/6ca2499366f5b5611041fe57e2aac1ee9.svg'
+  facebookProfileImageUrl : string
   checklist: any = [];
   public userName: string = localStorage.getItem('userName')
   public profileImageUrl: string = localStorage.getItem('profileImageUrl')
   public searchString: string
   checkedList: any;
+
   showDiv = {
     photo: true,
     video: false,
@@ -68,6 +70,7 @@ export class FacebookComponent implements OnInit {
     military: true,
   };
   ngOnInit() {
+    this.facebookProfileImageUrl = JSON.parse(localStorage.getItem('selectedClub')).userFacebookProfile.fbProfileImageUrl
     this.showSpinner();
     this.getSignedInUser();
     this.getCheckedItemList();
@@ -165,9 +168,14 @@ export class FacebookComponent implements OnInit {
   }
 
   getSignedInUser() {
+    debugger;
     let callsList = []
     this._authService.getSignedInUser().subscribe(user => {
       this.signedInUser = user;
+      if (user.FBPages.length == 0) {
+        this.toast.warning('Log in via Facebook to connect your Facebook pages');
+        return;
+      }
       for (let i = 0; i <= user.FBPages.length - 1; i++) {
         ;
         this._facebookService.getPublishedPostsOnFBPages(user.FBPages[i].pageID, user.FBPages[i].pageAccessToken).subscribe((postObjects: any) => {
@@ -180,20 +188,19 @@ export class FacebookComponent implements OnInit {
                   singleItem.pageName = user.FBPages[i].pageName
                 })
                 this.recentFBposts = facebookPosts
+                console.log(this.recentFBposts)
+
                 this.cf.detectChanges();
               })
             }
           });
         })
       }
-      if (user.FBPages.length == 0) {
-        this.toast.warning('Log in via Facebook to connect your Facebook pages');
-        return;
-      }
+    
 
       this.signedInUser.FBPages.map(page => {
         page.isSelected = false;
-        page.captureImageURL = this.facebookProfileUrl
+        page.captureImageURL = this.facebookPageImageUrl
         this.checklist.push(page);
         this.tempList.push(page);
         this.cf.detectChanges();
