@@ -15,6 +15,7 @@ import { ToastrService } from 'ngx-toastr';
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { constants } from 'src/app/app.constants';
+import { filter } from 'rxjs/operators';
 
 
 @Component({
@@ -158,8 +159,12 @@ export class LoginComponent implements OnInit {
 
   getAllClubs() {
     this._clubService.getAllClubs(0, 10).subscribe(clubs => {
-      this.allClubs = clubs;
-      this.tempClubs = clubs;
+      let res =  clubs.filter(item=>{
+       return !item.isPicker
+      })
+      console.log(res , 'response')
+      this.allClubs = res;
+      this.tempClubs = res;
       this.setDefaultClub()
     }, (error) => {
       this.toastr.error(error.message)
@@ -201,7 +206,6 @@ export class LoginComponent implements OnInit {
   }
 
   onClubSelected(club) {
-    debugger;
     if (!club.isPicker) {
       this.modalService.dismissAll()
     }
