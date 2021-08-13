@@ -227,6 +227,19 @@
                 </div>
             </div>
             <div class="card-body2">
+
+            <div *ngIf="!selectedEvent" class="custom-height d-flex align-items-center justify-content-center m-5" 
+               >
+                <div class="d-flex flex-column-auto flex-column mt-30">
+                  <a class="text-center">
+                    <img src="./assets/media/bg/preview-post.png" style="width: 200px" alt="" />
+                  </a>
+                  <p class="text-center m-10 text-dark-50 p-10">
+                    Please click on a schedule to see details.
+                  </p>
+                </div>
+            </div> 
+         
          
               <!-- PREVIEW SELECTED SCHEDULE -->
 
