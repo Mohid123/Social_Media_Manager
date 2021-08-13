@@ -106,7 +106,7 @@ function appInitializer(authService: AuthService) {
         providers: [
           {
             id: FacebookLoginProvider.PROVIDER_ID,
-            provider: new FacebookLoginProvider('844857613045687')
+            provider: new FacebookLoginProvider('132795392262404')
           }
         ]
       } as SocialAuthServiceConfig,
