@@ -162,9 +162,9 @@ export class LoginComponent implements OnInit {
       let res =  clubs.filter(item=>{
        return !item.isPicker
       })
-      console.log(res , 'response')
-      this.allClubs = res;
-      this.tempClubs = res;
+      console.log(clubs , 'response')
+      this.allClubs = clubs;
+      this.tempClubs = clubs;
       this.setDefaultClub()
     }, (error) => {
       this.toastr.error(error.message)

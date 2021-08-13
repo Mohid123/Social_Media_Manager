@@ -34,10 +34,14 @@ export class ScheduleComponent implements OnInit {
 
   ngOnInit() {
     this.getUserClub()
-    this.getFacebookSchedule()
-    this.getInstagramSchedule()
-    this.getClubSchedule()
+
   }
+
+  // ngAfterViewInit() {
+  //   this.getFacebookSchedule()
+  //   this.getInstagramSchedule()
+  //   this.getClubSchedule()
+  // }
 
   getSelectedSchedule(event) {
     debugger;
@@ -106,12 +110,13 @@ export class ScheduleComponent implements OnInit {
   }
 
   getQueuedSchedueles() {
+    debugger;
     let clubId = JSON.parse(localStorage.getItem('selectedClub')).id;
     this._scheduleService.getQueuedSchedules(clubId).pipe(take(1)).subscribe(data => {
       let res = data.map(((item, idx, self) => {
         return {
           id: item.id,
-          title: item.postedTo,
+          title: item.post.postedTo + ':' + item.post.title,
           start: new Date(item.scheduleDate).toISOString().slice(0, 10),
           post: item.post,
           index: idx,
@@ -129,7 +134,7 @@ export class ScheduleComponent implements OnInit {
       let res = data.map(((item, idx, self) => {
         return {
           id: item.id,
-          title: item.postedTo,
+          title: item.post.postedTo + ':' + item.post.title,
           start: new Date(item.scheduleDate).toISOString().slice(0, 10),
           post: item.post,
           status: item.status
@@ -149,7 +154,7 @@ export class ScheduleComponent implements OnInit {
       let res = data.map(((item, idx, self) => {
         return {
           id: item.id,
-          title: item.postedTo,
+          title: item.post.postedTo + ':' + item.post.title,
           start: new Date(item.scheduleDate).toISOString().slice(0, 10),
           post: item.post,
           status: item.status
@@ -168,7 +173,7 @@ export class ScheduleComponent implements OnInit {
       let res = data.map(((item, idx, self) => {
         return {
           id: item.id,
-          title: item.postedTo + ':' + item.post.pageName,
+          title: item.post.postedTo + ':' + item.post.title,
           start: new Date(item.scheduleDate).toISOString().slice(0, 10),
           post: item.post,
           status: item.status,
@@ -188,7 +193,7 @@ export class ScheduleComponent implements OnInit {
       let res = data.map(((item, idx, self) => {
         return {
           id: item.id,
-          title: item.postedTo,
+          title: item.post.postedTo + ':' + item.post.title,
           start: new Date(item.scheduleDate).toISOString().slice(0, 10),
           color: '#D62976',
           post: item.post,
@@ -208,7 +213,7 @@ export class ScheduleComponent implements OnInit {
       let res = data.map(((item, idx, self) => {
         return {
           id: item.id,
-          title: item.postedTo,
+          title: item.post.postedTo + ':' + item.post.title,
           start: new Date(item.scheduleDate).toISOString().slice(0, 10),
           color: JSON.parse(localStorage.getItem('selectedClub')).clubColor,
           post: item.post,
@@ -229,14 +234,16 @@ export class ScheduleComponent implements OnInit {
   }
 
   getAllSchedule() {
-    let clubSch, fbSch, igSch, spread
-    clubSch = JSON.parse(decodeURIComponent(localStorage.getItem('clubsch')));
-    fbSch = JSON.parse(decodeURIComponent(localStorage.getItem('fbsch')));
-    igSch = JSON.parse(decodeURIComponent(localStorage.getItem('igsch')));
-    spread = [...clubSch, ...fbSch, ...igSch];
-    this.events = spread;
-    this.showDeleteBtn = false;
+    this.getQueuedSchedueles()
+    // let clubSch, fbSch, igSch, spread
+    // clubSch = JSON.parse(decodeURIComponent(localStorage.getItem('clubsch')));
+    // fbSch = JSON.parse(decodeURIComponent(localStorage.getItem('fbsch')));
+    // igSch = JSON.parse(decodeURIComponent(localStorage.getItem('igsch')));
+    // spread = [...clubSch, ...fbSch, ...igSch];
+    // this.events = spread;
+    // this.showDeleteBtn = false;
 
-    this.cf.detectChanges()
+    // this.cf.detectChanges()
   }
+
 }

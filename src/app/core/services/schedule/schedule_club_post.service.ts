@@ -16,6 +16,7 @@ export class ScheduleClubPostService {
   public post;
   clubID: string
   clubToken: string
+  clubName: string
   constructor(private _reportService: ReportService,
     private _postService: PostService,
     private spinner: NgxSpinnerService,
@@ -27,11 +28,12 @@ export class ScheduleClubPostService {
     this.post = new Post()
     this.clubID = JSON.parse(localStorage.getItem('selectedClub')).id
     this.clubToken = localStorage.getItem('club-token');
-    
+    this.clubName = JSON.parse(localStorage.getItem('selectedClub')).clubName
 
   }
 
   scheduleTextPost(postedText, postedTo, scheduledDate, selectedList) {
+    debugger;
     return new Promise((resolve, reject) => {
       let hyperLinkResponse = []
       this.post.type = 'text'
@@ -73,9 +75,14 @@ export class ScheduleClubPostService {
         selectedList.forEach((element, idx, self) => {
           if (element.hasOwnProperty('groupName')) {
             this.post.groupID = element.id;
+            this.post.title = element.groupName
           }
           else if (element.hasOwnProperty('eventName')) {
             this.post.eventID = element.id;
+            this.post.title = element.eventName
+          }
+          else {
+            this.post.title = this.clubName
           }
           // this._reportService.createReport(2, "", postedTo);
           this._scheduleService.schduleClubPost(postedTo, this.clubID, this.post).subscribe((post: Post) => {
@@ -141,9 +148,15 @@ export class ScheduleClubPostService {
 
             if (element.hasOwnProperty('groupName')) {
               this.post.groupID = element.id;
+              this.post.title = element.groupName
             }
             else if (element.hasOwnProperty('eventName')) {
               this.post.eventID = element.id;
+              this.post.title = element.eventName
+
+            }
+            else {
+              this.post.title = this.clubName
             }
             // this._reportService.createReport(2, "", postedTo);
             this._scheduleService.schduleClubPost(postedTo, this.clubID, this.post).subscribe((post: Post) => {
@@ -167,9 +180,9 @@ export class ScheduleClubPostService {
   }
 
 
-  schedulePollPost(post){
-    post.jwtToken =  this.clubToken
-   return this._scheduleService.schduleClubPost('Club' , this.clubID , post )
+  schedulePollPost(post) {
+    post.jwtToken = this.clubToken
+    return this._scheduleService.schduleClubPost('Club', this.clubID, post)
   }
 
 
@@ -239,9 +252,15 @@ export class ScheduleClubPostService {
                 selectedList.forEach((element, idx, self) => {
                   if (element.hasOwnProperty('groupName')) {
                     this.post.groupID = element.id;
+                    this.post.title = element.groupName
+
                   }
                   else if (element.hasOwnProperty('eventName')) {
                     this.post.eventID = element.id;
+                    this.post.title = element.eventName
+                  }
+                  else {
+                    this.post.title = this.clubName
                   }
                   // this._reportService.createReport(2, "", postedTo);
                   this._scheduleService.schduleClubPost(postedTo, this.clubID, this.post).subscribe((post: any) => {

@@ -53,7 +53,7 @@
                 </h3>
               </div>
             </div>
-            <div class="row row-cols-1 row-cols-md-4 g-4" id="items">
+            <div class="row row-cols-1 row-cols-md-4 g-4" id="items" style="cursor: pointer;">
               <div class="col" *ngFor="let club of allClubs" id="items">
                 <div class="card resp-card" (click)="onClubSelected(club) ">
                   <img src="{{club.logoURL}} "
@@ -61,7 +61,7 @@
 
                   <ul class="list-group list-group-flush" style="width: 100%;">
                     <li
-                      class="list-group-item d-flex justify-content-center font-weight-bold text-center text-truncate">
+                      class="list-group-item d-flex justify-content-center font-weight-bold text-center " style="margin:auto;">
                       {{club.clubName}}</li>
                   </ul>
                 </div>
@@ -72,10 +72,12 @@
         </div>
         <div class="modal-footer d-flex justify-content-center">
           <button type="button" class="btn btn-secondary"
+          (click)="showPreviousClubs();searchStarted = false">Back</button>
+
+          <button type="button" class="btn btn-danger"
             (click)="c('Close click');searchStarted = false">Close</button>
             
-            <button type="button" class="btn btn-secondary"
-            (click)="showPreviousClubs();searchStarted = false">Back</button>
+         
 
           <!-- <button type="button" class="btn" style="background-color: #1e1e2d; color: #fff;">Save changes</button> -->
         </div>

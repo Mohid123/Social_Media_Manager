@@ -66,7 +66,6 @@ export class ScheduleService {
   }
 
   validateScheduleDate(selectedDate, selectedTime) {
-
     selectedDate = new Date(selectedDate.setHours(selectedTime.getHours()));
     selectedDate = new Date(selectedDate.setMinutes(selectedTime.getMinutes()))
     var days = moment.duration(moment().diff(moment(new Date()))).days();

@@ -22,6 +22,7 @@ export class ScheduleSocialPostService {
 
 
   scheduleFacebookTextPost(postedText, scheduledDate, selectedList) {
+    debugger;
     this.spinner.show()
     return new Promise((resolve, reject) => {
       selectedList.map(item => {
@@ -32,6 +33,8 @@ export class ScheduleSocialPostService {
         item.postType = 'text'
         item.clubID = this.clubID
         item.color = '#3B5998'
+        item.title = item.pageName;
+        item.postedTo = 'Facebook'
       })
       this.spinner.show();
       selectedList.forEach((element, idx, self) => {
@@ -64,6 +67,8 @@ export class ScheduleSocialPostService {
           item.postType = 'image'
           item.clubID = this.clubID
           item.color = '#3B5998'
+          item.postedTo = 'Facebook'
+          item.title = item.pageName
 
         });
         selectedList.forEach((element, idx, self) => {
@@ -98,7 +103,8 @@ export class ScheduleSocialPostService {
           item.postType = 'video'
           item.clubID = this.clubID
           item.color = '#3B5998'
-
+          item.postedTo = 'Facebook'
+          item.title = item.pageName
         });
         selectedList.forEach((element, idx, self) => {
           this._scheduleService.scheduleFacebookPost(element).subscribe(data => {
@@ -137,6 +143,8 @@ export class ScheduleSocialPostService {
           item.postType = 'image'
           item.clubID = this.clubID
           item.color = '#D62976'
+          item.postedTo = 'Instagram'
+          item.title = 'Instagram Account'
 
         });
         selectedList.forEach((element, idx, self) => {
@@ -172,6 +180,8 @@ export class ScheduleSocialPostService {
           item.postType = 'video'
           item.clubID = this.clubID
           item.color = '#D62976'
+          item.postedTo = 'Instagram'
+          item.title = 'Instagram Account'
 
           delete item.instagram_business_account.id;
           delete item.linkedFbPagetoken;

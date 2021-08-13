@@ -37,6 +37,7 @@ export class InstagramComponent implements OnInit {
   private checkedList: any;
   public userName: string = localStorage.getItem('userName')
   public profileImageUrl: string = localStorage.getItem('profileImageUrl')
+  facebookProfileImageUrl:string
   public showDiv = {
     photo: true,
     video: false,
@@ -74,6 +75,7 @@ export class InstagramComponent implements OnInit {
 
 
   ngOnInit() {
+    this.facebookProfileImageUrl = JSON.parse(localStorage.getItem('selectedClub')).userFacebookProfile.fbProfileImageUrl
     this.showSpinner()
     this.getSignedInUser();
     this.getCheckedItemList()
@@ -166,6 +168,7 @@ export class InstagramComponent implements OnInit {
   getRecentPosts(IGaccountID, FBpageaccessToken) {
     return this._instagramService.getPublishedPostsForIG(IGaccountID, FBpageaccessToken).subscribe((publishedPosts: any) => {
       this.recentPosts = publishedPosts.data;
+      console.log(this.recentPosts , 'recent ig posts')
       this.cf.detectChanges();
     })
   }
