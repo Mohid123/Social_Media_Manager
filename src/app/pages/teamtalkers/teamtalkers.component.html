@@ -1187,6 +1187,8 @@
                                                         class="fas fa-trash-alt mr-2 text-dark"></i>Delete</button>
                                             </div>
                                         </div>
+
+                                      
                                     </div>
                                 </div>
 
@@ -1197,10 +1199,9 @@
                                             <div class="modal-header d-flex justify-content-center"
                                                 style="background-color: #1e1e2d; border-bottom: none;">
                                                 <h4 class="modal-title" style="color: #fff;">Edit Post</h4>
-                                                <button type="button" class="close" aria-label="Close"
-                                                    (click)="d('Cross click')">
+                                                <button type="button" class="close ml-auto" aria-label="Close" (click)="d('Cross click')"> <i class="ki ki-bold-close icon-sm" style="color:rgba(255, 255, 255, 0.877)"></i>
                                                     <span aria-hidden="true">&times;</span>
-                                                </button>
+                                                  </button>
                                             </div>
 
                                             <div class="preview-facebook preview-facebook-media item-post-type"
@@ -1400,7 +1401,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="caption" style="    padding: 10px 33px;
+                                <div class="caption text-justify" style="    padding: 10px 33px;
                                 word-break: break-all;
                                 color: #000;">
                                     <div *ngIf="post.text">{{post.text}}</div>
