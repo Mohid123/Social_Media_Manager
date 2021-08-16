@@ -3,8 +3,8 @@ import { Component, OnInit, AfterViewInit, ChangeDetectorRef, ViewChild, Templat
 import { take } from 'rxjs/operators';
 import { ScheduleService } from './../../core/services/schedule.service';
 import { Schedule } from './../../core/models/schedule.model';
-import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ModalOptions } from 'angular-bootstrap-md';
+
+
 import { Club } from 'src/app/core/models/club.model';
 import { ToastrService } from 'ngx-toastr';
 
@@ -27,7 +27,7 @@ export class ScheduleComponent implements OnInit {
   constructor(
     private _scheduleService: ScheduleService,
     private cf: ChangeDetectorRef,
-    private modalService: NgbModal,
+
     private toast: ToastrService
   ) { }
 
@@ -78,23 +78,6 @@ export class ScheduleComponent implements OnInit {
     console.log(event)
   }
 
-  openVerticallyCentered(previewSelectedSchedule) {
-    this.modalService.open(previewSelectedSchedule, { centered: true }).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-    });
-  }
-  private getDismissReason(reason: any): string {
-    if (reason === ModalDismissReasons.ESC) {
-      return 'by pressing ESC';
-    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-      return 'by clicking on a backdrop';
-    } else {
-      return `with: ${reason}`;
-    }
-  }
-
   getSchedulesByPostedTo() {
     this._scheduleService.getSchedulesByPostedTo(0, 10, 'Instagram').pipe(take(1)).subscribe((schedules: any) => {
       const response = schedules.map((schedule, idx) => {
@@ -116,7 +99,7 @@ export class ScheduleComponent implements OnInit {
       let res = data.map(((item, idx, self) => {
         return {
           id: item.id,
-          title: item.post.postedTo + ':' + item.post.title,
+          title: item.post.postedTo + ': ' + item.post.title,
           start: new Date(item.scheduleDate).toISOString().slice(0, 10),
           post: item.post,
           index: idx,
@@ -134,7 +117,7 @@ export class ScheduleComponent implements OnInit {
       let res = data.map(((item, idx, self) => {
         return {
           id: item.id,
-          title: item.post.postedTo + ':' + item.post.title,
+          title: item.post.postedTo + ': ' + item.post.title,
           start: new Date(item.scheduleDate).toISOString().slice(0, 10),
           post: item.post,
           status: item.status
@@ -154,7 +137,7 @@ export class ScheduleComponent implements OnInit {
       let res = data.map(((item, idx, self) => {
         return {
           id: item.id,
-          title: item.post.postedTo + ':' + item.post.title,
+          title: item.post.postedTo + ': ' + item.post.title,
           start: new Date(item.scheduleDate).toISOString().slice(0, 10),
           post: item.post,
           status: item.status
@@ -173,7 +156,7 @@ export class ScheduleComponent implements OnInit {
       let res = data.map(((item, idx, self) => {
         return {
           id: item.id,
-          title: item.post.postedTo + ':' + item.post.title,
+          title: item.post.postedTo + ': ' + item.post.title,
           start: new Date(item.scheduleDate).toISOString().slice(0, 10),
           post: item.post,
           status: item.status,
@@ -193,7 +176,7 @@ export class ScheduleComponent implements OnInit {
       let res = data.map(((item, idx, self) => {
         return {
           id: item.id,
-          title: item.post.postedTo + ':' + item.post.title,
+          title: item.post.postedTo + ': ' + item.post.title,
           start: new Date(item.scheduleDate).toISOString().slice(0, 10),
           color: '#D62976',
           post: item.post,
@@ -213,7 +196,7 @@ export class ScheduleComponent implements OnInit {
       let res = data.map(((item, idx, self) => {
         return {
           id: item.id,
-          title: item.post.postedTo + ':' + item.post.title,
+          title: item.post.postedTo + ': ' + item.post.title,
           start: new Date(item.scheduleDate).toISOString().slice(0, 10),
           color: JSON.parse(localStorage.getItem('selectedClub')).clubColor,
           post: item.post,

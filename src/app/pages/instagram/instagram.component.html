@@ -568,17 +568,20 @@
                                     </div>
                                       <div class="preview-media" data-max-image="1">
                         
-                                        <img *ngIf="post.media_type == 'IMAGE' && post.media_url" style="object-fit: cover;
-                                        margin-right: auto;
+                                        <img *ngIf="post.media_type == 'IMAGE' && post.media_url" style=" margin-right: auto;
                                         margin-left: auto;
-                                        width: 50%; height: 100%;
-                                        display: block;" class="img-circle" src="{{post.media_url}}" >
-                                        <video *ngIf="post.media_type == 'VIDEO' && post.media_url" src="{{post.media_url}}" style="object-fit: cover;
-                                        margin-right: auto;
+                                        height: 100%;
+                                        display: block;
+                                        object-fit: contain;
+                                        width: 100%;" class="img-circle" src="{{post.media_url}}" >
+                                        <video *ngIf="post.media_type == 'VIDEO' && post.media_url" src="{{post.media_url}}" style=" margin-right: auto;
                                         margin-left: auto;
-                                        width: 70%; height: 100%; -webkit-filter: brightness(75%);
+                                        height: 100%;
+                                        display: block;
+                                        object-fit: contain;
+                                        width: 100%; -webkit-filter: brightness(75%);
                                             filter: brightness(75%); filter: blur(2px);
-                                        display: block;"   
+                                      "   
                                                         disablePictureInPicture 
                                                         (ended)="onVideoEnded()" data-toggle="modal"
                                         data-target="#content"></video>
@@ -733,7 +736,12 @@
                                                     <img class="img-circle" [src]="profileImageUrl" style="width: 44px; height: 44px; object-fit: cover; border-radius: 50px;">
                                                     <span><b>{{userName}}</b></span>
                                                 </div>
-                                                <div class="preview-media" data-max-image="1"><img logo #logo  (load)="onSelectedImageLoad()" style="height: 100%; width: 100%; object-fit: cover;" class="img-circle" [src]= url *ngIf="format==='image' && url"></div>
+                                                <div class="preview-media" data-max-image="1"><img logo #logo  (load)="onSelectedImageLoad()" style=" margin-right: auto;
+                                                    margin-left: auto;
+                                                    height: 100%;
+                                                    display: block;
+                                                    object-fit: contain;
+                                                    width: 100%;" class="img-circle" [src]= url *ngIf="format==='image' && url"></div>
                                                 <div class="post-info">
                                                     <div class="info-active pull-left"> Be the first to like this</div>
                                                     <!-- <div class="pull-right">1s</div> -->
@@ -789,7 +797,12 @@
                                                     <img class="img-circle" [src]="profileImageUrl" style="width: 44px; height: 44px; object-fit: cover; border-radius: 50px;">
                                                     <span><strong>{{userName}}</strong></span>
                                                 </div>
-                                                <div class="preview-media" data-max-image="1"><video [src]="url" *ngIf="format==='video' && url" style="height: 100%; width: 100%; object-fit: cover;"  controls disablepictureinpicture  controlsList="nodownload"></video></div>
+                                                <div class="preview-media" data-max-image="1"><video [src]="url" *ngIf="format==='video' && url" style=" margin-right: auto;
+                                                    margin-left: auto;
+                                                    height: 100%;
+                                                    display: block;
+                                                    object-fit: contain;
+                                                    width: 100%;"  controls disablepictureinpicture  controlsList="nodownload"></video></div>
                                                 <div class="post-info">
                                                     <div class="info-active pull-left"> Be the first to like this</div>
                                                     <!-- <div class="pull-right">1s</div> -->

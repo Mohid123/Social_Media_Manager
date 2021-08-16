@@ -1187,6 +1187,8 @@
                                                         class="fas fa-trash-alt mr-2 text-dark"></i>Delete</button>
                                             </div>
                                         </div>
+
+                                      
                                     </div>
                                 </div>
 
@@ -1197,10 +1199,9 @@
                                             <div class="modal-header d-flex justify-content-center"
                                                 style="background-color: #1e1e2d; border-bottom: none;">
                                                 <h4 class="modal-title" style="color: #fff;">Edit Post</h4>
-                                                <button type="button" class="close" aria-label="Close"
-                                                    (click)="d('Cross click')">
+                                                <button type="button" class="close ml-auto" aria-label="Close" (click)="d('Cross click')"> <i class="ki ki-bold-close icon-sm" style="color:rgba(255, 255, 255, 0.877)"></i>
                                                     <span aria-hidden="true">&times;</span>
-                                                </button>
+                                                  </button>
                                             </div>
 
                                             <div class="preview-facebook preview-facebook-media item-post-type"
@@ -1294,17 +1295,26 @@
 
 
                                 <div *ngIf="post.type!=='text' && post.type!== 'hyperlink' " class="preview-media"
-                                    data-max-image="5" style="margin-top: -20px ; background: #F3F6F9;" >
+                                    data-max-image="5" style="margin-top: -20px ; background: #F3F6F9; background-size: cover;
+                                    background-position: center center;
+                                    background-color: #F3F6F9;
+                                    overflow: hidden;
+                                    position: relative; height: 368px;" >
                        
                                     <img *ngIf="post.type == 'image'" src="{{post.captureFileURL}}"
-                                          style="height: auto; width: 100%; object-fit: cover; margin-right: auto; margin-left: auto; width: 50%; display: block; ">
+                                          style="height: 100%; max-width: 100%; margin-right: auto; margin-left: auto;  display: block; object-fit: contain; ">
 
-                                    <div *ngIf="post.type == 'video'" style="position: relative;cursor: pointer;"
+                                    <div *ngIf="post.type == 'video'" style="position: relative;cursor: pointer; height: 368px;"
                                         (click)="openVerticallyCentered(content, post)" data-toggle="modal"
                                         data-target="#video-modal">
                                         <img *ngIf="post.type == 'video'" class="img-responsive" [src]=post.thumbnailURL
                                             alt="Photo" style=" -webkit-filter: brightness(75%);
-                                            filter: brightness(75%); filter: blur(2px); display: block; margin-left: auto; margin-right: auto; width: 70%;">
+                                            filter: brightness(75%); filter: blur(2px);    object-fit: contain;
+                                            margin-right: auto;
+                                            margin-left: auto;
+                                            height: 100%;
+                                            width: 100%;
+                                            display: block;">
                                         <h1 class="playBtn" style="backdrop-filter: blur(0px);"><i
                                                 class="far fa-play-circle icon-xl" aria-hidden="true"
                                                 style="font-size: 7.75rem !important; color: #fff;"></i>
@@ -1400,7 +1410,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="caption" style="    padding: 10px 33px;
+                                <div class="caption text-justify" style="    padding: 10px 33px;
                                 word-break: break-all;
                                 color: #000;">
                                     <div *ngIf="post.text">{{post.text}}</div>
@@ -1564,7 +1574,12 @@
 
                                             <div class="preview-media" data-max-image="5" style="margin-top: -20px"><img
                                                     [src]="url" *ngIf="format==='image' && url"
-                                                    style="height: 100%; width: 100%; object-fit: cover; "></div>
+                                                    style="object-fit: contain;
+                                                    margin-right: auto;
+                                                    margin-left: auto;
+                                                    height: 100%;
+                                                    width: 100%;
+                                                    display: block; "></div>
                                             <div class="caption">
                                                 <div>{{teamtalkerCaption}}</div>
                                                 <div class="line-no-text" *ngIf="!teamtalkerCaption">
@@ -1697,7 +1712,13 @@
 
                                             <div class="preview-media" data-max-image="5" style="margin-top: -20px">
                                                 <video [src]="url" *ngIf="format==='video' && url"
-                                                    style="height: 100%; width: 100%; object-fit: cover;" controls
+                                                    style="
+                                                    margin-right: auto;
+                                                    margin-left: auto;
+                                                    height: 100%;
+                                                    width: 100%;
+                                                    object-position: contain;
+                                                    display: block;" controls
                                                     disablepictureinpicture controlsList="nodownload"></video>
                                             </div>
                                             <div class="caption">

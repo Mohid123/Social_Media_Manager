@@ -15,7 +15,8 @@ import { ToastrService } from 'ngx-toastr';
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { constants } from 'src/app/app.constants';
-import { filter } from 'rxjs/operators';
+import { filter, map } from 'rxjs/operators';
+import { of } from 'rxjs';
 
 
 @Component({
@@ -41,7 +42,6 @@ export class LoginComponent implements OnInit {
   noClubFound: boolean = false;
   public defaultClub: Club
   public userClub
-  public pickerClub: boolean = false;
   private unsubscribe: Subscription[] = [];
 
   constructor(
@@ -103,26 +103,23 @@ export class LoginComponent implements OnInit {
 
 
   loginByEmail() {
-    debugger;
-    console.log(this.pickerClub)
+
     var self = this;
     if (!this.selectedClub) {
       this.toastr.error('Please Select Club', 'Empty Club')
       return;
     }
-
-
-    this.spinner.show();
-
     const payload = {
       clubID: this.selectedClub.id,
       email: this.loginForm.value.email,
       password: this.loginForm.value.password
     }
+    if (this.selectedClub.pickerClub) {
+      payload.clubID = this.selectedClub.pickerModelId
+      payload['pickerClubID'] = this.selectedClub.id
+    }
 
-    // localStorage.getItem('pickerClub') ? 
-
-
+    this.spinner.show();
     this._authService.loginByEmail(payload).subscribe(user => {
       if (user.user.admin) {
         localStorage.setItem('app-token', user.app_token.access_token)
@@ -159,10 +156,10 @@ export class LoginComponent implements OnInit {
 
   getAllClubs() {
     this._clubService.getAllClubs(0, 10).subscribe(clubs => {
-      let res =  clubs.filter(item=>{
-       return !item.isPicker
+      let res = clubs.filter(item => {
+        return !item.isPicker
       })
-      console.log(clubs , 'response')
+      console.log(clubs, 'response')
       this.allClubs = clubs;
       this.tempClubs = clubs;
       this.setDefaultClub()
@@ -212,20 +209,24 @@ export class LoginComponent implements OnInit {
     localStorage.setItem('selectedClub', JSON.stringify(club));
     this.selectedClub = club
     constants.clubApiUrl = club.baseURL;
+
     if (this.selectedClub.isPicker) {
-      localStorage.setItem('pickerClub', JSON.stringify(this.selectedClub))
       this._clubService.getDividisClubs(0, 50).subscribe((dividisClubs: any) => {
+        dividisClubs.map(item => {
+          item.pickerClub = true;
+          item.baseURL = this.selectedClub.baseURL;
+          item.pickerModelId = this.selectedClub.id
+        })
         this.allClubs = dividisClubs;
         this.tempClubs = dividisClubs;
-        this.pickerClub = true
         this.setDefaultClub()
-        console.log(dividisClubs, 'insied divides')
+        console.log(dividisClubs, 'Dividis Clubs')
       }, error => {
         this.toastr.error(error.message)
       })
     }
     else {
-      localStorage.removeItem('pickerClub')
+      return of(null)
     }
   }
 
