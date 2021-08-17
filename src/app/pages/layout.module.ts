@@ -35,7 +35,7 @@ import { MatIconModule } from "@angular/material/icon";
 import {MatInputModule} from '@angular/material/input';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { NgxSpinnerModule } from "ngx-spinner";
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxDatePickerModule} from '@ngx-tiny/date-picker';
 import { NgxTimePickerModule } from '@ngx-tiny/time-picker';
 import { NewsfeedComponent } from './newsfeed/newsfeed.component';
@@ -52,6 +52,8 @@ import dayGridPlugin from '@fullcalendar/daygrid'; // a plugin!
 import interactionPlugin from '@fullcalendar/interaction';
 import { CalendarComponent } from './schedule/calendar/calendar.component'; // a plugin!
 import { ScheduleDateTransform } from '../core/pipes/scheduleDateTransform.pipe';
+import { FeedbackComponent } from './help/feedback.component';
+import { NgxDropzoneModule } from 'ngx-dropzone';
 
 FullCalendarModule.registerPlugins([ 
   dayGridPlugin,
@@ -88,7 +90,8 @@ FullCalendarModule.registerPlugins([
     ComingSoonIgComponent,
     AdvertisementComponent,
     ScheduleComponent,
-    CalendarComponent
+    CalendarComponent,
+    FeedbackComponent
 
   
   ],
@@ -111,6 +114,8 @@ FullCalendarModule.registerPlugins([
     FormsModule,
     NgxDatePickerModule,
     NgxTimePickerModule,
+    NgxDropzoneModule
+   
     
      
   ],
