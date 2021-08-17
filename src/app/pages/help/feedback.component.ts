@@ -26,7 +26,7 @@ moduleName: any
       email: ['', [Validators.required, Validators.email]],
       message: ['', [Validators.required, Validators.minLength(15)]],
       // select:  ['Facebook', 'Instagram', 'Nicesnippets.com']
-      moduleName: ['']
+      moduleName: ['', [Validators.required]]
    
     });
   }
