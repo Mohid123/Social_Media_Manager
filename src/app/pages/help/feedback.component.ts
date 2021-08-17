@@ -37,6 +37,7 @@ moduleName: any
     console.log('Email', form.value.email);
     console.log('Message', form.value.message);
     console.log('Module', form.value.moduleName)
+    console.log(form.value)
   }
 
   // changeModule(e) {
