@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
@@ -9,43 +9,35 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class FeedbackComponent implements OnInit {
   myForm: FormGroup;
-public url;
-files: File[] = [];
-Module: any = ['Facebook', 'Instagram', 'Club']
-moduleName: any
+  public url;
+  files: File[] = [];
+  Module: any = ['Facebook', 'Instagram']
+  moduleName: any
 
 
-  constructor(private spinner: NgxSpinnerService, private fb: FormBuilder) { 
-   
+  constructor(private spinner: NgxSpinnerService, private fb: FormBuilder, private cf: ChangeDetectorRef) {
+
   }
 
   ngOnInit(): void {
     this.showSpinner()
+    let club = JSON.parse(localStorage.getItem('selectedClub'));
+    this.Module.push(club.clubName)
     this.myForm = this.fb.group({
       name: ['Sammy', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       message: ['', [Validators.required, Validators.minLength(15)]],
-      // select:  ['Facebook', 'Instagram', 'Nicesnippets.com']
       moduleName: ['', [Validators.required]]
-   
+
     });
   }
 
   onSubmit(form: FormGroup) {
-    console.log('Valid?', form.valid); // true or false
-    console.log('Name', form.value.name);
-    console.log('Email', form.value.email);
-    console.log('Message', form.value.message);
-    console.log('Module', form.value.moduleName)
     console.log(form.value)
   }
 
-  // changeModule(e) {
-  //   this.moduleName.setValue(e.target.value, {
-  //     onlySelf: true
-  //   })
-  // }
- 
+
+
   onSelectFile(event) {
     if (event.target.files && event.target.files[0]) {
       var reader = new FileReader();
@@ -54,10 +46,12 @@ moduleName: any
 
       reader.onload = (event) => { // called once readAsDataURL is completed
         this.url = event.target.result;
+        this.cf.detectChanges()
+
       }
     }
   }
-  
+
 
   showSpinner() {
     this.spinner.show();
@@ -68,14 +62,14 @@ moduleName: any
 
 
 
-onSelect(event) {
-  console.log(event);
-  this.files.push(...event.addedFiles);
-}
+  // onSelect(event) {
+  //   console.log(event);
+  //   this.files.push(...event.addedFiles);
+  // }
 
-onRemove(event) {
-  console.log(event);
-  this.files.splice(this.files.indexOf(event), 1);
-}
- 
+  // onRemove(event) {
+  //   console.log(event);
+  //   this.files.splice(this.files.indexOf(event), 1);
+  // }
+
 }
