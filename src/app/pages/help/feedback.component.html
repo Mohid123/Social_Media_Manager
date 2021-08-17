@@ -22,109 +22,130 @@
                 </div>
             </div>
             <div class="card-body" style="padding: 0px;">
-
-                <div class="custom-scrollbar-css padd">
-                    <div class="card card-custom">
-                       
-                        <!--begin::Form-->
-                        <form>
-                         <div class="card-body">
-                          <div class="form-group mb-8">
+                <div class="row">
+                    <div class=" col-lg-3">
+                        
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="custom-scrollbar-css padd">
                             <div class="card card-custom">
-                                <div class="card-body rounded p-0 d-flex " style="background-color: #1e1e2d;">
-                                    <div class="d-flex flex-column flex-lg-row-auto w-auto w-lg-350px w-xl-450px w-xxl-650px py-10 py-md-14 px-10 px-md-20 pr-lg-0">
-                                        <h1 class="font-weight-bolder text-light mb-0">Hi,</h1>
-                                        <div class="font-size-h4 mb-8 text-light">how can we <span style="font-weight: 600; color: #3699FF; font-size: 25px;" >help</span> you?</div>
-                                       
+                               
+                                <!--begin::Form-->
+                                <form>
+                                 <div class="card-body">
+                                  <div class="form-group mb-8">
+                                    <div class="card card-custom">
+                                        <div class="card-body rounded p-0 d-flex " style="background-color: #1e1e2d;">
+                                            <div class="d-flex flex-column flex-lg-row-auto w-auto w-lg-350px w-xl-450px w-xxl-650px py-10 py-md-14 px-10 px-md-20 pr-lg-0">
+                                                <h1 class="font-weight-bolder text-light mb-0">Hi,</h1>
+                                                <div class="font-size-h4 mb-8 text-light">how can we <span style="font-weight: 600; color: #3699FF; font-size: 25px;" >help</span> you?</div>
+                                               
+                                            </div>
+                                            <div class="d-none d-md-flex flex-row-fluid bgi-no-repeat bgi-position-y-center bgi-position-x-left bgi-size-cover" ></div>
+                                        </div>
                                     </div>
-                                    <div class="d-none d-md-flex flex-row-fluid bgi-no-repeat bgi-position-y-center bgi-position-x-left bgi-size-cover" style="background-position: right top; background-size: 30% auto; background-image: url(assets/media/svg/illustrations/copy.svg)"></div>
-                                </div>
-                            </div>
-                          </div>
-                          <div class="form-group">
-                           <label>Email address <span class="text-danger">*</span></label>
-                           <input type="email" class="form-control"  placeholder="Enter email"/>
-                           <span class="form-text text-muted">We'll never share your email with anyone else.</span>
-                          </div>
-                        
-
-                      
-<!-- 
-                          <div class="image-input-wrapper">
-                            <img class="rounded" [src]="url" height="200">
-                          </div>
-                          <br/>
-                          <div class="image-upload mt-5 mb-5">
-                            <label for="file-input">
+                                  </div>
+                                  <div class="row">
+                                    <div class="form-group col-sm-6 ">
+                                        <label>Name <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control"  placeholder="John Doe"/>
+                                        <!-- <span class="form-text text-muted">We'll never share your email with anyone else.</span> -->
+                                       </div>
+                                      <div class="form-group col-sm-6 ">
+                                       <label>Email address <span class="text-danger">*</span></label>
+                                       <input type="email" class="form-control"  placeholder="Enter email"/>
+                                       <span class="form-text text-muted">We'll never share your email with anyone else.</span>
+                                      </div>
+                                  </div>
                                 
-                                <div class="btn btn-icon btn-light w-auto btn-clean d-inline-flex align-items-center btn-lg px-2 mr-5">
-                                    <span class="symbol symbol-35 symbol-light-primary">
-                                        <span class="symbol-label"><a  class="btn btn-icon btn-sm ">
-                                            <i class="fas fa-upload icon-lg" style="cursor: pointer;"></i>
-                                        </a></span>
-                                    </span>
-                                    <span class="btn text-dark-50 font-weight-normal font-size-base"> &nbsp;Choose image</span>
-                                    
+                                
+                                 
+                                
+        
+                              
+        <!-- 
+                                  <div class="image-input-wrapper">
+                                    <img class="rounded" [src]="url" height="200">
+                                  </div>
+                                  <br/>
+                                  <div class="image-upload mt-5 mb-5">
+                                    <label for="file-input">
+                                        
+                                        <div class="btn btn-icon btn-light w-auto btn-clean d-inline-flex align-items-center btn-lg px-2 mr-5">
+                                            <span class="symbol symbol-35 symbol-light-primary">
+                                                <span class="symbol-label"><a  class="btn btn-icon btn-sm ">
+                                                    <i class="fas fa-upload icon-lg" style="cursor: pointer;"></i>
+                                                </a></span>
+                                            </span>
+                                            <span class="btn text-dark-50 font-weight-normal font-size-base"> &nbsp;Choose image</span>
+                                            
+                                        </div>
+                                    </label>
+        
+                                    <input id="file-input" accept="image/*" (change)="onSelectFile($event)" type="file" name="myfile" multiple style="display: none;"/> 
+                                </div> -->
+        
+        
+                                <div class="custom-dropzone" ngx-dropzone [accept]="'image/*'" (change)="onSelect($event)">
+                                    <ngx-dropzone-label>
+                                        <div>
+                                            <h5>Drop your files here or click to select!</h5>
+                                        </div>
+                                    </ngx-dropzone-label>
+                                    <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let f of files" [file]="f" [removable]="true" (removed)="onRemove(f)">
+                                        <!-- <ngx-dropzone-label style="color: white">{{ f.name }} ({{ f.type }})</ngx-dropzone-label> -->
+                                    </ngx-dropzone-image-preview>
                                 </div>
-                            </label>
-
-                            <input id="file-input" accept="image/*" (change)="onSelectFile($event)" type="file" name="myfile" multiple style="display: none;"/> 
-                        </div> -->
-
-
-                        <div class="custom-dropzone" ngx-dropzone [accept]="'image/*'" (change)="onSelect($event)">
-                            <ngx-dropzone-label>
-                                <div>
-                                    <h5>Drop your files here or click to select!</h5>
-                                </div>
-                            </ngx-dropzone-label>
-                            <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let f of files" [file]="f" [removable]="true" (removed)="onRemove(f)">
-                                <!-- <ngx-dropzone-label style="color: white">{{ f.name }} ({{ f.type }})</ngx-dropzone-label> -->
-                            </ngx-dropzone-image-preview>
+        
+                                <!-- <ngx-dropzone (change)="onSelect($event)">
+                                    <ngx-dropzone-label>Drop it, baby!</ngx-dropzone-label>
+                                    <ngx-dropzone-preview *ngFor="let f of files" [removable]="true" (removed)="onRemove(f)">
+                                        <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
+                                    </ngx-dropzone-preview>
+                                </ngx-dropzone> -->
+        
+                                <!-- <input type='file' (change)="onSelectFile($event)"> -->
+                                 
+                                
+                                  <div class="form-group">
+                                   <label for="exampleSelect1">Select <span class="text-danger">*</span></label>
+                                   <select class="form-control" id="exampleSelect1">
+                                    <option>Facebook</option>
+                                    <option>Instagram</option>
+                                    <option>Club</option>
+                                
+                                   </select>
+                                  </div>
+                                  <!-- <div class="form-group">
+                                   <label for="exampleSelect2">Example multiple select <span class="text-danger">*</span></label>
+                                   <select multiple="" class="form-control" id="exampleSelect2">
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                    <option>5</option>
+                                   </select>
+                                  </div> -->
+                                  <div class="form-group mb-1">
+                                   <label for="exampleTextarea">Example textarea <span class="text-danger">*</span></label>
+                                   <textarea class="form-control" id="exampleTextarea" rows="3"></textarea>
+                                  </div>
+                                 </div>
+                                 <div class="card-footer">
+                                  <button type="reset" class="btn btn-primary mr-2">Submit</button>
+                                  <button type="reset" class="btn btn-secondary">Cancel</button>
+                                 </div>
+                                </form>
+                                <!--end::Form-->
+                               </div>
                         </div>
+                    </div>
+                    <div class=" col-lg-3">
 
-                        <!-- <ngx-dropzone (change)="onSelect($event)">
-                            <ngx-dropzone-label>Drop it, baby!</ngx-dropzone-label>
-                            <ngx-dropzone-preview *ngFor="let f of files" [removable]="true" (removed)="onRemove(f)">
-                                <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
-                            </ngx-dropzone-preview>
-                        </ngx-dropzone> -->
-
-                        <!-- <input type='file' (change)="onSelectFile($event)"> -->
-                         
-                        
-                          <div class="form-group">
-                           <label for="exampleSelect1">Select <span class="text-danger">*</span></label>
-                           <select class="form-control" id="exampleSelect1">
-                            <option>Facebook</option>
-                            <option>Instagram</option>
-                            <option>Club</option>
-                        
-                           </select>
-                          </div>
-                          <!-- <div class="form-group">
-                           <label for="exampleSelect2">Example multiple select <span class="text-danger">*</span></label>
-                           <select multiple="" class="form-control" id="exampleSelect2">
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
-                            <option>5</option>
-                           </select>
-                          </div> -->
-                          <div class="form-group mb-1">
-                           <label for="exampleTextarea">Example textarea <span class="text-danger">*</span></label>
-                           <textarea class="form-control" id="exampleTextarea" rows="3"></textarea>
-                          </div>
-                         </div>
-                         <div class="card-footer">
-                          <button type="reset" class="btn btn-primary mr-2">Submit</button>
-                          <button type="reset" class="btn btn-secondary">Cancel</button>
-                         </div>
-                        </form>
-                        <!--end::Form-->
-                       </div>
+                    </div>
+                   
                 </div>
+               
             </div>
         </div>
 
