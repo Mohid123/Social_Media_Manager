@@ -114,7 +114,8 @@ FullCalendarModule.registerPlugins([
     FormsModule,
     NgxDatePickerModule,
     NgxTimePickerModule,
-    NgxDropzoneModule
+    NgxDropzoneModule,
+    ReactiveFormsModule
    
     
      
