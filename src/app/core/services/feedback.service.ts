@@ -5,7 +5,7 @@ import { Report } from '../models/report.model';
 @Injectable({
     providedIn: 'root'
 })
-export class ReportService {
+export class FeedbackService {
     private report: Report
 
     constructor(private _apiService: ApiService) {

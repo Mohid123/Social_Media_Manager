@@ -76,7 +76,7 @@
 
                                             <div class="form-group col-sm-6 ">
                                                 <label>Email address <span class="text-danger">*</span></label>
-                                                <input type="email" class="form-control" formControlName="email"
+                                                <input type="email" class="form-control" formControlName="email" [(ngModel)]="feedback.email"
                                                     placeholder="Enter email" />
                                                 <span class="form-text text-muted">We'll never share your email with
                                                     anyone else.</span>
@@ -149,8 +149,8 @@
                                     <option>Club</option>
                                 
                                    </select> -->
-                                            <select class="custom-select" formControlName="moduleName">
-                                                <option value="" disabled>Choose your module</option>
+                                            <select [(ngModel)]="feedback.type" class="custom-select" formControlName="type">
+                                                <option value="" disabled>Type</option>
                                                 <option *ngFor="let module of Module" [ngValue]="module">{{module}}
                                                 </option>
                                             </select>
@@ -168,7 +168,7 @@
                                         <div class="form-group mb-1">
                                             <label for="exampleTextarea">Describe your problem <span
                                                     class="text-danger">*</span></label>
-                                            <textarea class="form-control" formControlName="message"
+                                            <textarea [(ngModel)]="feedback.message" class="form-control" formControlName="message"
                                                 id="exampleTextarea" rows="3"></textarea>
                                             <div class="text-danger"
                                                 *ngIf="myForm.get('message').invalid && (myForm.get('message').dirty || myForm.get('message').touched)">
