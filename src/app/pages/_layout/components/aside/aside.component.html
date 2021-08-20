@@ -44,7 +44,7 @@
       <li class="menu-item" aria-haspopup="true" routerLinkActive="menu-item-active"
         style="border-bottom: 1px solid rgba(163, 175, 183, 0.219);">
         <a class="menu-link" routerLink="/pages/publish-all" routerLinkActive="active">
-          <i  class="svg-icon menu-icon text-danger fab fa-telegram-plane icon-lg mr-5"></i>
+          <i class="svg-icon menu-icon text-danger fab fa-telegram-plane icon-lg mr-5"></i>
           <span class="menu-text">Create Content</span>
         </a>
       </li>
@@ -80,8 +80,7 @@
       <li class="menu-item" aria-haspopup="true" routerLinkActive="menu-item-active"
         style="border-bottom: 1px solid rgba(163, 175, 183, 0.219);">
         <a class="menu-link" routerLink="/pages/team-talkers" routerLinkActive="active">
-          <img class="club-logo mr-7 rounded"  [src]="selectedClub.logoURL"
-            alt="">
+          <img class="club-logo mr-7 rounded" [src]="selectedClub.logoURL" alt="">
           <!-- <i class="svg-icon menu-icon icon-xs mr-6" style="color: white; margin-left: -5px"><span ><img class="rounded" style="height: 95%; width: 95%; " [src]="clubLogo" alt=""></span></i> -->
           <span class="menu-text">{{selectedClub.clubName}}</span>
         </a>
@@ -89,19 +88,17 @@
 
 
       <!--Advertisement-->
-      <li *ngIf="sponsorPanelExists" class="menu-item" aria-haspopup="true" routerLinkActive="menu-item-active"
-        >
-        <a class="menu-link" (click) = "routeToSponsorPanel()" routerLinkActive="active">
+      <li *ngIf="sponsorPanelExists" class="menu-item" aria-haspopup="true" routerLinkActive="menu-item-active">
+        <a class="menu-link" (click)="routeToSponsorPanel()" routerLinkActive="active">
           <!-- <i class="fas fa-ad icon-xl mr-9" style="color: #82AA36; margin-top: 2px;" ></i> -->
-          <img class="club-logo mr-7 rounded"  src="../../../../../assets/media/bg/block.png"
-          alt="">
+          <img class="club-logo mr-7 rounded" src="../../../../../assets/media/bg/block.png" alt="">
           <span class="menu-text">A<span>d</span><span>ver</span> <span>ti</span> <span>se</span> <span>ment</span>
-        </span>
+          </span>
         </a>
       </li>
 
-       <!--News feed-->
-       <!-- <li class="menu-item" aria-haspopup="true" routerLinkActive="menu-item-active">
+      <!--News feed-->
+      <!-- <li class="menu-item" aria-haspopup="true" routerLinkActive="menu-item-active">
         <a class="menu-link" routerLink="/pages/newsfeed" routerLinkActive="active">
           <i class="svg-icon menu-icon socicon-instagram icon-lg mr-5" style="color: #d62976"></i>
           <span class="menu-text">News Feed</span>
@@ -118,25 +115,33 @@
       </li>
 
       <!--Account Manager-->
-      <li class="menu-item" aria-haspopup="true" routerLinkActive="menu-item-active">
+      <li class="menu-item" aria-haspopup="true" routerLinkActive="menu-item-active" style="border-bottom: 1px solid rgba(163, 175, 183, 0.219);">
         <a class="menu-link" routerLink="/pages/account-manager" routerLinkActive="active">
-          <i class="svg-icon menu-icon far fa-user-circle icon-lg mr-5" style="color: #969696"></i>
+          <i class="svg-icon menu-icon far fa-user-circle icon-lg mr-5" style="color: #8692d3"></i>
           <span class="menu-text">Account Manager</span>
         </a>
       </li>
 
-      
+      <!--Support-->
+      <li class="menu-item" aria-haspopup="true" routerLinkActive="menu-item-active">
+        <a class="menu-link" routerLink="/pages/feedback" routerLinkActive="active">
+          <i class="svg-icon menu-icon fas fa-question-circle icon-lg mr-5" style="color: #74afff"></i>
+          <span class="menu-text">Support</span>
+        </a>
+      </li>
+
+
 
       <!--Signout-->
       <li class="menu-item" aria-haspopup="true" routerLinkActive="menu-item-active"
         (click)="openVerticallyCentered(content)">
         <a class="menu-link">
-          <i class="svg-icon menu-icon fas fa-sign-out-alt icon-lg mr-5" style="color: #969696"></i>
+          <i class="svg-icon menu-icon fas fa-sign-out-alt icon-lg mr-5" style="color: #84b9b2"></i>
           <span class="menu-text">Sign Out</span>
         </a>
       </li>
 
-     
+
 
     </ul>
     <!-- end::Menu Nav -->
@@ -150,7 +155,8 @@
     <ng-template #content let-c="close" let-d="dismiss">
       <div class="modal-header d-flex justify-content-center" style="background-color: #1e1e2d;">
         <h4 class="modal-title" style="color: #fff;">Log out</h4>
-        <button type="button" class="close ml-auto" aria-label="Close" (click)="d('Cross click')"> <i class="ki ki-bold-close icon-sm" style="color:rgba(255, 255, 255, 0.877)"></i>
+        <button type="button" class="close ml-auto" aria-label="Close" (click)="d('Cross click')"> <i
+            class="ki ki-bold-close icon-sm" style="color:rgba(255, 255, 255, 0.877)"></i>
           <span aria-hidden="true">&times;</span>
         </button>
       </div>

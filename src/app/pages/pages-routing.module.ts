@@ -6,6 +6,7 @@ import { AdvertisementComponent } from './advertisement/advertisement.component'
 import { ComingSoonIgComponent } from './coming-soon-ig/coming-soon-ig.component';
 import { CommingSoonFbComponent } from './comming-soon-fb/comming-soon-fb.component';
 import { FacebookComponent } from './facebook/facebook.component';
+import { FeedbackComponent } from './help/feedback.component';
 import { InstagramComponent } from './instagram/instagram.component';
 import { NewsfeedComponent } from './newsfeed/newsfeed.component';
 import { PublishComponent } from './publish-all/publish.component';
@@ -61,6 +62,10 @@ const routes: Routes = [
       {
         path: 'schedule', 
         component: ScheduleComponent 
+      },
+      {
+        path: 'feedback', 
+        component: FeedbackComponent 
       },
       {
         path: 'dashboard',
