@@ -180,7 +180,7 @@ export class TeamtalkersComponent implements OnInit {
     this.poll = new Poll();
     this.unCheckSlectedItems()
     this.singleDate = new Date(new Date().setDate(new Date().getDate() + 1));
-
+    this.cf.detectChanges()
   }
 
   initializeChecklist() {
