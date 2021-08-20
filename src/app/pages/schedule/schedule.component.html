@@ -276,7 +276,7 @@
 
                 <!-- PREVIEW SELECTED SCHEDULE -->
 
-                <div class="card card-custom " *ngIf="selectedEvent && selectedEvent?.title.includes('Club') ||  selectedEvent?.title.includes('Group') ||  selectedEvent?.title.includes('Event') ">
+                <div class="card card-custom " *ngIf="selectedEvent && selectedEvent?.title?.includes('Club') ||  selectedEvent?.title?.includes('Group') ||  selectedEvent?.title?.includes('Event') ">
                     <div class="card-header ribbon ribbon-top mt-3">
                         <div class="ribbon-target bg-light" *ngIf="selectedEvent.post.type == 'image' "
                             style="top: -2px; right: 20px"> <i data-visualcompletion="css-img" class="mr-2"
