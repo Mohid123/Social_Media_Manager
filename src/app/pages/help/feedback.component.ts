@@ -53,7 +53,6 @@ export class FeedbackComponent implements OnInit {
     this.spinner.show()
     if (this.mediaFile) {
       this._mediaUploadService.uploadClubMedia('Feedback', this.userId, this.mediaFile).subscribe((media: any) => {
-        console.log(media, 'Media uploaded');
         response['imageUrl'] = media.url
         this.submitFeedback(response)
       } , err=>{
@@ -68,7 +67,6 @@ export class FeedbackComponent implements OnInit {
 
   submitFeedback(feedback) {
     this._feedBackService.addFeedback(feedback).subscribe((data) => {
-      console.log(data)
       this.resetFeedbackForm()
     }, err => {
       this.spinner.hide()
