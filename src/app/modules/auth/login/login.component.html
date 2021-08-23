@@ -15,18 +15,28 @@
       <ng-template #content6 let-c="close" let-d="dismiss">
         <div class="modal-header d-flex justify-content-between"
           style="background-color: #1e1e2d; padding-bottom: 10px;">
+      
 
           <form>
-            <div class="form-group d-flex flex-row" style="float: left;">
+          
+            <div class="form-group d-flex flex-row" style="float: left; margin-left: -22px">
+              
+              <button type="button" class="btn"  (click)="showPreviousClubs();searchStarted = false"  
+              data-toggle="tooltip" title="back">
+              <i class="far fa-arrow-alt-circle-left" style="color:rgba(255, 255, 255, 0.877)"></i>
+            </button>
               <label for="exampleInputEmail1" class=" font-size-h2" style="color: #fff;">Select club</label>
 
             </div>
 
             <div class="form-group d-flex flex-row-reverse responsive">
               <button type="button" class="btn" (click)="c('Close click');searchStarted = false;  "
-                data-toggle="tooltip" title="close window">
-                <i class="ki ki-bold-close icon-sm" style="color:rgba(255, 255, 255, 0.877)"></i>
-              </button>
+              data-toggle="tooltip" title="close window">
+              <i class="far fa-times-circle" style="color:rgba(255, 255, 255, 0.877)"></i>
+            </button>
+             
+            
+            
               <!-- <button type="button" class="btn-close btn-close-white" aria-label="Close"></button> -->
 
               <input class="form-control bg-primary-o-30" [ngModelOptions]="{standalone: true}"
@@ -71,10 +81,10 @@
         
         </div>
         <div class="modal-footer d-flex justify-content-center">
-          <button type="button" class="btn btn-secondary"
-          (click)="showPreviousClubs();searchStarted = false">Back</button>
+          <!-- <button type="button" class="btn btn-secondary"
+          (click)="showPreviousClubs();searchStarted = false">Back</button> -->
 
-          <button type="button" class="btn btn-danger"
+          <button type="button" class="btn btn-secondary"
             (click)="c('Close click');searchStarted = false">Close</button>
             
          
