@@ -90,6 +90,11 @@ export class FeedbackComponent implements OnInit {
     }
   }
 
+  resetForm(){
+    this.feedback = new Feedback()
+    this.url = ""
+ 
+  }
 
   resetFeedbackForm() {
     this.feedback = new Feedback()
