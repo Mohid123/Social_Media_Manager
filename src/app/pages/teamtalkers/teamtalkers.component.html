@@ -1219,7 +1219,7 @@
                                                     </div>
                                                 </div>
                                                 <div *ngIf="post.type == 'text'" class="m-3" >
-                                                    <textarea [(ngModel)]="editedPostText" style="height: 150px;" class="form-control form-control-xl form-control-solid"
+                                                    <textarea [(ngModel)]="editedPostText" style="height: 150px;" style="white-space: pre-wrap" class="form-control form-control-xl form-control-solid"
                                                     id="exampleTextarea" rows="3"
                                                     placeholder="What’s on your mind, {{userName}}?">{{post.text}}</textarea>
                                                 </div>
@@ -1422,7 +1422,7 @@
                                 </div>
                                 <div class="caption text-justify" style="    padding: 10px 33px;
                                 word-break: break-all;
-                                color: #000;">
+                                color: #000; white-space: pre-wrap">
                                     <div *ngIf="post.text">{{post.text}}</div>
                                 </div>
 
