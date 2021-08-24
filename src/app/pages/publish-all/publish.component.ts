@@ -100,10 +100,8 @@ export class PublishComponent implements OnInit {
   }
 
   postedSuccessfully() {
-    // this.clear()
     this.spinner.hide();
     this.url = ""
-    this.file = ""
     this.removeSlectedItems()
     this.cf.detectChanges()
     setTimeout(() => {
@@ -592,7 +590,7 @@ export class PublishComponent implements OnInit {
                     this.url = "";
                     this.socialCaption = "";
                     this.cf.detectChanges()
-                    this.toast.success('Published', 'Video Post Added');
+                    this.toast.success('Instagram', 'Video Post Added');
                     this._reportService.createReport(1, data.id, 'Instagram')
                   }, (error) => {
                     this.spinner.hide();
@@ -604,7 +602,7 @@ export class PublishComponent implements OnInit {
                 else if (data.status_code == "ERROR") {
                   clearInterval(interval)
                   this.postedSuccessfully()
-                  this.toast.error('Error uploding Video', 'Video Format Unsupported')
+                  this.toast.error('Instagram', 'Error uploading, video format unsupported ')
                   this._reportService.createReport(0, '', 'Instagram');
                 }
               })
@@ -816,7 +814,6 @@ export class PublishComponent implements OnInit {
         if (index == array.length - 1) {
           this.postedSuccessfully()
           this.toast.success('Post added to Facebook Pages', 'Success')
-          this.clear()
         }
       })
     }
@@ -863,7 +860,6 @@ export class PublishComponent implements OnInit {
             if (index == array.length - 1) {
               this.toast.success('Post added Successfully to Groups');
               this.postedSuccessfully()
-              this.clear();
             }
           })
         }
@@ -887,13 +883,14 @@ export class PublishComponent implements OnInit {
             if (index == array.length - 1) {
               this.toast.success('Post added Successfully to Events', 'Success');
               this.postedSuccessfully()
-              this.clear()
+          
             }
           })
         }
 
 
         if (selectedClub) {
+          debugger;
           this.spinner.show()
           delete this.post.groupID;
           delete this.post.eventID;
@@ -904,8 +901,7 @@ export class PublishComponent implements OnInit {
           
             this.toast.success(' Post added Successfully to Club');
             this.postedSuccessfully()
-            
-           
+          
             this._reportService.createReport(1, post.id, 'Club')
           }, error => {
             this.spinner.hide();

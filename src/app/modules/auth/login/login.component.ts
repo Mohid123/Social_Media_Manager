@@ -41,6 +41,7 @@ export class LoginComponent implements OnInit {
   searchString: string
   searchStarted: boolean = false;
   noClubFound: boolean = false;
+  showBackBtn : boolean = false
   public defaultClub: Club
   public userClub
   private unsubscribe: Subscription[] = [];
@@ -110,6 +111,7 @@ export class LoginComponent implements OnInit {
 
 
   showPreviousClubs() {
+    this.showBackBtn = false;
     this.getAllClubs();
   }
 
@@ -209,6 +211,7 @@ export class LoginComponent implements OnInit {
     }
     else if (localClub) {
       this.selectedClub = JSON.parse(localClub);
+      
       this.cf.detectChanges();
     }
   }
@@ -222,6 +225,7 @@ export class LoginComponent implements OnInit {
     constants.clubApiUrl = club.baseURL;
 
     if (this.selectedClub.isPicker) {
+      this.showBackBtn = true
       this._clubService.getDividisClubs(0, 50).subscribe((dividisClubs: any) => {
         dividisClubs.map(item => {
           item.pickerClub = true;
