@@ -73,13 +73,13 @@ export class LoginComponent implements OnInit {
     this.getAllClubs();
   }
 
-  onClick() {
-    this.joyrideService.startTour({ steps: ['firstStep', 'secondStep', 'thirdStep', 'fourthStep'],
-    themeColor: '#1e1e2d',
+//   onClick() {
+//     this.joyrideService.startTour({ steps: ['firstStep', 'secondStep', 'thirdStep', 'fourthStep'],
+//     themeColor: '#1e1e2d',
  
-   } // Your steps order
-    );
-}
+//    } // Your steps order
+//     );
+// }
 
   initLoginForm() {
     this.loginForm = this.fb.group({

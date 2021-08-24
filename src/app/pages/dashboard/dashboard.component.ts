@@ -73,7 +73,7 @@ export class DashboardComponent implements OnInit {
     this.getSignedInUserStats()
     this.initializeStatsChart()
     this.getLastSevenDaysStats()
-    this.openVerticallyCentered(this.content);
+    // this.openVerticallyCentered(this.content);
   
   }
 
