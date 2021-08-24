@@ -16,7 +16,7 @@ export class FeedbackComponent implements OnInit {
   myForm: FormGroup;
   public url;
   files: File[] = [];
-  Module: string[] = ['Facebook', 'Instagram']
+  Module: string[] = ['Facebook', 'Instagram' , 'Advertisement' , 'Schedule']
   type: any
   mediaFile: any
   userId: string
@@ -66,13 +66,12 @@ export class FeedbackComponent implements OnInit {
     }
     else {
       this.submitFeedback(response)
-     
-    
     }
   }
 
   submitFeedback(feedback) {
     this._feedBackService.addFeedback(feedback).subscribe((data) => {
+      console.log(data)
       this.resetFeedbackForm()     
     }, err => {
       this.spinner.hide()
@@ -114,7 +113,6 @@ export class FeedbackComponent implements OnInit {
     this.url = ""
     this.spinner.hide()
     this.toast.success('Feedback submitted', 'Success');
-    // window.location.reload()
   }
 
   showSpinner() {
@@ -123,17 +121,4 @@ export class FeedbackComponent implements OnInit {
       this.spinner.hide();
     }, 1000);
   }
-
-
-
-  // onSelect(event) {
-  //   console.log(event);
-  //   this.files.push(...event.addedFiles);
-  // }
-
-  // onRemove(event) {
-  //   console.log(event);
-  //   this.files.splice(this.files.indexOf(event), 1);
-  // }
-
 }

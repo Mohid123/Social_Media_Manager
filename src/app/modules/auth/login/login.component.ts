@@ -181,7 +181,7 @@ export class LoginComponent implements OnInit {
 
 
   openVerticallyCentered(content) {
-
+    debugger;
     this.modalService.open(content, { centered: true, size: 'lg' });
     this.noClubFound = false;
     this.searchString = ""
