@@ -1280,6 +1280,8 @@ MIT
 ngx-highlightjs
 MIT
 
+ngx-joyride
+
 ngx-perfect-scrollbar
 MIT
 
