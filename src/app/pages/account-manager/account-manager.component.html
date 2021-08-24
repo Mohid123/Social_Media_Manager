@@ -20,7 +20,7 @@
             </div>
             <div class="card-body">
                 <!--Facebook button-->
-                <div *ngIf="socialFlag"  id="signInFB" (click)= signInWithFB() class="btn btn-icon btn-light w-auto btn-clean d-inline-flex btn-lg px-2 mr-5">
+                <div id="signInFB" (click)= signInWithFB() class="btn btn-icon btn-light w-auto btn-clean d-inline-flex btn-lg px-2 mr-5">
                     <span class="symbol symbol-35 symbol-light-primary">
                         <span class="symbol-label font-size-h5 font-weight-bold"><a  class="btn btn-icon btn-sm btn-facebook">
                             <i class="socicon-facebook"></i>
@@ -29,7 +29,7 @@
                     <span class="text-dark-50 font-weight-bolder font-size-base ml-3" style="text-align: -webkit-left;"> Add facebook profile</span>
                     
                 </div>
-                <div  *ngIf="!socialFlag" id="signInFB" (click)= showFBCommingSoonPopup() class="btn btn-icon btn-light w-auto btn-clean d-inline-flex btn-lg px-2 mr-5">
+                <!-- <div  *ngIf="!socialFlag" id="signInFB" (click)= showFBCommingSoonPopup() class="btn btn-icon btn-light w-auto btn-clean d-inline-flex btn-lg px-2 mr-5">
                     <span class="symbol symbol-35 symbol-light-primary">
                         <span class="symbol-label font-size-h5 font-weight-bold"><a  class="btn btn-icon btn-sm btn-facebook">
                             <i class="socicon-facebook"></i>
@@ -37,7 +37,7 @@
                     </span>
                     <span class="text-dark-50 font-weight-bolder font-size-base ml-3" style="text-align: -webkit-left;"> Add facebook profile</span>
                     
-                </div>
+                </div> -->
                 <hr>
                  <!--Insta button-->
                 <div *ngIf="socialFlag" (click) = showIGLoginPopup() class="btn btn-icon btn-light w-auto btn-clean d-inline-flex btn-lg px-2 mr-5">
@@ -121,7 +121,7 @@
                                             <span class="label label-light-primary label-inline font-weight-bold label-lg">Facebook</span>
                                         </div>
                                       
-                                        <a diabled (click) = "signOutFB()" class="btn btn-light-primary btn-hover-primary font-weight-bold py-3 px-6 mb-2 text-center btn-block ">Sign Out</a>
+                                        <!-- <a diabled (click) = "signOutFB()" class="btn btn-light-primary btn-hover-primary font-weight-bold py-3 px-6 mb-2 text-center btn-block ">Sign Out</a> -->
                                     
                                         
                                      
