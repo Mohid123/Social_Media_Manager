@@ -5,6 +5,7 @@ import { MediauploadService } from './../../core/services/mediaupload.service';
 import { Feedback } from './../../core/models/feedback.model';
 import { FeedbackService } from './../../core/services/feedback.service';
 import { ToastrService } from 'ngx-toastr';
+import { JoyrideService } from 'ngx-joyride';
 
 @Component({
   selector: 'app-help',
@@ -26,7 +27,8 @@ export class FeedbackComponent implements OnInit {
     private cf: ChangeDetectorRef,
     private _mediaUploadService: MediauploadService,
     private _feedBackService: FeedbackService,
-    private toast: ToastrService
+    private toast: ToastrService,
+    private joyrideService: JoyrideService
   ) {
     this.feedback = new Feedback()
   }
@@ -79,6 +81,13 @@ export class FeedbackComponent implements OnInit {
       this.toast.error(err.message)
     })
   }
+
+
+  onClick() {
+    this.joyrideService.startTour(
+        { steps: ['firstStep', 'secondStep'] } // Your steps order
+    );
+}
 
   onSelectFile(event) {
     debugger;

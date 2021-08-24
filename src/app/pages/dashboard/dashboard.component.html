@@ -80,9 +80,45 @@
                  
 
                     
-                </div>
-                
+            </div>
 
+
+            <!--MODAL ONLOAD-->
+                
+            <div class="example-preview ">
+                <div>
+                  <ng-template #content let-c="close" let-d="dismiss">
+                    <div class="modal-header d-flex justify-content-center" style="background-color: #1e1e2d;">
+                      <h4 class="modal-title" style="color: #fff;">Take a tour</h4>
+                      <button type="button" class="close ml-auto" aria-label="Close" (click)="d('Cross click')"> <i class="ki ki-bold-close icon-sm" style="color:rgba(255, 255, 255, 0.877)"></i>
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body justify-content-center text-center d-inline">
+                      
+                        <a class="text-center">
+                            <img src="./assets/media/bg/setup.png" style="width: 18rem" alt="" />
+                        </a>
+                        <h1 class="justify-content-center">Welcome!</h1>
+                        <h3 class="justify-content-center">We're glad you're here.</h3>
+                        <p class="justify-content-center">To get a feel take our guided tour where we'll get you setup and show you how to start publishing your social posts.</p>
+                    </div>
+                    <div class="modal-footer d-flex justify-content-center">
+                      <button type="button" class="btn btn-secondary">Take a tour</button>
+                      <button type="button" class="btn btn-secondary" (click)="c('Close click')">Skip</button>
+                     
+                    </div>
+                  </ng-template>
+                  </div>
+              </div>
+
+              <div class="topbar-item mr-3" style="cursor: pointer;">
+                <div class="btn btn-icon btn-icon-mobile w-auto btn-clean d-flex align-items-center btn-lg px-2"  (click)="openVerticallyCentered(content)">
+                  <span class="text-muted font-weight-bold font-size-base d-none d-md-inline mr-1">Hi,</span>
+                  <span class="text-muted font-weight-bolder font-size-base d-none d-md-inline mr-3">TEST</span>
+                
+                </div>
+              </div>
 
             
         </div>

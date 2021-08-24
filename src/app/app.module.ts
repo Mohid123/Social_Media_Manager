@@ -34,6 +34,7 @@ import { MomentPipe } from './core/pipes/datetransform.pipe';
 
 
 
+
 function appInitializer(authService: AuthService) {
   return () => {
     return new Promise((resolve) => {
@@ -57,6 +58,7 @@ function appInitializer(authService: AuthService) {
     ChartsModule,
     NgApexchartsModule,
     MatIconModule,
+    
     
     environment.isMockEnabled
       ? HttpClientInMemoryWebApiModule.forRoot(FakeAPIService, {
