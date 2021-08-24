@@ -50,6 +50,7 @@ export class ScheduleComponent implements OnInit {
     })
     if (res) {
       this.selectedEvent = res
+      // console.log(this.selectedEvent)
     }
     else {
       return
@@ -57,8 +58,10 @@ export class ScheduleComponent implements OnInit {
   }
 
   deleteSelectedSchedule() {
+    debugger;
     this._scheduleService.deleteSchedule(this.selectedEvent.id).subscribe(res => {
-      console.log(res);
+      // console.log(res);
+      this.selectedEvent = ''
       setTimeout(() => {
         this.toast.success('Schedule Deleted', 'Success')
       }, 1000);
@@ -75,7 +78,7 @@ export class ScheduleComponent implements OnInit {
   }
 
   eventClick(event) {
-    console.log(event)
+    // console.log(event)
   }
 
   getSchedulesByPostedTo() {
@@ -108,6 +111,7 @@ export class ScheduleComponent implements OnInit {
       }))
       this.events = res;
       this.showDeleteBtn = true;
+      // console.log(this.events)
       this.cf.detectChanges();
     })
   }
@@ -125,6 +129,7 @@ export class ScheduleComponent implements OnInit {
           // color:'red'
         }
       }))
+      // console.log(res)
       this.showDeleteBtn = false;
 
       this.events = res;

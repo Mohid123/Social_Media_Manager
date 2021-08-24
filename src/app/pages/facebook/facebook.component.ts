@@ -70,7 +70,7 @@ export class FacebookComponent implements OnInit {
     military: true,
   };
   ngOnInit() {
-    this.facebookProfileImageUrl = JSON.parse(localStorage.getItem('selectedClub')).userFacebookProfile.fbProfileImageUrl
+    this.facebookProfileImageUrl = JSON.parse(localStorage.getItem('selectedClub'))?.userFacebookProfile?.fbProfileImageUrl
     this.showSpinner();
     this.getSignedInUser();
     this.getCheckedItemList();
@@ -188,7 +188,7 @@ export class FacebookComponent implements OnInit {
                   singleItem.pageName = user.FBPages[i].pageName
                 })
                 this.recentFBposts = facebookPosts
-                console.log(this.recentFBposts)
+                // console.log(this.recentFBposts)
 
                 this.cf.detectChanges();
               })
@@ -261,10 +261,10 @@ export class FacebookComponent implements OnInit {
     this.spinner.show()
     this._mediaUploadService.uploadMedia('Facebook', this.signedInUser.id, this.file).subscribe((media: any) => {
       this.checkedList.forEach((item, index, array) => {
-        console.log(item)
+        // console.log(item)
         this._reportService.createReport(2, "", 'Facebook')
         this._facebookService.addImagePostToFB(item.pageID, media.url, this.facebookCaption, item.pageAccessToken).subscribe(FbPost => {
-          console.log(FbPost, 'post')
+          // console.log(FbPost, 'post')
           this._reportService.createReport(1, FbPost.id, 'Facebook')
           if (index == array.length - 1) {
             this.toast.success('Post added to Facebook Pages', 'Success')

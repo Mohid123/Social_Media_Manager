@@ -73,7 +73,7 @@
 
 
                                     <tr class="text-left ">
-                                        <td style="width: 20px; padding: 20px;">
+                                        <td style="width: 20px;">
                                             <label class="radio">
                                                 <input type="radio" name="radios1" (click)="getAllSchedule()" />
                                                 <span></span>
@@ -254,11 +254,11 @@
                 <div *ngIf="!selectedEvent" class="custom-height d-flex align-items-center justify-content-center">
                     <div class="d-flex flex-column mt-10">
                         <h1>Preview<span class="dot">.</span></h1>
-                        <h3 class="mb-10 text-center">Your Scheduled Feed Planner</h3>
+                        <h3 class="mb-10 text-center p-2">Your Scheduled Feed Planner</h3>
                         <a class="text-center">
                             <img src="./assets/media/bg/preview-post.png" style="width: 180px" alt="" />
                         </a>
-                        <p class="text-center  text-dark-50  d-inline mt-10">
+                        <p class="text-center  text-dark-50  d-inline mt-10 p-2">
 
                             PS: We don’t just help you plan. We’ll help you grow.
                         </p>
@@ -276,7 +276,7 @@
 
                 <!-- PREVIEW SELECTED SCHEDULE -->
 
-                <div class="card card-custom " *ngIf="selectedEvent && selectedEvent?.title.includes('Club') ||  selectedEvent?.title.includes('Group') ||  selectedEvent?.title.includes('Event') ">
+                <div class="card card-custom " *ngIf="selectedEvent && selectedEvent?.title?.includes('Club') ||  selectedEvent?.title?.includes('Group') ||  selectedEvent?.title?.includes('Event') ">
                     <div class="card-header ribbon ribbon-top mt-3">
                         <div class="ribbon-target bg-light" *ngIf="selectedEvent.post.type == 'image' "
                             style="top: -2px; right: 20px"> <i data-visualcompletion="css-img" class="mr-2"

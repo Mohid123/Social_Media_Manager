@@ -94,17 +94,21 @@ export class PublishComponent implements OnInit {
   }
 
   clear() {
-    this.url = "";
     this.socialCaption = "";
-    this.file = ""
+    this.cf.detectChanges()
+
   }
 
   postedSuccessfully() {
+    // this.clear()
     this.spinner.hide();
     this.url = ""
     this.file = ""
     this.removeSlectedItems()
     this.cf.detectChanges()
+    setTimeout(() => {
+      this.clear()
+    }, 4000);
   }
 
   getSignedInUser() {
@@ -501,8 +505,9 @@ export class PublishComponent implements OnInit {
           this.post.path = media.path;
           this._reportService.createReport(2, '', 'Club')
           this._postService.addPost(this.post).subscribe((post: any) => {
-            this.postedSuccessfully()
+       
             this.toast.success('Post added to Club');
+            this.postedSuccessfully()
             this._reportService.createReport(1, post.id, 'Club')
           })
         }, (error: any) => {
@@ -761,7 +766,9 @@ export class PublishComponent implements OnInit {
     let selectedClub: boolean = false;
     let hyperLinkResponse = []
 
-    if (this.socialCaption == "") {
+    
+
+    if (this.socialCaption.trim() == "") {
       this.toast.error('Please add content to post', 'No Content Added');
       return;
     }
@@ -808,11 +815,13 @@ export class PublishComponent implements OnInit {
         if (index == array.length - 1) {
           this.postedSuccessfully()
           this.toast.success('Post added to Facebook Pages', 'Success')
+          this.clear()
         }
       })
     }
 
     this.post.type = 'text';
+    this.spinner.show()
     if (selectedClubEvents.length > 0 || selectedClubGroups.length > 0 || selectedClub) {
 
       this._postService.hyperLinkScrapper(this.socialCaption).subscribe(data => {
@@ -834,6 +843,7 @@ export class PublishComponent implements OnInit {
 
 
         if (selectedClubGroups.length > 0) {
+          this.spinner.show()
           delete this.post.eventID;
           this.post.postedTo = 'Group';
           this.post.text = this.socialCaption;
@@ -851,11 +861,14 @@ export class PublishComponent implements OnInit {
             if (index == array.length - 1) {
               this.toast.success('Post added Successfully to Groups');
               this.postedSuccessfully()
+              this.clear();
             }
           })
         }
 
         if (selectedClubEvents.length > 0) {
+          
+          this.spinner.show()
           delete this.post.groupID;
           this.post.postedTo = 'Event';
           this.post.text = this.socialCaption;
@@ -872,20 +885,25 @@ export class PublishComponent implements OnInit {
             if (index == array.length - 1) {
               this.toast.success('Post added Successfully to Events', 'Success');
               this.postedSuccessfully()
+              this.clear()
             }
           })
         }
 
 
         if (selectedClub) {
+          this.spinner.show()
           delete this.post.groupID;
           delete this.post.eventID;
           this.post.postedTo = 'Club';
           this.post.text = this.socialCaption;
           this._reportService.createReport(2, '', 'Club')
           this._postService.addPost(this.post).subscribe((post: any) => {
-            this.postedSuccessfully()
+          
             this.toast.success(' Post added Successfully to Club');
+            this.postedSuccessfully()
+            
+           
             this._reportService.createReport(1, post.id, 'Club')
           }, error => {
             this.spinner.hide();

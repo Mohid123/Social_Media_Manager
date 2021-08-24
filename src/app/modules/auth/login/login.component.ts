@@ -43,6 +43,8 @@ export class LoginComponent implements OnInit {
   public defaultClub: Club
   public userClub
   private unsubscribe: Subscription[] = [];
+ 
+
 
   constructor(
     private config: NgbModalConfig,
@@ -159,7 +161,6 @@ export class LoginComponent implements OnInit {
       let res = clubs.filter(item => {
         return !item.isPicker
       })
-      console.log(clubs, 'response')
       this.allClubs = clubs;
       this.tempClubs = clubs;
       this.setDefaultClub()
@@ -220,7 +221,6 @@ export class LoginComponent implements OnInit {
         this.allClubs = dividisClubs;
         this.tempClubs = dividisClubs;
         this.setDefaultClub()
-        console.log(dividisClubs, 'Dividis Clubs')
       }, error => {
         this.toastr.error(error.message)
       })

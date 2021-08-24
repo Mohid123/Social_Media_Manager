@@ -75,7 +75,7 @@ export class InstagramComponent implements OnInit {
 
 
   ngOnInit() {
-    this.facebookProfileImageUrl = JSON.parse(localStorage.getItem('selectedClub')).userFacebookProfile.fbProfileImageUrl
+    this.facebookProfileImageUrl = JSON.parse(localStorage.getItem('selectedClub'))?.userFacebookProfile?.fbProfileImageUrl
     this.showSpinner()
     this.getSignedInUser();
     this.getCheckedItemList()
@@ -168,7 +168,7 @@ export class InstagramComponent implements OnInit {
   getRecentPosts(IGaccountID, FBpageaccessToken) {
     return this._instagramService.getPublishedPostsForIG(IGaccountID, FBpageaccessToken).subscribe((publishedPosts: any) => {
       this.recentPosts = publishedPosts.data;
-      console.log(this.recentPosts , 'recent ig posts')
+      // console.log(this.recentPosts , 'recent ig posts')
       this.cf.detectChanges();
     })
   }
@@ -350,7 +350,7 @@ export class InstagramComponent implements OnInit {
   scheduleInstagramImagePost() {
     debugger;
     let selectedList = this.checkedList;
-    console.log(selectedList)
+    // console.log(selectedList)
     if (!this.file) {
       this.toast.error('Please select any Image File', 'Empty File');
       return;
@@ -374,7 +374,7 @@ export class InstagramComponent implements OnInit {
   scheduleInstagramVideoPost() {
     debugger;
     let selectedList = this.checkedList;
-    console.log(selectedList)
+    // console.log(selectedList)
     if (!this.file) {
       this.toast.error('Please select any Video File', 'Empty File');
       return;
