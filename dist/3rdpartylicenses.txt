@@ -1274,6 +1274,9 @@ ISC
 ngx-clipboard
 MIT
 
+ngx-dropzone
+MIT
+
 ngx-highlightjs
 MIT
 
