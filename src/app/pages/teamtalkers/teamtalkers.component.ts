@@ -170,6 +170,7 @@ export class TeamtalkersComponent implements OnInit {
     this.singleDate = new Date(new Date().setDate(new Date().getDate() + 1));
     this.unCheckSlectedItems()
     this.getLatestClubPosts()
+    this.cf.detectChanges()
   }
 
   resetSchedulePost() {

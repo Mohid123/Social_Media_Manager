@@ -94,9 +94,9 @@ export class PublishComponent implements OnInit {
   }
 
   clear() {
-    this.url = "";
     this.socialCaption = "";
-    this.file = ""
+    this.cf.detectChanges()
+
   }
 
   postedSuccessfully() {
@@ -106,6 +106,9 @@ export class PublishComponent implements OnInit {
     this.file = ""
     this.removeSlectedItems()
     this.cf.detectChanges()
+    setTimeout(() => {
+      this.clear()
+    }, 4000);
   }
 
   getSignedInUser() {
