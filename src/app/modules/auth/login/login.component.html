@@ -19,10 +19,10 @@
 
           <form>
           
-            <div class="form-group d-flex flex-row" style="float: left; margin-left: -22px">
+            <div class="form-group d-flex flex-row" style="float: left;">
               
-              <button type="button" class="btn"  (click)="showPreviousClubs();searchStarted = false"  
-              data-toggle="tooltip" title="back">
+              <button *ngIf="selectedClub.pickerClub == true || selectedClub.isPicker == true " type="button" class="btn"  (click)="showPreviousClubs();searchStarted = false"  
+              data-toggle="tooltip" title="back" style="margin-left: -15px;">
               <i class="far fa-arrow-alt-circle-left" style="color:rgba(255, 255, 255, 0.877)"></i>
             </button>
               <label for="exampleInputEmail1" class=" font-size-h2" style="color: #fff;">Select club</label>

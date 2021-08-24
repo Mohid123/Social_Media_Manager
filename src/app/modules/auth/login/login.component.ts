@@ -43,6 +43,8 @@ export class LoginComponent implements OnInit {
   public defaultClub: Club
   public userClub
   private unsubscribe: Subscription[] = [];
+ 
+
 
   constructor(
     private config: NgbModalConfig,

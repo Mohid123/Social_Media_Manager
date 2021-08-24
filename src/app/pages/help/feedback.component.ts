@@ -46,6 +46,7 @@ export class FeedbackComponent implements OnInit {
   }
 
   onSubmit(form: FormGroup) {
+    debugger
     let response = form.value;
     response['userId'] = this.userId
     response['clubId'] = this.club.id
@@ -55,6 +56,7 @@ export class FeedbackComponent implements OnInit {
       this._mediaUploadService.uploadClubMedia('Feedback', this.userId, this.mediaFile).subscribe((media: any) => {
         response['imageUrl'] = media.url
         this.submitFeedback(response)
+       
       } , err=>{
         this.spinner.hide()
         this.toast.error(err.message)
@@ -62,12 +64,16 @@ export class FeedbackComponent implements OnInit {
     }
     else {
       this.submitFeedback(response)
+     
+    
     }
   }
 
   submitFeedback(feedback) {
     this._feedBackService.addFeedback(feedback).subscribe((data) => {
+   
       this.resetFeedbackForm()
+     
     }, err => {
       this.spinner.hide()
       this.toast.error(err.message)
@@ -100,7 +106,7 @@ export class FeedbackComponent implements OnInit {
     this.feedback = new Feedback()
     this.url = ""
     this.spinner.hide()
-    this.toast.success('Feedback sumbitted', 'Success');
+    this.toast.success('Feedback submitted', 'Success');
     this.cf.detectChanges()
   }
 
