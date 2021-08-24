@@ -94,18 +94,21 @@ export class PublishComponent implements OnInit {
   }
 
   clear() {
-    this.url = "";
     this.socialCaption = "";
-    this.file = ""
+    this.cf.detectChanges()
+
   }
 
   postedSuccessfully() {
-    this.clear()
+    // this.clear()
     this.spinner.hide();
     this.url = ""
     this.file = ""
     this.removeSlectedItems()
     this.cf.detectChanges()
+    setTimeout(() => {
+      this.clear()
+    }, 4000);
   }
 
   getSignedInUser() {

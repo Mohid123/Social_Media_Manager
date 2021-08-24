@@ -71,9 +71,7 @@ export class FeedbackComponent implements OnInit {
 
   submitFeedback(feedback) {
     this._feedBackService.addFeedback(feedback).subscribe((data) => {
-   
-      this.resetFeedbackForm()
-     
+      this.resetFeedbackForm()     
     }, err => {
       this.spinner.hide()
       this.toast.error(err.message)
@@ -99,15 +97,15 @@ export class FeedbackComponent implements OnInit {
   resetForm(){
     this.feedback = new Feedback()
     this.url = ""
- 
   }
 
   resetFeedbackForm() {
+    this.myForm.reset(this.myForm.value);
     this.feedback = new Feedback()
     this.url = ""
     this.spinner.hide()
     this.toast.success('Feedback submitted', 'Success');
-    this.cf.detectChanges()
+    // window.location.reload()
   }
 
   showSpinner() {
