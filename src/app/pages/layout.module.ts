@@ -122,7 +122,7 @@ FullCalendarModule.registerPlugins([
     
      
   ],
-  providers: [VideoProcessingService], 
+  providers: [VideoProcessingService , AsideComponent], 
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class LayoutModule { }
