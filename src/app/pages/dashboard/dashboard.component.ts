@@ -19,6 +19,8 @@ import { Club } from 'src/app/core/models/club.model';
 import { constants } from 'src/app/app.constants';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { Content } from '@angular/compiler/src/render3/r3_ast';
+import { TemplateRef } from '@angular/core';
+import { AsideComponent } from './../_layout/components/aside/aside.component';
 
 
 
@@ -46,6 +48,7 @@ export type ChartOptions = {
 export class DashboardComponent implements OnInit {
 
   @ViewChild("chart") chart: ChartComponent;
+  @ViewChild("appTour") modalContent: TemplateRef<any>;
   public chartOptions: Partial<ChartOptions>;
 
   public facebookStats: any
@@ -57,13 +60,19 @@ export class DashboardComponent implements OnInit {
   public instagramStatistics: any = [0, 0, 0, 0, 0, 0, 0, 0]
   public clubStatistics: any = [0, 0, 0, 0, 0, 0, 0, 0]
   public selectedClub: Club
-  clubPrimaryColor : string 
+  clubPrimaryColor: string
   closeResult: string;
-  content: any;
+  // content: any;
   // public clubName: string = localStorage.getItem('club');
   // public clubLogo: string = localStorage.getItem('clubLogo')
 
-  constructor(private spinner: NgxSpinnerService, private _clubService: ClubService, private _reportService: ReportService, private cf: ChangeDetectorRef, private modalService: NgbModal) {
+  constructor(private spinner: NgxSpinnerService,
+     private _clubService: ClubService, 
+     private _reportService: ReportService,
+      private cf: ChangeDetectorRef,
+       private modalService: NgbModal,
+       private asideComponent : AsideComponent
+       ) {
   }
 
   ngOnInit() {
@@ -73,8 +82,8 @@ export class DashboardComponent implements OnInit {
     this.getSignedInUserStats()
     this.initializeStatsChart()
     this.getLastSevenDaysStats()
-    // this.openVerticallyCentered(this.content);
-  
+    this.openVerticallyCentered(this.modalContent);
+
   }
 
   getSelectedClub() {
@@ -82,6 +91,8 @@ export class DashboardComponent implements OnInit {
     this.selectedClub = club;
     this.clubPrimaryColor = this.selectedClub.clubColor;
   }
+
+
   openVerticallyCentered(content) {
     this.modalService.open(content, { centered: true }).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
@@ -89,6 +100,7 @@ export class DashboardComponent implements OnInit {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
     });
   }
+
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
       return 'by pressing ESC';
@@ -119,20 +131,20 @@ export class DashboardComponent implements OnInit {
           color: this.selectedClub.clubColor
         }
       ],
-      
+
       chart: {
         height: 400,
         type: "line"
       },
       dataLabels: {
         enabled: false,
-        
+
       },
       stroke: {
         width: 5,
         curve: "smooth",
         dashArray: [0, 8, 9],
-        
+
         colors: ['#3b5998', '#D62976', '#FBAD50', '#FBAD50', '#FBAD50']
       },
       title: {
@@ -158,7 +170,7 @@ export class DashboardComponent implements OnInit {
       xaxis: {
         labels: {
           trim: false
-        
+
         },
         categories: [
           new Date(new Date().setDate(new Date().getDate() - 7)).getDate() + ' ' + new Date(new Date().setDate(new Date().getDate() - 7)).toLocaleString('default', { month: 'short' }),
@@ -217,6 +229,11 @@ export class DashboardComponent implements OnInit {
     })
   }
 
+  openJoyRide(){
+    console.log('sdsd')
+    
+    this.asideComponent.onClick()
+  }
 
   getInstagramStats() {
     return this._reportService.getInstagramStats(this.signedInuserID)
