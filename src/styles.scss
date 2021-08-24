@@ -455,3 +455,38 @@ label{
 .aside-menu .menu-nav > .menu-item.menu-item-active > .menu-heading, .aside-menu .menu-nav > .menu-item.menu-item-active > .menu-link {
   background-color: #454550c2;
 }
+
+.joyride-button{
+  // text-transform: uppercase;
+  border: 1px solid transparent;
+  outline: none;
+  padding: 6px 12px;
+  font-size: 11px !important;
+  font-weight: 500 !important;
+  color: #fff;
+  background-color: #3b5560;
+  cursor: pointer;
+  border-radius: 20px;
+}
+.joyride-step__container {
+  box-sizing: border-box;
+  position: relative;
+  color: #6a6a6a !important;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 10px;
+  box-shadow: 0 0 30px 1px #000;
+  border-radius: 10px !important;
+  height: auto !important;
+}
+.joyride-step__title {
+  font-weight: 700;
+  font-size: 18px !important;
+}
+.joyride-step__body {
+  text-align: left;
+  padding: 10px 8px;
+  font-size: 15px !important;
+}

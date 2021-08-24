@@ -8,6 +8,7 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import * as CryptoJS from 'crypto-js';
+import { JoyrideService } from 'ngx-joyride';
 
 @Component({
   selector: 'app-aside',
@@ -38,7 +39,8 @@ export class AsideComponent implements OnInit {
     private _authService: MainAuthService,
     private modalService: NgbModal,
     private router: Router,
-    private http: HttpClient) { }
+    private http: HttpClient,
+    private joyrideService: JoyrideService) { }
 
 
   ngOnInit(): void {
@@ -49,6 +51,18 @@ export class AsideComponent implements OnInit {
   logout() {
     this._authService.logoutSignedInUser()
   }
+
+  onClick() {
+    this.joyrideService.startTour({ 
+     steps: ['firstStep', 'secondStep', 'thirdStep', 'fourthStep', 'fifthStep', 'sixthStep', 'seventhStep', 'eighthStep'],
+    themeColor: '#1e1e2d',
+    stepDefaultPosition: 'right',
+  
+ 
+   } // Your steps order
+   
+    );
+}
 
   set_socialFlag_after_getting_club() {
     this.selectedClub = JSON.parse(localStorage.getItem('selectedClub'));

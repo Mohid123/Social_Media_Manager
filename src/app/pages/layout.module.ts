@@ -54,6 +54,7 @@ import { CalendarComponent } from './schedule/calendar/calendar.component'; // a
 import { ScheduleDateTransform } from '../core/pipes/scheduleDateTransform.pipe';
 import { FeedbackComponent } from './help/feedback.component';
 import { NgxDropzoneModule } from 'ngx-dropzone';
+import { JoyrideModule } from 'ngx-joyride';
 
 FullCalendarModule.registerPlugins([ 
   dayGridPlugin,
@@ -115,7 +116,8 @@ FullCalendarModule.registerPlugins([
     NgxDatePickerModule,
     NgxTimePickerModule,
     NgxDropzoneModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    JoyrideModule.forRoot(),
    
     
      

@@ -17,6 +17,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { constants } from 'src/app/app.constants';
 import { filter, map } from 'rxjs/operators';
 import { of } from 'rxjs';
+import { JoyrideService } from 'ngx-joyride';
 
 
 @Component({
@@ -59,7 +60,8 @@ export class LoginComponent implements OnInit {
     private toastr: ToastrService,
     private spinner: NgxSpinnerService,
     private cf: ChangeDetectorRef,
-    private activeModal: NgbActiveModal
+    private activeModal: NgbActiveModal,
+    private joyrideService: JoyrideService
   ) {
     config.backdrop = 'static';
     config.keyboard = false;
@@ -70,6 +72,14 @@ export class LoginComponent implements OnInit {
     this.initLoginForm();
     this.getAllClubs();
   }
+
+//   onClick() {
+//     this.joyrideService.startTour({ steps: ['firstStep', 'secondStep', 'thirdStep', 'fourthStep'],
+//     themeColor: '#1e1e2d',
+ 
+//    } // Your steps order
+//     );
+// }
 
   initLoginForm() {
     this.loginForm = this.fb.group({

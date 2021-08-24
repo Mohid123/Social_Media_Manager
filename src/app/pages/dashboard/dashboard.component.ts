@@ -17,6 +17,9 @@ import {
 } from "ng-apexcharts";
 import { Club } from 'src/app/core/models/club.model';
 import { constants } from 'src/app/app.constants';
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { Content } from '@angular/compiler/src/render3/r3_ast';
+
 
 
 
@@ -55,10 +58,12 @@ export class DashboardComponent implements OnInit {
   public clubStatistics: any = [0, 0, 0, 0, 0, 0, 0, 0]
   public selectedClub: Club
   clubPrimaryColor : string 
+  closeResult: string;
+  content: any;
   // public clubName: string = localStorage.getItem('club');
   // public clubLogo: string = localStorage.getItem('clubLogo')
 
-  constructor(private spinner: NgxSpinnerService, private _clubService: ClubService, private _reportService: ReportService, private cf: ChangeDetectorRef) {
+  constructor(private spinner: NgxSpinnerService, private _clubService: ClubService, private _reportService: ReportService, private cf: ChangeDetectorRef, private modalService: NgbModal) {
   }
 
   ngOnInit() {
@@ -68,12 +73,30 @@ export class DashboardComponent implements OnInit {
     this.getSignedInUserStats()
     this.initializeStatsChart()
     this.getLastSevenDaysStats()
+    // this.openVerticallyCentered(this.content);
+  
   }
 
   getSelectedClub() {
     let club = JSON.parse(localStorage.getItem('selectedClub'));
     this.selectedClub = club;
     this.clubPrimaryColor = this.selectedClub.clubColor;
+  }
+  openVerticallyCentered(content) {
+    this.modalService.open(content, { centered: true }).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+  }
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return `with: ${reason}`;
+    }
   }
 
   initializeStatsChart() {
@@ -182,6 +205,7 @@ export class DashboardComponent implements OnInit {
 
 
   getLatestReports() {
+
     let userId = localStorage.getItem('clubUid');
     this._reportService.getLatestReports(userId).subscribe((reports: any) => {
       reports.map((singleReport: any) => {

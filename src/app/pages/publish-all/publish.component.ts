@@ -757,6 +757,7 @@ export class PublishComponent implements OnInit {
   }
 
   addTextPost() {
+    debugger;
 
     let selectedFacebookPages = []
     let selctedInstagramPages = []
@@ -840,6 +841,7 @@ export class PublishComponent implements OnInit {
         if (hyperLinkResponse.length > 0 && hyperLinkResponse[0].hasOwnProperty('image')) {
           this.post.captureFileURL = hyperLinkResponse[0].image;
         }
+        
 
 
         if (selectedClubGroups.length > 0) {

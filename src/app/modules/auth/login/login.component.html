@@ -5,7 +5,7 @@
 </ngx-spinner>
 
 <div class="login-form login-signin">
-  <h2 class="font-weight-bolder  font-size-h2" style="color: #000000; letter-spacing: 1px;">
+  <h2 class="font-weight-bolder  font-size-h2" style="color: #000000; letter-spacing: 1px;" >
     Sign In
   </h2>
 
@@ -14,7 +14,7 @@
     <div>
       <ng-template #content6 let-c="close" let-d="dismiss">
         <div class="modal-header d-flex justify-content-between"
-          style="background-color: #1e1e2d; padding-bottom: 10px;">
+          style="background-color: #1e1e2d; padding-bottom: 10px;" >
       
 
           <form>
@@ -25,7 +25,7 @@
               data-toggle="tooltip" title="back" style="margin-left: -15px;">
               <i class="far fa-arrow-alt-circle-left" style="color:rgba(255, 255, 255, 0.877)"></i>
             </button>
-              <label for="exampleInputEmail1" class=" font-size-h2" style="color: #fff;">Select club</label>
+              <label for="exampleInputEmail1" class=" font-size-h2" style="color: #fff;" >Select club</label>
 
             </div>
 
@@ -112,7 +112,7 @@
           </svg>
           <!--end::Svg Icon-->
         </span>
-        <span class="text-light font-weight-bolder font-size-base mr-3">&nbsp;&nbsp;Select club</span>
+        <span class="text-light font-weight-bolder font-size-base mr-3" joyrideStep="firstStep" title="Select Club" text="You need to select club first." (click)="onClick()">&nbsp;&nbsp;Select club</span>
 
       </div>
     </div>
@@ -152,7 +152,7 @@
 
     <div class="form-group">
       <label class="font-size-h6 font-weight-bolder text-dark">Email</label>
-      <input class="form-control form-control-solid h-auto py-7 px-6 rounded-lg" type="email" name="email"
+      <input class="form-control form-control-solid h-auto py-7 px-6 rounded-lg" type="email" name="email" joyrideStep="secondStep" title="Email" text="Provide your valid email"
         formControlName="email" autocomplete="off" [ngClass]="{ 'is-in valid': loginForm.controls['email'].invalid }"
         placeholder="e.g johndoe@gmail.com" />
       <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
@@ -183,7 +183,7 @@
 
       </div>
 
-      <input class="form-control form-control-solid h-auto py-7 px-6 rounded-lg" type="password" name="password"
+      <input class="form-control form-control-solid h-auto py-7 px-6 rounded-lg" type="password" name="password" joyrideStep="thirdStep" title="Password" text="Provide your valid password"
         autocomplete="off" formControlName="password"
         [ngClass]="{ 'is-in valid': loginForm.controls['password'].invalid }"
         placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;" />
@@ -208,7 +208,7 @@
     <!--begin::Action-->
     <div class="pb-lg-0 pb-5">
       <button type="submit" id="kt_login_signin_submit" class="btn font-weight-bolder font-size-h6 px-8 py-4 my-3 mr-3"
-        [disabled]="loginForm.invalid" style="background-color: #1e1e2d; color: #fff;">
+        [disabled]="loginForm.invalid" style="background-color: #1e1e2d; color: #fff;" joyrideStep="fourthStep" title="Sign In" text="By clicking this button you'll be redirected to the dashboard screen.">
         Sign In
       </button>
 
