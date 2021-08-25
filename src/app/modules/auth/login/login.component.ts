@@ -74,14 +74,6 @@ export class LoginComponent implements OnInit {
     this.getAllClubs();
   }
 
-//   onClick() {
-//     this.joyrideService.startTour({ steps: ['firstStep', 'secondStep', 'thirdStep', 'fourthStep'],
-//     themeColor: '#1e1e2d',
- 
-//    } // Your steps order
-//     );
-// }
-
   initLoginForm() {
     this.loginForm = this.fb.group({
       email: [
@@ -135,6 +127,10 @@ export class LoginComponent implements OnInit {
 
     this.spinner.show();
     this._authService.loginByEmail(payload).subscribe(user => {
+      console.log(user , 'Logged In User')
+      if(user.newUser){
+        localStorage.setItem('newUser' , 'true');
+      }
       if (user.user.admin) {
         localStorage.setItem('app-token', user.app_token.access_token)
         localStorage.setItem('clubUid', user.loggedInUser.userID)
@@ -243,5 +239,4 @@ export class LoginComponent implements OnInit {
       return of(null)
     }
   }
-
 }
