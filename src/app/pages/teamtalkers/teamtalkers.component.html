@@ -1219,7 +1219,7 @@
                                                     </div>
                                                 </div>
                                                 <div *ngIf="post.type == 'text'" class="m-3" >
-                                                    <textarea [(ngModel)]="editedPostText" style="height: 150px;" style="white-space: pre-wrap" class="form-control form-control-xl form-control-solid"
+                                                    <textarea [(ngModel)]="editedPostText" style="height: 150px;" style="white-space: pre-wrap; text-align: justify;" class="form-control form-control-xl form-control-solid"
                                                     id="exampleTextarea" rows="3"
                                                     placeholder="What’s on your mind, {{userName}}?">{{post.text}}</textarea>
                                                 </div>
@@ -1422,7 +1422,7 @@
                                 </div>
                                 <div class="caption text-justify" style="    padding: 10px 33px;
                                 word-break: break-all;
-                                color: #000; white-space: pre-wrap">
+                                color: #000; white-space: pre-wrap; text-align: justify;">
                                     <div *ngIf="post.text">{{post.text}}</div>
                                 </div>
 
@@ -1590,7 +1590,7 @@
                                                     height: 100%;
                                                     width: 100%;
                                                     display: block; "></div>
-                                            <div class="caption" style="white-space: pre-wrap">
+                                            <div class="caption" style="white-space: pre-wrap; text-align: justify;">
                                                 <div>{{teamtalkerCaption}}</div>
                                                 <div class="line-no-text" *ngIf="!teamtalkerCaption">
                                                     {{teamtalkerCaption}}</div>
@@ -1731,7 +1731,7 @@
                                                     display: block;" controls
                                                     disablepictureinpicture controlsList="nodownload"></video>
                                             </div>
-                                            <div class="caption" style="white-space: pre-wrap">
+                                            <div class="caption" style="white-space: pre-wrap; text-align: justify;">
                                                 <div>{{teamtalkerCaption}}</div>
                                                 <div class="line-no-text" *ngIf="!teamtalkerCaption">
                                                     {{teamtalkerCaption}}</div>
@@ -1857,7 +1857,7 @@
                                                     </span>
                                                 </div>
                                             </div>
-                                            <div class="caption" style="white-space: pre-wrap">
+                                            <div class="caption" style="white-space: pre-wrap; text-align: justify;">
                                                 <div>{{teamtalkerCaption}}</div>
                                                 <div class="line-no-text" *ngIf="!teamtalkerCaption"></div>
                                                 <div class="line-no-text" *ngIf="!teamtalkerCaption"></div>
@@ -1985,7 +1985,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="caption" style="white-space: pre-wrap">
+                                            <div class="caption" style="white-space: pre-wrap; text-align: justify;">
                                                 <div>
                                                     <div class="panel panel-primary">
                                                         <div class="panel-heading">
