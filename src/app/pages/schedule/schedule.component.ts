@@ -106,7 +106,8 @@ export class ScheduleComponent implements OnInit {
           start: new Date(item.scheduleDate).toISOString().slice(0, 10),
           post: item.post,
           index: idx,
-          status: item.status
+          status: item.status,
+          color: item.post?.color ? item.post.color : this.selectedClub?.clubColor
         }
       }))
       this.events = res;
@@ -124,7 +125,8 @@ export class ScheduleComponent implements OnInit {
           title: item.post.postedTo + ': ' + item.post.title,
           start: new Date(item.scheduleDate).toISOString().slice(0, 10),
           post: item.post,
-          status: item.status
+          status: item.status,
+          color: item.post?.color ? item.post.color : this.selectedClub?.clubColor
 
           // color:'red'
         }
@@ -145,11 +147,11 @@ export class ScheduleComponent implements OnInit {
           title: item.post.postedTo + ': ' + item.post.title,
           start: new Date(item.scheduleDate).toISOString().slice(0, 10),
           post: item.post,
-          status: item.status
+          status: item.status,
+          color: item.post?.color ? item.post.color : this.selectedClub?.clubColor
         }
       }))
       this.showDeleteBtn = false;
-
       this.events = res;
       this.cf.detectChanges();
     })
@@ -203,7 +205,7 @@ export class ScheduleComponent implements OnInit {
           id: item.id,
           title: item.post.postedTo + ': ' + item.post.title,
           start: new Date(item.scheduleDate).toISOString().slice(0, 10),
-          color: JSON.parse(localStorage.getItem('selectedClub')).clubColor,
+          color: this.selectedClub?.clubColor,
           post: item.post,
           status: item.status
 
@@ -212,7 +214,6 @@ export class ScheduleComponent implements OnInit {
       localStorage.setItem('clubsch', encodeURIComponent(JSON.stringify(res)))
       this.events = res;
       this.showDeleteBtn = false;
-
       this.cf.detectChanges();
     })
   }
