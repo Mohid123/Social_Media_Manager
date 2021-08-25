@@ -56,7 +56,7 @@ export class PublishComponent implements OnInit {
     text: false
   }
   public selectedFacebook : boolean = false; // initally the value was set to false
-  public selectedInstagram: boolean = false // was previousely set to true
+  public selectedInstagram: boolean = true // was previousely set to true
 
   constructor(private spinner: NgxSpinnerService, private cf: ChangeDetectorRef,
     private toast: ToastrService, private _facebookService: FacebookService,
