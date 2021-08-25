@@ -127,7 +127,7 @@ export class LoginComponent implements OnInit {
 
     this.spinner.show();
     this._authService.loginByEmail(payload).subscribe(user => {
-      console.log(user , 'Logged In User')
+      // console.log(user , 'Logged In User')
       if(user.newUser){
         localStorage.setItem('newUser' , 'true');
       }

@@ -34,7 +34,7 @@ export class CalendarComponent implements OnInit {
   }
 
   ngOnChanges() {
-    console.log('ngonchanges called')
+    // console.log('ngonchanges called')
     this.spinner.show()
     setTimeout(() => {
       this.calendarOptions.events = this.schedules;

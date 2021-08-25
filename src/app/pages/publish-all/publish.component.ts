@@ -751,7 +751,7 @@ export class PublishComponent implements OnInit {
 
 
   showSchedule(event) {
-    console.log(event.target.value)
+    // console.log(event.target.value)
   }
 
   addTextPost() {

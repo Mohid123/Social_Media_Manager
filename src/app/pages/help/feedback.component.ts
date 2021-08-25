@@ -71,7 +71,6 @@ export class FeedbackComponent implements OnInit {
 
   submitFeedback(feedback) {
     this._feedBackService.addFeedback(feedback).subscribe((data) => {
-      console.log(data)
       this.resetFeedbackForm()     
     }, err => {
       this.spinner.hide()
