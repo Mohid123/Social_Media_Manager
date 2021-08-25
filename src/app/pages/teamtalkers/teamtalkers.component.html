@@ -1177,10 +1177,10 @@
                                     <!-- EDIT & DELETE -->
 
                                     <div class="col text-right">
-                                        <div ngbDropdown class="d-inline-block">
+                                        <div ngbDropdown placement="bottom-right" class="d-inline-block">
                                             <button class="btn" id="dropdownBasic1" ngbDropdownToggle><i
                                                     class="ki ki-bold-more-hor" style="color:black"></i></button>
-                                            <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                                            <div ngbDropdownMenu aria-labelledby="dropdownBasic1" >
                                                 <button (click)="openEditPostDaialog(editPostDialog , post)" ngbDropdownItem><i
                                                         class="fas fa-edit mr-2 text-dark"></i>Edit</button>
                                                 <button (click)="deletePost(post)" ngbDropdownItem><i
@@ -1219,7 +1219,7 @@
                                                     </div>
                                                 </div>
                                                 <div *ngIf="post.type == 'text'" class="m-3" >
-                                                    <textarea [(ngModel)]="editedPostText" style="height: 150px;" style="white-space: pre-wrap" class="form-control form-control-xl form-control-solid"
+                                                    <textarea [(ngModel)]="editedPostText" style="height: 150px;" style="white-space: pre-wrap; text-align: justify;" class="form-control form-control-xl form-control-solid"
                                                     id="exampleTextarea" rows="3"
                                                     placeholder="What’s on your mind, {{userName}}?">{{post.text}}</textarea>
                                                 </div>
@@ -1266,7 +1266,7 @@
                                                                                 <img *ngIf="reaction.user.profilePicURL == '' " alt="Pic"
                                                                                 src="../../../assets/media/users/mockfbImage.png" />  
                                                                         </div>
-                                                                        <span class="symbol-label"> {{post.reactionCount}} Reactions</span>
+                                                                        <span class="symbol-label"> {{post.reactionCount}} likes</span>
                                                                     </div>
 
                                                                 </div>
@@ -1422,7 +1422,7 @@
                                 </div>
                                 <div class="caption text-justify" style="    padding: 10px 33px;
                                 word-break: break-all;
-                                color: #000; white-space: pre-wrap">
+                                color: #000; white-space: pre-wrap; text-align: justify;">
                                     <div *ngIf="post.text">{{post.text}}</div>
                                 </div>
 
@@ -1476,7 +1476,7 @@
 
 
                                                         <span class="symbol-label">{{post.reactionCount}}
-                                                            Reactions</span>
+                                                            likes</span>
                                                     </div>
 
                                                 </div>
@@ -1590,7 +1590,7 @@
                                                     height: 100%;
                                                     width: 100%;
                                                     display: block; "></div>
-                                            <div class="caption" style="white-space: pre-wrap">
+                                            <div class="caption" style="white-space: pre-wrap; text-align: justify;">
                                                 <div>{{teamtalkerCaption}}</div>
                                                 <div class="line-no-text" *ngIf="!teamtalkerCaption">
                                                     {{teamtalkerCaption}}</div>
@@ -1671,7 +1671,7 @@
                                                                     </div>
 
 
-                                                                    <span class="symbol-label">2 Reactions</span>
+                                                                    <span class="symbol-label">2 likes</span>
                                                                 </div>
 
                                                             </div>
@@ -1731,7 +1731,7 @@
                                                     display: block;" controls
                                                     disablepictureinpicture controlsList="nodownload"></video>
                                             </div>
-                                            <div class="caption" style="white-space: pre-wrap">
+                                            <div class="caption" style="white-space: pre-wrap; text-align: justify;">
                                                 <div>{{teamtalkerCaption}}</div>
                                                 <div class="line-no-text" *ngIf="!teamtalkerCaption">
                                                     {{teamtalkerCaption}}</div>
@@ -1810,7 +1810,7 @@
                                                                     </div>
 
 
-                                                                    <span class="symbol-label">2 Reactions</span>
+                                                                    <span class="symbol-label">2 likes</span>
                                                                 </div>
 
                                                             </div>
@@ -1857,7 +1857,7 @@
                                                     </span>
                                                 </div>
                                             </div>
-                                            <div class="caption" style="white-space: pre-wrap">
+                                            <div class="caption" style="white-space: pre-wrap; text-align: justify;">
                                                 <div>{{teamtalkerCaption}}</div>
                                                 <div class="line-no-text" *ngIf="!teamtalkerCaption"></div>
                                                 <div class="line-no-text" *ngIf="!teamtalkerCaption"></div>
@@ -1936,7 +1936,7 @@
                                                                     </div>
 
 
-                                                                    <span class="symbol-label">2 Reactions</span>
+                                                                    <span class="symbol-label">2 likes</span>
                                                                 </div>
 
                                                             </div>
@@ -1985,7 +1985,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="caption" style="white-space: pre-wrap">
+                                            <div class="caption" style="white-space: pre-wrap; text-align: justify;">
                                                 <div>
                                                     <div class="panel panel-primary">
                                                         <div class="panel-heading">
@@ -2062,7 +2062,7 @@
                                                                     </div>
 
 
-                                                                    <span class="symbol-label">2 Reactions</span>
+                                                                    <span class="symbol-label">2 likes</span>
                                                                 </div>
 
                                                             </div>

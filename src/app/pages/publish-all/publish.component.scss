@@ -36,7 +36,7 @@
     position: absolute;
     top: 14px;
     font-size: 13px;
-    left: 58px;
+    left: 68px;
     line-height: 17px;
 }
 
@@ -401,7 +401,7 @@
     position: absolute;
     top: 14px;
     font-size: 13px;
-    left: 58px;
+    left: 68px;
     line-height: 17px;
 }
 .preview-facebook-text .user-info-tt .text-tt{
@@ -476,10 +476,10 @@
     margin-top: 10px;
 }
 .preview-facebook .preview-tt{
+  
     position: relative;
-    padding: 7px 0px 12px 25px;
+    padding: 12px 0px 12px 25px;
     color: black;
-    // text-align: center;
     border-top: 1px solid #eee;
     margin: 0 10px;
     margin-top: -14px;
@@ -838,7 +838,7 @@
 
 @media screen 
  
-and (max-width: 1700px) 
+and (max-width: 1600px) 
 {
    
     .card.card-custom > .card-body {
@@ -854,7 +854,19 @@ and (max-width: 1700px)
   overflow-x: hidden;
 }
 
+// .preview-facebook .preview-comment .item {
+//     float: left;
+//     margin-right: 16px;
+//     font-weight: 500;
+//     font-size: 9px;
+// }
 .preview-facebook .preview-comment .item {
+    float: left;
+    margin-right: 16px;
+    font-weight: 500;
+    font-size: 9px;
+}
+.preview-facebook .preview-tt .item {
     float: left;
     margin-right: 16px;
     font-weight: 500;

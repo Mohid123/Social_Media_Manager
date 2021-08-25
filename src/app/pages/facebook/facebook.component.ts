@@ -267,7 +267,7 @@ export class FacebookComponent implements OnInit {
           // console.log(FbPost, 'post')
           this._reportService.createReport(1, FbPost.id, 'Facebook')
           if (index == array.length - 1) {
-            this.toast.success('Post added to Facebook Pages', 'Success')
+            this.toast.success('Great! The post has been shared.')
             this.postedSuccessfully();
           }
         }, error => {
@@ -305,7 +305,7 @@ export class FacebookComponent implements OnInit {
         this._facebookService.addVideoPost(item.pageID, item.pageAccessToken, media.url, this.facebookCaption).pipe(take(1)).subscribe((video: any) => {
           this._reportService.createReport(1, video.id, 'Facebook')
           if (index == array.length - 1) {
-            this.toast.success('Video post added to Facebook Pages', 'Success');
+            this.toast.success('Great! The post has been shared.');
             this.postedSuccessfully();
           }
         })
@@ -339,7 +339,7 @@ export class FacebookComponent implements OnInit {
       this._facebookService.addTextPostToFB(item.pageID, this.facebookCaption, item.pageAccessToken).subscribe(FbPost => {
         this._reportService.createReport(1, FbPost.id, 'Facebook')
         if (index == array.length - 1) {
-          this.toast.success('Text post added to Facebook pages', 'Success');
+          this.toast.success('Great! The post has been shared.');
           this.postedSuccessfully();
         }
       }, error => {

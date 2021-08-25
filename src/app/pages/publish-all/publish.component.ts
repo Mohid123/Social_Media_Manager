@@ -48,6 +48,7 @@ export class PublishComponent implements OnInit {
   public userName: string = localStorage.getItem('userName')
   public profileImageUrl: string = localStorage.getItem('profileImageUrl')
   public clubLogo: string = "";
+  public clubPrimaryColor: string;
   public searchString: string;
   public scheduleSelected: boolean = false;
   public showDiv = {
@@ -91,6 +92,7 @@ export class PublishComponent implements OnInit {
     this.checklist.push(obj);
     this.tempList.push(obj);
     this.clubLogo = club.logoURL
+    this.clubPrimaryColor = club.clubColor;
   }
 
   clear() {
@@ -112,7 +114,7 @@ export class PublishComponent implements OnInit {
   getSignedInUser() {
     this._authService.getSignedInUser().pipe(take(1)).subscribe(user => {
       this.signedInUser = user;
-      if (this.signedInUser.FBPages.length > 0) {
+      if (this.signedInUser?.FBPages?.length > 0) {
         this.signedInUser.FBPages.map(item => {
           item.isSelected = false;
           item.name = item.pageName
@@ -577,8 +579,8 @@ export class PublishComponent implements OnInit {
     }
 
     if (selctedInstagramPages.length > 0) {
+    this.toast.warning("You'll be notified when done","We are finalizing your video.")
       this._mediaUploadService.uploadMedia('Instagram', this.signedInUser.id, this.file).subscribe((media: any) => {
-        this.spinner.show();
         selctedInstagramPages.forEach(item => {
           this._instagramService.createIgContainerForVideo(item.instagram_business_account.id, media.url, this.socialCaption, item.linkedFbPagetoken).subscribe((container: any) => {
             let interval = setInterval(() => {
@@ -606,7 +608,7 @@ export class PublishComponent implements OnInit {
                   this._reportService.createReport(0, '', 'Instagram');
                 }
               })
-            }, 3000)
+            }, 30000)
           })
         }, (error) => {
           this.spinner.hide();

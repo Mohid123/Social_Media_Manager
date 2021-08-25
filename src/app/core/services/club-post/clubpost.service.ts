@@ -71,7 +71,7 @@ export class ClubpostService {
         this._postService.createClubPost(postedTo , this.post).subscribe((post: Post) => {
           this._reportService.createReport(1, post.id, postedTo);
           if (idx == self.length - 1) {
-            this.toast.success(`Post added successfully to ${postedTo}`)
+            this.toast.success(` Great! The post has been shared to ${postedTo}.`)
             this.spinner.hide();
             resolve('success')
           }
@@ -137,7 +137,7 @@ export class ClubpostService {
             // console.log(this.post)
             this._reportService.createReport(1, post.id, postedTo);
             if (idx == self.length - 1) {
-              this.toast.success(`Post added successfully to ${postedTo}`)
+              this.toast.success(`Great! The post has been shared to ${postedTo}.`)
               this.spinner.hide();
               resolve('success');
             }
@@ -228,7 +228,7 @@ export class ClubpostService {
                     this._reportService.createReport(1, post.id, postedTo);
                     if (idx == self.length - 1) {
                       this.spinner.hide();
-                      this.toast.success(`Post added to ${postedTo}`, "Success");
+                      this.toast.success(`Great! The post has been shared to ${postedTo}.`);
                       resolve('success')
                     }},
                   (error) => {

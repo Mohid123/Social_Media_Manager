@@ -109,6 +109,7 @@ export class DashboardComponent implements OnInit {
     }, (reason) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
     });
+    localStorage.removeItem('newUser')
   }
 
   private getDismissReason(reason: any): string {
