@@ -770,7 +770,7 @@ export class TeamtalkersComponent implements OnInit {
       this.spinner.show();
       this._postService.addPost(this.post).subscribe((data) => {
         this.spinner.hide();
-        this.toast.success('Poll Post Created in Club', 'Success');
+        this.toast.success('Great! The poll has been shared.');
         this.resetPost()
       });
     }
