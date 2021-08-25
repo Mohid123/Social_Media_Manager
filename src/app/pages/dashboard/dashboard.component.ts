@@ -67,12 +67,12 @@ export class DashboardComponent implements OnInit {
   // public clubLogo: string = localStorage.getItem('clubLogo')
 
   constructor(private spinner: NgxSpinnerService,
-     private _clubService: ClubService, 
-     private _reportService: ReportService,
-      private cf: ChangeDetectorRef,
-       private modalService: NgbModal,
-       private asideComponent : AsideComponent
-       ) {
+    private _clubService: ClubService,
+    private _reportService: ReportService,
+    private cf: ChangeDetectorRef,
+    private modalService: NgbModal,
+    private asideComponent: AsideComponent
+  ) {
   }
 
   ngOnInit() {
@@ -82,7 +82,8 @@ export class DashboardComponent implements OnInit {
     this.getSignedInUserStats()
     this.initializeStatsChart()
     this.getLastSevenDaysStats()
-    this.openVerticallyCentered(this.modalContent);
+    this.showAppTour()
+    // this.openVerticallyCentered(this.modalContent);
 
   }
 
@@ -93,6 +94,15 @@ export class DashboardComponent implements OnInit {
   }
 
 
+  showAppTour() {
+    let user = JSON.parse(localStorage.getItem('newUser'))
+    if (user === true) {
+      this.openVerticallyCentered(this.modalContent)
+    }
+    else {
+      return;
+    }
+  }
   openVerticallyCentered(content) {
     this.modalService.open(content, { centered: true }).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
@@ -229,9 +239,9 @@ export class DashboardComponent implements OnInit {
     })
   }
 
-  openJoyRide(){
+  openJoyRide() {
     console.log('sdsd')
-    
+
     this.asideComponent.onClick()
   }
 

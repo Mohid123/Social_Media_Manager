@@ -56,7 +56,7 @@ export class PublishComponent implements OnInit {
     text: false
   }
   public selectedFacebook : boolean = false; // initally the value was set to false
-  public selectedInstagram: boolean = false // was previousely set to true
+  public selectedInstagram: boolean = true // was previousely set to true
 
   constructor(private spinner: NgxSpinnerService, private cf: ChangeDetectorRef,
     private toast: ToastrService, private _facebookService: FacebookService,
@@ -252,21 +252,21 @@ export class PublishComponent implements OnInit {
       this.showDiv.photo = true;
       this.showDiv.video = false;
       this.showDiv.text = false;
-      // this.selectedInstagram = true;
+      this.selectedInstagram = true;
 
     }
     else if (event.index == 1) {
       this.showDiv.photo = false;
       this.showDiv.video = true;
       this.showDiv.text = false;
-      // this.selectedInstagram = true; 
+      this.selectedInstagram = true; 
 
     }
     else {
       this.showDiv.photo = false;
       this.showDiv.video = false;
       this.showDiv.text = true;
-      // this.selectedInstagram = false;s
+      this.selectedInstagram = false;
     }
   }
 
@@ -751,7 +751,7 @@ export class PublishComponent implements OnInit {
 
 
   showSchedule(event) {
-    console.log(event.target.value)
+    // console.log(event.target.value)
   }
 
   addTextPost() {

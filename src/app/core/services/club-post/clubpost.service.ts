@@ -134,7 +134,7 @@ export class ClubpostService {
           }
           this._reportService.createReport(2, "", postedTo);
           this._postService.createClubPost(postedTo, this.post).subscribe((post: Post) => {
-            console.log(this.post)
+            // console.log(this.post)
             this._reportService.createReport(1, post.id, postedTo);
             if (idx == self.length - 1) {
               this.toast.success(`Post added successfully to ${postedTo}`)

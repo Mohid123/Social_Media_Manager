@@ -236,10 +236,10 @@ export class InstagramComponent implements OnInit {
     this._mediaUploadService.uploadMedia('InstagramTest', '123', this.file).subscribe((media: any) => {
       this.checkedList.forEach(item => {
         this._instagramService.createIgContainerForVideo(item.instagram_business_account.id, media.url, this.instaCaption, item.linkedFbPagetoken).subscribe((container: any) => {
-          console.log(container, 'container')
+          // console.log(container, 'container')
           let interval = setInterval(() => {
             this._instagramService.getContainerStatus(container.id, item.linkedFbPagetoken).subscribe((data: any) => {
-              console.log(data, 'status')
+              // console.log(data, 'status')
               if (data.status_code == "FINISHED") {
                 this._instagramService.publishContent(item.instagram_business_account.id, container.id, item.linkedFbPagetoken).subscribe((data: any) => {
 

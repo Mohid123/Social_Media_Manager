@@ -130,9 +130,9 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
 
   setLiveStreamBit(bit){
     this._clubService.changeLiveStreamBit(bit).subscribe(data=>{
-      console.log(data);
+      // console.log(data);
     })
-    console.log(bit)
+    // console.log(bit)
   }
 
   getLiveStreamBit(){
@@ -140,7 +140,7 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
     if(club.id == '60a1f5fb764e4033cc10f7d5'){
       this.showLiveStream = true;
       this._clubService.getLiveStreamBit().subscribe((data:any)=>{
-        console.log(data)
+        // console.log(data)
        this.toggleBtn = data.liveStreamBit;
        this.cf.detectChanges();
       })

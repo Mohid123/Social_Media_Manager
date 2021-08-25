@@ -73,7 +73,7 @@ export class ScheduleSocialPostService {
         });
         selectedList.forEach((element, idx, self) => {
           this._scheduleService.scheduleFacebookPost(element).subscribe(data => {
-            console.log(data);
+            // console.log(data);
             if (idx == self.length - 1) {
               this.spinner.hide();
               this.toast.success('Post Scheduled', 'Info');
@@ -149,7 +149,7 @@ export class ScheduleSocialPostService {
         });
         selectedList.forEach((element, idx, self) => {
           this._scheduleService.scheduleInstagramPost(element).subscribe(data => {
-            console.log(data);
+            // console.log(data);
             if (idx == self.length - 1) {
               this.spinner.hide();
               this.toast.success('Post Scheduled', 'Info');
@@ -191,9 +191,9 @@ export class ScheduleSocialPostService {
 
         });
         selectedList.forEach((element, idx, self) => {
-          console.log(element, 'element')
+          // console.log(element, 'element')
           this._scheduleService.scheduleInstagramPost(element).subscribe(data => {
-            console.log(data);
+            // console.log(data);
             if (idx == self.length - 1) {
               this.spinner.hide();
               this.toast.success('Post Scheduled', 'Info');

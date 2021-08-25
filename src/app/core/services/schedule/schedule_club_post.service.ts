@@ -264,7 +264,7 @@ export class ScheduleClubPostService {
                   }
                   // this._reportService.createReport(2, "", postedTo);
                   this._scheduleService.schduleClubPost(postedTo, this.clubID, this.post).subscribe((post: any) => {
-                    console.log(post, 'scjhe')
+                    // console.log(post, 'scjhe')
                     // this._reportService.createReport(1, post.id, postedTo);
                     if (idx == self.length - 1) {
                       this.spinner.hide();

@@ -86,7 +86,7 @@ export class VideoProcessingService {
       let length;
       let rgb = { r: 0, g: 0, b: 0 };
       let count = 0;
-      console.log(typeof imgEl);
+      // console.log(typeof imgEl);
       if (typeof imgEl == 'string') {
         var src = imgEl;
         imgEl = new Image;
@@ -100,7 +100,7 @@ export class VideoProcessingService {
 
       height = canvas.height 
       width = canvas.width 
-      console.log(height , width ,'sd')
+      // console.log(height , width ,'sd')
 
       context.imageSmoothingEnabled = true;
       
