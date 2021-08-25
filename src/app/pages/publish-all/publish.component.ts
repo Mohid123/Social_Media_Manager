@@ -48,6 +48,7 @@ export class PublishComponent implements OnInit {
   public userName: string = localStorage.getItem('userName')
   public profileImageUrl: string = localStorage.getItem('profileImageUrl')
   public clubLogo: string = "";
+  public clubPrimaryColor: string;
   public searchString: string;
   public scheduleSelected: boolean = false;
   public showDiv = {
@@ -91,6 +92,7 @@ export class PublishComponent implements OnInit {
     this.checklist.push(obj);
     this.tempList.push(obj);
     this.clubLogo = club.logoURL
+    this.clubPrimaryColor = club.clubColor;
   }
 
   clear() {
