@@ -1,5 +1,5 @@
 
-import { Component, OnInit, AfterViewInit, ChangeDetectorRef, ViewChild, TemplateRef } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ChangeDetectorRef, ViewChild, TemplateRef, ElementRef } from '@angular/core';
 import { take } from 'rxjs/operators';
 import { ScheduleService } from './../../core/services/schedule.service';
 import { Schedule } from './../../core/models/schedule.model';
@@ -13,7 +13,7 @@ import { ToastrService } from 'ngx-toastr';
   templateUrl: './schedule.component.html',
   styleUrls: ['./schedule.component.scss']
 })
-export class ScheduleComponent implements OnInit {
+export class ScheduleComponent implements OnInit , AfterViewInit {
   public events: any[]
   public mutatedEvents: any[]
   public selectedClub: Club
@@ -23,18 +23,25 @@ export class ScheduleComponent implements OnInit {
   showDeleteBtn: boolean = false
   radios1: any = null
   @ViewChild("content", { static: false }) modalContent: TemplateRef<any>;
+  @ViewChild('queueSelected') queueSelected:ElementRef;
 
   constructor(
     private _scheduleService: ScheduleService,
     private cf: ChangeDetectorRef,
 
-    private toast: ToastrService
+    private toast: ToastrService,
+    private elementRef: ElementRef
   ) { }
 
 
   ngOnInit() {
     this.getUserClub()
+    this.cf.detectChanges()
+  }
 
+
+ngAfterViewInit(){
+    this.queueSelected.nativeElement.focus();
   }
 
   // ngAfterViewInit() {
