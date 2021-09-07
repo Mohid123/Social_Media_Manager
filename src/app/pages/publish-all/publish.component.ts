@@ -559,10 +559,10 @@ export class PublishComponent implements OnInit {
 
     if (selectedFacebookPages.length > 0) {
       this.spinner.show()
-      this._mediaUploadService.uploadMedia('Facebook', this.signedInUser.id, this.file).subscribe((media: any) => {
+      this._mediaUploadService.uploadMedia('Facebook', this.signedInUser.id, this.file).pipe(take(1)).subscribe((media: any) => {
         selectedFacebookPages.forEach((item, index, array) => {
           this._reportService.createReport(2, '', 'Facebook');
-          this._facebookService.addVideoPost(item.pageID, item.pageAccessToken, media.url, this.socialCaption).subscribe((FbPost: any) => {
+          this._facebookService.addVideoPost(item.pageID, item.pageAccessToken, media.url, this.socialCaption).pipe(take(1)).subscribe((FbPost: any) => {
             this._reportService.createReport(1, FbPost.id, 'Facebook')
           }, error => {
             this.spinner.hide()
@@ -580,13 +580,13 @@ export class PublishComponent implements OnInit {
 
     if (selctedInstagramPages.length > 0) {
     this.toast.warning("You'll be notified when done","We are finalizing your video.")
-      this._mediaUploadService.uploadMedia('Instagram', this.signedInUser.id, this.file).subscribe((media: any) => {
+      this._mediaUploadService.uploadMedia('Instagram', this.signedInUser.id, this.file).pipe(take(1)).subscribe((media: any) => {
         selctedInstagramPages.forEach(item => {
-          this._instagramService.createIgContainerForVideo(item.instagram_business_account.id, media.url, this.socialCaption, item.linkedFbPagetoken).subscribe((container: any) => {
+          this._instagramService.createIgContainerForVideo(item.instagram_business_account.id, media.url, this.socialCaption, item.linkedFbPagetoken).pipe(take(1)).subscribe((container: any) => {
             let interval = setInterval(() => {
-              this._instagramService.getContainerStatus(container.id, item.linkedFbPagetoken).subscribe((data: any) => {
+              this._instagramService.getContainerStatus(container.id, item.linkedFbPagetoken).pipe(take(1)).subscribe((data: any) => {
                 if (data.status_code == "FINISHED") {
-                  this._instagramService.publishContent(item.instagram_business_account.id, container.id, item.linkedFbPagetoken).subscribe((data: any) => {
+                  this._instagramService.publishContent(item.instagram_business_account.id, container.id, item.linkedFbPagetoken).pipe(take(1)).subscribe((data: any) => {
                     this.spinner.hide()
                     clearInterval(interval)
                     this.url = "";
@@ -607,9 +607,12 @@ export class PublishComponent implements OnInit {
                   this.toast.error('Instagram', 'Error uploading, video format unsupported ')
                   this._reportService.createReport(0, '', 'Instagram');
                 }
-              })
+              }, error=>{
+                clearInterval(interval)
+              } )
             }, 30000)
-          })
+          } , error=>{
+          } )
         }, (error) => {
           this.spinner.hide();
           this.toast.error(error.message);
@@ -620,7 +623,7 @@ export class PublishComponent implements OnInit {
     }
     this.post.type = 'video'
     this.spinner.show();
-    this._postService.hyperLinkScrapper(this.socialCaption).subscribe(data => {
+    this._postService.hyperLinkScrapper(this.socialCaption).pipe(take(1)).subscribe(data => {
       hyperLinkResponse = data;
       if (hyperLinkResponse.length > 0 && hyperLinkResponse[0].hasOwnProperty('url')) {
         this.post.hyperLink = hyperLinkResponse[0].url
@@ -640,7 +643,7 @@ export class PublishComponent implements OnInit {
         delete this.post.eventID;
         this.post.postedTo = 'Group';
         this.post.text = this.socialCaption;
-        this._mediaUploadService.uploadClubMedia('GroupMedia', this.signedInUser.id, this.file).subscribe((uploadedVideo: any) => {
+        this._mediaUploadService.uploadClubMedia('GroupMedia', this.signedInUser.id, this.file).pipe(take(1)).subscribe((uploadedVideo: any) => {
           this.post.captureFileURL = uploadedVideo.url;
           this.post.path = uploadedVideo.path
           this._videoService.generateThumbnail(this.file).then(base64 => {
@@ -648,7 +651,7 @@ export class PublishComponent implements OnInit {
             file = file.replace('data:image/png;base64,', '');
             const imageBlob = this.dataURItoBlob(file.toString());
             const imageFile = new File([imageBlob], 'thumbnail.jpeg', { type: 'image/jpeg' });
-            this._mediaUploadService.uploadClubMedia('VideoThumbnails', this.signedInUser.id, imageFile).subscribe((thumbnailFile: any) => {
+            this._mediaUploadService.uploadClubMedia('VideoThumbnails', this.signedInUser.id, imageFile).pipe(take(1)).subscribe((thumbnailFile: any) => {
               this.post.thumbnailPath = thumbnailFile.path
               this.post.thumbnailURL = thumbnailFile.url
               selectedClubGroups.forEach((singleGroup, index, array) => {
@@ -676,7 +679,7 @@ export class PublishComponent implements OnInit {
         delete this.post.groupID;
         this.post.postedTo = 'Event';
         this.post.text = this.socialCaption;
-        this._mediaUploadService.uploadClubMedia('EventMedia', this.signedInUser.id, this.file).subscribe((uploadedVideo: any) => {
+        this._mediaUploadService.uploadClubMedia('EventMedia', this.signedInUser.id, this.file).pipe(take(1)).subscribe((uploadedVideo: any) => {
           this.post.captureFileURL = uploadedVideo.url;
           this.post.path = uploadedVideo.path
           this._videoService.generateThumbnail(this.file).then(base64 => {
@@ -684,13 +687,13 @@ export class PublishComponent implements OnInit {
             file = file.replace('data:image/png;base64,', '');
             const imageBlob = this.dataURItoBlob(file.toString());
             const imageFile = new File([imageBlob], 'thumbnail.jpeg', { type: 'image/jpeg' });
-            this._mediaUploadService.uploadMedia('VideoThumbnails', this.signedInUser.id, imageFile).subscribe((thumbnailFile: any) => {
+            this._mediaUploadService.uploadMedia('VideoThumbnails', this.signedInUser.id, imageFile).pipe(take(1)).subscribe((thumbnailFile: any) => {
               this.post.thumbnailPath = thumbnailFile.path
               this.post.thumbnailURL = thumbnailFile.url
               selectedClubEvents.forEach((singleEvent, index, array) => {
                 this._reportService.createReport(2, '', 'Event')
                 this.post.eventID = singleEvent.id
-                this._postService.addPostToEvent(this.post).subscribe((eventPost: any) => {
+                this._postService.addPostToEvent(this.post).pipe(take(1)).subscribe((eventPost: any) => {
                   this._reportService.createReport(1, eventPost.id, 'Event')
                 }, (error) => {
                   this.spinner.hide();
