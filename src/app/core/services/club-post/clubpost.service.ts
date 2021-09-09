@@ -105,6 +105,7 @@ export class ClubpostService {
     }
     this.spinner.show();
     this._postService.hyperLinkScrapper(postedText).subscribe((data) => {
+      debugger
       hyperLinkResponse = data;
 
       if (hyperLinkResponse.length > 0 && hyperLinkResponse[0].hasOwnProperty("url")) {
@@ -149,6 +150,9 @@ export class ClubpostService {
           })
         });
       })
+    }, error=>{
+      debugger
+      console.log(error)
     })
     })
   }
@@ -175,6 +179,7 @@ export class ClubpostService {
     }
     this.spinner.show();
     this._postService.hyperLinkScrapper(postedText).subscribe((data) => {
+      debugger
       hyperLinkResponse = data;
       if (
         hyperLinkResponse.length > 0 &&

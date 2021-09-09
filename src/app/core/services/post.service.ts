@@ -13,7 +13,6 @@ import { ClubApiService } from './club_api.service';
 export class PostService {
 
   constructor(private _apiService: ApiService, private _errorHandlerService: ErrorhandlerService, private http: HttpClient, private _clubApiService: ClubApiService) {
-
   }
 
 
@@ -32,7 +31,7 @@ export class PostService {
   }
 
   hyperLinkScrapper(postedText): Observable<any> {
-
+    debugger
     postedText == "" ? postedText = 'MockPayloadScrapper' : postedText = postedText
     return this._clubApiService.post(`/firebase-migration-functions/hyperlinkScraper`, { 'text': postedText });
   }

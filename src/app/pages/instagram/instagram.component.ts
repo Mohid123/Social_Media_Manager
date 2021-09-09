@@ -246,6 +246,7 @@ export class InstagramComponent implements OnInit {
             this._instagramService.getContainerStatus(container.id, item.linkedFbPagetoken).pipe(take(1)).subscribe((data: any) => {
               console.log(data, 'status')
               if (data.status_code == "FINISHED") {
+                
                 this._instagramService.publishContent(item.instagram_business_account.id, container.id, item.linkedFbPagetoken).pipe(take(1)).subscribe((data: any) => {
 
                   clearInterval(interval)
