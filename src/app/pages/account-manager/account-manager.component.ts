@@ -117,7 +117,6 @@ export class AccountManagerComponent implements OnInit {
     document.getElementById("signInFB").style.pointerEvents = "none";
     setTimeout(() => {
     document.getElementById("signInFB").style.pointerEvents = "auto";
-      
     }, 4000);
     const fbLoginOptions = {
       scope:

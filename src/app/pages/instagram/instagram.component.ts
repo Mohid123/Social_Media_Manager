@@ -359,7 +359,7 @@ export class InstagramComponent implements OnInit {
   scheduleInstagramImagePost() {
     debugger;
     let selectedList = this.checkedList;
-    // console.log(selectedList)
+    console.log(selectedList)
     if (!this.file) {
       this.toast.error('Please select any Image File', 'Empty File');
       return;
