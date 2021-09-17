@@ -101,6 +101,7 @@ export class PublishComponent implements OnInit {
     this.spinner.hide();
     this.socialCaption = "";
     this.url = "";
+    this.file = ''
     this.cf.detectChanges()
   }
 
