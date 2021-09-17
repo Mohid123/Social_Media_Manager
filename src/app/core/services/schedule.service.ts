@@ -33,6 +33,7 @@ export class ScheduleService {
   }
 
   scheduleInstagramPost(IGpost) : Observable <any> {
+    debugger
     return this._apiService.post('/schedule/scheduleInstagramPost', IGpost)
   }
 

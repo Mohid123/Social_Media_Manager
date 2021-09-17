@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ScheduleService } from './../schedule.service';
-import { map } from 'rxjs/operators';
+import { map, take } from 'rxjs/operators';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { MediauploadService } from '../mediaupload.service';
@@ -26,8 +26,8 @@ export class ScheduleSocialPostService {
     this.spinner.show()
     return new Promise((resolve, reject) => {
       selectedList.map(item => {
-        delete item.isSelected;
-        delete item.captureImageURL
+        // delete item.isSelected;
+        // delete item.captureImageURL
         item.caption = postedText;
         item.scheduleDate = scheduledDate;
         item.postType = 'text'
@@ -38,7 +38,7 @@ export class ScheduleSocialPostService {
       })
       this.spinner.show();
       selectedList.forEach((element, idx, self) => {
-        this._scheduleService.scheduleFacebookPost(element).subscribe(data => {
+        this._scheduleService.scheduleFacebookPost(element).pipe(take(1)).subscribe(data => {
           if (idx == self.length - 1) {
             this.spinner.hide();
             this.toast.success('Post Scheduled', 'Info');
@@ -57,10 +57,10 @@ export class ScheduleSocialPostService {
     debugger;
     this.spinner.show()
     return new Promise((resolve, reject) => {
-      this._mediaUploadService.uploadMedia('Facebook', '123', mediaFile).subscribe((media: any) => {
+      this._mediaUploadService.uploadMedia('Facebook', '123', mediaFile).pipe(take(1)).subscribe((media: any) => {
         selectedList.map(item => {
-          delete item.isSelected;
-          delete item.captureImageURL
+          // delete item.isSelected;
+          // delete item.captureImageURL
           item.imageURL = media.url
           item.caption = postedText;
           item.scheduleDate = scheduledDate
@@ -72,7 +72,7 @@ export class ScheduleSocialPostService {
 
         });
         selectedList.forEach((element, idx, self) => {
-          this._scheduleService.scheduleFacebookPost(element).subscribe(data => {
+          this._scheduleService.scheduleFacebookPost(element).pipe(take(1)).subscribe(data => {
             // console.log(data);
             if (idx == self.length - 1) {
               this.spinner.hide();
@@ -93,10 +93,10 @@ export class ScheduleSocialPostService {
     this.spinner.show()
 
     return new Promise((resolve, reject) => {
-      this._mediaUploadService.uploadMedia('Facebook', '123', mediaFile).subscribe((media: any) => {
+      this._mediaUploadService.uploadMedia('Facebook', '123', mediaFile).pipe(take(1)).subscribe((media: any) => {
         selectedList.map(item => {
-          delete item.isSelected;
-          delete item.captureImageURL
+          // delete item.isSelected;
+          // delete item.captureImageURL
           item.videoUrl = media.url
           item.videoDescription = postedText;
           item.scheduleDate = scheduledDate
@@ -107,7 +107,7 @@ export class ScheduleSocialPostService {
           item.title = item.pageName
         });
         selectedList.forEach((element, idx, self) => {
-          this._scheduleService.scheduleFacebookPost(element).subscribe(data => {
+          this._scheduleService.scheduleFacebookPost(element).pipe(take(1)).subscribe(data => {
             console.log(data);
             if (idx == self.length - 1) {
               this.spinner.hide();
@@ -125,19 +125,20 @@ export class ScheduleSocialPostService {
   }
 
   scheduleInstagramImagePost(postedText, scheduledDate, mediaFile, selectedList) {
+    debugger
     this.spinner.show();
     return new Promise((resolve, reject) => {
-      this._mediaUploadService.uploadMedia('Instagram', '123', mediaFile).subscribe((media: any) => {
+      this._mediaUploadService.uploadMedia('Instagram', '123', mediaFile).pipe(take(1)).subscribe((media: any) => {
         selectedList.map(item => {
-
+          debugger
           item.instagramAccountID = item.instagram_business_account.id
           item.pageAccessToken = item.linkedFbPagetoken
           item.caption = postedText;
-          delete item.instagram_business_account.id;
-          delete item.linkedFbPagetoken;
-          delete item.captureImageURL;
+          // delete item.instagram_business_account.id;
+          // delete item.linkedFbPagetoken;
+          // delete item.captureImageURL;
           delete item.isSelected;
-          delete item.pageName
+          // delete item.pageName
           item.imageURL = media.url
           item.scheduleDate = scheduledDate
           item.postType = 'image'
@@ -148,7 +149,7 @@ export class ScheduleSocialPostService {
 
         });
         selectedList.forEach((element, idx, self) => {
-          this._scheduleService.scheduleInstagramPost(element).subscribe(data => {
+          this._scheduleService.scheduleInstagramPost(element).pipe(take(1)).subscribe(data => {
             // console.log(data);
             if (idx == self.length - 1) {
               this.spinner.hide();
@@ -166,12 +167,12 @@ export class ScheduleSocialPostService {
   }
 
   scheduleInstagramVideoPost(postedText, scheduledDate, mediaFile, selectedList) {
+    debugger
     this.spinner.show()
     return new Promise((resolve, reject) => {
-      this._mediaUploadService.uploadMedia('Instagram', '123', mediaFile).subscribe((media: any) => {
+      this._mediaUploadService.uploadMedia('Instagram', '123', mediaFile).pipe(take(1)).subscribe((media: any) => {
         selectedList.map(item => {
-
-
+          debugger
           item.instagramAccountID = item.instagram_business_account.id
           item.pageAccessToken = item.linkedFbPagetoken
           item.caption = postedText;
@@ -183,16 +184,17 @@ export class ScheduleSocialPostService {
           item.postedTo = 'Instagram'
           item.title = 'Instagram Account'
 
-          delete item.instagram_business_account.id;
-          delete item.linkedFbPagetoken;
-          delete item.captureImageURL;
-          delete item.isSelected;
-          delete item.pageName
+          // delete item.instagram_business_account.id;
+          // delete item.linkedFbPagetoken;
+          // delete item.captureImageURL;
+          // delete item.isSelected;
+          // delete item.pageName
 
         });
         selectedList.forEach((element, idx, self) => {
+          debugger
           // console.log(element, 'element')
-          this._scheduleService.scheduleInstagramPost(element).subscribe(data => {
+          this._scheduleService.scheduleInstagramPost(element).pipe(take(1)).subscribe(data => {
             // console.log(data);
             if (idx == self.length - 1) {
               this.spinner.hide();
@@ -209,5 +211,4 @@ export class ScheduleSocialPostService {
     })
 
   }
-
 }

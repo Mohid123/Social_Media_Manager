@@ -72,9 +72,9 @@ export class AccountManagerComponent implements OnInit {
 
 
   setFbProfile() {
-    let FBprofile = JSON.parse(localStorage.getItem('selectedClub')).userFacebookProfile;
-    this.userFBprofile.fbUserName = FBprofile.fbUserName;
-    this.userFBprofile.fbProfileImageUrl = FBprofile.fbProfileImageUrl;
+    let FBprofile = JSON.parse(localStorage.getItem('selectedClub'))?.userFacebookProfile;
+    this.userFBprofile.fbUserName = FBprofile?.fbUserName;
+    this.userFBprofile.fbProfileImageUrl = FBprofile?.fbProfileImageUrl;
     this.cf.detectChanges();
   }
 
@@ -115,6 +115,9 @@ export class AccountManagerComponent implements OnInit {
   async signInWithFB() {
     debugger;
     document.getElementById("signInFB").style.pointerEvents = "none";
+    setTimeout(() => {
+    document.getElementById("signInFB").style.pointerEvents = "auto";
+    }, 4000);
     const fbLoginOptions = {
       scope:
         "pages_show_list , pages_manage_posts , instagram_basic,instagram_content_publish"
@@ -155,7 +158,9 @@ export class AccountManagerComponent implements OnInit {
           }
         );
       })
-      .catch((err) => console.log(err , 'err obj'));
+      .catch((err) =>{
+      debugger
+      console.log(err , 'err obj')});
   }
 
   signOutOfClub() {
@@ -215,6 +220,7 @@ export class AccountManagerComponent implements OnInit {
   }
 
   signOutFB() {
+    
 
     // ;
     // let fbProfileImageUrl = "https://socialapi.solissol.com/api/v1/en/media-upload/mediaFiles/test/123/b448db445dab8728bb3fc822243e58f10.png"

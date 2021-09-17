@@ -147,7 +147,7 @@ export class InstagramComponent implements OnInit {
       this.signedInUser = user;
       if (this.signedInUser.FBPages.length > 0) {
         this.signedInUser.FBPages.forEach(item => {
-          this.getIGAccountDetails(item.pageID, item.pageAccessToken).subscribe((igaccount: any) => {
+          this.getIGAccountDetails(item.pageID, item.pageAccessToken).pipe(take(1)).subscribe((igaccount: any) => {
             if (igaccount.hasOwnProperty('instagram_business_account')) {
               this.getRecentPosts(igaccount.instagram_business_account.id, item.pageAccessToken);
               igaccount.isSelected = false;
@@ -166,7 +166,7 @@ export class InstagramComponent implements OnInit {
   }
 
   getRecentPosts(IGaccountID, FBpageaccessToken) {
-    return this._instagramService.getPublishedPostsForIG(IGaccountID, FBpageaccessToken).subscribe((publishedPosts: any) => {
+    return this._instagramService.getPublishedPostsForIG(IGaccountID, FBpageaccessToken).pipe(take(1)).subscribe((publishedPosts: any) => {
       this.recentPosts = publishedPosts.data;
       // console.log(this.recentPosts , 'recent ig posts')
       this.cf.detectChanges();
@@ -234,19 +234,20 @@ export class InstagramComponent implements OnInit {
     }
     this.toast.warning("You'll be notified when done", "We are finalizing your video.")
     this.postedSuccessfully()
-    this._mediaUploadService.uploadMedia('InstagramTest', '123', this.file).subscribe((media: any) => {
+    this._mediaUploadService.uploadMedia('InstagramTest', '123', this.file).pipe(take(1)).subscribe((media: any) => {
       this.checkedList.forEach(item => {
-        this._instagramService.createIgContainerForVideo(item.instagram_business_account.id, media.url, this.instaCaption, item.linkedFbPagetoken).subscribe((container: any) => {
+        this._instagramService.createIgContainerForVideo(item.instagram_business_account.id, media.url, this.instaCaption, item.linkedFbPagetoken).pipe(take(1)).subscribe((container: any) => {
           let interval = setInterval(() => {
             counter = counter + 1
-            if(counter == 5){
+            if (counter == 5) {
               clearInterval(interval);
               return
             }
-            this._instagramService.getContainerStatus(container.id, item.linkedFbPagetoken).subscribe((data: any) => {
+            this._instagramService.getContainerStatus(container.id, item.linkedFbPagetoken).pipe(take(1)).subscribe((data: any) => {
               console.log(data, 'status')
               if (data.status_code == "FINISHED") {
-                this._instagramService.publishContent(item.instagram_business_account.id, container.id, item.linkedFbPagetoken).subscribe((data: any) => {
+                
+                this._instagramService.publishContent(item.instagram_business_account.id, container.id, item.linkedFbPagetoken).pipe(take(1)).subscribe((data: any) => {
 
                   clearInterval(interval)
                   this.postedSuccessfully()
@@ -265,11 +266,14 @@ export class InstagramComponent implements OnInit {
                 this.toast.error('Error uploding Video', 'Video Format Unsupported')
                 this._reportService.createReport(0, "", 'Instagram');
               }
+            }, error => {
+              this.spinner.hide();
+              this.toast.error(error.message);
+              clearInterval(interval)
             })
           }, 30000)
 
         }, (error) => {
-          debugger;
           this.spinner.hide();
           this.toast.error(error.message)
         })
@@ -296,11 +300,11 @@ export class InstagramComponent implements OnInit {
       return;
     }
     this.spinner.show()
-    this._mediaUploadService.uploadMedia('Instagram', this.signedInUser.id, this.file).subscribe((media: any) => {
+    this._mediaUploadService.uploadMedia('Instagram', this.signedInUser.id, this.file).pipe(take(1)).subscribe((media: any) => {
       this.checkedList.forEach((item, idx, self) => {
         this._reportService.createReport(2, "", 'Instagram')
-        this._instagramService.createIGMediaContainer(item.instagram_business_account.id, this.instaCaption, item.linkedFbPagetoken, media.url).subscribe((container: any) => {
-          this._instagramService.publishContent(item.instagram_business_account.id, container.id, item.linkedFbPagetoken).subscribe((data: any) => {
+        this._instagramService.createIGMediaContainer(item.instagram_business_account.id, this.instaCaption, item.linkedFbPagetoken, media.url).pipe(take(1)).subscribe((container: any) => {
+          this._instagramService.publishContent(item.instagram_business_account.id, container.id, item.linkedFbPagetoken).pipe(take(1)).subscribe((data: any) => {
             if (idx == self.length - 1) {
               this.toast.success('Great! The post has been shared.');
               this.postedSuccessfully();
@@ -355,7 +359,7 @@ export class InstagramComponent implements OnInit {
   scheduleInstagramImagePost() {
     debugger;
     let selectedList = this.checkedList;
-    // console.log(selectedList)
+    console.log(selectedList)
     if (!this.file) {
       this.toast.error('Please select any Image File', 'Empty File');
       return;
