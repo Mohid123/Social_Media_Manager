@@ -83,11 +83,13 @@ export class DashboardComponent implements OnInit {
     this.initializeStatsChart()
     this.getLastSevenDaysStats()
     this.showAppTour()
+    this.spinner.show()
     // this.openVerticallyCentered(this.modalContent);
 
   }
 
   getSelectedClub() {
+    
     let club = JSON.parse(localStorage.getItem('selectedClub'));
     this.selectedClub = club;
     this.clubPrimaryColor = this.selectedClub.clubColor;
@@ -237,6 +239,7 @@ export class DashboardComponent implements OnInit {
       });
       this.latestReports = reports;
       this.cf.detectChanges();
+      this.spinner.hide()
     })
   }
 
