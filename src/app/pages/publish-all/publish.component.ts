@@ -102,7 +102,6 @@ export class PublishComponent implements OnInit {
     this.socialCaption = "";
     this.url = "";
     this.cf.detectChanges()
-
   }
 
   postedSuccessfully() {

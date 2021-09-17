@@ -113,7 +113,6 @@ export class FacebookComponent implements OnInit {
     this.searchString = keyword
     let res;
     if (this.searchString !== "") {
-      ;
       this.checklist = this.tempList.filter(item =>
         res = item.pageName.toLowerCase().includes(this.searchString.toLowerCase()))
       return res;

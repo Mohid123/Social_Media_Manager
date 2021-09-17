@@ -42,6 +42,7 @@ export class InstagramComponent implements OnInit {
     photo: true,
     video: false,
   }
+  public searchString : any
   scheduleSelectedDate: any
   scheduleSelectedTime: any
 
@@ -164,6 +165,20 @@ export class InstagramComponent implements OnInit {
       }
     })
   }
+
+  searchInstagramAccounts(keyword) {
+    this.searchString = keyword
+    let res;
+    if (this.searchString !== "") {
+      this.checklist = this.tempList.filter(item =>
+        res = item.pageName.toLowerCase().includes(this.searchString.toLowerCase()))
+      return res;
+    }
+    else if (this.searchString == "") {
+      this.checklist = this.tempList;
+    }
+  }
+
 
   getRecentPosts(IGaccountID, FBpageaccessToken) {
     return this._instagramService.getPublishedPostsForIG(IGaccountID, FBpageaccessToken).pipe(take(1)).subscribe((publishedPosts: any) => {
@@ -366,6 +381,10 @@ export class InstagramComponent implements OnInit {
     }
     else if (this.checkedList.length == 0) {
       this.toast.error('No Page Selected', 'Please select Instagram account to post');
+      return;
+    }
+    else if (this.inValidImageFormat) {
+      this.toast.error('Unsupported Image Format', 'Image Format not supported for Instagram');
       return;
     }
     else if (this._scheduleService.validateScheduleDate(this.scheduleSelectedDate, this.scheduleSelectedTime)) {

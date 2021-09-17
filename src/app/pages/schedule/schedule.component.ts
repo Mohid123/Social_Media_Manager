@@ -109,7 +109,7 @@ ngAfterViewInit(){
       let res = data.map(((item, idx, self) => {
         return {
           id: item.id,
-          title: item.post.postedTo + ': ' + item.post.title,
+          title: item.post.postedTo + ': ' +item.post.title ? item.post.title : '', 
           start: new Date(item.scheduleDate).toISOString().slice(0, 10),
           post: item.post,
           index: idx,
@@ -129,7 +129,7 @@ ngAfterViewInit(){
       let res = data.map(((item, idx, self) => {
         return {
           id: item.id,
-          title: item.post.postedTo + ': ' + item.post.title,
+          title: item.post.postedTo + ': ' + item.post.title ? item.post.title : '',
           start: new Date(item.scheduleDate).toISOString().slice(0, 10),
           post: item.post,
           status: item.status,
@@ -151,7 +151,7 @@ ngAfterViewInit(){
       let res = data.map(((item, idx, self) => {
         return {
           id: item.id,
-          title: item.post.postedTo + ': ' + item.post.title,
+          title: item.post.postedTo + ': ' +item.post.title ? item.post.title : '',
           start: new Date(item.scheduleDate).toISOString().slice(0, 10),
           post: item.post,
           status: item.status,
@@ -170,7 +170,7 @@ ngAfterViewInit(){
       let res = data.map(((item, idx, self) => {
         return {
           id: item.id,
-          title: item.post.postedTo + ': ' + item.post.title,
+          title: item.post.postedTo + ': ' + item.post.title ? item.post.title : '',
           start: new Date(item.scheduleDate).toISOString().slice(0, 10),
           post: item.post,
           status: item.status,
@@ -190,7 +190,7 @@ ngAfterViewInit(){
       let res = data.map(((item, idx, self) => {
         return {
           id: item.id,
-          title: item.post.postedTo + ': ' + item.post.title,
+          title: item.post.postedTo + ': ' +item.post.title ? item.post.title : '',
           start: new Date(item.scheduleDate).toISOString().slice(0, 10),
           color: '#D62976',
           post: item.post,
@@ -210,7 +210,7 @@ ngAfterViewInit(){
       let res = data.map(((item, idx, self) => {
         return {
           id: item.id,
-          title: item.post.postedTo + ': ' + item.post.title,
+          title: item.post.postedTo + ': ' + item.post.title ? item.post.title : '',
           start: new Date(item.scheduleDate).toISOString().slice(0, 10),
           color: this.selectedClub?.clubColor,
           post: item.post,
