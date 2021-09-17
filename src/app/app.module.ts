@@ -57,7 +57,7 @@ function appInitializer(authService: AuthService) {
     SocialLoginModule,
     ChartsModule,
     NgApexchartsModule,
-    MatIconModule,
+    MatIconModule, 
     
     
     environment.isMockEnabled

@@ -189,6 +189,7 @@ export class LoginComponent implements OnInit {
 
   searchClub(event) {
     this.searchString = event
+    console.log(event)
     if (this.searchString) {
       this.allClubs = this.tempClubs.filter(i => i.clubName.toLowerCase().includes(this.searchString.toLowerCase()));
       this.allClubs.length > 0 ? this.noClubFound = false : this.noClubFound = true;

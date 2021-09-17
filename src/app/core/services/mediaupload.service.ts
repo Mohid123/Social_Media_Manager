@@ -18,6 +18,7 @@ export class MediauploadService {
 
 
   uploadMedia(folderName, fieldName, file) {
+    debugger
     const formData: FormData = new FormData();
     formData.append('file', file, file.name);
     return this.http.post(`${constants.api_url}/media-upload/mediaFiles/${folderName}/${fieldName}`, formData).pipe(catchError(this._errorHandlerService.handleErrors))
@@ -25,6 +26,7 @@ export class MediauploadService {
 
 
   uploadClubMedia(folderName , fieldName , file){
+    debugger
     const formData: FormData = new FormData();
     formData.append('file', file, file.name);
     return this._clubApiService.post(`/media-upload/mediaFiles/${folderName}/${fieldName}`, formData)
