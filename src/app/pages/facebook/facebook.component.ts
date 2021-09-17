@@ -188,8 +188,6 @@ export class FacebookComponent implements OnInit {
                   singleItem.pageName = user.FBPages[i].pageName
                 })
                 this.recentFBposts = facebookPosts
-                // console.log(this.recentFBposts)
-
                 this.cf.detectChanges();
               })
             }

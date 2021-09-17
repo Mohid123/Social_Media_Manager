@@ -72,9 +72,9 @@ export class AccountManagerComponent implements OnInit {
 
 
   setFbProfile() {
-    let FBprofile = JSON.parse(localStorage.getItem('selectedClub')).userFacebookProfile;
-    this.userFBprofile.fbUserName = FBprofile.fbUserName;
-    this.userFBprofile.fbProfileImageUrl = FBprofile.fbProfileImageUrl;
+    let FBprofile = JSON.parse(localStorage.getItem('selectedClub'))?.userFacebookProfile;
+    this.userFBprofile.fbUserName = FBprofile?.fbUserName;
+    this.userFBprofile.fbProfileImageUrl = FBprofile?.fbProfileImageUrl;
     this.cf.detectChanges();
   }
 

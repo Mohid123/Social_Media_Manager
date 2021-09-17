@@ -152,7 +152,7 @@ export class LoginComponent implements OnInit {
     }, err => {
       this.spinner.hide()
       if (err.message.includes('401 Unauthorized')) {
-        this.toastr.error('User not registerd in this club', 'Unauthorized');
+        this.toastr.error('Email or Password Incorrect', 'Unauthorized');
         console.log(err);
         return;
       }
