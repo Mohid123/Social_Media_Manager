@@ -72,6 +72,7 @@ export class LoginComponent implements OnInit {
     this.spinner.hide();
     this.initLoginForm();
     this.getAllClubs();
+
   }
 
   initLoginForm() {
@@ -165,10 +166,17 @@ export class LoginComponent implements OnInit {
   }
 
   getAllClubs() {
+    let res;
     this._clubService.getAllClubs(0, 10).subscribe(clubs => {
-      let res = clubs.filter(item => {
-        return !item.isPicker
-      })
+      if(window.location.href.includes('smm.dividis.io')){
+         res = clubs.filter(item => {
+          return !item.isPicker
+        })
+        this.allClubs = res;
+        this.tempClubs = res;
+        this.setDefaultClub()
+        return
+      }
       this.allClubs = clubs;
       this.tempClubs = clubs;
       this.setDefaultClub()
