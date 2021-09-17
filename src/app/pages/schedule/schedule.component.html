@@ -277,19 +277,20 @@
                 <!-- PREVIEW SELECTED SCHEDULE -->
 
                 <!--CLUB-->
+                
                 <div class="card card-custom " *ngIf="selectedEvent && selectedEvent?.title?.includes('Club') ||  selectedEvent?.title?.includes('Group') ||  selectedEvent?.title?.includes('Event') ">
                     <div class="card-header ribbon ribbon-top mt-3">
-                        <div class="ribbon-target bg-light" *ngIf="selectedEvent.post.type == 'image' "
+                        <div class="ribbon-target bg-light" *ngIf="selectedEvent.post.type == 'image'"
                             style="top: -2px; right: 20px"> <i data-visualcompletion="css-img" class="mr-2"
                                 style="background-image: url('https://static.xx.fbcdn.net/rsrc.php/v3/yG/r/1j-f6O0Xtyf.png?_nc_eui2=AeG_ziBgWuKTlexxWVF9hOlyxCA0FsPulJTEIDQWw-6UlCrJ5n7cV9jq2XE66KcW3LTtFYAod1eQ9c8TCxxlL1Mj'); background-position: 0 -125px; background-size: auto; width: 24px; height: 24px; background-repeat: no-repeat; display: inline-block;"></i>
                                 <div class="text-dark">Image</div>
                         </div>
-                        <div class="ribbon-target bg-light" *ngIf="selectedEvent.post.type == 'video' "
+                        <div class="ribbon-target bg-light" *ngIf="selectedEvent.post.type == 'video'"
                             style="top: -2px; right: 20px;"><i data-visualcompletion="css-img" class="mr-2"
                                 style="background-image: url('https://static.xx.fbcdn.net/rsrc.php/v3/yG/r/1j-f6O0Xtyf.png?_nc_eui2=AeG_ziBgWuKTlexxWVF9hOlyxCA0FsPulJTEIDQWw-6UlCrJ5n7cV9jq2XE66KcW3LTtFYAod1eQ9c8TCxxlL1Mj'); background-position: 0 0; background-size: auto; width: 24px; height: 24px; background-repeat: no-repeat; display: inline-block;"></i>
                                 <div class="text-dark">Video</div>
                             </div>
-                        <div class="ribbon-target bg-light" *ngIf="selectedEvent.post.type == 'text' "
+                        <div class="ribbon-target bg-light" *ngIf="selectedEvent.post.type == 'text'"
                             style="top: -2px; right: 20px;"><i class="far fa-file-alt icon-lg mr-2"
                                 style="color: #000000;"></i>
                                 <div class="text-dark">Text</div></div>
