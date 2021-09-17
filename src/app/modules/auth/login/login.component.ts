@@ -152,7 +152,7 @@ export class LoginComponent implements OnInit {
     }, err => {
       this.spinner.hide()
       if (err.message.includes('401 Unauthorized')) {
-        this.toastr.error('User not registerd in this club', 'Unauthorized');
+        this.toastr.error('Email or Password Incorrect', 'Unauthorized');
         console.log(err);
         return;
       }
@@ -189,6 +189,7 @@ export class LoginComponent implements OnInit {
 
   searchClub(event) {
     this.searchString = event
+    console.log(event)
     if (this.searchString) {
       this.allClubs = this.tempClubs.filter(i => i.clubName.toLowerCase().includes(this.searchString.toLowerCase()));
       this.allClubs.length > 0 ? this.noClubFound = false : this.noClubFound = true;
