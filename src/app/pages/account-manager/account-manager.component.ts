@@ -28,13 +28,13 @@ export class AccountManagerComponent implements OnInit {
   public signedInUser: User;
   public clubName: string = "";
   private connectedIG: boolean = false;
-  private userFacebookPages: any[] = [];
   public clubLogo: string = "";
   public userFBprofile: FacebookProfileModel
   public userClubProfile: ClubProfileModel
   public club: any
   public selectedClub: Club
   socialFlag: boolean = false
+  public userExisitngFacebookPages: any[] = []
 
   constructor(
     private spinner: NgxSpinnerService,
@@ -57,6 +57,7 @@ export class AccountManagerComponent implements OnInit {
     this.club = JSON.parse(localStorage.getItem('selectedClub'))
     this.clubName = this.club.clubName;
     this.clubLogo = this.club.logoURL;
+    this.userExisitngFacebookPages = this.club?.FBPages ? this.club?.FBPages : []
     this.showSpinner();
     this.getSignedInUser();
     this.set_socialFlag_after_getting_club()
@@ -75,6 +76,7 @@ export class AccountManagerComponent implements OnInit {
     let FBprofile = JSON.parse(localStorage.getItem('selectedClub'))?.userFacebookProfile;
     this.userFBprofile.fbUserName = FBprofile?.fbUserName;
     this.userFBprofile.fbProfileImageUrl = FBprofile?.fbProfileImageUrl;
+    localStorage.setItem('selectedClub', JSON.stringify(this.club));
     this.cf.detectChanges();
   }
 
@@ -85,12 +87,12 @@ export class AccountManagerComponent implements OnInit {
     }, 1000);
   }
 
-  
-  setClubProfile(){
+
+  setClubProfile() {
     let userId = localStorage.getItem('clubUid');
-    this._clubService.getUserClubProfile(userId).pipe(take(1)).subscribe((data:any)=>{
+    this._clubService.getUserClubProfile(userId).pipe(take(1)).subscribe((data: any) => {
       this.userClubProfile.clubEmail = data.email,
-      this.userClubProfile.clubProfileImageURL = data.profilePicURL;
+        this.userClubProfile.clubProfileImageURL = data.profilePicURL;
       this.userClubProfile.clubUsername = data.fullName;
       this.cf.detectChanges();
     })
@@ -113,10 +115,11 @@ export class AccountManagerComponent implements OnInit {
   }
 
   async signInWithFB() {
+    let newFBpages = []
     debugger;
     document.getElementById("signInFB").style.pointerEvents = "none";
     setTimeout(() => {
-    document.getElementById("signInFB").style.pointerEvents = "auto";
+      document.getElementById("signInFB").style.pointerEvents = "auto";
     }, 4000);
     const fbLoginOptions = {
       scope:
@@ -147,20 +150,33 @@ export class AccountManagerComponent implements OnInit {
                     pageID: item.id,
                     pageName: item.name,
                   };
-                  this.userFacebookPages.push(obj);
+                  newFBpages.push(obj);
                 });
               }
-              this.club.FBPages = this.userFacebookPages;
+              this.findUniqueObjects(this.userExisitngFacebookPages, newFBpages)
               this.updateUserClub(this.club);
-              localStorage.setItem('selectedClub' , JSON.stringify(this.club));
               this.setFbProfile();
             });
           }
         );
       })
-      .catch((err) =>{
-      debugger
-      console.log(err , 'err obj')});
+      .catch((err) => {
+        debugger
+        console.log(err, 'err obj')
+      });
+  }
+
+  findUniqueObjects(existingPages, newPages) {
+    let total, uniqueFacebookPages = []
+    if (existingPages.length == 0) {
+      this.club.FBPages = newPages
+      return;
+    }
+    total = [...existingPages, ...newPages]
+    debugger
+    uniqueFacebookPages = total.filter((value, index, self) => self.findIndex((m) => m.pageID === value.pageID) === index);
+    this.club.FBPages = uniqueFacebookPages
+    console.log(uniqueFacebookPages)
   }
 
   signOutOfClub() {
@@ -211,16 +227,16 @@ export class AccountManagerComponent implements OnInit {
     );
   }
 
-  showIGCommingSoonPopup(){
+  showIGCommingSoonPopup() {
     this._toast.warning("Comming Soon")
   }
 
-  showFBCommingSoonPopup(){
+  showFBCommingSoonPopup() {
     this._toast.warning('Comming Soon');
   }
 
   signOutFB() {
-    
+
 
     // ;
     // let fbProfileImageUrl = "https://socialapi.solissol.com/api/v1/en/media-upload/mediaFiles/test/123/b448db445dab8728bb3fc822243e58f10.png"
