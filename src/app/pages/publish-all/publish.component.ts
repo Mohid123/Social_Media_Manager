@@ -100,8 +100,8 @@ export class PublishComponent implements OnInit {
   clear() {
     this.spinner.hide();
     this.socialCaption = "";
-    this.url = "";
-    this.file = ''
+    this.file = null;
+    this.url = null;
     this.cf.detectChanges()
   }
 
@@ -259,6 +259,8 @@ export class PublishComponent implements OnInit {
       this.showDiv.video = false;
       this.showDiv.text = false;
       this.selectedInstagram = true;
+      this.file = null;
+      this.url = null;
 
     }
     else if (event.index == 1) {
@@ -266,6 +268,8 @@ export class PublishComponent implements OnInit {
       this.showDiv.video = true;
       this.showDiv.text = false;
       this.selectedInstagram = true; 
+      this.file = null;
+      this.url = null;
 
     }
     else {
@@ -273,6 +277,8 @@ export class PublishComponent implements OnInit {
       this.showDiv.video = false;
       this.showDiv.text = true;
       this.selectedInstagram = false;
+      this.file = null;
+      this.url = null;
     }
   }
 

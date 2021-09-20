@@ -164,8 +164,8 @@ export class TeamtalkersComponent implements OnInit {
 
   resetPost() {
     this.teamtalkerCaption = "";
-    this.url = "";
-    this.file = "";
+    this.url = null;
+    this.file = null;
     this.poll = new Poll();
     this.singleDate = new Date(new Date().setDate(new Date().getDate() + 1));
     this.unCheckSlectedItems()
@@ -175,8 +175,8 @@ export class TeamtalkersComponent implements OnInit {
 
   resetSchedulePost() {
     this.teamtalkerCaption = "";
-    this.url = "";
-    this.file = "";
+    this.url = null;
+    this.file = null;
     this.showSchedule = false;
     this.poll = new Poll();
     this.unCheckSlectedItems()
@@ -345,29 +345,38 @@ export class TeamtalkersComponent implements OnInit {
   }
 
   switchTabs(event) {
+    debugger
     if (event.index == 0) {
       this.showDiv.photo = true;
       this.showDiv.video = false;
       this.showDiv.text = false;
       this.showDiv.poll = false;
+      this.file = null;
+      this.url = null
 
     } else if (event.index == 1) {
       this.showDiv.photo = false;
       this.showDiv.video = true;
       this.showDiv.text = false;
       this.showDiv.poll = false;
+      this.file = null;
+      this.url = null
 
     } else if (event.index == 2) {
       this.showDiv.photo = false;
       this.showDiv.video = false;
       this.showDiv.text = true;
       this.showDiv.poll = false;
+      this.file = null;
+      this.url = null
 
     } else {
       this.showDiv.photo = false;
       this.showDiv.video = false;
       this.showDiv.text = false;
       this.showDiv.poll = true;
+      this.file = null;
+      this.url = null
 
     }
   }
@@ -459,6 +468,7 @@ export class TeamtalkersComponent implements OnInit {
   }
 
   addImagePost() {
+    debugger
     debugger;
     let groups = [];
     let events = [];
@@ -470,6 +480,9 @@ export class TeamtalkersComponent implements OnInit {
     } else if (this.checkedList.length == 0) {
       this.toast.error('Please select atleast one Item from (Club, Group or Event)');
       return;
+    }
+    else if(this.file.type.includes('video')){
+      this.toast.error('Please select an image file');
     }
 
     this.checkedList.filter((item) => {
