@@ -123,6 +123,19 @@ align-items: center;
   }
 }
 
+.search-results {
+  height: 100vh;
+  overflow: scroll;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.search-results::-webkit-scrollbar {
+  display: none;
+}
+.row.align-items-center.no-gutters {
+  display: flex;
+}
+
 // .custom-height{
 //   height: 590px !important;
 // }
