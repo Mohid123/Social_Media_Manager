@@ -169,6 +169,7 @@ export class FacebookComponent implements OnInit {
   getSignedInUser() {
     debugger;
     let callsList = []
+    let totalPosts;
     this._authService.getSignedInUser().subscribe(user => {
       this.signedInUser = user;
       if (user.FBPages.length == 0) {
@@ -178,16 +179,18 @@ export class FacebookComponent implements OnInit {
       for (let i = 0; i <= user.FBPages.length - 1; i++) {
         this._facebookService.getPublishedPostsOnFBPages(user.FBPages[i].pageID, user.FBPages[i].pageAccessToken).subscribe((postObjects: any) => {
           postObjects.data.forEach((item, idx, self) => {
-            callsList.push(this._facebookService.getSinglePagePost(item.id, user.FBPages[i].pageAccessToken));       
+            callsList.push(this._facebookService.getSinglePagePost(item.id, user.FBPages[i].pageAccessToken)); 
+            if(idx == self.length-1){
               combineLatest(callsList).subscribe(facebookPosts => {
                 facebookPosts.map((singleItem: any) => {
                   singleItem.created_time = moment(singleItem.created_time).fromNow()       
                   singleItem.pageName = user.FBPages[i].pageName
                 })
                 callsList = []
-                this.recentFBposts = facebookPosts
+                this.recentFBposts.push(...facebookPosts)
                 this.cf.detectChanges();
               })
+            }      
           });
         })
       }
