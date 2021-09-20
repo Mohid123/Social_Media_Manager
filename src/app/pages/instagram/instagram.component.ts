@@ -84,8 +84,8 @@ export class InstagramComponent implements OnInit {
 
   clear() {
     this.instaCaption = '';
-    this.url = '';
-    this.file = ""
+    this.file = null;
+    this.url = null
     this.cf.detectChanges()
   }
   onChangeSingle(value: Date) {
@@ -225,11 +225,15 @@ export class InstagramComponent implements OnInit {
     if (event.index == 0) {
       this.showDiv.photo = true;
       this.showDiv.video = false;
+      this.file = null;
+      this.url = null
 
     }
     else if (event.index == 1) {
       this.showDiv.photo = false;
       this.showDiv.video = true;
+      this.file = null;
+      this.url = null
 
     }
   }

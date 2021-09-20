@@ -15,7 +15,7 @@ import { ToastrService } from 'ngx-toastr';
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { constants } from 'src/app/app.constants';
-import { filter, map } from 'rxjs/operators';
+import { filter, map, take } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { JoyrideService } from 'ngx-joyride';
 
@@ -187,7 +187,6 @@ export class LoginComponent implements OnInit {
 
 
   openVerticallyCentered(content) {
-    debugger;
     this.modalService.open(content, { centered: true, size: 'lg' });
     this.noClubFound = false;
     this.searchString = ""
@@ -216,7 +215,6 @@ export class LoginComponent implements OnInit {
     }
     else if (localClub) {
       this.selectedClub = JSON.parse(localClub);
-      
       this.cf.detectChanges();
     }
   }
@@ -231,7 +229,7 @@ export class LoginComponent implements OnInit {
 
     if (this.selectedClub.isPicker) {
       this.showBackBtn = true
-      this._clubService.getDividisClubs(0, 50).subscribe((dividisClubs: any) => {
+      this._clubService.getDividisClubs(0, 50).pipe(take(1)).subscribe((dividisClubs: any) => {
         dividisClubs.map(item => {
           item.pickerClub = true;
           item.baseURL = this.selectedClub.baseURL;

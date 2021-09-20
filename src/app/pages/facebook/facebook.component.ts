@@ -96,9 +96,9 @@ export class FacebookComponent implements OnInit {
   }
 
   clear() {
-    this.url = '';
+    this.file = null;
+    this.url = null
     this.facebookCaption = '';
-    this.file = ""
     this.cf.detectChanges();
   }
 
@@ -176,20 +176,18 @@ export class FacebookComponent implements OnInit {
         return;
       }
       for (let i = 0; i <= user.FBPages.length - 1; i++) {
-        ;
         this._facebookService.getPublishedPostsOnFBPages(user.FBPages[i].pageID, user.FBPages[i].pageAccessToken).subscribe((postObjects: any) => {
           postObjects.data.forEach((item, idx, self) => {
-            callsList.push(this._facebookService.getSinglePagePost(item.id, user.FBPages[i].pageAccessToken));
-            if (idx == self.length - 1) {
+            callsList.push(this._facebookService.getSinglePagePost(item.id, user.FBPages[i].pageAccessToken));       
               combineLatest(callsList).subscribe(facebookPosts => {
                 facebookPosts.map((singleItem: any) => {
-                  singleItem.created_time = moment(singleItem.created_time).fromNow()
+                  singleItem.created_time = moment(singleItem.created_time).fromNow()       
                   singleItem.pageName = user.FBPages[i].pageName
                 })
+                callsList = []
                 this.recentFBposts = facebookPosts
                 this.cf.detectChanges();
               })
-            }
           });
         })
       }
@@ -212,16 +210,22 @@ export class FacebookComponent implements OnInit {
       this.showDiv.photo = true;
       this.showDiv.video = false;
       this.showDiv.text = false;
+      this.file = null;
+      this.url = null;
     }
     else if (event.index == 1) {
       this.showDiv.photo = false;
       this.showDiv.video = true;
       this.showDiv.text = false;
+      this.file = null;
+      this.url = null;
     }
     else {
       this.showDiv.photo = false;
       this.showDiv.video = false;
       this.showDiv.text = true;
+      this.file = null;
+      this.url = null;
     }
   }
 

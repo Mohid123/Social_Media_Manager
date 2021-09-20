@@ -14,7 +14,6 @@ export class AuthGuard implements CanActivate {
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     let token = localStorage.getItem('app-token')
-    debugger
     if (token && token.length > 0) {
       try {
         let data: any = jwt_decode(token);
