@@ -168,7 +168,7 @@ export class LoginComponent implements OnInit {
   getAllClubs() {
     let res;
     this._clubService.getAllClubs(0, 10).subscribe(clubs => {
-      if(window.location.href.includes('smm.dividis.io')){
+      if(window.location.href.includes('smm-staging')){
          res = clubs.filter(item => {
           return !item.isPicker
         })
