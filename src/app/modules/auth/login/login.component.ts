@@ -171,15 +171,15 @@ debugger
   getAllClubs() {
     let res;
     this._clubService.getAllClubs(0, 10).subscribe(clubs => {
-      if(window.location.href.includes('smm-staging')){
-         res = clubs.filter(item => {
-          return !item.isPicker
-        })
-        this.allClubs = res;
-        this.tempClubs = res;
-        this.setDefaultClub()
-        return
-      }
+      // if(window.location.href.includes('smm-staging')){
+      //    res = clubs.filter(item => {
+      //     return !item.isPicker
+      //   })
+      //   this.allClubs = res;
+      //   this.tempClubs = res;
+      //   this.setDefaultClub()
+      //   return
+      // }
       this.allClubs = clubs;
       this.tempClubs = clubs;
       this.setDefaultClub()
