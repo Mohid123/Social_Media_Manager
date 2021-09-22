@@ -172,10 +172,10 @@ export class FacebookComponent implements OnInit {
     let totalPosts;
     this._authService.getSignedInUser().subscribe(user => {
       this.signedInUser = user;
-      if (user.FBPages.length == 0) {
+      if (user?.FBPages?.length == 0 || !user?.FBPages ) {
         this.toast.warning('Log in via Facebook to connect your Facebook pages');
         return;
-      }
+      }     
       for (let i = 0; i <= user.FBPages.length - 1; i++) {
         this._facebookService.getPublishedPostsOnFBPages(user.FBPages[i].pageID, user.FBPages[i].pageAccessToken).subscribe((postObjects: any) => {
           postObjects.data.forEach((item, idx, self) => {

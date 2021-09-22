@@ -124,6 +124,8 @@ export class LoginComponent implements OnInit {
     if (this.selectedClub.pickerClub) {
       payload.clubID = this.selectedClub.pickerModelId
       payload['pickerClubID'] = this.selectedClub.id
+      payload['clubName'] = this.selectedClub.clubName
+    
     }
 
     this.spinner.show();
@@ -220,6 +222,7 @@ export class LoginComponent implements OnInit {
   }
 
   onClubSelected(club) {
+    debugger
     if (!club.isPicker) {
       this.modalService.dismissAll()
     }
