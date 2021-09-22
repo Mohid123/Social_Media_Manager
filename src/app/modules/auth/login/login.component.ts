@@ -110,7 +110,7 @@ export class LoginComponent implements OnInit {
 
 
   loginByEmail() {
-
+debugger
     var self = this;
     if (!this.selectedClub) {
       this.toastr.error('Please Select Club', 'Empty Club')
@@ -130,6 +130,7 @@ export class LoginComponent implements OnInit {
 
     this.spinner.show();
     this._authService.loginByEmail(payload).subscribe(user => {
+      debugger
       // console.log(user , 'Logged In User')
       if(user.newUser){
         localStorage.setItem('newUser' , 'true');
@@ -222,7 +223,6 @@ export class LoginComponent implements OnInit {
   }
 
   onClubSelected(club) {
-    debugger
     if (!club.isPicker) {
       this.modalService.dismissAll()
     }

@@ -146,8 +146,8 @@ export class InstagramComponent implements OnInit {
   getSignedInUser() {
     this._authService.getSignedInUser().pipe(take(1)).subscribe(user => {
       this.signedInUser = user;
-      if (this.signedInUser.FBPages.length > 0) {
-        this.signedInUser.FBPages.forEach(item => {
+      if (this.signedInUser?.FBPages?.length > 0) {
+        this.signedInUser?.FBPages.forEach(item => {
           this.getIGAccountDetails(item.pageID, item.pageAccessToken).pipe(take(1)).subscribe((igaccount: any) => {
             if (igaccount.hasOwnProperty('instagram_business_account')) {
               this.getRecentPosts(igaccount.instagram_business_account.id, item.pageAccessToken);
