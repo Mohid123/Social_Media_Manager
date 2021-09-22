@@ -16,7 +16,8 @@ export class UsersService {
   }
 
   getUserById(id): Observable <any> {
-    return this._apiService.get(`/profile/getUserById/${id}`)
+    let collection = JSON.parse(localStorage.getItem('selectedClub'))?.pickerClub ? 'pickerClubs' :'club';
+    return this._apiService.get(`/profile/getUserById/${id}?collection=${collection}`)
   }
 
   addUser(user) : Observable <any>{
