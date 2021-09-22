@@ -18,6 +18,7 @@ import { ChangeDetectorRef } from "@angular/core";
 import { ClubService } from './../../core/services/club.service';
 import { Club } from './../../core/models/club.model';
 import { take } from "rxjs/operators";
+import { PickerClubService } from './../../core/services/picker_clubs.service';
 @Component({
   selector: "app-account-manager",
   templateUrl: "./account-manager.component.html",
@@ -45,6 +46,7 @@ export class AccountManagerComponent implements OnInit {
     private _toast: ToastrService,
     private cf: ChangeDetectorRef,
     private _clubService: ClubService,
+    private _pickerClubService : PickerClubService
 
   ) {
     this.userFBprofile = new FacebookProfileModel();
@@ -174,7 +176,7 @@ export class AccountManagerComponent implements OnInit {
     }
     total = [...existingPages, ...newPages]
     debugger
-    uniqueFacebookPages = total.filter((value, index, self) => self.findIndex((m) => m.pageID === value.pageID) === index);
+    uniqueFacebookPages = total.filter((value, idx, mock) => mock.findIndex((x) => x.pageID === value.pageID) === idx);
     this.club.FBPages = uniqueFacebookPages
     console.log(uniqueFacebookPages)
   }
@@ -184,6 +186,14 @@ export class AccountManagerComponent implements OnInit {
   }
 
   updateUserClub(club) {
+    debugger
+    if(club.pickerClub){
+      club.pickerClubId =  this.selectedClub.id
+      this._pickerClubService.updatePickerClub(club).subscribe(data=>{
+        console.log(data ,'data')
+      }, err=>{console.log(err)})
+      return;
+    }
     this._clubService.updateClub(club).subscribe(data => {
     })
   }
