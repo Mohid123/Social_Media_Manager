@@ -22,18 +22,15 @@ export class ScheduleService {
   }
 
   schduleClubPost(postedTo , clubID, post) : Observable <any> {
-    debugger;
     post.postedTo = postedTo
     return this._apiService.post(`/schedule/scheduleClubPost/${clubID}`, post);
   }
 
   scheduleFacebookPost(FBpost) : Observable <any>{
-    debugger;
     return this._apiService.post('/schedule/scheduleFacebookPost', FBpost)
   }
 
   scheduleInstagramPost(IGpost) : Observable <any> {
-    debugger
     return this._apiService.post('/schedule/scheduleInstagramPost', IGpost)
   }
 

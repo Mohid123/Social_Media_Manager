@@ -345,7 +345,7 @@ export class TeamtalkersComponent implements OnInit {
   }
 
   switchTabs(event) {
-    debugger
+    
     if (event.index == 0) {
       this.showDiv.photo = true;
       this.showDiv.video = false;
@@ -468,8 +468,8 @@ export class TeamtalkersComponent implements OnInit {
   }
 
   addImagePost() {
-    debugger
-    debugger;
+    
+    ;
     let groups = [];
     let events = [];
     let club = []
@@ -516,7 +516,7 @@ export class TeamtalkersComponent implements OnInit {
   }
 
   addVideoPost() {
-    debugger;
+    ;
     let groups = [];
     let events = [];
     let club = []
@@ -612,7 +612,7 @@ export class TeamtalkersComponent implements OnInit {
 
 
   scheduleImagePost(postType) {
-    debugger;
+    ;
     let groups = [];
     let events = [];
     let club = []
@@ -747,7 +747,7 @@ export class TeamtalkersComponent implements OnInit {
       // this.poll.choice4.trim() || delete this.poll.choice4
       this.pollSelectedDate = new Date(this.pollSelectedDate.setHours(this.pollSelectedTime.getHours()));
       this.pollSelectedDate = new Date(this.pollSelectedDate.setMinutes(this.pollSelectedTime.getMinutes()));
-      debugger;
+      ;
       var days = moment.duration(moment(this.pollSelectedDate).diff(moment(new Date()))).days();
       var hours = moment.duration(moment(this.pollSelectedDate).diff(moment(new Date()))).hours();
       var minutes = moment.duration(moment(this.pollSelectedDate).diff(moment(new Date()))).minutes();
@@ -760,7 +760,7 @@ export class TeamtalkersComponent implements OnInit {
       this.post.type = "poll";
       this.post.postedTo = "Club";
       this.post.text = this.teamtalkerCaption;
-      debugger
+      
       this.poll.expiryDate = Math.round(this.pollSelectedDate.getTime()) * 1000;
       this.poll.startDate = Math.round(new Date().getTime()) * 1000;
       this.poll.votingDays = days;
@@ -769,7 +769,7 @@ export class TeamtalkersComponent implements OnInit {
       this.post.poll = Object.assign({}, this.poll);
       if (this.showSchedule) {
         if (this._scheduleService.validateScheduleDate(this.scheduleSelectedDate, this.scheduleSelectedTime)) {
-          debugger
+          
         if(new Date(this.poll.expiryDate / 1000) < new Date( this._scheduleService.getScheduleEpox)){
           this.toast.error('Poll Expiry Time must be ahead of Schedule Time');
           return

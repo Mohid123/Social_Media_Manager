@@ -253,7 +253,7 @@ export class PublishComponent implements OnInit {
   }
 
   switchTabs(event) {
-    debugger;
+    ;
     if (event.index == 0) {
       this.showDiv.photo = true;
       this.showDiv.video = false;
@@ -573,7 +573,7 @@ export class PublishComponent implements OnInit {
   }
 
   addTextPost() {
-    debugger;
+    ;
 
     let selectedFacebookPages = []
     let selctedInstagramPages = []

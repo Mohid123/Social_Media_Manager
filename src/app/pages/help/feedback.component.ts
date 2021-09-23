@@ -48,7 +48,7 @@ export class FeedbackComponent implements OnInit {
   }
 
   onSubmit(form: FormGroup) {
-    debugger
+    
     let response = form.value;
     response['userId'] = this.userId
     response['clubId'] = this.club.id
@@ -86,7 +86,7 @@ export class FeedbackComponent implements OnInit {
 }
 
   onSelectFile(event) {
-    debugger;
+    ;
     if (event.target.files && event.target.files[0]) {
       this.mediaFile = event.target.files && event.target.files[0]
       var reader = new FileReader();

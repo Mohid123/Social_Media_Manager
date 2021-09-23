@@ -105,7 +105,6 @@ export class ClubpostService {
     }
     this.spinner.show();
     this._postService.hyperLinkScrapper(postedText).subscribe((data) => {
-      debugger
       hyperLinkResponse = data;
 
       if (hyperLinkResponse.length > 0 && hyperLinkResponse[0].hasOwnProperty("url")) {
@@ -151,7 +150,6 @@ export class ClubpostService {
         });
       })
     }, error=>{
-      debugger
       console.log(error)
     })
     })
@@ -179,7 +177,6 @@ export class ClubpostService {
     }
     this.spinner.show();
     this._postService.hyperLinkScrapper(postedText).subscribe((data) => {
-      debugger
       hyperLinkResponse = data;
       if (
         hyperLinkResponse.length > 0 &&
@@ -205,7 +202,6 @@ export class ClubpostService {
       ) {
         this.post.hyperlinkCaptureFileURL = hyperLinkResponse[0].image;
       }
-      debugger;
       this._mediaUploadService
       .uploadClubMedia("GroupMedia", userID,MediaFile)
       .subscribe((uploadedVideo: any) => {
