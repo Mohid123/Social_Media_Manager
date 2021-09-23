@@ -183,6 +183,7 @@ export class AccountManagerComponent implements OnInit {
   }
 
   updateUserClub(club) {
+    localStorage.setItem(club , JSON.stringify(club))
     if(club.pickerClub){
       club.pickerClubId =  this.selectedClub.id
       this._pickerClubService.updatePickerClub(club).subscribe(data=>{
@@ -191,6 +192,7 @@ export class AccountManagerComponent implements OnInit {
       return;
     }
     this._clubService.updateClub(club).subscribe(data => {
+      debugger
     })
   }
 
