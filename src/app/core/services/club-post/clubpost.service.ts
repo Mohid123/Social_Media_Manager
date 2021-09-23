@@ -13,6 +13,7 @@ import { VideoProcessingService } from '../video-service/video-processing.servic
 })
 export class ClubpostService {
   private post: Post
+  private userClubID : string = localStorage.getItem("clubUid");
   public postedSuccessfully: EventEmitter<any> = new EventEmitter();
   constructor(private _reportService: ReportService,
     private _postService: PostService,
@@ -24,9 +25,11 @@ export class ClubpostService {
   }
 
   createTextPost(postedText, postedTo , selectedList) {
+    debugger
     return new Promise((resolve, reject) => {
     let hyperLinkResponse = []
     this.post.type = 'text'
+    this.post.userID = this.userClubID;
     this.post.text = postedText;
     this.post.postedTo = postedTo;
 
@@ -92,7 +95,7 @@ export class ClubpostService {
     this.post.type = 'image'
     this.post.text = postedText;
     this.post.postedTo = postedTo;
-
+    this.post.userID = this.userClubID;
     if (postedTo == 'Group') {
       delete this.post.eventID;
     }
@@ -163,7 +166,7 @@ export class ClubpostService {
     this.post.type = 'video';
     this.post.text = postedText;
     this.post.postedTo = postedTo;
-
+    this.post.userID = this.userClubID;
 
     if (postedTo == 'Group') {
       delete this.post.eventID;

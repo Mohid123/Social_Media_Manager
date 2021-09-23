@@ -140,6 +140,7 @@ export class TeamtalkersComponent implements OnInit {
   }
 
   getLatestClubPosts() {
+    debugger
     let tempPosts = []
     this._postService.getClubPosts('Club', 0, 15).subscribe((clubPosts: Post[]) => {
       clubPosts.map((singleClubPost: any, idx, self) => {
@@ -760,7 +761,7 @@ export class TeamtalkersComponent implements OnInit {
       this.post.type = "poll";
       this.post.postedTo = "Club";
       this.post.text = this.teamtalkerCaption;
-      
+      this.post.userID = localStorage.getItem("clubUid")
       this.poll.expiryDate = Math.round(this.pollSelectedDate.getTime()) * 1000;
       this.poll.startDate = Math.round(new Date().getTime()) * 1000;
       this.poll.votingDays = days;

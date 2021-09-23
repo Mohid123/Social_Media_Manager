@@ -62,6 +62,6 @@ export class Post {
     this.deletedCheck = false;
     this.pinPost = false;
     this.backgroundColorHex = "";
-    this.userID = localStorage.getItem("clubUid");
+    this.userID = ""
   }
 }

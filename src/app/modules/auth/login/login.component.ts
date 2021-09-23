@@ -110,6 +110,7 @@ export class LoginComponent implements OnInit {
 
 
   loginByEmail() {
+    debugger
     var self = this;
     if (!this.selectedClub) {
       this.toastr.error('Please Select Club', 'Empty Club')
