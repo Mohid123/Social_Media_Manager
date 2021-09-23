@@ -376,7 +376,7 @@ export class InstagramComponent implements OnInit {
   }
 
   scheduleInstagramImagePost() {
-    debugger;
+    ;
     let selectedList = this.checkedList;
     console.log(selectedList)
     if (!this.file) {
@@ -404,7 +404,7 @@ export class InstagramComponent implements OnInit {
   }
 
   scheduleInstagramVideoPost() {
-    debugger;
+    ;
     let selectedList = this.checkedList;
     // console.log(selectedList)
     if (!this.file) {
@@ -427,7 +427,7 @@ export class InstagramComponent implements OnInit {
   }
 
   onSelectFile(event) {
-    debugger;
+    ;
     this.file = event.target.files && event.target.files[0];
     if (this.file) {
       var reader = new FileReader();

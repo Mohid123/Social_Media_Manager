@@ -32,7 +32,6 @@ export class PickerClubService {
   }
 
   updatePickerClub(club): Observable<any> {
-    debugger
     return this._apiService.post('/PickerClubs/updateClub', club)
   }
 

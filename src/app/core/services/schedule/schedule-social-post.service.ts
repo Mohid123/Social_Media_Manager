@@ -22,7 +22,6 @@ export class ScheduleSocialPostService {
 
 
   scheduleFacebookTextPost(postedText, scheduledDate, selectedList) {
-    debugger;
     this.spinner.show()
     return new Promise((resolve, reject) => {
       selectedList.map(item => {
@@ -54,7 +53,6 @@ export class ScheduleSocialPostService {
   }
 
   scheduleFacebookImagePost(postedText, scheduledDate, mediaFile, selectedList) {
-    debugger;
     this.spinner.show()
     return new Promise((resolve, reject) => {
       this._mediaUploadService.uploadMedia('Facebook', '123', mediaFile).pipe(take(1)).subscribe((media: any) => {
@@ -125,12 +123,10 @@ export class ScheduleSocialPostService {
   }
 
   scheduleInstagramImagePost(postedText, scheduledDate, mediaFile, selectedList) {
-    debugger
     this.spinner.show();
     return new Promise((resolve, reject) => {
       this._mediaUploadService.uploadMedia('Instagram', '123', mediaFile).pipe(take(1)).subscribe((media: any) => {
         selectedList.map(item => {
-          debugger
           item.instagramAccountID = item.instagram_business_account.id
           item.pageAccessToken = item.linkedFbPagetoken
           item.caption = postedText;
@@ -167,12 +163,10 @@ export class ScheduleSocialPostService {
   }
 
   scheduleInstagramVideoPost(postedText, scheduledDate, mediaFile, selectedList) {
-    debugger
     this.spinner.show()
     return new Promise((resolve, reject) => {
       this._mediaUploadService.uploadMedia('Instagram', '123', mediaFile).pipe(take(1)).subscribe((media: any) => {
         selectedList.map(item => {
-          debugger
           item.instagramAccountID = item.instagram_business_account.id
           item.pageAccessToken = item.linkedFbPagetoken
           item.caption = postedText;
@@ -192,7 +186,6 @@ export class ScheduleSocialPostService {
 
         });
         selectedList.forEach((element, idx, self) => {
-          debugger
           // console.log(element, 'element')
           this._scheduleService.scheduleInstagramPost(element).pipe(take(1)).subscribe(data => {
             // console.log(data);

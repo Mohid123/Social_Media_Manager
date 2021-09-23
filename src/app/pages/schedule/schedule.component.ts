@@ -51,12 +51,10 @@ ngAfterViewInit(){
   // }
 
   getSelectedSchedule(event) {
-    debugger;
     let res = this.events.find(item => {
       return item.id === event
     })
     if (res) {
-      debugger
       this.selectedEvent = res
       // console.log(this.selectedEvent)
     }
@@ -66,7 +64,6 @@ ngAfterViewInit(){
   }
 
   deleteSelectedSchedule() {
-    debugger;
     this._scheduleService.deleteSchedule(this.selectedEvent.id).subscribe(res => {
       // console.log(res);
       this.selectedEvent = ''
@@ -104,7 +101,6 @@ ngAfterViewInit(){
   }
 
   getQueuedSchedueles() {
-    debugger;
     let clubId = JSON.parse(localStorage.getItem('selectedClub')).id;
     this._scheduleService.getQueuedSchedules(clubId).pipe(take(1)).subscribe(data => {
       let res = data.map(((item, idx, self) => {
@@ -118,7 +114,6 @@ ngAfterViewInit(){
           color: item.post?.color ? item.post.color : this.selectedClub?.clubColor
         }
       }))
-      debugger
       this.events = res;
       this.showDeleteBtn = true;
       // console.log(this.events)
@@ -167,7 +162,7 @@ ngAfterViewInit(){
   }
 
   getFacebookSchedule() {
-    debugger;
+    ;
     this._scheduleService.getFacebookSchedules(this.clubID).pipe(take(1)).subscribe((data: any) => {
       let res = data.map(((item, idx, self) => {
         return {

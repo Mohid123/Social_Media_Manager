@@ -87,9 +87,7 @@ export class ScheduleClubPostService {
           else {
             this.post.title = this.clubName
           }
-          // this._reportService.createReport(2, "", postedTo);
           this._scheduleService.schduleClubPost(postedTo, this.clubID, this.post).subscribe((post: Post) => {
-            // this._reportService.createReport(1, post.id, postedTo);
             if (idx == self.length - 1) {
               this.toast.success(`Post scheduled For ${postedTo}`, "Success");
               this.spinner.hide();
@@ -107,7 +105,6 @@ export class ScheduleClubPostService {
 
 
   scheduleImagePost(postedText, postedTo, userID, MediaFile, scheduleDate, selectedList?) {
-    debugger;
     return new Promise((resolve, reject) => {
       let hyperLinkResponse = []
       this.post.type = 'image'
@@ -242,7 +239,6 @@ export class ScheduleClubPostService {
         ) {
           this.post.hyperlinkCaptureFileURL = hyperLinkResponse[0].image;
         }
-        debugger;
         this._mediaUploadService
           .uploadClubMedia("GroupMedia", userID, MediaFile)
           .subscribe((uploadedVideo: any) => {

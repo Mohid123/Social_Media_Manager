@@ -118,7 +118,6 @@ export class AccountManagerComponent implements OnInit {
 
   async signInWithFB() {
     let newFBpages = []
-    debugger;
     document.getElementById("signInFB").style.pointerEvents = "none";
     setTimeout(() => {
       document.getElementById("signInFB").style.pointerEvents = "auto";
@@ -163,7 +162,6 @@ export class AccountManagerComponent implements OnInit {
         );
       })
       .catch((err) => {
-        debugger
         console.log(err, 'err obj')
       });
   }
@@ -175,7 +173,6 @@ export class AccountManagerComponent implements OnInit {
       return;
     }
     total = [...existingPages, ...newPages]
-    debugger
     uniqueFacebookPages = total.filter((value, idx, mock) => mock.findIndex((x) => x.pageID === value.pageID) === idx);
     this.club.FBPages = uniqueFacebookPages
     console.log(uniqueFacebookPages)
@@ -186,7 +183,6 @@ export class AccountManagerComponent implements OnInit {
   }
 
   updateUserClub(club) {
-    debugger
     if(club.pickerClub){
       club.pickerClubId =  this.selectedClub.id
       this._pickerClubService.updatePickerClub(club).subscribe(data=>{

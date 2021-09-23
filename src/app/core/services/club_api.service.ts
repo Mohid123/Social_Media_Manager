@@ -31,7 +31,6 @@ export class ClubApiService {
   }
 
   post(path: string, payload) {
-    debugger
     return this.http.post(
       `${constants.clubApiUrl}${path}`,  payload
     ).pipe(catchError(this.handleErrors));

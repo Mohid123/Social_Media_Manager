@@ -167,7 +167,6 @@ export class FacebookComponent implements OnInit {
   }
 
   getSignedInUser() {
-    debugger;
     let callsList = []
     let totalPosts;
     this._authService.getSignedInUser().subscribe(user => {
@@ -253,7 +252,6 @@ export class FacebookComponent implements OnInit {
   }
 
   addImagePost() {
-    debugger;
     if (!this.file) {
       this.toast.error('Please select an Image File', 'Empty File');
       return;
@@ -364,7 +362,6 @@ export class FacebookComponent implements OnInit {
 
 
   scheduleTextPostForFB() {
-    debugger;
     let selectedList = this.checkedList;
     if (this.facebookCaption.trim() == "") {
       this.toast.error('Please add content to post', 'No Content Added');
@@ -386,7 +383,6 @@ export class FacebookComponent implements OnInit {
 
 
   scheduleImagePostForFB() {
-    debugger;
     let selectedList = this.checkedList;
 
     if (!this.file) {
@@ -410,7 +406,6 @@ export class FacebookComponent implements OnInit {
 
 
   scheduleVideoPostForFB() {
-    debugger;
     let selectedList = this.checkedList;
 
     if (!this.file) {
