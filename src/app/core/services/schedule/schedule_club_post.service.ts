@@ -17,6 +17,7 @@ export class ScheduleClubPostService {
   clubID: string
   clubToken: string
   clubName: string
+  pickerClub : any
   constructor(private _reportService: ReportService,
     private _postService: PostService,
     private spinner: NgxSpinnerService,
@@ -29,11 +30,10 @@ export class ScheduleClubPostService {
     this.clubID = JSON.parse(localStorage.getItem('selectedClub')).id
     this.clubToken = localStorage.getItem('club-token');
     this.clubName = JSON.parse(localStorage.getItem('selectedClub')).clubName
-
+    this.pickerClub = JSON.parse(localStorage.getItem('selectedClub')).pickerClub;
   }
 
   scheduleTextPost(postedText, postedTo, scheduledDate, selectedList) {
-    debugger;
     return new Promise((resolve, reject) => {
       let hyperLinkResponse = []
       this.post.type = 'text'
@@ -41,7 +41,7 @@ export class ScheduleClubPostService {
       this.post.postedTo = postedTo;
       this.post.jwtToken = this.clubToken
       this.post.scheduleDate = scheduledDate
-
+      
       if (postedTo == 'Group') {
         delete this.post.eventID;
       }
@@ -73,6 +73,9 @@ export class ScheduleClubPostService {
         }
 
         selectedList.forEach((element, idx, self) => {
+          if(this.pickerClub){
+            this.post.pickerClubPost = true
+          }
           if (element.hasOwnProperty('groupName')) {
             this.post.groupID = element.id;
             this.post.title = element.groupName
@@ -146,6 +149,9 @@ export class ScheduleClubPostService {
           this.post.path = media.path;
           selectedList.forEach((element, idx, self) => {
 
+            if(this.pickerClub){
+              this.post.pickerClubPost = true
+            }
             if (element.hasOwnProperty('groupName')) {
               this.post.groupID = element.id;
               this.post.title = element.groupName
@@ -181,6 +187,9 @@ export class ScheduleClubPostService {
 
 
   schedulePollPost(post) {
+    if(this.pickerClub){
+      post.pickerClubPost = true
+    }
     post.jwtToken = this.clubToken
     return this._scheduleService.schduleClubPost('Club', this.clubID, post)
   }
@@ -250,6 +259,9 @@ export class ScheduleClubPostService {
                 this.post.thumbnailPath = thumbnailFile.path;
                 this.post.thumbnailURL = thumbnailFile.url;
                 selectedList.forEach((element, idx, self) => {
+                  if(this.pickerClub){
+                    this.post.pickerClubPost = true
+                  }
                   if (element.hasOwnProperty('groupName')) {
                     this.post.groupID = element.id;
                     this.post.title = element.groupName
