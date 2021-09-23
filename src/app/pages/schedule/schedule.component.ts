@@ -162,7 +162,6 @@ ngAfterViewInit(){
   }
 
   getFacebookSchedule() {
-    ;
     this._scheduleService.getFacebookSchedules(this.clubID).pipe(take(1)).subscribe((data: any) => {
       let res = data.map(((item, idx, self) => {
         return {

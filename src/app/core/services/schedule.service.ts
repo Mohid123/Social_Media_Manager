@@ -21,7 +21,7 @@ export class ScheduleService {
     return this._apiService.get(`/schedule/getScheduleByPostedTo/${postedTo}?offset=${offset}&limit=${limit}`);
   }
 
-  schduleClubPost(postedTo , clubID, post) : Observable <any> {
+    schduleClubPost(postedTo , clubID, post) : Observable <any> {
     post.postedTo = postedTo
     return this._apiService.post(`/schedule/scheduleClubPost/${clubID}`, post);
   }
@@ -70,7 +70,7 @@ export class ScheduleService {
     var hours = moment.duration(moment().diff(moment(new Date()))).hours();
     var minutes = moment.duration(moment(selectedDate).diff(moment(new Date()))).minutes();
 
-    if (days == 0 && hours <= 0 && minutes < 5) {
+    if (days == 0 && hours <= 0 && minutes < 1) {
       return false;
     }
     else {
