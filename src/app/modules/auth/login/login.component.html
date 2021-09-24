@@ -63,7 +63,9 @@
                 </h3>
               </div>
             </div>
+        
             <div class="row row-cols-1 row-cols-md-4 g-4" id="items" style="cursor: pointer;">
+          
               <div class="col" *ngFor="let club of allClubs" id="items">
                 <div class="card resp-card" (click)="onClubSelected(club) ">
                   <img src="{{club.logoURL}} "
@@ -86,6 +88,9 @@
 
           <button type="button" class="btn btn-secondary"
             (click)="c('Close click');searchStarted = false">Close</button>
+
+          <button type="button" class="btn btn-light-primary"
+            (click)="loadMoreClubs();searchStarted = false">Load more</button>
             
          
 
