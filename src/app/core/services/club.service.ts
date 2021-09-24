@@ -70,6 +70,10 @@ export class ClubService {
     return this._clubApiService.get(`/profile/getProfileById/${userId}`);
   }
 
+  searchClubByName(clubName , offset , limit){
+    return this._clubApiService.get(`/club/searchClubByName/${clubName}?offset=${offset}&limit=${limit}`);
+  }
+
 
 
 
