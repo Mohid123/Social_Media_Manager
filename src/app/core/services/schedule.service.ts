@@ -70,7 +70,7 @@ export class ScheduleService {
     var hours = moment.duration(moment().diff(moment(new Date()))).hours();
     var minutes = moment.duration(moment(selectedDate).diff(moment(new Date()))).minutes();
 
-    if (days == 0 && hours <= 0 && minutes < 1) {
+    if (days == 0 && hours <= 0 && minutes < 5) {
       return false;
     }
     else {
