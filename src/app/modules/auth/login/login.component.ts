@@ -44,8 +44,10 @@ export class LoginComponent implements OnInit {
   showBackBtn : boolean = false
   public defaultClub: Club
   public userClub
+  limit : number = 10;
+  offset : number = 0;
   private unsubscribe: Subscription[] = [];
- 
+
 
 
   constructor(
