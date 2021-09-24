@@ -14,8 +14,12 @@ import { Club } from 'src/app/core/models/club.model';
 })
 export class ScheduleClubPostService {
   public post;
+  club : Club
   clubID: string
   clubToken: string
+  clubName: string
+  pickerClub: any
+  private userClubID: string = localStorage.getItem("clubUid");
   constructor(private _reportService: ReportService,
     private _postService: PostService,
     private spinner: NgxSpinnerService,
@@ -25,12 +29,15 @@ export class ScheduleClubPostService {
     private _scheduleService: ScheduleService
   ) {
     this.post = new Post()
-    this.clubID = JSON.parse(localStorage.getItem('selectedClub')).id
+    this.club = JSON.parse(localStorage.getItem('selectedClub')) 
+    this.clubID = this.club.id
     this.clubToken = localStorage.getItem('club-token');
-
+    this.clubName = this.club.clubName
+    this.pickerClub = JSON.parse(localStorage.getItem('selectedClub')).pickerClub;
   }
 
   scheduleTextPost(postedText, postedTo, scheduledDate, selectedList) {
+    debugger
     return new Promise((resolve, reject) => {
       let hyperLinkResponse = []
       this.post.type = 'text'
@@ -38,7 +45,7 @@ export class ScheduleClubPostService {
       this.post.postedTo = postedTo;
       this.post.jwtToken = this.clubToken
       this.post.scheduleDate = scheduledDate
-
+      this.post.userID = this.userClubID;
       if (postedTo == 'Group') {
         delete this.post.eventID;
       }
@@ -70,15 +77,22 @@ export class ScheduleClubPostService {
         }
 
         selectedList.forEach((element, idx, self) => {
+          if (this.pickerClub) {
+            this.post.pickerClubPost = true
+            this.post.pickerClubBaseUrl =  this.club.baseURL
+          }
           if (element.hasOwnProperty('groupName')) {
             this.post.groupID = element.id;
+            this.post.title = element.groupName
           }
           else if (element.hasOwnProperty('eventName')) {
             this.post.eventID = element.id;
+            this.post.title = element.eventName
           }
-          // this._reportService.createReport(2, "", postedTo);
+          else {
+            this.post.title = this.clubName
+          }
           this._scheduleService.schduleClubPost(postedTo, this.clubID, this.post).subscribe((post: Post) => {
-            // this._reportService.createReport(1, post.id, postedTo);
             if (idx == self.length - 1) {
               this.toast.success(`Post scheduled For ${postedTo}`, "Success");
               this.spinner.hide();
@@ -96,7 +110,6 @@ export class ScheduleClubPostService {
 
 
   scheduleImagePost(postedText, postedTo, userID, MediaFile, scheduleDate, selectedList?) {
-    debugger;
     return new Promise((resolve, reject) => {
       let hyperLinkResponse = []
       this.post.type = 'image'
@@ -104,7 +117,7 @@ export class ScheduleClubPostService {
       this.post.postedTo = postedTo;
       this.post.scheduleDate = scheduleDate
       this.post.jwtToken = this.clubToken
-
+      this.post.userID = this.userClubID;
       if (postedTo == 'Group') {
         delete this.post.eventID;
       }
@@ -138,11 +151,21 @@ export class ScheduleClubPostService {
           this.post.path = media.path;
           selectedList.forEach((element, idx, self) => {
 
+            if (this.pickerClub) {
+              this.post.pickerClubPost = true
+              this.post.pickerClubBaseUrl =  this.club.baseURL
+            }
             if (element.hasOwnProperty('groupName')) {
               this.post.groupID = element.id;
+              this.post.title = element.groupName
             }
             else if (element.hasOwnProperty('eventName')) {
               this.post.eventID = element.id;
+              this.post.title = element.eventName
+
+            }
+            else {
+              this.post.title = this.clubName
             }
             // this._reportService.createReport(2, "", postedTo);
             this._scheduleService.schduleClubPost(postedTo, this.clubID, this.post).subscribe((post: Post) => {
@@ -166,6 +189,15 @@ export class ScheduleClubPostService {
   }
 
 
+  schedulePollPost(post) {
+    if (this.pickerClub) {
+      post.pickerClubPost = true
+    }
+    post.jwtToken = this.clubToken
+    return this._scheduleService.schduleClubPost('Club', this.clubID, post)
+  }
+
+
   scheduleVideoPost(postedText, postedTo, userID, MediaFile, scheduledDate, selectedList) {
     return new Promise((resolve, reject) => {
       let hyperLinkResponse = [];
@@ -175,7 +207,7 @@ export class ScheduleClubPostService {
       this.post.postedTo = postedTo;
       this.post.scheduleDate = scheduledDate
       this.post.jwtToken = this.clubToken
-
+      this.post.userID = this.userClubID
       if (postedTo == 'Group') {
         delete this.post.eventID;
       }
@@ -213,7 +245,6 @@ export class ScheduleClubPostService {
         ) {
           this.post.hyperlinkCaptureFileURL = hyperLinkResponse[0].image;
         }
-        debugger;
         this._mediaUploadService
           .uploadClubMedia("GroupMedia", userID, MediaFile)
           .subscribe((uploadedVideo: any) => {
@@ -230,15 +261,25 @@ export class ScheduleClubPostService {
                 this.post.thumbnailPath = thumbnailFile.path;
                 this.post.thumbnailURL = thumbnailFile.url;
                 selectedList.forEach((element, idx, self) => {
+                  if (this.pickerClub) {
+                    this.post.pickerClubPost = true
+                    this.post.pickerClubBaseUrl =  this.club.baseURL
+                  }
                   if (element.hasOwnProperty('groupName')) {
                     this.post.groupID = element.id;
+                    this.post.title = element.groupName
+
                   }
                   else if (element.hasOwnProperty('eventName')) {
                     this.post.eventID = element.id;
+                    this.post.title = element.eventName
+                  }
+                  else {
+                    this.post.title = this.clubName
                   }
                   // this._reportService.createReport(2, "", postedTo);
                   this._scheduleService.schduleClubPost(postedTo, this.clubID, this.post).subscribe((post: any) => {
-                    console.log(post, 'scjhe')
+                    // console.log(post, 'scjhe')
                     // this._reportService.createReport(1, post.id, postedTo);
                     if (idx == self.length - 1) {
                       this.spinner.hide();

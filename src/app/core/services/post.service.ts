@@ -5,7 +5,7 @@ import { ApiService } from './api.service';
 import { ErrorHandler, Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
-import { constants } from 'src/app/app.constatns';
+import { constants } from 'src/app/app.constants';
 import { ClubApiService } from './club_api.service';
 @Injectable({
   providedIn: 'root'
@@ -13,7 +13,6 @@ import { ClubApiService } from './club_api.service';
 export class PostService {
 
   constructor(private _apiService: ApiService, private _errorHandlerService: ErrorhandlerService, private http: HttpClient, private _clubApiService: ClubApiService) {
-
   }
 
 
@@ -32,7 +31,6 @@ export class PostService {
   }
 
   hyperLinkScrapper(postedText): Observable<any> {
-
     postedText == "" ? postedText = 'MockPayloadScrapper' : postedText = postedText
     return this._clubApiService.post(`/firebase-migration-functions/hyperlinkScraperForPanel`, { 'text': postedText });
   }

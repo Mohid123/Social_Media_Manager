@@ -32,7 +32,7 @@ export class Post {
   poll: Poll;
   pinPost: boolean;
   backgroundColorHex: any;
-
+  scheduleDate : any
   constructor() {
     this.id = "",
     this.userID = "", 
@@ -62,6 +62,6 @@ export class Post {
     this.deletedCheck = false;
     this.pinPost = false;
     this.backgroundColorHex = "";
-    this.userID = localStorage.getItem("clubUid");
+    this.userID = ""
   }
 }

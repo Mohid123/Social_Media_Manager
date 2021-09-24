@@ -1,0 +1,36 @@
+// .btn.btn-secondary:not(:disabled):not(.disabled):active:not(.btn-text), .btn.btn-secondary:not(:disabled):not(.disabled).active, .show > .btn.btn-secondary.dropdown-toggle, .show .btn.btn-secondary.btn-dropdown {
+//     color: #3F4254;
+//     background-color: #b1bffd;
+//     border-color: #d7dae7;
+// }
+
+.btn.btn-secondary{
+    padding: 25px;
+    background-color: rgb(245, 245, 245);
+    cursor: pointer;
+}
+
+.btn.btn-secondary:hover:not(.btn-text):not(:disabled):not(.disabled), .btn.btn-secondary:focus:not(.btn-text), .btn.btn-secondary.focus:not(.btn-text) {
+    color: #3F4254;
+    background-color: #d4d4d4cf;
+    border-color: #000000;
+}
+
+  
+h1 {
+    font-size: 40px;
+    font-family: 'Poppins', sans-serif;
+    margin-bottom: 0;
+    line-height: 1;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .dot {
+    color: #020d6d;
+  }
+
+  
+  
+ 

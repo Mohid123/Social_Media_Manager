@@ -7,7 +7,7 @@ import { Component, OnInit, ChangeDetectorRef, ViewChild, ElementRef } from '@an
 import { NgxSpinnerService } from "ngx-spinner";
 import { User } from 'src/app/core/models/user.model';
 import { ToastrService } from 'ngx-toastr';
-import { publish, take, map } from 'rxjs/operators';
+import { count, take } from 'rxjs/operators';
 import * as moment from 'moment';
 import { DatePickerOptions } from "@ngx-tiny/date-picker";
 import { TimePickerOptions } from "@ngx-tiny/time-picker/ngx-time-picker.options";
@@ -37,10 +37,12 @@ export class InstagramComponent implements OnInit {
   private checkedList: any;
   public userName: string = localStorage.getItem('userName')
   public profileImageUrl: string = localStorage.getItem('profileImageUrl')
+  facebookProfileImageUrl: string
   public showDiv = {
     photo: true,
     video: false,
   }
+  public searchString : any
   scheduleSelectedDate: any
   scheduleSelectedTime: any
 
@@ -58,7 +60,7 @@ export class InstagramComponent implements OnInit {
     military: true,
   };
   constructor(
-    private spinner: NgxSpinnerService, 
+    private spinner: NgxSpinnerService,
     private cf: ChangeDetectorRef,
     private _authService: MainAuthService,
     private _instagramService: InstagramService,
@@ -74,6 +76,7 @@ export class InstagramComponent implements OnInit {
 
 
   ngOnInit() {
+    this.facebookProfileImageUrl = JSON.parse(localStorage.getItem('selectedClub'))?.userFacebookProfile?.fbProfileImageUrl
     this.showSpinner()
     this.getSignedInUser();
     this.getCheckedItemList()
@@ -81,8 +84,8 @@ export class InstagramComponent implements OnInit {
 
   clear() {
     this.instaCaption = '';
-    this.url = '';
-    this.file = ""
+    this.file = null;
+    this.url = null
     this.cf.detectChanges()
   }
   onChangeSingle(value: Date) {
@@ -143,9 +146,9 @@ export class InstagramComponent implements OnInit {
   getSignedInUser() {
     this._authService.getSignedInUser().pipe(take(1)).subscribe(user => {
       this.signedInUser = user;
-      if (this.signedInUser.FBPages.length > 0) {
-        this.signedInUser.FBPages.forEach(item => {
-          this.getIGAccountDetails(item.pageID, item.pageAccessToken).subscribe((igaccount: any) => {
+      if (this.signedInUser?.FBPages?.length > 0) {
+        this.signedInUser?.FBPages.forEach(item => {
+          this.getIGAccountDetails(item.pageID, item.pageAccessToken).pipe(take(1)).subscribe((igaccount: any) => {
             if (igaccount.hasOwnProperty('instagram_business_account')) {
               this.getRecentPosts(igaccount.instagram_business_account.id, item.pageAccessToken);
               igaccount.isSelected = false;
@@ -163,15 +166,28 @@ export class InstagramComponent implements OnInit {
     })
   }
 
+  searchInstagramAccounts(keyword) {
+    this.searchString = keyword
+    let res;
+    if (this.searchString !== "") {
+      this.checklist = this.tempList.filter(item =>
+        res = item.pageName.toLowerCase().includes(this.searchString.toLowerCase()))
+      return res;
+    }
+    else if (this.searchString == "") {
+      this.checklist = this.tempList;
+    }
+  }
+
+
   getRecentPosts(IGaccountID, FBpageaccessToken) {
-    return this._instagramService.getPublishedPostsForIG(IGaccountID, FBpageaccessToken).subscribe((publishedPosts: any) => {
-      publishedPosts.data.map(item => {
-        item.timestamp = moment(item.timestamp).fromNow()
-      })
+    return this._instagramService.getPublishedPostsForIG(IGaccountID, FBpageaccessToken).pipe(take(1)).subscribe((publishedPosts: any) => {
       this.recentPosts = publishedPosts.data;
+      // console.log(this.recentPosts , 'recent ig posts')
       this.cf.detectChanges();
     })
   }
+
   getIGAccountDetails(FbPageID, FbPageAccessToken) {
     return this._instagramService.getInstagramAccountID(FbPageID, FbPageAccessToken)
   }
@@ -209,11 +225,15 @@ export class InstagramComponent implements OnInit {
     if (event.index == 0) {
       this.showDiv.photo = true;
       this.showDiv.video = false;
+      this.file = null;
+      this.url = null
 
     }
     else if (event.index == 1) {
       this.showDiv.photo = false;
       this.showDiv.video = true;
+      this.file = null;
+      this.url = null
 
     }
   }
@@ -222,7 +242,7 @@ export class InstagramComponent implements OnInit {
     this.modalService.dismissAll()
   }
   addVideoPost() {
-    debugger;
+    let counter = 0
     if (!this.file) {
       this.toast.error('Please select an Video File', 'Empty File');
       return;
@@ -231,20 +251,26 @@ export class InstagramComponent implements OnInit {
       this.toast.error('No Item Selected', 'Please select items to post');
       return;
     }
-    this.spinner.show();
-    this._mediaUploadService.uploadMedia('InstagramTest', '123', this.file).subscribe((media: any) => {
+    this.toast.warning("You'll be notified when done", "We are finalizing your video.")
+    this.postedSuccessfully()
+    this._mediaUploadService.uploadMedia('InstagramTest', '123', this.file).pipe(take(1)).subscribe((media: any) => {
       this.checkedList.forEach(item => {
-        this._instagramService.createIgContainerForVideo(item.instagram_business_account.id, media.url, this.instaCaption, item.linkedFbPagetoken).subscribe((container: any) => {
-          console.log(container, 'container')
+        this._instagramService.createIgContainerForVideo(item.instagram_business_account.id, media.url, this.instaCaption, item.linkedFbPagetoken).pipe(take(1)).subscribe((container: any) => {
           let interval = setInterval(() => {
-            this._instagramService.getContainerStatus(container.id, item.linkedFbPagetoken).subscribe((data: any) => {
+            counter = counter + 1
+            if (counter == 5) {
+              clearInterval(interval);
+              return
+            }
+            this._instagramService.getContainerStatus(container.id, item.linkedFbPagetoken).pipe(take(1)).subscribe((data: any) => {
               console.log(data, 'status')
               if (data.status_code == "FINISHED") {
-                this._instagramService.publishContent(item.instagram_business_account.id, container.id, item.linkedFbPagetoken).subscribe((data: any) => {
+                
+                this._instagramService.publishContent(item.instagram_business_account.id, container.id, item.linkedFbPagetoken).pipe(take(1)).subscribe((data: any) => {
 
                   clearInterval(interval)
                   this.postedSuccessfully()
-                  this.toast.success('Published', 'Video Post Added');
+                  this.toast.success('Great! The post has been shared.');
                   this._reportService.createReport(1, data.id, 'Instagram')
                 }, error => {
                   this.spinner.hide();
@@ -259,11 +285,14 @@ export class InstagramComponent implements OnInit {
                 this.toast.error('Error uploding Video', 'Video Format Unsupported')
                 this._reportService.createReport(0, "", 'Instagram');
               }
+            }, error => {
+              this.spinner.hide();
+              this.toast.error(error.message);
+              clearInterval(interval)
             })
-          }, 3000)
+          }, 30000)
 
         }, (error) => {
-          debugger;
           this.spinner.hide();
           this.toast.error(error.message)
         })
@@ -290,13 +319,13 @@ export class InstagramComponent implements OnInit {
       return;
     }
     this.spinner.show()
-    this._mediaUploadService.uploadMedia('Instagram', this.signedInUser.id, this.file).subscribe((media: any) => {
+    this._mediaUploadService.uploadMedia('Instagram', this.signedInUser.id, this.file).pipe(take(1)).subscribe((media: any) => {
       this.checkedList.forEach((item, idx, self) => {
         this._reportService.createReport(2, "", 'Instagram')
-        this._instagramService.createIGMediaContainer(item.instagram_business_account.id, this.instaCaption, item.linkedFbPagetoken, media.url).subscribe((container: any) => {
-          this._instagramService.publishContent(item.instagram_business_account.id, container.id, item.linkedFbPagetoken).subscribe((data: any) => {
+        this._instagramService.createIGMediaContainer(item.instagram_business_account.id, this.instaCaption, item.linkedFbPagetoken, media.url).pipe(take(1)).subscribe((container: any) => {
+          this._instagramService.publishContent(item.instagram_business_account.id, container.id, item.linkedFbPagetoken).pipe(take(1)).subscribe((data: any) => {
             if (idx == self.length - 1) {
-              this.toast.success('Image Post Added Successfully', 'Post Added');
+              this.toast.success('Great! The post has been shared.');
               this.postedSuccessfully();
 
             }
@@ -340,13 +369,14 @@ export class InstagramComponent implements OnInit {
     this.spinner.hide();
     this.url = ""
     this.instaCaption = ""
-    this.file = ""
+    // this.file = ""
+    this.showSchedule = false;
     this.removeSlectedItems();
     this.cf.detectChanges();
   }
 
   scheduleInstagramImagePost() {
-    debugger;
+    ;
     let selectedList = this.checkedList;
     console.log(selectedList)
     if (!this.file) {
@@ -354,11 +384,17 @@ export class InstagramComponent implements OnInit {
       return;
     }
     else if (this.checkedList.length == 0) {
-      this.toast.error('No Page Selected', 'Please select Facebook Pages to post');
+      this.toast.error('No Page Selected', 'Please select Instagram account to post');
+      return;
+    }
+    else if (this.inValidImageFormat) {
+      this.toast.error('Unsupported Image Format', 'Image Format not supported for Instagram');
       return;
     }
     else if (this._scheduleService.validateScheduleDate(this.scheduleSelectedDate, this.scheduleSelectedTime)) {
-      this._scheduleSocialPostService.scheduleInstagramImagePost(this.instaCaption, this._scheduleService.getScheduleEpox, this.file, selectedList)
+      this._scheduleSocialPostService.scheduleInstagramImagePost(this.instaCaption, this._scheduleService.getScheduleEpox, this.file, selectedList).then(() => {
+        this.postedSuccessfully()
+      })
     }
 
     else {
@@ -368,9 +404,9 @@ export class InstagramComponent implements OnInit {
   }
 
   scheduleInstagramVideoPost() {
-    debugger;
+    ;
     let selectedList = this.checkedList;
-    console.log(selectedList)
+    // console.log(selectedList)
     if (!this.file) {
       this.toast.error('Please select any Video File', 'Empty File');
       return;
@@ -380,7 +416,9 @@ export class InstagramComponent implements OnInit {
       return;
     }
     else if (this._scheduleService.validateScheduleDate(this.scheduleSelectedDate, this.scheduleSelectedTime)) {
-      this._scheduleSocialPostService.scheduleInstagramVideoPost(this.instaCaption, this._scheduleService.getScheduleEpox, this.file, selectedList)
+      this._scheduleSocialPostService.scheduleInstagramVideoPost(this.instaCaption, this._scheduleService.getScheduleEpox, this.file, selectedList).then(() => {
+        this.postedSuccessfully()
+      })
     }
 
     else {
@@ -389,7 +427,7 @@ export class InstagramComponent implements OnInit {
   }
 
   onSelectFile(event) {
-    debugger;
+    ;
     this.file = event.target.files && event.target.files[0];
     if (this.file) {
       var reader = new FileReader();

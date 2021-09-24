@@ -18,6 +18,7 @@ import { ChangeDetectorRef } from "@angular/core";
 import { ClubService } from './../../core/services/club.service';
 import { Club } from './../../core/models/club.model';
 import { take } from "rxjs/operators";
+import { PickerClubService } from './../../core/services/picker_clubs.service';
 @Component({
   selector: "app-account-manager",
   templateUrl: "./account-manager.component.html",
@@ -28,13 +29,13 @@ export class AccountManagerComponent implements OnInit {
   public signedInUser: User;
   public clubName: string = "";
   private connectedIG: boolean = false;
-  private userFacebookPages: any[] = [];
   public clubLogo: string = "";
   public userFBprofile: FacebookProfileModel
   public userClubProfile: ClubProfileModel
   public club: any
   public selectedClub: Club
   socialFlag: boolean = false
+  public userExisitngFacebookPages: any[] = []
 
   constructor(
     private spinner: NgxSpinnerService,
@@ -45,6 +46,7 @@ export class AccountManagerComponent implements OnInit {
     private _toast: ToastrService,
     private cf: ChangeDetectorRef,
     private _clubService: ClubService,
+    private _pickerClubService : PickerClubService
 
   ) {
     this.userFBprofile = new FacebookProfileModel();
@@ -57,6 +59,7 @@ export class AccountManagerComponent implements OnInit {
     this.club = JSON.parse(localStorage.getItem('selectedClub'))
     this.clubName = this.club.clubName;
     this.clubLogo = this.club.logoURL;
+    this.userExisitngFacebookPages = this.club?.FBPages ? this.club?.FBPages : []
     this.showSpinner();
     this.getSignedInUser();
     this.set_socialFlag_after_getting_club()
@@ -65,17 +68,17 @@ export class AccountManagerComponent implements OnInit {
   getSignedInUser() {
     this._authService.getSignedInUser().subscribe((user) => {
       this.signedInUser = user;
-      this.updateClubProfile();
-      // this.setFbProfile(user.userFacebookProfile.fbEmail , user.userFacebookProfile.fbUserName ,  user.userFacebookProfile.fbProfileImageUrl);
-      // this.setClubprofile(user.userClubProfile.clubEmail, user.userClubProfile.clubUsername, user.userClubProfile.clubProfileImageUrl);
+      this.setClubProfile();
+      this.setFbProfile();
     });
   }
 
 
-  setFbProfile(email, username, profileImageUrl) {
-    this.userFBprofile.fbEmail = email;
-    this.userFBprofile.fbUserName = username;
-    this.userFBprofile.fbProfileImageUrl = profileImageUrl;
+  setFbProfile() {
+    let FBprofile = JSON.parse(localStorage.getItem('selectedClub'))?.userFacebookProfile;
+    this.userFBprofile.fbUserName = FBprofile?.fbUserName;
+    this.userFBprofile.fbProfileImageUrl = FBprofile?.fbProfileImageUrl;
+    localStorage.setItem('selectedClub', JSON.stringify(this.club));
     this.cf.detectChanges();
   }
 
@@ -86,13 +89,12 @@ export class AccountManagerComponent implements OnInit {
     }, 1000);
   }
 
-  
-  updateClubProfile(){
-    debugger;
+
+  setClubProfile() {
     let userId = localStorage.getItem('clubUid');
-    this._clubService.getUserClubProfile(userId).pipe(take(1)).subscribe((data:any)=>{
+    this._clubService.getUserClubProfile(userId).pipe(take(1)).subscribe((data: any) => {
       this.userClubProfile.clubEmail = data.email,
-      this.userClubProfile.clubProfileImageURL = data.profilePicURL;
+        this.userClubProfile.clubProfileImageURL = data.profilePicURL;
       this.userClubProfile.clubUsername = data.fullName;
       this.cf.detectChanges();
     })
@@ -115,23 +117,21 @@ export class AccountManagerComponent implements OnInit {
   }
 
   async signInWithFB() {
-
-    // this._toast.warning('Comming Soon')
+    let newFBpages = []
     document.getElementById("signInFB").style.pointerEvents = "none";
+    setTimeout(() => {
+      document.getElementById("signInFB").style.pointerEvents = "auto";
+    }, 4000);
     const fbLoginOptions = {
       scope:
         "pages_show_list , pages_manage_posts , instagram_basic,instagram_content_publish"
     };
-    // ,, " "email,,
     await this.authService
       .signIn(FacebookLoginProvider.PROVIDER_ID, fbLoginOptions)
       .then((socialUser) => {
         this._toast.success("Successfully logged into Facebook");
         this.socialUser = socialUser;
         this.club.FBuserID = this.socialUser.id;
-
-
-        // this.signedInUser.FBuserID = this.socialUser.id;
         this.userFBprofile.fbEmail = this.socialUser.response.email;
         this.userFBprofile.fbUserName = this.socialUser.response.name;
         this.userFBprofile.fbProfileImageUrl = this.socialUser.response.picture.data.url;
@@ -151,16 +151,31 @@ export class AccountManagerComponent implements OnInit {
                     pageID: item.id,
                     pageName: item.name,
                   };
-                  this.userFacebookPages.push(obj);
+                  newFBpages.push(obj);
                 });
               }
-              this.club.FBPages = this.userFacebookPages;
+              this.findUniqueObjects(this.userExisitngFacebookPages, newFBpages)
               this.updateUserClub(this.club);
+              this.setFbProfile();
             });
           }
         );
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err, 'err obj')
+      });
+  }
+
+  findUniqueObjects(existingPages, newPages) {
+    let total, uniqueFacebookPages = []
+    if (existingPages.length == 0) {
+      this.club.FBPages = newPages
+      return;
+    }
+    total = [...existingPages, ...newPages]
+    uniqueFacebookPages = total.filter((value, idx, mock) => mock.findIndex((x) => x.pageID === value.pageID) === idx);
+    this.club.FBPages = uniqueFacebookPages
+    console.log(uniqueFacebookPages)
   }
 
   signOutOfClub() {
@@ -168,6 +183,13 @@ export class AccountManagerComponent implements OnInit {
   }
 
   updateUserClub(club) {
+    if(club.pickerClub){
+      club.pickerClubId =  this.selectedClub.id
+      this._pickerClubService.updatePickerClub(club).subscribe(data=>{
+        console.log(data ,'data')
+      }, err=>{console.log(err)})
+      return;
+    }
     this._clubService.updateClub(club).subscribe(data => {
     })
   }
@@ -205,17 +227,22 @@ export class AccountManagerComponent implements OnInit {
     );
   }
 
-  showFBPopup() {
+  showIGLoginPopup() {
     this._toast.warning(
-      "Comming Soon"
+      "Sign in via Facebook to connect your Instagram Accounts"
     );
   }
 
-  signInWithFacebook(){
+  showIGCommingSoonPopup() {
+    this._toast.warning("Comming Soon")
+  }
+
+  showFBCommingSoonPopup() {
     this._toast.warning('Comming Soon');
   }
 
   signOutFB() {
+
 
     // ;
     // let fbProfileImageUrl = "https://socialapi.solissol.com/api/v1/en/media-upload/mediaFiles/test/123/b448db445dab8728bb3fc822243e58f10.png"

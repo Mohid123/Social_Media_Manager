@@ -33,12 +33,25 @@
 
                 <div class="card-scroll custom-scrollbar-css p-2 padd">
                     <div class="card-header border-0 pt-5">
-                        <form class="form-inline md-form form-sm d-flex justify-content-center">
-                            <mdb-icon fas icon="search" aria-hidden="true"></mdb-icon>
-                            <input [(ngModel)]="searchString" (ngModelChange)="search($event)"
-                                [ngModelOptions]="{standalone: true}" class="form-control form-control-sm ml-3 w-75"
-                                type="text" placeholder="Search" aria-label="Search" mdbInput>
-                        </form>
+                     
+                        <div class="main">
+  
+                         
+                            
+                            <!-- Another variation with a button -->
+                            <div class="input-group">
+                              <input [(ngModel)]="searchString" (ngModelChange)="search($event)" type="text" class="form-control" placeholder="Search" >
+                              <div class="input-group-append">
+                                <button class="btn btn-secondary" type="button">
+                                  <i class="fa fa-search"></i>
+                                </button>
+                               
+                              </div>
+                            </div>
+                            
+                         
+                            
+                          </div>
 
                     </div>
 
@@ -702,7 +715,7 @@
                     <!--Club Tab-->
                     <mat-tab>
                         <ng-template mat-tab-label>
-                            <mat-icon><img class="rounded" style="height: auto; width: 32px; margin-left: -4px;"
+                            <mat-icon><img class="rounded" style="height: auto; width: 26px; margin-left: -1px;"
                                     [src]="clubLogo" alt=""></mat-icon>
 
                         </ng-template>
@@ -716,8 +729,10 @@
                                             data-type="photo" *ngIf="showDiv.photo">
                                             <div class="user-info-tt" style="z-index: 1;">
                                                 <img class="img-circle"
-                                                    style="height: 44px; object-fit: cover; border-radius: 30px;"
-                                                    [src]="profileImageUrl">
+                                                style="height: 44px; object-fit: cover; border-radius: 30px;"
+                                                name="fieldName" ngDefaultControl [(ngModel)]="clubPrimaryColor"
+                                                [ngStyle]="{'border': '3px solid' + clubPrimaryColor}"
+                                                [src]="profileImageUrl">
                                                 <div class="tt-text">
                                                     <div class="name"> {{userName}}</div>
                                                     <span> Just now
@@ -730,8 +745,13 @@
                                             <div class="preview-media" data-max-image="5" style="margin-top: -20px"><img
                                                     logo #logo (load)="onSelectedImageLoad()" [src]="url"
                                                     *ngIf="format==='image' && url"
-                                                    style="height: 100%; width: 100%; object-fit: cover; "></div>
-                                            <div class="caption-tt">
+                                                    style="object-fit: contain;
+                                                    margin-right: auto;
+                                                    margin-left: auto;
+                                                    height: 100%;
+                                                    width: 100%;
+                                                    display: block;"></div>
+                                            <div class="caption-tt" style="white-space: pre-wrap; text-align: justify;">
                                                 <div>{{socialCaption}}</div>
                                                 <div class="line-no-text" *ngIf="!socialCaption">{{socialCaption}}</div>
                                                 <div class="line-no-text" *ngIf="!socialCaption"></div>
@@ -798,8 +818,10 @@
                                             data-type="photo" *ngIf="showDiv.video">
                                             <div class="user-info-tt" style="z-index: 1;">
                                                 <img class="img-circle"
-                                                    style="height: 44px; object-fit: cover; border-radius: 30px;"
-                                                    [src]="profileImageUrl">
+                                                style="height: 44px; object-fit: cover; border-radius: 30px;"
+                                                name="fieldName" ngDefaultControl [(ngModel)]="clubPrimaryColor"
+                                                [ngStyle]="{'border': '3px solid' + clubPrimaryColor}"
+                                                [src]="profileImageUrl">
                                                 <div class="tt-text">
                                                     <div class="name"> {{userName}}</div>
                                                     <span> Just now
@@ -809,10 +831,18 @@
                                                 </div>
                                             </div>
 
-                                            <div class="preview-media" data-max-image="5" style="margin-top: -20px"><img
-                                                    [src]="url" *ngIf="format==='image' && url"
-                                                    style="height: 100%; width: 100%; object-fit: cover; "></div>
-                                            <div class="caption-tt">
+                                            <div class="preview-media" data-max-image="5" style="margin-top: -20px">
+                                                <video [src]="url" *ngIf="format==='video' && url"
+                                                style="
+                                                margin-right: auto;
+                                                margin-left: auto;
+                                                height: 100%;
+                                                width: 100%;
+                                                object-position: contain;
+                                                display: block;" controls
+                                                disablepictureinpicture controlsList="nodownload"></video>
+                                                </div>
+                                            <div class="caption-tt" style="white-space: pre-wrap; text-align: justify;">
                                                 <div>{{socialCaption}}</div>
                                                 <div class="line-no-text" *ngIf="!socialCaption">{{socialCaption}}</div>
                                                 <div class="line-no-text" *ngIf="!socialCaption"></div>
@@ -879,8 +909,10 @@
                                             data-type="photo" *ngIf="showDiv.text">
                                             <div class="user-info-tt" style="z-index: 1;">
                                                 <img class="img-circle"
-                                                    style="height: 44px; object-fit: cover; border-radius: 30px;"
-                                                    [src]="profileImageUrl">
+                                                style="height: 44px; object-fit: cover; border-radius: 30px;"
+                                                name="fieldName" ngDefaultControl [(ngModel)]="clubPrimaryColor"
+                                                [ngStyle]="{'border': '3px solid' + clubPrimaryColor}"
+                                                [src]="profileImageUrl">
                                                 <div class="tt-text">
                                                     <div class="name"> {{userName}}</div>
                                                     <span> Just now
@@ -891,7 +923,7 @@
                                             </div>
 
                                             <!-- <div class="preview-media" data-max-image="5" style="margin-top: -20px"><img [src]="url" *ngIf="format==='image' && url" style="height: 100%; width: 100%; object-fit: cover; "></div> -->
-                                            <div class="caption-tt">
+                                            <div class="caption-tt" style="white-space: pre-wrap; text-align: justify;">
                                                 <div>{{socialCaption}}</div>
                                                 <div class="line-no-text" *ngIf="!socialCaption">{{socialCaption}}</div>
                                                 <div class="line-no-text" *ngIf="!socialCaption"></div>
@@ -965,7 +997,7 @@
                     </mat-tab>
 
                     <!--Facebook Tab-->
-                    <mat-tab *ngIf="selectedFacebook" >
+                    <mat-tab  >
                         <ng-template mat-tab-label>
                             <mat-icon><i class="fab fa-facebook-square icon-2x" style="color: #3b5998;"></i></mat-icon>
 
@@ -989,18 +1021,23 @@
                                                             aria-hidden="true"></i></span>
                                                 </div>
                                             </div>
-                                            <div class="caption">
+                                            <div class="caption" style="white-space: pre-wrap; text-align: justify;">
                                                 <div>{{socialCaption}}</div>
                                                 <div class="line-no-text" *ngIf="!socialCaption">{{socialCaption}}</div>
                                                 <div class="line-no-text" *ngIf="!socialCaption"></div>
                                                 <div class="line-no-text" *ngIf="!socialCaption"></div>
                                             </div>
                                             <div class="preview-media" data-max-image="5">
-                                                <img style="height: 100%; width: 100%; object-fit: cover;" [src]="url"
+                                                <img style="object-fit: contain;
+                                                margin-right: auto;
+                                                margin-left: auto;
+                                                height: 100%;
+                                                width: 100%;
+                                                display: block;" [src]="url"
                                                     *ngIf="format==='image' && url">
                                             </div>
 
-                                            <div class="preview-fb">
+                                            <!-- <div class="preview-fb">
                                                 <div class="d-flex bd-highlight">
                                                     <div class="p-2 flex-grow-1 bd-highlight">
                                                         <div class="row">
@@ -1031,7 +1068,7 @@
                                                     <div class="p-2 bd-highlight">1 comment</div>
                                                     <div class="p-2 bd-highlight">1 share</div>
                                                 </div>
-                                            </div>
+                                            </div> -->
                                             <div class="preview-comment">
                                               
                                                 <div class="row">
@@ -1047,16 +1084,18 @@
                                                 </div>
                                             </div>
                                             <div class="d-flex align-items-center p-6" style="border-top: 1px solid #eee;">
-                                               
-                                                <div class="symbol symbol-40 symbol-light-success mr-5">
+
+                                                <div class="symbol symbol-40  mr-5">
                                                     <span class="symbol-label">
-                                                        <img class="img-circle"
-                                                    [src]="profileImageUrl" style="height: 48px ; width: 48px; object-fit: cover; border-radius: 50px;">
+                                                        <img class="img-circle" [src]="profileImageUrl"
+                                                            style="height: 40px ; width: 40px; object-fit: cover; border-radius: 50px;">
                                                     </span>
                                                 </div>
-                                               
-                                                <input type="text" class="form-control border-0 form-control-solid pl-6 min-h-50px" style="border-radius: 8.42rem;" name="name" placeholder="Write a comment..." disabled>
-                                                
+            
+                                                <input type="text" class="form-control border-0 form-control-solid pl-6 min-h-40px"
+                                                    style="border-radius: 8.42rem;" name="name" placeholder="Write a comment..."
+                                                    disabled>
+            
                                             </div>
                                         </div>
 
@@ -1071,7 +1110,7 @@
                                                             aria-hidden="true"></i></span>
                                                 </div>
                                             </div>
-                                            <div class="caption">
+                                            <div class="caption" style="white-space: pre-wrap; text-align: justify;">
                                                 <div>{{socialCaption}}</div>
                                                 <div class="line-no-text" *ngIf="!socialCaption">{{socialCaption}}</div>
                                                 <div class="line-no-text" *ngIf="!socialCaption"></div>
@@ -1079,11 +1118,16 @@
                                             </div>
                                             <div class="preview-media" data-max-image="5"><video [src]="url"
                                                     *ngIf="format==='video' && url"
-                                                    style="height: 100%; width: 100%; object-fit: cover;" controls
+                                                    style="margin-right: auto;
+                                                    margin-left: auto;
+                                                    height: 100%;
+                                                    display: block;
+                                                    object-fit: contain;
+                                                    width: 100%;" controls
                                                     disablepictureinpicture controlsList="nodownload"></video> </div>
 
 
-                                            <div class="preview-fb">
+                                            <!-- <div class="preview-fb">
                                                 <div class="d-flex bd-highlight">
                                                     <div class="p-2 flex-grow-1 bd-highlight">
                                                         <div class="row">
@@ -1114,7 +1158,7 @@
                                                     <div class="p-2 bd-highlight">1 comment</div>
                                                     <div class="p-2 bd-highlight">1 share</div>
                                                 </div>
-                                            </div>
+                                            </div> -->
                                             <div class="preview-comment">
                                               <div class="row">
                                                     <div class="col item">
@@ -1129,16 +1173,18 @@
                                                 </div>
                                             </div>
                                             <div class="d-flex align-items-center p-6" style="border-top: 1px solid #eee;">
-                                               
-                                                <div class="symbol symbol-40 symbol-light-success mr-5">
+
+                                                <div class="symbol symbol-40  mr-5">
                                                     <span class="symbol-label">
-                                                        <img class="img-circle"
-                                                    [src]="profileImageUrl" style="height: 48px ; width: 48px; object-fit: cover; border-radius: 50px;">
+                                                        <img class="img-circle" [src]="profileImageUrl"
+                                                            style="height: 40px ; width: 40px; object-fit: cover; border-radius: 50px;">
                                                     </span>
                                                 </div>
-                                               
-                                                <input type="text" class="form-control border-0 form-control-solid pl-6 min-h-50px" style="border-radius: 8.42rem;" name="name" placeholder="Write a comment..." disabled>
-                                                
+            
+                                                <input type="text" class="form-control border-0 form-control-solid pl-6 min-h-40px"
+                                                    style="border-radius: 8.42rem;" name="name" placeholder="Write a comment..."
+                                                    disabled>
+            
                                             </div>
                                         </div>
 
@@ -1154,13 +1200,13 @@
                                                             aria-hidden="true"></i></span>
                                                 </div>
                                             </div>
-                                            <div class="caption-tt">
+                                            <div class="caption-tt" style="white-space: pre-wrap; text-align: justify;">
                                                 <div>{{socialCaption}}</div>
                                                 <div class="line-no-text" *ngIf="!socialCaption">{{socialCaption}}</div>
                                                 <div class="line-no-text" *ngIf="!socialCaption"></div>
                                                 <div class="line-no-text" *ngIf="!socialCaption"></div>
                                             </div>
-
+<!-- 
                                             <div class="preview-fb">
                                                 <div class="d-flex bd-highlight">
                                                     <div class="p-2 flex-grow-1 bd-highlight">
@@ -1192,7 +1238,7 @@
                                                     <div class="p-2 bd-highlight">1 comment</div>
                                                     <div class="p-2 bd-highlight">1 share</div>
                                                 </div>
-                                            </div>
+                                            </div> -->
                                             <div class="preview-comment">
                                                 <!-- <div class="row">
                                                     <div class="col item">
@@ -1219,16 +1265,18 @@
                                           
                                             </div>
                                             <div class="d-flex align-items-center p-6" style="border-top: 1px solid #eee;">
-                                               
-                                                <div class="symbol symbol-40 symbol-light-success mr-5">
+
+                                                <div class="symbol symbol-40  mr-5">
                                                     <span class="symbol-label">
-                                                        <img class="img-circle"
-                                                    [src]="profileImageUrl" style="height: 48px ; width: 48px; object-fit: cover; border-radius: 50px;">
+                                                        <img class="img-circle" [src]="profileImageUrl"
+                                                            style="height: 40px ; width: 40px; object-fit: cover; border-radius: 50px;">
                                                     </span>
                                                 </div>
-                                               
-                                                <input type="text" class="form-control border-0 form-control-solid pl-6 min-h-50px" style="border-radius: 8.42rem;" name="name" placeholder="Write a comment..." disabled>
-                                                
+            
+                                                <input type="text" class="form-control border-0 form-control-solid pl-6 min-h-40px"
+                                                    style="border-radius: 8.42rem;" name="name" placeholder="Write a comment..."
+                                                    disabled>
+            
                                             </div>
                                         </div>
 
@@ -1241,7 +1289,7 @@
                     </mat-tab>
 
                     <!--Insta Tab-->
-                    <mat-tab *ngIf="selectedInstagram">
+                    <mat-tab *ngIf="selectedInstagram" >
                         <ng-template mat-tab-label>
                             <mat-icon><i class="fab fa-instagram icon-2x" style="color: #d62976;"></i></mat-icon>
 
@@ -1254,20 +1302,28 @@
                                             data-type="media" *ngIf="showDiv.photo">
                                             <div class="preview-content">
                                                 <div class="user-info">
-                                                    <img class="img-circle" [src]="profileImageUrl" >
-                                                    <span>{{userName}}</span>
+                                                    <img class="img-circle" style="width: 44px;
+                                                    height: 44px;
+                                                    object-fit: cover;
+                                                    border-radius: 50px;" [src]="profileImageUrl" >
+                                                    <span><b>{{userName}}</b></span>
                                                 </div>
                                                 <div class="preview-media" data-max-image="1"><img logo #logo
                                                         (load)="onSelectedImageLoad()"
-                                                        style="height: 100%; width: 100%; object-fit: cover;"
+                                                        style="object-fit: contain;
+                                                        margin-right: auto;
+                                                        margin-left: auto;
+                                                        height: 100%;
+                                                        width: 100%;
+                                                        display: block;"
                                                         class="img-circle" [src]=url *ngIf="format==='image' && url">
                                                 </div>
-                                                <div class="post-info">
+                                                <!-- <div class="post-info">
                                                     <div class="info-active pull-left"> Be the first to like this</div>
-                                                    <!-- <div class="pull-right">1s</div> -->
+                                                    <div class="pull-right">1s</div>
                                                     <div class="clearfix"></div>
-                                                </div>
-                                                <div class="caption">
+                                                </div> -->
+                                                <div class="caption" style="white-space: pre-wrap;text-align: justify;">
                                                     <div>{{socialCaption}}</div>
                                                     <div class="line-no-text" *ngIf="!socialCaption">{{socialCaption}}
                                                     </div>
@@ -1306,13 +1362,13 @@
                                                             <div class="d-inline" style="float: right;">
                                                                 <svg aria-label="Save" class="_8-yf5 " fill="#262626" height="24" viewBox="0 0 48 48" width="24"><path d="M43.5 48c-.4 0-.8-.2-1.1-.4L24 29 5.6 47.6c-.4.4-1.1.6-1.6.3-.6-.2-1-.8-1-1.4v-45C3 .7 3.7 0 4.5 0h39c.8 0 1.5.7 1.5 1.5v45c0 .6-.4 1.2-.9 1.4-.2.1-.4.1-.6.1zM24 26c.8 0 1.6.3 2.2.9l15.8 16V3H6v39.9l15.8-16c.6-.6 1.4-.9 2.2-.9z"></path></svg>
                                                               </div>
-                                                            <div style="padding: 8px">
+                                                            <!-- <div style="padding: 8px">
                                                                 <span class="text-dark font-weight-bold">1 like</span>
                                                             </div>
                                                             <div style="padding: 8px">
                                                                 <span class="text-muted" style="font-size: 10px;">2 DAYS
                                                                     AGO</span>
-                                                            </div>
+                                                            </div> -->
                                                         </div>
 
                                                     </div>
@@ -1341,19 +1397,27 @@
 
                                             <div class="preview-content">
                                                 <div class="user-info">
-                                                    <img class="img-circle" [src]="profileImageUrl">
-                                                    <span>{{userName}}</span>
+                                                    <img class="img-circle"  style="width: 44px;
+                                                    height: 44px;
+                                                    object-fit: cover;
+                                                    border-radius: 50px;" [src]="profileImageUrl">
+                                                    <span><b>{{userName}}</b></span>
                                                 </div>
                                                 <div class="preview-media" data-max-image="1"><video [src]="url"
                                                         *ngIf="format==='video' && url"
-                                                        style="height: 100%; width: 100%; object-fit: cover;" controls
+                                                        style="margin-right: auto;
+                                                        margin-left: auto;
+                                                        height: 100%;
+                                                        display: block;
+                                                        object-fit: contain;
+                                                        width: 100%;" controls
                                                         disablepictureinpicture controlsList="nodownload"></video></div>
-                                                <div class="post-info">
+                                                <!-- <div class="post-info">
                                                     <div class="info-active pull-left"> Be the first to like this</div>
-                                                    <!-- <div class="pull-right">1s</div> -->
+                                                    <div class="pull-right">1s</div>
                                                     <div class="clearfix"></div>
-                                                </div>
-                                                <div class="caption">
+                                                </div> -->
+                                                <div class="caption" style="white-space: pre-wrap; text-align: justify;">
                                                     <div>{{socialCaption}}</div>
                                                     <div class="line-no-text" *ngIf="!socialCaption">{{socialCaption}}
                                                     </div>
@@ -1392,13 +1456,13 @@
                                                             <div class="d-inline" style="float: right;">
                                                                 <svg aria-label="Save" class="_8-yf5 " fill="#262626" height="24" viewBox="0 0 48 48" width="24"><path d="M43.5 48c-.4 0-.8-.2-1.1-.4L24 29 5.6 47.6c-.4.4-1.1.6-1.6.3-.6-.2-1-.8-1-1.4v-45C3 .7 3.7 0 4.5 0h39c.8 0 1.5.7 1.5 1.5v45c0 .6-.4 1.2-.9 1.4-.2.1-.4.1-.6.1zM24 26c.8 0 1.6.3 2.2.9l15.8 16V3H6v39.9l15.8-16c.6-.6 1.4-.9 2.2-.9z"></path></svg>
                                                               </div>
-                                                            <div style="padding: 8px">
+                                                            <!-- <div style="padding: 8px">
                                                                 <span class="text-dark font-weight-bold">1 like</span>
                                                             </div>
                                                             <div style="padding: 8px">
                                                                 <span class="text-muted" style="font-size: 10px;">2 DAYS
                                                                     AGO</span>
-                                                            </div>
+                                                            </div> -->
                                                         </div>
 
                                                     </div>

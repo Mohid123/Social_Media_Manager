@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ScheduleService } from './../schedule.service';
-import { map } from 'rxjs/operators';
+import { map, take } from 'rxjs/operators';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { MediauploadService } from '../mediaupload.service';
@@ -10,30 +10,34 @@ import { de } from 'date-fns/locale';
   providedIn: 'root'
 })
 export class ScheduleSocialPostService {
+  clubID: string
 
   constructor(
     private _scheduleService: ScheduleService,
     private _mediaUploadService: MediauploadService,
     private spinner: NgxSpinnerService,
     private toast: ToastrService,
-  ) { }
+  ) { this.clubID = JSON.parse(localStorage.getItem('selectedClub')).id }
+
 
 
   scheduleFacebookTextPost(postedText, scheduledDate, selectedList) {
-    debugger;
+    this.spinner.show()
     return new Promise((resolve, reject) => {
       selectedList.map(item => {
-        delete item.pageName;
-        delete item.isSelected;
-        delete item.captureImageURL
+        // delete item.isSelected;
+        // delete item.captureImageURL
         item.caption = postedText;
         item.scheduleDate = scheduledDate;
         item.postType = 'text'
+        item.clubID = this.clubID
+        item.color = '#3B5998'
+        item.title = item.pageName;
+        item.postedTo = 'Facebook'
       })
       this.spinner.show();
       selectedList.forEach((element, idx, self) => {
-        this._scheduleService.scheduleFacebookPost(element).subscribe(data => {
-          console.log(data);
+        this._scheduleService.scheduleFacebookPost(element).pipe(take(1)).subscribe(data => {
           if (idx == self.length - 1) {
             this.spinner.hide();
             this.toast.success('Post Scheduled', 'Info');
@@ -49,20 +53,25 @@ export class ScheduleSocialPostService {
   }
 
   scheduleFacebookImagePost(postedText, scheduledDate, mediaFile, selectedList) {
-    debugger;
+    this.spinner.show()
     return new Promise((resolve, reject) => {
-      this._mediaUploadService.uploadMedia('Facebook', '123', mediaFile).subscribe((media: any) => {
+      this._mediaUploadService.uploadMedia('Facebook', '123', mediaFile).pipe(take(1)).subscribe((media: any) => {
         selectedList.map(item => {
-          delete item.pageName;
-          delete item.isSelected;
+          // delete item.isSelected;
+          // delete item.captureImageURL
           item.imageURL = media.url
           item.caption = postedText;
           item.scheduleDate = scheduledDate
           item.postType = 'image'
+          item.clubID = this.clubID
+          item.color = '#3B5998'
+          item.postedTo = 'Facebook'
+          item.title = item.pageName
+
         });
         selectedList.forEach((element, idx, self) => {
-          this._scheduleService.scheduleFacebookPost(element).subscribe(data => {
-            console.log(data);
+          this._scheduleService.scheduleFacebookPost(element).pipe(take(1)).subscribe(data => {
+            // console.log(data);
             if (idx == self.length - 1) {
               this.spinner.hide();
               this.toast.success('Post Scheduled', 'Info');
@@ -79,19 +88,24 @@ export class ScheduleSocialPostService {
   }
 
   scheduleFacebookVideoPost(postedText, scheduledDate, mediaFile, selectedList) {
-    debugger;
+    this.spinner.show()
+
     return new Promise((resolve, reject) => {
-      this._mediaUploadService.uploadMedia('Facebook', '123', mediaFile).subscribe((media: any) => {
+      this._mediaUploadService.uploadMedia('Facebook', '123', mediaFile).pipe(take(1)).subscribe((media: any) => {
         selectedList.map(item => {
-          delete item.pageName;
-          delete item.isSelected;
+          // delete item.isSelected;
+          // delete item.captureImageURL
           item.videoUrl = media.url
           item.videoDescription = postedText;
           item.scheduleDate = scheduledDate
           item.postType = 'video'
+          item.clubID = this.clubID
+          item.color = '#3B5998'
+          item.postedTo = 'Facebook'
+          item.title = item.pageName
         });
         selectedList.forEach((element, idx, self) => {
-          this._scheduleService.scheduleFacebookPost(element).subscribe(data => {
+          this._scheduleService.scheduleFacebookPost(element).pipe(take(1)).subscribe(data => {
             console.log(data);
             if (idx == self.length - 1) {
               this.spinner.hide();
@@ -109,24 +123,30 @@ export class ScheduleSocialPostService {
   }
 
   scheduleInstagramImagePost(postedText, scheduledDate, mediaFile, selectedList) {
+    this.spinner.show();
     return new Promise((resolve, reject) => {
-      this._mediaUploadService.uploadMedia('Instagram', '123', mediaFile).subscribe((media: any) => {
+      this._mediaUploadService.uploadMedia('Instagram', '123', mediaFile).pipe(take(1)).subscribe((media: any) => {
         selectedList.map(item => {
           item.instagramAccountID = item.instagram_business_account.id
           item.pageAccessToken = item.linkedFbPagetoken
           item.caption = postedText;
-          delete item.instagram_business_account.id;
-          delete item.linkedFbPagetoken;
-          delete item.captureImageURL;
+          // delete item.instagram_business_account.id;
+          // delete item.linkedFbPagetoken;
+          // delete item.captureImageURL;
           delete item.isSelected;
-          delete item.pageName
+          // delete item.pageName
           item.imageURL = media.url
           item.scheduleDate = scheduledDate
           item.postType = 'image'
+          item.clubID = this.clubID
+          item.color = '#D62976'
+          item.postedTo = 'Instagram'
+          item.title = 'Instagram Account'
+
         });
         selectedList.forEach((element, idx, self) => {
-          this._scheduleService.scheduleInstagramPost(element).subscribe(data => {
-            console.log(data);
+          this._scheduleService.scheduleInstagramPost(element).pipe(take(1)).subscribe(data => {
+            // console.log(data);
             if (idx == self.length - 1) {
               this.spinner.hide();
               this.toast.success('Post Scheduled', 'Info');
@@ -143,8 +163,9 @@ export class ScheduleSocialPostService {
   }
 
   scheduleInstagramVideoPost(postedText, scheduledDate, mediaFile, selectedList) {
+    this.spinner.show()
     return new Promise((resolve, reject) => {
-      this._mediaUploadService.uploadMedia('Instagram', '123', mediaFile).subscribe((media: any) => {
+      this._mediaUploadService.uploadMedia('Instagram', '123', mediaFile).pipe(take(1)).subscribe((media: any) => {
         selectedList.map(item => {
           item.instagramAccountID = item.instagram_business_account.id
           item.pageAccessToken = item.linkedFbPagetoken
@@ -152,16 +173,22 @@ export class ScheduleSocialPostService {
           item.videoUrl = media.url
           item.scheduleDate = scheduledDate
           item.postType = 'video'
-          delete item.instagram_business_account.id;
-          delete item.linkedFbPagetoken;
-          delete item.captureImageURL;
-          delete item.isSelected;
-          delete item.pageName
+          item.clubID = this.clubID
+          item.color = '#D62976'
+          item.postedTo = 'Instagram'
+          item.title = 'Instagram Account'
+
+          // delete item.instagram_business_account.id;
+          // delete item.linkedFbPagetoken;
+          // delete item.captureImageURL;
+          // delete item.isSelected;
+          // delete item.pageName
+
         });
         selectedList.forEach((element, idx, self) => {
-          console.log(element, 'element')
-          this._scheduleService.scheduleInstagramPost(element).subscribe(data => {
-            console.log(data);
+          // console.log(element, 'element')
+          this._scheduleService.scheduleInstagramPost(element).pipe(take(1)).subscribe(data => {
+            // console.log(data);
             if (idx == self.length - 1) {
               this.spinner.hide();
               this.toast.success('Post Scheduled', 'Info');
@@ -177,5 +204,4 @@ export class ScheduleSocialPostService {
     })
 
   }
-
 }

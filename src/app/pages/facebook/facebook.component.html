@@ -1,5 +1,7 @@
-<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "default" color = "#fff" type = "ball-spin" [fullScreen] = "true"><p style="color: white" > D I V I D I S </p></ngx-spinner>
- <div class="row">
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="default" color="#fff" type="ball-spin" [fullScreen]="true">
+    <p style="color: white"> D I V I D I S </p>
+</ngx-spinner>
+<div class="row">
     <div class="col-lg-3">
 
         <div class="card card-custom card-stretch">
@@ -7,8 +9,7 @@
                 <div class="card-title">
                     <h3 class="card-label">
                         <span class="svg-icon svg-icon-primary svg-icon-2x">
-                           <svg
-                                xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                                 width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
                                 <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                                     <rect x="0" y="0" width="24" height="24" />
@@ -20,7 +21,7 @@
                                         fill="#000000" fill-rule="nonzero" />
                                 </g>
                             </svg>
-                            
+
                         </span>
                         <span class="nav-text" style="color: #fff;"> &nbsp; Search</span>
 
@@ -30,91 +31,111 @@
             <div class="card-body" style="padding: 0px;">
                 <div class="card-scroll custom-scrollbar-css p-2" style="height: 660px;">
                     <div class="card-header border-0 pt-5">
-                        <form class="form-inline md-form form-sm d-flex justify-content-center">
+                        <!-- <form class="form-inline md-form form-sm d-flex justify-content-center">
                             <mdb-icon fas icon="search" aria-hidden="true"></mdb-icon>
-                            <input [(ngModel)]="searchString" [ngModelOptions]="{standalone: true}"  (ngModelChange)="searchFacebookPages($event)" class="form-control form-control-sm ml-3 w-75" type="text" placeholder="Search"
+                            <input [(ngModel)]="searchString" [ngModelOptions]="{standalone: true}"
+                                (ngModelChange)="searchFacebookPages($event)"
+                                class="form-control form-control-sm ml-3 w-75" type="text" placeholder="Search"
                                 aria-label="Search" mdbInput>
-                        </form>
+                        </form> -->
+
+                        <div class="main">
+                             <div class="input-group">
+                              <input [(ngModel)]="searchString" (ngModelChange)="searchFacebookPages($event)" type="text" class="form-control" placeholder="Search" >
+                              <div class="input-group-append">
+                                <button class="btn btn-secondary" type="button">
+                                  <i class="fa fa-search"></i>
+                                </button>
+                               
+                              </div>
+                            </div>
+                        </div>
 
                     </div>
 
                     <div class="card-body py-0" style="padding: 0px;">
-                  
+
                         <div>
                             <table class="table table-head-custom " id="kt_advance_table_widget_1">
-                                
+
                                 <tr class="text-left">
                                     <td style="width: 20px">
                                         <label class="checkbox checkbox-sm checkbox-inline">
-                                            <input [(ngModel)]="masterSelected" name="list_name" value="m1" (change)="selectAll()" type="checkbox" value="1"/>
-                                        
+                                            <input [(ngModel)]="masterSelected" name="list_name" value="m1"
+                                                (change)="selectAll()" type="checkbox" value="1" />
+
                                             <span></span>
-                                         <label style="padding-left: 10px;" class="font-weight-bolder">Select all</label>
-                                         
-                                          </label>
-                                    
+                                            <label style="padding-left: 10px;" class="font-weight-bolder">Select
+                                                all</label>
+
+                                        </label>
+
                                     </td>
 
 
                                 </tr>
-                            
-                            <tbody>
-                                <tr *ngFor="let item of checklist">
-                                   <td class="pr-0">
-                                        <div class="d-flex align-items-center">
-                                            <label class="checkbox checkbox-sm checkbox-inline">
-                                                <input type="checkbox" [(ngModel)]="item.isSelected"   value="{{item.id}}"   (change) = "singleItemSelected()" />
-                                                <span></span>
-                                          
-                   
-                                            <div class="symbol symbol-30 symbol-light mr-2" style="padding-left: 10px">
-                                                <span class="symbol-label">
-                                                    <img src="{{item.captureImageURL}}" class="h-100 align-self-end" style="object-fit: cover;" alt="" />
-                                                </span>
-                                            </div>
-                                          
-                                            <div class="d-flex flex-column flex-grow-1 font-weight-bold">
-                                                <a  class="text-dark text-hover-primary font-size-sm" style="cursor: pointer;">{{item.pageName}}</a>
-                                                <span class="text-muted font-size-sm">Page</span>
-                                            </div>
-                                        </label>
-                                            
-                                        </div>
-                                    </td>
 
-                                
+                                <tbody>
+                                    <tr *ngFor="let item of checklist">
+                                        <td class="pr-0">
+                                            <div class="d-flex align-items-center">
+                                                <label class="checkbox checkbox-sm checkbox-inline">
+                                                    <input type="checkbox" [(ngModel)]="item.isSelected"
+                                                        value="{{item.id}}" (change)="singleItemSelected()" />
+                                                    <span></span>
 
-                            
-                            </tbody>
-                        </table>
+
+                                                    <div class="symbol symbol-30 symbol-light mr-2"
+                                                        style="padding-left: 10px">
+                                                        <span class="symbol-label">
+                                                            <img src="{{item.captureImageURL}}"
+                                                                class="h-100 align-self-end" style="object-fit: cover;"
+                                                                alt="" />
+                                                        </span>
+                                                    </div>
+
+                                                    <div class="d-flex flex-column flex-grow-1 font-weight-bold">
+                                                        <a class="text-dark text-hover-primary font-size-sm"
+                                                            style="cursor: pointer;">{{item.pageName}}</a>
+                                                        <span class="text-muted font-size-sm">Page</span>
+                                                    </div>
+                                                </label>
+
+                                            </div>
+                                        </td>
+
+
+
+
+                                </tbody>
+                            </table>
                         </div>
-                     
+
                     </div>
                 </div>
 
-             
+
 
 
 
             </div>
-         
+
 
         </div>
-        
+
 
     </div>
 
 
 
     <div class="col-lg-5">
-      
+
         <div class="card card-custom card-stretch">
             <div class="card-header" style="background-color: #1e1e2d;">
                 <div class="card-title">
                     <h3 class="card-label">
                         <span class="svg-icon svg-icon-primary svg-icon-2x">
-                           <svg
-                                xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                                 width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
                                 <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                                     <rect x="0" y="0" width="24" height="24" />
@@ -127,7 +148,7 @@
                                         fill="#000000" fill-rule="nonzero" opacity="0.3" />
                                 </g>
                             </svg>
-                       
+
                         </span>
                         <span class="nav-text" style="color: #fff;"> &nbsp; New post</span>
 
@@ -135,87 +156,105 @@
                 </div>
             </div>
             <div class="card-body">
-                <mat-tab-group mat-align-tabs="center" dynamicHeight (selectedTabChange)="switchTabs($event)" >
-                    <mat-tab >
+                <mat-tab-group mat-align-tabs="center" dynamicHeight (selectedTabChange)="switchTabs($event)">
+                    <mat-tab>
                         <ng-template mat-tab-label>
                             <mat-icon>
-                               
-                                <i data-visualcompletion="css-img" style="background-image:url('https://static.xx.fbcdn.net/rsrc.php/v3/yG/r/1j-f6O0Xtyf.png?_nc_eui2=AeG_ziBgWuKTlexxWVF9hOlyxCA0FsPulJTEIDQWw-6UlCrJ5n7cV9jq2XE66KcW3LTtFYAod1eQ9c8TCxxlL1Mj');background-position:0 -125px;background-size:auto;width:24px;height:24px;background-repeat:no-repeat;display:inline-block"></i>
+
+                                <i data-visualcompletion="css-img"
+                                    style="background-image:url('https://static.xx.fbcdn.net/rsrc.php/v3/yG/r/1j-f6O0Xtyf.png?_nc_eui2=AeG_ziBgWuKTlexxWVF9hOlyxCA0FsPulJTEIDQWw-6UlCrJ5n7cV9jq2XE66KcW3LTtFYAod1eQ9c8TCxxlL1Mj');background-position:0 -125px;background-size:auto;width:24px;height:24px;background-repeat:no-repeat;display:inline-block"></i>
                             </mat-icon>&nbsp;
                             &nbsp;Photo
                         </ng-template>
                         <div class="card-body">
                             <div class="tab-content">
-                                <div class="tab-pane fade show active" id="" role="tabpanel" aria-labelledby="kt_tab_pane_7_1">
+                                <div class="tab-pane fade show active" id="" role="tabpanel"
+                                    aria-labelledby="kt_tab_pane_7_1">
                                     <div class="card-body">
-                                       
+
                                         <form class="form-inline">
-                                       
-                                            <div class="symbol symbol-50 symbol-light mr-5 pb-5" >
+
+                                            <div class="symbol symbol-50 symbol-light mr-5 pb-5">
                                                 <span class="symbol-label">
-                                                    <img [src]="profileImageUrl"
-                                                        class="h-100 align-self-center rounded" style="object-fit: cover; width: 100%" alt="" />
+                                                    <img [src]="profileImageUrl" class="h-100 align-self-center rounded"
+                                                        style="object-fit: cover; width: 100%" alt="" />
                                                 </span>
                                             </div>
-                                          
+
                                             <div class="d-flex flex-column flex-grow-1 font-weight-bold">
-                                                <a class="text-dark text-hover-primary mb-1 font-size-lg pb-12">{{userName}}</a>
-                                                
+                                                <a
+                                                    class="text-dark text-hover-primary mb-1 font-size-lg pb-12">{{userName}}</a>
+
                                             </div>
-                                           
+
                                         </form>
-                                          <div class="form-group">
-                                            <textarea [(ngModel)]="facebookCaption" [ngModelOptions]="{standalone: true}" class="form-control form-control-lg form-control-solid" id="exampleTextarea" rows="3" placeholder="What’s on your mind, {{userName}}?" ></textarea>
+                                        <div class="form-group">
+                                            <textarea [(ngModel)]="facebookCaption"
+                                                [ngModelOptions]="{standalone: true}"
+                                                class="form-control form-control-lg form-control-solid"
+                                                id="exampleTextarea" rows="3"
+                                                placeholder="What’s on your mind, {{userName}}?"></textarea>
                                         </div>
 
-                                        <!-- <label class="checkbox checkbox-sm checkbox-inline">
-                                            <input [(ngModel)]="showSchedule" name="list_name" value="m1" (click)="selectedSchedule()" type="checkbox" value="1"/>
-                                            <span></span> 
-                                            
-                                        
-                                         <div class="btn btn-icon btn-light w-auto btn-clean d-inline-flex align-items-center btn-lg px-2 mr-5 ml-2">
-                                            <span class="symbol symbol-35 symbol-light-primary">
-                                                <span class="symbol-label"><a  class="btn btn-icon btn-sm ">
-                                                    <i class="flaticon-calendar-with-a-clock-time-tools icon-lg"></i>
-                                                </a></span>
-                                            </span>
-                                            <span class="btn text-dark-50 font-weight-normal font-size-base"> &nbsp;Schedule</span>
-                                            
-                                           
-                                        </div>
-                                        </label> -->
-                                        
+                                        <label class="checkbox checkbox-sm checkbox-inline">
+                                            <input [(ngModel)]="showSchedule" name="list_name" value="m1"
+                                                (click)="selectedSchedule()" type="checkbox" value="1" />
+                                            <span></span>
+
+
+                                            <div
+                                                class="btn btn-icon btn-light w-auto btn-clean d-inline-flex align-items-center btn-lg px-2 mr-5 ml-2">
+                                                <span class="symbol symbol-35 symbol-light-primary">
+                                                    <span class="symbol-label"><a class="btn btn-icon btn-sm ">
+                                                            <i
+                                                                class="flaticon-calendar-with-a-clock-time-tools icon-lg"></i>
+                                                        </a></span>
+                                                </span>
+                                                <span class="btn text-dark-50 font-weight-normal font-size-base">
+                                                    &nbsp;Schedule</span>
+
+
+                                            </div>
+                                        </label>
+
                                         <form id="kt_forms_widget_2_form" class="pt-10 ql-quil ql-quil-plain">
 
-                                           
+
                                             <div id="kt_forms_widget_2_editor">
                                             </div>
-                                            
+
                                             <div class="border-top my-5"></div>
-                                           
+
                                             <div *ngIf="!showSchedule" id="kt_forms_widget_2_editor_toolbar"
                                                 class="ql-toolbar d-flex align-items-center justify-content-between">
                                                 <div class="d-flex">
-                                                   
+
                                                     <div class="p-2">
                                                         <div class="p-2">
                                                             <div class="image-upload">
                                                                 <label for="file-input">
-                                                                    
-                                                                    <div class="btn btn-icon btn-light w-auto btn-clean d-inline-flex align-items-center btn-lg px-2 mr-5">
-                                                                        <span class="symbol symbol-35 symbol-light-primary">
-                                                                            <span class="symbol-label"><a  class="btn btn-icon btn-sm ">
-                                                                                <i class="fas fa-upload icon-lg" style="cursor: pointer;"></i>
-                                                                            </a></span>
+
+                                                                    <div
+                                                                        class="btn btn-icon btn-light w-auto btn-clean d-inline-flex align-items-center btn-lg px-2 mr-5">
+                                                                        <span
+                                                                            class="symbol symbol-35 symbol-light-primary">
+                                                                            <span class="symbol-label"><a
+                                                                                    class="btn btn-icon btn-sm ">
+                                                                                    <i class="fas fa-upload icon-lg"
+                                                                                        style="cursor: pointer;"></i>
+                                                                                </a></span>
                                                                         </span>
-                                                                        <span class="btn text-dark-50 font-weight-normal font-size-base"> &nbsp;Select image</span>
-                                                                        
-                                                                       
+                                                                        <span
+                                                                            class="btn text-dark-50 font-weight-normal font-size-base">
+                                                                            &nbsp;Select image</span>
+
+
                                                                     </div>
                                                                 </label>
-    
-                                                                <input id="file-input" type="file"  accept="image/*" (change)="onSelectFile($event)" /> 
-                                                              
+
+                                                                <input id="file-input" type="file" accept="image/*"
+                                                                    (change)="onSelectFile($event)" />
+
                                                             </div>
 
                                                         </div>
@@ -230,26 +269,28 @@
 
                                                     </div>
                                                     <div class="ml-auto p-2">
-                                                        <button (click) = "clear()" type="button"
+                                                        <button (click)="clear()" type="button"
                                                             class="btn btn-transparent-warning">Clear</button>
                                                     </div>
-                                                    <div class="ml-auto p-2" >
-                                                        <button (click) = "addImagePost()" type="button"
-                                        
-                                                        class="btn btn-primary flex-row-reverse" style="background-color: #3b5998; border-color: #3b5998;">Post Now</button>
+                                                    <div class="ml-auto p-2">
+                                                        <button (click)="addImagePost()" type="button"
+                                                            class="btn btn-primary flex-row-reverse"
+                                                            style="background-color: #3b5998; border-color: #3b5998;">Post
+                                                            Now</button>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div *ngIf="showSchedule" id="kt_forms_widget_2_editor_toolbar"
                                                 class="ql-toolbar">
 
-                                                <div class="row d-block" >
+                                                <div class="row d-block">
                                                     <div class="col-md-6 d-inline-block">
                                                         <div class="form-group">
                                                             <label>Schedule Date</label>
                                                             <input readonly style="background-color:white;"
                                                                 class="form-control" placeholder="Select Date"
-                                                                [ngxDatePicker]="dateInstanceSingle" [value]="singleDate"
+                                                                [ngxDatePicker]="dateInstanceSingle"
+                                                                [value]="singleDate"
                                                                 (valueChange)="onChangeScheduleDate($event)">
                                                             <ngx-date-picker #dateInstanceSingle
                                                                 [options]="singleDatePickerOptions"></ngx-date-picker>
@@ -269,61 +310,68 @@
                                                 </div>
 
                                                 <div class="row d-block">
-                                                    <div class="d-flex"  style="float: left; margin-bottom: 40px;">
-                                                   
+                                                    <div class="d-flex" style="float: left; margin-bottom: 40px;">
+
                                                         <div class="p-2">
                                                             <div class="p-2">
                                                                 <div class="image-upload">
                                                                     <label for="file-input">
-                                                                        
-                                                                        <div class="btn btn-icon btn-light w-auto btn-clean d-inline-flex align-items-center btn-lg px-2 mr-5">
-                                                                            <span class="symbol symbol-35 symbol-light-primary">
-                                                                                <span class="symbol-label"><a  class="btn btn-icon btn-sm ">
-                                                                                    <i class="fas fa-upload icon-lg" style="cursor: pointer;"></i>
-                                                                                </a></span>
+
+                                                                        <div
+                                                                            class="btn btn-icon btn-light w-auto btn-clean d-inline-flex align-items-center btn-lg px-2 mr-5">
+                                                                            <span
+                                                                                class="symbol symbol-35 symbol-light-primary">
+                                                                                <span class="symbol-label"><a
+                                                                                        class="btn btn-icon btn-sm ">
+                                                                                        <i class="fas fa-upload icon-lg"
+                                                                                            style="cursor: pointer;"></i>
+                                                                                    </a></span>
                                                                             </span>
-                                                                            <span class="btn text-dark-50 font-weight-normal font-size-base"> &nbsp;Select image</span>
-                                                                            
-                                                                           
+                                                                            <span
+                                                                                class="btn text-dark-50 font-weight-normal font-size-base">
+                                                                                &nbsp;Select image</span>
+
+
                                                                         </div>
                                                                     </label>
-        
-                                                                    <input id="file-input" type="file"  accept="image/*" (change)="onSelectFile($event)" /> 
-                                                                  
+
+                                                                    <input id="file-input" type="file" accept="image/*"
+                                                                        (change)="onSelectFile($event)" />
+
                                                                 </div>
-    
+
                                                             </div>
                                                         </div>
                                                         <div class="ml-auto p-2"></div>
                                                     </div>
                                                     <div class="d-flex" style="float: right; margin-top: 10px;">
                                                         <div class="p-2">
-    
+
                                                         </div>
                                                         <div class="p-2">
-    
+
                                                         </div>
                                                         <div class="ml-auto p-2">
-                                                            <button (click) = "clear()" type="button"
+                                                            <button (click)="clear()" type="button"
                                                                 class="btn btn-transparent-warning">Clear</button>
                                                         </div>
-                                                        <div class="ml-auto p-2" >
-                                                            <button (click) = "scheduleImagePostForFB()" type="button"
-                                            
-                                                            class="btn btn-primary flex-row-reverse" style="background-color: #3b5998; border-color: #3b5998;">Schedule</button>
+                                                        <div class="ml-auto p-2">
+                                                            <button (click)="scheduleImagePostForFB()" type="button"
+                                                                class="btn btn-primary flex-row-reverse"
+                                                                style="background-color: #3b5998; border-color: #3b5998;">Schedule</button>
                                                         </div>
                                                     </div>
                                                 </div>
 
-                                                
+
                                             </div>
-                                            
+
                                         </form>
 
-                                       
+
                                     </div>
                                 </div>
-                                
+
                             </div>
                         </div>
                     </mat-tab>
@@ -331,86 +379,103 @@
                     <mat-tab (click)="showDiv.video = true ; showDiv.photo = false ; showDiv.text = false ">
                         <ng-template mat-tab-label>
                             <mat-icon>
-                                
-                                <i data-visualcompletion="css-img" style="background-image:url('https://static.xx.fbcdn.net/rsrc.php/v3/yG/r/1j-f6O0Xtyf.png?_nc_eui2=AeG_ziBgWuKTlexxWVF9hOlyxCA0FsPulJTEIDQWw-6UlCrJ5n7cV9jq2XE66KcW3LTtFYAod1eQ9c8TCxxlL1Mj');background-position:0 0;background-size:auto;width:24px;height:24px;background-repeat:no-repeat;display:inline-block"></i>
+
+                                <i data-visualcompletion="css-img"
+                                    style="background-image:url('https://static.xx.fbcdn.net/rsrc.php/v3/yG/r/1j-f6O0Xtyf.png?_nc_eui2=AeG_ziBgWuKTlexxWVF9hOlyxCA0FsPulJTEIDQWw-6UlCrJ5n7cV9jq2XE66KcW3LTtFYAod1eQ9c8TCxxlL1Mj');background-position:0 0;background-size:auto;width:24px;height:24px;background-repeat:no-repeat;display:inline-block"></i>
                             </mat-icon>&nbsp;
                             &nbsp;Video
-                            
+
                         </ng-template>
                         <div class="card-body">
                             <div class="tab-content">
                                 <div class="tab-pane fade show active" id="
                             " role="tabpanel" aria-labelledby="kt_tab_pane_7_1">
                                     <div class="card-body">
-                                       
+
                                         <form class="form-inline">
-                                       
-                                            <div class="symbol symbol-50 symbol-light mr-5 pb-5" >
+
+                                            <div class="symbol symbol-50 symbol-light mr-5 pb-5">
                                                 <span class="symbol-label">
-                                                    <img [src]="profileImageUrl"
-                                                        class="h-100 align-self-center rounded" style="object-fit: cover; width: 100%" alt="" />
+                                                    <img [src]="profileImageUrl" class="h-100 align-self-center rounded"
+                                                        style="object-fit: cover; width: 100%" alt="" />
                                                 </span>
                                             </div>
-                                          
+
                                             <div class="d-flex flex-column flex-grow-1 font-weight-bold">
-                                                <a class="text-dark text-hover-primary mb-1 font-size-lg pb-12">{{userName}}</a>
-                                                
+                                                <a
+                                                    class="text-dark text-hover-primary mb-1 font-size-lg pb-12">{{userName}}</a>
+
                                             </div>
-                                           
+
                                         </form>
                                         <div class="form-group">
-                                            <textarea [(ngModel)]="facebookCaption" [ngModelOptions]="{standalone: true}" class="form-control form-control-lg form-control-solid" id="exampleTextarea" rows="3" placeholder="What’s on your mind, {{userName}}?" ></textarea>
+                                            <textarea [(ngModel)]="facebookCaption"
+                                                [ngModelOptions]="{standalone: true}"
+                                                class="form-control form-control-lg form-control-solid"
+                                                id="exampleTextarea" rows="3"
+                                                placeholder="What’s on your mind, {{userName}}?"></textarea>
                                         </div>
-<!-- 
+
                                         <label class="checkbox checkbox-sm checkbox-inline">
-                                            <input [(ngModel)]="showSchedule" name="list_name" value="m1" (click)="selectedSchedule()" type="checkbox" value="1"/>
-                                    
-                                            <span></span> 
-                                            <div class="btn btn-icon btn-light w-auto btn-clean d-inline-flex align-items-center btn-lg px-2 mr-5 ml-2">
+                                            <input [(ngModel)]="showSchedule" name="list_name" value="m1"
+                                                (click)="selectedSchedule()" type="checkbox" value="1" />
+
+                                            <span></span>
+                                            <div
+                                                class="btn btn-icon btn-light w-auto btn-clean d-inline-flex align-items-center btn-lg px-2 mr-5 ml-2">
                                                 <span class="symbol symbol-35 symbol-light-primary">
-                                                    <span class="symbol-label"><a  class="btn btn-icon btn-sm ">
-                                                        <i class="flaticon-calendar-with-a-clock-time-tools icon-lg"></i>
-                                                    </a></span>
+                                                    <span class="symbol-label"><a class="btn btn-icon btn-sm ">
+                                                            <i
+                                                                class="flaticon-calendar-with-a-clock-time-tools icon-lg"></i>
+                                                        </a></span>
                                                 </span>
-                                                <span class="btn text-dark-50 font-weight-normal font-size-base"> &nbsp;Schedule</span>
-                                                
-                                               
+                                                <span class="btn text-dark-50 font-weight-normal font-size-base">
+                                                    &nbsp;Schedule</span>
+
+
                                             </div>
-                                         
-                                        </label> -->
-                                      
+
+                                        </label>
+
 
                                         <form id="kt_forms_widget_2_form" class="pt-10 ql-quil ql-quil-plain">
 
-                                           
+
                                             <div id="kt_forms_widget_2_editor">
                                             </div>
-                                            
+
                                             <div class="border-top my-5"></div>
-                                           
+
                                             <div *ngIf="!showSchedule" id="kt_forms_widget_2_editor_toolbar"
                                                 class="ql-toolbar d-flex align-items-center justify-content-between">
                                                 <div class="d-flex">
-                                                   
+
                                                     <div class="p-2">
                                                         <div class="p-2">
                                                             <div class="image-upload">
                                                                 <label for="file-input">
-                                                                    
-                                                                    <div class="btn btn-icon btn-light w-auto btn-clean d-inline-flex align-items-center btn-lg px-2 mr-5">
-                                                                        <span class="symbol symbol-35 symbol-light-primary">
-                                                                            <span class="symbol-label"><a  class="btn btn-icon btn-sm ">
-                                                                                <i class="fas fa-upload icon-lg" style="cursor: pointer;"></i>
-                                                                            </a></span>
+
+                                                                    <div
+                                                                        class="btn btn-icon btn-light w-auto btn-clean d-inline-flex align-items-center btn-lg px-2 mr-5">
+                                                                        <span
+                                                                            class="symbol symbol-35 symbol-light-primary">
+                                                                            <span class="symbol-label"><a
+                                                                                    class="btn btn-icon btn-sm ">
+                                                                                    <i class="fas fa-upload icon-lg"
+                                                                                        style="cursor: pointer;"></i>
+                                                                                </a></span>
                                                                         </span>
-                                                                        <span class="btn text-dark-50 font-weight-normal font-size-base"> &nbsp;Select video</span>
-                                                                        
-                                                                       
+                                                                        <span
+                                                                            class="btn text-dark-50 font-weight-normal font-size-base">
+                                                                            &nbsp;Select video</span>
+
+
                                                                     </div>
                                                                 </label>
-    
-                                                                <input id="file-input" type="file"  accept="video/*" (change)="onSelectFile($event)" /> 
-                                                              
+
+                                                                <input id="file-input" type="file" accept="video/*"
+                                                                    (change)="onSelectFile($event)" />
+
                                                             </div>
 
                                                         </div>
@@ -425,26 +490,28 @@
 
                                                     </div> -->
                                                     <div class="ml-auto p-2">
-                                                        <button (click) = "clear()" type="button"
+                                                        <button (click)="clear()" type="button"
                                                             class="btn btn-transparent-warning">Clear</button>
                                                     </div>
-                                                    <div class="ml-auto p-2" >
-                                                        <button (click) = "addVideoPost()" type="button"
-                                        
-                                                        class="btn btn-primary flex-row-reverse" style="background-color: #3b5998; border-color: #3b5998;">Post Now</button>
+                                                    <div class="ml-auto p-2">
+                                                        <button (click)="addVideoPost()" type="button"
+                                                            class="btn btn-primary flex-row-reverse"
+                                                            style="background-color: #3b5998; border-color: #3b5998;">Post
+                                                            Now</button>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div *ngIf="showSchedule" id="kt_forms_widget_2_editor_toolbar"
                                                 class="ql-toolbar">
 
-                                                <div class="row d-block" >
+                                                <div class="row d-block">
                                                     <div class="col-md-6 d-inline-block">
                                                         <div class="form-group">
                                                             <label>Schedule Date</label>
                                                             <input readonly style="background-color:white;"
                                                                 class="form-control" placeholder="Select Date"
-                                                                [ngxDatePicker]="dateInstanceSingle" [value]="singleDate"
+                                                                [ngxDatePicker]="dateInstanceSingle"
+                                                                [value]="singleDate"
                                                                 (valueChange)="onChangeScheduleDate($event)">
                                                             <ngx-date-picker #dateInstanceSingle
                                                                 [options]="singleDatePickerOptions"></ngx-date-picker>
@@ -464,61 +531,68 @@
                                                 </div>
 
                                                 <div class="row d-block">
-                                                    <div class="d-flex"  style="float: left; margin-bottom: 40px;">
-                                                   
+                                                    <div class="d-flex" style="float: left; margin-bottom: 40px;">
+
                                                         <div class="p-2">
                                                             <div class="p-2">
                                                                 <div class="image-upload">
                                                                     <label for="file-input">
-                                                                        
-                                                                        <div class="btn btn-icon btn-light w-auto btn-clean d-inline-flex align-items-center btn-lg px-2 mr-5">
-                                                                            <span class="symbol symbol-35 symbol-light-primary">
-                                                                                <span class="symbol-label"><a  class="btn btn-icon btn-sm ">
-                                                                                    <i class="fas fa-upload icon-lg" style="cursor: pointer;"></i>
-                                                                                </a></span>
+
+                                                                        <div
+                                                                            class="btn btn-icon btn-light w-auto btn-clean d-inline-flex align-items-center btn-lg px-2 mr-5">
+                                                                            <span
+                                                                                class="symbol symbol-35 symbol-light-primary">
+                                                                                <span class="symbol-label"><a
+                                                                                        class="btn btn-icon btn-sm ">
+                                                                                        <i class="fas fa-upload icon-lg"
+                                                                                            style="cursor: pointer;"></i>
+                                                                                    </a></span>
                                                                             </span>
-                                                                            <span class="btn text-dark-50 font-weight-normal font-size-base"> &nbsp;Select video</span>
-                                                                            
-                                                                           
+                                                                            <span
+                                                                                class="btn text-dark-50 font-weight-normal font-size-base">
+                                                                                &nbsp;Select video</span>
+
+
                                                                         </div>
                                                                     </label>
-        
-                                                                    <input id="file-input" type="file"  accept="video/*" (change)="onSelectFile($event)" /> 
-                                                                  
+
+                                                                    <input id="file-input" type="file" accept="video/*"
+                                                                        (change)="onSelectFile($event)" />
+
                                                                 </div>
-    
+
                                                             </div>
                                                         </div>
                                                         <div class="ml-auto p-2"></div>
                                                     </div>
                                                     <div class="d-flex" style="float: right; margin-top: 10px;">
                                                         <div class="p-2">
-    
+
                                                         </div>
                                                         <div class="p-2">
-    
+
                                                         </div>
                                                         <div class="ml-auto p-2">
-                                                            <button (click) = "clear()" type="button"
+                                                            <button (click)="clear()" type="button"
                                                                 class="btn btn-transparent-warning">Clear</button>
                                                         </div>
-                                                        <div class="ml-auto p-2" >
-                                                            <button (click) = "scheduleVideoPostForFB()" type="button"
-                                            
-                                                            class="btn btn-primary flex-row-reverse" style="background-color: #3b5998; border-color: #3b5998;">Schedule</button>
+                                                        <div class="ml-auto p-2">
+                                                            <button (click)="scheduleVideoPostForFB()" type="button"
+                                                                class="btn btn-primary flex-row-reverse"
+                                                                style="background-color: #3b5998; border-color: #3b5998;">Schedule</button>
                                                         </div>
                                                     </div>
                                                 </div>
 
-                                                
+
                                             </div>
-                                            
+
                                         </form>
 
-                                      
+
                                     </div>
                                 </div>
-                                
+
                             </div>
                         </div>
                     </mat-tab>
@@ -535,54 +609,63 @@
                                 <div class="tab-pane fade show active" id="
                             " role="tabpanel" aria-labelledby="kt_tab_pane_7_1">
                                     <div class="card-body">
-                                       
+
                                         <form class="form-inline">
-                                       
-                                            <div class="symbol symbol-50 symbol-light mr-5 pb-5" >
+
+                                            <div class="symbol symbol-50 symbol-light mr-5 pb-5">
                                                 <span class="symbol-label">
-                                                    <img [src]="profileImageUrl"
-                                                        class="h-100 align-self-center rounded" style="object-fit: cover; width: 100%" alt="" />
+                                                    <img [src]="profileImageUrl" class="h-100 align-self-center rounded"
+                                                        style="object-fit: cover; width: 100%" alt="" />
                                                 </span>
                                             </div>
-                                          
+
                                             <div class="d-flex flex-column flex-grow-1 font-weight-bold">
-                                                <a class="text-dark text-hover-primary mb-1 font-size-lg pb-12">{{userName}}</a>
-                                                
+                                                <a
+                                                    class="text-dark text-hover-primary mb-1 font-size-lg pb-12">{{userName}}</a>
+
                                             </div>
-                                           
+
                                         </form>
                                         <div class="form-group">
-                                            <textarea [(ngModel)]="facebookCaption" [ngModelOptions]="{standalone: true}" class="form-control form-control-lg form-control-solid" id="exampleTextarea" rows="3" placeholder="What’s on your mind, {{userName}}?" ></textarea>
+                                            <textarea [(ngModel)]="facebookCaption"
+                                                [ngModelOptions]="{standalone: true}"
+                                                class="form-control form-control-lg form-control-solid"
+                                                id="exampleTextarea" rows="3"
+                                                placeholder="What’s on your mind, {{userName}}?"></textarea>
                                         </div>
-<!-- 
+
                                         <label class="checkbox checkbox-sm checkbox-inline">
-                                            <input [(ngModel)]="showSchedule" name="list_name" value="m1" (click)="selectedSchedule()" type="checkbox" value="1"/>
-                                    
-                                            <span></span> 
-                                            <div class="btn btn-icon btn-light w-auto btn-clean d-inline-flex align-items-center btn-lg px-2 mr-5 ml-2">
+                                            <input [(ngModel)]="showSchedule" name="list_name" value="m1"
+                                                (click)="selectedSchedule()" type="checkbox" value="1" />
+
+                                            <span></span>
+                                            <div
+                                                class="btn btn-icon btn-light w-auto btn-clean d-inline-flex align-items-center btn-lg px-2 mr-5 ml-2">
                                                 <span class="symbol symbol-35 symbol-light-primary">
-                                                    <span class="symbol-label"><a  class="btn btn-icon btn-sm ">
-                                                        <i class="flaticon-calendar-with-a-clock-time-tools icon-lg"></i>
-                                                    </a></span>
+                                                    <span class="symbol-label"><a class="btn btn-icon btn-sm ">
+                                                            <i
+                                                                class="flaticon-calendar-with-a-clock-time-tools icon-lg"></i>
+                                                        </a></span>
                                                 </span>
-                                                <span class="btn text-dark-50 font-weight-normal font-size-base"> &nbsp;Schedule</span>
-                                                
-                                               
+                                                <span class="btn text-dark-50 font-weight-normal font-size-base">
+                                                    &nbsp;Schedule</span>
+
+
                                             </div>
-                                         
-                                        </label> -->
-                                     
+
+                                        </label>
+
                                         <form id="kt_forms_widget_2_form" class="pt-10 ql-quil ql-quil-plain">
 
-                                           
+
                                             <div id="kt_forms_widget_2_editor">
                                             </div>
-                                            
+
                                             <div class="border-top my-5"></div>
-                                           
+
                                             <div *ngIf="!showSchedule" id="kt_forms_widget_2_editor_toolbar"
                                                 class="ql-toolbar d-flex align-items-center justify-content-between">
-                                          
+
                                                 <div class="d-flex ml-auto">
                                                     <!-- <div class="p-2">
 
@@ -591,26 +674,28 @@
 
                                                     </div> -->
                                                     <div class="ml-auto p-2">
-                                                        <button (click) = "clear()" type="button"
+                                                        <button (click)="clear()" type="button"
                                                             class="btn btn-transparent-warning">Clear</button>
                                                     </div>
-                                                    <div class="ml-auto p-2" >
-                                                        <button (click) = "addTextPost()" type="button"
-                                        
-                                                        class="btn btn-primary flex-row-reverse" style="background-color: #3b5998; border-color: #3b5998;">Post Now</button>
+                                                    <div class="ml-auto p-2">
+                                                        <button (click)="addTextPost()" type="button"
+                                                            class="btn btn-primary flex-row-reverse"
+                                                            style="background-color: #3b5998; border-color: #3b5998;">Post
+                                                            Now</button>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div *ngIf="showSchedule" id="kt_forms_widget_2_editor_toolbar"
                                                 class="ql-toolbar">
 
-                                                <div class="row d-block" >
+                                                <div class="row d-block">
                                                     <div class="col-md-6 d-inline-block">
                                                         <div class="form-group">
                                                             <label>Schedule Date</label>
                                                             <input readonly style="background-color:white;"
                                                                 class="form-control" placeholder="Select Date"
-                                                                [ngxDatePicker]="dateInstanceSingle" [value]="singleDate"
+                                                                [ngxDatePicker]="dateInstanceSingle"
+                                                                [value]="singleDate"
                                                                 (valueChange)="onChangeScheduleDate($event)">
                                                             <ngx-date-picker #dateInstanceSingle
                                                                 [options]="singleDatePickerOptions"></ngx-date-picker>
@@ -631,25 +716,26 @@
 
                                                 <div class="row d-block">
                                                     <div class="d-flex ml-auto" style="float: right;">
-                                                   
+
                                                         <div class="ml-auto p-2">
-                                                            <button (click) = "clear()" type="button"
+                                                            <button (click)="clear()" type="button"
                                                                 class="btn btn-transparent-warning">Clear</button>
                                                         </div>
                                                         <div class="ml-auto p-2" style="margin-bottom: 45px;">
                                                             <button (click)="scheduleTextPostForFB()" type="button"
-                                                            class="btn btn-primary flex-row-reverse" style="background-color: #3b5998; border-color: #3b5998;">Schedule</button>
-                                                          
+                                                                class="btn btn-primary flex-row-reverse"
+                                                                style="background-color: #3b5998; border-color: #3b5998;">Schedule</button>
+
                                                         </div>
                                                     </div>
                                                 </div>
 
-                                                
+
                                             </div>
-                                            
+
                                         </form>
 
-                                        
+
                                     </div>
                                 </div>
 
@@ -658,47 +744,51 @@
                     </mat-tab>
                 </mat-tab-group>
                 <div>
-                    <div  class="card-header ribbon ribbon-right" style="box-shadow: rgb(99 99 99 / 20%) 0px 2px 8px 0px; border-radius: 7px; border-top: 5px solid #4267B2">
-                     <div class="ribbon-target" style="top: 10px; right: -2px; background-color: #4267B2;">Recent posts</div>
-                     <!-- <h3 class="card-title">
+                    <div class="card-header ribbon ribbon-right"
+                        style="box-shadow: rgb(99 99 99 / 20%) 0px 2px 8px 0px; border-radius: 7px; border-top: 5px solid #4267B2">
+                        <div class="ribbon-target" style="top: 10px; right: -2px; background-color: #4267B2;">Recent
+                            posts</div>
+                        <!-- <h3 class="card-title">
                         
                          <img class="fb_logo _8ilh img" src="https://static.xx.fbcdn.net/rsrc.php/y8/r/dF5SId3UHWd.svg" alt="Facebook" style="height: 70px; margin: -20px;">
                      </h3> -->
-                     <h1 class="card-title" style=" background-color: rgba(255, 255, 255, 0.95);
+                        <h1 class="card-title" style=" background-color: rgba(255, 255, 255, 0.95);
                      border-radius: 5px; font-size: 2rem; font-weight: 500;
                      color: #4267B2; width: fit-content;
                      padding: 1rem 2rem;  -webkit-backdrop-filter: blur(10px);
                      backdrop-filter: blur(10px);
-                     background-color: #F3F6F9;  margin-bottom: 30px;" >
-                         <!-- <img class="rounded" style="height: auto; width: 44px; " [src]="clubLogo" alt=""> -->
-                        Facebook
-                     </h1>
+                     background-color: #F3F6F9;  margin-bottom: 30px;">
+                            <!-- <img class="rounded" style="height: auto; width: 44px; " [src]="clubLogo" alt=""> -->
+                            Facebook
+                        </h1>
                     </div>
 
-                    
+
                     <div class="card-body">
-                        <div  *ngFor="let post of recentFBposts" class="rounded border m-6" style="box-shadow: rgb(99 99 99 / 20%) 0px 2px 8px 0px;">
-                            <div class="preview-facebook preview-facebook-media item-post-type"
-                            data-type="photo" >
+                        <div *ngFor="let post of recentFBposts" class="rounded border m-6"
+                            style="box-shadow: rgb(99 99 99 / 20%) 0px 2px 8px 0px;">
+                            <div class="preview-facebook preview-facebook-media item-post-type" data-type="photo">
                                 <div class="user-info">
-                                    <img class="img-circle"
-                                        [src]="profileImageUrl" style="height: 40px ; object-fit: cover;">
+                                    <img class="img-circle" [src]="facebookProfileImageUrl"
+                                        style="height: 40px ; object-fit: cover;">
                                     <div class="text">
-                                        <div class="name"> {{userName}}</div>
+                                        <div class="name"> {{post.pageName}} </div>
                                         <span> {{post.created_time}} <i class="fa fa-globe"
                                                 aria-hidden="true"></i></span>
                                     </div>
                                 </div>
-                                <div *ngIf="post.message" class="caption">
+                                <div *ngIf="post.message" class="caption" style="white-space: pre-wrap; text-align: justify;">
                                     <div style="font-size: large;">{{post.message}}</div>
-                                
+
                                 </div>
-                                <div  *ngIf="post.picture" class="preview-media-post" data-max-image="5" >
-                                    <img style="object-fit: cover;
+                                <div *ngIf="post.picture" class="preview-media-post" data-max-image="5">
+                                    <img style="object-fit: contain;
                                     margin-right: auto;
                                     margin-left: auto;
-                                    width: 50%; height: 100%;
-                                    display: block;" class="img-circle" src="{{post.attachments.data[0].media.image.src}}" >
+                                    height: 100%;
+                                    width: 100%;
+                                    display: block;" class="img-circle"
+                                        src="{{post.attachments.data[0].media.image.src}}">
                                 </div>
                                 <!-- <div class="preview-club">
                                     <div class="d-flex bd-highlight">
@@ -728,69 +818,76 @@
                                         <div class="p-2 bd-highlight">1 share</div>
                                       </div>
                                 </div> -->
-            
-                              
-            
+
+
+
                                 <div class="preview-comment">
                                     <div class="row">
                                         <div class="col item">
-                                            <i data-visualcompletion="css-img" class="hu5pjgll m6k467ps" style="background-image: url(&quot;https://static.xx.fbcdn.net/rsrc.php/v3/ym/r/ZVXgBVYm-iS.png?_nc_eui2=AeEgGx5dlSN1WRDbxzd1SGt8ZzFnT4urujBnMWdPi6u6MOBDINJu33c0wa8tEDnv0STJbUY6PABAtrh60xP_ylZx&quot;); background-position: 0px -191px; background-size: auto; width: 18px; height: 18px; background-repeat: no-repeat; display: inline-block; "></i> <span class="text-dark pl-2">Like</span>
+                                            <i data-visualcompletion="css-img" class="hu5pjgll m6k467ps"
+                                                style="background-image: url(&quot;https://static.xx.fbcdn.net/rsrc.php/v3/ym/r/ZVXgBVYm-iS.png?_nc_eui2=AeEgGx5dlSN1WRDbxzd1SGt8ZzFnT4urujBnMWdPi6u6MOBDINJu33c0wa8tEDnv0STJbUY6PABAtrh60xP_ylZx&quot;); background-position: 0px -191px; background-size: auto; width: 18px; height: 18px; background-repeat: no-repeat; display: inline-block; "></i>
+                                            <span class="text-dark pl-2">Like</span>
                                         </div>
                                         <div class="col item">
-                                            <i data-visualcompletion="css-img" class="hu5pjgll m6k467ps" style="background-image: url(&quot;https://static.xx.fbcdn.net/rsrc.php/v3/ym/r/ZVXgBVYm-iS.png?_nc_eui2=AeEgGx5dlSN1WRDbxzd1SGt8ZzFnT4urujBnMWdPi6u6MOBDINJu33c0wa8tEDnv0STJbUY6PABAtrh60xP_ylZx&quot;); background-position: 0px -153px; background-size: auto; width: 18px; height: 18px; background-repeat: no-repeat; display: inline-block;"></i> <span class="text-dark pl-2">Comment</span>
+                                            <i data-visualcompletion="css-img" class="hu5pjgll m6k467ps"
+                                                style="background-image: url(&quot;https://static.xx.fbcdn.net/rsrc.php/v3/ym/r/ZVXgBVYm-iS.png?_nc_eui2=AeEgGx5dlSN1WRDbxzd1SGt8ZzFnT4urujBnMWdPi6u6MOBDINJu33c0wa8tEDnv0STJbUY6PABAtrh60xP_ylZx&quot;); background-position: 0px -153px; background-size: auto; width: 18px; height: 18px; background-repeat: no-repeat; display: inline-block;"></i>
+                                            <span class="text-dark pl-2">Comment</span>
                                         </div>
                                         <div class="col item">
-                                            <i data-visualcompletion="css-img" class="hu5pjgll m6k467ps" style="background-image: url(&quot;https://static.xx.fbcdn.net/rsrc.php/v3/ym/r/ZVXgBVYm-iS.png?_nc_eui2=AeEgGx5dlSN1WRDbxzd1SGt8ZzFnT4urujBnMWdPi6u6MOBDINJu33c0wa8tEDnv0STJbUY6PABAtrh60xP_ylZx&quot;); background-position: 0px -210px; background-size: auto; width: 18px; height: 18px; background-repeat: no-repeat; display: inline-block;"></i> <span class="text-dark pl-2">Share</span>
+                                            <i data-visualcompletion="css-img" class="hu5pjgll m6k467ps"
+                                                style="background-image: url(&quot;https://static.xx.fbcdn.net/rsrc.php/v3/ym/r/ZVXgBVYm-iS.png?_nc_eui2=AeEgGx5dlSN1WRDbxzd1SGt8ZzFnT4urujBnMWdPi6u6MOBDINJu33c0wa8tEDnv0STJbUY6PABAtrh60xP_ylZx&quot;); background-position: 0px -210px; background-size: auto; width: 18px; height: 18px; background-repeat: no-repeat; display: inline-block;"></i>
+                                            <span class="text-dark pl-2">Share</span>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="d-flex align-items-center p-6" style="border-top: 1px solid #eee;">
-                                               
-                                    <div class="symbol symbol-40 symbol-light-success mr-5">
+
+                                    <div class="symbol symbol-40  mr-5">
                                         <span class="symbol-label">
-                                            <img class="img-circle"
-                                        [src]="profileImageUrl" style="height: 40px ; width: 48px; object-fit: cover; border-radius: 50px;">
+                                            <img class="img-circle" [src]="profileImageUrl"
+                                                style="height: 40px ; width: 40px; object-fit: cover; border-radius: 50px;">
                                         </span>
                                     </div>
-                                   
-                                    <input type="text" class="form-control border-0 form-control-solid pl-6 min-h-50px" style="border-radius: 8.42rem;" name="name" placeholder="Write a comment..." disabled>
-                                    
+
+                                    <input type="text" class="form-control border-0 form-control-solid pl-6 min-h-40px"
+                                        style="border-radius: 8.42rem;" name="name" placeholder="Write a comment..."
+                                        disabled>
+
                                 </div>
-                              </div>
+                            </div>
                         </div>
-                   
+
                     </div>
                 </div>
             </div>
 
-       
-
-            
-
-            
 
 
-           
-           
-          
 
-            
+
+
+
+
+
+
+
+
+
         </div>
 
-     
-        
+
+
     </div>
 
     <div class="col-lg-4">
-       
+
         <div class="card card-custom card-stretch">
             <div class="card-header" style="background-color: #1e1e2d;">
                 <div class="card-title">
                     <h3 class="card-label">
                         <span class="svg-icon svg-icon-primary svg-icon-2x">
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                                 width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
                                 <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                                     <rect x="0" y="0" width="24" height="24" />
@@ -800,7 +897,7 @@
                                         fill="#000000" opacity="0.3" />
                                 </g>
                             </svg>
-                           
+
                         </span>
                         <span class="nav-text" style="color: #fff;"> &nbsp; Facebook</span>
 
@@ -825,22 +922,29 @@
                                         <div class="preview-facebook preview-facebook-media item-post-type"
                                             data-type="photo" *ngIf="showDiv.photo">
                                             <div class="user-info">
-                                                <img class="img-circle"
-                                                    [src]="profileImageUrl" style="height: 40px ; object-fit: cover;">
+                                                <img class="img-circle" [src]="profileImageUrl"
+                                                    style="height: 40px ; object-fit: cover;">
                                                 <div class="text">
                                                     <div class="name"> {{userName}}</div>
                                                     <span> Just now . <i class="fa fa-globe"
                                                             aria-hidden="true"></i></span>
                                                 </div>
                                             </div>
-                                            <div class="caption">
+                                            <div class="caption" style="white-space: pre-wrap; text-align: justify;">
                                                 <div>{{facebookCaption}}</div>
-                                                <div class="line-no-text" *ngIf="!facebookCaption">{{facebookCaption}}</div>
+                                                <div class="line-no-text" *ngIf="!facebookCaption">{{facebookCaption}}
+                                                </div>
                                                 <div class="line-no-text" *ngIf="!facebookCaption"></div>
                                                 <div class="line-no-text" *ngIf="!facebookCaption"></div>
                                             </div>
-                                            <div class="preview-media" data-max-image="5" >
-                                                <img style="width: 100%; height: 100%;" class="img-circle" [src]= "url" *ngIf="format==='image' && url">
+                                            <div class="preview-media" data-max-image="5">
+                                                <img style="object-fit: contain;
+                                                margin-right: auto;
+                                                margin-left: auto;
+                                                height: 100%;
+                                                width: 100%;
+                                                display: block;" class="img-circle" [src]="url"
+                                                    *ngIf="format==='image' && url">
                                             </div>
                                             <!-- <div class="preview-club">
                                                 <div class="d-flex bd-highlight">
@@ -870,37 +974,47 @@
                                                   </div>
                                             </div> -->
 
-                                          
+
 
                                             <div class="preview-comment">
                                                 <div class="row">
                                                     <div class="col item">
-                                                        <i data-visualcompletion="css-img" class="hu5pjgll m6k467ps" style="background-image: url(&quot;https://static.xx.fbcdn.net/rsrc.php/v3/ym/r/ZVXgBVYm-iS.png?_nc_eui2=AeEgGx5dlSN1WRDbxzd1SGt8ZzFnT4urujBnMWdPi6u6MOBDINJu33c0wa8tEDnv0STJbUY6PABAtrh60xP_ylZx&quot;); background-position: 0px -191px; background-size: auto; width: 18px; height: 18px; background-repeat: no-repeat; display: inline-block; "></i> <span class="text-dark pl-2">Like</span>
+                                                        <i data-visualcompletion="css-img" class="hu5pjgll m6k467ps"
+                                                            style="background-image: url(&quot;https://static.xx.fbcdn.net/rsrc.php/v3/ym/r/ZVXgBVYm-iS.png?_nc_eui2=AeEgGx5dlSN1WRDbxzd1SGt8ZzFnT4urujBnMWdPi6u6MOBDINJu33c0wa8tEDnv0STJbUY6PABAtrh60xP_ylZx&quot;); background-position: 0px -191px; background-size: auto; width: 18px; height: 18px; background-repeat: no-repeat; display: inline-block; "></i>
+                                                        <span class="text-dark pl-2">Like</span>
                                                     </div>
                                                     <div class="col item">
-                                                        <i data-visualcompletion="css-img" class="hu5pjgll m6k467ps" style="background-image: url(&quot;https://static.xx.fbcdn.net/rsrc.php/v3/ym/r/ZVXgBVYm-iS.png?_nc_eui2=AeEgGx5dlSN1WRDbxzd1SGt8ZzFnT4urujBnMWdPi6u6MOBDINJu33c0wa8tEDnv0STJbUY6PABAtrh60xP_ylZx&quot;); background-position: 0px -153px; background-size: auto; width: 18px; height: 18px; background-repeat: no-repeat; display: inline-block;"></i> <span class="text-dark pl-2">Comment</span>
+                                                        <i data-visualcompletion="css-img" class="hu5pjgll m6k467ps"
+                                                            style="background-image: url(&quot;https://static.xx.fbcdn.net/rsrc.php/v3/ym/r/ZVXgBVYm-iS.png?_nc_eui2=AeEgGx5dlSN1WRDbxzd1SGt8ZzFnT4urujBnMWdPi6u6MOBDINJu33c0wa8tEDnv0STJbUY6PABAtrh60xP_ylZx&quot;); background-position: 0px -153px; background-size: auto; width: 18px; height: 18px; background-repeat: no-repeat; display: inline-block;"></i>
+                                                        <span class="text-dark pl-2">Comment</span>
                                                     </div>
                                                     <div class="col item">
-                                                        <i data-visualcompletion="css-img" class="hu5pjgll m6k467ps" style="background-image: url(&quot;https://static.xx.fbcdn.net/rsrc.php/v3/ym/r/ZVXgBVYm-iS.png?_nc_eui2=AeEgGx5dlSN1WRDbxzd1SGt8ZzFnT4urujBnMWdPi6u6MOBDINJu33c0wa8tEDnv0STJbUY6PABAtrh60xP_ylZx&quot;); background-position: 0px -210px; background-size: auto; width: 18px; height: 18px; background-repeat: no-repeat; display: inline-block;"></i> <span class="text-dark pl-2">Share</span>
+                                                        <i data-visualcompletion="css-img" class="hu5pjgll m6k467ps"
+                                                            style="background-image: url(&quot;https://static.xx.fbcdn.net/rsrc.php/v3/ym/r/ZVXgBVYm-iS.png?_nc_eui2=AeEgGx5dlSN1WRDbxzd1SGt8ZzFnT4urujBnMWdPi6u6MOBDINJu33c0wa8tEDnv0STJbUY6PABAtrh60xP_ylZx&quot;); background-position: 0px -210px; background-size: auto; width: 18px; height: 18px; background-repeat: no-repeat; display: inline-block;"></i>
+                                                        <span class="text-dark pl-2">Share</span>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="d-flex align-items-center p-6" style="border-top: 1px solid #eee;">
-                                               
-                                                <div class="symbol symbol-40 symbol-light-success mr-5">
+                                            <div class="d-flex align-items-center p-6"
+                                                style="border-top: 1px solid #eee;">
+
+                                                <div class="symbol symbol-40  mr-5">
                                                     <span class="symbol-label">
-                                                        <img class="img-circle"
-                                                    [src]="profileImageUrl" style="height: 40px ; width: 48px; object-fit: cover; border-radius: 50px;">
+                                                        <img class="img-circle" [src]="profileImageUrl"
+                                                            style="height: 40px ; width: 40px; object-fit: cover; border-radius: 50px;">
                                                     </span>
                                                 </div>
-                                               
-                                                <input type="text" class="form-control border-0 form-control-solid pl-6 min-h-50px" style="border-radius: 8.42rem;" name="name" placeholder="Write a comment..." disabled>
-                                                
+
+                                                <input type="text"
+                                                    class="form-control border-0 form-control-solid pl-6 min-h-40px"
+                                                    style="border-radius: 8.42rem;" name="name"
+                                                    placeholder="Write a comment..." disabled>
+
                                             </div>
                                         </div>
 
                                         <div class="preview-facebook preview-facebook-media item-post-type"
-                                            data-type="video"  *ngIf="showDiv.video">
+                                            data-type="video" *ngIf="showDiv.video">
                                             <div class="user-info">
                                                 <img class="img-circle" style="height: 40px ; object-fit: cover;"
                                                     [src]="profileImageUrl">
@@ -910,13 +1024,23 @@
                                                             aria-hidden="true"></i></span>
                                                 </div>
                                             </div>
-                                            <div class="caption">
+                                            <div class="caption" style="white-space: pre-wrap; text-align: justify;">
                                                 <div>{{facebookCaption}}</div>
-                                                <div class="line-no-text" *ngIf="!facebookCaption">{{facebookCaption}}</div>
+                                                <div class="line-no-text" *ngIf="!facebookCaption">{{facebookCaption}}
+                                                </div>
                                                 <div class="line-no-text" *ngIf="!facebookCaption"></div>
                                                 <div class="line-no-text" *ngIf="!facebookCaption"></div>
                                             </div>
-                                            <div class="preview-media" data-max-image="5" ><video [src]="url" *ngIf="format==='video' && url" style="height: 100%; width: 100%; object-fit: cover;"  controls disablepictureinpicture  controlsList="nodownload"></video></div>
+                                            <div class="preview-media" data-max-image="5"><video [src]="url"
+                                                    *ngIf="format==='video' && url"
+                                                    style="
+                                                    margin-right: auto;
+                                                    margin-left: auto;
+                                                    height: 100%;
+                                                    display: block;
+                                                    object-fit: contain;
+                                                    width: 100%;" controls
+                                                    disablepictureinpicture controlsList="nodownload"></video></div>
                                             <!-- <div class="preview-club">
                                                 <div class="d-flex bd-highlight">
                                                     <div class="p-2 flex-grow-1 bd-highlight">  
@@ -945,30 +1069,40 @@
                                                   </div>
                                             </div> -->
                                             <div class="preview-comment">
-                                               
+
                                                 <div class="row">
                                                     <div class="col item">
-                                                        <i data-visualcompletion="css-img" class="hu5pjgll m6k467ps" style="background-image: url(&quot;https://static.xx.fbcdn.net/rsrc.php/v3/ym/r/ZVXgBVYm-iS.png?_nc_eui2=AeEgGx5dlSN1WRDbxzd1SGt8ZzFnT4urujBnMWdPi6u6MOBDINJu33c0wa8tEDnv0STJbUY6PABAtrh60xP_ylZx&quot;); background-position: 0px -191px; background-size: auto; width: 18px; height: 18px; background-repeat: no-repeat; display: inline-block; "></i> <span class="text-dark pl-2">Like</span>
+                                                        <i data-visualcompletion="css-img" class="hu5pjgll m6k467ps"
+                                                            style="background-image: url(&quot;https://static.xx.fbcdn.net/rsrc.php/v3/ym/r/ZVXgBVYm-iS.png?_nc_eui2=AeEgGx5dlSN1WRDbxzd1SGt8ZzFnT4urujBnMWdPi6u6MOBDINJu33c0wa8tEDnv0STJbUY6PABAtrh60xP_ylZx&quot;); background-position: 0px -191px; background-size: auto; width: 18px; height: 18px; background-repeat: no-repeat; display: inline-block; "></i>
+                                                        <span class="text-dark pl-2">Like</span>
                                                     </div>
                                                     <div class="col item">
-                                                        <i data-visualcompletion="css-img" class="hu5pjgll m6k467ps" style="background-image: url(&quot;https://static.xx.fbcdn.net/rsrc.php/v3/ym/r/ZVXgBVYm-iS.png?_nc_eui2=AeEgGx5dlSN1WRDbxzd1SGt8ZzFnT4urujBnMWdPi6u6MOBDINJu33c0wa8tEDnv0STJbUY6PABAtrh60xP_ylZx&quot;); background-position: 0px -153px; background-size: auto; width: 18px; height: 18px; background-repeat: no-repeat; display: inline-block;"></i> <span class="text-dark pl-2">Comment</span>
+                                                        <i data-visualcompletion="css-img" class="hu5pjgll m6k467ps"
+                                                            style="background-image: url(&quot;https://static.xx.fbcdn.net/rsrc.php/v3/ym/r/ZVXgBVYm-iS.png?_nc_eui2=AeEgGx5dlSN1WRDbxzd1SGt8ZzFnT4urujBnMWdPi6u6MOBDINJu33c0wa8tEDnv0STJbUY6PABAtrh60xP_ylZx&quot;); background-position: 0px -153px; background-size: auto; width: 18px; height: 18px; background-repeat: no-repeat; display: inline-block;"></i>
+                                                        <span class="text-dark pl-2">Comment</span>
                                                     </div>
                                                     <div class="col item">
-                                                        <i data-visualcompletion="css-img" class="hu5pjgll m6k467ps" style="background-image: url(&quot;https://static.xx.fbcdn.net/rsrc.php/v3/ym/r/ZVXgBVYm-iS.png?_nc_eui2=AeEgGx5dlSN1WRDbxzd1SGt8ZzFnT4urujBnMWdPi6u6MOBDINJu33c0wa8tEDnv0STJbUY6PABAtrh60xP_ylZx&quot;); background-position: 0px -210px; background-size: auto; width: 18px; height: 18px; background-repeat: no-repeat; display: inline-block;"></i> <span class="text-dark pl-2">Share</span>
+                                                        <i data-visualcompletion="css-img" class="hu5pjgll m6k467ps"
+                                                            style="background-image: url(&quot;https://static.xx.fbcdn.net/rsrc.php/v3/ym/r/ZVXgBVYm-iS.png?_nc_eui2=AeEgGx5dlSN1WRDbxzd1SGt8ZzFnT4urujBnMWdPi6u6MOBDINJu33c0wa8tEDnv0STJbUY6PABAtrh60xP_ylZx&quot;); background-position: 0px -210px; background-size: auto; width: 18px; height: 18px; background-repeat: no-repeat; display: inline-block;"></i>
+                                                        <span class="text-dark pl-2">Share</span>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="d-flex align-items-center p-6" style="border-top: 1px solid #eee;">
-                                               
-                                                <div class="symbol symbol-40 symbol-light-success mr-5">
+                                            <div class="d-flex align-items-center p-6"
+                                                style="border-top: 1px solid #eee;">
+
+                                                <div class="symbol symbol-40  mr-5">
                                                     <span class="symbol-label">
-                                                        <img class="img-circle"
-                                                    [src]="profileImageUrl" style="height: 40px ; width: 48px; object-fit: cover; border-radius: 50px;">
+                                                        <img class="img-circle" [src]="profileImageUrl"
+                                                            style="height: 40px ; width: 40px; object-fit: cover; border-radius: 50px;">
                                                     </span>
                                                 </div>
-                                               
-                                                <input type="text" class="form-control border-0 form-control-solid pl-6 min-h-50px" style="border-radius: 8.42rem;" name="name" placeholder="Write a comment..." disabled>
-                                                
+
+                                                <input type="text"
+                                                    class="form-control border-0 form-control-solid pl-6 min-h-40px"
+                                                    style="border-radius: 8.42rem;" name="name"
+                                                    placeholder="Write a comment..." disabled>
+
                                             </div>
                                         </div>
 
@@ -984,9 +1118,10 @@
                                                             aria-hidden="true"></i></span>
                                                 </div>
                                             </div>
-                                            <div class="caption">
+                                            <div class="caption" style="white-space: pre-wrap; text-align: justify;">
                                                 <div>{{facebookCaption}}</div>
-                                                <div class="line-no-text" *ngIf="!facebookCaption">{{facebookCaption}}</div>
+                                                <div class="line-no-text" *ngIf="!facebookCaption">{{facebookCaption}}
+                                                </div>
                                                 <div class="line-no-text" *ngIf="!facebookCaption"></div>
                                                 <div class="line-no-text" *ngIf="!facebookCaption"></div>
                                             </div>
@@ -1019,33 +1154,43 @@
                                                   </div>
                                             </div> -->
                                             <div class="preview-comment">
-                                            <div class="row">
+                                                <div class="row">
                                                     <div class="col item">
-                                                        <i data-visualcompletion="css-img" class="hu5pjgll m6k467ps" style="background-image: url(&quot;https://static.xx.fbcdn.net/rsrc.php/v3/ym/r/ZVXgBVYm-iS.png?_nc_eui2=AeEgGx5dlSN1WRDbxzd1SGt8ZzFnT4urujBnMWdPi6u6MOBDINJu33c0wa8tEDnv0STJbUY6PABAtrh60xP_ylZx&quot;); background-position: 0px -191px; background-size: auto; width: 18px; height: 18px; background-repeat: no-repeat; display: inline-block; "></i> <span class="text-dark pl-2">Like</span>
+                                                        <i data-visualcompletion="css-img" class="hu5pjgll m6k467ps"
+                                                            style="background-image: url(&quot;https://static.xx.fbcdn.net/rsrc.php/v3/ym/r/ZVXgBVYm-iS.png?_nc_eui2=AeEgGx5dlSN1WRDbxzd1SGt8ZzFnT4urujBnMWdPi6u6MOBDINJu33c0wa8tEDnv0STJbUY6PABAtrh60xP_ylZx&quot;); background-position: 0px -191px; background-size: auto; width: 18px; height: 18px; background-repeat: no-repeat; display: inline-block; "></i>
+                                                        <span class="text-dark pl-2">Like</span>
                                                     </div>
                                                     <div class="col item">
-                                                        <i data-visualcompletion="css-img" class="hu5pjgll m6k467ps" style="background-image: url(&quot;https://static.xx.fbcdn.net/rsrc.php/v3/ym/r/ZVXgBVYm-iS.png?_nc_eui2=AeEgGx5dlSN1WRDbxzd1SGt8ZzFnT4urujBnMWdPi6u6MOBDINJu33c0wa8tEDnv0STJbUY6PABAtrh60xP_ylZx&quot;); background-position: 0px -153px; background-size: auto; width: 18px; height: 18px; background-repeat: no-repeat; display: inline-block;"></i> <span class="text-dark pl-2">Comment</span>
+                                                        <i data-visualcompletion="css-img" class="hu5pjgll m6k467ps"
+                                                            style="background-image: url(&quot;https://static.xx.fbcdn.net/rsrc.php/v3/ym/r/ZVXgBVYm-iS.png?_nc_eui2=AeEgGx5dlSN1WRDbxzd1SGt8ZzFnT4urujBnMWdPi6u6MOBDINJu33c0wa8tEDnv0STJbUY6PABAtrh60xP_ylZx&quot;); background-position: 0px -153px; background-size: auto; width: 18px; height: 18px; background-repeat: no-repeat; display: inline-block;"></i>
+                                                        <span class="text-dark pl-2">Comment</span>
                                                     </div>
                                                     <div class="col item">
-                                                        <i data-visualcompletion="css-img" class="hu5pjgll m6k467ps" style="background-image: url(&quot;https://static.xx.fbcdn.net/rsrc.php/v3/ym/r/ZVXgBVYm-iS.png?_nc_eui2=AeEgGx5dlSN1WRDbxzd1SGt8ZzFnT4urujBnMWdPi6u6MOBDINJu33c0wa8tEDnv0STJbUY6PABAtrh60xP_ylZx&quot;); background-position: 0px -210px; background-size: auto; width: 18px; height: 18px; background-repeat: no-repeat; display: inline-block;"></i> <span class="text-dark pl-2">Share</span>
+                                                        <i data-visualcompletion="css-img" class="hu5pjgll m6k467ps"
+                                                            style="background-image: url(&quot;https://static.xx.fbcdn.net/rsrc.php/v3/ym/r/ZVXgBVYm-iS.png?_nc_eui2=AeEgGx5dlSN1WRDbxzd1SGt8ZzFnT4urujBnMWdPi6u6MOBDINJu33c0wa8tEDnv0STJbUY6PABAtrh60xP_ylZx&quot;); background-position: 0px -210px; background-size: auto; width: 18px; height: 18px; background-repeat: no-repeat; display: inline-block;"></i>
+                                                        <span class="text-dark pl-2">Share</span>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="d-flex align-items-center p-6" style="border-top: 1px solid #eee;">
-                                               
-                                                <div class="symbol symbol-40 symbol-light-success mr-5">
+                                            <div class="d-flex align-items-center p-6"
+                                                style="border-top: 1px solid #eee;">
+
+                                                <div class="symbol symbol-40  mr-5">
                                                     <span class="symbol-label">
-                                                        <img class="img-circle"
-                                                    [src]="profileImageUrl" style="height: 40px ; width: 48px; object-fit: cover; border-radius: 50px;">
+                                                        <img class="img-circle" [src]="profileImageUrl"
+                                                            style="height: 40px ; width: 40px; object-fit: cover; border-radius: 50px;">
                                                     </span>
                                                 </div>
-                                               
-                                                <input type="text" class="form-control border-0 form-control-solid pl-6 min-h-50px" style="border-radius: 8.42rem;" name="name" placeholder="Write a comment..." disabled>
-                                                
+
+                                                <input type="text"
+                                                    class="form-control border-0 form-control-solid pl-6 min-h-40px"
+                                                    style="border-radius: 8.42rem;" name="name"
+                                                    placeholder="Write a comment..." disabled>
+
                                             </div>
 
-                                          
-                                          
+
+
                                         </div>
 
                                     </div>
@@ -1065,7 +1210,6 @@
 
             </div>
         </div>
-       
-    </div>
-</div> 
 
+    </div>
+</div>

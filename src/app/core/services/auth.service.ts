@@ -30,5 +30,7 @@ export class MainAuthService {
     this.router.navigateByUrl('/login');
   }
 
+  
+
 
 }

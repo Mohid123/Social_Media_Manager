@@ -6,7 +6,9 @@ import { LayoutService } from '../../../../_metronic/core';
 import { Club } from 'src/app/core/models/club.model';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
-
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import * as CryptoJS from 'crypto-js';
+import { JoyrideService } from 'ngx-joyride';
 
 @Component({
   selector: 'app-aside',
@@ -28,10 +30,17 @@ export class AsideComponent implements OnInit {
   brandClasses: string;
   asideMenuScroll = 1;
   asideSelfMinimizeToggle = false;
-  selectedClub: Club
+  selectedClub
   closeResult: string;
   socialFlag: boolean = false;
-  constructor(private layout: LayoutService, private loc: Location, private _authService: MainAuthService, private modalService: NgbModal, private router: Router) { }
+  sponsorPanelExists: boolean = false;
+  constructor(private layout: LayoutService,
+    private loc: Location,
+    private _authService: MainAuthService,
+    private modalService: NgbModal,
+    private router: Router,
+    private http: HttpClient,
+    private joyrideService: JoyrideService) { }
 
 
   ngOnInit(): void {
@@ -43,9 +52,27 @@ export class AsideComponent implements OnInit {
     this._authService.logoutSignedInUser()
   }
 
-  set_socialFlag_after_getting_club(){
-    this.selectedClub = JSON.parse(localStorage.getItem('selectedClub')) as Club;
+  onClick() {
+    this.joyrideService.startTour({ 
+     steps: ['firstStep', 'secondStep', 'thirdStep', 'fourthStep', 'fifthStep', 'sixthStep', 'seventhStep', 'eighthStep'],
+    themeColor: '#1e1e2d',
+    stepDefaultPosition: 'right',
+  
+ 
+   } // Your steps order
+   
+    );
+}
+
+  set_socialFlag_after_getting_club() {
+    this.selectedClub = JSON.parse(localStorage.getItem('selectedClub'));
     this.selectedClub.clubName == "Solis Solution" && this.selectedClub.id == "60db0c52723416289b31f1d9" ? this.socialFlag = true : this.socialFlag = false;
+    if (!this.selectedClub.sponsorPanelUrl) {
+      this.sponsorPanelExists = false
+    }
+    else {
+      this.sponsorPanelExists = true;
+    }
   }
 
   setProp() {
@@ -64,6 +91,23 @@ export class AsideComponent implements OnInit {
     this.asideMenuScroll = this.layout.getProp('aside.menu.scroll') ? 1 : 0;
     this.location = this.loc;
   }
+
+  routeToSponsorPanel() {
+    let sponsorPanelBaseUrl, token, encrypted, encoded, url
+    sponsorPanelBaseUrl = this.selectedClub.sponsorPanelUrl
+    token = localStorage.getItem('club-token');
+    encrypted = CryptoJS.AES.encrypt(token, 'secretkey123').toString();
+    encoded = encodeURIComponent(encrypted);
+    url = `${sponsorPanelBaseUrl}/loading?value=${encoded}`;
+    window.open(url)
+  }
+
+
+  // decryptData(data) {
+  //   data = CryptoJS.AES.decrypt(data, 'secretkey123').toString(CryptoJS.enc.Utf8);;
+  //   console.log(data, 'decrypted');
+  // }
+
 
   openVerticallyCentered(content) {
     this.modalService.open(content, { centered: true }).result.then((result) => {

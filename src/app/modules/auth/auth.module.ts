@@ -14,6 +14,7 @@ import { PerfectScrollbarModule }          from 'ngx-perfect-scrollbar';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 import { ToastrModule } from 'ngx-toastr';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { JoyrideModule } from 'ngx-joyride';
 
 export const PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
@@ -39,6 +40,7 @@ export const PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     MatSelectModule,
     PerfectScrollbarModule,
     NgxSpinnerModule,
+    JoyrideModule.forRoot()
 
   ]
 })

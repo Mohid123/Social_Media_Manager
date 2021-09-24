@@ -80,9 +80,45 @@
                  
 
                     
-                </div>
-                
+            </div>
 
+
+            <!--MODAL ONLOAD-->
+                
+            <div class="example-preview ">
+                <div>
+                  <ng-template #appTour let-c="close" let-d="dismiss">
+                    <div class="modal-header d-flex justify-content-center" style="background-color: #1e1e2d;">
+                      <h4 class="modal-title" style="color: #fff;">Take a tour</h4>
+                      <button type="button" class="close ml-auto" aria-label="Close" (click)="d('Cross click')"> <i class="ki ki-bold-close icon-sm" style="color:rgba(255, 255, 255, 0.877)"></i>
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body justify-content-center text-center d-inline">
+                      
+                        <a class="text-center">
+                            <img src="./assets/media/bg/setup.png" style="width: 18rem" alt="" />
+                        </a>
+                        <h1 class="justify-content-center">Welcome!</h1>
+                        <h3 class="justify-content-center">We're glad you're here.</h3>
+                        <p class="justify-content-center">To get a feel take our guided tour where we'll get you setup and show you how to start publishing your social posts.</p>
+                    </div>
+                    <div class="modal-footer d-flex justify-content-center">
+                      <button (click) = "openJoyRide(); c('Close click')" type="button" class="btn btn-secondary m-1">Take a tour</button>
+                      <button type="button" class="btn btn-secondary m-1" (click)="c('Close click')">Skip</button>
+                     
+                    </div>
+                  </ng-template>
+                  </div>
+              </div>
+
+              <!-- <div class="topbar-item mr-3" style="cursor: pointer;">
+                <div class="btn btn-icon btn-icon-mobile w-auto btn-clean d-flex align-items-center btn-lg px-2"  (click)="openVerticallyCentered(content)">
+                  <span class="text-muted font-weight-bold font-size-base d-none d-md-inline mr-1">Hi,</span>
+                  <span class="text-muted font-weight-bolder font-size-base d-none d-md-inline mr-3">TEST</span>
+                
+                </div>
+              </div> -->
 
             
         </div>
@@ -175,7 +211,7 @@
                 </div>
                 <div class="col-xl-4 col-xs-3">
                   
-                    <a class="card card-custom bgi-no-repeat card-stretch gutter-b" style=" background-color: #FBAD50 !important;">
+                    <a class="card card-custom bgi-no-repeat card-stretch gutter-b" [ngStyle]="{'background-color': clubPrimaryColor}">
                        
                         <div class="card-body">
                             <i class="svg-icon menu-icon icon-lg"><span ><img class="rounded" style="height: auto; width: 29px; " [src]="selectedClub.logoURL" alt=""></span></i>

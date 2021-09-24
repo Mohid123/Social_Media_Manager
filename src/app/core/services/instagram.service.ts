@@ -3,7 +3,7 @@ import { ErrorhandlerService } from './errorhandler.service';
 import { HttpClient } from '@angular/common/http';
 import { environment } from './../../../environments/environment';
 import { Injectable } from '@angular/core';
-import { constants } from 'src/app/app.constatns';
+import { constants } from 'src/app/app.constants';
 
 @Injectable({
   providedIn: 'root'

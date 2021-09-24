@@ -25,7 +25,7 @@ import { CoreModule } from '../_metronic/core';
 import { SubheaderModule } from '../_metronic/partials/layout/subheader/subheader.module';
 import { AsideDynamicComponent } from './_layout/components/aside-dynamic/aside-dynamic.component';
 import { HeaderMenuDynamicComponent } from './_layout/components/header/header-menu-dynamic/header-menu-dynamic.component';
-import { PublishComponent } from './publish/publish.component';
+import { PublishComponent } from './publish-all/publish.component';
 import { FacebookComponent } from './facebook/facebook.component';
 import { InstagramComponent } from './instagram/instagram.component';
 import { TeamtalkersComponent } from './teamtalkers/teamtalkers.component';
@@ -35,7 +35,7 @@ import { MatIconModule } from "@angular/material/icon";
 import {MatInputModule} from '@angular/material/input';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { NgxSpinnerModule } from "ngx-spinner";
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxDatePickerModule} from '@ngx-tiny/date-picker';
 import { NgxTimePickerModule } from '@ngx-tiny/time-picker';
 import { NewsfeedComponent } from './newsfeed/newsfeed.component';
@@ -44,9 +44,22 @@ import { Error5Component } from '../modules/errors/error5/error5.component';
 import { CommingSoonFbComponent } from './comming-soon-fb/comming-soon-fb.component';
 import { ComingSoonIgComponent } from './coming-soon-ig/coming-soon-ig.component';
 import { AdvertisementComponent } from './advertisement/advertisement.component';
+import { MomentPipeIG } from '../core/pipes/datetransformIG.pipe';
+import { ScheduleComponent } from './schedule/schedule.component';
 
+import { FullCalendarModule } from '@fullcalendar/angular';
+import dayGridPlugin from '@fullcalendar/daygrid'; // a plugin!
+import interactionPlugin from '@fullcalendar/interaction';
+import { CalendarComponent } from './schedule/calendar/calendar.component'; // a plugin!
+import { ScheduleDateTransform } from '../core/pipes/scheduleDateTransform.pipe';
+import { FeedbackComponent } from './help/feedback.component';
+import { NgxDropzoneModule } from 'ngx-dropzone';
+import { JoyrideModule } from 'ngx-joyride';
 
-
+FullCalendarModule.registerPlugins([ 
+  dayGridPlugin,
+  interactionPlugin
+]);
 
 
 
@@ -72,14 +85,20 @@ import { AdvertisementComponent } from './advertisement/advertisement.component'
     NewsfeedComponent,
     Error5Component,
     MomentPipe,
+    MomentPipeIG,
+    ScheduleDateTransform,
     CommingSoonFbComponent,
     ComingSoonIgComponent,
-    AdvertisementComponent
+    AdvertisementComponent,
+    ScheduleComponent,
+    CalendarComponent,
+    FeedbackComponent
 
   
   ],
   imports: [
-    CommonModule,
+  FullCalendarModule,
+  CommonModule,
     PagesRoutingModule,
     TranslationModule,
     InlineSVGModule,
@@ -95,10 +114,15 @@ import { AdvertisementComponent } from './advertisement/advertisement.component'
     NgxSpinnerModule,
     FormsModule,
     NgxDatePickerModule,
-    NgxTimePickerModule
+    NgxTimePickerModule,
+    NgxDropzoneModule,
+    ReactiveFormsModule,
+    JoyrideModule.forRoot(),
+   
+    
      
   ],
-  providers: [VideoProcessingService], 
+  providers: [VideoProcessingService , AsideComponent], 
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class LayoutModule { }

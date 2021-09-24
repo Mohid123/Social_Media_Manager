@@ -1,4 +1,4 @@
-import { filter, publish } from 'rxjs/operators';
+import { filter, publish, take } from 'rxjs/operators';
 import { ReportService } from './../../core/services/report.service';
 import { Report } from './../../core/models/report.model';
 import { MediauploadService } from './../../core/services/mediaupload.service';
@@ -44,12 +44,14 @@ export class FacebookComponent implements OnInit {
   public facebookPages: any[] = []
   public tempList: any[] = []
   public masterSelected: boolean
-  public facebookProfileUrl: string = 'https://socialapi.solissol.com/api/v1/en/media-upload/mediaFiles/123/test/6ca2499366f5b5611041fe57e2aac1ee9.svg'
+  public facebookPageImageUrl: string = 'https://socialapi.solissol.com/api/v1/en/media-upload/mediaFiles/123/test/6ca2499366f5b5611041fe57e2aac1ee9.svg'
+  facebookProfileImageUrl : string
   checklist: any = [];
   public userName: string = localStorage.getItem('userName')
   public profileImageUrl: string = localStorage.getItem('profileImageUrl')
   public searchString: string
   checkedList: any;
+
   showDiv = {
     photo: true,
     video: false,
@@ -68,6 +70,7 @@ export class FacebookComponent implements OnInit {
     military: true,
   };
   ngOnInit() {
+    this.facebookProfileImageUrl = JSON.parse(localStorage.getItem('selectedClub'))?.userFacebookProfile?.fbProfileImageUrl
     this.showSpinner();
     this.getSignedInUser();
     this.getCheckedItemList();
@@ -93,9 +96,9 @@ export class FacebookComponent implements OnInit {
   }
 
   clear() {
-    this.url = '';
+    this.file = null;
+    this.url = null
     this.facebookCaption = '';
-    this.file = ""
     this.cf.detectChanges();
   }
 
@@ -110,7 +113,6 @@ export class FacebookComponent implements OnInit {
     this.searchString = keyword
     let res;
     if (this.searchString !== "") {
-      ;
       this.checklist = this.tempList.filter(item =>
         res = item.pageName.toLowerCase().includes(this.searchString.toLowerCase()))
       return res;
@@ -135,6 +137,7 @@ export class FacebookComponent implements OnInit {
     this.url = ""
     this.facebookCaption = ""
     this.file = ""
+    this.showSchedule = false;
     this.removeSlectedItems();
     this.cf.detectChanges();
   }
@@ -165,35 +168,36 @@ export class FacebookComponent implements OnInit {
 
   getSignedInUser() {
     let callsList = []
+    let totalPosts;
     this._authService.getSignedInUser().subscribe(user => {
       this.signedInUser = user;
-      console.log(this.signedInUser)
+      if (user?.FBPages?.length == 0 || !user?.FBPages ) {
+        this.toast.warning('Log in via Facebook to connect your Facebook pages');
+        return;
+      }     
       for (let i = 0; i <= user.FBPages.length - 1; i++) {
-        ;
         this._facebookService.getPublishedPostsOnFBPages(user.FBPages[i].pageID, user.FBPages[i].pageAccessToken).subscribe((postObjects: any) => {
           postObjects.data.forEach((item, idx, self) => {
-            callsList.push(this._facebookService.getSinglePagePost(item.id, user.FBPages[i].pageAccessToken));
-            if (idx == self.length - 1) {
+            callsList.push(this._facebookService.getSinglePagePost(item.id, user.FBPages[i].pageAccessToken)); 
+            if(idx == self.length-1){
               combineLatest(callsList).subscribe(facebookPosts => {
                 facebookPosts.map((singleItem: any) => {
-                  singleItem.created_time = moment(singleItem.created_time).fromNow()
+                  singleItem.created_time = moment(singleItem.created_time).fromNow()       
                   singleItem.pageName = user.FBPages[i].pageName
                 })
-                this.recentFBposts = facebookPosts
+                callsList = []
+                this.recentFBposts.push(...facebookPosts)
                 this.cf.detectChanges();
               })
-            }
+            }      
           });
         })
       }
-      if (user.FBPages.length == 0) {
-        this.toast.warning('Log in via Facebook to connect your Facebook pages');
-        return;
-      }
+    
 
       this.signedInUser.FBPages.map(page => {
         page.isSelected = false;
-        page.captureImageURL = this.facebookProfileUrl
+        page.captureImageURL = this.facebookPageImageUrl
         this.checklist.push(page);
         this.tempList.push(page);
         this.cf.detectChanges();
@@ -208,16 +212,22 @@ export class FacebookComponent implements OnInit {
       this.showDiv.photo = true;
       this.showDiv.video = false;
       this.showDiv.text = false;
+      this.file = null;
+      this.url = null;
     }
     else if (event.index == 1) {
       this.showDiv.photo = false;
       this.showDiv.video = true;
       this.showDiv.text = false;
+      this.file = null;
+      this.url = null;
     }
     else {
       this.showDiv.photo = false;
       this.showDiv.video = false;
       this.showDiv.text = true;
+      this.file = null;
+      this.url = null;
     }
   }
 
@@ -242,7 +252,6 @@ export class FacebookComponent implements OnInit {
   }
 
   addImagePost() {
-    debugger;
     if (!this.file) {
       this.toast.error('Please select an Image File', 'Empty File');
       return;
@@ -254,13 +263,13 @@ export class FacebookComponent implements OnInit {
     this.spinner.show()
     this._mediaUploadService.uploadMedia('Facebook', this.signedInUser.id, this.file).subscribe((media: any) => {
       this.checkedList.forEach((item, index, array) => {
-        console.log(item)
+        // console.log(item)
         this._reportService.createReport(2, "", 'Facebook')
         this._facebookService.addImagePostToFB(item.pageID, media.url, this.facebookCaption, item.pageAccessToken).subscribe(FbPost => {
-          console.log(FbPost, 'post')
+          // console.log(FbPost, 'post')
           this._reportService.createReport(1, FbPost.id, 'Facebook')
           if (index == array.length - 1) {
-            this.toast.success('Post added to Facebook Pages', 'Success')
+            this.toast.success('Great! The post has been shared.')
             this.postedSuccessfully();
           }
         }, error => {
@@ -295,10 +304,10 @@ export class FacebookComponent implements OnInit {
     this._mediaUploadService.uploadMedia('Facebook', this.signedInUser.id, this.file).subscribe((media: any) => {
       this.checkedList.forEach((item, index, array) => {
         this._reportService.createReport(2, "", 'Facebook')
-        this._facebookService.addVideoPost(item.pageID, item.pageAccessToken, media.url, this.facebookCaption).subscribe((video: any) => {
+        this._facebookService.addVideoPost(item.pageID, item.pageAccessToken, media.url, this.facebookCaption).pipe(take(1)).subscribe((video: any) => {
           this._reportService.createReport(1, video.id, 'Facebook')
           if (index == array.length - 1) {
-            this.toast.success('Video post added to Facebook Pages', 'Success');
+            this.toast.success('Great! The post has been shared.');
             this.postedSuccessfully();
           }
         })
@@ -317,7 +326,7 @@ export class FacebookComponent implements OnInit {
 
   addTextPost() {
 
-    if (this.facebookCaption == "") {
+    if (this.facebookCaption.trim() == "") {
       this.toast.error('Please add content to post', 'No Content Added');
       return;
     }
@@ -332,7 +341,7 @@ export class FacebookComponent implements OnInit {
       this._facebookService.addTextPostToFB(item.pageID, this.facebookCaption, item.pageAccessToken).subscribe(FbPost => {
         this._reportService.createReport(1, FbPost.id, 'Facebook')
         if (index == array.length - 1) {
-          this.toast.success('Text post added to Facebook pages', 'Success');
+          this.toast.success('Great! The post has been shared.');
           this.postedSuccessfully();
         }
       }, error => {
@@ -353,9 +362,8 @@ export class FacebookComponent implements OnInit {
 
 
   scheduleTextPostForFB() {
-    debugger;
     let selectedList = this.checkedList;
-    if (this.facebookCaption == "") {
+    if (this.facebookCaption.trim() == "") {
       this.toast.error('Please add content to post', 'No Content Added');
       return;
     }
@@ -364,13 +372,17 @@ export class FacebookComponent implements OnInit {
       return;
     }
     else if (this._scheduleService.validateScheduleDate(this.scheduleSelectedDate, this.scheduleSelectedTime)) {
-      this._scheduleSocialPostService.scheduleFacebookTextPost(this.facebookCaption, this._scheduleService.getScheduleEpox, selectedList)
+      this._scheduleSocialPostService.scheduleFacebookTextPost(this.facebookCaption, this._scheduleService.getScheduleEpox, selectedList).then(()=>{
+        this.postedSuccessfully()
+      })
+    }
+    else {
+      this.toast.error("Schedule should be 5 minutes ahead of current time", "info");
     }
   }
 
 
   scheduleImagePostForFB() {
-    debugger;
     let selectedList = this.checkedList;
 
     if (!this.file) {
@@ -382,14 +394,18 @@ export class FacebookComponent implements OnInit {
       return;
     }
     else if (this._scheduleService.validateScheduleDate(this.scheduleSelectedDate, this.scheduleSelectedTime)) {
-      this._scheduleSocialPostService.scheduleFacebookImagePost(this.facebookCaption, this._scheduleService.getScheduleEpox, this.file, selectedList)
+      this._scheduleSocialPostService.scheduleFacebookImagePost(this.facebookCaption, this._scheduleService.getScheduleEpox, this.file, selectedList).then(()=>{
+        this.postedSuccessfully()
+      })
+    }
+    else {
+      this.toast.error("Schedule should be 5 minutes ahead of current time", "info");
     }
 
   }
 
 
   scheduleVideoPostForFB() {
-    debugger;
     let selectedList = this.checkedList;
 
     if (!this.file) {
@@ -401,7 +417,9 @@ export class FacebookComponent implements OnInit {
       return;
     }
     else if (this._scheduleService.validateScheduleDate(this.scheduleSelectedDate, this.scheduleSelectedTime)) {
-      this._scheduleSocialPostService.scheduleFacebookVideoPost(this.facebookCaption, this._scheduleService.getScheduleEpox, this.file, selectedList)
+      this._scheduleSocialPostService.scheduleFacebookVideoPost(this.facebookCaption, this._scheduleService.getScheduleEpox, this.file, selectedList).then(()=>{
+        this.postedSuccessfully()
+      })
     } 
 
     else {

@@ -20,7 +20,7 @@
             </div>
             <div class="card-body">
                 <!--Facebook button-->
-                <div *ngIf="socialFlag"  id="signInFB" (click)= signInWithFB() class="btn btn-icon btn-light w-auto btn-clean d-inline-flex btn-lg px-2 mr-5">
+                <div id="signInFB" (click)= signInWithFB() class="btn btn-icon btn-light w-auto btn-clean d-inline-flex btn-lg px-2 mr-5">
                     <span class="symbol symbol-35 symbol-light-primary">
                         <span class="symbol-label font-size-h5 font-weight-bold"><a  class="btn btn-icon btn-sm btn-facebook">
                             <i class="socicon-facebook"></i>
@@ -29,7 +29,7 @@
                     <span class="text-dark-50 font-weight-bolder font-size-base ml-3" style="text-align: -webkit-left;"> Add facebook profile</span>
                     
                 </div>
-                <div  *ngIf="!socialFlag" id="signInFB" (click)= signInWithFacebook() class="btn btn-icon btn-light w-auto btn-clean d-inline-flex btn-lg px-2 mr-5">
+                <!-- <div  *ngIf="!socialFlag" id="signInFB" (click)= showFBCommingSoonPopup() class="btn btn-icon btn-light w-auto btn-clean d-inline-flex btn-lg px-2 mr-5">
                     <span class="symbol symbol-35 symbol-light-primary">
                         <span class="symbol-label font-size-h5 font-weight-bold"><a  class="btn btn-icon btn-sm btn-facebook">
                             <i class="socicon-facebook"></i>
@@ -37,23 +37,31 @@
                     </span>
                     <span class="text-dark-50 font-weight-bolder font-size-base ml-3" style="text-align: -webkit-left;"> Add facebook profile</span>
                     
-                </div>
+                </div> -->
                 <hr>
                  <!--Insta button-->
-                <div (click) = showFBPopup() class="btn btn-icon btn-light w-auto btn-clean d-inline-flex btn-lg px-2 mr-5">
+                <div (click) = showIGLoginPopup() class="btn btn-icon btn-light w-auto btn-clean d-inline-flex btn-lg px-2 mr-5">
                     <span class="symbol symbol-35 symbol-light-primary">
                         <span class="symbol-label font-size-h5 font-weight-bold"><a  class="btn btn-icon btn-sm btn-instagram">
                             <i class="socicon-instagram"></i>
                         </a></span>
                     </span>
                     <span class="text-dark-50 font-weight-bolder font-size-base ml-3" style="text-align: -webkit-left;"> Add Instagram profile</span>
-                   
                 </div>
+                <!-- <div *ngIf="!socialFlag" (click) = showIGCommingSoonPopup() class="btn btn-icon btn-light w-auto btn-clean d-inline-flex btn-lg px-2 mr-5">
+                    <span class="symbol symbol-35 symbol-light-primary">
+                        <span class="symbol-label font-size-h5 font-weight-bold"><a  class="btn btn-icon btn-sm btn-instagram">
+                            <i class="socicon-instagram"></i>
+                        </a></span>
+                    </span>
+                    <span class="text-dark-50 font-weight-bolder font-size-base ml-3" style="text-align: -webkit-left;"> Add Instagram profile</span>
+                </div> -->
+
                 <hr>
                 <div (click) = "Club()" class="btn btn-icon btn-light w-auto btn-clean d-inline-flex  btn-lg px-2 mr-5">
                     <span class="symbol symbol-35 symbol-light-primary">
                         <span class="symbol-label font-size-h5 font-weight-bold"><a  class="btn btn-icon btn-sm" >
-                            <i class="svg-icon menu-icon icon-2x "><span><img style="height: 100%; width: 100%;" [src]="clubLogo" alt=""></span></i>
+                            <i class="svg-icon menu-icon icon-2x "><span><img style="height: 100%; width: 100%; border-radius: 6px;" [src]="clubLogo" alt=""></span></i>
                         </a></span>
                     </span>
                     <span class="text-dark-50 font-weight-bolder font-size-base ml-3" style="text-align: -webkit-left;">{{clubName}}</span>
@@ -102,7 +110,10 @@
                                        
                                         <div class="text-center mb-10">
                                             <div class="symbol symbol-60 symbol-circle symbol-xl-90">
-                                                <div class="symbol-label"><span><img class="symbol-label" src="../../../assets/media/users/mockfbImage.png" style="object-fit: cover;" alt=""></span></div>
+                                                
+                                                <div *ngIf="!userFBprofile.fbProfileImageUrl" class="symbol-label"><span><img class="symbol-label" src="../../../assets/media/users/mockfbImage.png" style="object-fit: cover;" alt=""></span></div>
+                                                <div *ngIf="userFBprofile.fbProfileImageUrl" class="symbol-label"><span><img class="symbol-label" [src] = "userFBprofile.fbProfileImageUrl"  style="object-fit: cover;" alt=""></span></div>
+
                                                 <i class="symbol-badge symbol-badge-bottom bg-success"></i>
                                             </div>
                                           
@@ -139,7 +150,8 @@
                                        
                                         <div class="text-center mb-10">
                                             <div class="symbol symbol-60 symbol-circle symbol-xl-90">
-                                                <div class="symbol-label"><span><img class="symbol-label" src="../../../assets/media/users/mockfbImage.png" style="object-fit: cover;" alt=""></span></div>
+                                                <div *ngIf="!userFBprofile.fbProfileImageUrl" class="symbol-label"><span><img class="symbol-label" src="../../../assets/media/users/mockfbImage.png" style="object-fit: cover;" alt=""></span></div>
+                                                <div *ngIf="userFBprofile.fbProfileImageUrl" class="symbol-label"><span><img class="symbol-label" [src] = "userFBprofile.fbProfileImageUrl"  style="object-fit: cover;" alt=""></span></div>
                                                 <i class="symbol-badge symbol-badge-bottom bg-success"></i>
                                             </div>
                                           
@@ -164,7 +176,7 @@
                             <div class="card-header">
                              <div class="card-title">
                               <h5 class="card-label">
-                                <span><img style="height: 100%; width: 20px;" [src]="clubLogo" alt=""></span>&nbsp;
+                                <span><img style="height: 100%; width: 20px; border-radius: 5px;" [src]="clubLogo" alt=""></span>&nbsp;
                                   
                                {{clubName}}
                                

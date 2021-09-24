@@ -13,6 +13,7 @@ import { VideoProcessingService } from '../video-service/video-processing.servic
 })
 export class ClubpostService {
   private post: Post
+  private userClubID : string = localStorage.getItem("clubUid");
   public postedSuccessfully: EventEmitter<any> = new EventEmitter();
   constructor(private _reportService: ReportService,
     private _postService: PostService,
@@ -24,9 +25,11 @@ export class ClubpostService {
   }
 
   createTextPost(postedText, postedTo , selectedList) {
+    debugger
     return new Promise((resolve, reject) => {
     let hyperLinkResponse = []
     this.post.type = 'text'
+    this.post.userID = this.userClubID;
     this.post.text = postedText;
     this.post.postedTo = postedTo;
 
@@ -71,7 +74,7 @@ export class ClubpostService {
         this._postService.createClubPost(postedTo , this.post).subscribe((post: Post) => {
           this._reportService.createReport(1, post.id, postedTo);
           if (idx == self.length - 1) {
-            this.toast.success(`Post added successfully to ${postedTo}`)
+            this.toast.success(` Great! The post has been shared to ${postedTo}.`)
             this.spinner.hide();
             resolve('success')
           }
@@ -92,7 +95,7 @@ export class ClubpostService {
     this.post.type = 'image'
     this.post.text = postedText;
     this.post.postedTo = postedTo;
-
+    this.post.userID = this.userClubID;
     if (postedTo == 'Group') {
       delete this.post.eventID;
     }
@@ -134,10 +137,10 @@ export class ClubpostService {
           }
           this._reportService.createReport(2, "", postedTo);
           this._postService.createClubPost(postedTo, this.post).subscribe((post: Post) => {
-            console.log(this.post)
+            // console.log(this.post)
             this._reportService.createReport(1, post.id, postedTo);
             if (idx == self.length - 1) {
-              this.toast.success(`Post added successfully to ${postedTo}`)
+              this.toast.success(`Great! The post has been shared to ${postedTo}.`)
               this.spinner.hide();
               resolve('success');
             }
@@ -149,6 +152,8 @@ export class ClubpostService {
           })
         });
       })
+    }, error=>{
+      console.log(error)
     })
     })
   }
@@ -161,7 +166,7 @@ export class ClubpostService {
     this.post.type = 'video';
     this.post.text = postedText;
     this.post.postedTo = postedTo;
-
+    this.post.userID = this.userClubID;
 
     if (postedTo == 'Group') {
       delete this.post.eventID;
@@ -200,7 +205,6 @@ export class ClubpostService {
       ) {
         this.post.hyperlinkCaptureFileURL = hyperLinkResponse[0].image;
       }
-      debugger;
       this._mediaUploadService
       .uploadClubMedia("GroupMedia", userID,MediaFile)
       .subscribe((uploadedVideo: any) => {
@@ -228,7 +232,7 @@ export class ClubpostService {
                     this._reportService.createReport(1, post.id, postedTo);
                     if (idx == self.length - 1) {
                       this.spinner.hide();
-                      this.toast.success(`Post added to ${postedTo}`, "Success");
+                      this.toast.success(`Great! The post has been shared to ${postedTo}.`);
                       resolve('success')
                     }},
                   (error) => {

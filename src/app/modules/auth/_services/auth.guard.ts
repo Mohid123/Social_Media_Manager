@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import jwt_decode from "jwt-decode";
 import {
   Router,
   CanActivate,
@@ -12,13 +13,25 @@ export class AuthGuard implements CanActivate {
   constructor(private authService: AuthService, private router: Router) { }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    // const currentUser = this.authService.currentUserValue;
-    if (localStorage.getItem('app-token')) {
-      return true;
+    let token = localStorage.getItem('app-token')
+    if (token && token.length > 0) {
+      try {
+        let data: any = jwt_decode(token);
+        if (data.id) {
+          return true
+        }
+        else {
+          this.router.navigateByUrl('/login')
+          return false;
+        }
+      } catch (error) {
+        this.router.navigateByUrl('/login')
+        return false;
+      }
     }
     else {
       this.router.navigateByUrl('/login')
-      return false;
+      return false
     }
   }
 }
