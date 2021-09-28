@@ -155,14 +155,14 @@ export class LoginComponent implements OnInit {
       }
       else {
         this.spinner.hide();
-        this.toastr.error('Only admins can access this panel', 'Access Denied');
+        this.toastr.error('Only admins can access this panel.', 'Access Denied!');
         return;
       }
 
     }, err => {
       this.spinner.hide()
       if (err.message.includes('401 Unauthorized')) {
-        this.toastr.error('Email or Password Incorrect', 'Unauthorized');
+        this.toastr.error('Email or Password Incorrect.', 'Unauthorized!');
         console.log(err);
         return;
       }
