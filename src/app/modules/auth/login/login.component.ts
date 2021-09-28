@@ -150,7 +150,7 @@ export class LoginComponent implements OnInit {
         localStorage.setItem('userName', user.user.fullName)
         localStorage.setItem('profileImageUrl', user.user.profilePicURL)
         this.spinner.hide();
-        this.toastr.success('Login Success', 'Logged In Successfully');
+        this.toastr.success(`You are logged in as ${user.user.fullName}.`, 'Welcome!');
         this.router.navigateByUrl('/pages/dashboard');
       }
       else {
