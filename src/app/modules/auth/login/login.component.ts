@@ -251,15 +251,12 @@ export class LoginComponent implements OnInit {
       else {
         this._clubService.searchClubByNameForPicker(this.searchString, this.offset, this.limit).subscribe((searchedClubs: any) => {
           debugger
-          console.log(searchedClubs)
           if (searchedClubs.length == 0) {
-            console.log(searchedClubs, 'l=0')
             this.noClubFound = true;
             this.allClubs = searchedClubs;
             return;
           }
           else if (searchedClubs.length > 0) {
-            console.log(searchedClubs, this.searchString, 'l>0')
             this.allClubs = searchedClubs;
             this.noClubFound = false
             this.cf.detectChanges()
@@ -282,15 +279,12 @@ export class LoginComponent implements OnInit {
       else {
         this._clubService.searchClubByName(this.searchString, this.offset, this.limit).subscribe((searchedClubs: any) => {
           debugger
-          console.log(searchedClubs)
           if (searchedClubs.length == 0 && this.searchString.trim().length !== 0) {
-            console.log(searchedClubs, 'l=0')
             this.noClubFound = true;
             this.allClubs = searchedClubs;
             return;
           }
           else if (searchedClubs.length > 0) {
-            console.log(searchedClubs, this.searchString, 'l>0')
             this.allClubs = searchedClubs;
             this.noClubFound = false
             this.cf.detectChanges()
