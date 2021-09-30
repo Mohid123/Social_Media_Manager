@@ -74,7 +74,7 @@ export class ClubpostService {
         this._postService.createClubPost(postedTo , this.post).subscribe((post: Post) => {
           this._reportService.createReport(1, post.id, postedTo);
           if (idx == self.length - 1) {
-            this.toast.success(` Great! The post has been shared to ${postedTo}.`)
+            this.toast.success(`Your post has been shared to ${postedTo}.`, 'Great!')
             this.spinner.hide();
             resolve('success')
           }

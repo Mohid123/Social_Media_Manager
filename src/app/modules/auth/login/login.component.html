@@ -40,7 +40,7 @@
               <!-- <button type="button" class="btn-close btn-close-white" aria-label="Close"></button> -->
 
               <input class="form-control bg-primary-o-30" [ngModelOptions]="{standalone: true}"
-                [(ngModel)]="searchString" (ngModelChange)="searchClub($event)" style="color: #fff;"
+                [(ngModel)]="searchString" (ngModelChange)="searchClub()" style="color: #fff;"
                 id="exampleInputEmail1" placeholder="search">
             </div>
           </form>
@@ -64,7 +64,7 @@
               </div>
             </div>
         
-            <div class="row row-cols-1 row-cols-md-4 g-4" id="items" style="cursor: pointer;">
+            <div  class="row row-cols-1 row-cols-md-4 g-4" id="items" style="cursor: pointer;">
           
               <div class="col" *ngFor="let club of allClubs" id="items">
                 <div class="card resp-card" (click)="onClubSelected(club) ">

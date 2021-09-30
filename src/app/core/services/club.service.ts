@@ -71,10 +71,14 @@ export class ClubService {
   }
 
   searchClubByName(clubName , offset , limit){
-    return this._clubApiService.get(`/club/searchClubByName/${clubName}?offset=${offset}&limit=${limit}`);
+
+    return this._apiService.get(`/club/searchClub/${clubName}?offset=${offset}&limit=${limit}`);
   }
 
-
+  searchClubByNameForPicker(clubName , offset , limit){
+    
+    return this._clubApiService.get(`/club/searchClubByName/${clubName}?offset=${offset}&limit=${limit}`);
+  }
 
 
 }
