@@ -31,6 +31,7 @@ export class LoginComponent implements OnInit {
     email: '',
     password: '',
   };
+  searchedClubs: []
   loginForm: FormGroup;
   hasError: boolean;
   returnUrl: string;
@@ -38,10 +39,11 @@ export class LoginComponent implements OnInit {
   allClubs: Club[]
   tempClubs: Club[]
   selectedClub: any
-  searchString: string
+  searchString: string = ''
   searchStarted: boolean = false;
   noClubFound: boolean = false;
-  showBackBtn: boolean = false
+  showBackBtn: boolean = false;
+  isPickerClub: boolean = false;
   public defaultClub: Club
   public userClub
   offset: number = 0;
@@ -107,7 +109,7 @@ export class LoginComponent implements OnInit {
 
 
   showPreviousClubs() {
-    debugger
+    this.isPickerClub = false;
     this.noClubFound = false
     this.offset = 0
     this.limit = 20
@@ -193,24 +195,119 @@ export class LoginComponent implements OnInit {
     this.allClubs = this.tempClubs;
 
   }
+   // search() {
+  //   debugger
+  //   if(this.searchString.trim().length == 0) {
+  //     this.searchString = "";
+  //     this.allClubs = this.tempClubs;
+  //     this.noClubFound = false;
+  //     return
+  //   }
+  //   else {
+  //     this._clubService.searchClubByName(this.searchString, this.limit, this.offset)
+  //     .subscribe((searchedClubs: any)=> {
+  //       if(searchedClubs.length == 0) {
+  //         console.log(searchedClubs, 'l=0')
+  //         this.noClubFound = true;
+  //         this.allClubs = searchedClubs;
+  //         return
+  //       }
+  //       else if(searchedClubs.length>0) {
+  //         console.log(searchedClubs, this. searchString, 'l>0')
+  //         this.allClubs = searchedClubs;
+  //         this.noClubFound = false
+  //         this.cf.detectChanges()
+  //       }
+  //     })
+  //   }
+  // }
 
-  searchClub(event) {
+  searchClub() {
+    // this.searchString = ''
+    
+    // this.searchString = event;
+    // console.log(event)
     // debugger
     // this.searchString = event
+    // console.log(this.searchString)
     // this._clubService.searchClubByName(event, 0, 50).subscribe((data: any) => {
     //   console.log(data)
     //   this.allClubs = data
     // }, err => {
     //   console.log(err, 'err_message')
     // })
-    if (this.searchString) {
-      this.allClubs = this.tempClubs.filter(i => i.clubName.toLowerCase().includes(this.searchString.toLowerCase()));
-      this.allClubs.length > 0 ? this.noClubFound = false : this.noClubFound = true;
+    // debugger
+    if(this.isPickerClub){
+      this.showBackBtn=true;
+      if (this.searchString.trim().length == 0 || this.searchString == "") {
+        debugger
+        // this.searchString == "";
+
+        this.noClubFound = false;
+        this.getDividisClubs(this.offset, this.limit);
+        this.cf.detectChanges()
+        return
+      }
+      else {
+        this._clubService.searchClubByNameForPicker(this.searchString, this.offset, this.limit).subscribe((searchedClubs: any) => {
+          debugger
+          console.log(searchedClubs)
+          if (searchedClubs.length == 0) {
+            console.log(searchedClubs, 'l=0')
+            this.noClubFound = true;
+            this.allClubs = searchedClubs;
+            return;
+          }
+          else if (searchedClubs.length > 0) {
+            console.log(searchedClubs, this.searchString, 'l>0')
+            this.allClubs = searchedClubs;
+            this.noClubFound = false
+            this.cf.detectChanges()
+          }
+        })
+      }
     }
-    else if (this.searchString == "") {
-      this.allClubs = this.tempClubs;
-      this.noClubFound = false;
+     else  {
+      this.showBackBtn=false;
+      // debugger
+      if (this.searchString.trim().length == 0 || this.searchString == "") {
+        debugger
+        // this.searchString == "";
+
+        this.noClubFound = false;
+        this.getAllClubs(this.offset, this.limit);
+        this.cf.detectChanges()
+        return
+      }
+      else {
+        this._clubService.searchClubByName(this.searchString, this.offset, this.limit).subscribe((searchedClubs: any) => {
+          debugger
+          console.log(searchedClubs)
+          if (searchedClubs.length == 0 && this.searchString.trim().length !== 0) {
+            console.log(searchedClubs, 'l=0')
+            this.noClubFound = true;
+            this.allClubs = searchedClubs;
+            return;
+          }
+          else if (searchedClubs.length > 0) {
+            console.log(searchedClubs, this.searchString, 'l>0')
+            this.allClubs = searchedClubs;
+            this.noClubFound = false
+            this.cf.detectChanges()
+          }
+        })
+      }
     }
+
+
+    // if (this.searchString) {
+    //   this.allClubs = this.tempClubs.filter(i => i.clubName.toLowerCase().includes(this.searchString.toLowerCase()));
+    //   this.allClubs.length > 0 ? this.noClubFound = false : this.noClubFound = true;
+    // }
+    // else if (this.searchString == "") {
+    //   this.allClubs = this.tempClubs;
+    //   this.noClubFound = false;
+    // }
   }
 
   setDefaultClub() {
@@ -228,11 +325,13 @@ export class LoginComponent implements OnInit {
 
   onClubSelected(club) {
     if (!club.isPicker) {
+      this.isPickerClub = false
       this.modalService.dismissAll()
     }
     localStorage.setItem('selectedClub', JSON.stringify(club));
     this.selectedClub = club
     constants.clubApiUrl = club.baseURL;
+    this.isPickerClub = true
     if (this.selectedClub.isPicker || this.selectedClub.isPicker) {
       this.showBackBtn = true
       this.getDividisClubs(this.offset , this.limit)
@@ -244,7 +343,7 @@ export class LoginComponent implements OnInit {
 
 
   loadMoreClubs() {
-    debugger
+    // debugger
     let findSolisClub = this.allClubs.find((item:any)=>item.clubName == "TeamTalkers" && item.id == "614ac4ceb71e7462a965288e" );
     if(findSolisClub){
       return

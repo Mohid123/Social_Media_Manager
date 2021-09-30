@@ -324,21 +324,21 @@ export class InstagramComponent implements OnInit {
         this._reportService.createReport(2, "", 'Instagram')
         this._instagramService.createIGMediaContainer(item.instagram_business_account.id, this.instaCaption, item.linkedFbPagetoken, media.url).pipe(take(1)).subscribe((container: any) => {
           this._instagramService.publishContent(item.instagram_business_account.id, container.id, item.linkedFbPagetoken).pipe(take(1)).subscribe((data: any) => {
+            this._reportService.createReport(1, data.id, 'Instagram')
             if (idx == self.length - 1) {
               this.toast.success('Great! The post has been shared.');
               this.postedSuccessfully();
 
             }
-            this._reportService.createReport(1, data.id, 'Instagram')
+         
           }, error => {
-            ;
             this.spinner.hide()
             console.log(error)
             this.toast.error(error.error.error.error_user_msg)
             this._reportService.createReport(0, "", 'Instagram');
           })
         }, error => {
-          ;
+         
           this.spinner.hide()
           console.log(error)
           this.toast.error(error.error.error.error_user_msg)
@@ -363,6 +363,7 @@ export class InstagramComponent implements OnInit {
       }
     }
     this.masterSelected = false;
+    this.checkedList = []
   }
 
   postedSuccessfully() {
@@ -371,7 +372,9 @@ export class InstagramComponent implements OnInit {
     this.instaCaption = ""
     // this.file = ""
     this.showSchedule = false;
+   
     this.removeSlectedItems();
+  
     this.cf.detectChanges();
   }
 

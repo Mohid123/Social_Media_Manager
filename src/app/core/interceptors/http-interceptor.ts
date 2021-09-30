@@ -13,6 +13,9 @@ export class Interceptor implements HttpInterceptor {
     if (request.url.includes('getAllClubs') || request.url.includes('loginByEmail')) {
       customReq = request.clone()
     }
+   else if (request.url.includes('searchClub') || request.url.includes('loginByEmail')) {
+      customReq = request.clone()
+    }
     else if (request.url.includes('socialapi.solissol') || request.url.includes("http://localhost:3005")) {
       customReq = request.clone({
         headers: request.headers.set('Authorization', localStorage.getItem('app-token'))
