@@ -126,12 +126,18 @@ export class InstagramComponent implements OnInit {
 
 
   onSelectedImageLoad() {
+    debugger
     const width = (this.logo.nativeElement as HTMLImageElement).naturalWidth
     const height = (this.logo.nativeElement as HTMLImageElement).naturalHeight
 
     let gcd = this.calculateAspectRatio(width, height);
     const ratio = width / gcd + ':' + height / gcd;
     this.validAspectRatios.includes(ratio) ? this.inValidImageFormat = false : this.inValidImageFormat = true;
+    if (this.inValidImageFormat) {
+      this.toast.error('Unsupported Image Format', 'Image Format not supported for Instagram');
+      this.url = ""
+      this.file = null;
+    }
   }
 
   calculateAspectRatio(a, b) {
@@ -306,6 +312,7 @@ export class InstagramComponent implements OnInit {
   }
 
   addImagePost() {
+   
     if (!this.file) {
       this.toast.error('Please select an Image File', 'Empty File');
       return;
@@ -433,8 +440,23 @@ export class InstagramComponent implements OnInit {
     ;
     this.file = event.target.files && event.target.files[0];
     if (this.file) {
+      // debugger
+      // const width = (this.logo.nativeElement as HTMLImageElement).naturalWidth
+      // const height = (this.logo.nativeElement as HTMLImageElement).naturalHeight
+  
+      // let gcd = this.calculateAspectRatio(width, height);
+      // const ratio = width / gcd + ':' + height / gcd;
+      // this.validAspectRatios.includes(ratio) ? this.inValidImageFormat = false : this.inValidImageFormat = true;
+      // if (this.inValidImageFormat) {
+      //   this.toast.error('Unsupported Image Format', 'Image Format not supported for Instagram');
+      //   this.url = ""
+        
+      // }
+
+      // console.log('Is Unsupported',this.inValidImageFormat)
       var reader = new FileReader();
       reader.readAsDataURL(this.file);
+      debugger
       if (this.file.type.indexOf('image') > -1) {
         this.format = 'image';
       } else if (this.file.type.indexOf('video') > -1) {
