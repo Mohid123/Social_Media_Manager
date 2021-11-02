@@ -8,11 +8,13 @@ import { PipeResolver } from '@angular/compiler';
 import { environment } from 'src/environments/environment';
 import { MediauploadService } from './../mediaupload.service';
 import { VideoProcessingService } from '../video-service/video-processing.service';
+import { Media } from '../../models/media-model';
 @Injectable({
   providedIn: 'root'
 })
 export class ClubpostService {
   private post: Post
+  private media: Media
   private userClubID : string = localStorage.getItem("clubUid");
   public postedSuccessfully: EventEmitter<any> = new EventEmitter();
   constructor(private _reportService: ReportService,
@@ -22,6 +24,7 @@ export class ClubpostService {
     private _videoService: VideoProcessingService,
     private _mediaUploadService: MediauploadService) {
     this.post = new Post()
+    this.media = new Media()
   }
 
   createTextPost(postedText, postedTo , selectedList) {
@@ -96,6 +99,7 @@ export class ClubpostService {
     this.post.text = postedText;
     this.post.postedTo = postedTo;
     this.post.userID = this.userClubID;
+    this.media.type = Object.assign({},this.post.type)
     if (postedTo == 'Group') {
       delete this.post.eventID;
     }

@@ -23,6 +23,7 @@ import { isTemplateMiddle } from "typescript";
 import { DatePickerOptions } from "@ngx-tiny/date-picker";
 import { TimePickerOptions } from "@ngx-tiny/time-picker/ngx-time-picker.options";
 import { Poll } from "src/app/core/models/poll.model";
+import { Media } from "src/app/core/models/media-model";
 import * as moment from "moment";
 import { ThisReceiver } from "@angular/compiler";
 import { ClubpostService } from './../../core/services/club-post/clubpost.service';
@@ -42,6 +43,7 @@ export class TeamtalkersComponent implements OnInit {
   public teamtalkerCaption: string = "";
   public editedPostText: string
   public poll: Poll;
+  public media: Media;
   public clubName: string;
   public clubLogo: string;
   public url: string;
@@ -54,6 +56,8 @@ export class TeamtalkersComponent implements OnInit {
   public searchString: string;
   public tempList: any = [];
   public checklist: any = [];
+  urls: any[] = [];
+  value: number[];
   public masterSelected: boolean;
   public groupSelected: boolean = false;
   public eventSelected: boolean = false;
@@ -65,7 +69,7 @@ export class TeamtalkersComponent implements OnInit {
     photo: true,
     video: false,
     text: false,
-    poll: false,
+    poll: false
   };
   scheduleSelectedDate: any;
   scheduleSelectedTime: Date;
@@ -100,6 +104,7 @@ export class TeamtalkersComponent implements OnInit {
     this.post = new Post();
     this.report = new Report();
     this.poll = new Poll();
+    this.media = new Media();
   }
 
 
@@ -140,7 +145,6 @@ export class TeamtalkersComponent implements OnInit {
   }
 
   getLatestClubPosts() {
-    debugger
     let tempPosts = []
     this._postService.getClubPosts('Club', 0, 15).subscribe((clubPosts: Post[]) => {
       clubPosts.map((singleClubPost: any, idx, self) => {
@@ -166,6 +170,7 @@ export class TeamtalkersComponent implements OnInit {
   resetPost() {
     this.teamtalkerCaption = "";
     this.url = null;
+    this.urls = null;
     this.file = null;
     this.poll = new Poll();
     this.singleDate = new Date(new Date().setDate(new Date().getDate() + 1));
@@ -382,7 +387,32 @@ export class TeamtalkersComponent implements OnInit {
     }
   }
 
+
   onSelectFile(event) {
+    this.file = event.target.files && event.target.files[0];
+    if (this.file) {
+      var filesAmount = event.target.files.length;
+      for (let i = 0; i < filesAmount; i++) {
+        var reader = new FileReader();
+        if (event.target.files.length < 5) {
+          if (this.file.type.indexOf("image") > -1) {
+            this.format = "image";
+            reader.onload = (event: any) => {
+              this.urls.push(<FileReader>event.target.result);
+              this.cf.detectChanges();
+            };
+          }
+        } else {
+          this.toast.error('No more than 4 images', 'Image Upload');
+          this.cf.detectChanges();
+        }
+        reader.readAsDataURL(event.target.files[i]);
+      }
+    }
+  }
+
+
+  onSelectVideo(event) {
     let fileSize;
     this.file = event.target.files && event.target.files[0];
     fileSize = (this.file.size / (1024 * 1024)).toFixed(2) + 'MB';
@@ -391,13 +421,12 @@ export class TeamtalkersComponent implements OnInit {
     if (this.file) {
       var reader = new FileReader();
       reader.readAsDataURL(this.file);
-      if (this.file.type.indexOf("image") > -1) {
-        this.format = "image";
-      } else if (this.file.type.indexOf("video") > -1) {
+      if (this.file.type.indexOf("video") > -1) {
         this.format = "video";
       }
       reader.onload = (event) => {
         this.url = (<FileReader>event.target).result as string;
+        console.log(this.url)
         this.cf.detectChanges();
       };
       event.target.value = "";
@@ -469,21 +498,16 @@ export class TeamtalkersComponent implements OnInit {
   }
 
   addImagePost() {
-    
-    ;
     let groups = [];
     let events = [];
-    let club = []
-
-    if (!this.file) {
+    let club = [];
+  
+    if (!this.urls) {
       this.toast.error("Please Select Image File to post", "No File Selected");
       return;
     } else if (this.checkedList.length == 0) {
       this.toast.error('Please select atleast one Item from (Club, Group or Event)');
       return;
-    }
-    else if(this.file.type.includes('video')){
-      this.toast.error('Please select an image file');
     }
 
     this.checkedList.filter((item) => {
@@ -492,13 +516,19 @@ export class TeamtalkersComponent implements OnInit {
       } else if (item.hasOwnProperty("eventName")) {
         events.push(item);
       } else if (item.hasOwnProperty("clubName")) {
-        club.push(item)
+        club.push(item);
       }
+  
     });
-    ;
     if (club.length > 0) {
       this._genericPostService.createImagePost(this.teamtalkerCaption, 'Club', this.signedInUser.id, this.file, club).then(success => {
-        this.resetPost()
+        this.media.type = this.post.type;
+        this.media.captureFileURL = this.post.captureFileURL;
+        this.media.path = this.post.path
+        this.media.thumbnailURL = "null";
+        this.media.thumbnailPath = "null";
+        this.post.media = Object.assign({}, this.media)
+       this.resetPost()
       })
     }
 
@@ -517,7 +547,7 @@ export class TeamtalkersComponent implements OnInit {
   }
 
   addVideoPost() {
-    ;
+    
     let groups = [];
     let events = [];
     let club = []

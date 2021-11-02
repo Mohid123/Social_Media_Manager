@@ -30,12 +30,12 @@
                 </div>
             </div>
             <div class="card-body" style="padding: 0px;">
-                <div class=" custom-scrollbar-css p-2" style="height: auto;">
-                    <div class="card-header border-0 pt-5">
+                <div class="p-2 custom-scrollbar-css" style="height: auto;">
+                    <div class="pt-5 border-0 card-header">
                         <!-- <form class="form-inline md-form form-sm d-flex justify-content-center">
                             <mdb-icon fas icon="search" aria-hidden="true"></mdb-icon>
                             <input [(ngModel)]="searchString" (ngModelChange)="searchGroupsAndEvents($event)"
-                                [ngModelOptions]="{standalone: true}" class="form-control form-control-sm ml-3 w-75"
+                                [ngModelOptions]="{standalone: true}" class="ml-3 form-control form-control-sm w-75"
                                 type="text" placeholder="Search" aria-label="Search" mdbInput>
                         </form> -->
 
@@ -55,7 +55,7 @@
 
                     <!--end::Header-->
                     <!--begin::Body-->
-                    <div class="card-body py-0" style="padding: 0px;">
+                    <div class="py-0 card-body" style="padding: 0px;">
                         <!--begin::Table-->
                         <div>
 
@@ -77,10 +77,10 @@
                                 </tr>
 
                                 <tbody>
-                                    <th class="pr-0 pt-5 pb-5 text-left">
+                                    <th class="pt-5 pb-5 pr-0 text-left">
 
-                                        <span class="label label-xl label-dark label-inline mr-2"><i
-                                                class="fas fa-medal icon-md mr-2" style="color: white"></i>Club</span>
+                                        <span class="mr-2 label label-xl label-dark label-inline"><i
+                                                class="mr-2 fas fa-medal icon-md" style="color: white"></i>Club</span>
                                     </th>
                                     <tr *ngFor="let item of checklist">
 
@@ -93,11 +93,11 @@
                                                         <span></span>
 
 
-                                                        <div class="symbol symbol-30 symbol-light mr-2"
+                                                        <div class="mr-2 symbol symbol-30 symbol-light"
                                                             style="padding-left: 10px">
                                                             <span class="symbol-label">
                                                                 <img src="{{item.captureImageURL}}"
-                                                                    class="h-100 align-self-end rounded"
+                                                                    class="rounded h-100 align-self-end"
                                                                     style="object-fit: cover; width: 100%" alt="" />
                                                             </span>
                                                         </div>
@@ -112,11 +112,11 @@
                                             </td>
                                         </ng-container>
                                     </tr>
-                                    <th class="pr-0 pt-5 pb-5 text-left bg-gray-100">
+                                    <th class="pt-5 pb-5 pr-0 text-left bg-gray-100">
 
-                                        <span class="label label-xl label-dark label-inline mr-2 "><i
-                                                class="fas fa-users icon-md mr-2" style="color: white"></i>Group</span>
-                                        <label class="checkbox checkbox-sm checkbox-inline mt-5">
+                                        <span class="mr-2 label label-xl label-dark label-inline "><i
+                                                class="mr-2 fas fa-users icon-md" style="color: white"></i>Group</span>
+                                        <label class="mt-5 checkbox checkbox-sm checkbox-inline">
                                             <input [(ngModel)]="groupSelected" name="list_name" value="m1"
                                                 (change)="selectAllGroups()" type="checkbox" value="1" />
 
@@ -136,11 +136,11 @@
                                                         <span></span>
 
 
-                                                        <div class="symbol symbol-30 symbol-light mr-2"
+                                                        <div class="mr-2 symbol symbol-30 symbol-light"
                                                             style="padding-left: 10px">
                                                             <span class="symbol-label">
                                                                 <img src="{{item.captureImageURL}}"
-                                                                    class="h-100 align-self-end rounded"
+                                                                    class="rounded h-100 align-self-end"
                                                                     style="object-fit: cover; width: 100%" alt="" />
                                                             </span>
                                                         </div>
@@ -155,12 +155,12 @@
                                             </td>
                                         </ng-container>
                                     </tr>
-                                    <th class="pr-0 pt-5 pb-5 text-left bg-gray-100">
+                                    <th class="pt-5 pb-5 pr-0 text-left bg-gray-100">
 
-                                        <span class="label label-xl label-dark label-inline mr-2"> <i
-                                                class="far fa-calendar-alt icon-md mr-2" style="color: white"></i>
+                                        <span class="mr-2 label label-xl label-dark label-inline"> <i
+                                                class="mr-2 far fa-calendar-alt icon-md" style="color: white"></i>
                                             Event</span>
-                                        <label class="checkbox checkbox-sm checkbox-inline mt-5">
+                                        <label class="mt-5 checkbox checkbox-sm checkbox-inline">
                                             <input [(ngModel)]="eventSelected" name="list_name" value="m1"
                                                 (change)="selectAllEvents()" type="checkbox" value="1" />
 
@@ -180,11 +180,11 @@
                                                         <span></span>
 
 
-                                                        <div class="symbol symbol-30 symbol-light mr-2"
+                                                        <div class="mr-2 symbol symbol-30 symbol-light"
                                                             style="padding-left: 10px">
                                                             <span class="symbol-label">
                                                                 <img src="{{item.captureImageURL}}"
-                                                                    class="h-100 align-self-end rounded"
+                                                                    class="rounded h-100 align-self-end"
                                                                     style="width: 100%; height: 100%; object-fit: cover;"
                                                                     alt="" />
                                                             </span>
@@ -282,16 +282,16 @@
                                         <!--begin::Top-->
                                         <form class="form-inline">
 
-                                            <div class="symbol symbol-50 symbol-light mr-5 pb-5">
+                                            <div class="pb-5 mr-5 symbol symbol-50 symbol-light">
                                                 <span class="symbol-label">
-                                                    <img [src]="profileImageUrl" class="h-100 align-self-center rounded"
+                                                    <img [src]="profileImageUrl" class="rounded h-100 align-self-center"
                                                         style="object-fit: cover; width: 100%" alt="" />
                                                 </span>
                                             </div>
 
                                             <div class="d-flex flex-column flex-grow-1 font-weight-bold">
                                                 <a
-                                                    class="text-dark text-hover-primary mb-1 font-size-lg pb-12">{{userName}}</a>
+                                                    class="pb-12 mb-1 text-dark text-hover-primary font-size-lg">{{userName}}</a>
 
                                             </div>
 
@@ -308,7 +308,7 @@
                                             <input [(ngModel)]="showSchedule" name="list_name" value="m1" (click)="selectedSchedule()" type="checkbox" value="1"/>
                                     
                                             <span></span> 
-                                            <div class="btn btn-icon btn-light w-auto btn-clean d-inline-flex align-items-center btn-lg px-2 mr-5 ml-2">
+                                            <div class="w-auto px-2 ml-2 mr-5 btn btn-icon btn-light btn-clean d-inline-flex align-items-center btn-lg">
                                                 <span class="symbol symbol-35 symbol-light-primary">
                                                     <span class="symbol-label"><a  class="btn btn-icon btn-sm ">
                                                         <i class="flaticon-calendar-with-a-clock-time-tools icon-lg"></i>
@@ -325,7 +325,7 @@
                                             <!--begin::Editor-->
 
                                             <!--end::Editor-->
-                                            <div class="border-top my-5"></div>
+                                            <div class="my-5 border-top"></div>
                                             <!--begin::Toolbar-->
                                             <div *ngIf="!showSchedule" id="kt_forms_widget_2_editor_toolbar" class="ql-toolbar d-flex align-items-center justify-content-between">
 
@@ -338,7 +338,7 @@
                                                                 <label for="file-input">
 
                                                                     <div
-                                                                        class="btn btn-icon btn-light w-auto btn-clean d-inline-flex align-items-center btn-lg px-2 mr-5">
+                                                                        class="w-auto px-2 mr-5 btn btn-icon btn-light btn-clean d-inline-flex align-items-center btn-lg">
                                                                         <span
                                                                             class="symbol symbol-35 symbol-light-primary">
                                                                             <span class="symbol-label"><a
@@ -370,13 +370,13 @@
                                                     <div class="p-2">
 
                                                     </div>
-                                                    <div class="ml-auto p-2 ">
+                                                    <div class="p-2 ml-auto ">
                                                         <button (click)="resetPost()" type="button"
                                                             class="btn btn-transparent-warning">Clear</button>
                                                     </div>
-                                                    <div class="ml-auto p-2">
+                                                    <div class="p-2 ml-auto">
                                                         <button (click)="addImagePost()" type="button"
-                                                            class="btn btn-primary flex-row-reverse"
+                                                            class="flex-row-reverse btn btn-primary"
                                                             style="background-color: #3b5998; border-color: #3b5998;">Post
                                                             Now</button>
                                                     </div>
@@ -420,7 +420,7 @@
                                                             <div class="image-upload">
                                                                 <label for="file-input">
     
-                                                                    <div class="btn btn-icon btn-light w-auto btn-clean d-inline-flex align-items-center btn-lg px-2 mr-5">
+                                                                    <div class="w-auto px-2 mr-5 btn btn-icon btn-light btn-clean d-inline-flex align-items-center btn-lg">
                                                                         <span
                                                                             class="symbol symbol-35 symbol-light-primary">
                                                                             <span class="symbol-label"><a
@@ -452,7 +452,7 @@
                                                                 <label for="file-input">
 
                                                                     <div
-                                                                        class="btn btn-icon btn-light w-auto btn-clean d-inline-flex align-items-center btn-lg px-2 mr-5">
+                                                                        class="w-auto px-2 mr-5 btn btn-icon btn-light btn-clean d-inline-flex align-items-center btn-lg">
                                                                         <span
                                                                             class="symbol symbol-35 symbol-light-primary">
                                                                             <span class="symbol-label"><a
@@ -469,7 +469,7 @@
                                                                 </label>
 
                                                                 <input id="file-input" type="file" accept="video/*"
-                                                                    name="myfile" (change)="onSelectFile($event)"
+                                                                    name="myfile" (change)="onSelectVideo($event)"
                                                                     multiple />
                                                             </div>
                                                         </div>
@@ -478,7 +478,7 @@
                                                     <div class="p-2">
 
                                                     </div>
-                                                    <div class="ml-auto p-2"></div>
+                                                    <div class="p-2 ml-auto"></div>
                                                 </div>
                                                  <div class="d-flex">
                                                     <div class="p-2">
@@ -487,13 +487,13 @@
                                                     <div class="p-2">
     
                                                     </div>
-                                                    <div class="ml-auto p-2 ">
+                                                    <div class="p-2 ml-auto ">
                                                         <button (click)="resetPost()" type="button"
                                                             class="btn btn-transparent-warning">Clear</button>
                                                     </div>
-                                                    <div class="ml-auto p-2">
+                                                    <div class="p-2 ml-auto">
                                                         <button (click)="scheduleImagePost('image')" type="button"
-                                                            class="btn btn-primary flex-row-reverse"
+                                                            class="flex-row-reverse btn btn-primary"
                                                             style="background-color: #3b5998; border-color: #3b5998;">Schedule</button>
                                                     </div>
                                                 </div>
@@ -533,16 +533,16 @@
                                         <!--begin::Top-->
                                         <form class="form-inline">
 
-                                            <div class="symbol symbol-50 symbol-light mr-5 pb-5">
+                                            <div class="pb-5 mr-5 symbol symbol-50 symbol-light">
                                                 <span class="symbol-label">
-                                                    <img [src]="profileImageUrl" class="h-100 align-self-center rounded"
+                                                    <img [src]="profileImageUrl" class="rounded h-100 align-self-center"
                                                         style="object-fit: cover; width: 100%" alt="" />
                                                 </span>
                                             </div>
 
                                             <div class="d-flex flex-column flex-grow-1 font-weight-bold">
                                                 <a
-                                                    class="text-dark text-hover-primary mb-1 font-size-lg pb-12">{{userName}}</a>
+                                                    class="pb-12 mb-1 text-dark text-hover-primary font-size-lg">{{userName}}</a>
 
                                             </div>
 
@@ -560,7 +560,7 @@
                                             <input [(ngModel)]="showSchedule"  name="list_name" value="m1" (click)="selectedSchedule()" type="checkbox" value="1"/>
                                         
                                             <span></span> 
-                                            <div class="btn btn-icon btn-light w-auto btn-clean d-inline-flex align-items-center btn-lg px-2 mr-5 ml-2">
+                                            <div class="w-auto px-2 ml-2 mr-5 btn btn-icon btn-light btn-clean d-inline-flex align-items-center btn-lg">
                                                 <span class="symbol symbol-35 symbol-light-primary">
                                                     <span class="symbol-label"><a  class="btn btn-icon btn-sm ">
                                                         <i class="flaticon-calendar-with-a-clock-time-tools icon-lg"></i>
@@ -577,7 +577,7 @@
 
                                           
                                             
-                                            <div class="border-top my-5"></div>
+                                            <div class="my-5 border-top"></div>
                                            
                                             <div id="kt_forms_widget_2_editor_toolbar"
                                                 class="ql-toolbar d-flex align-items-center justify-content-between"
@@ -589,7 +589,7 @@
                                                                 <label for="file-input">
 
                                                                     <div
-                                                                        class="btn btn-icon btn-light w-auto btn-clean d-inline-flex align-items-center btn-lg px-2 mr-5">
+                                                                        class="w-auto px-2 mr-5 btn btn-icon btn-light btn-clean d-inline-flex align-items-center btn-lg">
                                                                         <span
                                                                             class="symbol symbol-35 symbol-light-primary">
                                                                             <span class="symbol-label"><a
@@ -606,7 +606,7 @@
                                                                 </label>
 
                                                                 <input id="file-input" type="file" accept="video/*"
-                                                                    name="myfile" (change)="onSelectFile($event)"
+                                                                    name="myfile" (change)="onSelectVideo($event)"
                                                                     multiple />
                                                             </div>
                                                         </div>
@@ -615,7 +615,7 @@
                                                     <div class="p-2">
 
                                                     </div>
-                                                    <div class="ml-auto p-2"></div>
+                                                    <div class="p-2 ml-auto"></div>
                                                 </div>
                                                 <div class="d-flex">
                                                     <div class="p-2">
@@ -624,13 +624,13 @@
                                                     <div class="p-2">
 
                                                     </div>
-                                                    <div class="ml-auto p-2">
+                                                    <div class="p-2 ml-auto">
                                                         <button (click)="resetPost()" type="button"
                                                             class="btn btn-transparent-warning">Clear</button>
                                                     </div>
-                                                    <div class="ml-auto p-2">
+                                                    <div class="p-2 ml-auto">
                                                         <button (click)="addVideoPost()" type="button"
-                                                            class="btn btn-primary flex-row-reverse" style="background-color: #3b5998; border-color: #3b5998;">Post Now</button>
+                                                            class="flex-row-reverse btn btn-primary" style="background-color: #3b5998; border-color: #3b5998;">Post Now</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -671,7 +671,7 @@
                                                                 <div class="image-upload">
                                                                     <label for="file-input">
         
-                                                                        <div class="btn btn-icon btn-light w-auto btn-clean d-inline-flex align-items-center btn-lg px-2 mr-5">
+                                                                        <div class="w-auto px-2 mr-5 btn btn-icon btn-light btn-clean d-inline-flex align-items-center btn-lg">
                                                                             <span
                                                                                 class="symbol symbol-35 symbol-light-primary">
                                                                                 <span class="symbol-label"><a
@@ -688,7 +688,7 @@
                                                                     </label>
         
                                                                     <input id="file-input" type="file" accept="video/*"
-                                                                        name="myfile" (change)="onSelectFile($event)"
+                                                                        name="myfile" (change)="onSelectVideo($event)"
                                                                         multiple />
                                                                 </div>
         
@@ -703,13 +703,13 @@
                                                         <div class="p-2">
         
                                                         </div>
-                                                        <div class="ml-auto p-2 ">
+                                                        <div class="p-2 ml-auto ">
                                                             <button (click)="resetPost()" type="button"
                                                                 class="btn btn-transparent-warning">Clear</button>
                                                         </div>
-                                                        <div class="ml-auto p-2">
+                                                        <div class="p-2 ml-auto">
                                                             <button (click)="scheduleVideoPost('video')" type="button"
-                                                                class="btn btn-primary flex-row-reverse"
+                                                                class="flex-row-reverse btn btn-primary"
                                                                 style="background-color: #3b5998; border-color: #3b5998;">Schedule</button>
                                                         </div>
                                                     </div>
@@ -745,16 +745,16 @@
                                         <!--begin::Top-->
                                         <form class="form-inline">
 
-                                            <div class="symbol symbol-50 symbol-light mr-5 pb-5">
+                                            <div class="pb-5 mr-5 symbol symbol-50 symbol-light">
                                                 <span class="symbol-label">
-                                                    <img [src]="profileImageUrl" class="h-100 align-self-center rounded"
+                                                    <img [src]="profileImageUrl" class="rounded h-100 align-self-center"
                                                         style="object-fit: cover; width: 100%" alt="" />
                                                 </span>
                                             </div>
 
                                             <div class="d-flex flex-column flex-grow-1 font-weight-bold">
                                                 <a
-                                                    class="text-dark text-hover-primary mb-1 font-size-lg pb-12">{{userName}}</a>
+                                                    class="pb-12 mb-1 text-dark text-hover-primary font-size-lg">{{userName}}</a>
 
                                             </div>
 
@@ -770,7 +770,7 @@
                                             <input [(ngModel)]="showSchedule" name="list_name" value="m1" (click)="selectedSchedule()" type="checkbox" value="1"/>
                                         
                                             <span></span> 
-                                            <div class="btn btn-icon btn-light w-auto btn-clean d-inline-flex align-items-center btn-lg px-2 mr-5 ml-2">
+                                            <div class="w-auto px-2 ml-2 mr-5 btn btn-icon btn-light btn-clean d-inline-flex align-items-center btn-lg">
                                                 <span class="symbol symbol-35 symbol-light-primary">
                                                     <span class="symbol-label"><a  class="btn btn-icon btn-sm ">
                                                         <i class="flaticon-calendar-with-a-clock-time-tools icon-lg"></i>
@@ -784,7 +784,7 @@
                                         </label>
                                         <form id="kt_forms_widget_2_form" class="pt-10 ql-quil ql-quil-plain">
 
-                                            <div class="border-top my-5"></div>
+                                            <div class="my-5 border-top"></div>
                                             <!--begin::Toolbar-->
                                             <div *ngIf="!showSchedule" id="kt_forms_widget_2_editor_toolbar"
                                                 class="ql-toolbar d-flex align-items-center justify-content-between">
@@ -804,7 +804,7 @@
                                                             </span> -->
                                                         </div>
                                                     </div>
-                                                    <div class="ml-auto p-2"></div>
+                                                    <div class="p-2 ml-auto"></div>
                                                 </div>
                                                 <div class="d-flex">
                                                     <div class="p-2">
@@ -813,13 +813,13 @@
                                                     <div class="p-2">
 
                                                     </div>
-                                                    <div class="ml-auto p-2">
+                                                    <div class="p-2 ml-auto">
                                                         <button (click)="resetPost()" type="button"
                                                             class="btn btn-transparent-warning">Clear</button>
                                                     </div>
-                                                    <div class="ml-auto p-2">
+                                                    <div class="p-2 ml-auto">
                                                         <button (click)="addTextPost()" type="button"
-                                                            class="btn btn-primary flex-row-reverse" style="background-color: #3b5998; border-color: #3b5998;">Post Now</button>
+                                                            class="flex-row-reverse btn btn-primary" style="background-color: #3b5998; border-color: #3b5998;">Post Now</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -849,7 +849,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="row d-block mb-10">
+                                                <div class="mb-10 row d-block">
                                                     <div class="d-flex" >
                                                         <div class="p-2">
                                                             <div class="p-2">
@@ -866,7 +866,7 @@
                                                                 </span> -->
                                                             </div>
                                                         </div>
-                                                        <div class="ml-auto p-2"></div>
+                                                        <div class="p-2 ml-auto"></div>
                                                     </div>
                                                     <div class="d-flex" style="float: right;">
                                                         <div class="p-2">
@@ -875,13 +875,13 @@
                                                         <div class="p-2">
     
                                                         </div>
-                                                        <div class="ml-auto p-2">
+                                                        <div class="p-2 ml-auto">
                                                             <button (click)="resetPost()" type="button"
                                                                 class="btn btn-transparent-warning">Clear</button>
                                                         </div>
-                                                        <div class="ml-auto p-2">
+                                                        <div class="p-2 ml-auto">
                                                             <button (click)="scheduleTextPost('text')" type="button"
-                                                                class="btn btn-primary flex-row-reverse" style="background-color: #3b5998; border-color: #3b5998;">Schedule</button>
+                                                                class="flex-row-reverse btn btn-primary" style="background-color: #3b5998; border-color: #3b5998;">Schedule</button>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -916,16 +916,16 @@
 
                                         <form class="form-inline">
 
-                                            <div class="symbol symbol-50 symbol-light mr-5 pb-5">
+                                            <div class="pb-5 mr-5 symbol symbol-50 symbol-light">
                                                 <span class="symbol-label">
-                                                    <img [src]="profileImageUrl" class="h-100 align-self-center rounded"
+                                                    <img [src]="profileImageUrl" class="rounded h-100 align-self-center"
                                                         style="object-fit: cover; width: 100%" alt="" />
                                                 </span>
                                             </div>
 
                                             <div class="d-flex flex-column flex-grow-1 font-weight-bold">
                                                 <a
-                                                    class="text-dark text-hover-primary mb-1 font-size-lg pb-12">{{userName}}</a>
+                                                    class="pb-12 mb-1 text-dark text-hover-primary font-size-lg">{{userName}}</a>
                                             </div>
 
                                         </form>
@@ -994,7 +994,7 @@
                                             <input [(ngModel)]="showSchedule"  class="d-inline" name="list_name" value="m1" (click)="selectedSchedule()" type="checkbox" value="1"/>
                                         
                                             <span></span> 
-                                            <div class="btn btn-icon btn-light w-auto btn-clean d-inline-flex align-items-center btn-lg px-2 mr-5 ml-2">
+                                            <div class="w-auto px-2 ml-2 mr-5 btn btn-icon btn-light btn-clean d-inline-flex align-items-center btn-lg">
                                                 <span class="symbol symbol-35 symbol-light-primary">
                                                     <span class="symbol-label"><a  class="btn btn-icon btn-sm ">
                                                         <i class="flaticon-calendar-with-a-clock-time-tools icon-lg"></i>
@@ -1011,7 +1011,7 @@
 
                                             <div id="kt_forms_widget_2_editor">
                                             </div>
-                                            <div class="border-top my-5"></div>
+                                            <div class="my-5 border-top"></div>
                                             <div *ngIf="!showSchedule" id="kt_forms_widget_2_editor_toolbar"
                                             class="ql-toolbar d-flex align-items-center justify-content-between">
                                             <div class="d-flex">
@@ -1030,7 +1030,7 @@
                                                         </span> -->
                                                     </div>
                                                 </div>
-                                                <div class="ml-auto p-2"></div>
+                                                <div class="p-2 ml-auto"></div>
                                             </div>
                                             <div class="d-flex">
                                                 <div class="p-2">
@@ -1039,13 +1039,13 @@
                                                 <div class="p-2">
 
                                                 </div>
-                                                <div class="ml-auto p-2">
+                                                <div class="p-2 ml-auto">
                                                     <button (click)="resetPost()" type="button"
                                                         class="btn btn-transparent-warning">Clear</button>
                                                 </div>
-                                                <div class="ml-auto p-2">
+                                                <div class="p-2 ml-auto">
                                                     <button (click)="addPollPost()" type="button"
-                                                        class="btn btn-primary flex-row-reverse" style="background-color: #3b5998; border-color: #3b5998;">Post Now</button>
+                                                        class="flex-row-reverse btn btn-primary" style="background-color: #3b5998; border-color: #3b5998;">Post Now</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -1075,7 +1075,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="row d-block mb-10">
+                                            <div class="mb-10 row d-block">
                                                 <div class="d-flex" >
                                                     <div class="p-2">
                                                         <div class="p-2">
@@ -1092,7 +1092,7 @@
                                                             </span> -->
                                                         </div>
                                                     </div>
-                                                    <div class="ml-auto p-2"></div>
+                                                    <div class="p-2 ml-auto"></div>
                                                 </div>
                                                 <div class="d-flex" style="float: right;">
                                                     <div class="p-2">
@@ -1101,13 +1101,13 @@
                                                     <div class="p-2">
 
                                                     </div>
-                                                    <div class="ml-auto p-2">
+                                                    <div class="p-2 ml-auto">
                                                         <button (click)="resetPost()" type="button"
                                                             class="btn btn-transparent-warning">Clear</button>
                                                     </div>
-                                                    <div class="ml-auto p-2">
+                                                    <div class="p-2 ml-auto">
                                                         <button (click)="addPollPost()" type="button"
-                                                            class="btn btn-primary flex-row-reverse" style="background-color: #3b5998; border-color: #3b5998;">Schedule</button>
+                                                            class="flex-row-reverse btn btn-primary" style="background-color: #3b5998; border-color: #3b5998;">Schedule</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1146,10 +1146,10 @@
                     </div>
 
                     <div class="card-body">
-                        <div *ngFor="let post of recentClubPosts" class="border rounded m-6"
+                        <div *ngFor="let post of recentClubPosts" class="m-6 border rounded"
                             style="box-shadow: rgb(99 99 99 / 20%) 0px 2px 8px 0px;">
                             <div class="preview-facebook preview-media-post item-post-type" data-type="photo">
-                                <div class="row pt-5">
+                                <div class="pt-5 row">
                                     <div class="col">
                                         <div class="user-info d-inline-block" style="z-index: 1; padding: 10px 25px;
                                         position: relative;">
@@ -1176,15 +1176,15 @@
 
                                     <!-- EDIT & DELETE -->
 
-                                    <div class="col text-right">
+                                    <div class="text-right col">
                                         <div ngbDropdown placement="bottom-right" class="d-inline-block">
                                             <button class="btn" id="dropdownBasic1" ngbDropdownToggle><i
                                                     class="ki ki-bold-more-hor" style="color:black"></i></button>
                                             <div ngbDropdownMenu aria-labelledby="dropdownBasic1" >
                                                 <button (click)="openEditPostDaialog(editPostDialog , post)" ngbDropdownItem><i
-                                                        class="fas fa-edit mr-2 text-dark"></i>Edit</button>
+                                                        class="mr-2 fas fa-edit text-dark"></i>Edit</button>
                                                 <button (click)="deletePost(post)" ngbDropdownItem><i
-                                                        class="fas fa-trash-alt mr-2 text-dark"></i>Delete</button>
+                                                        class="mr-2 fas fa-trash-alt text-dark"></i>Delete</button>
                                             </div>
                                         </div>
 
@@ -1199,7 +1199,7 @@
                                             <div class="modal-header d-flex justify-content-center"
                                                 style="background-color: #1e1e2d; border-bottom: none;">
                                                 <h4 class="modal-title" style="color: #fff;">Edit Post</h4>
-                                                <button type="button" class="close ml-auto" aria-label="Close" (click)="d('Cross click')"> <i class="ki ki-bold-close icon-sm" style="color:rgba(255, 255, 255, 0.877)"></i>
+                                                <button type="button" class="ml-auto close" aria-label="Close" (click)="d('Cross click')"> <i class="ki ki-bold-close icon-sm" style="color:rgba(255, 255, 255, 0.877)"></i>
                                                     <span aria-hidden="true">&times;</span>
                                                   </button>
                                             </div>
@@ -1246,7 +1246,7 @@
                                                         (ended)="onVideoEnded()" controlsList="nodownload"></video>
                                                  
                                                 </div>
-                                                <div *ngIf="post.type == 'image' || post.type == 'video'" class="form-group m-3">
+                                                <div *ngIf="post.type == 'image' || post.type == 'video'" class="m-3 form-group">
                                                     <textarea [(ngModel)]="editedPostText" style="height: 100px;" class="form-control form-control-lg form-control-solid"
                                                         id="exampleTextarea" rows="3"
                                                         placeholder="What’s on your mind, {{userName}}?">{{post.text}}</textarea>
@@ -1279,12 +1279,12 @@
                                                 <!-- <div class="preview-comment">
                                                     <div class="row">
                                                         <div class="col-12 item">
-                                                            <i class="far fa-heart mr-2" style="color: black;"></i>Like
+                                                            <i class="mr-2 far fa-heart" style="color: black;"></i>Like
                                                             &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
-                                                            <i class="far fa-comment-dots mr-2"
+                                                            <i class="mr-2 far fa-comment-dots"
                                                                 style="color: black;"></i>Comment &nbsp;
                                                             &nbsp;&nbsp;&nbsp;&nbsp;
-                                                            <i class="fas fa-share mr-2" style="color: black;"></i>Share
+                                                            <i class="mr-2 fas fa-share" style="color: black;"></i>Share
                                                         </div>
                                                         <div class="col item">
                                                         </div>
@@ -1340,7 +1340,7 @@
                                                 style="background-color: #1e1e2d; border-bottom: none;">
                                                 <h4 class="modal-title" style="color: #fff;">Video</h4>
                                                 
-                                                <button type="button" class="close ml-auto" aria-label="Close"
+                                                <button type="button" class="ml-auto close" aria-label="Close"
                                                     (click)="d('Cross click')"> <i class="ki ki-bold-close icon-sm" style="color:rgba(255, 255, 255, 0.877)"></i>
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
@@ -1363,33 +1363,33 @@
 
                                 <!--HYPERLINK POST DESIGN-->
                                 <div *ngIf="post.hyperLink != ''"
-                                    class="card card-custom mb-8 mb-lg-0 rounded border mt-3 ml-3 mr-3">
-                                    <div class="card-body p-0">
-                                        <div class="d-flex align-items-center p-5">
+                                    class="mt-3 mb-8 ml-3 mr-3 border rounded card card-custom mb-lg-0">
+                                    <div class="p-0 card-body">
+                                        <div class="p-5 d-flex align-items-center">
                                             <div class="mr-6">
-                                                <span class="svg-icon svg-icon-4x rounded">
-                                                    <div class="symbol symbol-80 symbol-light mr-2 "
+                                                <span class="rounded svg-icon svg-icon-4x">
+                                                    <div class="mr-2 symbol symbol-80 symbol-light "
                                                         style="padding-left: 10px">
-                                                        <span class="symbol-label rounded">
+                                                        <span class="rounded symbol-label">
                                                             <img *ngIf="post.type == 'hyperlink' && post.captureFileURL === '' "
                                                                 src="https://api.teamtalkers.com/api/v1/en/media-upload/mediaFiles/html/html/7bd046a8c10bcfba8800951fc2a9063f9.jpg"
-                                                                class="h-100 align-self-end rounded"
+                                                                class="rounded h-100 align-self-end"
                                                                 style="object-fit: cover;    width: -webkit-fill-available;"
                                                                 alt="" />
                                                             <img *ngIf="post.type != 'hyperlink' && post.hyperlinkCaptureFileURL === '' "
                                                                 src="https://api.teamtalkers.com/api/v1/en/media-upload/mediaFiles/html/html/7bd046a8c10bcfba8800951fc2a9063f9.jpg"
-                                                                class="h-100 align-self-end rounded"
+                                                                class="rounded h-100 align-self-end"
                                                                 style="object-fit: cover;    width: -webkit-fill-available;"
                                                                 alt="" />
 
                                                             <img *ngIf="post.type == 'hyperlink' && post.captureFileURL"
                                                                 src="{{post.captureFileURL}}"
-                                                                class="h-100 align-self-end rounded"
+                                                                class="rounded h-100 align-self-end"
                                                                 style="object-fit: cover;    width: -webkit-fill-available;"
                                                                 alt="" />
                                                             <img *ngIf="post.type != 'hyperlink' && post.hyperlinkCaptureFileURL"
                                                                 src="{{post.hyperlinkCaptureFileURL}}"
-                                                                class="h-100 align-self-end rounded"
+                                                                class="rounded h-100 align-self-end"
                                                                 style="object-fit: cover;    width: -webkit-fill-available;"
                                                                 alt="" />
 
@@ -1399,7 +1399,7 @@
                                             </div>
                                             <div class="d-flex flex-column">
                                                 <a href={{post.hyperLink}} target="_blank"
-                                                    class="font-weight-normal font-size-h4 mb-3">
+                                                    class="mb-3 font-weight-normal font-size-h4">
                                                     <div *ngIf="post.type == 'hyperlink'" class="text-dark">
                                                         {{post.textFirst}}
                                                     </div>
@@ -1420,7 +1420,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="caption text-justify" style="    padding: 10px 33px;
+                                <div class="text-justify caption" style="    padding: 10px 33px;
                                 word-break: break-all;
                                 color: #000; white-space: pre-wrap; text-align: justify;">
                                     <div *ngIf="post.text">{{post.text}}</div>
@@ -1491,11 +1491,11 @@
                                 <div class="preview-comment">
                                     <div class="row">
                                         <div class="col-12 item">
-                                            <i class="far fa-heart mr-2" style="color: black;"></i>Like &nbsp;
+                                            <i class="mr-2 far fa-heart" style="color: black;"></i>Like &nbsp;
                                             &nbsp;&nbsp;&nbsp;&nbsp;
-                                            <i class="far fa-comment-dots mr-2" style="color: black;"></i>Comment &nbsp;
+                                            <i class="mr-2 far fa-comment-dots" style="color: black;"></i>Comment &nbsp;
                                             &nbsp;&nbsp;&nbsp;&nbsp;
-                                            <i class="fas fa-share mr-2" style="color: black;"></i>Share
+                                            <i class="mr-2 fas fa-share" style="color: black;"></i>Share
                                         </div>
                                         <div class="col item">
                                             <!-- <i class="fas fa-comments"></i> &nbsp;Comment -->
@@ -1563,8 +1563,8 @@
 
                                 <div class="card">
 
-                                    <div class="card-body p-0">
-
+                                    <div class="p-0 card-body">
+                                            <!--photo preview-->
                                         <div class="preview-facebook preview-facebook-media item-post-type"
                                             data-type="photo" *ngIf="showDiv.photo">
                                             <div class="user-info" style="z-index: 1;">
@@ -1582,14 +1582,14 @@
                                                 </div>
                                             </div>
 
-                                            <div class="preview-media" data-max-image="5" style="margin-top: -20px"><img
-                                                    [src]="url" *ngIf="format==='image' && url"
+                                            <div class="preview-media" data-max-image="5" style="margin-top: -20px"><img *ngFor = "let url of urls"
+                                                    [src]="url"
                                                     style="object-fit: contain;
                                                     margin-right: auto;
                                                     margin-left: auto;
-                                                    height: 100%;
-                                                    width: 100%;
-                                                    display: block; "></div>
+                                                    height: 150px;
+                                                    max-width: 200px;
+                                                    display: block;"></div>
                                             <div class="caption" style="white-space: pre-wrap; text-align: justify;">
                                                 <div>{{teamtalkerCaption}}</div>
                                                 <div class="line-no-text" *ngIf="!teamtalkerCaption">
@@ -1686,12 +1686,12 @@
                                             <div class="preview-comment">
                                                 <div class="row">
                                                     <div class="col-12 item">
-                                                        <i class="far fa-heart mr-2" style="color: black;"></i>Like
+                                                        <i class="mr-2 far fa-heart" style="color: black;"></i>Like
                                                         &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
-                                                        <i class="far fa-comment-dots mr-2"
+                                                        <i class="mr-2 far fa-comment-dots"
                                                             style="color: black;"></i>Comment &nbsp;
                                                         &nbsp;&nbsp;&nbsp;&nbsp;
-                                                        <i class="fas fa-share mr-2" style="color: black;"></i>Share
+                                                        <i class="mr-2 fas fa-share" style="color: black;"></i>Share
                                                     </div>
                                                     <div class="col item">
                                                         <!-- <i class="fas fa-comments"></i> &nbsp;Comment -->
@@ -1825,12 +1825,12 @@
                                             <div class="preview-comment">
                                                 <div class="row">
                                                     <div class="col-12 item">
-                                                        <i class="far fa-heart mr-2" style="color: black;"></i>Like
+                                                        <i class="mr-2 far fa-heart" style="color: black;"></i>Like
                                                         &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
-                                                        <i class="far fa-comment-dots mr-2"
+                                                        <i class="mr-2 far fa-comment-dots"
                                                             style="color: black;"></i>Comment &nbsp;
                                                         &nbsp;&nbsp;&nbsp;&nbsp;
-                                                        <i class="fas fa-share mr-2" style="color: black;"></i>Share
+                                                        <i class="mr-2 fas fa-share" style="color: black;"></i>Share
                                                     </div>
                                                     <div class="col item">
                                                         <!-- <i class="fas fa-comments"></i> &nbsp;Comment -->
@@ -1951,12 +1951,12 @@
                                             <div class="preview-comment">
                                                 <div class="row">
                                                     <div class="col-12 item">
-                                                        <i class="far fa-heart mr-2" style="color: black;"></i>Like
+                                                        <i class="mr-2 far fa-heart" style="color: black;"></i>Like
                                                         &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
-                                                        <i class="far fa-comment-dots mr-2"
+                                                        <i class="mr-2 far fa-comment-dots"
                                                             style="color: black;"></i>Comment &nbsp;
                                                         &nbsp;&nbsp;&nbsp;&nbsp;
-                                                        <i class="fas fa-share mr-2" style="color: black;"></i>Share
+                                                        <i class="mr-2 fas fa-share" style="color: black;"></i>Share
                                                     </div>
                                                     <div class="col item">
                                                         <!-- <i class="fas fa-comments"></i> &nbsp;Comment -->
@@ -2077,12 +2077,12 @@
                                             <div class="preview-comment">
                                                 <div class="row">
                                                     <div class="col-12 item">
-                                                        <i class="far fa-heart mr-2" style="color: black;"></i>Like
+                                                        <i class="mr-2 far fa-heart" style="color: black;"></i>Like
                                                         &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
-                                                        <i class="far fa-comment-dots mr-2"
+                                                        <i class="mr-2 far fa-comment-dots"
                                                             style="color: black;"></i>Comment &nbsp;
                                                         &nbsp;&nbsp;&nbsp;&nbsp;
-                                                        <i class="fas fa-share mr-2" style="color: black;"></i>Share
+                                                        <i class="mr-2 fas fa-share" style="color: black;"></i>Share
                                                     </div>
                                                     <div class="col item">
                                                         <!-- <i class="fas fa-comments"></i> &nbsp;Comment -->
