@@ -170,6 +170,7 @@ export class TeamtalkersComponent implements OnInit {
     this.teamtalkerCaption = "";
     this.url = null;
     this.urls = [];
+    this.multiples = [];
     this.file = null;
     this.poll = new Poll();
     this.singleDate = new Date(new Date().setDate(new Date().getDate() + 1));
