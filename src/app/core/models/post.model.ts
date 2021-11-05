@@ -34,7 +34,7 @@ export class Post {
   pinPost: boolean;
   backgroundColorHex: any;
   scheduleDate : any;
-  media: Media;
+  media: Media[];
 
   constructor() {
     this.id = "",
@@ -66,6 +66,6 @@ export class Post {
     this.pinPost = false;
     this.backgroundColorHex = "";
     this.userID = "";
-    //this.media = new Media;
+    this.media = [];
   }
 }

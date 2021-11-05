@@ -4,4 +4,6 @@ export class Media {
     path: string = '';
     thumbnailURL: string = '';
     thumbnailPath: string = '';
+    blurHash: string = '';
+    backgroundColorHex: string = '';
 }

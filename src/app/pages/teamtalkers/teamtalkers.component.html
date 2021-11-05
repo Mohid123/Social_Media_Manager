@@ -356,7 +356,7 @@
 
                                                                 <input id="file-input" type="file" accept="image/*"
                                                                     name="myfile" (change)="onSelectFile($event)"
-                                                                    multiple />
+                                                                    multiple="multiple"/>
                                                             </div>
 
                                                         </div>
@@ -1581,15 +1581,16 @@
                                                     </span>
                                                 </div>
                                             </div>
+                                          
 
-                                            <div class="preview-media" data-max-image="5" style="margin-top: -20px"><img *ngFor = "let url of urls"
-                                                    [src]="url"
-                                                    style="object-fit: contain;
-                                                    margin-right: auto;
-                                                    margin-left: auto;
-                                                    height: 150px;
-                                                    max-width: 200px;
-                                                    display: block;"></div>
+                                            <div class="preview-media" data-max-image="4" style="margin-top: -20px; width: auto;
+                                            height:auto; display: flex; flex-wrap: wrap; object-fit: cover;">
+                                                <ng-container *ngFor="let singlefile of urls">
+                                                    <img [src]="singlefile" style="flex-grow: 1; flex-direction: row; flex-wrap: wrap;
+                                                    width: 50%; height: auto; object-fit: cover;">
+                                                </ng-container>
+                                            </div>
+
                                             <div class="caption" style="white-space: pre-wrap; text-align: justify;">
                                                 <div>{{teamtalkerCaption}}</div>
                                                 <div class="line-no-text" *ngIf="!teamtalkerCaption">

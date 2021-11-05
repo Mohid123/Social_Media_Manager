@@ -23,7 +23,6 @@ import { isTemplateMiddle } from "typescript";
 import { DatePickerOptions } from "@ngx-tiny/date-picker";
 import { TimePickerOptions } from "@ngx-tiny/time-picker/ngx-time-picker.options";
 import { Poll } from "src/app/core/models/poll.model";
-import { Media } from "src/app/core/models/media-model";
 import * as moment from "moment";
 import { ThisReceiver } from "@angular/compiler";
 import { ClubpostService } from './../../core/services/club-post/clubpost.service';
@@ -43,7 +42,6 @@ export class TeamtalkersComponent implements OnInit {
   public teamtalkerCaption: string = "";
   public editedPostText: string
   public poll: Poll;
-  public media: Media;
   public clubName: string;
   public clubLogo: string;
   public url: string;
@@ -58,6 +56,7 @@ export class TeamtalkersComponent implements OnInit {
   public checklist: any = [];
   urls: any[] = [];
   value: number[];
+  targets: any[] = [];
   public masterSelected: boolean;
   public groupSelected: boolean = false;
   public eventSelected: boolean = false;
@@ -104,7 +103,6 @@ export class TeamtalkersComponent implements OnInit {
     this.post = new Post();
     this.report = new Report();
     this.poll = new Poll();
-    this.media = new Media();
   }
 
 
@@ -170,7 +168,7 @@ export class TeamtalkersComponent implements OnInit {
   resetPost() {
     this.teamtalkerCaption = "";
     this.url = null;
-    this.urls = null;
+    this.urls = [];
     this.file = null;
     this.poll = new Poll();
     this.singleDate = new Date(new Date().setDate(new Date().getDate() + 1));
@@ -387,27 +385,26 @@ export class TeamtalkersComponent implements OnInit {
     }
   }
 
-
   onSelectFile(event) {
-    this.file = event.target.files && event.target.files[0];
-    if (this.file) {
-      var filesAmount = event.target.files.length;
-      for (let i = 0; i < filesAmount; i++) {
+    this.file = event.target.files && event.target.files.length
+    if (this.file > 0 && this.file < 5) {
+      let i: number = 0;
+      for (const singlefile of event.target.files) {
         var reader = new FileReader();
-        if (event.target.files.length < 5) {
-          if (this.file.type.indexOf("image") > -1) {
-            this.format = "image";
-            reader.onload = (event: any) => {
-              this.urls.push(<FileReader>event.target.result);
-              this.cf.detectChanges();
-            };
-          }
-        } else {
-          this.toast.error('No more than 4 images', 'Image Upload');
-          this.cf.detectChanges();
+        reader.readAsDataURL(singlefile); 
+        this.urls.push(singlefile);
+        this.cf.detectChanges()
+        i++;
+        console.log(this.urls)
+        reader.onload = (event) => {
+          this.url = (<FileReader>event.target).result as string;
+          this.cf.detectChanges()
         }
-        reader.readAsDataURL(event.target.files[i]);
-      }
+        //console.log(this.url)
+      };
+    }
+    else {
+      this.toast.error('No More than 4 images', 'Upload Images')
     }
   }
 
@@ -518,18 +515,12 @@ export class TeamtalkersComponent implements OnInit {
       } else if (item.hasOwnProperty("clubName")) {
         club.push(item);
       }
-  
     });
+
     if (club.length > 0) {
-      this._genericPostService.createImagePost(this.teamtalkerCaption, 'Club', this.signedInUser.id, this.file, club).then(success => {
-        this.media.type = this.post.type;
-        this.media.captureFileURL = this.post.captureFileURL;
-        this.media.path = this.post.path
-        this.media.thumbnailURL = "null";
-        this.media.thumbnailPath = "null";
-        this.post.media = Object.assign({}, this.media)
-       this.resetPost()
-      })
+        this._genericPostService.createImagePost(this.teamtalkerCaption, 'Club', this.signedInUser.id, this.urls, club).then(success => {
+          this.resetPost()
+         })
     }
 
     if (groups.length > 0) {

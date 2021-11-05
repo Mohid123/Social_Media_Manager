@@ -14,7 +14,6 @@ import { Media } from '../../models/media-model';
 })
 export class ClubpostService {
   private post: Post
-  private media: Media
   private userClubID : string = localStorage.getItem("clubUid");
   public postedSuccessfully: EventEmitter<any> = new EventEmitter();
   constructor(private _reportService: ReportService,
@@ -24,7 +23,6 @@ export class ClubpostService {
     private _videoService: VideoProcessingService,
     private _mediaUploadService: MediauploadService) {
     this.post = new Post()
-    this.media = new Media()
   }
 
   createTextPost(postedText, postedTo , selectedList) {
@@ -92,14 +90,13 @@ export class ClubpostService {
   }
 
 
-  createImagePost(postedText, postedTo, userID, MediaFile, selectedList?) {
+  createImagePost(postedText, postedTo, userID, MediaFiles, selectedList?) {
     return new Promise((resolve, reject) => {
     let hyperLinkResponse = []
     this.post.type = 'image'
     this.post.text = postedText;
     this.post.postedTo = postedTo;
     this.post.userID = this.userClubID;
-    this.media.type = Object.assign({},this.post.type)
     if (postedTo == 'Group') {
       delete this.post.eventID;
     }
@@ -111,7 +108,7 @@ export class ClubpostService {
       delete this.post.groupID;
     }
     this.spinner.show();
-    this._postService.hyperLinkScrapper(postedText).subscribe((data) => {
+    this._postService.hyperLinkScrapper(postedText).subscribe(async (data) => {
       hyperLinkResponse = data;
 
       if (hyperLinkResponse.length > 0 && hyperLinkResponse[0].hasOwnProperty("url")) {
@@ -127,35 +124,45 @@ export class ClubpostService {
       if (hyperLinkResponse.length > 0 && hyperLinkResponse[0].hasOwnProperty("image")) {
         this.post.captureFileURL = hyperLinkResponse[0].image;
       }
-
-      this._mediaUploadService.uploadClubMedia(postedTo, userID, MediaFile).subscribe((media: any) => {
-        this.post.captureFileURL = media.url
-        this.post.path = media.path;
-        selectedList.forEach((element, idx, self) => {
-
-          if (element.hasOwnProperty('groupName')) {
-            this.post.groupID = element.id;
-          }
-          else if (element.hasOwnProperty('eventName')) {
-            this.post.eventID = element.id;
-          }
-          this._reportService.createReport(2, "", postedTo);
-          this._postService.createClubPost(postedTo, this.post).subscribe((post: Post) => {
-            // console.log(this.post)
-            this._reportService.createReport(1, post.id, postedTo);
-            if (idx == self.length - 1) {
-              this.toast.success(`Great! The post has been shared to ${postedTo}.`)
-              this.spinner.hide();
-              resolve('success');
+       for (let i = 0;  i < MediaFiles.length; i++) {
+        this._mediaUploadService.uploadClubMedia(postedTo, userID, MediaFiles[i]).subscribe((media: any) => {
+          this.post.captureFileURL = media.url
+          this.post.path = media.path;
+          
+          let mediaModel = new Media();
+  
+          mediaModel.type = 'image';
+          mediaModel.captureFileURL = this.post.captureFileURL;
+          mediaModel.path = this.post.path
+          mediaModel.thumbnailURL = "";
+          mediaModel.thumbnailPath = "";
+          this.post.media.push(mediaModel);
+          selectedList.forEach((element, idx, self) => {
+  
+            if (element.hasOwnProperty('groupName')) {
+              this.post.groupID = element.id;
             }
-          }, error => {
-    
-            this.spinner.hide();
-            this.toast.error(error.message);
-            this._reportService.createReport(0, "", postedTo);
-          })
-        });
-      })
+            else if (element.hasOwnProperty('eventName')) {
+              this.post.eventID = element.id;
+            }
+            this._reportService.createReport(2, "", postedTo);
+            this._postService.createClubPost(postedTo, this.post).subscribe((post: Post) => {
+              // console.log(this.post)
+              this._reportService.createReport(1, post.id, postedTo);
+              if (idx == self.length - 1) {
+                this.toast.success(`Great! The post has been shared to ${postedTo}.`)
+                this.spinner.hide();
+                resolve('success');
+              }
+            }, error => {
+      
+              this.spinner.hide();
+              this.toast.error(error.message);
+              this._reportService.createReport(0, "", postedTo);
+            })
+          });
+        })
+       }
     }, error=>{
       console.log(error)
     })
