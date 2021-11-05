@@ -56,6 +56,7 @@ export class TeamtalkersComponent implements OnInit {
   public checklist: any = [];
   urls: any[] = [];
   value: number[];
+  multiples: any[] = [];
   targets: any[] = [];
   public masterSelected: boolean;
   public groupSelected: boolean = false;
@@ -397,7 +398,8 @@ export class TeamtalkersComponent implements OnInit {
         i++;
         console.log(this.urls)
         reader.onload = (event) => {
-          this.url = (<FileReader>event.target).result as string;
+          const url = (<FileReader>event.target).result as string;
+          this.multiples.push(url);
           this.cf.detectChanges()
         }
         //console.log(this.url)
