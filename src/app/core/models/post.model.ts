@@ -1,4 +1,5 @@
 import { Poll } from "./poll.model";
+import { Media } from './media-model';
 
 export class Post {
   id: string;
@@ -32,7 +33,9 @@ export class Post {
   poll: Poll;
   pinPost: boolean;
   backgroundColorHex: any;
-  scheduleDate : any
+  scheduleDate : any;
+  media: Media[];
+
   constructor() {
     this.id = "",
     this.userID = "", 
@@ -62,6 +65,7 @@ export class Post {
     this.deletedCheck = false;
     this.pinPost = false;
     this.backgroundColorHex = "";
-    this.userID = ""
+    this.userID = "";
+    this.media = [];
   }
 }

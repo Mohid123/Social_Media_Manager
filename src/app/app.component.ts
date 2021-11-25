@@ -3,38 +3,45 @@ import {
   ChangeDetectionStrategy,
   OnDestroy,
   OnInit,
-} from '@angular/core';
-import { TranslationService } from './modules/i18n/translation.service';
+} from "@angular/core";
+import { TranslationService } from "./modules/i18n/translation.service";
 // language list
-import { locale as enLang } from './modules/i18n/vocabs/en';
-import { locale as chLang } from './modules/i18n/vocabs/ch';
-import { locale as esLang } from './modules/i18n/vocabs/es';
-import { locale as jpLang } from './modules/i18n/vocabs/jp';
-import { locale as deLang } from './modules/i18n/vocabs/de';
-import { locale as frLang } from './modules/i18n/vocabs/fr';
-import { SplashScreenService } from './_metronic/partials/layout/splash-screen/splash-screen.service';
-import { Router, NavigationEnd, NavigationError } from '@angular/router';
-import { Subscription } from 'rxjs';
-import { TableExtendedService } from './_metronic/shared/crud-table';
+import { locale as enLang } from "./modules/i18n/vocabs/en";
+import { locale as chLang } from "./modules/i18n/vocabs/ch";
+import { locale as esLang } from "./modules/i18n/vocabs/es";
+import { locale as jpLang } from "./modules/i18n/vocabs/jp";
+import { locale as deLang } from "./modules/i18n/vocabs/de";
+import { locale as frLang } from "./modules/i18n/vocabs/fr";
+import { SplashScreenService } from "./_metronic/partials/layout/splash-screen/splash-screen.service";
+import { Router, NavigationEnd, NavigationError } from "@angular/router";
+import { fromEvent, Observable, Subscription } from "rxjs";
+import { TableExtendedService } from "./_metronic/shared/crud-table";
+import { ToastrService } from "ngx-toastr";
+
 @Component({
   // tslint:disable-next-line:component-selector
-  selector: 'body[root]',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
+  selector: "body[root]",
+  templateUrl: "./app.component.html",
+  styleUrls: ["./app.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent implements OnInit, OnDestroy {
+  onlineEvent: Observable<Event>;
+  offlineEvent: Observable<Event>;
+  subscriptions: Subscription[] = [];
+
   private unsubscribe: Subscription[] = []; // Read more: => https://brianflove.com/2016/12/11/anguar-2-unsubscribe-observables/
 
   constructor(
     private translationService: TranslationService,
     private splashScreenService: SplashScreenService,
     private router: Router,
-    private tableService: TableExtendedService
+    private tableService: TableExtendedService,
+    private toastr: ToastrService
   ) {
     // register translations
     this.translationService.loadTranslations(
-      enLang, 
+      enLang,
       chLang,
       esLang,
       jpLang,
@@ -56,16 +63,39 @@ export class AppComponent implements OnInit, OnDestroy {
 
         // to display back the body content
         setTimeout(() => {
-          document.body.classList.add('page-loaded');
+          document.body.classList.add("page-loaded");
         }, 500);
       }
     });
     this.unsubscribe.push(routerSubscription);
+
+    // OFFLINE/ONLINE CHECK
+    this.onlineEvent = fromEvent(window, "online");
+    this.offlineEvent = fromEvent(window, "offline");
+
+    //ONLINE CHECK
+
+    this.subscriptions.push(
+      this.onlineEvent.subscribe((e) => {
+        this.toastr.success("You are now back online", "Internet Status");
+      })
+    );
+
+    //OFFLINE CHECK
+
+    this.subscriptions.push(
+      this.offlineEvent.subscribe((e) => {
+        this.toastr.error(
+          "You are offline. Please Check your Internet Connection",
+          "Internet Status"
+        );
+      })
+    );
   }
-
-
 
   ngOnDestroy() {
     this.unsubscribe.forEach((sb) => sb.unsubscribe());
+    // UNSUBSCRIBE FROM OBSERVABLE
+    this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }
 }

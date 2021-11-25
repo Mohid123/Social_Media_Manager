@@ -26,7 +26,7 @@ export class MediauploadService {
 
   uploadClubMedia(folderName , fieldName , file){
     const formData: FormData = new FormData();
-    formData.append('file', file, file.name);
+    formData.append('file', file);
     return this._clubApiService.post(`/media-upload/mediaFiles/${folderName}/${fieldName}`, formData)
   }
 
