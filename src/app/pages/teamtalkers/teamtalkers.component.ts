@@ -57,7 +57,7 @@ export class TeamtalkersComponent implements OnInit {
   urls: any[] = [];
   value: number[];
   multiples: any[] = [];
-  fileDialogOpen = false;
+  MultipleImageUpload = false;
   targets: any[] = [];
   public masterSelected: boolean;
   public groupSelected: boolean = false;
@@ -176,7 +176,6 @@ export class TeamtalkersComponent implements OnInit {
     this.url = null;
     this.urls = [];
     this.multiples = [];
-    this.fileDialogOpen = true;
     this.file = null;
     this.poll = new Poll();
     this.singleDate = new Date(new Date().setDate(new Date().getDate() + 1));
@@ -392,34 +391,62 @@ export class TeamtalkersComponent implements OnInit {
 
   onSelectFile(event) {
     this.file = event.target.files && event.target.files.length;
-    if (this.file > 0 && this.file < 5) {
-      let i: number = 0;
-      for (const singlefile of event.target.files) {
-        var reader = new FileReader();
-        reader.readAsDataURL(singlefile);
-        this.urls.push(singlefile);
-        this.cf.detectChanges();
-        i++;
-        reader.onload = (event) => {
-          const url = (<FileReader>event.target).result as string;
-          this.multiples.push(url);
+    if (this.MultipleImageUpload) {
+      if (this.file > 0 && this.file < 5) {
+        let i: number = 0;
+        for (const singlefile of event.target.files) {
+          var reader = new FileReader();
+          reader.readAsDataURL(singlefile);
+          this.urls.push(singlefile);
           this.cf.detectChanges();
-          if (this.multiples.length > 4) {
-            event.preventDefault();
-            event.stopPropagation();
-            this.multiples.pop();
+          i++;
+          console.log(this.urls);
+          reader.onload = (event) => {
+            const url = (<FileReader>event.target).result as string;
+            this.multiples.push(url);
             this.cf.detectChanges();
-            this.toast.error(
-              "Max Number of Selected Files reached",
-              "Upload Images"
-            );
-          }
-        };
+            if (this.multiples.length > 4) {
+              event.preventDefault();
+              event.stopPropagation();
+              this.multiples.pop();
+              this.cf.detectChanges();
+              this.toast.error(
+                "Max Number of Selected Files reached",
+                "Upload Images"
+              );
+            }
+          };
+        }
+      } else {
+        this.toast.error("No More than 4 images", "Upload Images");
       }
     } else {
-      this.toast.error("No More than 4 images", "Upload Images");
+      if (this.file < 2 && this.file > 0) {
+        for (const singlefile of event.target.files) {
+          var reader = new FileReader();
+          reader.readAsDataURL(singlefile);
+          this.urls.push(singlefile);
+          this.cf.detectChanges();
+          console.log(this.urls);
+          reader.onload = (event) => {
+            const url = (<FileReader>event.target).result as string;
+            this.multiples.push(url);
+            this.cf.detectChanges();
+          };
+        }
+      } else {
+        this.toast.error("Only One Image upload allowed", "Upload Image");
+      }
     }
   }
+
+  multipleUploadCheck = (event) => {
+    if (this.MultipleImageUpload) {
+      return true;
+    } else {
+      return false;
+    }
+  };
 
   onSelectVideo(event) {
     let fileSize;

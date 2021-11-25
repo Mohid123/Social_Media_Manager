@@ -681,7 +681,7 @@
                                       type="file"
                                       accept="image/*"
                                       name="myfile"
-                                      (change)="onSelectFile($event)"
+                                      ng-click="multipleUploadCheck($event); onSelectFile($event)"
                                       multiple
                                     />
                                   </div>
@@ -773,6 +773,14 @@
                             </div>
                           </div>
                         </div>
+                      </div>
+                      <div style="margin-left: 10px">
+                        <input
+                          type="checkbox"
+                          [(ngModel)]="MultipleImageUpload"
+                          [ngModelOptions]="{ standalone: true }"
+                        />
+                        Upload Multiple?
                       </div>
                     </form>
 

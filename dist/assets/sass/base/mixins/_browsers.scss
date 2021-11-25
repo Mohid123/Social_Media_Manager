@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 //
 // Browsers
 //
@@ -15,3 +16,22 @@
 		@content;
 	}
 }
+=======
+//
+// Browsers
+//
+
+@mixin for-ie11 {
+	// Microsoft IE11
+	@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+		@content;
+	}
+}
+
+@mixin for-edge {
+    // Microsoft Edge
+	@supports (-ms-ime-align:auto) {
+		@content;
+	}
+}
+>>>>>>> master
