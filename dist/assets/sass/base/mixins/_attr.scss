@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
 //
 // Attr
 //
@@ -9,19 +7,3 @@
         #{$attr}: #{$value} #{$important};
     }
 }
-=======
-=======
->>>>>>> master
-//
-// Attr
-//
-
-@mixin attr($attr, $value, $important: '') {
-    @if  $value != null  {
-        #{$attr}: #{$value} #{$important};
-    }
-}
-<<<<<<< HEAD
->>>>>>> master
-=======
->>>>>>> master

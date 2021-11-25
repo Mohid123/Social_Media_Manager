@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
 //
 // Label
 //
@@ -21,31 +19,3 @@
     height: $size;
     width: $size;
 }
-=======
-=======
->>>>>>> master
-//
-// Label
-//
-
-@mixin label-size($size, $font-size) {
-    height: $size;
-	width: $size;
-    font-size: $font-size;
-
-    &.label-inline {
-		width: auto;
-    }
-}
-
-@mixin label-dot-size($size) {
-    line-height: $size;
-    min-height: $size;
-    min-width: $size;
-    height: $size;
-    width: $size;
-}
-<<<<<<< HEAD
->>>>>>> master
-=======
->>>>>>> master
