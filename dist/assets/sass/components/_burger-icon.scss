@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 //
 // Burger Icon
 //
@@ -8,6 +9,8 @@
     @include  burger-icon-theme(get($burger-icon-config, theme, default), get($burger-icon-config, theme, hover), get($burger-icon-config, theme, active));
 }
 =======
+=======
+>>>>>>> master
 //
 // Burger Icon
 //
@@ -16,4 +19,7 @@
     @include  burger-icon-build($burger-icon-config);
     @include  burger-icon-theme(get($burger-icon-config, theme, default), get($burger-icon-config, theme, hover), get($burger-icon-config, theme, active));
 }
+<<<<<<< HEAD
+>>>>>>> master
+=======
 >>>>>>> master
