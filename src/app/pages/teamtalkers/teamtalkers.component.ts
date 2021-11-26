@@ -403,7 +403,6 @@ export class TeamtalkersComponent implements OnInit {
           this.urls.push(singlefile);
           this.cf.detectChanges();
           i++;
-          console.log(this.urls);
           reader.onload = (event) => {
             const url = (<FileReader>event.target).result as string;
             this.multiples.push(url);
@@ -411,6 +410,7 @@ export class TeamtalkersComponent implements OnInit {
             if (this.multiples.length > 4) {
               // If multple events are fired by user
               this.multiples.pop();
+              this.urls.pop();
               this.cf.detectChanges();
               this.toast.error(
                 "Max Number of Selected Files reached",
@@ -430,13 +430,13 @@ export class TeamtalkersComponent implements OnInit {
           reader.readAsDataURL(singlefile);
           this.urls.push(singlefile);
           this.cf.detectChanges();
-          console.log(this.urls);
           reader.onload = (event) => {
             const url = (<FileReader>event.target).result as string;
             this.multiples.push(url);
             this.cf.detectChanges();
             if (this.multiples.length > 1) {
               this.multiples.pop();
+              this.urls.pop();
               this.cf.detectChanges();
               this.toast.error("Only one Image is allowed", "Upload Images");
             }
