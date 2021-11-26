@@ -410,6 +410,7 @@ export class TeamtalkersComponent implements OnInit {
             this.cf.detectChanges();
             // If multple events are fired by user
             if (this.multiples.length > 4) {
+              // If multple events are fired by user
               this.multiples.pop();
               this.cf.detectChanges();
               this.toast.error(
@@ -436,8 +437,6 @@ export class TeamtalkersComponent implements OnInit {
             this.multiples.push(url);
             this.cf.detectChanges();
             if (this.multiples.length > 1) {
-              event.preventDefault();
-              event.stopPropagation();
               this.multiples.pop();
               this.cf.detectChanges();
               this.toast.error("Only one Image is allowed", "Upload Images");
@@ -445,7 +444,7 @@ export class TeamtalkersComponent implements OnInit {
           };
         }
       } else {
-        this.toast.error("Please select only one Image", "Upload Image");
+        this.toast.error("Please Select One Image to Upload", "Upload Image");
       }
     }
   }
