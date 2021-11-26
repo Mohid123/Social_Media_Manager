@@ -6,6 +6,7 @@ import { VideoProcessingService } from "./../../core/services/video-service/vide
 import { MediauploadService } from "./../../core/services/mediaupload.service";
 import { PostService } from "./../../core/services/post.service";
 import { NgbModal, ModalDismissReasons } from "@ng-bootstrap/ng-bootstrap";
+import { MergeService } from "src/app/core/services/merge-service.service";
 import {
   Component,
   OnInit,
@@ -100,7 +101,8 @@ export class TeamtalkersComponent implements OnInit {
     private modalService: NgbModal,
     private _genericPostService: ClubpostService,
     private _scheduleClubPostService: ScheduleClubPostService,
-    private _scheduleService: ScheduleService
+    private _scheduleService: ScheduleService,
+    public mergeService: MergeService
   ) {
     this.post = new Post();
     this.report = new Report();
@@ -391,7 +393,8 @@ export class TeamtalkersComponent implements OnInit {
 
   onSelectFile(event) {
     this.file = event.target.files && event.target.files.length;
-    if (this.MultipleImageUpload) {
+    if (this.mergeService.gen4 == true) {
+      //Multiple Images for gen4 = true
       if (this.file > 0 && this.file < 5) {
         let i: number = 0;
         for (const singlefile of event.target.files) {
@@ -406,8 +409,7 @@ export class TeamtalkersComponent implements OnInit {
             this.multiples.push(url);
             this.cf.detectChanges();
             if (this.multiples.length > 4) {
-              event.preventDefault();
-              event.stopPropagation();
+              // If multple events are fired by user
               this.multiples.pop();
               this.cf.detectChanges();
               this.toast.error(
@@ -421,6 +423,7 @@ export class TeamtalkersComponent implements OnInit {
         this.toast.error("No More than 4 images", "Upload Images");
       }
     } else {
+      //Single Image for gen4 = false
       if (this.file < 2 && this.file > 0) {
         for (const singlefile of event.target.files) {
           var reader = new FileReader();
@@ -433,8 +436,6 @@ export class TeamtalkersComponent implements OnInit {
             this.multiples.push(url);
             this.cf.detectChanges();
             if (this.multiples.length > 1) {
-              event.preventDefault();
-              event.stopPropagation();
               this.multiples.pop();
               this.cf.detectChanges();
               this.toast.error("Only one Image is allowed", "Upload Images");
@@ -442,18 +443,10 @@ export class TeamtalkersComponent implements OnInit {
           };
         }
       } else {
-        this.toast.error("Only One Image upload allowed", "Upload Image");
+        this.toast.error("Please Select One Image to Upload", "Upload Image");
       }
     }
   }
-
-  multipleUploadCheck = (event) => {
-    if (this.MultipleImageUpload) {
-      return true;
-    } else {
-      return false;
-    }
-  };
 
   onSelectVideo(event) {
     let fileSize;
