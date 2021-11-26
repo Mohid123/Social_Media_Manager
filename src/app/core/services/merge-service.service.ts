@@ -4,7 +4,7 @@ import { Injectable } from "@angular/core";
   providedIn: "root",
 })
 export class MergeService {
-  public gen4: boolean = false;
+  public gen4: boolean = true;
 
   constructor() {}
 }
