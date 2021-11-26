@@ -23,8 +23,8 @@ var KTCard = function(elementId, options) {
         sticky: {
             releseOnReverse: false,
             offset: 300,
-            zIndex: 101,
-        },
+            zIndex: 101
+        }
     };
 
     ////////////////////////////
@@ -37,8 +37,8 @@ var KTCard = function(elementId, options) {
          */
 
         construct: function(options) {
-            if (KTUtil.data(element).has("card")) {
-                the = KTUtil.data(element).get("card");
+            if (KTUtil.data(element).has('card')) {
+                the = KTUtil.data(element).get('card');
             } else {
                 // reset menu
                 Plugin.init(options);
@@ -46,7 +46,7 @@ var KTCard = function(elementId, options) {
                 // build menu
                 Plugin.build();
 
-                KTUtil.data(element).set("card", the);
+                KTUtil.data(element).set('card', the);
             }
 
             return the;
@@ -61,13 +61,13 @@ var KTCard = function(elementId, options) {
 
             // merge default and user defined options
             the.options = KTUtil.deepExtend({}, defaultOptions, options);
-            the.header = KTUtil.child(element, ".card-header");
-            the.footer = KTUtil.child(element, ".card-footer");
+            the.header = KTUtil.child(element, '.card-header');
+            the.footer = KTUtil.child(element, '.card-footer');
 
-            if (KTUtil.child(element, ".card-body")) {
-                the.body = KTUtil.child(element, ".card-body");
-            } else if (KTUtil.child(element, ".form")) {
-                the.body = KTUtil.child(element, ".form");
+            if (KTUtil.child(element, '.card-body')) {
+                the.body = KTUtil.child(element, '.card-body');
+            } else if (KTUtil.child(element, '.form')) {
+                the.body = KTUtil.child(element, '.form');
             }
         },
 
@@ -76,27 +76,27 @@ var KTCard = function(elementId, options) {
          */
         build: function() {
             // Remove
-            var remove = KTUtil.find(the.header, "[data-card-tool=remove]");
+            var remove = KTUtil.find(the.header, '[data-card-tool=remove]');
             if (remove) {
-                KTUtil.addEvent(remove, "click", function(e) {
+                KTUtil.addEvent(remove, 'click', function(e) {
                     e.preventDefault();
                     Plugin.remove();
                 });
             }
 
             // Reload
-            var reload = KTUtil.find(the.header, "[data-card-tool=reload]");
+            var reload = KTUtil.find(the.header, '[data-card-tool=reload]');
             if (reload) {
-                KTUtil.addEvent(reload, "click", function(e) {
+                KTUtil.addEvent(reload, 'click', function(e) {
                     e.preventDefault();
                     Plugin.reload();
                 });
             }
 
             // Toggle
-            var toggle = KTUtil.find(the.header, "[data-card-tool=toggle]");
+            var toggle = KTUtil.find(the.header, '[data-card-tool=toggle]');
             if (toggle) {
-                KTUtil.addEvent(toggle, "click", function(e) {
+                KTUtil.addEvent(toggle, 'click', function(e) {
                     e.preventDefault();
                     Plugin.toggle();
                 });
@@ -114,37 +114,35 @@ var KTCard = function(elementId, options) {
                 return;
             }
 
-            window.addEventListener("scroll", Plugin.onScrollSticky);
+	        window.addEventListener('scroll', Plugin.onScrollSticky);
         },
 
-        /**
-         * Window scroll handle event for sticky card
-         */
-        onScrollSticky: function(e) {
-            var offset = the.options.sticky.offset;
+	    /**
+	     * Window scroll handle event for sticky card
+	     */
+	    onScrollSticky: function(e) {
+		    var offset = the.options.sticky.offset;
 
-            if (isNaN(offset)) return;
+		    if(isNaN(offset)) return;
 
-            var st = KTUtil.getScrollTop();
+		    var st = KTUtil.getScrollTop();
 
-            if (st >= offset && KTUtil.hasClass(body, "card-sticky-on") === false) {
-                Plugin.eventTrigger("stickyOn");
+		    if (st >= offset && KTUtil.hasClass(body, 'card-sticky-on') === false) {
+			    Plugin.eventTrigger('stickyOn');
 
-                KTUtil.addClass(body, "card-sticky-on");
+			    KTUtil.addClass(body, 'card-sticky-on');
 
-                Plugin.updateSticky();
-            } else if (
-                st * 1.5 <= offset &&
-                KTUtil.hasClass(body, "card-sticky-on")
-            ) {
-                // Back scroll mode
-                Plugin.eventTrigger("stickyOff");
+			    Plugin.updateSticky();
 
-                KTUtil.removeClass(body, "card-sticky-on");
+		    } else if ((st*1.5) <= offset && KTUtil.hasClass(body, 'card-sticky-on')) {
+			    // Back scroll mode
+			    Plugin.eventTrigger('stickyOff');
 
-                Plugin.resetSticky();
-            }
-        },
+			    KTUtil.removeClass(body, 'card-sticky-on');
+
+			    Plugin.resetSticky();
+		    }
+	    },
 
         updateSticky: function() {
             if (!the.header) {
@@ -153,7 +151,7 @@ var KTCard = function(elementId, options) {
 
             var top;
 
-            if (KTUtil.hasClass(body, "card-sticky-on")) {
+            if (KTUtil.hasClass(body, 'card-sticky-on')) {
                 if (the.options.sticky.position.top instanceof Function) {
                     top = parseInt(the.options.sticky.position.top.call(this, the));
                 } else {
@@ -174,10 +172,10 @@ var KTCard = function(elementId, options) {
                     right = parseInt(the.options.sticky.position.right);
                 }
 
-                KTUtil.css(the.header, "z-index", the.options.sticky.zIndex);
-                KTUtil.css(the.header, "top", top + "px");
-                KTUtil.css(the.header, "left", left + "px");
-                KTUtil.css(the.header, "right", right + "px");
+                KTUtil.css(the.header, 'z-index', the.options.sticky.zIndex);
+                KTUtil.css(the.header, 'top', top + 'px');
+                KTUtil.css(the.header, 'left', left + 'px');
+                KTUtil.css(the.header, 'right', right + 'px');
             }
         },
 
@@ -186,11 +184,11 @@ var KTCard = function(elementId, options) {
                 return;
             }
 
-            if (KTUtil.hasClass(body, "card-sticky-on") === false) {
-                KTUtil.css(the.header, "z-index", "");
-                KTUtil.css(the.header, "top", "");
-                KTUtil.css(the.header, "left", "");
-                KTUtil.css(the.header, "right", "");
+            if (KTUtil.hasClass(body, 'card-sticky-on') === false) {
+                KTUtil.css(the.header, 'z-index', '');
+                KTUtil.css(the.header, 'top', '');
+                KTUtil.css(the.header, 'left', '');
+                KTUtil.css(the.header, 'right', '');
             }
         },
 
@@ -198,19 +196,19 @@ var KTCard = function(elementId, options) {
          * Remove card
          */
         remove: function() {
-            if (Plugin.eventTrigger("beforeRemove") === false) {
+            if (Plugin.eventTrigger('beforeRemove') === false) {
                 return;
             }
 
             // Remove tooltips
             var tooltips;
-            if ((tooltips = document.querySelectorAll(".tooltip.show"))) {
-                $(tooltips).tooltip("dispose");
+            if ( tooltips = document.querySelectorAll('.tooltip.show') ) {
+                $(tooltips).tooltip('dispose');
             }
 
             KTUtil.remove(element);
 
-            Plugin.eventTrigger("afterRemove");
+            Plugin.eventTrigger('afterRemove');
         },
 
         /**
@@ -240,17 +238,14 @@ var KTCard = function(elementId, options) {
          * Reload
          */
         reload: function() {
-            Plugin.eventTrigger("reload");
+            Plugin.eventTrigger('reload');
         },
 
         /**
          * Toggle
          */
         toggle: function() {
-            if (
-                KTUtil.hasClass(element, "card-collapse") ||
-                KTUtil.hasClass(element, "card-collapsed")
-            ) {
+            if (KTUtil.hasClass(element, 'card-collapse') || KTUtil.hasClass(element, 'card-collapsed')) {
                 Plugin.expand();
             } else {
                 Plugin.collapse();
@@ -261,31 +256,31 @@ var KTCard = function(elementId, options) {
          * Collapse
          */
         collapse: function() {
-            if (Plugin.eventTrigger("beforeCollapse") === false) {
+            if (Plugin.eventTrigger('beforeCollapse') === false) {
                 return;
             }
 
             KTUtil.slideUp(the.body, the.options.toggleSpeed, function() {
-                Plugin.eventTrigger("afterCollapse");
+                Plugin.eventTrigger('afterCollapse');
             });
 
-            KTUtil.addClass(element, "card-collapse");
+            KTUtil.addClass(element, 'card-collapse');
         },
 
         /**
          * Expand
          */
         expand: function() {
-            if (Plugin.eventTrigger("beforeExpand") === false) {
+            if (Plugin.eventTrigger('beforeExpand') === false) {
                 return;
             }
 
             KTUtil.slideDown(the.body, the.options.toggleSpeed, function() {
-                Plugin.eventTrigger("afterExpand");
+                Plugin.eventTrigger('afterExpand');
             });
 
-            KTUtil.removeClass(element, "card-collapse");
-            KTUtil.removeClass(element, "card-collapsed");
+            KTUtil.removeClass(element, 'card-collapse');
+            KTUtil.removeClass(element, 'card-collapsed');
         },
 
         /**
@@ -313,11 +308,11 @@ var KTCard = function(elementId, options) {
                 name: name,
                 handler: handler,
                 one: one,
-                fired: false,
+                fired: false
             });
 
             return the;
-        },
+        }
     };
 
     //////////////////////////
@@ -360,13 +355,13 @@ var KTCard = function(elementId, options) {
         return Plugin.resetSticky();
     };
 
-    /**
-     * Destroy sticky card
-     */
-    the.destroySticky = function() {
-        Plugin.resetSticky();
-        window.removeEventListener("scroll", Plugin.onScrollSticky);
-    };
+	/**
+	 * Destroy sticky card
+	 */
+	the.destroySticky = function() {
+		Plugin.resetSticky();
+		window.removeEventListener('scroll', Plugin.onScrollSticky);
+	};
 
     /**
      * Reload card
@@ -440,7 +435,7 @@ var KTCard = function(elementId, options) {
 };
 
 // webpack support
-if (typeof module !== "undefined" && typeof module.exports !== "undefined") {
+if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
     // module.exports = KTCard;
 }
 

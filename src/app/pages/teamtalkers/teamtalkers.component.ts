@@ -432,6 +432,13 @@ export class TeamtalkersComponent implements OnInit {
             const url = (<FileReader>event.target).result as string;
             this.multiples.push(url);
             this.cf.detectChanges();
+            if (this.multiples.length > 1) {
+              event.preventDefault();
+              event.stopPropagation();
+              this.multiples.pop();
+              this.cf.detectChanges();
+              this.toast.error("Only one Image is allowed", "Upload Images");
+            }
           };
         }
       } else {

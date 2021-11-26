@@ -1,46 +1,58 @@
 //
 // Bootstrap Datetimepicker
 //
+
+
 .bootstrap-datetimepicker-widget {
     $cell-size: 35px;
     $container-spacing: 10px;
+
     border: 1px solid $gray-200;
     @include border-radius($border-radius);
+
     &.dropdown-menu {
         border: 0;
         width: 265px !important;
         padding: 0;
     }
+
     .datepicker {
         width: 100%;
         padding: $container-spacing;
+
         table {
             width: 100%;
+
             thead {
                 th {
                     display: table-cell;
+
                     &.picker-switch {
                         color: $dark-75;
                         font-weight: 500;
                         display: table-cell;
                         font-size: 1rem;
+
                         &:hover {
                             color: $primary;
                             background: $gray-100 !important;
                         }
                     }
+
                     &.prev,
                     &.next {
                         span {
                             font-size: 0.8rem;
                             color: $dark-50;
                         }
+
                         &:hover {
                             span {
                                 color: $primary;
                             }
                         }
                     }
+
                     &.disabled {
                         color: $text-muted;
                         cursor: not-allowed;
@@ -48,6 +60,7 @@
                 }
             }
         }
+
         .datepicker-days {
             table {
                 tr {
@@ -63,37 +76,46 @@
                         @include border-radius($border-radius);
                     }
                 }
+
                 tbody {
-                    tr>td {
+                    tr > td {
                         color: $dark-50;
+
                         &:hover {
                             background: $gray-100;
                         }
+
                         &.old {
                             color: $dark-50;
                         }
+
                         &.new {
                             color: $dark-75;
                         }
+
                         &:focus,
                         &.active {
                             background: $primary !important;
                             color: $white !important;
                         }
+
                         &.selected {
                             background: $primary-light;
                             color: $primary;
                         }
+
                         &.disabled {
                             color: $text-muted;
                             cursor: not-allowed;
                         }
+
                         &.today {
                             position: relative;
                             background: $primary-light !important;
                             color: $primary !important;
+
                             &:before {
-                                content: "";
+                                content: '';
                                 display: inline-block;
                                 border: solid transparent;
                                 border-width: 0 0 7px 7px;
@@ -108,6 +130,7 @@
                 }
             }
         }
+
         .datepicker-months,
         .datepicker-years,
         .datepicker-decades {
@@ -123,32 +146,40 @@
                         vertical-align: middle;
                         text-align: center;
                         @include border-radius($border-radius);
+
                         span {
                             color: $dark-50;
+
                             &:hover {
                                 background: $gray-100;
                             }
+
                             &.old {
                                 color: $dark-50;
                             }
+
                             &.new {
                                 color: $dark-75;
                             }
+
                             &:focus,
                             &.active {
                                 background: $primary !important;
                                 color: $white !important;
                             }
+
                             &.selected {
                                 background: $primary-light;
                                 color: $primary;
                             }
+
                             &.today {
                                 position: relative;
                                 background: $primary-light !important;
                                 color: $primary !important;
+
                                 &:before {
-                                    content: "";
+                                    content: '';
                                     display: inline-block;
                                     border: solid transparent;
                                     border-width: 0 0 7px 7px;
@@ -159,6 +190,7 @@
                                     right: 4px;
                                 }
                             }
+
                             &.disabled {
                                 color: $text-muted;
                                 cursor: not-allowed;
@@ -169,8 +201,10 @@
             }
         }
     }
+
     .timepicker {
         padding: $container-spacing;
+
         .timepicker-picker {
             table {
                 td {
@@ -180,9 +214,11 @@
                     vertical-align: middle;
                     padding: 0;
                     line-height: $cell-size;
+
                     a {
                         padding: 0;
                     }
+
                     span {
                         align-content: center;
                         display: inline-flex;
@@ -193,12 +229,14 @@
                         font-size: 0.8rem;
                         color: $dark-50;
                     }
+
                     .timepicker-minute,
                     .timepicker-hour {
                         font-size: 1rem;
                         color: $dark-50;
                         font-weight: 400;
                     }
+
                     &:hover {
                         span {
                             background: $gray-100;
@@ -208,18 +246,22 @@
                 }
             }
         }
+
         .timepicker-minutes,
         .timepicker-hours {
             table {
                 width: auto;
                 margin: 0 auto;
+
                 tr td {
                     height: $cell-size;
                     width: $cell-size;
                     line-height: $cell-size;
+
                     font-size: 1rem;
                     font-weight: 400;
                     color: $dark-50;
+
                     &:hover {
                         background: $gray-100;
                         color: $primary;
@@ -228,24 +270,31 @@
             }
         }
     }
+
     .picker-switch.accordion-toggle {
         padding: $container-spacing;
+
         table {
             padding: 0;
+
             td {
                 padding: 0;
                 height: $cell-size;
+
                 a {
                     padding: 0;
                     color: $dark-75;
                     font-weight: 500;
+
                     span {
                         font-size: 1.1rem;
                         color: $dark-50;
                     }
                 }
+
                 &:hover {
                     background: $gray-100 !important;
+
                     a {
                         span {
                             background: transparent;
@@ -256,10 +305,12 @@
             }
         }
     }
-    .collapse.show~.picker-switch.accordion-toggle {
+
+    .collapse.show ~ .picker-switch.accordion-toggle {
         padding-top: 0;
     }
-    .picker-switch.accordion-toggle~.collapse.show {
+
+    .picker-switch.accordion-toggle ~ .collapse.show {
         .timepicker {
             padding-top: 0;
         }
