@@ -15,13 +15,12 @@ import { BehaviorSubject, Observable } from 'rxjs';
 })
 export class MediauploadService {
   @Output()
-  //valueChanged = new EventEmitter()
+  valueChanged: EventEmitter<number> = new EventEmitter<number>();
   //progress$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
   progress: number = 0;
 
   constructor(private _apiService: ApiService, private http: HttpClient, private _errorHandlerService: ErrorhandlerService , private _clubApiService : ClubApiService,
-    private ref: ApplicationRef, 
-    private zone:NgZone) { 
+    private ref: ApplicationRef) { 
   }
 
 
@@ -49,7 +48,7 @@ export class MediauploadService {
             break;
           case HttpEventType.UploadProgress:
             this.progress = Math.round(event.loaded / event.total * 100);
-           // this.valueChanged.emit(this.progress);
+            this.valueChanged.emit(this.progress);
             // this.progress$.next(this.progress);
             // this.progress$.getValue();
             console.log(`Uploaded: ${this.progress}%`);
@@ -60,6 +59,7 @@ export class MediauploadService {
             success.next(event.body);
             setTimeout(() => {
             this.progress = 0;
+            this.valueChanged.emit(0);
           }, 1500);
         }
       })
@@ -67,8 +67,8 @@ export class MediauploadService {
     //return this._clubApiService.post(`/media-upload/mediaFiles/${folderName}/${fieldName}`, formData)
   }
 
-//   public getOutput(): Observable<number> {
-//     return this.progress$;
-// }
+  public subscribeToProgressEvents(subscribeFn: (x: number) => any): void {
+    this.valueChanged.subscribe(subscribeFn);
+}
 
 }

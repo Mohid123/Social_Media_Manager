@@ -112,10 +112,6 @@ export class TeamtalkersComponent implements OnInit {
     this.post = new Post();
     this.report = new Report();
     this.poll = new Poll();
-
-    // this.mediaService.getOutput().subscribe((val : number) => {
-    //   this.updateProgress = val;
-    // });
   }
 
   ngOnInit() {
@@ -124,12 +120,12 @@ export class TeamtalkersComponent implements OnInit {
     this.initializeChecklist();
     this.getCheckedItemList();
     this.getLatestClubPosts();
-  }
 
-  // changeProgress(count) {
-  //   this.updateProgress = count;
-  //   this.cf.detectChanges();
-  // }
+    this.mediaService.subscribeToProgressEvents((progress: number) => {
+      this.updateProgress = progress;
+      this.cf.detectChanges();
+    })
+  }
   
 
   openVerticallyCentered(content, post) {
