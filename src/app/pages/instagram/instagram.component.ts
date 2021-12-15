@@ -25,7 +25,8 @@ export class InstagramComponent implements OnInit {
   public instaCaption: string = "";
   private signedInUser: User
   private IGaccount: any
-  public file: any
+  public file: any;
+  updateProgress: number;
   public format: string;
   public url: string = '';
   public report: Report
@@ -69,7 +70,8 @@ export class InstagramComponent implements OnInit {
     private modalService: NgbModal,
     private toast: ToastrService,
     private _scheduleService: ScheduleService,
-    private _scheduleSocialPostService: ScheduleSocialPostService
+    private _scheduleSocialPostService: ScheduleSocialPostService,
+    public mediaService: MediauploadService
   ) {
     this.report = new Report()
   }
@@ -77,9 +79,14 @@ export class InstagramComponent implements OnInit {
 
   ngOnInit() {
     this.facebookProfileImageUrl = JSON.parse(localStorage.getItem('selectedClub'))?.userFacebookProfile?.fbProfileImageUrl
-    this.showSpinner()
+    this.showSpinner();
     this.getSignedInUser();
-    this.getCheckedItemList()
+    this.getCheckedItemList();
+
+    this.mediaService.subscribeToProgressEvents((progress: number) => {
+      this.updateProgress = progress;
+      this.cf.detectChanges();
+    })
   }
 
   clear() {
@@ -257,7 +264,7 @@ export class InstagramComponent implements OnInit {
       this.toast.error('No Item Selected', 'Please select items to post');
       return;
     }
-    this.toast.warning("You'll be notified when done", "We are finalizing your video.")
+    //this.toast.warning("You'll be notified when done", "We are finalizing your video.")
     this.postedSuccessfully()
     this._mediaUploadService.uploadMedia('InstagramTest', '123', this.file).pipe(take(1)).subscribe((media: any) => {
       this.checkedList.forEach(item => {
@@ -325,7 +332,7 @@ export class InstagramComponent implements OnInit {
       this.toast.error('Unsupported Image Format', 'Image Format not supported for Instagram');
       return;
     }
-    this.spinner.show()
+    //this.spinner.show()
     this._mediaUploadService.uploadMedia('Instagram', this.signedInUser.id, this.file).pipe(take(1)).subscribe((media: any) => {
       this.checkedList.forEach((item, idx, self) => {
         this._reportService.createReport(2, "", 'Instagram')
@@ -339,14 +346,14 @@ export class InstagramComponent implements OnInit {
             }
          
           }, error => {
-            this.spinner.hide()
+            //this.spinner.hide()
             console.log(error)
             this.toast.error(error.error.error.error_user_msg)
             this._reportService.createReport(0, "", 'Instagram');
           })
         }, error => {
          
-          this.spinner.hide()
+          //this.spinner.hide()
           console.log(error)
           this.toast.error(error.error.error.error_user_msg)
           this._reportService.createReport(0, "", 'Instagram');
@@ -354,7 +361,7 @@ export class InstagramComponent implements OnInit {
         })
 
       }, error => {
-        this.spinner.hide()
+       // this.spinner.hide()
         this.toast.error(error.message)
         this._reportService.createReport(0, "", 'Instagram');
 

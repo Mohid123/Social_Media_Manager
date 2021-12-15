@@ -29,7 +29,8 @@ export class FacebookComponent implements OnInit {
     private _mediaUploadService: MediauploadService,
     private _reportService: ReportService,
     private _scheduleSocialPostService: ScheduleSocialPostService,
-    private _scheduleService: ScheduleService
+    private _scheduleService: ScheduleService,
+    public mediaService: MediauploadService
   ) {
     this.report = new Report()
   }
@@ -39,6 +40,7 @@ export class FacebookComponent implements OnInit {
   public url: string;
   public signedInUser: User
   public file: any
+  updateProgress: number;
   public report: Report
   private selectedFBPages: any[] = []
   public facebookPages: any[] = []
@@ -74,6 +76,11 @@ export class FacebookComponent implements OnInit {
     this.showSpinner();
     this.getSignedInUser();
     this.getCheckedItemList();
+
+    this.mediaService.subscribeToProgressEvents((progress: number) => {
+      this.updateProgress = progress;
+      this.cf.detectChanges();
+    })
   }
 
 
@@ -260,7 +267,7 @@ export class FacebookComponent implements OnInit {
       this.toast.error('No Page Selected', 'Please select Facebook Pages to post');
       return;
     }
-    this.spinner.show()
+    //this.spinner.show()
     this._mediaUploadService.uploadMedia('Facebook', this.signedInUser.id, this.file).subscribe((media: any) => {
       this.checkedList.forEach((item, index, array) => {
         // console.log(item)
@@ -273,7 +280,7 @@ export class FacebookComponent implements OnInit {
             this.postedSuccessfully();
           }
         }, error => {
-          this.spinner.hide();
+         // this.spinner.hide();
           this.toast.error(error.message)
           console.log(error)
           this._reportService.createReport(0, "", 'Facebook')
@@ -281,12 +288,12 @@ export class FacebookComponent implements OnInit {
         })
 
       }, (error) => {
-        this.spinner.hide();
+        //this.spinner.hide();
         this.toast.error(error.message)
         this._reportService.createReport(0, "", 'Facebook')
       })
     }, (err) => {
-      this.spinner.hide();
+      //this.spinner.hide();
       this.toast.error(err.message)
     })
   }
@@ -300,7 +307,7 @@ export class FacebookComponent implements OnInit {
       this.toast.error('No Page Selected', 'Please select Facebook Pages to post');
       return;
     }
-    this.spinner.show()
+    //this.spinner.show()
     this._mediaUploadService.uploadMedia('Facebook', this.signedInUser.id, this.file).subscribe((media: any) => {
       this.checkedList.forEach((item, index, array) => {
         this._reportService.createReport(2, "", 'Facebook')
@@ -313,12 +320,12 @@ export class FacebookComponent implements OnInit {
         })
 
       }, (err) => {
-        this.spinner.hide()
+        //this.spinner.hide()
         this.toast.error(err.message);
         this._reportService.createReport(0, "", 'Facebook')
       })
     }, (err) => {
-      this.spinner.hide()
+      //this.spinner.hide()
       this.toast.error(err.message);
     })
   }

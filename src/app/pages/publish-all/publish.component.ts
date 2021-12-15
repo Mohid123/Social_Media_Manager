@@ -30,6 +30,7 @@ export class PublishComponent implements OnInit {
   public fbPagesSelected: boolean = false;
   public igProfilesSelected: boolean = false;
   public checklist: any = [];
+  updateProgress: number;
   private tempList: any = [];
   public validAspectRatios : string[] = ['4:5' , '1:1',  '4898:6123' , '1491:1844' , '499:374' , '5128:3419' , '3:2' , '4159:5200'];
   public inValidImageAspectRatio : boolean  ;
@@ -69,7 +70,8 @@ export class PublishComponent implements OnInit {
     private _reportService: ReportService,
     private _clubService: ClubService,
     private _videoService: VideoProcessingService,
-    private _genericPostService : ClubpostService
+    private _genericPostService : ClubpostService,
+    public mediaService: MediauploadService
   ) {
     this.post = new Post();
     this.report = new Report();
@@ -80,6 +82,11 @@ export class PublishComponent implements OnInit {
     this.getSignedInUser();
     this.initializeChecklist()
     this.getCheckedItemList();
+
+    this.mediaService.subscribeToProgressEvents((progress: number) => {
+      this.updateProgress = progress;
+      this.cf.detectChanges();
+    })
   }
 
   initializeChecklist(){
@@ -385,7 +392,7 @@ export class PublishComponent implements OnInit {
     }
 
     if (selectedFacebookPages.length > 0) {
-      this.spinner.show();
+      //this.spinner.show();
       this._mediaUploadService.uploadMedia('Facebook', this.signedInUser.id, this.file).subscribe((media: any) => {
         selectedFacebookPages.forEach((item, index, array) => {
           this._reportService.createReport(2, '', 'Facebook')
@@ -397,7 +404,7 @@ export class PublishComponent implements OnInit {
               this.postedSuccessfully()
             }
           }, (error) => {
-            this.spinner.hide();
+            //this.spinner.hide();
             this.toast.error(error.message);
             this._reportService.createReport(0, '', 'Facebook')
           })
@@ -408,7 +415,7 @@ export class PublishComponent implements OnInit {
 
     if (selctedInstagramPages.length > 0) {
 
-      this.spinner.show();
+     // this.spinner.show();
       this._mediaUploadService.uploadMedia('Instagram', this.signedInUser.id, this.file).subscribe((media: any) => {
         selctedInstagramPages.forEach((item, index, array) => {
           this._reportService.createReport(2, '', 'Instagram')
@@ -418,12 +425,12 @@ export class PublishComponent implements OnInit {
               this._reportService.createReport(1, IgPost.id, 'Instagram')
               this.toast.success(`Post added to Instagram Profile`, 'Success');
             }, (error) => {
-              this.spinner.hide();
+              //this.spinner.hide();
               this.toast.error(error.message);
               this._reportService.createReport(0, '', 'Instagram')
             })
           }, error => {
-            this.spinner.hide();
+            //this.spinner.hide();
             console.log(error)
             this.toast.error(error.error.error.error_user_msg);
             this._reportService.createReport(0, '', 'Instagram')
@@ -489,14 +496,14 @@ export class PublishComponent implements OnInit {
     })
 
     if (selectedFacebookPages.length > 0) {
-      this.spinner.show()
+     // this.spinner.show()
       this._mediaUploadService.uploadMedia('Facebook', this.signedInUser.id, this.file).pipe(take(1)).subscribe((media: any) => {
         selectedFacebookPages.forEach((item, index, array) => {
           this._reportService.createReport(2, '', 'Facebook');
           this._facebookService.addVideoPost(item.pageID, item.pageAccessToken, media.url, this.socialCaption).pipe(take(1)).subscribe((FbPost: any) => {
             this._reportService.createReport(1, FbPost.id, 'Facebook')
           }, error => {
-            this.spinner.hide()
+           // this.spinner.hide()
             this.toast.error(error.message);
             this._reportService.createReport(0, '', 'Facebook')
           })
@@ -510,7 +517,7 @@ export class PublishComponent implements OnInit {
     }
 
     if (selctedInstagramPages.length > 0) {
-    this.toast.warning("You'll be notified when done","We are finalizing your video.")
+   // this.toast.warning("You'll be notified when done","We are finalizing your video.")
       this._mediaUploadService.uploadMedia('Instagram', this.signedInUser.id, this.file).pipe(take(1)).subscribe((media: any) => {
         selctedInstagramPages.forEach(item => {
           this._instagramService.createIgContainerForVideo(item.instagram_business_account.id, media.url, this.socialCaption, item.linkedFbPagetoken).pipe(take(1)).subscribe((container: any) => {

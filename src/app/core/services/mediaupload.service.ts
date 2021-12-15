@@ -27,7 +27,37 @@ export class MediauploadService {
   uploadMedia(folderName, fieldName, file) {
     const formData: FormData = new FormData();
     formData.append('file', file, file.name);
-    return this.http.post(`${constants.api_url}/media-upload/mediaFiles/${folderName}/${fieldName}`, formData).pipe(catchError(this._errorHandlerService.handleErrors))
+    return new Observable((success) => {
+      const req = new HttpRequest('POST', `${constants.api_url}/media-upload/mediaFiles/${folderName}/${fieldName}`, formData, {
+        reportProgress: true
+      });
+     this.http.request(req).subscribe((event: HttpEvent<any>) => {
+        switch (event.type) {
+          case HttpEventType.Sent:
+            console.log('Request has been made!');
+            break;
+          case HttpEventType.ResponseHeader:
+            console.log('Response header has been received!');
+            break;
+          case HttpEventType.UploadProgress:
+            this.progress = Math.round(event.loaded / event.total * 100);
+            this.valueChanged.emit(this.progress);
+            // this.progress$.next(this.progress);
+            // this.progress$.getValue();
+            console.log(`Uploaded: ${this.progress}%`);
+            this.ref.tick();
+            break;
+          case HttpEventType.Response:
+            console.log('Successfully Posted!', event.body);
+            success.next(event.body);
+            setTimeout(() => {
+            this.progress = 0;
+            this.valueChanged.emit(0);
+          }, 1500);
+        }
+      })
+    })
+    //return this.http.post(`${constants.api_url}/media-upload/mediaFiles/${folderName}/${fieldName}`, formData).pipe(catchError(this._errorHandlerService.handleErrors))
   }
 
 
