@@ -189,7 +189,7 @@ export class ClubpostService {
       delete this.post.eventID;
       delete this.post.groupID;
     }
-    this.spinner.show();
+    //this.spinner.show();
     this._postService.hyperLinkScrapper(postedText).subscribe((data) => {
       hyperLinkResponse = data;
       if (
@@ -242,7 +242,7 @@ export class ClubpostService {
                 this._postService.createClubPost(postedTo , this.post).subscribe((post: any) => {
                     this._reportService.createReport(1, post.id, postedTo);
                     if (idx == self.length - 1) {
-                      this.spinner.hide();
+                     // this.spinner.hide();
                       this.toast.success(`Great! The post has been shared to ${postedTo}.`);
                       resolve('success')
                     }},

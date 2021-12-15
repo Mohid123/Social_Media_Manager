@@ -32,6 +32,7 @@ import { tr } from "date-fns/locale";
 import { ScheduleClubPostService } from "../../core/services/schedule/schedule_club_post.service";
 import { ScheduleService } from "./../../core/services/schedule.service";
 import { resourceUsage } from "process";
+import { DomSanitizer } from "@angular/platform-browser";
 
 @Component({
   selector: "app-teamtalkers",
@@ -60,6 +61,7 @@ export class TeamtalkersComponent implements OnInit {
   multiples: any[] = [];
   MultipleImageUpload = false;
   targets: any[] = [];
+  updateProgress: number;
   public masterSelected: boolean;
   public groupSelected: boolean = false;
   public eventSelected: boolean = false;
@@ -91,6 +93,7 @@ export class TeamtalkersComponent implements OnInit {
     military: true,
   };
   public showSchedule: boolean = false;
+  public progress:number = 0;
   constructor(
     private spinner: NgxSpinnerService,
     private cf: ChangeDetectorRef,
@@ -102,11 +105,17 @@ export class TeamtalkersComponent implements OnInit {
     private _genericPostService: ClubpostService,
     private _scheduleClubPostService: ScheduleClubPostService,
     private _scheduleService: ScheduleService,
-    public mergeService: MergeService
+    public mergeService: MergeService,
+    private sanitizer: DomSanitizer,
+    public mediaService: MediauploadService
   ) {
     this.post = new Post();
     this.report = new Report();
     this.poll = new Poll();
+
+    // this.mediaService.getOutput().subscribe((val : number) => {
+    //   this.updateProgress = val;
+    // });
   }
 
   ngOnInit() {
@@ -116,6 +125,12 @@ export class TeamtalkersComponent implements OnInit {
     this.getCheckedItemList();
     this.getLatestClubPosts();
   }
+
+  // changeProgress(count) {
+  //   this.updateProgress = count;
+  //   this.cf.detectChanges();
+  // }
+  
 
   openVerticallyCentered(content, post) {
     this.playingVideo = post.captureFileURL;
@@ -404,7 +419,7 @@ export class TeamtalkersComponent implements OnInit {
           this.cf.detectChanges();
           i++;
           reader.onload = (event) => {
-            const url = (<FileReader>event.target).result as string;
+            const url = this.sanitizer.bypassSecurityTrustUrl((<FileReader>event.target).result as string);
             this.multiples.push(url);
             this.cf.detectChanges();
             if (this.multiples.length > 4) {
@@ -431,7 +446,7 @@ export class TeamtalkersComponent implements OnInit {
           this.urls.push(singlefile);
           this.cf.detectChanges();
           reader.onload = (event) => {
-            const url = (<FileReader>event.target).result as string;
+            const url = this.sanitizer.bypassSecurityTrustUrl((<FileReader>event.target).result as string);
             this.multiples.push(url);
             this.cf.detectChanges();
             if (this.multiples.length > 1) {
@@ -616,7 +631,7 @@ export class TeamtalkersComponent implements OnInit {
     let groups = [];
     let events = [];
     let club = [];
-
+    
     if (!this.file) {
       this.toast.error("Please select a Video File", "Empty File");
       return;
@@ -629,7 +644,7 @@ export class TeamtalkersComponent implements OnInit {
       this.toast.error("Video Size must be less than 500MB", "info");
       return;
     }
-
+  
     this.checkedList.filter((item) => {
       if (item.hasOwnProperty("groupName")) {
         groups.push(item);
@@ -639,7 +654,7 @@ export class TeamtalkersComponent implements OnInit {
         club.push(item);
       }
     });
-
+    
     if (club.length > 0) {
       this._genericPostService
         .createVideoPost(
@@ -653,7 +668,7 @@ export class TeamtalkersComponent implements OnInit {
           this.resetPost();
         });
     }
-
+    
     if (groups.length > 0) {
       this._genericPostService
         .createVideoPost(
@@ -667,7 +682,7 @@ export class TeamtalkersComponent implements OnInit {
           this.resetPost();
         });
     }
-
+    this.cf.detectChanges();
     if (events.length > 0) {
       this._genericPostService
         .createVideoPost(
