@@ -70,8 +70,7 @@ export class InstagramComponent implements OnInit {
     private modalService: NgbModal,
     private toast: ToastrService,
     private _scheduleService: ScheduleService,
-    private _scheduleSocialPostService: ScheduleSocialPostService,
-    public mediaService: MediauploadService
+    private _scheduleSocialPostService: ScheduleSocialPostService
   ) {
     this.report = new Report()
   }
@@ -83,7 +82,7 @@ export class InstagramComponent implements OnInit {
     this.getSignedInUser();
     this.getCheckedItemList();
 
-    this.mediaService.subscribeToProgressEvents((progress: number) => {
+    this._mediaUploadService.subscribeToProgressEvents((progress: number) => {
       this.updateProgress = progress;
       this.cf.detectChanges();
     })
@@ -254,6 +253,7 @@ export class InstagramComponent implements OnInit {
   onVideoEnded() {
     this.modalService.dismissAll()
   }
+
   addVideoPost() {
     let counter = 0
     if (!this.file) {
@@ -286,7 +286,7 @@ export class InstagramComponent implements OnInit {
                   this.toast.success('Great! The post has been shared.');
                   this._reportService.createReport(1, data.id, 'Instagram')
                 }, error => {
-                  this.spinner.hide();
+                  //this.spinner.hide();
                   this.toast.error(error.message);
                   clearInterval(interval)
                   this._reportService.createReport(0, "", 'Instagram')

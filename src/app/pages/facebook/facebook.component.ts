@@ -29,8 +29,7 @@ export class FacebookComponent implements OnInit {
     private _mediaUploadService: MediauploadService,
     private _reportService: ReportService,
     private _scheduleSocialPostService: ScheduleSocialPostService,
-    private _scheduleService: ScheduleService,
-    public mediaService: MediauploadService
+    private _scheduleService: ScheduleService
   ) {
     this.report = new Report()
   }
@@ -77,7 +76,7 @@ export class FacebookComponent implements OnInit {
     this.getSignedInUser();
     this.getCheckedItemList();
 
-    this.mediaService.subscribeToProgressEvents((progress: number) => {
+    this._mediaUploadService.subscribeToProgressEvents((progress: number) => {
       this.updateProgress = progress;
       this.cf.detectChanges();
     })
