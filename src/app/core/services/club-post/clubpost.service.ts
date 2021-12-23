@@ -138,6 +138,9 @@ export class ClubpostService {
           mediaModel.thumbnailPath = "";
           this.post.media.push(mediaModel);
           selectedList.forEach((element, idx, self) => {
+            setTimeout(() => {
+              this.spinner.show();
+            }, 2000);
   
             if (element.hasOwnProperty('groupName')) {
               this.post.groupID = element.id;
@@ -232,6 +235,9 @@ export class ClubpostService {
               this.post.thumbnailPath = thumbnailFile.path;
               this.post.thumbnailURL = thumbnailFile.url;
               selectedList.forEach((element, idx, self) => {
+                setTimeout(() => {
+                  this.spinner.show();
+                }, 2000);
                 if (element.hasOwnProperty('groupName')) {
                   this.post.groupID = element.id;
                 }
@@ -242,7 +248,7 @@ export class ClubpostService {
                 this._postService.createClubPost(postedTo , this.post).subscribe((post: any) => {
                     this._reportService.createReport(1, post.id, postedTo);
                     if (idx == self.length - 1) {
-                     // this.spinner.hide();
+                      this.spinner.hide();
                       this.toast.success(`Great! The post has been shared to ${postedTo}.`);
                       resolve('success')
                     }},
