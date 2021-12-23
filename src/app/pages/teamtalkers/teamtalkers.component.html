@@ -561,9 +561,11 @@
                           </div>
                           <div class="p-2 ml-auto">
                             <button
-                              (click)="addImagePost()"
+                              [disabled]="clicked"
+                              [ngClass]="_genericPostService.condition == true ? 'spinner spinner-white spinner-right' : '' "
+                              (click)="addImagePost(); clicked = true;"
                               type="button"
-                              class="flex-row-reverse btn btn-primary"
+                              class="flex-row-reverse btn btn-primary" 
                               style="
                                 background-color: #3b5998;
                                 border-color: #3b5998;
@@ -571,6 +573,7 @@
                             >
                               Post Now
                             </button>
+                          
                           </div>
                         </div>
                       </div>
@@ -593,6 +596,24 @@
                         </div>
                       </div>
                      </div> 
+                     <div class="form-group mb-5" *ngIf="_genericPostService.condition == true">
+                      <div class="card card-custom" style="height: 150px;">
+                          <div class="card-body rounded p-0 d-flex "
+                              style="background-color: #1e1e2d;">
+                              <div
+                                  class="d-flex flex-column flex-lg-row-auto w-auto w-lg-350px w-xl-450px w-xxl-650px py-10 py-md-14 px-10 px-md-20 pr-lg-0">
+                                  <h1 class="font-weight-bolder text-light mb-0">Almost done!</h1>
+                                  <div class="font-size-h4 mb-8 text-light" style="letter-spacing: 1px;">Finalizing your <span
+                                          style="font-weight: 600; color: #3699FF; font-size: 25px;">post. . .</span>
+                                    </div>
+
+                              </div>
+                              <div
+                                  class="d-none d-md-flex flex-row-fluid bgi-no-repeat bgi-position-y-center bgi-position-x-left bgi-size-cover">
+                              </div>
+                          </div>
+                      </div>
+                  </div>
                      
 
                       <div
@@ -1014,7 +1035,9 @@
                           </div>
                           <div class="p-2 ml-auto">
                             <button
-                              (click)="addVideoPost()"
+                              [disabled]="clicked"
+                              [ngClass]="_genericPostService.condition == true ? 'spinner spinner-white spinner-right' : '' "
+                              (click)="addVideoPost(); clicked = true"
                               type="button"
                               class="flex-row-reverse btn btn-primary"
                               style="
@@ -1043,7 +1066,25 @@
                             </div>
                           </div>
                         </div>
-                       </div> 
+                       </div>
+                       <div class="form-group mb-5" *ngIf="_genericPostService.condition == true">
+                        <div class="card card-custom" style="height: 150px;">
+                            <div class="card-body rounded p-0 d-flex "
+                                style="background-color: #1e1e2d;">
+                                <div
+                                    class="d-flex flex-column flex-lg-row-auto w-auto w-lg-350px w-xl-450px w-xxl-650px py-10 py-md-14 px-10 px-md-20 pr-lg-0">
+                                    <h1 class="font-weight-bolder text-light mb-0">Almost done!</h1>
+                                    <div class="font-size-h4 mb-8 text-light" style="letter-spacing: 1px;">Finalizing your <span
+                                            style="font-weight: 600; color: #3699FF; font-size: 25px;">post. . .</span>
+                                      </div>
+  
+                                </div>
+                                <div
+                                    class="d-none d-md-flex flex-row-fluid bgi-no-repeat bgi-position-y-center bgi-position-x-left bgi-size-cover">
+                                </div>
+                            </div>
+                        </div>
+                       </div>
 
                       <div
                         *ngIf="showSchedule"
@@ -1350,7 +1391,8 @@
                           </div>
                           <div class="p-2 ml-auto">
                             <button
-                              (click)="addTextPost()"
+                              [disabled]="clicked"
+                              (click)="addTextPost(); clicked = true"
                               type="button"
                               class="flex-row-reverse btn btn-primary"
                               style="
@@ -1710,7 +1752,8 @@
                           </div>
                           <div class="p-2 ml-auto">
                             <button
-                              (click)="addPollPost()"
+                              [disabled]="clicked"
+                              (click)="addPollPost(); clicked = true"
                               type="button"
                               class="flex-row-reverse btn btn-primary"
                               style="
@@ -2163,6 +2206,8 @@
                   "
                 >
                   <img
+                     data-toggle="modal"
+                     data-target="#image-modal" (click)="openImageCentered(image, post)"
                     *ngIf="post.type == 'image'"
                     src="{{ post.captureFileURL }}"
                     style="
@@ -2172,6 +2217,7 @@
                       margin-left: auto;
                       display: block;
                       object-fit: contain;
+                      cursor: pointer;
                     "
                   />
 
@@ -2260,6 +2306,48 @@
                     </ng-template>
                   </div>
                 </div>
+
+                <div class="example-preview">
+                  <div>
+                   <ng-template #image let-c="close" let-d="dismiss">
+                    <div class="modal-header d-flex justify-content-center" style="background-color: #1e1e2d; border-bottom: none">
+                     <h4 class="modal-title" style="color: #fff">Image</h4>
+                     <button
+                      type="button"
+                      class="ml-auto close"
+                      aria-label="Close"
+                      (click)="d('Cross click')">
+                    <i
+                      class="ki ki-bold-close icon-sm"
+                      style="color: rgba(255, 255, 255, 0.877)"
+                    >
+                    </i>
+                  <span aria-hidden="true">&times;</span>
+                  </button>
+                  </div>
+                  <div
+                    class="modal-body d-flex justify-content-center"
+                    style="padding: 0px"
+                  >
+                  <img
+                   id="clubVideo"
+                   src="{{ imageModal }}"
+                   style="height: auto"
+                   width="100%"
+                  >
+                  </div>
+                  <div class="modal-footer d-flex justify-content-center">
+                  <button
+                  type="button"
+                  class="btn btn-secondary"
+                  (click)="c('Close click')"
+                  >
+                  Close
+                </button>
+                  </div>
+                  </ng-template>
+                  </div>
+                  </div>
 
                 <!--HYPERLINK POST DESIGN-->
                 <div
