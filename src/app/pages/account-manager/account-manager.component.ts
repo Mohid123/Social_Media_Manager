@@ -131,7 +131,7 @@ export class AccountManagerComponent implements OnInit {
       .then((socialUser) => {
         this._toast.success("Successfully logged into Facebook");
         this.socialUser = socialUser;
-        this.club.FBuserID = this.socialUser.id;
+        console.log(this.club.FBuserID = this.socialUser.id);
         this.userFBprofile.fbEmail = this.socialUser.response.email;
         this.userFBprofile.fbUserName = this.socialUser.response.name;
         this.userFBprofile.fbProfileImageUrl = this.socialUser.response.picture.data.url;
