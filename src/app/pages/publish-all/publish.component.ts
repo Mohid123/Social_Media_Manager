@@ -35,6 +35,7 @@ export class PublishComponent implements OnInit {
   multiples: any[] = [];
   urls: any[] = [];
   updateProgress: number;
+  clicked: Boolean = false;
   private tempList: any = [];
   public validAspectRatios : string[] = ['4:5' , '1:1',  '4898:6123' , '1491:1844' , '499:374' , '5128:3419' , '3:2' , '4159:5200'];
   public inValidImageAspectRatio : boolean  ;
@@ -74,7 +75,7 @@ export class PublishComponent implements OnInit {
     private _reportService: ReportService,
     private _clubService: ClubService,
     private _videoService: VideoProcessingService,
-    private _genericPostService : ClubpostService,
+    public _genericPostService : ClubpostService,
     public mediaService: MediauploadService,
     private mergeService: MergeService,
     private sanitizer: DomSanitizer
@@ -117,13 +118,16 @@ export class PublishComponent implements OnInit {
     this.urls = [];
     this.multiples = [];
     this.url = null;
+    this.clicked = false;
+    this.removeSlectedItems();
     this.cf.detectChanges()
   }
 
   postedSuccessfully() {
     this.spinner.hide();
     this.url = ""
-    this.removeSlectedItems()
+    this.removeSlectedItems();
+    this.clicked = false;
     this.cf.detectChanges()
     setTimeout(() => {
       this.clear()

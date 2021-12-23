@@ -344,10 +344,17 @@
                                                             class="btn btn-transparent-warning">Clear</button>
                                                     </div>
                                                     <div class="ml-auto p-2">
+<<<<<<< HEAD
                                                         <button (click)="addImagePost()" type="button"
                                                             class="btn btn-primary flex-row-reverse"
                                                             style="background-color: #3b5998; border-color: #3b5998;">Post
                                                             Now</button>
+=======
+                                                        <button (click)="addImagePost(); clicked = true" type="button"
+                                                        [disabled]="clicked"
+                                                        [ngClass]="_genericPostService.condition == true ? 'spinner spinner-white spinner-right' : '' "
+                                                        class="btn btn-primary flex-row-reverse" style="background-color: #3b5998; border-color: #3b5998;">Post Now</button>
+>>>>>>> 8578ad877af58a4ad0b6d80e44189dd38f885470
                                                     </div>
                                                 </div>
                                             </div>
@@ -376,6 +383,30 @@
                                                 </div>
                                             </div>
                                         </div>
+<<<<<<< HEAD
+=======
+                                        <div class="form-group mb-5" *ngIf="_genericPostService.condition == true">
+                                            <div class="card card-custom" style="height: 150px;">
+                                                <div class="card-body rounded p-0 d-flex "
+                                                    style="background-color: #1e1e2d;">
+                                                    <div
+                                                        class="d-flex flex-column flex-lg-row-auto w-auto w-lg-350px w-xl-450px w-xxl-650px py-10 py-md-14 px-10 px-md-20 pr-lg-0">
+                                                        <h1 class="font-weight-bolder text-light mb-0">Almost done!</h1>
+                                                        <div class="font-size-h4 mb-8 text-light" style="letter-spacing: 1px;">Finalizing your <span
+                                                                style="font-weight: 600; color: #3699FF; font-size: 25px;">post. . .</span>
+                                                          </div>
+                      
+                                                    </div>
+                                                    <div
+                                                        class="d-none d-md-flex flex-row-fluid bgi-no-repeat bgi-position-y-center bgi-position-x-left bgi-size-cover">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                    
+
+                                        <!--end::Form-->
+>>>>>>> 8578ad877af58a4ad0b6d80e44189dd38f885470
                                     </div>
                                 </div>
                             </div>
@@ -447,9 +478,15 @@
                                                     </div>
                                                     <div class="ml-auto p-2">
                                                         <button (click)="addVideoPost()" type="button"
+<<<<<<< HEAD
                                                             class="btn btn-primary flex-row-reverse"
                                                             style="background-color: #3b5998; border-color: #3b5998;">Post
                                                             Now</button>
+=======
+                                                        [disabled]="clicked"
+                                                        [ngClass]="_genericPostService.condition == true ? 'spinner spinner-white spinner-right' : '' "
+                                                        class="btn btn-primary flex-row-reverse" style="background-color: #3b5998; border-color: #3b5998;">Post Now</button>
+>>>>>>> 8578ad877af58a4ad0b6d80e44189dd38f885470
                                                     </div>
                                                 </div>
                                             </div>
@@ -478,6 +515,29 @@
                                                 </div>
                                             </div>
                                         </div>
+<<<<<<< HEAD
+=======
+                                        <div class="form-group mb-5" *ngIf="_genericPostService.condition == true">
+                                            <div class="card card-custom" style="height: 150px;">
+                                                <div class="card-body rounded p-0 d-flex "
+                                                    style="background-color: #1e1e2d;">
+                                                    <div
+                                                        class="d-flex flex-column flex-lg-row-auto w-auto w-lg-350px w-xl-450px w-xxl-650px py-10 py-md-14 px-10 px-md-20 pr-lg-0">
+                                                        <h1 class="font-weight-bolder text-light mb-0">Almost done!</h1>
+                                                        <div class="font-size-h4 mb-8 text-light" style="letter-spacing: 1px;">Finalizing your <span
+                                                                style="font-weight: 600; color: #3699FF; font-size: 25px;">post. . .</span>
+                                                          </div>
+                      
+                                                    </div>
+                                                    <div
+                                                        class="d-none d-md-flex flex-row-fluid bgi-no-repeat bgi-position-y-center bgi-position-x-left bgi-size-cover">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                           </div>
+
+                                        <!--end::Form-->
+>>>>>>> 8578ad877af58a4ad0b6d80e44189dd38f885470
                                     </div>
                                 </div>
                             </div>
