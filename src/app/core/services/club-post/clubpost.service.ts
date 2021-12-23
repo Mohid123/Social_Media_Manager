@@ -151,12 +151,12 @@ export class ClubpostService {
               this._reportService.createReport(1, post.id, postedTo);
               if (idx == self.length - 1) {
                 this.toast.success(`Great! The post has been shared to ${postedTo}.`)
-                //this.spinner.hide();
+                this.spinner.hide();
                 resolve('success');
               }
             }, error => {
       
-              //this.spinner.hide();
+              this.spinner.hide();
               this.toast.error(error.message);
               this._reportService.createReport(0, "", postedTo);
             })

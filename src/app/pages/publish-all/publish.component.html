@@ -781,15 +781,19 @@
                                                 </div>
                                             </div>
 
-                                            <div class="preview-media" data-max-image="5" style="margin-top: -20px"><img
-                                                    logo #logo (load)="onSelectedImageLoad()" [src]="url"
-                                                    *ngIf="format==='image' && url"
+                                            <div class="preview-media" data-max-image="5" style="margin-top: -20px">
+                                                <ng-container *ngFor="let multiple of multiples">
+                                                    <img
+                                                    logo #logo (load)="onSelectedImageLoad()" [src]="multiple"
                                                     style="object-fit: contain;
                                                     margin-right: auto;
                                                     margin-left: auto;
                                                     height: 100%;
                                                     width: 100%;
-                                                    display: block;"></div>
+                                                    display: block;">
+                                                </ng-container>
+                                            </div>
+
                                             <div class="caption-tt" style="white-space: pre-wrap; text-align: justify;">
                                                 <div>{{socialCaption}}</div>
                                                 <div class="line-no-text" *ngIf="!socialCaption">{{socialCaption}}</div>
@@ -1066,7 +1070,19 @@
                                                 <div class="line-no-text" *ngIf="!socialCaption"></div>
                                                 <div class="line-no-text" *ngIf="!socialCaption"></div>
                                             </div>
-                                            <div class="preview-media" data-max-image="5">
+                                            <div class="preview-media" data-max-image="5" style="margin-top: -20px">
+                                                <ng-container *ngFor="let multiple of multiples">
+                                                    <img
+                                                    logo #logo (load)="onSelectedImageLoad()" [src]="multiple"
+                                                    style="object-fit: contain;
+                                                    margin-right: auto;
+                                                    margin-left: auto;
+                                                    height: 100%;
+                                                    width: 100%;
+                                                    display: block;">
+                                                </ng-container>
+                                            </div>
+                                            <!-- <div class="preview-media" data-max-image="5">
                                                 <img style="object-fit: contain;
                                                 margin-right: auto;
                                                 margin-left: auto;
@@ -1074,7 +1090,7 @@
                                                 width: 100%;
                                                 display: block;" [src]="url"
                                                     *ngIf="format==='image' && url">
-                                            </div>
+                                            </div> -->
 
                                             <!-- <div class="preview-fb">
                                                 <div class="d-flex bd-highlight">
