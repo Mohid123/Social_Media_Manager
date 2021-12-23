@@ -13,6 +13,7 @@ import { Media } from '../../models/media-model';
   providedIn: 'root'
 })
 export class ClubpostService {
+  condition: Boolean = false;
   private post: Post
   private userClubID : string = localStorage.getItem("clubUid");
   public postedSuccessfully: EventEmitter<any> = new EventEmitter();
@@ -138,9 +139,7 @@ export class ClubpostService {
           mediaModel.thumbnailPath = "";
           this.post.media.push(mediaModel);
           selectedList.forEach((element, idx, self) => {
-            setTimeout(() => {
-              this.spinner.show();
-            }, 2000);
+            this.condition = true;
   
             if (element.hasOwnProperty('groupName')) {
               this.post.groupID = element.id;
@@ -154,12 +153,13 @@ export class ClubpostService {
               this._reportService.createReport(1, post.id, postedTo);
               if (idx == self.length - 1) {
                 this.toast.success(`Great! The post has been shared to ${postedTo}.`)
-                this.spinner.hide();
+                this.condition = false;
+                //this.spinner.hide();
                 resolve('success');
               }
             }, error => {
-      
-              this.spinner.hide();
+              this.condition = false;
+              //this.spinner.hide();
               this.toast.error(error.message);
               this._reportService.createReport(0, "", postedTo);
             })
@@ -235,9 +235,7 @@ export class ClubpostService {
               this.post.thumbnailPath = thumbnailFile.path;
               this.post.thumbnailURL = thumbnailFile.url;
               selectedList.forEach((element, idx, self) => {
-                setTimeout(() => {
-                  this.spinner.show();
-                }, 2000);
+                this.condition = true;
                 if (element.hasOwnProperty('groupName')) {
                   this.post.groupID = element.id;
                 }
@@ -248,12 +246,14 @@ export class ClubpostService {
                 this._postService.createClubPost(postedTo , this.post).subscribe((post: any) => {
                     this._reportService.createReport(1, post.id, postedTo);
                     if (idx == self.length - 1) {
-                      this.spinner.hide();
+                      this.condition = false;
+                      //this.spinner.hide();
                       this.toast.success(`Great! The post has been shared to ${postedTo}.`);
                       resolve('success')
                     }},
                   (error) => {
-                    this.spinner.hide();
+                    this.condition = false;
+                    //this.spinner.hide();
                     this.toast.error(error.message);
                     this._reportService.createReport(0, "", postedTo);
                   }

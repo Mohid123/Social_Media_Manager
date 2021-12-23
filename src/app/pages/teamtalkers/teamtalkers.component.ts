@@ -61,6 +61,7 @@ export class TeamtalkersComponent implements OnInit {
   multiples: any[] = [];
   MultipleImageUpload = false;
   targets: any[] = [];
+  clicked: Boolean = false;
   updateProgress: number;
   public masterSelected: boolean;
   public groupSelected: boolean = false;
@@ -68,6 +69,7 @@ export class TeamtalkersComponent implements OnInit {
   private checkedList: any;
   public recentClubPosts: Post[] = [];
   playingVideo: string;
+  imageModal: string;
   schedulePollCheck: boolean = false;
   public showDiv = {
     photo: true,
@@ -102,7 +104,7 @@ export class TeamtalkersComponent implements OnInit {
     private _authService: MainAuthService,
     private _clubService: ClubService,
     private modalService: NgbModal,
-    private _genericPostService: ClubpostService,
+    public _genericPostService: ClubpostService,
     private _scheduleClubPostService: ScheduleClubPostService,
     private _scheduleService: ScheduleService,
     public mergeService: MergeService,
@@ -125,6 +127,18 @@ export class TeamtalkersComponent implements OnInit {
       this.updateProgress = progress;
       this.cf.detectChanges();
     })
+  }
+
+  openImageCentered(content, post) {
+    this.imageModal = post.captureFileURL;
+    this.modalService.open(content, { centered: true }).result.then(
+      (result) => {
+        this.closeResult = `Closed with: ${result}`;
+      },
+      (reason) => {
+        this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+      }
+    );
   }
   
 
@@ -194,6 +208,7 @@ export class TeamtalkersComponent implements OnInit {
     this.singleDate = new Date(new Date().setDate(new Date().getDate() + 1));
     this.unCheckSlectedItems();
     this.getLatestClubPosts();
+    this.clicked = false;
     this.cf.detectChanges();
   }
 
@@ -592,6 +607,7 @@ export class TeamtalkersComponent implements OnInit {
         )
         .then((success) => {
           this.resetPost();
+          this.clicked = false;
         });
     }
 
@@ -606,6 +622,7 @@ export class TeamtalkersComponent implements OnInit {
         )
         .then((success) => {
           this.resetPost();
+          this.clicked = false;
         });
     }
 
@@ -620,6 +637,7 @@ export class TeamtalkersComponent implements OnInit {
         )
         .then((success) => {
           this.resetPost();
+          this.clicked = false;
         });
     }
   }
