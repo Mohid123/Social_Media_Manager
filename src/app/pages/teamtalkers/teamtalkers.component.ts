@@ -166,7 +166,6 @@ export class TeamtalkersComponent implements OnInit {
 
   selectedSchedule() {
     this.showSchedule = !this.showSchedule;
-    console.log(this.showSchedule);
   }
 
   getLatestClubPosts() {

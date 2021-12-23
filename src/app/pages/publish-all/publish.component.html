@@ -3,14 +3,12 @@
 </ngx-spinner>
 <div class="row">
     <div class="col-lg-3">
-        <!--begin::Card-->
         <div class="card card-custom card-stretch" id="kt_page_stretched_card">
             <div class="card-header" style="background-color: #1e1e2d;">
                 <div class="card-title">
                     <h3 class="card-label">
                         <span class="svg-icon svg-icon-primary svg-icon-2x">
-                            <!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2021-05-06-223557/theme/html/demo1/dist/../src/media/svg/icons/General/Search.svg--><svg
-                                xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                                 width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
                                 <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                                     <rect x="0" y="0" width="24" height="24" />
@@ -22,62 +20,40 @@
                                         fill="#fff" fill-rule="nonzero" />
                                 </g>
                             </svg>
-                            <!--end::Svg Icon-->
                         </span>
                         <span class="nav-text" style="color: #fff;"> &nbsp; Search</span>
-
                     </h3>
                 </div>
             </div>
             <div class="card-body" style="padding: 0px;">
-
                 <div class="card-scroll custom-scrollbar-css p-2 padd">
                     <div class="card-header border-0 pt-5">
-                     
                         <div class="main">
-  
-                         
-                            
-                            <!-- Another variation with a button -->
                             <div class="input-group">
-                              <input [(ngModel)]="searchString" (ngModelChange)="search($event)" type="text" class="form-control" placeholder="Search" >
-                              <div class="input-group-append">
-                                <button class="btn btn-secondary" type="button">
-                                  <i class="fa fa-search"></i>
-                                </button>
-                               
-                              </div>
+                                <input [(ngModel)]="searchString" (ngModelChange)="search($event)" type="text"
+                                    class="form-control" placeholder="Search">
+                                <div class="input-group-append">
+                                    <button class="btn btn-secondary" type="button">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+                                </div>
                             </div>
-                            
-                         
-                            
-                          </div>
-
+                        </div>
                     </div>
-
-
                     <div class="card-body py-0" style="padding: 0px;">
-                        <!--begin::Table-->
                         <div>
-
-
-                            <table class="table table-head-custom " id="kt_advance_table_widget_1">
-
+                            <table class="table table-head-custom ">
                                 <tr class="text-left ">
                                     <td style="width: 20px">
                                         <label class="checkbox checkbox-sm checkbox-inline">
                                             <input [(ngModel)]="masterSelected" name="list_name" value="m1"
                                                 (change)="selectAll()" type="checkbox" value="1" />
-
                                             <span></span>
                                             <label style="padding-left: 10px;" class="font-weight-bolder ">Select
                                                 all</label>
-
                                         </label>
-
                                     </td>
                                 </tr>
-
                                 <tbody>
                                     <!-- CLUB -->
                                     <th class="pr-0 pt-5 pb-5 text-left bg-gray-100 ">
@@ -100,16 +76,12 @@
                                                                     style="object-fit: cover; width: 100%" alt="" />
                                                             </span>
                                                         </div>
-
                                                         <div class="d-flex flex-column flex-grow-1 font-weight-bold">
                                                             <a class="text-dark text-hover-primary font-size-sm text-truncate"
                                                                 style="cursor: pointer;     max-width: 145px;">{{item.clubName}}</a>
                                                             <span class="text-muted font-size-sm">Club</span>
                                                         </div>
                                                     </label>
-
-
-
                                                 </div>
                                             </td>
                                         </ng-container>
@@ -123,11 +95,9 @@
                                         <label class="checkbox checkbox-sm checkbox-inline mt-5">
                                             <input [(ngModel)]="fbPagesSelected" name="list_name" value="m1"
                                                 (change)="selectAllFBPages()" type="checkbox" value="1" />
-
                                             <span></span>
                                             <label style="padding-left: 10px;" class="font-weight-bolder">Select
                                                 all</label>
-
                                         </label>
                                     </th>
                                     <tr *ngFor="let item of checklist">
@@ -138,8 +108,6 @@
                                                         <input type="checkbox" [(ngModel)]="item.isSelected"
                                                             value="{{item.id}}" (change)="singleItemSelected()" />
                                                         <span></span>
-
-
                                                         <div class="symbol symbol-30 symbol-light mr-2"
                                                             style="padding-left: 10px">
                                                             <span class="symbol-label">
@@ -148,14 +116,12 @@
                                                                     style="object-fit: cover;" alt="" />
                                                             </span>
                                                         </div>
-
                                                         <div class="d-flex flex-column flex-grow-1 font-weight-bold">
                                                             <a class="text-dark text-hover-primary font-size-sm text-truncate"
                                                                 style="cursor: pointer;">{{item.pageName}}</a>
                                                             <span class="text-muted font-size-sm">Page</span>
                                                         </div>
                                                     </label>
-
                                                 </div>
                                             </td>
                                         </ng-container>
@@ -170,11 +136,9 @@
                                         <label class="checkbox checkbox-sm checkbox-inline mt-5">
                                             <input [(ngModel)]="igProfilesSelected" name="list_name" value="m1"
                                                 (change)="selectAllIGProfiles()" type="checkbox" value="1" />
-
                                             <span></span>
                                             <label style="padding-left: 10px;" class="font-weight-bolder">Select
                                                 all</label>
-
                                         </label>
                                     </th>
                                     <tr *ngFor="let item of checklist">
@@ -185,8 +149,6 @@
                                                         <input type="checkbox" [(ngModel)]="item.isSelected"
                                                             value="{{item.id}}" (change)="singleItemSelected()" />
                                                         <span></span>
-
-
                                                         <div class="symbol symbol-30 symbol-light mr-2"
                                                             style="padding-left: 10px">
                                                             <span class="symbol-label">
@@ -195,14 +157,12 @@
                                                                     style="object-fit: cover;" alt="" />
                                                             </span>
                                                         </div>
-
                                                         <div class="d-flex flex-column flex-grow-1 font-weight-bold">
                                                             <a class="text-dark text-hover-primary font-size-sm"
                                                                 style="cursor: pointer;">{{item.igProfileName}}</a>
                                                             <span class="text-muted font-size-sm">Profile</span>
                                                         </div>
                                                     </label>
-
                                                 </div>
                                             </td>
                                         </ng-container>
@@ -215,11 +175,9 @@
                                         <label class="checkbox checkbox-sm checkbox-inline mt-5">
                                             <input [(ngModel)]="groupSelected" name="list_name" value="m1"
                                                 (change)="selectAllGroups()" type="checkbox" value="1" />
-
                                             <span></span>
                                             <label style="padding-left: 10px;" class="font-weight-bolder">Select
                                                 all</label>
-
                                         </label>
                                     </th>
                                     <tr *ngFor="let item of checklist">
@@ -230,8 +188,6 @@
                                                         <input type="checkbox" [(ngModel)]="item.isSelected"
                                                             value="{{item.id}}" (change)="singleItemSelected()" />
                                                         <span></span>
-
-
                                                         <div class="symbol symbol-30 symbol-light mr-2"
                                                             style="padding-left: 10px">
                                                             <span class="symbol-label">
@@ -240,14 +196,12 @@
                                                                     style="object-fit: cover; width: 100%" alt="" />
                                                             </span>
                                                         </div>
-
                                                         <div class="d-flex flex-column flex-grow-1 font-weight-bold">
                                                             <a class="text-dark text-hover-primary font-size-sm text-truncate"
                                                                 style="cursor: pointer; max-width: 145px;">{{item.groupName}}</a>
                                                             <span class="text-muted font-size-sm">Group</span>
                                                         </div>
                                                     </label>
-
                                                 </div>
                                             </td>
                                         </ng-container>
@@ -261,11 +215,9 @@
                                         <label class="checkbox checkbox-sm checkbox-inline mt-5">
                                             <input [(ngModel)]="eventSelected" name="list_name" value="m1"
                                                 (change)="selectAllEvents()" type="checkbox" value="1" />
-
                                             <span></span>
                                             <label style="padding-left: 10px;" class="font-weight-bolder">Select
                                                 all</label>
-
                                         </label>
                                     </th>
                                     <tr *ngFor="let item of checklist">
@@ -276,8 +228,6 @@
                                                         <input type="checkbox" [(ngModel)]="item.isSelected"
                                                             value="{{item.id}}" (change)="singleItemSelected()" />
                                                         <span></span>
-
-
                                                         <div class="symbol symbol-30 symbol-light mr-2"
                                                             style="padding-left: 10px">
                                                             <span class="symbol-label">
@@ -286,37 +236,26 @@
                                                                     style="object-fit: cover; width: 100%" alt="" />
                                                             </span>
                                                         </div>
-
                                                         <div class="d-flex flex-column flex-grow-1 font-weight-bold">
                                                             <a class="text-dark text-hover-primary font-size-sm d-inline-block text-truncate"
                                                                 style="cursor: pointer;     max-width: 145px;">{{item.eventName}}</a>
                                                             <span class="text-muted font-size-sm">Event</span>
                                                         </div>
                                                     </label>
-
                                                 </div>
                                             </td>
                                         </ng-container>
                                     </tr>
-
-
-
-
                                 </tbody>
                             </table>
                         </div>
-                        <!--end::Table-->
                     </div>
                 </div>
             </div>
         </div>
-        <!--end::Card-->
     </div>
 
-
-
     <div class="col-lg-5">
-        <!--begin::Card-->
         <div class="card card-custom card-stretch">
             <div class="card-header" style="background-color: #1e1e2d;">
                 <div class="card-title">
@@ -335,10 +274,8 @@
                                         fill="#000000" fill-rule="nonzero" opacity="0.3" />
                                 </g>
                             </svg>
-                            <!--end::Svg Icon-->
                         </span>
                         <span class="nav-text" style="color: #fff;"> &nbsp; New post</span>
-
                     </h3>
                 </div>
             </div>
@@ -346,32 +283,25 @@
                 <mat-tab-group mat-align-tabs="center" (selectedTabChange)="switchTabs($event)">
                     <mat-tab>
                         <ng-template mat-tab-label>
-
                             <mat-icon>
                                 <i class="far fa-images icon-lg" style="color: #3699FF;"></i>
-                                <!-- <i data-visualcompletion="css-img" style="background-image:url('https://static.xx.fbcdn.net/rsrc.php/v3/yG/r/1j-f6O0Xtyf.png?_nc_eui2=AeG_ziBgWuKTlexxWVF9hOlyxCA0FsPulJTEIDQWw-6UlCrJ5n7cV9jq2XE66KcW3LTtFYAod1eQ9c8TCxxlL1Mj');background-position:0 -125px;background-size:auto;width:24px;height:24px;background-repeat:no-repeat;display:inline-block"></i> -->
                             </mat-icon>&nbsp;
                             &nbsp;Photo
                         </ng-template>
                         <div class="card-body">
                             <div class="tab-content">
-                                <div class="tab-pane fade show active" id="
-                            " role="tabpanel" aria-labelledby="kt_tab_pane_7_1">
+                                <div class="tab-pane fade show active" role="tabpanel">
                                     <div class="card-body">
-                                        <!--begin::Top-->
                                         <form class="form-inline">
-
                                             <div class="symbol symbol-50 symbol-light mr-5 pb-5">
                                                 <span class="symbol-label">
                                                     <img [src]="profileImageUrl" class="h-100 align-self-center rounded"
                                                         style="object-fit: cover; width: 100%" alt="" />
                                                 </span>
                                             </div>
-
                                             <div class="d-flex flex-column flex-grow-1 font-weight-bold">
                                                 <a
                                                     class="text-dark text-hover-primary mb-1 font-size-lg pb-12">{{userName}}</a>
-
                                             </div>
 
                                         </form>
@@ -381,65 +311,34 @@
                                                 id="exampleTextarea" rows="3"
                                                 placeholder="What’s on your mind, {{userName}}?"></textarea>
                                         </div>
-
-                                        <!--end::Top-->
-                                        <!--begin::Form-->
-                                        <form id="kt_forms_widget_2_form" class="pt-10 ql-quil ql-quil-plain">
-
-                                            <!--begin::Editor-->
-                                            <div id="kt_forms_widget_2_editor">
-                                            </div>
-                                            <!--end::Editor-->
+                                        <form class="pt-10 ql-quil ql-quil-plain">
                                             <div class="border-top my-5"></div>
-                                            <!--begin::Toolbar-->
-                                            <div id="kt_forms_widget_2_editor_toolbar"
-                                                class="ql-toolbar d-flex align-items-center justify-content-between">
+                                            <div class="ql-toolbar d-flex align-items-center justify-content-between">
                                                 <div class="d-flex">
                                                     <div class="p-2">
-                                                        <div class="p-2">
-                                                            <div class="image-upload">
-                                                                <label for="file-input">
-
-                                                                    <div
-                                                                        class="btn btn-icon btn-light w-auto btn-clean d-inline-flex align-items-center btn-lg px-2 mr-5">
-                                                                        <span
-                                                                            class="symbol symbol-35 symbol-light-primary">
-                                                                            <span class="symbol-label"><a
-                                                                                    class="btn btn-icon btn-sm ">
-                                                                                    <i class="fas fa-upload icon-lg"
-                                                                                        style="cursor: pointer;"></i>
-                                                                                </a></span>
-                                                                        </span>
-                                                                        <span
-                                                                            class="btn text-dark-50 font-weight-normal font-size-base">
-                                                                            &nbsp;Select image</span>
-
-                                                                    </div>
-                                                                </label>
-
-                                                                <input id="file-input" accept="image/*"
-                                                                    (change)="onSelectFile($event)" type="file"
-                                                                    name="myfile" />
-                                                            </div>
-                                                        </div>
-
-                                                    </div>
-                                                    <div class="p-2">
-                                                        <div class="p-2">
-                                                            <!-- <span class="btn btn-icon btn-sm btn-hover-icon-primary">
-                                                        <i class="flaticon2-pin icon-ms"></i>
-                                                    </span> -->
+                                                        <div class="image-upload">
+                                                            <label for="file-input">
+                                                                <div
+                                                                    class="btn btn-icon btn-light w-auto btn-clean d-inline-flex align-items-center btn-lg px-2 mr-5">
+                                                                    <span class="symbol symbol-35 symbol-light-primary">
+                                                                        <span class="symbol-label"><a
+                                                                                class="btn btn-icon btn-sm ">
+                                                                                <i class="fas fa-upload icon-lg"
+                                                                                    style="cursor: pointer;"></i>
+                                                                            </a></span>
+                                                                    </span>
+                                                                    <span
+                                                                        class="btn text-dark-50 font-weight-normal font-size-base">
+                                                                        &nbsp;Select image</span>
+                                                                </div>
+                                                            </label>
+                                                            <input id="file-input" accept="image/*"
+                                                                (change)="onSelectFile($event)" type="file"
+                                                                name="myfile" />
                                                         </div>
                                                     </div>
-                                                    <div class="ml-auto p-2"></div>
                                                 </div>
                                                 <div class="d-flex">
-                                                    <div class="p-2">
-
-                                                    </div>
-                                                    <div class="p-2">
-
-                                                    </div>
                                                     <div class="ml-auto p-2">
                                                         <button (click)="clear()" type="button"
                                                             class="btn btn-transparent-warning">Clear</button>
@@ -452,25 +351,29 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <!--end::Toolbar-->
                                         </form>
 
                                         <div *ngIf="updateProgress">
                                             <div class="card card-xl-stretch mb-5 mb-xl-8">
-                                              <!--begin::Body-->
-                                              <div class="card-body d-flex align-items-center pt-3 pb-0">
-                                                <div class="d-flex flex-column flex-grow-1 py-2 py-lg-13 me-2">
-                                                  <a href="#" class="fw-bolder text-dark fs-7 mb-2">Upload in progress!</a>
-                                                  <span class="fw-bold text-muted fs-4">It will take a short time</span>
+                                                <div class="card-body d-flex align-items-center pt-3 pb-0">
+                                                    <div class="d-flex flex-column flex-grow-1 py-2 py-lg-13 me-2">
+                                                        <a href="#" class="fw-bolder text-dark fs-7 mb-2">Upload in
+                                                            progress!</a>
+                                                        <span class="fw-bold text-muted fs-4">It will take a short
+                                                            time</span>
+                                                    </div>
+                                                    <img src="https://preview.keenthemes.com/metronic8/demo1/assets/media/svg/avatars/004-boy-1.svg"
+                                                        alt="" class="align-self-end h-100px">
                                                 </div>
-                                                <img src="https://preview.keenthemes.com/metronic8/demo1/assets/media/svg/avatars/004-boy-1.svg" alt="" class="align-self-end h-100px">
-                                              </div>
-                                              <!--end::Body-->
-                                              <div class="progress form-group m-2" *ngIf="updateProgress > 0" style="height: 20px; width:95%;">
-                                                <div style="font-size: 16px;" class="progress-bar progress-bar-striped " [ngStyle]="{ 'background-color': clubPrimaryColor }" role="progressbar" [style.width.%]="updateProgress">
-                                                  {{updateProgress}}%
+                                                <div class="progress form-group m-2" *ngIf="updateProgress > 0"
+                                                    style="height: 20px; width:95%;">
+                                                    <div style="font-size: 16px;"
+                                                        class="progress-bar progress-bar-striped "
+                                                        [ngStyle]="{ 'background-color': clubPrimaryColor }"
+                                                        role="progressbar" [style.width.%]="updateProgress">
+                                                        {{updateProgress}}%
+                                                    </div>
                                                 </div>
-                                              </div>
                                             </div>
                                         </div>
                                         <div class="form-group mb-5" *ngIf="_genericPostService.condition == true">
@@ -496,7 +399,6 @@
                                         <!--end::Form-->
                                     </div>
                                 </div>
-
                             </div>
                         </div>
                     </mat-tab>
@@ -505,102 +407,61 @@
                         <ng-template mat-tab-label>
                             <mat-icon>
                                 <i class="fas fa-video icon-lg" style="color: #3699FF;"></i>
-                                <!-- <i data-visualcompletion="css-img" style="background-image:url('https://static.xx.fbcdn.net/rsrc.php/v3/yG/r/1j-f6O0Xtyf.png?_nc_eui2=AeG_ziBgWuKTlexxWVF9hOlyxCA0FsPulJTEIDQWw-6UlCrJ5n7cV9jq2XE66KcW3LTtFYAod1eQ9c8TCxxlL1Mj');background-position:0 0;background-size:auto;width:24px;height:24px;background-repeat:no-repeat;display:inline-block"></i> -->
                             </mat-icon>&nbsp;
                             &nbsp;Video
-
                         </ng-template>
                         <div class="card-body">
                             <div class="tab-content">
-                                <div class="tab-pane fade show active" id="
-                            " role="tabpanel" aria-labelledby="kt_tab_pane_7_1">
+                                <div class="tab-pane fade show active" role="tabpanel"
+                                    aria-labelledby="kt_tab_pane_7_1">
                                     <div class="card-body">
-                                        <!--begin::Top-->
                                         <form class="form-inline">
-
                                             <div class="symbol symbol-50 symbol-light mr-5 pb-5">
                                                 <span class="symbol-label">
                                                     <img [src]="profileImageUrl" class="h-100 align-self-center rounded"
                                                         style="object-fit: cover; width: 100%" alt="" />
                                                 </span>
                                             </div>
-
                                             <div class="d-flex flex-column flex-grow-1 font-weight-bold">
                                                 <a
                                                     class="text-dark text-hover-primary mb-1 font-size-lg pb-12">{{userName}}</a>
-
                                             </div>
-
                                         </form>
-
-
-
-
-
-
                                         <div class="form-group">
                                             <textarea [(ngModel)]="socialCaption" [ngModelOptions]="{standalone: true}"
                                                 class="form-control form-control-lg form-control-solid"
                                                 id="exampleTextarea" rows="3"
                                                 placeholder="What’s on your mind, {{userName}}?"></textarea>
                                         </div>
-                                        <!--end::Top-->
-                                        <!--begin::Form-->
-                                        <form id="kt_forms_widget_2_form" class="pt-10 ql-quil ql-quil-plain">
-
-                                            <!--begin::Editor-->
-                                            <div id="kt_forms_widget_2_editor">
-                                            </div>
-                                            <!--end::Editor-->
+                                        <form class="pt-10 ql-quil ql-quil-plain">
                                             <div class="border-top my-5"></div>
-                                            <!--begin::Toolbar-->
-                                            <div id="kt_forms_widget_2_editor_toolbar"
-                                                class="ql-toolbar d-flex align-items-center justify-content-between">
+                                            <div class="ql-toolbar d-flex align-items-center justify-content-between">
                                                 <div class="d-flex">
                                                     <div class="p-2">
-                                                        <div class="p-2">
-                                                            <div class="image-upload">
-                                                                <label for="file-input">
-
-                                                                    <div
-                                                                        class="btn btn-icon btn-light w-auto btn-clean d-inline-flex align-items-center btn-lg px-2 mr-5">
-                                                                        <span
-                                                                            class="symbol symbol-35 symbol-light-primary">
-                                                                            <span class="symbol-label"><a
-                                                                                    class="btn btn-icon btn-sm ">
-                                                                                    <i class="fas fa-video icon-lg"
-                                                                                        style="cursor: pointer;"></i>
-                                                                                </a></span>
-                                                                        </span>
-                                                                        <span
-                                                                            class="btn text-dark-50 font-weight-normal font-size-base">
-                                                                            &nbsp;Select video</span>
-
-                                                                    </div>
-                                                                </label>
-
-                                                                <input id="file-input" accept="video/*"
-                                                                    (change)="onSelectVideo($event)" type="file"
-                                                                    name="myfile" />
-                                                            </div>
-
-                                                        </div>
-
-                                                    </div>
-                                                    <div class="p-2">
-                                                        <div class="p-2">
-
+                                                        <div class="image-upload">
+                                                            <label for="file-input">
+                                                                <div
+                                                                    class="btn btn-icon btn-light w-auto btn-clean d-inline-flex align-items-center btn-lg px-2 mr-5">
+                                                                    <span class="symbol symbol-35 symbol-light-primary">
+                                                                        <span class="symbol-label"><a
+                                                                                class="btn btn-icon btn-sm ">
+                                                                                <i class="fas fa-video icon-lg"
+                                                                                    style="cursor: pointer;"></i>
+                                                                            </a></span>
+                                                                    </span>
+                                                                    <span
+                                                                        class="btn text-dark-50 font-weight-normal font-size-base">
+                                                                        &nbsp;Select video</span>
+                                                                </div>
+                                                            </label>
+                                                            <input id="file-input" accept="video/*"
+                                                                (change)="onSelectVideo($event)" type="file"
+                                                                name="myfile" />
                                                         </div>
                                                     </div>
-                                                    <div class="ml-auto p-2"></div>
+
                                                 </div>
                                                 <div class="d-flex">
-                                                    <div class="p-2">
-
-                                                    </div>
-                                                    <div class="p-2">
-
-                                                    </div>
                                                     <div class="ml-auto p-2">
                                                         <button (click)="clear()" type="button"
                                                             class="btn btn-transparent-warning">Clear</button>
@@ -609,29 +470,34 @@
                                                         <button (click)="addVideoPost()" type="button"
                                                         [disabled]="clicked"
                                                         [ngClass]="_genericPostService.condition == true ? 'spinner spinner-white spinner-right' : '' "
-                                                        class="btn btn-primary flex-row-reverse" style="background-color: #3b5998; border-color: #3b5998;">Post Now</button>
+                                                        class="btn btn-primary flex-row-reverse" style="background-color: #3b5998; border-color: #3b5998;">Post Now
+                                                        </button>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <!--end::Toolbar-->
                                         </form>
 
                                         <div *ngIf="updateProgress">
                                             <div class="card card-xl-stretch mb-5 mb-xl-8">
-                                              <!--begin::Body-->
-                                              <div class="card-body d-flex align-items-center pt-3 pb-0">
-                                                <div class="d-flex flex-column flex-grow-1 py-2 py-lg-13 me-2">
-                                                  <a href="#" class="fw-bolder text-dark fs-7 mb-2">Upload in progress!</a>
-                                                  <span class="fw-bold text-muted fs-4">It will take a short time</span>
+                                                <div class="card-body d-flex align-items-center pt-3 pb-0">
+                                                    <div class="d-flex flex-column flex-grow-1 py-2 py-lg-13 me-2">
+                                                        <a href="#" class="fw-bolder text-dark fs-7 mb-2">Upload in
+                                                            progress!</a>
+                                                        <span class="fw-bold text-muted fs-4">It will take a short
+                                                            time</span>
+                                                    </div>
+                                                    <img src="https://preview.keenthemes.com/metronic8/demo1/assets/media/svg/avatars/004-boy-1.svg"
+                                                        alt="" class="align-self-end h-100px">
                                                 </div>
-                                                <img src="https://preview.keenthemes.com/metronic8/demo1/assets/media/svg/avatars/004-boy-1.svg" alt="" class="align-self-end h-100px">
-                                              </div>
-                                              <!--end::Body-->
-                                              <div class="progress form-group m-2" *ngIf="updateProgress > 0" style="height: 20px; width:95%;">
-                                                <div style="font-size: 16px;" class="progress-bar progress-bar-striped " [ngStyle]="{ 'background-color': clubPrimaryColor }" role="progressbar" [style.width.%]="updateProgress">
-                                                  {{updateProgress}}%
+                                                <div class="progress form-group m-2" *ngIf="updateProgress > 0"
+                                                    style="height: 20px; width:95%;">
+                                                    <div style="font-size: 16px;"
+                                                        class="progress-bar progress-bar-striped "
+                                                        [ngStyle]="{ 'background-color': clubPrimaryColor }"
+                                                        role="progressbar" [style.width.%]="updateProgress">
+                                                        {{updateProgress}}%
+                                                    </div>
                                                 </div>
-                                              </div>
                                             </div>
                                         </div>
                                         <div class="form-group mb-5" *ngIf="_genericPostService.condition == true">
@@ -656,7 +522,6 @@
                                         <!--end::Form-->
                                     </div>
                                 </div>
-
                             </div>
                         </div>
                     </mat-tab>
@@ -665,33 +530,25 @@
                         <ng-template mat-tab-label>
                             <mat-icon>
                                 <i class="far fa-file-alt icon-lg" style="color: #EAB026;"></i>
-                               
                             </mat-icon>
                             &nbsp;Text
-
                         </ng-template>
-
                         <div class="card-body">
                             <div class="tab-content">
-                                <div class="tab-pane fade show active" id="
-                            " role="tabpanel" aria-labelledby="kt_tab_pane_7_1">
+                                <div class="tab-pane fade show active" role="tabpanel"
+                                    aria-labelledby="kt_tab_pane_7_1">
                                     <div class="card-body">
-                                        <!--begin::Top-->
                                         <form class="form-inline">
-
                                             <div class="symbol symbol-50 symbol-light mr-5 pb-5">
                                                 <span class="symbol-label">
                                                     <img [src]="profileImageUrl" class="h-100 align-self-center rounded"
                                                         style="object-fit: cover; width: 100%" alt="" />
                                                 </span>
                                             </div>
-
                                             <div class="d-flex flex-column flex-grow-1 font-weight-bold">
                                                 <a
                                                     class="text-dark text-hover-primary mb-1 font-size-lg pb-12">{{userName}}</a>
-
                                             </div>
-
                                         </form>
                                         <div class="form-group">
                                             <textarea [(ngModel)]="socialCaption" [ngModelOptions]="{standalone: true}"
@@ -699,78 +556,40 @@
                                                 id="exampleTextarea" rows="3"
                                                 placeholder="What’s on your mind, {{userName}}?"></textarea>
                                         </div>
-                                        <!--end::Top-->
-                                        <!--begin::Form-->
-                                        <form id="kt_forms_widget_2_form" class="pt-10 ql-quil ql-quil-plain">
-
-                                            <!--begin::Editor-->
-                                            <div id="kt_forms_widget_2_editor">
-                                            </div>
-                                            <!--end::Editor-->
+                                        <form class="pt-10 ql-quil ql-quil-plain">
                                             <div class="border-top my-5"></div>
-                                            <!--begin::Toolbar-->
-                                            <div id="kt_forms_widget_2_editor_toolbar"
-                                                class="ql-toolbar d-flex align-items-center justify-content-between">
+                                            <div class="ql-toolbar d-flex align-items-center justify-content-end">
                                                 <div class="d-flex">
-                                                    <div class="p-2">
-                                                        <div class="p-2">
-                                                            <!-- <span class="btn btn-icon btn-sm btn-hover-icon-primary">
-                                                       <i class="flaticon2-clip-symbol icon-ms"></i>
-                                                   </span> -->
-                                                        </div>
-
-                                                    </div>
-                                                    <div class="p-2">
-                                                        <div class="p-2">
-                                                            <!-- <span class="btn btn-icon btn-sm btn-hover-icon-primary">
-                                                        <i class="flaticon2-pin icon-ms"></i>
-                                                    </span> -->
-                                                        </div>
-                                                    </div>
-                                                    <div class="ml-auto p-2"></div>
-                                                </div>
-                                                <div class="d-flex">
-                                                    <div class="p-2">
-
-                                                    </div>
-                                                    <div class="p-2">
-
-                                                    </div>
                                                     <div class="ml-auto p-2">
                                                         <button (click)="clear()" type="button"
                                                             class="btn btn-transparent-warning">Clear</button>
                                                     </div>
                                                     <div class="ml-auto p-2">
                                                         <button (click)="addTextPost()" type="button"
-                                                        class="btn btn-primary flex-row-reverse" style="background-color: #3b5998; border-color: #3b5998;">Post Now</button>
+                                                            class="btn btn-primary flex-row-reverse"
+                                                            style="background-color: #3b5998; border-color: #3b5998;">Post
+                                                            Now</button>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <!--end::Toolbar-->
                                         </form>
-
-                                        <!--end::Form-->
                                     </div>
                                 </div>
-
                             </div>
                         </div>
                     </mat-tab>
                 </mat-tab-group>
             </div>
         </div>
-        <!--end::Card-->
     </div>
 
     <div class="col-lg-4">
-        <!--begin::Card-->
         <div class="card card-custom card-stretch">
             <div class="card-header" style="background-color: #1e1e2d;">
                 <div class="card-title">
                     <h3 class="card-label">
                         <span class="svg-icon svg-icon-primary svg-icon-2x">
-                            <!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2021-05-06-223557/theme/html/demo1/dist/../src/media/svg/icons/Layout/Layout-4-blocks.svg--><svg
-                                xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                                 width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
                                 <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                                     <rect x="0" y="0" width="24" height="24" />
@@ -780,17 +599,13 @@
                                         fill="#000000" opacity="0.3" />
                                 </g>
                             </svg>
-                            <!--end::Svg Icon-->
                         </span>
                         <span class="nav-text" style="color: #fff;"> &nbsp; Preview</span>
-
                     </h3>
                 </div>
             </div>
             <div class="card-body">
                 <mat-tab-group mat-align-tabs="center" dynamicHeight>
-
-
                     <!--Club Tab-->
                     <mat-tab>
                         <ng-template mat-tab-label>
@@ -800,32 +615,25 @@
                         </ng-template>
                         <div class="card card-custom gutter-b">
                             <div class="preview-facebook">
-
                                 <div class="card">
-
                                     <div class="card-body p-0">
                                         <div class="preview-facebook preview-facebook-media item-post-type"
                                             data-type="photo" *ngIf="showDiv.photo">
                                             <div class="user-info-tt" style="z-index: 1;">
                                                 <img class="img-circle"
-                                                style="height: 44px; object-fit: cover; border-radius: 30px;"
-                                                name="fieldName" ngDefaultControl [(ngModel)]="clubPrimaryColor"
-                                                [ngStyle]="{'border': '3px solid' + clubPrimaryColor}"
-                                                [src]="profileImageUrl">
+                                                    style="height: 44px; object-fit: cover; border-radius: 30px;"
+                                                    name="fieldName" ngDefaultControl [(ngModel)]="clubPrimaryColor"
+                                                    [ngStyle]="{'border': '3px solid' + clubPrimaryColor}"
+                                                    [src]="profileImageUrl">
                                                 <div class="tt-text">
                                                     <div class="name"> {{userName}}</div>
-                                                    <span> Just now
-                                                        <!-- <i class="fa fa-globe"
-                                                        aria-hidden="true"></i> -->
-                                                    </span>
+                                                    <span> Just now</span>
                                                 </div>
                                             </div>
-
                                             <div class="preview-media" data-max-image="5" style="margin-top: -20px">
                                                 <ng-container *ngFor="let multiple of multiples">
-                                                    <img
-                                                    logo #logo (load)="onSelectedImageLoad()" [src]="multiple"
-                                                    style="object-fit: contain;
+                                                    <img logo #logo (load)="onSelectedImageLoad()" [src]="multiple"
+                                                        style="object-fit: contain;
                                                     margin-right: auto;
                                                     margin-left: auto;
                                                     height: 100%;
@@ -887,12 +695,6 @@
                                                         &nbsp;&nbsp;&nbsp;&nbsp;
                                                         <i class="fas fa-share mr-2" style="color: black;"></i>Share
                                                     </div>
-                                                    <div class="col item">
-                                                        <!-- <i class="fas fa-comments"></i> &nbsp;Comment -->
-                                                    </div>
-                                                    <div class="col item">
-                                                        <!-- <i class="fas fa-share" aria-hidden="true"></i> &nbsp;Share -->
-                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -901,30 +703,26 @@
                                             data-type="photo" *ngIf="showDiv.video">
                                             <div class="user-info-tt" style="z-index: 1;">
                                                 <img class="img-circle"
-                                                style="height: 44px; object-fit: cover; border-radius: 30px;"
-                                                name="fieldName" ngDefaultControl [(ngModel)]="clubPrimaryColor"
-                                                [ngStyle]="{'border': '3px solid' + clubPrimaryColor}"
-                                                [src]="profileImageUrl">
+                                                    style="height: 44px; object-fit: cover; border-radius: 30px;"
+                                                    name="fieldName" ngDefaultControl [(ngModel)]="clubPrimaryColor"
+                                                    [ngStyle]="{'border': '3px solid' + clubPrimaryColor}"
+                                                    [src]="profileImageUrl">
                                                 <div class="tt-text">
                                                     <div class="name"> {{userName}}</div>
-                                                    <span> Just now
-                                                        <!-- <i class="fa fa-globe"
-                                                    aria-hidden="true"></i> -->
-                                                    </span>
+                                                    <span> Just now</span>
                                                 </div>
                                             </div>
 
                                             <div class="preview-media" data-max-image="5" style="margin-top: -20px">
-                                                <video [src]="url" *ngIf="format==='video' && url"
-                                                style="
+                                                <video [src]="url" *ngIf="format==='video' && url" style="
                                                 margin-right: auto;
                                                 margin-left: auto;
                                                 height: 100%;
                                                 width: 100%;
                                                 object-position: contain;
-                                                display: block;" controls
-                                                disablepictureinpicture controlsList="nodownload"></video>
-                                                </div>
+                                                display: block;" controls disablepictureinpicture
+                                                    controlsList="nodownload"></video>
+                                            </div>
                                             <div class="caption-tt" style="white-space: pre-wrap; text-align: justify;">
                                                 <div>{{socialCaption}}</div>
                                                 <div class="line-no-text" *ngIf="!socialCaption">{{socialCaption}}</div>
@@ -953,15 +751,10 @@
                                                                         <img alt="Pic"
                                                                             src="../../../assets/media/users/100_11.jpg" />
                                                                     </div>
-
-
                                                                     <span class="symbol-label">2
                                                                         likes</span>
                                                                 </div>
-
                                                             </div>
-
-
                                                         </div>
                                                     </div>
                                                     <div class="p-2 bd-highlight">1 comment</div>
@@ -977,12 +770,6 @@
                                                             style="color: black;"></i>Comment &nbsp;
                                                         &nbsp;&nbsp;&nbsp;&nbsp;
                                                         <i class="fas fa-share mr-2" style="color: black;"></i>Share
-                                                    </div>
-                                                    <div class="col item">
-                                                        <!-- <i class="fas fa-comments"></i> &nbsp;Comment -->
-                                                    </div>
-                                                    <div class="col item">
-                                                        <!-- <i class="fas fa-share" aria-hidden="true"></i> &nbsp;Share -->
                                                     </div>
                                                 </div>
                                             </div>
@@ -992,20 +779,16 @@
                                             data-type="photo" *ngIf="showDiv.text">
                                             <div class="user-info-tt" style="z-index: 1;">
                                                 <img class="img-circle"
-                                                style="height: 44px; object-fit: cover; border-radius: 30px;"
-                                                name="fieldName" ngDefaultControl [(ngModel)]="clubPrimaryColor"
-                                                [ngStyle]="{'border': '3px solid' + clubPrimaryColor}"
-                                                [src]="profileImageUrl">
+                                                    style="height: 44px; object-fit: cover; border-radius: 30px;"
+                                                    name="fieldName" ngDefaultControl [(ngModel)]="clubPrimaryColor"
+                                                    [ngStyle]="{'border': '3px solid' + clubPrimaryColor}"
+                                                    [src]="profileImageUrl">
                                                 <div class="tt-text">
                                                     <div class="name"> {{userName}}</div>
-                                                    <span> Just now
-                                                        <!-- <i class="fa fa-globe"
-                                                aria-hidden="true"></i> -->
-                                                    </span>
+                                                    <span> Just now</span>
                                                 </div>
                                             </div>
 
-                                            <!-- <div class="preview-media" data-max-image="5" style="margin-top: -20px"><img [src]="url" *ngIf="format==='image' && url" style="height: 100%; width: 100%; object-fit: cover; "></div> -->
                                             <div class="caption-tt" style="white-space: pre-wrap; text-align: justify;">
                                                 <div>{{socialCaption}}</div>
                                                 <div class="line-no-text" *ngIf="!socialCaption">{{socialCaption}}</div>
@@ -1018,7 +801,6 @@
                                                         <div class="row">
                                                             <div class="col item">
                                                                 <div class=" symbol-group symbol-hover">
-
                                                                     <div
                                                                         class="symbol symbol-circle symbol-20 symbol-sm-2">
                                                                         <img alt="Pic"
@@ -1034,15 +816,10 @@
                                                                         <img alt="Pic"
                                                                             src="../../../assets/media/users/100_11.jpg" />
                                                                     </div>
-
-
                                                                     <span class="symbol-label">2
                                                                         likes</span>
                                                                 </div>
-
                                                             </div>
-
-
                                                         </div>
                                                     </div>
                                                     <div class="p-2 bd-highlight">1 comment</div>
@@ -1059,44 +836,29 @@
                                                         &nbsp;&nbsp;&nbsp;&nbsp;
                                                         <i class="fas fa-share mr-2" style="color: black;"></i>Share
                                                     </div>
-                                                    <div class="col item">
-                                                        <!-- <i class="fas fa-comments"></i> &nbsp;Comment -->
-                                                    </div>
-                                                    <div class="col item">
-                                                        <!-- <i class="fas fa-share" aria-hidden="true"></i> &nbsp;Share -->
-                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-
-
-
                                     </div>
-
                                 </div>
-
                             </div>
                         </div>
                     </mat-tab>
 
                     <!--Facebook Tab-->
-                    <mat-tab  >
+                    <mat-tab>
                         <ng-template mat-tab-label>
                             <mat-icon><i class="fab fa-facebook-square icon-2x" style="color: #3b5998;"></i></mat-icon>
-
                         </ng-template>
                         <div class="card card-custom gutter-b">
                             <div class="preview-facebook">
-
                                 <div class="card">
-
                                     <div class="card-body p-0">
-
-
                                         <div class="preview-facebook preview-facebook-media item-post-type"
                                             data-type="photo" *ngIf="showDiv.photo">
                                             <div class="user-info">
-                                                <img class="img-circle" style="height: 40px; width: 40px; object-fit: cover;"
+                                                <img class="img-circle"
+                                                    style="height: 40px; width: 40px; object-fit: cover;"
                                                     [src]="profileImageUrl">
                                                 <div class="text">
                                                     <div class="name"> {{userName}}</div>
@@ -1112,9 +874,8 @@
                                             </div>
                                             <div class="preview-media" data-max-image="5" style="margin-top: -20px">
                                                 <ng-container *ngFor="let multiple of multiples">
-                                                    <img
-                                                    logo #logo (load)="onSelectedImageLoad()" [src]="multiple"
-                                                    style="object-fit: contain;
+                                                    <img logo #logo (load)="onSelectedImageLoad()" [src]="multiple"
+                                                        style="object-fit: contain;
                                                     margin-right: auto;
                                                     margin-left: auto;
                                                     height: 100%;
@@ -1122,82 +883,44 @@
                                                     display: block;">
                                                 </ng-container>
                                             </div>
-                                            <!-- <div class="preview-media" data-max-image="5">
-                                                <img style="object-fit: contain;
-                                                margin-right: auto;
-                                                margin-left: auto;
-                                                height: 100%;
-                                                width: 100%;
-                                                display: block;" [src]="url"
-                                                    *ngIf="format==='image' && url">
-                                            </div> -->
-
-                                            <!-- <div class="preview-fb">
-                                                <div class="d-flex bd-highlight">
-                                                    <div class="p-2 flex-grow-1 bd-highlight">
-                                                        <div class="row">
-                                                            <div class="col item">
-                                                                <div class=" symbol-group symbol-hover">
-
-                                                                    <div
-                                                                        class="symbol symbol-circle symbol-20 symbol-sm-2">
-                                                                        <img alt="Pic"
-                                                                            src="../../../assets/media/users/heart.svg" />
-                                                                    </div>
-
-                                                                    <div
-                                                                        class="symbol symbol-circle symbol-20 symbol-sm-2">
-                                                                        <img alt="Pic"
-                                                                            src="../../../assets/media/users/like.svg" />
-                                                                    </div>
-
-
-                                                                    <span class="symbol-label">20</span>
-                                                                </div>
-
-                                                            </div>
-
-
-                                                        </div>
-                                                    </div>
-                                                    <div class="p-2 bd-highlight">1 comment</div>
-                                                    <div class="p-2 bd-highlight">1 share</div>
-                                                </div>
-                                            </div> -->
                                             <div class="preview-comment">
-                                              
                                                 <div class="row">
                                                     <div class="col item">
-                                                        <i data-visualcompletion="css-img" class="hu5pjgll m6k467ps" style="background-image: url(&quot;https://static.xx.fbcdn.net/rsrc.php/v3/ym/r/ZVXgBVYm-iS.png?_nc_eui2=AeEgGx5dlSN1WRDbxzd1SGt8ZzFnT4urujBnMWdPi6u6MOBDINJu33c0wa8tEDnv0STJbUY6PABAtrh60xP_ylZx&quot;); background-position: 0px -191px; background-size: auto; width: 18px; height: 18px; background-repeat: no-repeat; display: inline-block; "></i> <span class="text-dark pl-2">Like</span>
+                                                        <i data-visualcompletion="css-img" class="hu5pjgll m6k467ps"
+                                                            style="background-image: url(&quot;https://static.xx.fbcdn.net/rsrc.php/v3/ym/r/ZVXgBVYm-iS.png?_nc_eui2=AeEgGx5dlSN1WRDbxzd1SGt8ZzFnT4urujBnMWdPi6u6MOBDINJu33c0wa8tEDnv0STJbUY6PABAtrh60xP_ylZx&quot;); background-position: 0px -191px; background-size: auto; width: 18px; height: 18px; background-repeat: no-repeat; display: inline-block; "></i>
+                                                        <span class="text-dark pl-2">Like</span>
                                                     </div>
                                                     <div class="col item">
-                                                        <i data-visualcompletion="css-img" class="hu5pjgll m6k467ps" style="background-image: url(&quot;https://static.xx.fbcdn.net/rsrc.php/v3/ym/r/ZVXgBVYm-iS.png?_nc_eui2=AeEgGx5dlSN1WRDbxzd1SGt8ZzFnT4urujBnMWdPi6u6MOBDINJu33c0wa8tEDnv0STJbUY6PABAtrh60xP_ylZx&quot;); background-position: 0px -153px; background-size: auto; width: 18px; height: 18px; background-repeat: no-repeat; display: inline-block;"></i> <span class="text-dark pl-2">Comment</span>
+                                                        <i data-visualcompletion="css-img" class="hu5pjgll m6k467ps"
+                                                            style="background-image: url(&quot;https://static.xx.fbcdn.net/rsrc.php/v3/ym/r/ZVXgBVYm-iS.png?_nc_eui2=AeEgGx5dlSN1WRDbxzd1SGt8ZzFnT4urujBnMWdPi6u6MOBDINJu33c0wa8tEDnv0STJbUY6PABAtrh60xP_ylZx&quot;); background-position: 0px -153px; background-size: auto; width: 18px; height: 18px; background-repeat: no-repeat; display: inline-block;"></i>
+                                                        <span class="text-dark pl-2">Comment</span>
                                                     </div>
                                                     <div class="col item">
-                                                        <i data-visualcompletion="css-img" class="hu5pjgll m6k467ps" style="background-image: url(&quot;https://static.xx.fbcdn.net/rsrc.php/v3/ym/r/ZVXgBVYm-iS.png?_nc_eui2=AeEgGx5dlSN1WRDbxzd1SGt8ZzFnT4urujBnMWdPi6u6MOBDINJu33c0wa8tEDnv0STJbUY6PABAtrh60xP_ylZx&quot;); background-position: 0px -210px; background-size: auto; width: 18px; height: 18px; background-repeat: no-repeat; display: inline-block;"></i> <span class="text-dark pl-2">Share</span>
+                                                        <i data-visualcompletion="css-img" class="hu5pjgll m6k467ps"
+                                                            style="background-image: url(&quot;https://static.xx.fbcdn.net/rsrc.php/v3/ym/r/ZVXgBVYm-iS.png?_nc_eui2=AeEgGx5dlSN1WRDbxzd1SGt8ZzFnT4urujBnMWdPi6u6MOBDINJu33c0wa8tEDnv0STJbUY6PABAtrh60xP_ylZx&quot;); background-position: 0px -210px; background-size: auto; width: 18px; height: 18px; background-repeat: no-repeat; display: inline-block;"></i>
+                                                        <span class="text-dark pl-2">Share</span>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="d-flex align-items-center p-6" style="border-top: 1px solid #eee;">
-
+                                            <div class="d-flex align-items-center p-6"
+                                                style="border-top: 1px solid #eee;">
                                                 <div class="symbol symbol-40  mr-5">
                                                     <span class="symbol-label">
                                                         <img class="img-circle" [src]="profileImageUrl"
                                                             style="height: 40px ; width: 40px; object-fit: cover; border-radius: 50px;">
                                                     </span>
                                                 </div>
-            
-                                                <input type="text" class="form-control border-0 form-control-solid pl-6 min-h-40px"
-                                                    style="border-radius: 8.42rem;" name="name" placeholder="Write a comment..."
-                                                    disabled>
-            
+                                                <input type="text"
+                                                    class="form-control border-0 form-control-solid pl-6 min-h-40px"
+                                                    style="border-radius: 8.42rem;" name="name"
+                                                    placeholder="Write a comment..." disabled>
                                             </div>
                                         </div>
-
                                         <div class="preview-facebook preview-facebook-media item-post-type"
                                             data-type="video" *ngIf="showDiv.video">
                                             <div class="user-info">
-                                                <img class="img-circle" style="height: 40px; width: 40px; object-fit: cover;"
+                                                <img class="img-circle"
+                                                    style="height: 40px; width: 40px; object-fit: cover;"
                                                     [src]="profileImageUrl">
                                                 <div class="text">
                                                     <div class="name"> {{userName}}</div>
@@ -1212,82 +935,51 @@
                                                 <div class="line-no-text" *ngIf="!socialCaption"></div>
                                             </div>
                                             <div class="preview-media" data-max-image="5"><video [src]="url"
-                                                    *ngIf="format==='video' && url"
-                                                    style="margin-right: auto;
+                                                    *ngIf="format==='video' && url" style="margin-right: auto;
                                                     margin-left: auto;
                                                     height: 100%;
                                                     display: block;
                                                     object-fit: contain;
-                                                    width: 100%;" controls
-                                                    disablepictureinpicture controlsList="nodownload"></video> </div>
-
-
-                                            <!-- <div class="preview-fb">
-                                                <div class="d-flex bd-highlight">
-                                                    <div class="p-2 flex-grow-1 bd-highlight">
-                                                        <div class="row">
-                                                            <div class="col item">
-                                                                <div class=" symbol-group symbol-hover">
-
-                                                                    <div
-                                                                        class="symbol symbol-circle symbol-20 symbol-sm-2">
-                                                                        <img alt="Pic"
-                                                                            src="../../../assets/media/users/heart.svg" />
-                                                                    </div>
-
-                                                                    <div
-                                                                        class="symbol symbol-circle symbol-20 symbol-sm-2">
-                                                                        <img alt="Pic"
-                                                                            src="../../../assets/media/users/like.svg" />
-                                                                    </div>
-
-
-                                                                    <span class="symbol-label">20</span>
-                                                                </div>
-
-                                                            </div>
-
-
-                                                        </div>
-                                                    </div>
-                                                    <div class="p-2 bd-highlight">1 comment</div>
-                                                    <div class="p-2 bd-highlight">1 share</div>
-                                                </div>
-                                            </div> -->
+                                                    width: 100%;" controls disablepictureinpicture
+                                                    controlsList="nodownload"></video> </div>
                                             <div class="preview-comment">
-                                              <div class="row">
+                                                <div class="row">
                                                     <div class="col item">
-                                                        <i data-visualcompletion="css-img" class="hu5pjgll m6k467ps" style="background-image: url(&quot;https://static.xx.fbcdn.net/rsrc.php/v3/ym/r/ZVXgBVYm-iS.png?_nc_eui2=AeEgGx5dlSN1WRDbxzd1SGt8ZzFnT4urujBnMWdPi6u6MOBDINJu33c0wa8tEDnv0STJbUY6PABAtrh60xP_ylZx&quot;); background-position: 0px -191px; background-size: auto; width: 18px; height: 18px; background-repeat: no-repeat; display: inline-block; "></i> <span class="text-dark pl-2">Like</span>
+                                                        <i data-visualcompletion="css-img" class="hu5pjgll m6k467ps"
+                                                            style="background-image: url(&quot;https://static.xx.fbcdn.net/rsrc.php/v3/ym/r/ZVXgBVYm-iS.png?_nc_eui2=AeEgGx5dlSN1WRDbxzd1SGt8ZzFnT4urujBnMWdPi6u6MOBDINJu33c0wa8tEDnv0STJbUY6PABAtrh60xP_ylZx&quot;); background-position: 0px -191px; background-size: auto; width: 18px; height: 18px; background-repeat: no-repeat; display: inline-block; "></i>
+                                                        <span class="text-dark pl-2">Like</span>
                                                     </div>
                                                     <div class="col item">
-                                                        <i data-visualcompletion="css-img" class="hu5pjgll m6k467ps" style="background-image: url(&quot;https://static.xx.fbcdn.net/rsrc.php/v3/ym/r/ZVXgBVYm-iS.png?_nc_eui2=AeEgGx5dlSN1WRDbxzd1SGt8ZzFnT4urujBnMWdPi6u6MOBDINJu33c0wa8tEDnv0STJbUY6PABAtrh60xP_ylZx&quot;); background-position: 0px -153px; background-size: auto; width: 18px; height: 18px; background-repeat: no-repeat; display: inline-block;"></i> <span class="text-dark pl-2">Comment</span>
+                                                        <i data-visualcompletion="css-img" class="hu5pjgll m6k467ps"
+                                                            style="background-image: url(&quot;https://static.xx.fbcdn.net/rsrc.php/v3/ym/r/ZVXgBVYm-iS.png?_nc_eui2=AeEgGx5dlSN1WRDbxzd1SGt8ZzFnT4urujBnMWdPi6u6MOBDINJu33c0wa8tEDnv0STJbUY6PABAtrh60xP_ylZx&quot;); background-position: 0px -153px; background-size: auto; width: 18px; height: 18px; background-repeat: no-repeat; display: inline-block;"></i>
+                                                        <span class="text-dark pl-2">Comment</span>
                                                     </div>
                                                     <div class="col item">
-                                                        <i data-visualcompletion="css-img" class="hu5pjgll m6k467ps" style="background-image: url(&quot;https://static.xx.fbcdn.net/rsrc.php/v3/ym/r/ZVXgBVYm-iS.png?_nc_eui2=AeEgGx5dlSN1WRDbxzd1SGt8ZzFnT4urujBnMWdPi6u6MOBDINJu33c0wa8tEDnv0STJbUY6PABAtrh60xP_ylZx&quot;); background-position: 0px -210px; background-size: auto; width: 18px; height: 18px; background-repeat: no-repeat; display: inline-block;"></i> <span class="text-dark pl-2">Share</span>
+                                                        <i data-visualcompletion="css-img" class="hu5pjgll m6k467ps"
+                                                            style="background-image: url(&quot;https://static.xx.fbcdn.net/rsrc.php/v3/ym/r/ZVXgBVYm-iS.png?_nc_eui2=AeEgGx5dlSN1WRDbxzd1SGt8ZzFnT4urujBnMWdPi6u6MOBDINJu33c0wa8tEDnv0STJbUY6PABAtrh60xP_ylZx&quot;); background-position: 0px -210px; background-size: auto; width: 18px; height: 18px; background-repeat: no-repeat; display: inline-block;"></i>
+                                                        <span class="text-dark pl-2">Share</span>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="d-flex align-items-center p-6" style="border-top: 1px solid #eee;">
-
+                                            <div class="d-flex align-items-center p-6"
+                                                style="border-top: 1px solid #eee;">
                                                 <div class="symbol symbol-40  mr-5">
                                                     <span class="symbol-label">
                                                         <img class="img-circle" [src]="profileImageUrl"
                                                             style="height: 40px ; width: 40px; object-fit: cover; border-radius: 50px;">
                                                     </span>
                                                 </div>
-            
-                                                <input type="text" class="form-control border-0 form-control-solid pl-6 min-h-40px"
-                                                    style="border-radius: 8.42rem;" name="name" placeholder="Write a comment..."
-                                                    disabled>
-            
+                                                <input type="text"
+                                                    class="form-control border-0 form-control-solid pl-6 min-h-40px"
+                                                    style="border-radius: 8.42rem;" name="name"
+                                                    placeholder="Write a comment..." disabled>
                                             </div>
                                         </div>
-
-
                                         <div class="preview-facebook preview-facebook-text item-post-type"
                                             data-type="text" *ngIf="showDiv.text">
                                             <div class="user-info">
-                                                <img class="img-circle" style="height: 40px; width: 40px; object-fit: cover;"
+                                                <img class="img-circle"
+                                                    style="height: 40px; width: 40px; object-fit: cover;"
                                                     [src]="profileImageUrl">
                                                 <div class="text">
                                                     <div class="name"> {{userName}}</div>
@@ -1301,93 +993,49 @@
                                                 <div class="line-no-text" *ngIf="!socialCaption"></div>
                                                 <div class="line-no-text" *ngIf="!socialCaption"></div>
                                             </div>
-<!-- 
-                                            <div class="preview-fb">
-                                                <div class="d-flex bd-highlight">
-                                                    <div class="p-2 flex-grow-1 bd-highlight">
-                                                        <div class="row">
-                                                            <div class="col item">
-                                                                <div class=" symbol-group symbol-hover">
-
-                                                                    <div
-                                                                        class="symbol symbol-circle symbol-20 symbol-sm-2">
-                                                                        <img alt="Pic"
-                                                                            src="../../../assets/media/users/heart.svg" />
-                                                                    </div>
-
-                                                                    <div
-                                                                        class="symbol symbol-circle symbol-20 symbol-sm-2">
-                                                                        <img alt="Pic"
-                                                                            src="../../../assets/media/users/like.svg" />
-                                                                    </div>
-
-
-                                                                    <span class="symbol-label">20</span>
-                                                                </div>
-
-                                                            </div>
-
-
-                                                        </div>
-                                                    </div>
-                                                    <div class="p-2 bd-highlight">1 comment</div>
-                                                    <div class="p-2 bd-highlight">1 share</div>
-                                                </div>
-                                            </div> -->
                                             <div class="preview-comment">
-                                                <!-- <div class="row">
-                                                    <div class="col item">
-                                                        <i class="fas fa-thumbs-up"></i> &nbsp;Like
-                                                    </div>
-                                                    <div class="col item">
-                                                        <i class="fas fa-comments"></i> &nbsp;Comment
-                                                    </div>
-                                                    <div class="col item">
-                                                        <i class="fas fa-share" aria-hidden="true"></i> &nbsp;Share
-                                                    </div>
-                                                </div> -->
                                                 <div class="row">
                                                     <div class="col item">
-                                                        <i data-visualcompletion="css-img" class="hu5pjgll m6k467ps" style="background-image: url(&quot;https://static.xx.fbcdn.net/rsrc.php/v3/ym/r/ZVXgBVYm-iS.png?_nc_eui2=AeEgGx5dlSN1WRDbxzd1SGt8ZzFnT4urujBnMWdPi6u6MOBDINJu33c0wa8tEDnv0STJbUY6PABAtrh60xP_ylZx&quot;); background-position: 0px -191px; background-size: auto; width: 18px; height: 18px; background-repeat: no-repeat; display: inline-block; "></i> <span class="text-dark pl-2">Like</span>
+                                                        <i data-visualcompletion="css-img" class="hu5pjgll m6k467ps"
+                                                            style="background-image: url(&quot;https://static.xx.fbcdn.net/rsrc.php/v3/ym/r/ZVXgBVYm-iS.png?_nc_eui2=AeEgGx5dlSN1WRDbxzd1SGt8ZzFnT4urujBnMWdPi6u6MOBDINJu33c0wa8tEDnv0STJbUY6PABAtrh60xP_ylZx&quot;); background-position: 0px -191px; background-size: auto; width: 18px; height: 18px; background-repeat: no-repeat; display: inline-block; "></i>
+                                                        <span class="text-dark pl-2">Like</span>
                                                     </div>
                                                     <div class="col item">
-                                                        <i data-visualcompletion="css-img" class="hu5pjgll m6k467ps" style="background-image: url(&quot;https://static.xx.fbcdn.net/rsrc.php/v3/ym/r/ZVXgBVYm-iS.png?_nc_eui2=AeEgGx5dlSN1WRDbxzd1SGt8ZzFnT4urujBnMWdPi6u6MOBDINJu33c0wa8tEDnv0STJbUY6PABAtrh60xP_ylZx&quot;); background-position: 0px -153px; background-size: auto; width: 18px; height: 18px; background-repeat: no-repeat; display: inline-block;"></i> <span class="text-dark pl-2">Comment</span>
+                                                        <i data-visualcompletion="css-img" class="hu5pjgll m6k467ps"
+                                                            style="background-image: url(&quot;https://static.xx.fbcdn.net/rsrc.php/v3/ym/r/ZVXgBVYm-iS.png?_nc_eui2=AeEgGx5dlSN1WRDbxzd1SGt8ZzFnT4urujBnMWdPi6u6MOBDINJu33c0wa8tEDnv0STJbUY6PABAtrh60xP_ylZx&quot;); background-position: 0px -153px; background-size: auto; width: 18px; height: 18px; background-repeat: no-repeat; display: inline-block;"></i>
+                                                        <span class="text-dark pl-2">Comment</span>
                                                     </div>
                                                     <div class="col item">
-                                                        <i data-visualcompletion="css-img" class="hu5pjgll m6k467ps" style="background-image: url(&quot;https://static.xx.fbcdn.net/rsrc.php/v3/ym/r/ZVXgBVYm-iS.png?_nc_eui2=AeEgGx5dlSN1WRDbxzd1SGt8ZzFnT4urujBnMWdPi6u6MOBDINJu33c0wa8tEDnv0STJbUY6PABAtrh60xP_ylZx&quot;); background-position: 0px -210px; background-size: auto; width: 18px; height: 18px; background-repeat: no-repeat; display: inline-block;"></i> <span class="text-dark pl-2">Share</span>
+                                                        <i data-visualcompletion="css-img" class="hu5pjgll m6k467ps"
+                                                            style="background-image: url(&quot;https://static.xx.fbcdn.net/rsrc.php/v3/ym/r/ZVXgBVYm-iS.png?_nc_eui2=AeEgGx5dlSN1WRDbxzd1SGt8ZzFnT4urujBnMWdPi6u6MOBDINJu33c0wa8tEDnv0STJbUY6PABAtrh60xP_ylZx&quot;); background-position: 0px -210px; background-size: auto; width: 18px; height: 18px; background-repeat: no-repeat; display: inline-block;"></i>
+                                                        <span class="text-dark pl-2">Share</span>
                                                     </div>
                                                 </div>
-                                          
                                             </div>
-                                            <div class="d-flex align-items-center p-6" style="border-top: 1px solid #eee;">
-
+                                            <div class="d-flex align-items-center p-6"
+                                                style="border-top: 1px solid #eee;">
                                                 <div class="symbol symbol-40  mr-5">
                                                     <span class="symbol-label">
                                                         <img class="img-circle" [src]="profileImageUrl"
                                                             style="height: 40px ; width: 40px; object-fit: cover; border-radius: 50px;">
                                                     </span>
                                                 </div>
-            
-                                                <input type="text" class="form-control border-0 form-control-solid pl-6 min-h-40px"
-                                                    style="border-radius: 8.42rem;" name="name" placeholder="Write a comment..."
-                                                    disabled>
-            
+                                                <input type="text"
+                                                    class="form-control border-0 form-control-solid pl-6 min-h-40px"
+                                                    style="border-radius: 8.42rem;" name="name"
+                                                    placeholder="Write a comment..." disabled>
                                             </div>
                                         </div>
-
                                     </div>
-
                                 </div>
-
                             </div>
                         </div>
                     </mat-tab>
 
                     <!--Insta Tab-->
-                    <mat-tab *ngIf="selectedInstagram" >
+                    <mat-tab *ngIf="selectedInstagram">
                         <ng-template mat-tab-label>
                             <mat-icon><i class="fab fa-instagram icon-2x" style="color: #d62976;"></i></mat-icon>
-
                         </ng-template>
                         <div class="card card-custom gutter-b">
                             <div class="preview-instagram">
@@ -1400,24 +1048,18 @@
                                                     <img class="img-circle" style="width: 44px;
                                                     height: 44px;
                                                     object-fit: cover;
-                                                    border-radius: 50px;" [src]="profileImageUrl" >
+                                                    border-radius: 50px;" [src]="profileImageUrl">
                                                     <span><b>{{userName}}</b></span>
                                                 </div>
                                                 <div class="preview-media" data-max-image="1"><img logo #logo
-                                                        (load)="onSelectedImageLoad()"
-                                                        style="object-fit: contain;
+                                                        (load)="onSelectedImageLoad()" style="object-fit: contain;
                                                         margin-right: auto;
                                                         margin-left: auto;
                                                         height: 100%;
                                                         width: 100%;
-                                                        display: block;"
-                                                        class="img-circle" [src]=url *ngIf="format==='image' && url">
+                                                        display: block;" class="img-circle" [src]=url
+                                                        *ngIf="format==='image' && url">
                                                 </div>
-                                                <!-- <div class="post-info">
-                                                    <div class="info-active pull-left"> Be the first to like this</div>
-                                                    <div class="pull-right">1s</div>
-                                                    <div class="clearfix"></div>
-                                                </div> -->
                                                 <div class="caption" style="white-space: pre-wrap;text-align: justify;">
                                                     <div>{{socialCaption}}</div>
                                                     <div class="line-no-text" *ngIf="!socialCaption">{{socialCaption}}
@@ -1435,7 +1077,6 @@
                                                                         d="M34.6 3.1c-4.5 0-7.9 1.8-10.6 5.6-2.7-3.7-6.1-5.5-10.6-5.5C6 3.1 0 9.6 0 17.6c0 7.3 5.4 12 10.6 16.5.6.5 1.3 1.1 1.9 1.7l2.3 2c4.4 3.9 6.6 5.9 7.6 6.5.5.3 1.1.5 1.6.5s1.1-.2 1.6-.5c1-.6 2.8-2.2 7.8-6.8l2-1.8c.7-.6 1.3-1.2 2-1.7C42.7 29.6 48 25 48 17.6c0-8-6-14.5-13.4-14.5z">
                                                                     </path>
                                                                 </svg>
-
                                                             </div>
                                                             <div style="padding: 8px" class="d-inline">
                                                                 <svg aria-label="Comment" class="_8-yf5 " fill="#262626"
@@ -1455,17 +1096,14 @@
                                                                 </svg>
                                                             </div>
                                                             <div class="d-inline" style="float: right;">
-                                                                <svg aria-label="Save" class="_8-yf5 " fill="#262626" height="24" viewBox="0 0 48 48" width="24"><path d="M43.5 48c-.4 0-.8-.2-1.1-.4L24 29 5.6 47.6c-.4.4-1.1.6-1.6.3-.6-.2-1-.8-1-1.4v-45C3 .7 3.7 0 4.5 0h39c.8 0 1.5.7 1.5 1.5v45c0 .6-.4 1.2-.9 1.4-.2.1-.4.1-.6.1zM24 26c.8 0 1.6.3 2.2.9l15.8 16V3H6v39.9l15.8-16c.6-.6 1.4-.9 2.2-.9z"></path></svg>
-                                                              </div>
-                                                            <!-- <div style="padding: 8px">
-                                                                <span class="text-dark font-weight-bold">1 like</span>
+                                                                <svg aria-label="Save" class="_8-yf5 " fill="#262626"
+                                                                    height="24" viewBox="0 0 48 48" width="24">
+                                                                    <path
+                                                                        d="M43.5 48c-.4 0-.8-.2-1.1-.4L24 29 5.6 47.6c-.4.4-1.1.6-1.6.3-.6-.2-1-.8-1-1.4v-45C3 .7 3.7 0 4.5 0h39c.8 0 1.5.7 1.5 1.5v45c0 .6-.4 1.2-.9 1.4-.2.1-.4.1-.6.1zM24 26c.8 0 1.6.3 2.2.9l15.8 16V3H6v39.9l15.8-16c.6-.6 1.4-.9 2.2-.9z">
+                                                                    </path>
+                                                                </svg>
                                                             </div>
-                                                            <div style="padding: 8px">
-                                                                <span class="text-muted" style="font-size: 10px;">2 DAYS
-                                                                    AGO</span>
-                                                            </div> -->
                                                         </div>
-
                                                     </div>
                                                 </div>
                                                 <div class="preview-comment">
@@ -1479,8 +1117,10 @@
                                                         </path>
                                                     </svg>
 
-                                                    <span style="padding-left: 15px;" class="d-inline">Add a comment...</span>   
-                                                    <span style="padding-left: 15px; float: right; color:#3699FF" class="d-inline">Post</span> 
+                                                    <span style="padding-left: 15px;" class="d-inline">Add a
+                                                        comment...</span>
+                                                    <span style="padding-left: 15px; float: right; color:#3699FF"
+                                                        class="d-inline">Post</span>
                                                     <div class="icon-3dot"></div>
                                                 </div>
                                             </div>
@@ -1488,31 +1128,24 @@
 
                                         <div class="preview-instagram preview-instagram-photo item-post-type"
                                             data-type="video" *ngIf="showDiv.video">
-
-
                                             <div class="preview-content">
                                                 <div class="user-info">
-                                                    <img class="img-circle"  style="width: 44px;
+                                                    <img class="img-circle" style="width: 44px;
                                                     height: 44px;
                                                     object-fit: cover;
                                                     border-radius: 50px;" [src]="profileImageUrl">
                                                     <span><b>{{userName}}</b></span>
                                                 </div>
                                                 <div class="preview-media" data-max-image="1"><video [src]="url"
-                                                        *ngIf="format==='video' && url"
-                                                        style="margin-right: auto;
+                                                        *ngIf="format==='video' && url" style="margin-right: auto;
                                                         margin-left: auto;
                                                         height: 100%;
                                                         display: block;
                                                         object-fit: contain;
-                                                        width: 100%;" controls
-                                                        disablepictureinpicture controlsList="nodownload"></video></div>
-                                                <!-- <div class="post-info">
-                                                    <div class="info-active pull-left"> Be the first to like this</div>
-                                                    <div class="pull-right">1s</div>
-                                                    <div class="clearfix"></div>
-                                                </div> -->
-                                                <div class="caption" style="white-space: pre-wrap; text-align: justify;">
+                                                        width: 100%;" controls disablepictureinpicture
+                                                        controlsList="nodownload"></video></div>
+                                                <div class="caption"
+                                                    style="white-space: pre-wrap; text-align: justify;">
                                                     <div>{{socialCaption}}</div>
                                                     <div class="line-no-text" *ngIf="!socialCaption">{{socialCaption}}
                                                     </div>
@@ -1529,7 +1162,6 @@
                                                                         d="M34.6 3.1c-4.5 0-7.9 1.8-10.6 5.6-2.7-3.7-6.1-5.5-10.6-5.5C6 3.1 0 9.6 0 17.6c0 7.3 5.4 12 10.6 16.5.6.5 1.3 1.1 1.9 1.7l2.3 2c4.4 3.9 6.6 5.9 7.6 6.5.5.3 1.1.5 1.6.5s1.1-.2 1.6-.5c1-.6 2.8-2.2 7.8-6.8l2-1.8c.7-.6 1.3-1.2 2-1.7C42.7 29.6 48 25 48 17.6c0-8-6-14.5-13.4-14.5z">
                                                                     </path>
                                                                 </svg>
-
                                                             </div>
                                                             <div style="padding: 8px" class="d-inline">
                                                                 <svg aria-label="Comment" class="_8-yf5 " fill="#262626"
@@ -1549,17 +1181,14 @@
                                                                 </svg>
                                                             </div>
                                                             <div class="d-inline" style="float: right;">
-                                                                <svg aria-label="Save" class="_8-yf5 " fill="#262626" height="24" viewBox="0 0 48 48" width="24"><path d="M43.5 48c-.4 0-.8-.2-1.1-.4L24 29 5.6 47.6c-.4.4-1.1.6-1.6.3-.6-.2-1-.8-1-1.4v-45C3 .7 3.7 0 4.5 0h39c.8 0 1.5.7 1.5 1.5v45c0 .6-.4 1.2-.9 1.4-.2.1-.4.1-.6.1zM24 26c.8 0 1.6.3 2.2.9l15.8 16V3H6v39.9l15.8-16c.6-.6 1.4-.9 2.2-.9z"></path></svg>
-                                                              </div>
-                                                            <!-- <div style="padding: 8px">
-                                                                <span class="text-dark font-weight-bold">1 like</span>
+                                                                <svg aria-label="Save" class="_8-yf5 " fill="#262626"
+                                                                    height="24" viewBox="0 0 48 48" width="24">
+                                                                    <path
+                                                                        d="M43.5 48c-.4 0-.8-.2-1.1-.4L24 29 5.6 47.6c-.4.4-1.1.6-1.6.3-.6-.2-1-.8-1-1.4v-45C3 .7 3.7 0 4.5 0h39c.8 0 1.5.7 1.5 1.5v45c0 .6-.4 1.2-.9 1.4-.2.1-.4.1-.6.1zM24 26c.8 0 1.6.3 2.2.9l15.8 16V3H6v39.9l15.8-16c.6-.6 1.4-.9 2.2-.9z">
+                                                                    </path>
+                                                                </svg>
                                                             </div>
-                                                            <div style="padding: 8px">
-                                                                <span class="text-muted" style="font-size: 10px;">2 DAYS
-                                                                    AGO</span>
-                                                            </div> -->
                                                         </div>
-
                                                     </div>
                                                 </div>
                                                 <div class="preview-comment">
@@ -1572,32 +1201,21 @@
                                                             d="M34.9 24c0-1.4-1.1-2.5-2.5-2.5s-2.5 1.1-2.5 2.5 1.1 2.5 2.5 2.5 2.5-1.1 2.5-2.5zm-21.8 0c0-1.4 1.1-2.5 2.5-2.5s2.5 1.1 2.5 2.5-1.1 2.5-2.5 2.5-2.5-1.1-2.5-2.5zM24 37.3c-5.2 0-8-3.5-8.2-3.7-.5-.6-.4-1.6.2-2.1.6-.5 1.6-.4 2.1.2.1.1 2.1 2.5 5.8 2.5 3.7 0 5.8-2.5 5.8-2.5.5-.6 1.5-.7 2.1-.2.6.5.7 1.5.2 2.1 0 .2-2.8 3.7-8 3.7z">
                                                         </path>
                                                     </svg>
-
-                                                    <span style="padding-left: 15px;" class="d-inline">Add a comment...</span>   
-                                                    <span style="padding-left: 15px; float: right; color:#3699FF" class="d-inline">Post</span> 
+                                                    <span style="padding-left: 15px;" class="d-inline">Add a
+                                                        comment...</span>
+                                                    <span style="padding-left: 15px; float: right; color:#3699FF"
+                                                        class="d-inline">Post</span>
                                                     <div class="icon-3dot"></div>
                                                 </div>
                                             </div>
                                         </div>
-
-
-
-
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </mat-tab>
-
-
-
-
-
-
                 </mat-tab-group>
-
             </div>
         </div>
-        <!--end::Card-->
     </div>
 </div>
