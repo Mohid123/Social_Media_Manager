@@ -342,8 +342,8 @@
                                                             class="btn btn-transparent-warning">Clear</button>
                                                     </div>
                                                     <div class="ml-auto p-2">
-                                                        <button (click)="addImagePost(); clicked = true" type="button"
-                                                            [disabled]="clicked"
+                                                        <button  (click)="addImagePost(); clicked = true" type="button"
+                                                            [disabled]="!file || clicked "
                                                             [ngClass]="_genericPostService.condition == true ? 'spinner spinner-white spinner-right' : '' "
                                                             class="btn btn-primary flex-row-reverse" style="background-color: #3b5998; border-color: #3b5998;">
                                                             {{_genericPostService.condition == true ? 'Finalizing Your Post': 'Post Now'}}
@@ -450,7 +450,7 @@
                                                     </div>
                                                     <div class="ml-auto p-2">
                                                         <button (click)="addVideoPost(); clicked = true" type="button"
-                                                        [disabled]="clicked"
+                                                        [disabled]="!file || clicked"
                                                         [ngClass]="_genericPostService.condition == true ? 'spinner spinner-white spinner-right' : '' "
                                                         class="btn btn-primary flex-row-reverse" style="background-color: #3b5998; border-color: #3b5998;">
                                                         {{_genericPostService.condition == true ? 'Finalizing Your Post': 'Post Now'}}
@@ -531,7 +531,7 @@
                                                             class="btn btn-transparent-warning">Clear</button>
                                                     </div>
                                                     <div class="ml-auto p-2">
-                                                        <button (click)="addTextPost()" type="button"
+                                                        <button (click)="addTextPost()" type="button" [disabled]="!socialCaption"
                                                             class="btn btn-primary flex-row-reverse"
                                                             style="background-color: #3b5998; border-color: #3b5998;">Post
                                                             Now</button>
