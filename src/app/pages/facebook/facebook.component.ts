@@ -72,7 +72,6 @@ export class FacebookComponent implements OnInit {
   };
   ngOnInit() {
     this.facebookProfileImageUrl = JSON.parse(localStorage.getItem('selectedClub'))?.userFacebookProfile?.fbProfileImageUrl
-    this.showSpinner();
     this.getSignedInUser();
     this.getCheckedItemList();
 

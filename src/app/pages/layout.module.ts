@@ -46,6 +46,7 @@ import { ComingSoonIgComponent } from './coming-soon-ig/coming-soon-ig.component
 import { AdvertisementComponent } from './advertisement/advertisement.component';
 import { MomentPipeIG } from '../core/pipes/datetransformIG.pipe';
 import { ScheduleComponent } from './schedule/schedule.component';
+import { AppSpinner } from './spinner/spinner.component';
 
 import { FullCalendarModule } from '@fullcalendar/angular';
 import dayGridPlugin from '@fullcalendar/daygrid'; // a plugin!
@@ -92,7 +93,8 @@ FullCalendarModule.registerPlugins([
     AdvertisementComponent,
     ScheduleComponent,
     CalendarComponent,
-    FeedbackComponent
+    FeedbackComponent,
+    AppSpinner
 
   
   ],

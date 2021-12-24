@@ -16,7 +16,6 @@ import { BehaviorSubject, Observable } from 'rxjs';
 export class MediauploadService {
   @Output()
   valueChanged: EventEmitter<number> = new EventEmitter<number>();
-  //progress$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
   progress: number = 0;
 
   constructor(private _apiService: ApiService, private http: HttpClient, private _errorHandlerService: ErrorhandlerService , private _clubApiService : ClubApiService,
