@@ -117,7 +117,6 @@ export class TeamtalkersComponent implements OnInit {
   }
 
   ngOnInit() {
-    //this.showSpinner();
     this.getSignedInUser();
     this.initializeChecklist();
     this.getCheckedItemList();
@@ -479,7 +478,6 @@ export class TeamtalkersComponent implements OnInit {
     this.file = event.target.files && event.target.files[0];
     fileSize = (this.file.size / (1024 * 1024)).toFixed(2) + "MB";
     this.file.fileSize = fileSize;
-    // console.log(this.file)
     if (this.file) {
       var reader = new FileReader();
       reader.readAsDataURL(this.file);
@@ -488,7 +486,6 @@ export class TeamtalkersComponent implements OnInit {
       }
       reader.onload = (event) => {
         this.url = (<FileReader>event.target).result as string;
-        console.log(this.url);
         this.cf.detectChanges();
       };
       event.target.value = "";
@@ -502,12 +499,6 @@ export class TeamtalkersComponent implements OnInit {
 
   dateEvent(event) {}
 
-  // showSpinner() {
-  //   this.spinner.show();
-  //   setTimeout(() => {
-  //     this.spinner.hide();
-  //   }, 1000);
-  // }
 
   getSignedInUser() {
     this._authService.getSignedInUser().subscribe((user) => {

@@ -372,27 +372,6 @@ export class PublishComponent implements OnInit {
     }
   }
 
-  // onSelectVideo(event) {
-  //   let fileSize;
-  //   this.file = event.target.files && event.target.files[0];
-  //   fileSize = (this.file.size / (1024 * 1024)).toFixed(2) + "MB";
-  //   this.file.fileSize = fileSize;
-  //   // console.log(this.file)
-  //   if (this.file) {
-  //     var reader = new FileReader();
-  //     reader.readAsDataURL(this.file);
-  //     if (this.file.type.indexOf("video") > -1) {
-  //       this.format = "video";
-  //     }
-  //     reader.onload = (event) => {
-  //       this.url = (<FileReader>event.target).result as string;
-  //       console.log(this.url);
-  //       this.cf.detectChanges();
-  //     };
-  //     event.target.value = "";
-  //   }
-  // }
-
 
   onSelectVideo(event): void {
     this.file = event.target.files && event.target.files[0];
