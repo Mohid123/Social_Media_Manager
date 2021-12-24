@@ -558,17 +558,14 @@
                             </button>
                           </div>
                           <div class="p-2 ml-auto">
-                            <button
-                              [disabled]="clicked"
+                            <button [disabled]="!file || clicked"
                               [ngClass]="_genericPostService.condition == true ? 'spinner spinner-white spinner-right' : '' "
                               (click)="addImagePost(); clicked = true;"
                               type="button"
                               class="flex-row-reverse btn btn-primary" 
                               style="
                                 background-color: #3b5998;
-                                border-color: #3b5998;
-                              "
-                            >
+                                border-color: #3b5998;">
                             {{_genericPostService.condition == true ? 'Finalizing Your Post': 'Post Now'}}
                             </button>
                           
@@ -948,54 +945,29 @@
                       >
                         <div class="d-flex">
                           <div class="p-2">
-                            <div class="p-2">
-                              <div class="image-upload">
-                                <label for="file-input">
-                                  <div
-                                    class="
-                                      w-auto
-                                      px-2
-                                      mr-5
-                                      btn btn-icon btn-light btn-clean
-                                      d-inline-flex
-                                      align-items-center
-                                      btn-lg
-                                    "
-                                  >
-                                    <span
-                                      class="
-                                        symbol symbol-35 symbol-light-primary
-                                      "
-                                    >
-                                      <span class="symbol-label"
-                                        ><a class="btn btn-icon btn-sm">
-                                          <i
-                                            class="fas fa-video icon-lg"
-                                            style="cursor: pointer"
-                                          ></i> </a
-                                      ></span>
-                                    </span>
-                                    <span
-                                      class="
-                                        btn
-                                        text-dark-50
-                                        font-weight-normal font-size-base
-                                      "
-                                    >
-                                      &nbsp;select video</span
-                                    >
-                                  </div>
-                                </label>
-
-                                <input
-                                  id="file-input"
-                                  type="file"
-                                  accept="video/*"
-                                  name="myfile"
-                                  (change)="onSelectVideo($event)"
-                                  multiple
-                                />
-                              </div>
+                            <div class="image-upload">
+                              <label for="file-input">
+                                <div class="
+                                    w-auto
+                                    px-2
+                                    mr-5
+                                    btn btn-icon btn-light btn-clean
+                                    d-inline-flex
+                                    align-items-center
+                                    btn-lg">
+                                  <span class="symbol symbol-35 symbol-light-primary">
+                                    <span class="symbol-label"><a class="btn btn-icon btn-sm">
+                                        <i class="fas fa-video icon-lg" style="cursor: pointer"></i> </a></span>
+                                  </span>
+                                  <span class="
+                                      btn
+                                      text-dark-50
+                                      font-weight-normal font-size-base">
+                                    &nbsp;select video</span>
+                                </div>
+                              </label>
+                              <input id="file-input" type="file" accept="video/*" name="myfile"
+                                (change)="onSelectVideo($event)" multiple />
                             </div>
                           </div>
                           <div class="p-2"></div>
@@ -1014,8 +986,7 @@
                             </button>
                           </div>
                           <div class="p-2 ml-auto">
-                            <button
-                              [disabled]="clicked"
+                            <button [disabled]="!file || clicked"
                               [ngClass]="_genericPostService.condition == true ? 'spinner spinner-white spinner-right' : '' "
                               (click)="addVideoPost(); clicked = true"
                               type="button"
@@ -1352,12 +1323,8 @@
                             </button>
                           </div>
                           <div class="p-2 ml-auto">
-                            <button
-                              [disabled]="clicked"
-                              (click)="addTextPost(); clicked = true"
-                              type="button"
-                              class="flex-row-reverse btn btn-primary"
-                              style="
+                            <button [disabled]="!teamtalkerCaption " (click)="addTextPost(); clicked = true" type="button"
+                              class="flex-row-reverse btn btn-primary" style="
                                 background-color: #3b5998;
                                 border-color: #3b5998;
                               "
@@ -1434,14 +1401,8 @@
                             <div class="p-2 ml-auto"></div>
                           </div>
                           <div class="d-flex" style="float: right">
-                            <div class="p-2"></div>
-                            <div class="p-2"></div>
-                            <div class="p-2 ml-auto">
-                              <button
-                                (click)="resetPost()"
-                                type="button"
-                                class="btn btn-transparent-warning"
-                              >
+                             <div class="p-2 ml-auto">
+                              <button (click)="resetPost()" type="button" class="btn btn-transparent-warning">
                                 Clear
                               </button>
                             </div>
@@ -1713,12 +1674,8 @@
                             </button>
                           </div>
                           <div class="p-2 ml-auto">
-                            <button
-                              [disabled]="clicked"
-                              (click)="addPollPost(); clicked = true"
-                              type="button"
-                              class="flex-row-reverse btn btn-primary"
-                              style="
+                            <button [disabled]="!poll.choice1 && !poll.choice2 " (click)="addPollPost(); clicked = true" type="button"
+                              class="flex-row-reverse btn btn-primary" style="
                                 background-color: #3b5998;
                                 border-color: #3b5998;
                               "
