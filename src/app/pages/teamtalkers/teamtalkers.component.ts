@@ -117,7 +117,7 @@ export class TeamtalkersComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.showSpinner();
+    //this.showSpinner();
     this.getSignedInUser();
     this.initializeChecklist();
     this.getCheckedItemList();
@@ -166,7 +166,6 @@ export class TeamtalkersComponent implements OnInit {
 
   selectedSchedule() {
     this.showSchedule = !this.showSchedule;
-    console.log(this.showSchedule);
   }
 
   getLatestClubPosts() {
@@ -503,12 +502,12 @@ export class TeamtalkersComponent implements OnInit {
 
   dateEvent(event) {}
 
-  showSpinner() {
-    this.spinner.show();
-    setTimeout(() => {
-      this.spinner.hide();
-    }, 1000);
-  }
+  // showSpinner() {
+  //   this.spinner.show();
+  //   setTimeout(() => {
+  //     this.spinner.hide();
+  //   }, 1000);
+  // }
 
   getSignedInUser() {
     this._authService.getSignedInUser().subscribe((user) => {

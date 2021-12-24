@@ -1,6 +1,4 @@
-<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="default" color="#fff" type="ball-spin" [fullScreen]="true">
-  <p style="color: white">D I V I D I S</p>
-</ngx-spinner>
+<app-spinner></app-spinner>
 <div class="row">
   <div class="col-lg-3">
     <div class="card card-custom card-stretch">
@@ -299,10 +297,13 @@
                               (click)="addImagePost(); clicked = true;" type="button"
                               class="flex-row-reverse btn btn-primary" style="
                                 background-color: #3b5998;
-                                border-color: #3b5998;">
-                              Post Now
+                                border-color: #3b5998;
+                              "
+                            >
+                            {{_genericPostService.condition == true ? 'Finalizing Your Post': 'Post Now'}}
                             </button>
-                          </div>
+                          
+                          </div> 
                         </div>
                       </div>
                       <div *ngIf="updateProgress">
@@ -326,23 +327,11 @@
                           </div>
                         </div>
                       </div>
-                      <div class="form-group mb-5" *ngIf="_genericPostService.condition == true">
-                        <div class="card card-custom" style="height: 150px;">
-                          <div class="card-body rounded p-0 d-flex " style="background-color: #1e1e2d;">
-                            <div
-                              class="d-flex flex-column flex-lg-row-auto w-auto w-lg-350px w-xl-450px w-xxl-650px py-10 py-md-14 px-10 px-md-20 pr-lg-0">
-                              <h1 class="font-weight-bolder text-light mb-0">Almost done!</h1>
-                              <div class="font-size-h4 mb-8 text-light" style="letter-spacing: 1px;">Finalizing your
-                                <span style="font-weight: 600; color: #3699FF; font-size: 25px;">post. . .</span>
-                              </div>
-                            </div>
-                            <div
-                              class="d-none d-md-flex flex-row-fluid bgi-no-repeat bgi-position-y-center bgi-position-x-left bgi-size-cover">
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div *ngIf="showSchedule" class="
+                     
+
+                      <div
+                        *ngIf="showSchedule"
+                        class="
                           ql-toolbar
                           align-items-center
                           justify-content-between">
@@ -565,8 +554,9 @@
                               (click)="addVideoPost(); clicked = true" type="button"
                               class="flex-row-reverse btn btn-primary" style="
                                 background-color: #3b5998;
-                                border-color: #3b5998;">
-                              Post Now
+                                border-color: #3b5998;"
+                            >
+                            {{_genericPostService.condition == true ? 'Finalizing Your Post': 'Post Now'}}
                             </button>
                           </div>
                         </div>
@@ -591,24 +581,11 @@
                             </div>
                           </div>
                         </div>
-                      </div>
-                      <div class="form-group mb-5" *ngIf="_genericPostService.condition == true">
-                        <div class="card card-custom" style="height: 150px;">
-                          <div class="card-body rounded p-0 d-flex " style="background-color: #1e1e2d;">
-                            <div
-                              class="d-flex flex-column flex-lg-row-auto w-auto w-lg-350px w-xl-450px w-xxl-650px py-10 py-md-14 px-10 px-md-20 pr-lg-0">
-                              <h1 class="font-weight-bolder text-light mb-0">Almost done!</h1>
-                              <div class="font-size-h4 mb-8 text-light" style="letter-spacing: 1px;">Finalizing your
-                                <span style="font-weight: 600; color: #3699FF; font-size: 25px;">post. . .</span>
-                              </div>
-                            </div>
-                            <div
-                              class="d-none d-md-flex flex-row-fluid bgi-no-repeat bgi-position-y-center bgi-position-x-left bgi-size-cover">
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div *ngIf="showSchedule" class="
+                       </div>
+
+                      <div
+                        *ngIf="showSchedule"
+                        class="
                           ql-toolbar
                           align-items-center
                           justify-content-between">
