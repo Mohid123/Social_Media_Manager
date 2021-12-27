@@ -34,7 +34,6 @@ export class FeedbackComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.showSpinner()
     this.club = JSON.parse(localStorage.getItem('selectedClub'));
     this.userId = localStorage.getItem('userId')
     this.Module.push(this.club.clubName)
@@ -114,10 +113,4 @@ export class FeedbackComponent implements OnInit {
     this.toast.success('Feedback submitted', 'Success');
   }
 
-  showSpinner() {
-    this.spinner.show();
-    setTimeout(() => {
-      this.spinner.hide();
-    }, 1000);
-  }
 }

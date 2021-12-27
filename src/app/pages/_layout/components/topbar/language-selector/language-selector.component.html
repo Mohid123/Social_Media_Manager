@@ -27,8 +27,7 @@
         <li class="navi-item" [ngClass]="{ active: language.active }">
           <a
             href="javascript:;"
-            (click)="setLanguageWithRefresh(language.lang)"
-            [ngClass]="{ active: language.active }"
+            [ngClass]="{ active: language.active }" 
             class="navi-link"
           >
             <span class="symbol symbol-20 mr-3">
@@ -43,3 +42,4 @@
   <!--end::Dropdown-->
 </div>
 <!--end::Languages-->
+<!--(click)="setLanguageWithRefresh(language.lang)"-->
