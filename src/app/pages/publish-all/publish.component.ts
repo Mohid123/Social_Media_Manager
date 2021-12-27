@@ -263,13 +263,6 @@ export class PublishComponent implements OnInit {
     }
   }
 
-  showSpinner(): void {
-    this.spinner.show();
-    setTimeout(() => {
-      this.spinner.hide();
-    }, 1000);
-  }
-
   switchTabs(event) {
     ;
     if (event.index == 0) {

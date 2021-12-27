@@ -107,13 +107,6 @@ export class FacebookComponent implements OnInit {
     this.cf.detectChanges();
   }
 
-  showSpinner() {
-    this.spinner.show();
-    setTimeout(() => {
-      this.spinner.hide();
-    }, 500);
-  }
-
   searchFacebookPages(keyword) {
     this.searchString = keyword
     let res;
@@ -432,10 +425,6 @@ export class FacebookComponent implements OnInit {
     }
 
   }
-
-
-
-
 
 
 
