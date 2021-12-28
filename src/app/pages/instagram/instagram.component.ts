@@ -23,6 +23,7 @@ import { ScheduleSocialPostService } from 'src/app/core/services/schedule/schedu
 export class InstagramComponent implements OnInit {
   @ViewChild('logo') logo: ElementRef;
   public instaCaption: string = "";
+  condition: Boolean = false;
   private signedInUser: User
   private IGaccount: any
   public file: any;
@@ -35,7 +36,7 @@ export class InstagramComponent implements OnInit {
   public checklist: any = [];
   public tempList: any = []
   public validAspectRatios: string[] = ['4:5', '1:1', '4898:6123', '1491:1844', '499:374', '5128:3419', '3:2', '4159:5200'];
-  private checkedList: any;
+  public checkedList: any;
   public userName: string = localStorage.getItem('userName')
   public profileImageUrl: string = localStorage.getItem('profileImageUrl')
   facebookProfileImageUrl: string
@@ -46,6 +47,7 @@ export class InstagramComponent implements OnInit {
   public searchString : any
   scheduleSelectedDate: any
   scheduleSelectedTime: any
+  clicked: Boolean = false;
 
   public showSchedule: boolean = false;
   closeResult: string;
@@ -93,6 +95,8 @@ export class InstagramComponent implements OnInit {
     this.file = null;
     this.url = null
     this.cf.detectChanges()
+    this.clicked = false;
+      
   }
   onChangeSingle(value: Date) {
 
@@ -268,6 +272,7 @@ export class InstagramComponent implements OnInit {
     this.postedSuccessfully()
     this._mediaUploadService.uploadMedia('InstagramTest', '123', this.file).pipe(take(1)).subscribe((media: any) => {
       this.checkedList.forEach(item => {
+        this.condition = true;
         this._instagramService.createIgContainerForVideo(item.instagram_business_account.id, media.url, this.instaCaption, item.linkedFbPagetoken).pipe(take(1)).subscribe((container: any) => {
           let interval = setInterval(() => {
             counter = counter + 1
@@ -285,11 +290,13 @@ export class InstagramComponent implements OnInit {
                   this.postedSuccessfully()
                   this.toast.success('Great! The post has been shared.');
                   this._reportService.createReport(1, data.id, 'Instagram')
+                  this.condition = false;
                 }, error => {
                   //this.spinner.hide();
                   this.toast.error(error.message);
                   clearInterval(interval)
                   this._reportService.createReport(0, "", 'Instagram')
+                  this.condition = false;
                 })
               }
               else if (data.status_code == "ERROR") {
@@ -335,6 +342,8 @@ export class InstagramComponent implements OnInit {
     //this.spinner.show()
     this._mediaUploadService.uploadMedia('Instagram', this.signedInUser.id, this.file).pipe(take(1)).subscribe((media: any) => {
       this.checkedList.forEach((item, idx, self) => {
+        this.condition = true;
+      
         this._reportService.createReport(2, "", 'Instagram')
         this._instagramService.createIGMediaContainer(item.instagram_business_account.id, this.instaCaption, item.linkedFbPagetoken, media.url).pipe(take(1)).subscribe((container: any) => {
           this._instagramService.publishContent(item.instagram_business_account.id, container.id, item.linkedFbPagetoken).pipe(take(1)).subscribe((data: any) => {
@@ -342,6 +351,8 @@ export class InstagramComponent implements OnInit {
             if (idx == self.length - 1) {
               this.toast.success('Great! The post has been shared.');
               this.postedSuccessfully();
+              this.condition = false;
+      
 
             }
          
@@ -350,6 +361,8 @@ export class InstagramComponent implements OnInit {
             console.log(error)
             this.toast.error(error.error.error.error_user_msg)
             this._reportService.createReport(0, "", 'Instagram');
+            this.condition = false;
+      
           })
         }, error => {
          

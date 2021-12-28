@@ -22,7 +22,7 @@ import { ScheduleSocialPostService } from 'src/app/core/services/schedule/schedu
   styleUrls: ['./facebook.component.scss']
 })
 export class FacebookComponent implements OnInit {
-
+  condition: Boolean = false;
   constructor(private spinner: NgxSpinnerService, private cf: ChangeDetectorRef, private toast: ToastrService,
     private _facebookService: FacebookService,
     private _authService: MainAuthService,
@@ -52,6 +52,7 @@ export class FacebookComponent implements OnInit {
   public profileImageUrl: string = localStorage.getItem('profileImageUrl')
   public searchString: string
   checkedList: any;
+  clicked: Boolean = false;
 
   showDiv = {
     photo: true,
@@ -102,6 +103,7 @@ export class FacebookComponent implements OnInit {
 
   clear() {
     this.file = null;
+    this.clicked = false;
     this.url = null
     this.facebookCaption = '';
     this.cf.detectChanges();
@@ -267,7 +269,10 @@ export class FacebookComponent implements OnInit {
     }
     //this.spinner.show()
     this._mediaUploadService.uploadMedia('Facebook', this.signedInUser.id, this.file).subscribe((media: any) => {
+      
       this.checkedList.forEach((item, index, array) => {
+        this.condition = true;
+      
         // console.log(item)
         this._reportService.createReport(2, "", 'Facebook')
         this._facebookService.addImagePostToFB(item.pageID, media.url, this.facebookCaption, item.pageAccessToken).subscribe(FbPost => {
@@ -276,12 +281,14 @@ export class FacebookComponent implements OnInit {
           if (index == array.length - 1) {
             this.toast.success('Great! The post has been shared.')
             this.postedSuccessfully();
+            this.condition = false;
           }
         }, error => {
          // this.spinner.hide();
           this.toast.error(error.message)
           console.log(error)
           this._reportService.createReport(0, "", 'Facebook')
+          this.condition = false;
 
         })
 
@@ -308,12 +315,16 @@ export class FacebookComponent implements OnInit {
     //this.spinner.show()
     this._mediaUploadService.uploadMedia('Facebook', this.signedInUser.id, this.file).subscribe((media: any) => {
       this.checkedList.forEach((item, index, array) => {
+        this.condition = true;
+      
         this._reportService.createReport(2, "", 'Facebook')
         this._facebookService.addVideoPost(item.pageID, item.pageAccessToken, media.url, this.facebookCaption).pipe(take(1)).subscribe((video: any) => {
           this._reportService.createReport(1, video.id, 'Facebook')
           if (index == array.length - 1) {
             this.toast.success('Great! The post has been shared.');
             this.postedSuccessfully();
+            this.condition = false;
+      
           }
         })
 
@@ -321,6 +332,8 @@ export class FacebookComponent implements OnInit {
         //this.spinner.hide()
         this.toast.error(err.message);
         this._reportService.createReport(0, "", 'Facebook')
+        this.condition = false;
+      
       })
     }, (err) => {
       //this.spinner.hide()
