@@ -537,13 +537,6 @@ and (max-width: 1600px)
     padding: 30px 0px 0px 0px;
  }
 
-// .card-body{
-//     padding: 5px !important;
-// }
-
-
-
-
 body {
     background: #00091B;
     color: #fff;
@@ -620,4 +613,9 @@ body {
     -webkit-transform: scale(1.2);
     text-decoration: none;
     
+  }
+
+  .img-circle{
+    height: 40px; 
+    object-fit: cover;
   }

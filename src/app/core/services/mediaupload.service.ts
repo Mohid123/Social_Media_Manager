@@ -33,19 +33,15 @@ export class MediauploadService {
      this.http.request(req).subscribe((event: HttpEvent<any>) => {
         switch (event.type) {
           case HttpEventType.Sent:
-           // console.log('Request has been made!');
             break;
           case HttpEventType.ResponseHeader:
-            //console.log('Response header has been received!');
             break;
           case HttpEventType.UploadProgress:
             this.progress = Math.round(event.loaded / event.total * 100);
             this.valueChanged.emit(this.progress);
-            //console.log(`Uploaded: ${this.progress}%`);
             this.ref.tick();
             break;
           case HttpEventType.Response:
-           // console.log('Successfully Posted!', event.body);
             success.next(event.body);
             setTimeout(() => {
             this.progress = 0;
@@ -68,19 +64,15 @@ export class MediauploadService {
      this.http.request(req).subscribe((event: HttpEvent<any>) => {
         switch (event.type) {
           case HttpEventType.Sent:
-            //console.log('Request has been made!');
             break;
           case HttpEventType.ResponseHeader:
-           // console.log('Response header has been received!');
             break;
           case HttpEventType.UploadProgress:
             this.progress = Math.round(event.loaded / event.total * 100);
             this.valueChanged.emit(this.progress);
-           // console.log(`Uploaded: ${this.progress}%`);
             this.ref.tick();
             break;
           case HttpEventType.Response:
-           // console.log('Successfully Posted!', event.body);
             success.next(event.body);
             setTimeout(() => {
             this.progress = 0;

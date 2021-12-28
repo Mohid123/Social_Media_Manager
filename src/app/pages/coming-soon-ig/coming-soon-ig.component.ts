@@ -12,7 +12,6 @@ export class ComingSoonIgComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
   
   showSpinner() {
     this.spinner.show();
