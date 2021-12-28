@@ -1,621 +1,422 @@
      /*Preview photos*/
-     .preview-facebook-media{
-        position: relative;
-    }
-    
-    .preview-facebook-media .user-info{
-        padding: 10px 10px;
-        position: relative;
-    }
-    
-    .preview-facebook-media .user-info img{
-        width: 40px;
-        margin-right: 5px;
-        border-radius: 5px;
-    }
-    
-    .preview-facebook-media .user-info .text{
-        position: absolute;
-        top: 14px;
-        font-size: 13px;
-        left: 68px;
-        line-height: 17px;
-    }
-    
-    .preview-facebook-media .user-info .text .name{
-        font-weight: bold;
-        color: #365899;
-    }
-    
-    .preview-facebook-media .user-info .text span{
-        color: #90949c;
-        font-size: 12px;
-    }
-    .preview-facebook .preview-club{
-        position: relative;
-        padding: 0px 9px;
-        color: #999;
-        text-align: end;
-        // border-top: 1px solid #eee;
-        // margin: 0 10px;
-        
-    }
-    
-    .preview-facebook-media .preview-media{
-        height: 350px;
-        background-size: cover;
-        background-position: center center;
-        background-color: #F3F6F9;
-        overflow: hidden;
-        position: relative;
-        margin-left: 10px;
-        margin-right: 10px;
-    }
-    
+     .preview-facebook-media .user-info {
+         padding: 10px 10px;
+         position: relative;
+     }
 
-    .preview-facebook-media .preview-media-post{
-     height: 360px;
-        background-size: cover;
-        background-position: center center;
-        background-color: #F3F6F9;
-        overflow: hidden;
-        position: relative;
-        margin-left: 10px;
-        margin-right: 10px;
-    }
+     .preview-facebook-media .user-info img {
+         width: 40px;
+         margin-right: 5px;
+         border-radius: 5px;
+     }
 
-    .preview-facebook-media .preview-media .item{
-        background-size: cover;
-        background-repeat: no-repeat;
-        background-position: center center;
-        border: 1px solid #fff;
-        transition: all 0.5s;
-        position: relative;
-        overflow: hidden;
-    }
-    
-    .preview-facebook-media .preview-media.preview-media1,
-    .preview-facebook-media .preview-media.preview-media2,
-    .preview-facebook-media .preview-media.preview-media3,
-    .preview-facebook-media .preview-media.preview-media4{
-        background-color: #fff;
-    }
-    
-    .preview-facebook-media .preview-media.preview-media2{
-        height: 180px;
-    }
-    
-    .preview-facebook-media .preview-media.preview-media2 .item:nth-child(1){
-        width: 50%;
-        height: 100%;
-        float: left;
-    }
-    
-    .preview-facebook-media .preview-media.preview-media3 .item:nth-child(1){
-        width: 100%;
-        height: 50%;
-        float: left;
-    }
-    
-    .preview-facebook-media .preview-media.preview-media4 .item:nth-child(1),
-    .preview-facebook-media .preview-media.preview-media4 .item:nth-child(2),
-    .preview-facebook-media .preview-media.preview-media4 .item:nth-child(3),
-    .preview-facebook-media .preview-media.preview-media4 .item:nth-child(4)
-    {
-        width: 50%;
-        height: 50%;
-        float: left;
-    }
-    
-    .preview-facebook-media .preview-media.preview-media1 .item:nth-child(1){
-        width: 100%;
-        height: 100%;
-        float: left;
-    }
-    
-    .preview-facebook-media .preview-media.preview-media3 .item:nth-child(2){
-        width: 50%;
-        height: 50%;
-        float: left;
-    }
-    
-    .preview-facebook-media .preview-media.preview-media3 .item:nth-child(3){
-        width: 50%;
-        height: 50%;
-        float: left;
-    }
-    
-    .preview-facebook-media .preview-media.preview-media2 .item:nth-child(2){
-        width: 50%;
-        height: 100%;
-        float: left;
-    }
-    
-    .preview-facebook-media .preview-media.preview-media5 .item:nth-child(1),
-    .preview-facebook-media .preview-media.preview-media5 .item:nth-child(2)
-    {
-        width: 50%;
-        height: 64%;
-        float: left;
-    }
-    
-    .preview-facebook-media .preview-media.preview-media5 .item:nth-child(3),
-    .preview-facebook-media .preview-media.preview-media5 .item:nth-child(4),
-    .preview-facebook-media .preview-media.preview-media5 .item:nth-child(5)
-    {
-        width: 33.3333%;
-        height: 36%;
-        float: left;
-    }
-    
-    .preview-facebook-media video{
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: auto;
-        height: 100%;
-        -webkit-transform: translate(-50%, -50%);
-        -moz-transform: translate(-50%, -50%);
-        -ms-transform: translate(-50%, -50%);
-        -o-transform: translate(-50%, -50%);
-        transform: translate(-50%, -50%);
-    }
-    
-    .preview-facebook-media .post-info,.preview-facebook-media .caption{
-        padding: 10px 10px;
-        word-break: break-all;
-        color: #000;
-    }
-    
-    .preview-facebook-media .post-info img,.preview-facebook-media .caption img{
-        width: 15px;
-        position: relative;
-        top: -2px;
-    }
-    
-    
-    .preview-facebook-media .line-no-text{
-        margin-bottom: 3px;
-        height: 13px;
+     .preview-facebook-media .user-info .text {
+         position: absolute;
+         top: 14px;
+         font-size: 13px;
+         left: 68px;
+         line-height: 17px;
+     }
+
+     .preview-facebook-media .user-info .text .name {
+         font-weight: bold;
+         color: #365899;
+     }
+
+     .preview-facebook-media .user-info .text span {
+         color: #90949c;
+         font-size: 12px;
+     }
+
+     .preview-facebook .preview-club {
+         position: relative;
+         padding: 0px 9px;
+         color: #999;
+         text-align: end;
+         // border-top: 1px solid #eee;
+         // margin: 0 10px;
+
+     }
+
+     .preview-facebook-media .preview-media {
+         height: 350px;
+         background-size: cover;
+         background-position: center center;
+         background-color: #F3F6F9;
+         overflow: hidden;
+         position: relative;
+         margin-left: 10px;
+         margin-right: 10px;
+     }
+
+
+     .preview-facebook-media .preview-media-post {
+         height: 360px;
+         background-size: cover;
+         background-position: center center;
+         background-color: #F3F6F9;
+         overflow: hidden;
+         position: relative;
+         margin-left: 10px;
+         margin-right: 10px;
+     }
+
+     .preview-facebook-media .preview-media .item {
+         background-size: cover;
+         background-repeat: no-repeat;
+         background-position: center center;
+         border: 1px solid #fff;
+         transition: all 0.5s;
+         position: relative;
+         overflow: hidden;
+     }
+
+
+
+     .preview-facebook-media video {
+         position: absolute;
+         top: 50%;
+         left: 50%;
+         width: auto;
+         height: 100%;
+         -webkit-transform: translate(-50%, -50%);
+         -moz-transform: translate(-50%, -50%);
+         -ms-transform: translate(-50%, -50%);
+         -o-transform: translate(-50%, -50%);
+         transform: translate(-50%, -50%);
+     }
+
+     .preview-facebook-media .post-info,
+     .preview-facebook-media .caption {
+         padding: 10px 10px;
+         word-break: break-all;
+         color: #000;
+     }
+
+     .preview-facebook-media .post-info img,
+     .preview-facebook-media .caption img {
+         width: 15px;
+         position: relative;
+         top: -2px;
+     }
+
+
+     .preview-facebook-media .line-no-text {
+         margin-bottom: 3px;
+         height: 13px;
          background: #F3F6F9;
-       
-    }
-    
-    /*Preview Link*/
-    .preview-facebook-link{
-        position: relative;
-    }
-    
-    .preview-facebook-link .preview-header{
-        padding: 20px;
-        height: 60px;
-        border-bottom: 1px solid #F3F6F9;
-    }
-    
-    .preview-facebook-link .preview-header i{
-        font-size: 20px;
-    }
-    
-    .preview-facebook-link .preview-header .facebook-logo{
-        position: absolute;
-        text-align: center;
-        width: 100%;
-        left: 0;
-        top: 16px;
-        color: #4a76a8;
-        font-size: 18px;
-    }
-    
-    .preview-facebook-link .preview-header .facebook-logo i{
-        font-size: 30px;
-    }
-    
-    .preview-facebook-link .user-info{
-        padding: 10px 10px;
-        position: relative;
-    }
-    
-    .preview-facebook-link .user-info img{
-        width: 40px;
-        margin-right: 5px;
-    }
-    
-    .preview-facebook-link .user-info .text{
-        position: absolute;
-        top: 14px;
-        font-size: 13px;
-        left: 68px;
-        line-height: 17px;
-    }
-    
-    .preview-facebook-link .user-info .text .name{
-        font-weight: bold;
-        color: #2a5885;
-    }
-    
-    .preview-facebook-link .user-info .text span{
-        color: #939393;
-        font-size: 12px;
-    }
-    
-    .preview-facebook-link .post-info,.preview-facebook-link .caption{
-        padding: 10px 10px;
-        word-break: break-all;
-        color: #000;
-    }
-    
-    .preview-facebook-link .post-info img,.preview-facebook-link .caption img{
-        width: 15px;
-        position: relative;
-        top: -2px;
-    }
-    
-    
-    .preview-facebook-link .line-no-text{
-        margin-bottom: 3px;
-        height: 13px;
-        background: #F3F6F9;
-    }
-    
-    .preview-facebook-link .line-no-text.w50{
-        width: 50%;
-    }
-    
-    .preview-facebook-link .preview-link{
-        border: 1px solid rgba(0, 0, 0, 0.05);
-        margin: 0 10px;
-        margin-bottom: 10px;
-    }
-    
-    .preview-facebook-link .preview-link .image{
-        height: 203px;
-        width: 100%;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-        background-color: #F3F6F9;
-        background-position: center;
-    }
-    
-    .preview-facebook-link .preview-link .info{
-        padding: 10px;
-        letter-spacing: normal;
-    }
-    
-    .preview-facebook-link .preview-link .info .title{
-        color: #000;
-        font-size: 15px;
-        font-weight: 500;
-        line-height: 22px;
-        margin-bottom: 5px;
-        max-height: 110px;
-        overflow: hidden;
-        word-wrap: break-word;
-    }
-    
-    .preview-facebook-link .preview-link .info .desc{
-        color: #000;
-        font-size: 12px;
-        font-family: inherit;
-    }
-    
-    .preview-facebook-link .preview-link .info .website{
-        color: #90949c;
-        font-size: 12px;
-        text-transform: uppercase;
-        font-family: inherit;
-        margin-top: 10px;
-    }
-    
-    .preview-facebook-link .preview-comment{
-        margin-top: 0px;
-    }
-    
-    /*Preview Text*/
-    .preview-facebook-text{
-        position: relative;
-    }
-    
-    .preview-facebook-text .preview-header{
-        padding: 20px;
-        height: 60px;
-        border-bottom: 1px solid #F3F6F9;
-    }
-    
-    .preview-facebook-text .preview-header i{
-        font-size: 20px;
-    }
-    
-    .preview-facebook-text .preview-header .fb-logo{
-        position: absolute;
-        text-align: center;
-        width: 100%;
-        left: 0;
-        top: 16px;
-        color: #4a76a8;
-        font-size: 18px;
-    }
-    
-    .preview-facebook-text .preview-header .fb-logo i{
-        font-size: 30px;
-    }
-    
-    .preview-facebook-text .user-info{
-        padding: 10px 10px;
-        position: relative;
-    }
-    
-    .preview-facebook-text .user-info img{
-        width: 40px;
-        margin-right: 5px;
-        border-radius: 5px;
-    }
-    
-    .preview-facebook-text .user-info .text{
-        position: absolute;
-        top: 14px;
-        font-size: 13px;
-        left: 68px;
-        line-height: 17px;
-    }
-    
-    .preview-facebook-text .user-info .text .name{
-        font-weight: bold;
-        color: #2a5885;
-    }
-    
-    .preview-facebook-text .user-info .text span{
-        color: #939393;
-        font-size: 12px;
-    }
-    
-    .preview-facebook-text .post-info,.preview-facebook-text .caption{
-        padding: 10px 10px;
-        word-break: break-all;
-        color: #000;
-    }
-    
-    .preview-facebook-text .post-info img,.preview-facebook-text .caption img{
-        width: 15px;
-        position: relative;
-        top: -2px;
-    }
-    
-    
-    .preview-facebook-text .line-no-text{
-        margin-bottom: 3px;
-        height: 13px;
+
+     }
+
+
+     /*Preview Text*/
+     .preview-facebook-text {
+         position: relative;
+     }
+
+     .preview-facebook-text .preview-header {
+         padding: 20px;
+         height: 60px;
+         border-bottom: 1px solid #F3F6F9;
+     }
+
+     .preview-facebook-text .preview-header i {
+         font-size: 20px;
+     }
+
+     .preview-facebook-text .preview-header .fb-logo {
+         position: absolute;
+         text-align: center;
+         width: 100%;
+         left: 0;
+         top: 16px;
+         color: #4a76a8;
+         font-size: 18px;
+     }
+
+     .preview-facebook-text .preview-header .fb-logo i {
+         font-size: 30px;
+     }
+
+     .preview-facebook-text .user-info {
+         padding: 10px 10px;
+         position: relative;
+     }
+
+     .preview-facebook-text .user-info img {
+         width: 40px;
+         margin-right: 5px;
+         border-radius: 5px;
+     }
+
+     .preview-facebook-text .user-info .text {
+         position: absolute;
+         top: 14px;
+         font-size: 13px;
+         left: 68px;
+         line-height: 17px;
+     }
+
+     .preview-facebook-text .user-info .text .name {
+         font-weight: bold;
+         color: #2a5885;
+     }
+
+     .preview-facebook-text .user-info .text span {
+         color: #939393;
+         font-size: 12px;
+     }
+
+     .preview-facebook-text .post-info,
+     .preview-facebook-text .caption {
+         padding: 10px 10px;
+         word-break: break-all;
+         color: #000;
+     }
+
+     .preview-facebook-text .post-info img,
+     .preview-facebook-text .caption img {
+         width: 15px;
+         position: relative;
+         top: -2px;
+     }
+
+
+     .preview-facebook-text .line-no-text {
+         margin-bottom: 3px;
+         height: 13px;
          background: #F3F6F9;
-    }
-    
-    .preview-facebook-text .preview-comment{
-        margin-top: 0px;
-    }
-    
-    .preview-facebook .preview-comment{
-        position: relative;
-        padding: 9px 0px 9px;
-        color: #999;
-        text-align: center;
-        border-top: 1px solid #eee;
-        margin: 0 10px;
-        margin-top: 10px;
-    }
-    
-    .preview-facebook .preview-comment .item{
-        float: left;
-        margin-right: 25px;
-        font-weight: 400;
-        font-size: 12px;
-    }
-    
-    .preview-facebook .preview-media .item .count{
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0,0,0,0.3);
-        text-align: center;
-        color: #fff;
-        font-weight: bold;
-        padding-top: 31%;
-        font-size: 27px;
-    }
-    
-    .preview-facebook .preview-comment .item .facebook-icon{
-        position: relative;
-        top: 3px;
-    }
-    
-    .preview-comment .row .col .item{
-        background: url(/assets/media/svg/icons/General/Heart.svg) no-repeat 20px;
-    }
-    
-    
-    
-    .facebook-icon{
-        //background-image: url(../img/facebook-icon.png);
-        background-repeat: no-repeat;
-        width: 18px;
-        height: 18px;
-        display: inline-block;
-    }
-    
-    .facebook-icon.like{
-        background-position: 0 0;
-    }
-    
-    .facebook-icon.comment{
-        background-position: 0 -22px;
-    }
-    
-    .facebook-icon.share{
-        background-position: 0 -42px;
-    }
-    .image-upload > input
-{
-    display: none;
-}
-.pl-0{
-    padding-top: 25px !important;
-    padding-left: 5px !important;
-}
+     }
 
-@media (min-width: 992px)
-{
-.footer-fixed .content {
-    padding-bottom: 0px; 
-}
-}
-.custom-scrollbar-css {
-    height: 200px;
-  }
-  /* Custom Scrollbar using CSS */
-  .custom-scrollbar-css {
-    overflow-y: scroll;
-  }
-  /* scrollbar width */
-  .custom-scrollbar-css::-webkit-scrollbar {
-    width: 7px;
-  }
-  /* scrollbar track */
-  .custom-scrollbar-css::-webkit-scrollbar-track {
-    background: #eee;
-  }
-  /* scrollbar handle */
-  .custom-scrollbar-css::-webkit-scrollbar-thumb {
-    border-radius: 1rem;
-    background-color: #34ABC5;
-    background-image: linear-gradient(to top, #949494 0%, #1E1E2D 100%);
-  }
-  .cus-form{
-    width: 240%;
-  }
+     .preview-facebook-text .preview-comment {
+         margin-top: 0px;
+     }
 
-  @media screen 
- 
-and (max-width: 1600px) 
-{
-    .card.card-custom > .card-body {
-        padding: 0rem !important;
-    }
-  
-.btn{
-    font-size: 10px;
-}
+     .preview-facebook .preview-comment {
+         position: relative;
+         padding: 9px 0px 9px;
+         color: #999;
+         text-align: center;
+         border-top: 1px solid #eee;
+         margin: 0 10px;
+         margin-top: 10px;
+     }
 
-  
-.card-body{
-  padding: 5px
-}
+     .preview-facebook .preview-comment .item {
+         float: left;
+         margin-right: 25px;
+         font-weight: 400;
+         font-size: 12px;
+     }
 
-.preview-facebook .preview-comment .item {
-    float: left;
-    margin-right: 16px;
-    font-weight: 500;
-    font-size: 9px;
-}
-.font-size-lg{
-    font-size: 12px !important;
-}
-.cus-form{
-    width: 212% !important
-}
- 
-}
+     .preview-facebook .preview-media .item .count {
+         position: absolute;
+         width: 100%;
+         height: 100%;
+         background-color: rgba(0, 0, 0, 0.3);
+         text-align: center;
+         color: #fff;
+         font-weight: bold;
+         padding-top: 31%;
+         font-size: 27px;
+     }
 
-::ng-deep.mat-tab-label.mat-tab-label-active:not(.mat-tab-disabled),
-::ng-deep.mat-tab-label.mat-tab-label-active.cdk-keyboard-focused:not(.mat-tab-disabled) {
-//   background-color: #FCE500;
-  font-weight: 500;
-  color: black;
-  opacity: 1;
-}
+     .preview-facebook .preview-comment .item .facebook-icon {
+         position: relative;
+         top: 3px;
+     }
 
-::ng-deep .mat-tab-label{
-    min-width: 40px !important;
-    padding: 0px 8px !important;
- }
- .card.card-custom > .card-body {
-    padding: 30px 0px 0px 0px;
- }
+     .preview-comment .row .col .item {
+         background: url(/assets/media/svg/icons/General/Heart.svg) no-repeat 20px;
+     }
 
-body {
-    background: #00091B;
-    color: #fff;
-  }
-  
-  
-  @keyframes fadeIn {
-    from {top: 20%; opacity: 0;}
-    to {top: 100; opacity: 1;}
-    
-  }
-  
-  @-webkit-keyframes fadeIn {
-    from {top: 20%; opacity: 0;}
-    to {top: 100; opacity: 1;}
-    
-  }
-  
-  .wrapper {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    -webkit-transform: translate(-50%, -50%);
-    animation: fadeIn 1000ms ease;
-    -webkit-animation: fadeIn 1000ms ease;
-    
-  }
-  
-  h1 {
-    font-size: 50px;
-    font-family: 'Poppins', sans-serif;
-    margin-bottom: 0;
-    line-height: 1;
-    font-weight: 700;
-  }
-  
-  .dot {
-    color: #4FEBFE;
-  }
-  
-  p {
-    text-align: center;
-    margin: 18px;
-    font-family: 'Muli', sans-serif;
-    font-weight: normal;
-    
-  }
-  
-  .icons {
-    text-align: center;
-    
-  }
-  
-  .icons i {
-    color: #00091B;
-    background: #fff;
-    height: 15px;
-    width: 15px;
-    padding: 13px;
-    margin: 0 10px;
-    border-radius: 50px;
-    border: 2px solid #fff;
-    transition: all 200ms ease;
-    text-decoration: none;
-    position: relative;
-  }
-  
-  .icons i:hover, .icons i:active {
-    color: #fff;
-    background: none;
-    cursor: pointer !important;
-    transform: scale(1.2);
-    -webkit-transform: scale(1.2);
-    text-decoration: none;
-    
-  }
+     .image-upload>input {
+         display: none;
+     }
 
-  .img-circle{
-    height: 40px; 
-    object-fit: cover;
-  }
+     .pl-0 {
+         padding-top: 25px !important;
+         padding-left: 5px !important;
+     }
+
+     @media (min-width: 992px) {
+         .footer-fixed .content {
+             padding-bottom: 0px;
+         }
+     }
+
+     .custom-scrollbar-css {
+         height: 200px;
+     }
+
+     /* Custom Scrollbar using CSS */
+     .custom-scrollbar-css {
+         overflow-y: scroll;
+     }
+
+     /* scrollbar width */
+     .custom-scrollbar-css::-webkit-scrollbar {
+         width: 7px;
+     }
+
+     /* scrollbar track */
+     .custom-scrollbar-css::-webkit-scrollbar-track {
+         background: #eee;
+     }
+
+     /* scrollbar handle */
+     .custom-scrollbar-css::-webkit-scrollbar-thumb {
+         border-radius: 1rem;
+         background-color: #34ABC5;
+         background-image: linear-gradient(to top, #949494 0%, #1E1E2D 100%);
+     }
+
+     .cus-form {
+         width: 240%;
+     }
+
+     @media screen and (max-width: 1600px) {
+         .card.card-custom>.card-body {
+             padding: 0rem !important;
+         }
+
+         .btn {
+             font-size: 10px;
+         }
+
+
+         .card-body {
+             padding: 5px
+         }
+
+         .preview-facebook .preview-comment .item {
+             float: left;
+             margin-right: 16px;
+             font-weight: 500;
+             font-size: 9px;
+         }
+
+         .font-size-lg {
+             font-size: 12px !important;
+         }
+
+         .cus-form {
+             width: 212% !important
+         }
+
+     }
+
+     ::ng-deep.mat-tab-label.mat-tab-label-active:not(.mat-tab-disabled),
+     ::ng-deep.mat-tab-label.mat-tab-label-active.cdk-keyboard-focused:not(.mat-tab-disabled) {
+         //   background-color: #FCE500;
+         font-weight: 500;
+         color: black;
+         opacity: 1;
+     }
+
+     ::ng-deep .mat-tab-label {
+         min-width: 40px !important;
+         padding: 0px 8px !important;
+     }
+
+     .card.card-custom>.card-body {
+         padding: 30px 0px 0px 0px;
+     }
+
+     body {
+         background: #00091B;
+         color: #fff;
+     }
+
+
+     @keyframes fadeIn {
+         from {
+             top: 20%;
+             opacity: 0;
+         }
+
+         to {
+             top: 100;
+             opacity: 1;
+         }
+
+     }
+
+     @-webkit-keyframes fadeIn {
+         from {
+             top: 20%;
+             opacity: 0;
+         }
+
+         to {
+             top: 100;
+             opacity: 1;
+         }
+
+     }
+
+     .wrapper {
+         position: absolute;
+         left: 50%;
+         top: 50%;
+         transform: translate(-50%, -50%);
+         -webkit-transform: translate(-50%, -50%);
+         animation: fadeIn 1000ms ease;
+         -webkit-animation: fadeIn 1000ms ease;
+
+     }
+
+     h1 {
+         font-size: 50px;
+         font-family: 'Poppins', sans-serif;
+         margin-bottom: 0;
+         line-height: 1;
+         font-weight: 700;
+     }
+
+     .dot {
+         color: #4FEBFE;
+     }
+
+     p {
+         text-align: center;
+         margin: 18px;
+         font-family: 'Muli', sans-serif;
+         font-weight: normal;
+
+     }
+
+     .icons {
+         text-align: center;
+
+     }
+
+     .icons i {
+         color: #00091B;
+         background: #fff;
+         height: 15px;
+         width: 15px;
+         padding: 13px;
+         margin: 0 10px;
+         border-radius: 50px;
+         border: 2px solid #fff;
+         transition: all 200ms ease;
+         text-decoration: none;
+         position: relative;
+     }
+
+     .icons i:hover,
+     .icons i:active {
+         color: #fff;
+         background: none;
+         cursor: pointer !important;
+         transform: scale(1.2);
+         -webkit-transform: scale(1.2);
+         text-decoration: none;
+
+     }
+
+     .img-circle {
+         height: 40px;
+         object-fit: cover;
+     }
