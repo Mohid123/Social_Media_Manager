@@ -64,6 +64,12 @@ export class AccountManagerComponent implements OnInit {
     this.set_socialFlag_after_getting_club()
   }
 
+  unLinkFacebookAccount(clubId: string) {
+    clubId = this.selectedClub.id;
+    debugger
+    this._facebookService.unLinkFacebookPage(clubId);
+  }
+
   getSignedInUser() {
     this._authService.getSignedInUser().subscribe((user) => {
       this.signedInUser = user;
