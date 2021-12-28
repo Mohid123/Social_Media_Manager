@@ -125,8 +125,7 @@ export class ClubpostService {
       if (hyperLinkResponse.length > 0 && hyperLinkResponse[0].hasOwnProperty("image")) {
         this.post.captureFileURL = hyperLinkResponse[0].image;
       }
-       for (let i = 0;  i < MediaFiles.length; i++) {
-        this._mediaUploadService.uploadClubMedia(postedTo, userID, MediaFiles[i]).subscribe((media: any) => {
+        this._mediaUploadService.uploadClubMedia(postedTo, userID, MediaFiles).subscribe((media: any) => {
           this.post.captureFileURL = media.url
           this.post.path = media.path;
           
@@ -165,7 +164,6 @@ export class ClubpostService {
             })
           });
         })
-       }
     }, error=>{
       console.log(error)
     })
