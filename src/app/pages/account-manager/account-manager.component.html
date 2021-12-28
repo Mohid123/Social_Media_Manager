@@ -1,7 +1,6 @@
 <app-spinner></app-spinner>
 <div class="row">
     <div class="col-lg-3">
-        <!--begin::Card-->
         <div class="card card-custom card-stretch">
             <div class="card-header" style="background-color: #1e1e2d;">
                 <div class="card-title">
@@ -24,16 +23,8 @@
                     <span class="text-dark-50 font-weight-bolder font-size-base ml-3" style="text-align: -webkit-left;"> Add facebook profile</span>
                     
                 </div>
-                <!-- <div  *ngIf="!socialFlag" id="signInFB" (click)= showFBCommingSoonPopup() class="btn btn-icon btn-light w-auto btn-clean d-inline-flex btn-lg px-2 mr-5">
-                    <span class="symbol symbol-35 symbol-light-primary">
-                        <span class="symbol-label font-size-h5 font-weight-bold"><a  class="btn btn-icon btn-sm btn-facebook">
-                            <i class="socicon-facebook"></i>
-                        </a></span>
-                    </span>
-                    <span class="text-dark-50 font-weight-bolder font-size-base ml-3" style="text-align: -webkit-left;"> Add facebook profile</span>
-                    
-                </div> -->
                 <hr>
+
                  <!--Insta button-->
                 <div (click) = showIGLoginPopup() class="btn btn-icon btn-light w-auto btn-clean d-inline-flex btn-lg px-2 mr-5">
                     <span class="symbol symbol-35 symbol-light-primary">
@@ -43,16 +34,8 @@
                     </span>
                     <span class="text-dark-50 font-weight-bolder font-size-base ml-3" style="text-align: -webkit-left;"> Add Instagram profile</span>
                 </div>
-                <!-- <div *ngIf="!socialFlag" (click) = showIGCommingSoonPopup() class="btn btn-icon btn-light w-auto btn-clean d-inline-flex btn-lg px-2 mr-5">
-                    <span class="symbol symbol-35 symbol-light-primary">
-                        <span class="symbol-label font-size-h5 font-weight-bold"><a  class="btn btn-icon btn-sm btn-instagram">
-                            <i class="socicon-instagram"></i>
-                        </a></span>
-                    </span>
-                    <span class="text-dark-50 font-weight-bolder font-size-base ml-3" style="text-align: -webkit-left;"> Add Instagram profile</span>
-                </div> -->
-
                 <hr>
+            
                 <div (click) = "Club()" class="btn btn-icon btn-light w-auto btn-clean d-inline-flex  btn-lg px-2 mr-5">
                     <span class="symbol symbol-35 symbol-light-primary">
                         <span class="symbol-label font-size-h5 font-weight-bold"><a  class="btn btn-icon btn-sm" >
@@ -60,15 +43,12 @@
                         </a></span>
                     </span>
                     <span class="text-dark-50 font-weight-bolder font-size-base ml-3" style="text-align: -webkit-left;">{{clubName}}</span>
-                    
                 </div>
             </div>
         </div>
-        <!--end::Card-->
     </div>
     
     <div class="col-lg-9">
-        <!--begin::Card-->
         <div class="card card-custom card-stretch">
             <div class="card-header" style="background-color: #1e1e2d;">
                 <div class="card-title">
@@ -89,35 +69,23 @@
                             <div class="card-header">
                              <div class="card-title">
                               <h5 class="card-label">
-                                <i class="socicon-facebook text-primary mr-5"></i>Facebook profile
-                               
-                              </h5>
+                                <i class="socicon-facebook text-primary mr-5"></i>Facebook Profile</h5>
                              </div>
                             </div>
                             <div class="card-body">
                                 <div class="card-custom">
-                                   
                                     <div class="card-body pt-15">
-                                       
                                         <div class="text-center mb-10">
                                             <div class="symbol symbol-60 symbol-circle symbol-xl-90">
-                                                
                                                 <div *ngIf="!userFBprofile.fbProfileImageUrl" class="symbol-label"><span><img class="symbol-label" src="../../../assets/media/users/mockfbImage.png" style="object-fit: cover;" alt=""></span></div>
                                                 <div *ngIf="userFBprofile.fbProfileImageUrl" class="symbol-label"><span><img class="symbol-label" [src] = "userFBprofile.fbProfileImageUrl"  style="object-fit: cover;" alt=""></span></div>
-
                                                 <i class="symbol-badge symbol-badge-bottom bg-success"></i>
                                             </div>
-                                          
                                             <div class="text-muted mb-2">{{userFBprofile.fbUserName}}</div>
                                             <span class="label label-light-primary label-inline font-weight-bold label-lg">Facebook</span>
                                         </div>
-                                      
                                         <!-- <a diabled (click) = "signOutFB()" class="btn btn-light-primary btn-hover-primary font-weight-bold py-3 px-6 mb-2 text-center btn-block ">Sign Out</a> -->
-                                    
-                                        
-                                     
                                     </div>
-                                 
                                 </div>
                             </div>
                            </div>
@@ -129,33 +97,23 @@
                             <div class="card-header">
                              <div class="card-title">
                               <h5 class="card-label">
-                                <i class="socicon-instagram mr-5" style="color: #d62976;"></i>Instagram profile
-                               
-                              </h5>
+                                <i class="socicon-instagram mr-5" style="color: #d62976;"></i>Instagram Profile</h5>
                              </div>
                             </div>
                             <div class="card-body">
                                 <div class="card-custom">
-                                   
                                     <div class="card-body pt-15">
-                                       
                                         <div class="text-center mb-10">
                                             <div class="symbol symbol-60 symbol-circle symbol-xl-90">
                                                 <div *ngIf="!userFBprofile.fbProfileImageUrl" class="symbol-label"><span><img class="symbol-label" src="../../../assets/media/users/mockfbImage.png" style="object-fit: cover;" alt=""></span></div>
                                                 <div *ngIf="userFBprofile.fbProfileImageUrl" class="symbol-label"><span><img class="symbol-label" [src] = "userFBprofile.fbProfileImageUrl"  style="object-fit: cover;" alt=""></span></div>
                                                 <i class="symbol-badge symbol-badge-bottom bg-success"></i>
                                             </div>
-                                          
                                             <div class="text-muted mb-2">{{userFBprofile.fbUserName}}</div>
                                             <span class="label label-light-primary label-inline font-weight-bold label-lg">Instagram</span>
                                         </div>
-                                      
                                         <!-- <a diabled (click) = "signOutFB()" class="btn btn-light-primary btn-hover-primary font-weight-bold py-3 px-6 mb-2 text-center btn-block ">Sign Out</a> -->
-                                    
-                                        
-                                     
                                     </div>
-                                 
                                 </div>
                             </div>
                            </div>
@@ -167,32 +125,23 @@
                             <div class="card-header">
                              <div class="card-title">
                               <h5 class="card-label">
-                                <span><img style="height: 100%; width: 20px; border-radius: 5px;" [src]="clubLogo" alt=""></span>&nbsp;
-                                  
-                               {{clubName}}
-                               
-                              </h5>
+                                <span><img style="height: 100%; width: 20px; border-radius: 5px;" [src]="clubLogo" alt=""></span>&nbsp;{{clubName}}
+                            </h5>
                              </div>
                             </div>
                             <div class="card-body">
                                 <div class="card-custom">
-                                 
                                     <div class="card-body pt-15">
-                                  
                                         <div class="text-center mb-10">
                                             <div class="symbol symbol-60 symbol-circle symbol-xl-90">
                                                 <div class="symbol-label"><span>
                                                     <img class="symbol-label" [src]="userClubProfile.clubProfileImageURL" style="object-fit: cover;" alt=""></span></div>
                                                 <i class="symbol-badge symbol-badge-bottom bg-success"></i>
                                             </div>
-                                         
                                             <div class="text-muted mb-2">{{userClubProfile.clubUsername}}</div>
                                             <span class="label label-inline font-weight-bold label-lg">{{clubName}}</span>
                                         </div>
-                                      
-                                        
                                     </div>
-                                  
                                 </div>
                             </div>
                            </div>
@@ -200,7 +149,6 @@
                 </div>
             </div>
         </div>
-        <!--end::Card-->
     </div>
     
 </div>

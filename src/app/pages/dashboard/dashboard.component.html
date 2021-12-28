@@ -1,7 +1,6 @@
 <app-spinner></app-spinner>
 <div class="row">
-     <div class="col-lg-3">
-     
+    <div class="col-lg-3">
         <div class="card card-custom card-stretch">
             <div class="card-header" style="background-color: #1e1e2d;">
                 <div class="card-title">
@@ -11,46 +10,50 @@
                         </span>
                         <span class="nav-text text-white"> &nbsp; Activity log</span>
                     </h3>
-                   </div>
+                </div>
             </div>
             <div class="card-body">
-                <div class="container d-flex justify-content-center " style="border-bottom: 1px solid lightgrey; padding-bottom: 25px">
-                    <i  class="fa fa-genderless text-success icon-md mr-2 ml-2"></i> Succeed
+                <div class="container d-flex justify-content-center "
+                    style="border-bottom: 1px solid lightgrey; padding-bottom: 25px">
+                    <i class="fa fa-genderless text-success icon-md mr-2 ml-2"></i> Succeed
                     <i class="fa fa-genderless text-danger icon-md mr-2 ml-2"></i> Failed
-                    <i class="fa fa-genderless text-info icon-md mr-2 ml-2"></i> Pending
+                    <i class="fa fa-genderless text-info icon-md mr-2 ml-2"></i> pending
                 </div>
-                  
-                <div class="card-scroll custom-scrollbar-css padd" >
 
+                <div class="card-scroll custom-scrollbar-css padd">
                     <div class="card-body pt-4">
-                       <ng-container *ngFor="let report of latestReports" >
-                       <div class="timeline timeline-6 mt-3">
-                          <div class="timeline-item align-items-start">
+                        <ng-container *ngFor="let report of latestReports">
+                            <div class="timeline timeline-6 mt-3">
+                                <div class="timeline-item align-items-start">
+                                    <div class="timeline-label font-weight-bolder text-dark-75 font-size-lg">
+                                        {{report.time}}</div>
+                                    <div class="timeline-badge">
+                                        <i *ngIf="report.successStatus == 0"
+                                            class="fa fa-genderless text-danger icon-xl"></i>
 
-                             <div class="timeline-label font-weight-bolder text-dark-75 font-size-lg">{{report.time}}</div>
+                                        <i *ngIf="report.successStatus == 1"
+                                            class="fa fa-genderless text-success icon-xl"></i>
 
-                             <div class="timeline-badge">
-                                <i *ngIf="report.successStatus == 0" class="fa fa-genderless text-danger icon-xl"></i>
-
-                                <i *ngIf="report.successStatus == 1" class="fa fa-genderless text-success icon-xl"></i>
-
-                                <i *ngIf="report.successStatus == 2" class="fa fa-genderless text-info icon-xl"></i>
-
-                             </div>
-
-                             <div *ngIf="report.successStatus == 0" class="font-weight-mormal font-size-lg timeline-content text-bold pl-5">Your<strong> {{report.postedTo}}  </strong>post was <span class="text-danger font-weight-bolder">failed</span>  </div>
-                             <div *ngIf="report.successStatus == 1"  class="font-weight-mormal font-size-lg timeline-content text-bold pl-5">Your<strong> {{report.postedTo}}  </strong>post was <span class="text-success font-weight-bolder">succeed</span> </div>
-                             <div *ngIf="report.successStatus == 2" class="font-weight-mormal font-size-lg timeline-content text-bold pl-5">Your<strong> {{report.postedTo}}  </strong>post was <span class="text-info font-weight-bolder">pending</span></div>
-           
-                          </div>
-                       </div>
-                    </ng-container>
-
+                                        <i *ngIf="report.successStatus == 2"
+                                            class="fa fa-genderless text-info icon-xl"></i>
+                                    </div>
+                                    <div *ngIf="report.successStatus == 0"
+                                        class="font-weight-mormal font-size-lg timeline-content text-bold pl-5">
+                                        Your<strong> {{report.postedTo}} </strong>post was <span
+                                            class="text-danger font-weight-bolder">failed</span> </div>
+                                    <div *ngIf="report.successStatus == 1"
+                                        class="font-weight-mormal font-size-lg timeline-content text-bold pl-5">
+                                        Your<strong> {{report.postedTo}} </strong>post was <span
+                                            class="text-success font-weight-bolder">succeed</span> </div>
+                                    <div *ngIf="report.successStatus == 2"
+                                        class="font-weight-mormal font-size-lg timeline-content text-bold pl-5">
+                                        Your<strong> {{report.postedTo}} </strong>post was <span
+                                            class="text-info font-weight-bolder">pending</span></div>
+                                </div>
+                            </div>
+                        </ng-container>
                     </div>
-                 </div>
-                 
-
-                    
+                </div>
             </div>
 
 
@@ -83,23 +86,15 @@
                 </ng-template>
             </div>
         </div>
-     
-
-    
-    </div> 
-    
-
-
+    </div>
 
     <div class="col-lg-9">
-        <div  class="card card-custom bgi-no-repeat card-stretch " style="background-position: right top; background-size: 30% auto; background-image: url(assets/media/svg/shapes/abstract-2.svg)">
+        <div class="card card-custom bgi-no-repeat card-stretch "
+            style="background-position: right top; background-size: 30% auto; background-image: url(assets/media/svg/shapes/abstract-2.svg)">
             <div class="row">
-
-                
                 <div class="col-xl-4 col-xs-3">
-                   
-                    <a  class="card card-custom bgi-no-repeat card-stretch gutter-b" style=" background-color: #3B5998 !important;" >
-                     
+                    <a class="card card-custom bgi-no-repeat card-stretch gutter-b"
+                        style=" background-color: #3B5998 !important;">
                         <div class="card-body">
                             <i class="socicon-facebook mr-5 icon-lg text-white"></i>
                             <div class="text-white font-weight-bolder font-size-h5 mb-2 mt-5">Facebook</div>
@@ -122,14 +117,11 @@
                                 </span>
                             </button>
                         </div>
-                       
                     </a>
-                   
                 </div>
                 <div class="col-xl-4 col-xs-3">
-                  
-                    <a class="card card-custom bgi-no-repeat card-stretch gutter-b" style=" background-color: #D62976 !important;">
-                       
+                    <a class="card card-custom bgi-no-repeat card-stretch gutter-b"
+                        style=" background-color: #D62976 !important;">
                         <div class="card-body">
                             <i class="socicon-instagram mr-5 icon-lg text-white"></i>
                             <div class="text-white font-weight-bolder font-size-h5 mb-2 mt-5">Instagram</div>
@@ -152,14 +144,11 @@
                                 </span>
                             </button>
                         </div>
-                      
                     </a>
-                    
                 </div>
                 <div class="col-xl-4 col-xs-3">
-                  
-                    <a class="card card-custom bgi-no-repeat card-stretch gutter-b" [ngStyle]="{'background-color': clubPrimaryColor}">
-                       
+                    <a class="card card-custom bgi-no-repeat card-stretch gutter-b"
+                        [ngStyle]="{'background-color': clubPrimaryColor}">
                         <div class="card-body">
                             <i class="svg-icon menu-icon icon-lg"><span><img class="rounded"
                                 style="height: auto; width: 29px; " [src]="selectedClub.logoURL"></span></i>
@@ -181,55 +170,18 @@
                                 </span>
                             </button>
                         </div>
-                      
                     </a>
-                  
                 </div>
             </div>
-            <div class="card-body" >
-            
-                <div id="chart" >
-                    <apx-chart
-                      [series]="chartOptions.series"
-                      [chart]="chartOptions.chart"
-                      [xaxis]="chartOptions.xaxis"
-                      [stroke]="chartOptions.stroke"
-                      [tooltip]="chartOptions.tooltip"
-                      [dataLabels]="chartOptions.dataLabels"
-                      [legend]="chartOptions.legend"
-                      [markers]="chartOptions.markers"
-                      [grid]="chartOptions.grid"
-                      [yaxis]="chartOptions.yaxis"
-                      [title]="chartOptions.title"
-                    ></apx-chart>
-                  </div>
-                  
-                  
-               
+            <div class="card-body">
+                <div id="chart">
+                    <apx-chart [series]="chartOptions.series" [chart]="chartOptions.chart" [xaxis]="chartOptions.xaxis"
+                        [stroke]="chartOptions.stroke" [tooltip]="chartOptions.tooltip"
+                        [dataLabels]="chartOptions.dataLabels" [legend]="chartOptions.legend"
+                        [markers]="chartOptions.markers" [grid]="chartOptions.grid" [yaxis]="chartOptions.yaxis"
+                        [title]="chartOptions.title"></apx-chart>
+                </div>
             </div>
-           
         </div>
-        <!--end::Card-->
-
-       
-   
-   
-   
-   
     </div>
-    
-  
-    
 </div>
-
-
-
-
-
-
-
-
-
-
-
-   
