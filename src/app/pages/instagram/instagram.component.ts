@@ -260,8 +260,6 @@ export class InstagramComponent implements OnInit {
       this.toast.error('No Item Selected', 'Please select items to post');
       return;
     }
-    //this.toast.warning("You'll be notified when done", "We are finalizing your video.")
-    this.postedSuccessfully()
     this._mediaUploadService.uploadMedia('InstagramTest', '123', this.file).pipe(take(1)).subscribe((media: any) => {
       this.checkedList.forEach(item => {
         this.condition = true;
@@ -282,9 +280,8 @@ export class InstagramComponent implements OnInit {
                   this.postedSuccessfully()
                   this.toast.success('Great! The post has been shared.');
                   this._reportService.createReport(1, data.id, 'Instagram')
-                  this.condition = false;
+                 
                 }, error => {
-                  //this.spinner.hide();
                   this.toast.error(error.message);
                   clearInterval(interval)
                   this._reportService.createReport(0, "", 'Instagram')
@@ -296,9 +293,11 @@ export class InstagramComponent implements OnInit {
                 this.postedSuccessfully()
                 this.toast.error('Error uploding Video', 'Video Format Unsupported')
                 this._reportService.createReport(0, "", 'Instagram');
+               
               }
             }, error => {
               this.spinner.hide();
+              this.condition = false;
               this.toast.error(error.message);
               clearInterval(interval)
             })
@@ -307,6 +306,7 @@ export class InstagramComponent implements OnInit {
         }, (error) => {
           this.spinner.hide();
           this.toast.error(error.message)
+          this.condition = false;
         })
 
       })
@@ -335,7 +335,6 @@ export class InstagramComponent implements OnInit {
     this._mediaUploadService.uploadMedia('Instagram', this.signedInUser.id, this.file).pipe(take(1)).subscribe((media: any) => {
       this.checkedList.forEach((item, idx, self) => {
         this.condition = true;
-      
         this._reportService.createReport(2, "", 'Instagram')
         this._instagramService.createIGMediaContainer(item.instagram_business_account.id, this.instaCaption, item.linkedFbPagetoken, media.url).pipe(take(1)).subscribe((container: any) => {
           this._instagramService.publishContent(item.instagram_business_account.id, container.id, item.linkedFbPagetoken).pipe(take(1)).subscribe((data: any) => {
@@ -344,32 +343,20 @@ export class InstagramComponent implements OnInit {
               this.toast.success('Great! The post has been shared.');
               this.postedSuccessfully();
               this.condition = false;
-      
-
             }
-         
           }, error => {
-            //this.spinner.hide()
-            console.log(error)
             this.toast.error(error.error.error.error_user_msg)
             this._reportService.createReport(0, "", 'Instagram');
             this.condition = false;
-      
           })
         }, error => {
-         
-          //this.spinner.hide()
-          console.log(error)
           this.toast.error(error.error.error.error_user_msg)
           this._reportService.createReport(0, "", 'Instagram');
-
         })
-
       }, error => {
        // this.spinner.hide()
         this.toast.error(error.message)
         this._reportService.createReport(0, "", 'Instagram');
-
       })
     })
   }
@@ -386,19 +373,16 @@ export class InstagramComponent implements OnInit {
   }
 
   postedSuccessfully() {
+    this.condition = false;
     this.spinner.hide();
     this.url = ""
     this.instaCaption = ""
-    // this.file = ""
     this.showSchedule = false;
-   
     this.removeSlectedItems();
-  
     this.cf.detectChanges();
   }
 
   scheduleInstagramImagePost() {
-    ;
     let selectedList = this.checkedList;
     console.log(selectedList)
     if (!this.file) {
@@ -449,7 +433,7 @@ export class InstagramComponent implements OnInit {
   }
 
   onSelectFile(event) {
-    ;
+   
     this.file = event.target.files && event.target.files[0];
     if (this.file) {
       // debugger
