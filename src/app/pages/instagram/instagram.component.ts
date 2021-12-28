@@ -80,7 +80,6 @@ export class InstagramComponent implements OnInit {
 
   ngOnInit() {
     this.facebookProfileImageUrl = JSON.parse(localStorage.getItem('selectedClub'))?.userFacebookProfile?.fbProfileImageUrl
-    this.showSpinner();
     this.getSignedInUser();
     this.getCheckedItemList();
 
@@ -228,13 +227,6 @@ export class InstagramComponent implements OnInit {
       return item.isSelected == true;
     })
     this.getCheckedItemList();
-  }
-
-  showSpinner() {
-    this.spinner.show();
-    setTimeout(() => {
-      this.spinner.hide();
-    }, 1000);
   }
 
   switchTabs(event) {

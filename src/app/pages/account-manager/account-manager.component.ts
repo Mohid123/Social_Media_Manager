@@ -60,7 +60,6 @@ export class AccountManagerComponent implements OnInit {
     this.clubName = this.club.clubName;
     this.clubLogo = this.club.logoURL;
     this.userExisitngFacebookPages = this.club?.FBPages ? this.club?.FBPages : []
-    this.showSpinner();
     this.getSignedInUser();
     this.set_socialFlag_after_getting_club()
   }
@@ -80,13 +79,6 @@ export class AccountManagerComponent implements OnInit {
     this.userFBprofile.fbProfileImageUrl = FBprofile?.fbProfileImageUrl;
     localStorage.setItem('selectedClub', JSON.stringify(this.club));
     this.cf.detectChanges();
-  }
-
-  showSpinner() {
-    this.spinner.show();
-    setTimeout(() => {
-      this.spinner.hide();
-    }, 1000);
   }
 
 
