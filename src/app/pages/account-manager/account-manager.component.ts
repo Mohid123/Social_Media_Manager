@@ -30,6 +30,7 @@ export class AccountManagerComponent implements OnInit {
   public clubName: string = "";
   private connectedIG: boolean = false;
   public clubLogo: string = "";
+  hideBtn: Boolean = false;
   public userFBprofile: FacebookProfileModel
   public userClubProfile: ClubProfileModel
   public club: any
@@ -69,6 +70,7 @@ export class AccountManagerComponent implements OnInit {
     this._facebookService.unLinkFacebookPage(clubId).subscribe();
     this.userFBprofile.fbProfileImageUrl = "";
     this.userFBprofile.fbUserName = "";
+    this.hideBtn = true;
     this._toast.success('Account Successfully Removed', 'UnLink Account')
   }
 
@@ -130,6 +132,7 @@ export class AccountManagerComponent implements OnInit {
       .signIn(FacebookLoginProvider.PROVIDER_ID, fbLoginOptions)
       .then((socialUser) => {
         this._toast.success("Successfully logged into Facebook");
+        this.hideBtn = false;
         this.socialUser = socialUser;
         console.log(this.club.FBuserID = this.socialUser.id);
         this.userFBprofile.fbEmail = this.socialUser.response.email;

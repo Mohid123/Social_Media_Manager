@@ -44,6 +44,10 @@
                     </span>
                     <span class="text-dark-50 font-weight-bolder font-size-base ml-3" style="text-align: -webkit-left;">{{clubName}}</span>
                 </div>
+                <hr>
+                <a (click)="unLinkFacebookAccount($event)" class="btn btn-light-primary">
+                    <i class="flaticon-logout"></i> Facebook Sign Out
+                </a>
             </div>
         </div>
     </div>
@@ -84,7 +88,7 @@
                                             <div class="text-muted mb-2">{{userFBprofile.fbUserName}}</div>
                                             <span class="label label-light-primary label-inline font-weight-bold label-lg">Facebook</span>
                                         </div>
-                                        <a (click)="unLinkFacebookAccount($event)" class="btn btn-light-primary btn-hover-primary font-weight-bold py-3 px-6 mb-2 text-center btn-block ">Sign Out</a>
+                                     
                                     </div>
                                 </div>
                             </div>
