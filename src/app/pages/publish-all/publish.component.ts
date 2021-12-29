@@ -39,7 +39,7 @@ export class PublishComponent implements OnInit {
   private tempList: any = [];
   public validAspectRatios : string[] = ['4:5' , '1:1',  '4898:6123' , '1491:1844' , '499:374' , '5128:3419' , '3:2' , '4159:5200'];
   public inValidImageAspectRatio : boolean  ;
-  private checkedList: any;
+  public checkedList: any;
   public format: string;
   public url: string = 'https://getstackposts.com/inc/themes/backend/default/assets/img/avatar.jpg';
   public facebookProfileUrl: string = 'https://socialapi.solissol.com/api/v1/en/media-upload/mediaFiles/123/test/6ca2499366f5b5611041fe57e2aac1ee9.svg'

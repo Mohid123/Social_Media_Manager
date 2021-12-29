@@ -56,7 +56,6 @@ export class ScheduleClubPostService {
         delete this.post.eventID;
         delete this.post.groupID;
       }
-      this.spinner.show();
       this._postService.hyperLinkScrapper(postedText).subscribe((data) => {
         hyperLinkResponse = data;
 
@@ -95,11 +94,9 @@ export class ScheduleClubPostService {
           this._scheduleService.schduleClubPost(postedTo, this.clubID, this.post).subscribe((post: Post) => {
             if (idx == self.length - 1) {
               this.toast.success(`Post scheduled For ${postedTo}`, "Success");
-              this.spinner.hide();
               resolve('success')
             }
           }, error => {
-            this.spinner.hide();
             this.toast.error(error.message);
             this._reportService.createReport(0, "", postedTo);
           })
@@ -128,7 +125,6 @@ export class ScheduleClubPostService {
         delete this.post.eventID;
         delete this.post.groupID;
       }
-      this.spinner.show();
       this._postService.hyperLinkScrapper(postedText).subscribe((data) => {
         hyperLinkResponse = data;
 
@@ -162,25 +158,17 @@ export class ScheduleClubPostService {
             else if (element.hasOwnProperty('eventName')) {
               this.post.eventID = element.id;
               this.post.title = element.eventName
-
             }
             else {
               this.post.title = this.clubName
             }
-            // this._reportService.createReport(2, "", postedTo);
             this._scheduleService.schduleClubPost(postedTo, this.clubID, this.post).subscribe((post: Post) => {
-              // console.log(this.post)
-              // this._reportService.createReport(1, post.id, postedTo);
               if (idx == self.length - 1) {
                 this.toast.success(`Post scheduled For ${postedTo}`, "Success");
-
-                this.spinner.hide();
                 resolve('success');
               }
             }, error => {
-              this.spinner.hide();
               this.toast.error(error.message);
-              // this._reportService.createReport(0, "", postedTo);
             })
           });
         })
@@ -218,7 +206,6 @@ export class ScheduleClubPostService {
         delete this.post.eventID;
         delete this.post.groupID;
       }
-      this.spinner.show();
       this._postService.hyperLinkScrapper(postedText).subscribe((data) => {
         hyperLinkResponse = data;
         if (
@@ -277,18 +264,13 @@ export class ScheduleClubPostService {
                   else {
                     this.post.title = this.clubName
                   }
-                  // this._reportService.createReport(2, "", postedTo);
                   this._scheduleService.schduleClubPost(postedTo, this.clubID, this.post).subscribe((post: any) => {
-                    // console.log(post, 'scjhe')
-                    // this._reportService.createReport(1, post.id, postedTo);
                     if (idx == self.length - 1) {
-                      this.spinner.hide();
                       this.toast.success(`Post scheduled For ${postedTo}`, "Success");
                       resolve('success')
                     }
                   },
                     (error) => {
-                      this.spinner.hide();
                       this.toast.error(error.message);
                       this._reportService.createReport(0, "", postedTo);
                     }

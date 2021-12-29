@@ -9,6 +9,7 @@ import { environment } from 'src/environments/environment';
 import { MediauploadService } from './../mediaupload.service';
 import { VideoProcessingService } from '../video-service/video-processing.service';
 import { Media } from '../../models/media-model';
+import { locale } from './../../../modules/i18n/vocabs/jp';
 @Injectable({
   providedIn: 'root'
 })
@@ -108,7 +109,6 @@ export class ClubpostService {
       delete this.post.eventID;
       delete this.post.groupID;
     }
-    //this.spinner.show();
     this._postService.hyperLinkScrapper(postedText).subscribe(async (data) => {
       hyperLinkResponse = data;
 
@@ -125,7 +125,7 @@ export class ClubpostService {
       if (hyperLinkResponse.length > 0 && hyperLinkResponse[0].hasOwnProperty("image")) {
         this.post.captureFileURL = hyperLinkResponse[0].image;
       }
-        this._mediaUploadService.uploadClubMedia(postedTo, userID, MediaFiles).subscribe((media: any) => {
+      this._mediaUploadService.uploadClubMedia(postedTo, userID, MediaFiles).subscribe((media: any) => {
           this.post.captureFileURL = media.url
           this.post.path = media.path;
           
@@ -148,17 +148,14 @@ export class ClubpostService {
             }
             this._reportService.createReport(2, "", postedTo);
             this._postService.createClubPost(postedTo, this.post).subscribe((post: Post) => {
-              // console.log(this.post)
               this._reportService.createReport(1, post.id, postedTo);
               if (idx == self.length - 1) {
                 this.toast.success(`Great! The post has been shared to ${postedTo}.`)
                 this.condition = false;
-                //this.spinner.hide();
                 resolve('success');
               }
             }, error => {
               this.condition = false;
-              //this.spinner.hide();
               this.toast.error(error.message);
               this._reportService.createReport(0, "", postedTo);
             })
@@ -190,7 +187,6 @@ export class ClubpostService {
       delete this.post.eventID;
       delete this.post.groupID;
     }
-    //this.spinner.show();
     this._postService.hyperLinkScrapper(postedText).subscribe((data) => {
       hyperLinkResponse = data;
       if (
@@ -245,13 +241,11 @@ export class ClubpostService {
                     this._reportService.createReport(1, post.id, postedTo);
                     if (idx == self.length - 1) {
                       this.condition = false;
-                      //this.spinner.hide();
                       this.toast.success(`Great! The post has been shared to ${postedTo}.`);
                       resolve('success')
                     }},
                   (error) => {
                     this.condition = false;
-                    //this.spinner.hide();
                     this.toast.error(error.message);
                     this._reportService.createReport(0, "", postedTo);
                   }

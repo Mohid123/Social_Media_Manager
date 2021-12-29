@@ -66,7 +66,7 @@ export class TeamtalkersComponent implements OnInit {
   public masterSelected: boolean;
   public groupSelected: boolean = false;
   public eventSelected: boolean = false;
-  private checkedList: any;
+  public checkedList: any;
   public recentClubPosts: Post[] = [];
   playingVideo: string;
   imageModal: string;
@@ -117,7 +117,6 @@ export class TeamtalkersComponent implements OnInit {
   }
 
   ngOnInit() {
-    //this.showSpinner();
     this.getSignedInUser();
     this.initializeChecklist();
     this.getCheckedItemList();
@@ -417,64 +416,25 @@ export class TeamtalkersComponent implements OnInit {
   }
 
   onSelectFile(event) {
-    this.file = event.target.files && event.target.files.length;
-    if (this.mergeService.gen4 == true) {
-      //Multiple Images for gen4 = true
-      if (this.file > 0 && this.file < 5) {
-        let i: number = 0;
-        for (const singlefile of event.target.files) {
-          var reader = new FileReader();
-          reader.readAsDataURL(singlefile);
-          this.urls.push(singlefile);
-          this.cf.detectChanges();
-          i++;
-          reader.onload = (event) => {
-            const url = this.sanitizer.bypassSecurityTrustUrl((<FileReader>event.target).result as string);
-            this.multiples.push(url);
-            this.cf.detectChanges();
-            // If multple events are fired by user
-            if (this.multiples.length > 4) {
-              // If multple events are fired by user
-              this.multiples.pop();
-              this.urls.pop();
-              this.cf.detectChanges();
-              this.toast.error(
-                "Max Number of Selected Files reached",
-                "Upload Images"
-              );
-            }
-          };
-        }
-      } else {
-        this.toast.error("No More than 4 images", "Upload Images");
+    debugger
+    this.file = event.target.files && event.target.files[0];
+    if (this.file) {
+      var reader = new FileReader();
+      reader.readAsDataURL(this.file);
+      if (this.file.type.indexOf('image') > -1) {
+        this.format = 'image';
       }
-    } else {
-      //Single Image for gen4 = false
-      if (this.file == 1) {
-        for (const singlefile of event.target.files) {
-          var reader = new FileReader();
-          reader.readAsDataURL(singlefile);
-          this.urls.push(singlefile);
-          this.cf.detectChanges();
-          reader.onload = (event) => {
-            const url = this.sanitizer.bypassSecurityTrustUrl((<FileReader>event.target).result as string);
-            this.multiples.push(url);
-            this.cf.detectChanges();
-            if (this.multiples.length > 1) {
-              this.multiples.pop();
-              this.urls.pop();
-              this.cf.detectChanges();
-              this.toast.error("Only one Image is allowed", "Upload Images");
-            }
-          };
-        }
-      } else {
-        this.toast.error("Please Select One Image to Upload", "Upload Image");
+      reader.onload = (event) => {
+        this.url = (<FileReader>event.target).result as string;
+        this.cf.detectChanges();
       }
+      event.target.value = '';
+
     }
   }
 
   onSelectVideo(event) {
+    debugger
     let fileSize;
     this.file = event.target.files && event.target.files[0];
     fileSize = (this.file.size / (1024 * 1024)).toFixed(2) + "MB";
@@ -497,15 +457,6 @@ export class TeamtalkersComponent implements OnInit {
     var elem = document.getElementById("dt");
     alert(elem);
   }
-
-  dateEvent(event) {}
-
-  // showSpinner() {
-  //   this.spinner.show();
-  //   setTimeout(() => {
-  //     this.spinner.hide();
-  //   }, 1000);
-  // }
 
   getSignedInUser() {
     this._authService.getSignedInUser().subscribe((user) => {

@@ -180,7 +180,7 @@
             </ng-template>
             <div class="card-body">
               <div class="tab-content">
-                <div class="tab-pane fade show active" role="tabpanel" aria-labelledby="kt_tab_pane_7_1">
+                <div class="tab-pane fade show active" role="tabpanel">
                   <div class="card-body">
                     <form class="form-inline">
                       <div class="pb-5 mr-5 symbol symbol-50 symbol-light">
@@ -268,7 +268,7 @@
                             </button>
                           </div>
                           <div class="p-2 ml-auto">
-                            <button [disabled]="!file || clicked "
+                            <button [disabled]="!file || checkedList.length == 0 || clicked "
                               [ngClass]="_genericPostService.condition == true ? 'spinner spinner-white spinner-right' : '' "
                               (click)="addImagePost(); clicked = true;" type="button"
                               class="flex-row-reverse btn btn-primary" style="
@@ -301,10 +301,7 @@
                           </div>
                         </div>
                       </div>
-                     
-
-                      <div
-                        *ngIf="showSchedule"
+                      <div *ngIf="showSchedule"
                         class="
                           ql-toolbar
                           align-items-center
@@ -338,37 +335,6 @@
                               justify-content-between">
                             <div class="d-flex" *ngIf="showDiv.photo">
                               <div class="p-2">
-                                <div class="p-2">
-                                  <div class="image-upload">
-                                    <label for="file-input">
-                                      <div class="
-                                          w-auto
-                                          px-2
-                                          mr-5
-                                          btn btn-icon btn-light btn-clean
-                                          d-inline-flex
-                                          align-items-center
-                                          btn-lg">
-                                        <span class="symbol
-                                            symbol-35
-                                            symbol-light-primary">
-                                          <span class="symbol-label"><a class="btn btn-icon btn-sm">
-                                              <i class="fas fa-upload icon-lg" style="cursor: pointer"></i> </a></span>
-                                        </span>
-                                        <span class="btn
-                                            text-dark-50
-                                            font-weight-normal font-size-base">
-                                          &nbsp;Select image</span>
-                                      </div>
-                                    </label>
-                                    <input id="file-input" type="file" accept="image/*" name="myfile"
-                                      ng-click="onSelectFile($event)" />
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                            <div class="d-flex" *ngIf="showDiv.video">
-                              <div class="p-2">
                                 <div class="image-upload">
                                   <label for="file-input">
                                     <div class="
@@ -379,24 +345,24 @@
                                         d-inline-flex
                                         align-items-center
                                         btn-lg">
-                                      <span class="
-                                          symbol
+                                      <span class="symbol
                                           symbol-35
                                           symbol-light-primary">
                                         <span class="symbol-label"><a class="btn btn-icon btn-sm">
-                                            <i class="fas fa-video icon-lg" style="cursor: pointer"></i> </a></span>
+                                            <i class="fas fa-upload icon-lg" style="cursor: pointer"></i> </a></span>
                                       </span>
                                       <span class="btn
                                           text-dark-50
                                           font-weight-normal font-size-base">
-                                        &nbsp;select video</span>
+                                        &nbsp;Select image</span>
                                     </div>
                                   </label>
-                                  <input id="file-input" type="file" accept="video/*" name="myfile"
-                                    (change)="onSelectVideo($event)" />
+                                  <input id="file-input" type="file" accept="image/*" name="myfile"
+                                    (change)="onSelectFile($event)" />
                                 </div>
                               </div>
                             </div>
+                         
                             <div class="d-flex">
                               <div class="p-2 ml-auto">
                                 <button (click)="resetPost()" type="button" class="btn btn-transparent-warning">
@@ -404,7 +370,7 @@
                                 </button>
                               </div>
                               <div class="p-2 ml-auto">
-                                <button (click)="scheduleImagePost('image')" type="button"
+                                <button (click)="scheduleImagePost('image'); clicked = true;" type="button" [disabled]="!file || checkedList.length == 0 || clicked "
                                   class="flex-row-reverse btn btn-primary" style="
                                     background-color: #3b5998;
                                     border-color: #3b5998;">
@@ -521,7 +487,7 @@
                             </button>
                           </div>
                           <div class="p-2 ml-auto">
-                            <button [disabled]="!file || clicked"
+                            <button [disabled]="!file || checkedList.length == 0 || clicked"
                               [ngClass]="_genericPostService.condition == true ? 'spinner spinner-white spinner-right' : '' "
                               (click)="addVideoPost(); clicked = true" type="button"
                               class="flex-row-reverse btn btn-primary" style="
@@ -628,7 +594,7 @@
                                 </button>
                               </div>
                               <div class="p-2 ml-auto">
-                                <button (click)="scheduleVideoPost('video')" type="button"
+                                <button (click)="scheduleVideoPost('video'); clicked = true;" type="button" [disabled]="!file || checkedList.length == 0 || clicked "
                                   class="flex-row-reverse btn btn-primary" style="
                                     background-color: #3b5998;
                                     border-color: #3b5998;">
@@ -1321,7 +1287,8 @@
           <mat-tab #tab1>
             <ng-template mat-tab-label>
               <mat-icon><img class="rounded" style="height: auto; width: 32px; margin-left: -4px" [src]="clubLogo"
-                  alt="" /></mat-icon>
+                  alt="" />
+              </mat-icon>
             </ng-template>
             <div class="card card-custom gutter-b">
               <div class="preview-facebook">
@@ -1341,23 +1308,15 @@
                           <span>Just now</span>
                         </div>
                       </div>
-                      <div class="preview-media" data-max-image="4" style="
-                          margin-top: 20px;
-                          width: auto;
-                          height: auto;
-                          display: flex;
-                          flex-wrap: wrap;
-                          object-fit: cover;">
-                        <ng-container *ngFor="let multiple of multiples">
-                          <img [src]="multiple" style="
-                              flex-grow: 1;
-                              flex-direction: row;
-                              flex-wrap: wrap;
-                              width: 50%;
-                              height: auto;
-                              object-fit: cover;
-                            " />
-                        </ng-container>
+                      <div class="preview-media" data-max-image="5" style="margin-top: -20px">
+                        <img [src]="url" *ngIf="format==='image' && url" style="
+                        margin-right: auto;
+                        margin-left: auto;
+                        height: 100%;
+                        width: 100%;
+                        object-fit: contain;
+                        display: block;"
+                      >
                       </div>
                       <div class="caption" style="white-space: pre-wrap; text-align: justify">
                         <div>{{ teamtalkerCaption }}</div>
@@ -1402,6 +1361,8 @@
                         </div>
                       </div>
                     </div>
+
+                    <!--video preview-->
                     <div class="preview-facebook preview-facebook-media
                         item-post-type" data-type="video" *ngIf="showDiv.video">
                       <div class="user-info" style="z-index: 1">
@@ -1423,7 +1384,8 @@
                             height: 100%;
                             width: 100%;
                             object-position: contain;
-                            display: block;" controls disablepictureinpicture controlsList="nodownload"></video>
+                            display: block;" controls disablepictureinpicture controlsList="nodownload">
+                        </video>
                       </div>
                       <div class="caption" style="white-space: pre-wrap; text-align: justify">
                         <div>{{ teamtalkerCaption }}</div>
@@ -1469,6 +1431,8 @@
                         </div>
                       </div>
                     </div>
+
+                    <!--text preview-->
                     <div class="preview-facebook preview-facebook-text
                         item-post-type" data-type="text" *ngIf="showDiv.text">
                       <div class="user-info">
@@ -1525,6 +1489,7 @@
                       </div>
                     </div>
 
+                    <!--poll preview-->
                     <div class="
                         preview-facebook preview-facebook-text
                         item-post-type

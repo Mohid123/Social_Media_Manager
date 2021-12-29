@@ -133,12 +133,13 @@ export class FacebookComponent implements OnInit {
   }
 
   postedSuccessfully() {
-    this.spinner.hide();
     this.url = ""
     this.facebookCaption = ""
     this.file = ""
+    this.clicked = false;
     this.showSchedule = false;
     this.removeSlectedItems();
+    this.condition = false;
     this.cf.detectChanges();
   }
 
@@ -272,9 +273,8 @@ export class FacebookComponent implements OnInit {
           // console.log(FbPost, 'post')
           this._reportService.createReport(1, FbPost.id, 'Facebook')
           if (index == array.length - 1) {
-            this.toast.success('Great! The post has been shared.')
             this.postedSuccessfully();
-            this.condition = false;
+            this.toast.success('Great! The post has been shared.')
           }
         }, error => {
          // this.spinner.hide();
