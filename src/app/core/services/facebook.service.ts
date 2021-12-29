@@ -43,7 +43,7 @@ export class FacebookService {
     return this.http.get(`${constants.base_url}${pageId}/published_posts?access_token=${fbPageAccessToken}`).pipe(catchError(this._errorHandlerService.handleErrors));
   }
 
-  unLinkFacebookPage(clubId) {
+  unLinkFacebookPage(clubId): Observable<string | Object> {
     return this.http.get(`${constants.api_url}/club/unlinkFacebookPage/${clubId}`).pipe(catchError(this._errorHandlerService.handleErrors));
   }
 
