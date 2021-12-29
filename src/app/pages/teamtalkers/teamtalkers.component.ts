@@ -416,7 +416,6 @@ export class TeamtalkersComponent implements OnInit {
   }
 
   onSelectFile(event) {
-    debugger
     this.file = event.target.files && event.target.files[0];
     if (this.file) {
       var reader = new FileReader();
@@ -434,7 +433,6 @@ export class TeamtalkersComponent implements OnInit {
   }
 
   onSelectVideo(event) {
-    debugger
     let fileSize;
     this.file = event.target.files && event.target.files[0];
     fileSize = (this.file.size / (1024 * 1024)).toFixed(2) + "MB";
@@ -521,7 +519,7 @@ export class TeamtalkersComponent implements OnInit {
     let events = [];
     let club = [];
 
-    if (!this.urls) {
+    if (!this.file) {
       this.toast.error("Please Select Image File to post", "No File Selected");
       return;
     } else if (this.checkedList.length == 0) {
@@ -550,7 +548,7 @@ export class TeamtalkersComponent implements OnInit {
           this.teamtalkerCaption,
           "Club",
           this.signedInUser.id,
-          this.urls,
+          this.file,
           club
         )
         .then((success) => {

@@ -261,23 +261,18 @@ export class FacebookComponent implements OnInit {
       this.toast.error('No Page Selected', 'Please select Facebook Pages to post');
       return;
     }
-    //this.spinner.show()
     this._mediaUploadService.uploadMedia('Facebook', this.signedInUser.id, this.file).subscribe((media: any) => {
       
       this.checkedList.forEach((item, index, array) => {
         this.condition = true;
-      
-        // console.log(item)
         this._reportService.createReport(2, "", 'Facebook')
         this._facebookService.addImagePostToFB(item.pageID, media.url, this.facebookCaption, item.pageAccessToken).subscribe(FbPost => {
-          // console.log(FbPost, 'post')
           this._reportService.createReport(1, FbPost.id, 'Facebook')
           if (index == array.length - 1) {
             this.postedSuccessfully();
             this.toast.success('Great! The post has been shared.')
           }
         }, error => {
-         // this.spinner.hide();
           this.toast.error(error.message)
           console.log(error)
           this._reportService.createReport(0, "", 'Facebook')
@@ -286,12 +281,10 @@ export class FacebookComponent implements OnInit {
         })
 
       }, (error) => {
-        //this.spinner.hide();
         this.toast.error(error.message)
         this._reportService.createReport(0, "", 'Facebook')
       })
     }, (err) => {
-      //this.spinner.hide();
       this.toast.error(err.message)
     })
   }
