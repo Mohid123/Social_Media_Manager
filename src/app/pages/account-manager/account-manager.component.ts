@@ -66,8 +66,10 @@ export class AccountManagerComponent implements OnInit {
 
   unLinkFacebookAccount(clubId: string) {
     clubId = this.selectedClub.id;
-    debugger
-    this._facebookService.unLinkFacebookPage(clubId);
+    this._facebookService.unLinkFacebookPage(clubId).subscribe();
+    this.userFBprofile.fbProfileImageUrl = "";
+    this.userFBprofile.fbUserName = "";
+    this._toast.success('Account Successfully Removed', 'UnLink Account')
   }
 
   getSignedInUser() {
