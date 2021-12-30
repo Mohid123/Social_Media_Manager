@@ -244,7 +244,7 @@ export class PublishComponent implements OnInit {
     this.igProfilesSelected = false;
     this.groupSelected = false;
     this.eventSelected = false;
-    this.checkedList = []
+    this.checkedList = [];
   }
 
   singleItemSelected() {
@@ -309,83 +309,21 @@ export class PublishComponent implements OnInit {
   }
 
   onSelectFile(event) {
-    this.file = event.target.files && event.target.files.length;
-    if (this.mergeService.gen4 == true) {
-      //Multiple Images for gen4 = true
-      if (this.file > 0 && this.file < 5) {
-        let i: number = 0;
-        for (const singlefile of event.target.files) {
-          var reader = new FileReader();
-          reader.readAsDataURL(singlefile);
-          this.urls.push(singlefile);
-          this.cf.detectChanges();
-          i++;
-          reader.onload = (event) => {
-            const url = this.sanitizer.bypassSecurityTrustUrl((<FileReader>event.target).result as string);
-            this.multiples.push(url);
-            this.cf.detectChanges();
-            if (this.multiples.length > 4) {
-              // If multple events are fired by user
-              this.multiples.pop();
-              this.urls.pop();
-              this.cf.detectChanges();
-              this.toast.error(
-                "Max Number of Selected Files reached",
-                "Upload Images"
-              );
-            }
-          };
-        }
-      } else {
-        this.toast.error("No More than 4 images", "Upload Images");
+    this.file = event.target.files && event.target.files[0];
+    if (this.file) {
+      var reader = new FileReader();
+      reader.readAsDataURL(this.file);
+      if (this.file.type.indexOf('image') > -1) {
+        this.format = 'image';
       }
-    } else {
-      //Single Image for gen4 = false
-      if (this.file < 2 && this.file > 0) {
-        for (const singlefile of event.target.files) {
-          var reader = new FileReader();
-          reader.readAsDataURL(singlefile);
-          this.urls.push(singlefile);
-          this.cf.detectChanges();
-          reader.onload = (event) => {
-            const url = this.sanitizer.bypassSecurityTrustUrl((<FileReader>event.target).result as string);
-            this.multiples.push(url);
-            this.cf.detectChanges();
-            if (this.multiples.length > 1) {
-              this.multiples.pop();
-              this.urls.pop();
-              this.cf.detectChanges();
-              this.toast.error("Only one Image is allowed", "Upload Images");
-            }
-          };
-        }
-      } else {
-        this.toast.error("Please Select One Image to Upload", "Upload Image");
+      reader.onload = (event) => {
+        this.url = (<FileReader>event.target).result as string;
+        this.cf.detectChanges();
       }
+      event.target.value = '';
+
     }
   }
-
-  // onSelectVideo(event) {
-  //   let fileSize;
-  //   this.file = event.target.files && event.target.files[0];
-  //   fileSize = (this.file.size / (1024 * 1024)).toFixed(2) + "MB";
-  //   this.file.fileSize = fileSize;
-  //   // console.log(this.file)
-  //   if (this.file) {
-  //     var reader = new FileReader();
-  //     reader.readAsDataURL(this.file);
-  //     if (this.file.type.indexOf("video") > -1) {
-  //       this.format = "video";
-  //     }
-  //     reader.onload = (event) => {
-  //       this.url = (<FileReader>event.target).result as string;
-  //       console.log(this.url);
-  //       this.cf.detectChanges();
-  //     };
-  //     event.target.value = "";
-  //   }
-  // }
-
 
   onSelectVideo(event): void {
     this.file = event.target.files && event.target.files[0];
@@ -442,7 +380,7 @@ export class PublishComponent implements OnInit {
     let selectedClubEvents = []
     let selectedClub: any[] = [];
 
-    if (!this.urls) {
+    if (!this.file) {
       this.toast.error('Please select an Image File', 'Empty File');
       return;
     }
@@ -475,8 +413,7 @@ export class PublishComponent implements OnInit {
     }
 
     if (selectedFacebookPages.length > 0) {
-      //this.spinner.show();
-      this._mediaUploadService.uploadMedia('Facebook', this.signedInUser.id, this.urls).subscribe((media: any) => {
+      this._mediaUploadService.uploadMedia('Facebook', this.signedInUser.id, this.file).subscribe((media: any) => {
         selectedFacebookPages.forEach((item, index, array) => {
           this._reportService.createReport(2, '', 'Facebook')
           this._facebookService.addImagePostToFB(item.pageID, media.url, this.socialCaption, item.pageAccessToken).subscribe((FbPost: any) => {
@@ -487,7 +424,6 @@ export class PublishComponent implements OnInit {
               this.postedSuccessfully()
             }
           }, (error) => {
-            //this.spinner.hide();
             this.toast.error(error.message);
             this._reportService.createReport(0, '', 'Facebook')
           })
@@ -498,8 +434,7 @@ export class PublishComponent implements OnInit {
 
     if (selctedInstagramPages.length > 0) {
 
-     // this.spinner.show();
-      this._mediaUploadService.uploadMedia('Instagram', this.signedInUser.id, this.urls).subscribe((media: any) => {
+      this._mediaUploadService.uploadMedia('Instagram', this.signedInUser.id, this.file).subscribe((media: any) => {
         selctedInstagramPages.forEach((item, index, array) => {
           this._reportService.createReport(2, '', 'Instagram')
           this._instagramService.createIGMediaContainer(item.instagram_business_account.id, this.socialCaption, item.linkedFbPagetoken, media.url).subscribe((container: any) => {
@@ -522,19 +457,19 @@ export class PublishComponent implements OnInit {
       })
     }
     if (selectedClub.length > 0) {
-      this._genericPostService.createImagePost(this.socialCaption, 'Club', this.signedInUser.id, this.urls, selectedClub).then(success => {
+      this._genericPostService.createImagePost(this.socialCaption, 'Club', this.signedInUser.id, this.file, selectedClub).then(success => {
         this.clear()
       })
     }
 
     if (selectedClubGroups.length > 0) {
-      this._genericPostService.createImagePost(this.socialCaption, 'Group', this.signedInUser.id, this.urls, selectedClubGroups).then(success => {
+      this._genericPostService.createImagePost(this.socialCaption, 'Group', this.signedInUser.id, this.file, selectedClubGroups).then(success => {
         this.clear()
       });
     }
 
     if (selectedClubEvents.length > 0) {
-      this._genericPostService.createImagePost(this.socialCaption, 'Event', this.signedInUser.id, this.urls, selectedClubEvents).then(success => {
+      this._genericPostService.createImagePost(this.socialCaption, 'Event', this.signedInUser.id, this.file, selectedClubEvents).then(success => {
         this.clear()
       });
     }

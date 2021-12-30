@@ -559,16 +559,15 @@
                                                 </div>
                                             </div>
                                             <div class="preview-media" data-max-image="5" style="margin-top: -20px">
-                                                <ng-container *ngFor="let multiple of multiples">
-                                                    <img logo #logo (load)="onSelectedImageLoad()" [src]="multiple"
-                                                        style="object-fit: contain;
-                                                    margin-right: auto;
-                                                    margin-left: auto;
-                                                    height: 100%;
-                                                    width: 100%;
-                                                    display: block;">
-                                                </ng-container>
-                                            </div>
+                                                <img [src]="url" *ngIf="format==='image' && url" style="
+                                                margin-right: auto;
+                                                margin-left: auto;
+                                                height: 100%;
+                                                width: 100%;
+                                                object-fit: contain;
+                                                display: block;"
+                                              >
+                                              </div>
 
                                             <div class="caption-tt" style="white-space: pre-wrap; text-align: justify;">
                                                 <div>{{socialCaption}}</div>
