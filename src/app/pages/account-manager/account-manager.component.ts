@@ -31,6 +31,7 @@ export class AccountManagerComponent implements OnInit {
   private connectedIG: boolean = false;
   public clubLogo: string = "";
   hideBtn: Boolean = false;
+  clubId: string;
   public userFBprofile: FacebookProfileModel
   public userClubProfile: ClubProfileModel
   public club: any
@@ -70,7 +71,13 @@ export class AccountManagerComponent implements OnInit {
     this._facebookService.unLinkFacebookPage(clubId).subscribe();
     this.userFBprofile.fbProfileImageUrl = "";
     this.userFBprofile.fbUserName = "";
-    this.hideBtn = true;
+
+    this.club.userFacebookProfile = {
+      fbUserName:"",
+      fbProfileImageUrl:"",
+    }
+
+    localStorage.setItem('selectedClub', JSON.stringify(this.club));
     this._toast.success('Account Successfully Removed', 'UnLink Account')
   }
 
@@ -132,7 +139,6 @@ export class AccountManagerComponent implements OnInit {
       .signIn(FacebookLoginProvider.PROVIDER_ID, fbLoginOptions)
       .then((socialUser) => {
         this._toast.success("Successfully logged into Facebook");
-        this.hideBtn = false;
         this.socialUser = socialUser;
         console.log(this.club.FBuserID = this.socialUser.id);
         this.userFBprofile.fbEmail = this.socialUser.response.email;
@@ -195,7 +201,6 @@ export class AccountManagerComponent implements OnInit {
       return;
     }
     this._clubService.updateClub(club).subscribe(data => {
-      debugger
     })
   }
 
@@ -203,15 +208,6 @@ export class AccountManagerComponent implements OnInit {
     this.selectedClub = JSON.parse(localStorage.getItem('selectedClub')) as Club;
     this.selectedClub.clubName == "Solis Solution" && this.selectedClub.id == "60db0c52723416289b31f1d9" ? this.socialFlag = true : this.socialFlag = false;
   }
-
-
-  // setClubprofile(email, userName, profileImageUrl) {
-
-  //   this.userClubProfile.clubEmail = email,
-  //     this.userClubProfile.clubUsername = userName;
-  //   this.userClubProfile.clubProfileImageURL = profileImageUrl;
-  //   this.cf.detectChanges()
-  // }
 
   getLongLivedFBUserToken(userToken): Observable<any> {
     return this._facebookService.getLongLivedFBAccessToken(userToken);

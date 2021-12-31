@@ -298,7 +298,6 @@ export class FacebookComponent implements OnInit {
       this.toast.error('No Page Selected', 'Please select Facebook Pages to post');
       return;
     }
-    //this.spinner.show()
     this._mediaUploadService.uploadMedia('Facebook', this.signedInUser.id, this.file).subscribe((media: any) => {
       this.checkedList.forEach((item, index, array) => {
         this.condition = true;
@@ -315,14 +314,12 @@ export class FacebookComponent implements OnInit {
         })
 
       }, (err) => {
-        //this.spinner.hide()
         this.toast.error(err.message);
         this._reportService.createReport(0, "", 'Facebook')
         this.condition = false;
       
       })
     }, (err) => {
-      //this.spinner.hide()
       this.toast.error(err.message);
     })
   }
@@ -347,6 +344,7 @@ export class FacebookComponent implements OnInit {
         if (index == array.length - 1) {
           this.toast.success('Great! The post has been shared.');
           this.postedSuccessfully();
+          this.spinner.hide();
         }
       }, error => {
         this.spinner.hide();

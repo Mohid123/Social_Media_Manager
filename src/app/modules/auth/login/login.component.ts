@@ -119,7 +119,6 @@ export class LoginComponent implements OnInit {
 
 
   loginByEmail() {
-    debugger
     var self = this;
     if (!this.selectedClub) {
       this.toastr.error('Please Select Club', 'Empty Club')
@@ -240,7 +239,6 @@ export class LoginComponent implements OnInit {
     if(this.isPickerClub){
       this.showBackBtn=true;
       if (this.searchString.trim().length == 0 || this.searchString == "") {
-        debugger
         // this.searchString == "";
 
         this.noClubFound = false;
@@ -268,7 +266,6 @@ export class LoginComponent implements OnInit {
       this.showBackBtn=false;
       // debugger
       if (this.searchString.trim().length == 0 || this.searchString == "") {
-        debugger
         // this.searchString == "";
 
         this.noClubFound = false;
@@ -278,7 +275,6 @@ export class LoginComponent implements OnInit {
       }
       else {
         this._clubService.searchClubByName(this.searchString, this.offset, this.limit).subscribe((searchedClubs: any) => {
-          debugger
           if (searchedClubs.length == 0 && this.searchString.trim().length !== 0) {
             this.noClubFound = true;
             this.allClubs = searchedClubs;
@@ -318,7 +314,6 @@ export class LoginComponent implements OnInit {
 
 
   onClubSelected(club) {
-    debugger
     if (!club.isPicker) {
       this.isPickerClub = false
       this.modalService.dismissAll()
@@ -350,7 +345,6 @@ export class LoginComponent implements OnInit {
     }
   }
   getDividisClubs(offset, limit) {
-    debugger
     offset = this.offset;
     limit = this.limit
     this._clubService.getDividisClubs(offset, limit).pipe(take(1)).subscribe((dividisClubs: any) => {
