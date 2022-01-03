@@ -138,7 +138,6 @@ export class LoginComponent implements OnInit {
 
     this.spinner.show();
     this._authService.loginByEmail(payload).subscribe(user => {
-      // console.log(user , 'Logged In User')
       if (user.newUser) {
         localStorage.setItem('newUser', 'true');
       }
@@ -171,10 +170,6 @@ export class LoginComponent implements OnInit {
     })
   }
 
-  updateLoggedInUser(email, username, profileImageUrl) {
-
-  }
-
 
   getAllClubs(offset, limit) {
     this._clubService.getAllClubs(offset, limit).subscribe(clubs => {
@@ -194,52 +189,11 @@ export class LoginComponent implements OnInit {
     this.allClubs = this.tempClubs;
 
   }
-   // search() {
-  //   debugger
-  //   if(this.searchString.trim().length == 0) {
-  //     this.searchString = "";
-  //     this.allClubs = this.tempClubs;
-  //     this.noClubFound = false;
-  //     return
-  //   }
-  //   else {
-  //     this._clubService.searchClubByName(this.searchString, this.limit, this.offset)
-  //     .subscribe((searchedClubs: any)=> {
-  //       if(searchedClubs.length == 0) {
-  //         console.log(searchedClubs, 'l=0')
-  //         this.noClubFound = true;
-  //         this.allClubs = searchedClubs;
-  //         return
-  //       }
-  //       else if(searchedClubs.length>0) {
-  //         console.log(searchedClubs, this. searchString, 'l>0')
-  //         this.allClubs = searchedClubs;
-  //         this.noClubFound = false
-  //         this.cf.detectChanges()
-  //       }
-  //     })
-  //   }
-  // }
 
   searchClub() {
-    // this.searchString = ''
-    
-    // this.searchString = event;
-    // console.log(event)
-    // debugger
-    // this.searchString = event
-    // console.log(this.searchString)
-    // this._clubService.searchClubByName(event, 0, 50).subscribe((data: any) => {
-    //   console.log(data)
-    //   this.allClubs = data
-    // }, err => {
-    //   console.log(err, 'err_message')
-    // })
-    // debugger
     if(this.isPickerClub){
       this.showBackBtn=true;
       if (this.searchString.trim().length == 0 || this.searchString == "") {
-        // this.searchString == "";
 
         this.noClubFound = false;
         this.getDividisClubs(this.offset, this.limit);
@@ -248,7 +202,6 @@ export class LoginComponent implements OnInit {
       }
       else {
         this._clubService.searchClubByNameForPicker(this.searchString, this.offset, this.limit).subscribe((searchedClubs: any) => {
-          debugger
           if (searchedClubs.length == 0) {
             this.noClubFound = true;
             this.allClubs = searchedClubs;
@@ -264,9 +217,7 @@ export class LoginComponent implements OnInit {
     }
      else  {
       this.showBackBtn=false;
-      // debugger
       if (this.searchString.trim().length == 0 || this.searchString == "") {
-        // this.searchString == "";
 
         this.noClubFound = false;
         this.getAllClubs(this.offset, this.limit);
@@ -288,16 +239,6 @@ export class LoginComponent implements OnInit {
         })
       }
     }
-
-
-    // if (this.searchString) {
-    //   this.allClubs = this.tempClubs.filter(i => i.clubName.toLowerCase().includes(this.searchString.toLowerCase()));
-    //   this.allClubs.length > 0 ? this.noClubFound = false : this.noClubFound = true;
-    // }
-    // else if (this.searchString == "") {
-    //   this.allClubs = this.tempClubs;
-    //   this.noClubFound = false;
-    // }
   }
 
   setDefaultClub() {
@@ -333,7 +274,6 @@ export class LoginComponent implements OnInit {
 
 
   loadMoreClubs() {
-    // debugger
     let findSolisClub = this.allClubs.find((item:any)=>item.clubName == "TeamTalkers" && item.id == "614ac4ceb71e7462a965288e" );
     if(findSolisClub){
       return
