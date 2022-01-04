@@ -166,6 +166,7 @@ export class AccountManagerComponent implements OnInit {
               this.findUniqueObjects(this.userExisitngFacebookPages, newFBpages)
               this.updateUserClub(this.club);
               this.setFbProfile();
+              this.cf.detectChanges();
             });
           }
         );

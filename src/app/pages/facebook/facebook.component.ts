@@ -335,7 +335,7 @@ export class FacebookComponent implements OnInit {
       this.toast.error('No Page Selected', 'Please select Facebook Pages to post');
       return;
     }
-    this.spinner.show();
+    this.condition = true;
     this.checkedList.forEach((item, index, array) => {
       this._reportService.createReport(2, "", 'Facebook')
 
@@ -344,18 +344,16 @@ export class FacebookComponent implements OnInit {
         if (index == array.length - 1) {
           this.toast.success('Great! The post has been shared.');
           this.postedSuccessfully();
-          this.spinner.hide();
         }
       }, error => {
-        this.spinner.hide();
         this.toast.error(error.message);
-        console.log(error, 'error')
+        this.condition = false;
         this.cf.detectChanges();
         this._reportService.createReport(0, "", 'Facebook')
       })
     }, (error) => {
-      this.spinner.hide();
       this.toast.error(error.message);
+      this.condition = false;
       this.cf.detectChanges();
       this._reportService.createReport(0, "", 'Facebook')
     })

@@ -111,7 +111,6 @@ export class PublishComponent implements OnInit {
   }
 
   clear() {
-    this.spinner.hide();
     this.socialCaption = "";
     this.file = null;
     this.urls = [];
@@ -202,8 +201,6 @@ export class PublishComponent implements OnInit {
     }
     this.getCheckedItemList();
   }
-
-
 
   
   selectAllFBPages() {
@@ -443,12 +440,10 @@ export class PublishComponent implements OnInit {
               this._reportService.createReport(1, IgPost.id, 'Instagram')
               this.toast.success(`Post added to Instagram Profile`, 'Success');
             }, (error) => {
-              //this.spinner.hide();
               this.toast.error(error.message);
               this._reportService.createReport(0, '', 'Instagram')
             })
           }, error => {
-            //this.spinner.hide();
             console.log(error)
             this.toast.error(error.error.error.error_user_msg);
             this._reportService.createReport(0, '', 'Instagram')
@@ -514,14 +509,12 @@ export class PublishComponent implements OnInit {
     })
 
     if (selectedFacebookPages.length > 0) {
-     // this.spinner.show()
       this._mediaUploadService.uploadMedia('Facebook', this.signedInUser.id, this.file).pipe(take(1)).subscribe((media: any) => {
         selectedFacebookPages.forEach((item, index, array) => {
           this._reportService.createReport(2, '', 'Facebook');
           this._facebookService.addVideoPost(item.pageID, item.pageAccessToken, media.url, this.socialCaption).pipe(take(1)).subscribe((FbPost: any) => {
             this._reportService.createReport(1, FbPost.id, 'Facebook')
           }, error => {
-           // this.spinner.hide()
             this.toast.error(error.message);
             this._reportService.createReport(0, '', 'Facebook')
           })
@@ -535,7 +528,6 @@ export class PublishComponent implements OnInit {
     }
 
     if (selctedInstagramPages.length > 0) {
-   // this.toast.warning("You'll be notified when done","We are finalizing your video.")
       this._mediaUploadService.uploadMedia('Instagram', this.signedInUser.id, this.file).pipe(take(1)).subscribe((media: any) => {
         selctedInstagramPages.forEach(item => {
           this._instagramService.createIgContainerForVideo(item.instagram_business_account.id, media.url, this.socialCaption, item.linkedFbPagetoken).pipe(take(1)).subscribe((container: any) => {
@@ -543,7 +535,6 @@ export class PublishComponent implements OnInit {
               this._instagramService.getContainerStatus(container.id, item.linkedFbPagetoken).pipe(take(1)).subscribe((data: any) => {
                 if (data.status_code == "FINISHED") {
                   this._instagramService.publishContent(item.instagram_business_account.id, container.id, item.linkedFbPagetoken).pipe(take(1)).subscribe((data: any) => {
-                    this.spinner.hide()
                     clearInterval(interval)
                     this.url = "";
                     this.socialCaption = "";
@@ -551,7 +542,6 @@ export class PublishComponent implements OnInit {
                     this.toast.success('Instagram', 'Video Post Added');
                     this._reportService.createReport(1, data.id, 'Instagram')
                   }, (error) => {
-                    this.spinner.hide();
                     this.toast.error(error.message);
                     clearInterval(interval)
                     this._reportService.createReport(0, '', 'Instagram')
@@ -570,7 +560,6 @@ export class PublishComponent implements OnInit {
           } , error=>{
           } )
         }, (error) => {
-          this.spinner.hide();
           this.toast.error(error.message);
           this._reportService.createReport(0, '', 'Instagram');
 
@@ -598,7 +587,6 @@ export class PublishComponent implements OnInit {
   }
 
   addTextPost() {
-    ;
 
     let selectedFacebookPages = []
     let selctedInstagramPages = []
@@ -641,7 +629,6 @@ export class PublishComponent implements OnInit {
     }
 
     if (selectedFacebookPages.length > 0) {
-      this.spinner.show();
       selectedFacebookPages.forEach((item, index, array) => {
         this._reportService.createReport(2, item.id, 'Facebook')
         this._facebookService.addTextPostToFB(item.pageID, this.socialCaption, item.pageAccessToken).subscribe(FbPost => {

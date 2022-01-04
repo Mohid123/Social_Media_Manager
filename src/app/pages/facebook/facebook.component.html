@@ -180,7 +180,7 @@
                                                             <span class="fw-bold text-muted fs-4">It will take a short
                                                                 time</span>
                                                         </div>
-                                                        <img src="https://preview.keenthemes.com/metronic8/demo1/assets/media/svg/avatars/004-boy-1.svg"
+                                                        <img src="../../../assets/media/svg/avatars/004-boy-1.svg"
                                                             alt="" class="align-self-end h-100px">
                                                     </div>
                                                     <div class="progress form-group m-2" *ngIf="updateProgress > 0"
@@ -366,7 +366,7 @@
                                                             <span class="fw-bold text-muted fs-4">It will take a short
                                                                 time</span>
                                                         </div>
-                                                        <img src="https://preview.keenthemes.com/metronic8/demo1/assets/media/svg/avatars/004-boy-1.svg"
+                                                        <img src="../../../assets/media/svg/avatars/004-boy-1.svg"
                                                             alt="" class="align-self-end h-100px">
                                                     </div>
                                                     <div class="progress form-group m-2" *ngIf="updateProgress > 0"
@@ -507,10 +507,12 @@
                                                             class="btn btn-transparent-warning">Clear</button>
                                                     </div>
                                                     <div class="ml-auto p-2">
-                                                        <button (click)="addTextPost(); clicked = true" type="button" [disabled]="!facebookCaption "
+                                                        <button (click)="addTextPost(); clicked = true" type="button" [disabled]="!facebookCaption || checkedList.length == 0 || clicked"
+                                                            [ngClass]="condition == true ? 'spinner spinner-white spinner-right' : '' "
                                                             class="btn btn-primary flex-row-reverse"
-                                                            style="background-color: #3b5998; border-color: #3b5998;">Post
-                                                            Now</button>
+                                                            style="background-color: #3b5998; border-color: #3b5998;">
+                                                            {{condition == true ? 'Creating Text Post': 'Post Now'}}
+                                                        </button>
                                                     </div>
                                                 </div>
                                             </div>

@@ -135,7 +135,6 @@ export class InstagramComponent implements OnInit {
 
 
   onSelectedImageLoad() {
-    debugger
     const width = (this.logo.nativeElement as HTMLImageElement).naturalWidth
     const height = (this.logo.nativeElement as HTMLImageElement).naturalHeight
 
@@ -198,7 +197,6 @@ export class InstagramComponent implements OnInit {
   getRecentPosts(IGaccountID, FBpageaccessToken) {
     return this._instagramService.getPublishedPostsForIG(IGaccountID, FBpageaccessToken).pipe(take(1)).subscribe((publishedPosts: any) => {
       this.recentPosts = publishedPosts.data;
-      // console.log(this.recentPosts , 'recent ig posts')
       this.cf.detectChanges();
     })
   }
@@ -253,7 +251,7 @@ export class InstagramComponent implements OnInit {
   addVideoPost() {
     let counter = 0
     if (!this.file) {
-      this.toast.error('Please select an Video File', 'Empty File');
+      this.toast.error('Please select a Video File', 'Empty File');
       return;
     }
     else if (this.checkedList.length == 0) {
@@ -271,7 +269,6 @@ export class InstagramComponent implements OnInit {
               return
             }
             this._instagramService.getContainerStatus(container.id, item.linkedFbPagetoken).pipe(take(1)).subscribe((data: any) => {
-              console.log(data, 'status')
               if (data.status_code == "FINISHED") {
                 
                 this._instagramService.publishContent(item.instagram_business_account.id, container.id, item.linkedFbPagetoken).pipe(take(1)).subscribe((data: any) => {
@@ -331,7 +328,6 @@ export class InstagramComponent implements OnInit {
       this.toast.error('Unsupported Image Format', 'Image Format not supported for Instagram');
       return;
     }
-    //this.spinner.show()
     this._mediaUploadService.uploadMedia('Instagram', this.signedInUser.id, this.file).pipe(take(1)).subscribe((media: any) => {
       this.checkedList.forEach((item, idx, self) => {
         this.condition = true;
@@ -353,7 +349,6 @@ export class InstagramComponent implements OnInit {
           this._reportService.createReport(0, "", 'Instagram');
         })
       }, error => {
-       // this.spinner.hide()
         this.toast.error(error.message)
         this._reportService.createReport(0, "", 'Instagram');
       })

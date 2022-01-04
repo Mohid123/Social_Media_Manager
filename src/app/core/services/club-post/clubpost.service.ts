@@ -28,7 +28,6 @@ export class ClubpostService {
   }
 
   createTextPost(postedText, postedTo , selectedList) {
-    debugger
     return new Promise((resolve, reject) => {
     let hyperLinkResponse = []
     this.post.type = 'text'
@@ -46,7 +45,7 @@ export class ClubpostService {
       delete this.post.eventID;
       delete this.post.groupID;
     }
-    this.spinner.show();
+    this.condition = true;
     this._postService.hyperLinkScrapper(postedText).subscribe((data) => {
       hyperLinkResponse = data;
 
@@ -78,12 +77,12 @@ export class ClubpostService {
           this._reportService.createReport(1, post.id, postedTo);
           if (idx == self.length - 1) {
             this.toast.success(`Your post has been shared to ${postedTo}.`, 'Great!')
-            this.spinner.hide();
+            this.condition = false;
             resolve('success')
           }
         }, error => {
-          this.spinner.hide();
           this.toast.error(error.message);
+          this.condition = false;
           this._reportService.createReport(0, "", postedTo);
         })
       });

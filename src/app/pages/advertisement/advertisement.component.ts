@@ -13,11 +13,4 @@ export class AdvertisementComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  showSpinner() {
-    this.spinner.show();
-    setTimeout(() => {
-      this.spinner.hide();
-    }, 600);
-  }
-
 }

@@ -494,6 +494,7 @@ export class TeamtalkersComponent implements OnInit {
         .createTextPost(this.teamtalkerCaption, "Club", club)
         .then((success) => {
           this.resetPost();
+          this.clicked = false;
         });
     }
 
@@ -502,6 +503,7 @@ export class TeamtalkersComponent implements OnInit {
         .createTextPost(this.teamtalkerCaption, "Group", groups)
         .then((success) => {
           this.resetPost();
+          this.clicked = false;
         });
     }
 
@@ -510,6 +512,7 @@ export class TeamtalkersComponent implements OnInit {
         .createTextPost(this.teamtalkerCaption, "Event", events)
         .then((success) => {
           this.resetPost();
+          this.clicked = false;
         });
     }
   }

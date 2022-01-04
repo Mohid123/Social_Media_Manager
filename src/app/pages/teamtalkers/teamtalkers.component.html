@@ -288,7 +288,7 @@
                               <span class="fw-bold text-muted fs-4">It will take a short time</span>
                             </div>
                             <img
-                              src="https://preview.keenthemes.com/metronic8/demo1/assets/media/svg/avatars/004-boy-1.svg"
+                              src="../../../assets/media/svg/avatars/004-boy-1.svg"
                               alt="" class="align-self-end h-100px">
                           </div>
                           <div class="progress form-group m-2" *ngIf="updateProgress > 0"
@@ -507,7 +507,7 @@
                               <span class="fw-bold text-muted fs-4">It will take a short time</span>
                             </div>
                             <img
-                              src="https://preview.keenthemes.com/metronic8/demo1/assets/media/svg/avatars/004-boy-1.svg"
+                              src="../../../assets/media/svg/avatars/004-boy-1.svg"
                               alt="" class="align-self-end h-100px">
                           </div>
                           <div class="progress form-group m-2" *ngIf="updateProgress > 0"
@@ -682,11 +682,15 @@
                             </button>
                           </div>
                           <div class="p-2 ml-auto">
-                            <button [disabled]="!teamtalkerCaption " (click)="addTextPost(); clicked = true" type="button"
-                              class="flex-row-reverse btn btn-primary" style="
+                            <button
+                            [disabled]="!teamtalkerCaption || checkedList.length == 0 || clicked"
+                            (click)="addTextPost(); clicked = true" type="button"
+                              class="flex-row-reverse btn btn-primary"
+                              [ngClass]="_genericPostService.condition == true ? 'spinner spinner-white spinner-right' : '' "
+                              style="
                                 background-color: #3b5998;
                                 border-color: #3b5998;">
-                              Post Now
+                              {{_genericPostService.condition == true ? 'Creating Text Post': 'Post Now'}}
                             </button>
                           </div>
                         </div>
