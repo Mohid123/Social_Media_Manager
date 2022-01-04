@@ -144,11 +144,6 @@ export class AccountManagerComponent implements OnInit {
         this.userFBprofile.fbEmail = this.socialUser.response.email;
         this.userFBprofile.fbUserName = this.socialUser.response.name;
         this.userFBprofile.fbProfileImageUrl = this.socialUser.response.picture.data.url;
-        let selectedClub = JSON.parse(localStorage.getItem('selectedClub'))
-        if(selectedClub) {
-          selectedClub.userFacebookProfile = this.userFBprofile;
-          localStorage.setItem('selectedClub',JSON.stringify(selectedClub));
-        }
         this.cf.detectChanges();
         this.club.userFacebookProfile = Object.assign({}, this.userFBprofile)
         this.getLongLivedFBUserToken(this.socialUser.authToken).subscribe(
@@ -171,7 +166,6 @@ export class AccountManagerComponent implements OnInit {
               this.findUniqueObjects(this.userExisitngFacebookPages, newFBpages)
               this.updateUserClub(this.club);
               this.setFbProfile();
-              this.cf.detectChanges();
             });
           }
         );
