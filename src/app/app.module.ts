@@ -1,3 +1,4 @@
+import { JwtInterceptor } from './core/interceptors/jwt.interceptor';
 import { Interceptor } from './core/interceptors/http-interceptor';
 import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
@@ -101,6 +102,11 @@ function appInitializer(authService: AuthService) {
     {
       provide: HTTP_INTERCEPTORS,
       useClass: Interceptor,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: JwtInterceptor,
       multi: true
     },
     {

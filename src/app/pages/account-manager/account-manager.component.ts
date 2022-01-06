@@ -12,7 +12,7 @@ import {
   SocialUser,
 } from "angularx-social-login";
 import { NgxSpinnerService } from "ngx-spinner";
-import { User } from "src/app/core/models/user.model";
+import { LoggedInUser } from "@app/core/models/logged-in-user.model";
 import { ExtrasModule } from './../../_metronic/partials/layout/extras/extras.module';
 import { ChangeDetectorRef } from "@angular/core";
 import { ClubService } from './../../core/services/club.service';
@@ -26,7 +26,7 @@ import { PickerClubService } from './../../core/services/picker_clubs.service';
 export class AccountManagerComponent implements OnInit {
   public profileImageUrl: string = localStorage.getItem('profileImageUrl')
   public socialUser: SocialUser;
-  public signedInUser: User;
+  public signedInUser: LoggedInUser;
   public clubName: string = "";
   private connectedIG: boolean = false;
   public clubLogo: string = "";

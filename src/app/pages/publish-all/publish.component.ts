@@ -10,7 +10,7 @@ import { FacebookService } from '../../core/services/facebook.service';
 import { ToastrService } from 'ngx-toastr';
 import { Component, OnInit, ChangeDetectorRef, ViewChild, ElementRef } from '@angular/core';
 import { NgxSpinnerService } from "ngx-spinner";
-import { User } from 'src/app/core/models/user.model';
+import { LoggedInUser } from '@app/core/models/logged-in-user.model';
 import { Post } from 'src/app/core/models/post.model';
 import { take, filter, single, throwIfEmpty } from 'rxjs/operators';
 import { Report } from 'src/app/core/models/report.model';
@@ -25,7 +25,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 export class PublishComponent implements OnInit {
   @ViewChild('logo') logo: ElementRef;
   public textFirst: string
-  public signedInUser: User
+  public signedInUser: LoggedInUser
   public masterSelected: boolean = false;
   public groupSelected: boolean = false;
   public eventSelected: boolean = false;

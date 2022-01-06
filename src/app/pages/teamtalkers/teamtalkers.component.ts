@@ -17,7 +17,7 @@ import { NgxSpinnerService } from "ngx-spinner";
 import { ToastrService } from "ngx-toastr";
 import { Post } from "src/app/core/models/post.model";
 import { MainAuthService } from "src/app/core/services/auth.service";
-import { User } from "src/app/core/models/user.model";
+import { LoggedInUser } from "@app/core/models/logged-in-user.model";
 import { Report } from "src/app/core/models/report.model";
 import { THIS_EXPR } from "@angular/compiler/src/output/output_ast";
 import { isTemplateMiddle } from "typescript";
@@ -49,7 +49,7 @@ export class TeamtalkersComponent implements OnInit {
   public url: string;
   public post: Post;
   public file: any;
-  public signedInUser: User;
+  public signedInUser: LoggedInUser;
   public report: Report;
   public userName: string;
   public profileImageUrl: string;

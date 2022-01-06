@@ -5,7 +5,7 @@ import { InstagramService } from './../../core/services/instagram.service';
 import { MainAuthService } from './../../core/services/auth.service';
 import { Component, OnInit, ChangeDetectorRef, ViewChild, ElementRef } from '@angular/core';
 import { NgxSpinnerService } from "ngx-spinner";
-import { User } from 'src/app/core/models/user.model';
+import { LoggedInUser } from '@app/core/models/logged-in-user.model';
 import { ToastrService } from 'ngx-toastr';
 import { count, take } from 'rxjs/operators';
 import * as moment from 'moment';
@@ -24,7 +24,7 @@ export class InstagramComponent implements OnInit {
   @ViewChild('logo') logo: ElementRef;
   public instaCaption: string = "";
   condition: Boolean = false;
-  private signedInUser: User
+  private signedInUser: LoggedInUser
   private IGaccount: any
   public file: any;
   updateProgress: number;

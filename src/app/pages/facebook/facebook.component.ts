@@ -8,7 +8,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { NgxSpinnerService } from "ngx-spinner";
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
-import { User } from 'src/app/core/models/user.model';
+import { LoggedInUser } from '@app/core/models/logged-in-user.model';
 import { DatePickerOptions } from "@ngx-tiny/date-picker";
 import { TimePickerOptions } from "@ngx-tiny/time-picker/ngx-time-picker.options";
 import { combineLatest } from 'rxjs';
@@ -37,7 +37,7 @@ export class FacebookComponent implements OnInit {
   public facebookCaption: string = "";
   public format: string;
   public url: string;
-  public signedInUser: User
+  public signedInUser: LoggedInUser
   public file: any
   updateProgress: number;
   public report: Report

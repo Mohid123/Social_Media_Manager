@@ -1,3 +1,5 @@
+import { LoginResponse } from './../../../core/models/response/login-response.model';
+import { ApiResponse } from './../../../core/models/response.model';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { UsersService } from './../../../core/services/users.service';
 import { ClubService } from './../../../core/services/club.service';
@@ -18,6 +20,7 @@ import { filter, map, take } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { JoyrideService } from 'ngx-joyride';
 import { locale } from './../../i18n/vocabs/jp';
+import { AuthRequest } from '@app/core/models/requests/auth-request.model';
 
 
 @Component({
@@ -124,41 +127,45 @@ export class LoginComponent implements OnInit {
       this.toastr.error('Please Select Club', 'Empty Club')
       return;
     }
-    const payload = {
+    
+    const payload: AuthRequest = {
       clubID: this.selectedClub.id,
       email: this.loginForm.value.email,
       password: this.loginForm.value.password
     }
+
     if (this.selectedClub.pickerClub) {
       payload.clubID = this.selectedClub.pickerModelId
-      payload['pickerClubID'] = this.selectedClub.id
-      payload['clubName'] = this.selectedClub.clubName
-
+      payload.pickerClubID = this.selectedClub.id
+      payload.clubName = this.selectedClub.clubName
     }
 
     this.spinner.show();
-    this._authService.loginByEmail(payload).subscribe(user => {
-      if (user.newUser) {
-        localStorage.setItem('newUser', 'true');
+    this._authService.loginByEmail(payload).subscribe((res:ApiResponse<LoginResponse>) => {
+      if (!res.hasErrors()) {
+        if (res.data?.newUser) {
+          localStorage.setItem('newUser', 'true');
+        }
+        if (res.data?.user.admin) {
+          localStorage.setItem('app-token', res.data.app_token.access_token)
+          localStorage.setItem('clubUid', res.data.loggedInUser.userID)
+          localStorage.setItem('userId', res.data.loggedInUser.id)
+          localStorage.setItem('club-token', res.data.token)
+          localStorage.setItem('admin', res.data.user.admin.toString())
+          localStorage.setItem('userName', res.data.user.fullName)
+          localStorage.setItem('profileImageUrl', res.data.user.profilePicURL)
+          this.spinner.hide();
+          this.toastr.success(`You are logged in as ${res.data.user.fullName}.`, 'Welcome!');
+          this.router.navigateByUrl('/pages/dashboard');
+        }
+        else {
+          this.spinner.hide();
+          this.toastr.error('Only admins can access this panel.', 'Access Denied!');
+          return;
+        }
+      } else {
+        console.log('error res:',res);
       }
-      if (user.user.admin) {
-        localStorage.setItem('app-token', user.app_token.access_token)
-        localStorage.setItem('clubUid', user.loggedInUser.userID)
-        localStorage.setItem('userId', user.loggedInUser.id)
-        localStorage.setItem('club-token', user.token)
-        localStorage.setItem('admin', user.user.admin)
-        localStorage.setItem('userName', user.user.fullName)
-        localStorage.setItem('profileImageUrl', user.user.profilePicURL)
-        this.spinner.hide();
-        this.toastr.success(`You are logged in as ${user.user.fullName}.`, 'Welcome!');
-        this.router.navigateByUrl('/pages/dashboard');
-      }
-      else {
-        this.spinner.hide();
-        this.toastr.error('Only admins can access this panel.', 'Access Denied!');
-        return;
-      }
-
     }, err => {
       this.spinner.hide()
       if (err.message.includes('401 Unauthorized')) {
