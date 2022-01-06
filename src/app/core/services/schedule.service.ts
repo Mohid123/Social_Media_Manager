@@ -5,6 +5,10 @@ import { ApiService } from './api.service';
 import * as moment from "moment";
 import { Observable, ObservedValueOf, scheduled } from 'rxjs';
 import { Schedule } from './../models/schedule.model';
+import { Post } from '../models/post.model';
+import { FBPage } from './../models/fb-page.model';
+import { FacebookPostModel } from '../models/facebook-post.model';
+import { InstagramPostModel } from '../models/instagram-post.model';
 
 @Injectable({
   providedIn: 'root'
@@ -21,44 +25,44 @@ export class ScheduleService {
     return this._apiService.get(`/schedule/getScheduleByPostedTo/${postedTo}?offset=${offset}&limit=${limit}`);
   }
 
-    schduleClubPost(postedTo , clubID, post) : Observable <any> {
+    schduleClubPost(postedTo: string , clubID: string, post: Post) : Observable <any> {
     post.postedTo = postedTo
     return this._apiService.post(`/schedule/scheduleClubPost/${clubID}`, post);
   }
 
-  scheduleFacebookPost(FBpost) : Observable <any>{
+  scheduleFacebookPost(FBpost: FacebookPostModel) : Observable <any>{
     return this._apiService.post('/schedule/scheduleFacebookPost', FBpost)
   }
 
-  scheduleInstagramPost(IGpost) : Observable <any> {
+  scheduleInstagramPost(IGpost: InstagramPostModel) : Observable <any> {
     return this._apiService.post('/schedule/scheduleInstagramPost', IGpost)
   }
 
-  getQueuedSchedules(clubID) : Observable <any>{
+  getQueuedSchedules(clubID: string) : Observable <any>{
     return this._apiService.get(`/schedule/getQueuedSchedules/${clubID}`)
   }
 
-  getPublishedSchedules(clubID): Observable <any> {
+  getPublishedSchedules(clubID: string): Observable <any> {
     return this._apiService.get(`/schedule/getPublishedSchedules/${clubID}`)
   }
 
-  getUnPublishedSchedules(clubID) : Observable <any> {
+  getUnPublishedSchedules(clubID: string) : Observable <any> {
     return this._apiService.get(`/schedule/getUnPublishedSchedules/${clubID}`)
   }
 
-  getFacebookSchedules(clubID){
+  getFacebookSchedules(clubID: string){
     return this._apiService.get(`/schedule/getFacebookSchedules/${clubID}`)
   }
 
-  getInstagramSchedules(clubID){
+  getInstagramSchedules(clubID: string){
     return this._apiService.get(`/schedule/getInstagramSchedules/${clubID}`)
   }
 
-  deleteSchedule(scheduleId){
+  deleteSchedule(scheduleId: string){
     return this._apiService.get(`/schedule/deleteSchedule/${scheduleId}`);
   }
   
-  getClubSchedules(clubID){
+  getClubSchedules(clubID: string){
     return this._apiService.get(`/schedule/getClubSchedules/${clubID}`)
 
   }

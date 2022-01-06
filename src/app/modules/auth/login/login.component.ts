@@ -164,16 +164,13 @@ export class LoginComponent implements OnInit {
           return;
         }
       } else {
-        console.log('error res:',res);
+        console.log('error res:', res.errors);
+        this.spinner.hide();
+        if (res.errors) {
+          this.toastr.error('Email or Password Incorrect.', 'Unauthorized!');
+          return;
+        }
       }
-    }, err => {
-      this.spinner.hide()
-      if (err.message.includes('401 Unauthorized')) {
-        this.toastr.error('Email or Password Incorrect.', 'Unauthorized!');
-        console.log(err);
-        return;
-      }
-      this.toastr.error(err.message);
     })
   }
 

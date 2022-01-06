@@ -1,6 +1,5 @@
 export class FacebookProfileModel {
-    fbEmail : string
-    fbUserName : string
+    fbEmail : string;
     fbUsername?:        string;
     fbProfileImageUrl : string
     fbProfileImageURL?: string;

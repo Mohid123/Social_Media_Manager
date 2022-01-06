@@ -7,6 +7,7 @@ import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
 import { constants } from 'src/app/app.constants';
 import { ClubApiService } from './club_api.service';
+import { Post } from '../models/post.model';
 @Injectable({
   providedIn: 'root'
 })
@@ -16,27 +17,27 @@ export class PostService {
   }
 
 
-  addPost(body): Observable<any> {
+  addPost(body: Post): Observable<any> {
     return this._clubApiService.post(`/post/AddPost`, body);
   }
 
-  addPostToGroup(body): Observable<any> {
+  addPostToGroup(body: Post): Observable<any> {
     return this._clubApiService.post(`/groups/addPost/`, body);
 
   }
 
-  addPostToEvent(body): Observable<any> {
+  addPostToEvent(body: PositionCallback): Observable<any> {
     return this._clubApiService.post(`/event/addPost`, body);
 
   }
 
-  hyperLinkScrapper(postedText): Observable<any> {
+  hyperLinkScrapper(postedText: string): Observable<any> {
     postedText == "" ? postedText = 'MockPayloadScrapper' : postedText = postedText
     return this._clubApiService.post(`/firebase-migration-functions/hyperlinkScraperForPanel`, { 'text': postedText });
   }
 
 
-  createClubPost(postedTo, post) {
+  createClubPost(postedTo: string, post: Post) {
     post.postedTo = postedTo;
     if (postedTo == 'Group') {
       return this._clubApiService.post(`/groups/addPost/`, post);
@@ -49,23 +50,23 @@ export class PostService {
     }
   }
 
-  getClubPosts(postedTo, offset, limit) {
+  getClubPosts(postedTo: string, offset, limit) {
     limit = parseInt(limit) < 1 ? 10 : limit;
     offset = parseInt(offset) < 0 ? 0 : offset;
     return this._clubApiService.get(`/post/getAllPosts/${postedTo}?offset=${offset}&limit=${limit}`);
   }
 
-  getPostCommentsAndReactions(postId, offset, limit) {
+  getPostCommentsAndReactions(postId: string, offset, limit) {
     limit = parseInt(limit) < 1 ? 10 : limit;
     offset = parseInt(offset) < 0 ? 0 : offset;
     return this._clubApiService.get(`/post-reaction/getPostReactionswithCount/${postId}?offset=${offset}&limit=${limit}`);
   }
 
-  updateClubPost(post) {
+  updateClubPost(post: Post) {
     return this._clubApiService.post(`/post/EditPost`, post);
   }
 
-  deleteClubPost(postID) {
+  deleteClubPost(postID: string) {
     return this._clubApiService.get(`/post/deletePost/${postID}`)
   }
 

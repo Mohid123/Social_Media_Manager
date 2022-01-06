@@ -7,6 +7,7 @@ import { ApiService } from './api.service';
 import { Injectable } from '@angular/core';
 import { constants } from 'src/app/app.constants';
 import { ClubApiService } from './club_api.service';
+import { BaseClub } from './../models/base-club.model';
 
 @Injectable({
   providedIn: 'root'
@@ -29,7 +30,7 @@ export class ClubService {
     return this._clubApiService.get(`/club/getAllClubs?offset=${offset}&limit=${limit}`)
   }
 
-  getClubById(clubID): Observable<any> {
+  getClubById(clubID: string): Observable<any> {
     return this._apiService.get(`/club/getClubByID/${clubID}`)
   }
 
@@ -37,11 +38,11 @@ export class ClubService {
     return this._apiService.post('/club/addClub', payload)
   }
 
-  updateClub(club): Observable<any> {
+  updateClub(club: BaseClub): Observable<any> {
     return this._apiService.post('/club/updateClub', club)
   }
 
-  deleteClub(clubID): Observable<any> {
+  deleteClub(clubID: string): Observable<any> {
     return this._apiService.get(`/club/deleteClub/${clubID}`)
   }
 
@@ -62,20 +63,20 @@ export class ClubService {
     return this._clubApiService.get(`/firebase-migration-functions/getLiveStreamValue`);
   }
 
-  changeLiveStreamBit(liveStreamBit) {
+  changeLiveStreamBit(liveStreamBit: string) {
     return this._clubApiService.get(`/firebase-migration-functions/changeLiveStreamBit/${liveStreamBit}`);
   }
 
-  getUserClubProfile(userId) {
+  getUserClubProfile(userId: string) {
     return this._clubApiService.get(`/profile/getProfileById/${userId}`);
   }
 
-  searchClubByName(clubName , offset , limit){
+  searchClubByName(clubName: string, offset , limit){
 
     return this._apiService.get(`/club/searchClub/${clubName}?offset=${offset}&limit=${limit}`);
   }
 
-  searchClubByNameForPicker(clubName , offset , limit){
+  searchClubByNameForPicker(clubName: string, offset , limit){
     
     return this._clubApiService.get(`/club/searchClubByName/${clubName}?offset=${offset}&limit=${limit}`);
   }

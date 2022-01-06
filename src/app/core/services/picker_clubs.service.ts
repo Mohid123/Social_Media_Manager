@@ -7,6 +7,7 @@ import { ApiService } from './api.service';
 import { Injectable } from '@angular/core';
 import { constants } from 'src/app/app.constants';
 import { ClubApiService } from './club_api.service';
+import { Club } from './../models/club.model';
 
 @Injectable({
   providedIn: 'root'
@@ -23,11 +24,11 @@ export class PickerClubService {
     return this._apiService.get(`/PickerClubs/getAllClubs?offset=${offset}&limit=${limit}`)
   }
 
-  getClubById(clubID): Observable<any> {
+  getClubById(clubID: string): Observable<any> {
     return this._apiService.get(`/PickerClubs/getClubById/${clubID}`)
   }
 
-  addClub(payload): Observable<any> {
+  addClub(payload: Club): Observable<any> {
     return this._apiService.post('/PickerClubs/addClub', payload)
   }
 
@@ -35,7 +36,7 @@ export class PickerClubService {
     return this._apiService.post('/PickerClubs/updateClub', club)
   }
 
-  deleteClub(clubID): Observable<any> {
+  deleteClub(clubID: string): Observable<any> {
     return this._apiService.get(`/PickerClubs/deleteClub/${clubID}`)
   }
 

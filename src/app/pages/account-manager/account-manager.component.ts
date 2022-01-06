@@ -70,10 +70,10 @@ export class AccountManagerComponent implements OnInit {
     clubId = this.selectedClub.id;
     this._facebookService.unLinkFacebookPage(clubId).subscribe();
     this.userFBprofile.fbProfileImageUrl = "";
-    this.userFBprofile.fbUserName = "";
+    this.userFBprofile.fbUsername = "";
 
     this.club.userFacebookProfile = {
-      fbUserName:"",
+      fbUsername:"",
       fbProfileImageUrl:"",
     }
 
@@ -92,7 +92,7 @@ export class AccountManagerComponent implements OnInit {
 
   setFbProfile() {
     let FBprofile = JSON.parse(localStorage.getItem('selectedClub'))?.userFacebookProfile;
-    this.userFBprofile.fbUserName = FBprofile?.fbUserName;
+    this.userFBprofile.fbUsername = FBprofile?.fbUsername;
     this.userFBprofile.fbProfileImageUrl = FBprofile?.fbProfileImageUrl;
     localStorage.setItem('selectedClub', JSON.stringify(this.club));
     this.cf.detectChanges();
@@ -142,7 +142,7 @@ export class AccountManagerComponent implements OnInit {
         this.socialUser = socialUser;
         console.log(this.club.FBuserID = this.socialUser.id);
         this.userFBprofile.fbEmail = this.socialUser.response.email;
-        this.userFBprofile.fbUserName = this.socialUser.response.name;
+        this.userFBprofile.fbUsername = this.socialUser.response.name;
         this.userFBprofile.fbProfileImageUrl = this.socialUser.response.picture.data.url;
         let selectedClub = JSON.parse(localStorage.getItem('selectedClub'))
         if(selectedClub) {
@@ -245,19 +245,6 @@ export class AccountManagerComponent implements OnInit {
 
   showFBCommingSoonPopup() {
     this._toast.warning('Comming Soon');
-  }
-
-  signOutFB() {
-
-
-    // ;
-    // let fbProfileImageUrl = "https://socialapi.solissol.com/api/v1/en/media-upload/mediaFiles/test/123/b448db445dab8728bb3fc822243e58f10.png"
-    // this.authService.signOut();
-    // this.signedInUser.userFacebookProfile.fbEmail = 'Email'
-    // this.signedInUser.userFacebookProfile.fbUserName = 'Username'
-    // this.signedInUser.userFacebookProfile.fbProfileImageUrl = fbProfileImageUrl
-    // this.setFbProfile("Email","Username", fbProfileImageUrl)
-    // this.updateSignedInUser(this.signedInUser);
   }
 
   Club() {
