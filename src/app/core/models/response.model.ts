@@ -7,6 +7,7 @@ export interface Response {
 
 export class ApiResponse<T> {
   headers: any;
+  id: any;
   constructor() {
     this.errors = [];
   }
