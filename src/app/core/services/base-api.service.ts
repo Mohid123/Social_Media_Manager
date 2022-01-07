@@ -65,6 +65,13 @@ export class BaseApiService<T> {
     return this.http.get(`${path}`, options);
   }
 
+  public baseGet(path: string): Observable<any> {
+    const options: any = {
+      responseType: 'text'
+    };
+    return this.http.get(`${constants.base_url}${path}`, options);
+  }
+
   public post(
     path: string,
     body: Object = {}
@@ -122,7 +129,7 @@ export class BaseApiService<T> {
     );
   }
 
-  extrnalPost(path: string, body: any = {}, options: any = {}): Observable<any> {
+  externalPost(path: string, body: any = {}, options: any = {}): Observable<any> {
     if (options.responseType) {
       return this.http.post(
         `${path}`,

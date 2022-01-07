@@ -1,37 +1,42 @@
 import { Observable } from 'rxjs';
-import { ApiService } from './api.service';
 import { Injectable } from '@angular/core';
-import { Report } from '../models/report.model';
+import { BaseApiService } from './base-api.service';
+import { ApiResponse } from '@app/core/models/response.model';
+import { HttpClient } from '@angular/common/http';
+import { Feedback } from '../models/feedback.model';
+
+type feedBack = Feedback
+
 @Injectable({
     providedIn: 'root'
 })
-export class FeedbackService {
-    private report: Report
+export class FeedbackService extends BaseApiService<feedBack> {
 
-    constructor(private _apiService: ApiService) {
+    constructor(protected http: HttpClient) {
+        super(http)
     }
 
-    addFeedback(feedback): Observable<any> {
-        return this._apiService.post(`/feedbacks/addFeedback`, feedback)
+    addFeedback(feedback: feedBack): Observable<ApiResponse<feedBack>> {
+        return this.post(`/feedbacks/addFeedback`, feedback)
     }
 
-    updateFeedback(feedback): Observable<any> {
-        return this._apiService.post(`/feedbacks/updateFeedback`, feedback)
+    updateFeedback(feedback: feedBack): Observable<ApiResponse<feedBack>> {
+        return this.post(`/feedbacks/updateFeedback`, feedback)
 
     }
 
-    deleteFeedback(id): Observable<any> {
-        return this._apiService.get(`/feedbacks/deleteFeedback/${id}`)
+    deleteFeedback(id: string): Observable<ApiResponse<feedBack>> {
+        return this.get(`/feedbacks/deleteFeedback/${id}`)
     }
 
-    getAllFeedbacks(offset, limit): Observable<any> {
+    getAllFeedbacks(offset, limit): Observable<ApiResponse<feedBack>> {
         limit = limit < 0 ? 10 : limit;
         offset = offset < 1 ? 0 : offset
-        return this._apiService.get(`/feedbacks/getAllFeedbacks?offset=${offset}&limit=${limit}`)
+        return this.get(`/feedbacks/getAllFeedbacks?offset=${offset}&limit=${limit}`)
     }
 
-    getFeedbackById(id): Observable<any> {
-        return this._apiService.get(`/feedbacks/getFeedbackById/${id}`)
+    getFeedbackById(id: string): Observable<ApiResponse<feedBack>> {
+        return this.get(`/feedbacks/getFeedbackById/${id}`)
     }
 
 

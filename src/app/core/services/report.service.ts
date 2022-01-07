@@ -2,59 +2,66 @@ import { Observable } from 'rxjs';
 import { ApiService } from './api.service';
 import { Injectable } from '@angular/core';
 import { Report } from '../models/report.model';
+import { BaseApiService } from './base-api.service';
+import { HttpClient } from '@angular/common/http';
+import { ApiResponse } from '../models/response.model';
+
+type report = Report
+
 @Injectable({
   providedIn: 'root'
 })
-export class ReportService {
+export class ReportService extends BaseApiService<report> {
   private report : Report
 
-  constructor(private _apiService: ApiService) { 
+  constructor(protected http: HttpClient) {
+    super(http)
     this.report = new Report();
   }
 
-  getReportByClubId(id, offset, limit) : Observable <any> {
+  getReportByClubId(id: string, offset, limit) : Observable <ApiResponse<report>> {
     offset = parseInt(offset) < 0 ? 0 : offset;
     limit = parseInt(limit) < 1 ? 10 : limit;
-    return this._apiService.get(`/report/getByClubID/${id}?offset=${offset}&limit=${limit}`)
+    return this.get(`/report/getByClubID/${id}?offset=${offset}&limit=${limit}`)
   }
 
-  getReportByPostedTo(postedTo, offset, limit) : Observable <any> {
+  getReportByPostedTo(postedTo: string, offset, limit) : Observable <ApiResponse<report>> {
     offset = parseInt(offset) < 0 ? 0 : offset;
     limit = parseInt(limit) < 1 ? 10 : limit;
-    return this._apiService.get(`/report/getByPostedTo/${postedTo}?offset=${offset}&limit=${limit}`)
+    return this.get(`/report/getByPostedTo/${postedTo}?offset=${offset}&limit=${limit}`)
   }
 
-  addReport(report) : Observable <any> {
-    return this._apiService.post('/report/addReport', report);
+  addReport(report: Report) : Observable <ApiResponse<report>> {
+    return this.post('/report/addReport', report);
   }
 
-  updateReport(report) : Observable <any>{
-    return this._apiService.post('/report/updateReport' , report)
+  updateReport(report: Report) : Observable <ApiResponse<report>>{
+    return this.post('/report/updateReport' , report)
   }
 
-  getFacebookStats(userId) : Observable <any>{
-    return this._apiService.get(`/report/getFacebookStats/${userId}`);
+  getFacebookStats(userId: string) : Observable <ApiResponse<report>>{
+    return this.get(`/report/getFacebookStats/${userId}`);
   }
 
-  getInstagramStats(userId) : Observable <any>{
-    return this._apiService.get(`/report/getInstagramStats/${userId}`);
+  getInstagramStats(userId: string) : Observable <ApiResponse<report>>{
+    return this.get(`/report/getInstagramStats/${userId}`);
 
   }
 
-  getClubStatus(userId) : Observable <any>{
-    return this._apiService.get(`/report/getClubStats/${userId}`);
+  getClubStatus(userId: string) : Observable <ApiResponse<report>> {
+    return this.get(`/report/getClubStats/${userId}`);
   }
 
-   getLatestReports(userId){
-      return this._apiService.get(`/report/getLatestReports/${userId}`)
+   getLatestReports(userId: string): Observable <ApiResponse<report>> {
+      return this.get(`/report/getLatestReports/${userId}`)
   }
 
-  getLastSevenDaysStats(userId , postedTo){
-    return this._apiService.get(`/report/getLastSevenDaysStats/${userId}/${postedTo}`)
+  getLastSevenDaysStats(userId: string , postedTo: string): Observable <ApiResponse<report>> {
+    return this.get(`/report/getLastSevenDaysStats/${userId}/${postedTo}`)
   }
 
-  getLastSeventDaysStatsForClub(userId){
-    return this._apiService.get(`/report/getLastSevenDaysStatsForClub/${userId}`)
+  getLastSeventDaysStatsForClub(userId: string): Observable <ApiResponse<report>> {
+    return this.get(`/report/getLastSevenDaysStatsForClub/${userId}`)
   }
 
   createReport(status, postId?, postedTo?) {

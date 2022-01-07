@@ -1,58 +1,55 @@
-import { catchError } from 'rxjs/operators';
-import { ErrorhandlerService } from './errorhandler.service';
-import { environment } from './../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { constants } from 'src/app/app.constants';
-import { FBPage } from './../models/fb-page.model';
 import { BaseApiService } from './base-api.service';
 import { ApiResponse } from '../models/response.model';
+import { FacebookPostModel } from './../models/facebook-post.model';
 
-type Facebook = FBPage
+type FBModel = FacebookPostModel
 
 @Injectable({
   providedIn: 'root'
 })
-export class FacebookService extends BaseApiService<Facebook> {
+export class FacebookService extends BaseApiService<FBModel> {
 
   constructor(protected http: HttpClient) {
     super(http);
   }
 
-  getFacebookPages(userID: string, userAuthToken: string): Observable<ApiResponse<Facebook>> {
-    return this.get(`${constants.base_url}${userID}/accounts?access_token=${userAuthToken}`);
+  getFacebookPages(userID: string, userAuthToken: string): Observable<ApiResponse<FBModel>> {
+    return this.baseGet(`${userID}/accounts?access_token=${userAuthToken}`);
   }
 
-  addTextPostToFB(facebookPageId: string, content, fbpageAccessToken: string): Observable<ApiResponse<Facebook>> { 
-     content =  encodeURIComponent(content);
-    return this.post(`${constants.base_url}${facebookPageId}/feed?message=${content}&access_token=${fbpageAccessToken}`, '')
+  addTextPostToFB(facebookPageId: string, content, fbpageAccessToken: string): Observable<ApiResponse<FBModel>> { 
+     content = encodeURIComponent(content);
+    return this.externalPost(`${facebookPageId}/feed?message=${content}&access_token=${fbpageAccessToken}`, '')
   }
 
-  addImagePostToFB(facebookPageId: string, imageURL: string, content, fbpageAccessToken: string): Observable<ApiResponse<Facebook>> {
+  addImagePostToFB(facebookPageId: string, imageURL: string, content, fbpageAccessToken: string): Observable<ApiResponse<FBModel>> {
     content =  encodeURIComponent(content);
-    return this.post(`${constants.base_url}${facebookPageId}/photos?url=${imageURL}&message=${content}&access_token=${fbpageAccessToken}`, '');
+    return this.externalPost(`${facebookPageId}/photos?url=${imageURL}&message=${content}&access_token=${fbpageAccessToken}`, '');
   }
 
-  getLongLivedFBAccessToken(userToken: string): Observable<ApiResponse<Facebook>> {
-    return this.get(`https://graph.facebook.com/oauth/access_token?grant_type=fb_exchange_token&client_id=${constants.app_id}&client_secret=${constants.app_secret}&fb_exchange_token=${userToken}`);
+  getLongLivedFBAccessToken(userToken: string): Observable<any> {
+    return this.http.get(`https://graph.facebook.com/oauth/access_token?grant_type=fb_exchange_token&client_id=${constants.app_id}&client_secret=${constants.app_secret}&fb_exchange_token=${userToken}`);
   }
 
-  addVideoPost(facebookPageId: string, fbPageAccessToken: string, fileUrl: string, videoDescription: string): Observable<ApiResponse<Facebook>> {
+  addVideoPost(facebookPageId: string, fbPageAccessToken: string, fileUrl: string, videoDescription: string): Observable<ApiResponse<FBModel>> {
     videoDescription = encodeURIComponent(videoDescription);
-    return this.post(`${constants.base_url}${facebookPageId}/videos?access_token=${fbPageAccessToken}&file_url=${fileUrl}&description=${videoDescription}`, '')
+    return this.externalPost(`${facebookPageId}/videos?access_token=${fbPageAccessToken}&file_url=${fileUrl}&description=${videoDescription}`, '')
   }
   
-  getSinglePagePost(postId: string , fbPageAccessToken: string): Observable<ApiResponse<Facebook>>{
-    return this.get(`${constants.base_url}${postId}?fields=id,message,picture,attachments,created_time&access_token=${fbPageAccessToken}`)
+  getSinglePagePost(postId: string , fbPageAccessToken: string): Observable<ApiResponse<FBModel>>{
+    return this.baseGet(`${postId}?fields=id,message,picture,attachments,created_time&access_token=${fbPageAccessToken}`)
   }
 
-  getPublishedPostsOnFBPages(pageId: string, fbPageAccessToken: string): Observable<ApiResponse<Facebook>> {
-    return this.get(`${constants.base_url}${pageId}/published_posts?access_token=${fbPageAccessToken}`)
+  getPublishedPostsOnFBPages(pageId: string, fbPageAccessToken: string): Observable<ApiResponse<FBModel>> {
+    return this.baseGet(`${pageId}/published_posts?access_token=${fbPageAccessToken}`)
   }
 
-  unLinkFacebookPage(clubId: string): Observable<ApiResponse<Facebook>> {
-    return this.get(`${constants.api_url}/club/unlinkFacebookPage/${clubId}`)
+  unLinkFacebookPage(clubId: string): Observable<ApiResponse<FBModel>> {
+    return this.get(`/club/unlinkFacebookPage/${clubId}`)
   }
 
 }

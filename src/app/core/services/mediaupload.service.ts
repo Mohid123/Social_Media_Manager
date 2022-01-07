@@ -50,7 +50,6 @@ export class MediauploadService {
         }
       })
     })
-    //return this.http.post(`${constants.api_url}/media-upload/mediaFiles/${folderName}/${fieldName}`, formData).pipe(catchError(this._errorHandlerService.handleErrors))
   }
 
 
@@ -81,7 +80,6 @@ export class MediauploadService {
         }
       })
     })
-    //return this._clubApiService.post(`/media-upload/mediaFiles/${folderName}/${fieldName}`, formData)
   }
 
   public subscribeToProgressEvents(subscribeFn: (x: number) => any): void {

@@ -1,5 +1,4 @@
 import { Observable } from 'rxjs';
-import { ApiService } from './api.service';
 import { Injectable } from '@angular/core';
 import { User } from './../models/user.model';
 import { BaseApiService } from './base-api.service';
@@ -22,7 +21,7 @@ export class UsersService extends BaseApiService<UsersData> {
     return this.get(`/profile/getAllUsers?offset=${offset}&limit=${limit}`)
   }
 
-  getUserById(id: string): Observable <any> {
+  getUserById(id: string): Observable <any> { //errors occur in facebook and instagram components when using ApiResponse<UsersData>
     let collection = JSON.parse(localStorage.getItem('selectedClub'))?.pickerClub ? 'pickerClubs' :'club';
     return this.get(`/profile/getUserById/${id}?collection=${collection}`)
   }

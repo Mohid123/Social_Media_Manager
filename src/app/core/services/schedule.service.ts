@@ -1,69 +1,71 @@
 import { Injectable } from '@angular/core';
-import { constants } from 'src/app/app.constants';
-import { ClubApiService } from './club_api.service';
-import { ApiService } from './api.service';
 import * as moment from "moment";
-import { Observable, ObservedValueOf, scheduled } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Schedule } from './../models/schedule.model';
 import { Post } from '../models/post.model';
-import { FBPage } from './../models/fb-page.model';
 import { FacebookPostModel } from '../models/facebook-post.model';
 import { InstagramPostModel } from '../models/instagram-post.model';
+import { BaseApiService } from './base-api.service';
+import { ApiResponse } from '../models/response.model';
+import { HttpClient } from '@angular/common/http';
+
+type schedule = Schedule
 
 @Injectable({
   providedIn: 'root'
 })
-export class ScheduleService {
+export class ScheduleService extends BaseApiService<schedule> {
 
-  constructor(private _apiService: ApiService) { }
+  constructor(protected http: HttpClient) {
+    super(http)
+  }
   scheduleEpox : number;
 
-  getSchedulesByPostedTo(offset , limit , postedTo) : Observable <any>{
-
+  getSchedulesByPostedTo(offset , limit , postedTo) : Observable <ApiResponse<schedule>>{
     offset = parseInt(offset) < 0 ? 0 : offset;
     limit = parseInt(limit) < 1 ? 10 : limit;
-    return this._apiService.get(`/schedule/getScheduleByPostedTo/${postedTo}?offset=${offset}&limit=${limit}`);
+    return this.get(`/schedule/getScheduleByPostedTo/${postedTo}?offset=${offset}&limit=${limit}`);
   }
 
-    schduleClubPost(postedTo: string , clubID: string, post: Post) : Observable <any> {
+    schduleClubPost(postedTo: string , clubID: string, post: Post): Observable <ApiResponse<schedule>> {
     post.postedTo = postedTo
-    return this._apiService.post(`/schedule/scheduleClubPost/${clubID}`, post);
+    return this.post(`/schedule/scheduleClubPost/${clubID}`, post);
   }
 
-  scheduleFacebookPost(FBpost: FacebookPostModel) : Observable <any>{
-    return this._apiService.post('/schedule/scheduleFacebookPost', FBpost)
+  scheduleFacebookPost(FBpost: FacebookPostModel): Observable <ApiResponse<schedule>>{
+    return this.post('/schedule/scheduleFacebookPost', FBpost)
   }
 
-  scheduleInstagramPost(IGpost: InstagramPostModel) : Observable <any> {
-    return this._apiService.post('/schedule/scheduleInstagramPost', IGpost)
+  scheduleInstagramPost(IGpost: InstagramPostModel): Observable <ApiResponse<schedule>> {
+    return this.post('/schedule/scheduleInstagramPost', IGpost)
   }
 
-  getQueuedSchedules(clubID: string) : Observable <any>{
-    return this._apiService.get(`/schedule/getQueuedSchedules/${clubID}`)
+  getQueuedSchedules(clubID: string) : Observable <any>{ //error occurs in schedule.component when using ApiResponse<schedule>
+    return this.get(`/schedule/getQueuedSchedules/${clubID}`)
   }
 
-  getPublishedSchedules(clubID: string): Observable <any> {
-    return this._apiService.get(`/schedule/getPublishedSchedules/${clubID}`)
+  getPublishedSchedules(clubID: string): Observable <any> { //error occurs in schedule.component when using ApiResponse<schedule>
+    return this.get(`/schedule/getPublishedSchedules/${clubID}`)
   }
 
-  getUnPublishedSchedules(clubID: string) : Observable <any> {
-    return this._apiService.get(`/schedule/getUnPublishedSchedules/${clubID}`)
+  getUnPublishedSchedules(clubID: string) : Observable <any> { //error occurs in schedule.component when using ApiResponse<schedule>
+    return this.get(`/schedule/getUnPublishedSchedules/${clubID}`)
   }
 
-  getFacebookSchedules(clubID: string){
-    return this._apiService.get(`/schedule/getFacebookSchedules/${clubID}`)
+  getFacebookSchedules(clubID: string): Observable <ApiResponse<schedule>>{
+    return this.get(`/schedule/getFacebookSchedules/${clubID}`)
   }
 
-  getInstagramSchedules(clubID: string){
-    return this._apiService.get(`/schedule/getInstagramSchedules/${clubID}`)
+  getInstagramSchedules(clubID: string): Observable <ApiResponse<schedule>>{
+    return this.get(`/schedule/getInstagramSchedules/${clubID}`)
   }
 
-  deleteSchedule(scheduleId: string){
-    return this._apiService.get(`/schedule/deleteSchedule/${scheduleId}`);
+  deleteSchedule(scheduleId: string): Observable <ApiResponse<schedule>>{
+    return this.get(`/schedule/deleteSchedule/${scheduleId}`);
   }
   
-  getClubSchedules(clubID: string){
-    return this._apiService.get(`/schedule/getClubSchedules/${clubID}`)
+  getClubSchedules(clubID: string): Observable <ApiResponse<schedule>>{
+    return this.get(`/schedule/getClubSchedules/${clubID}`)
 
   }
 

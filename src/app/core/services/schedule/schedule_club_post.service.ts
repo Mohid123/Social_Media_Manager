@@ -91,7 +91,7 @@ export class ScheduleClubPostService {
           else {
             this.post.title = this.clubName
           }
-          this._scheduleService.schduleClubPost(postedTo, this.clubID, this.post).subscribe((post: Post) => {
+          this._scheduleService.schduleClubPost(postedTo, this.clubID, this.post).subscribe((post: any) => {
             if (idx == self.length - 1) {
               this.toast.success(`Post scheduled For ${postedTo}`, "Success");
               resolve('success')
@@ -162,7 +162,7 @@ export class ScheduleClubPostService {
             else {
               this.post.title = this.clubName
             }
-            this._scheduleService.schduleClubPost(postedTo, this.clubID, this.post).subscribe((post: Post) => {
+            this._scheduleService.schduleClubPost(postedTo, this.clubID, this.post).subscribe((post: any) => {
               if (idx == self.length - 1) {
                 this.toast.success(`Post scheduled For ${postedTo}`, "Success");
                 resolve('success');
