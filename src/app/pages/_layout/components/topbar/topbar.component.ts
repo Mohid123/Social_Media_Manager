@@ -22,8 +22,8 @@ import { MainAuthService } from 'src/app/core/services/auth.service';
 })
 export class TopbarComponent implements OnInit, AfterViewInit {
 
-  public userName: string = localStorage.getItem("userName");
-  public profileImageUrl: string = localStorage.getItem("profileImageUrl");
+  public userName: string = localStorage.getItem('userName');
+  public profileImageUrl: string = localStorage.getItem('profileImageUrl');
 
   closeResult: string;
   // userNameLo: string

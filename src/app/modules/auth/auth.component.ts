@@ -19,9 +19,12 @@ export class AuthComponent implements OnInit {
 
 
   getAllClubs() {
-    this._clubService.getAllClubs(0, 10).subscribe(clubs => {
-      this.allClubs = clubs;
-      this.setDefaultClub()
+    console.log('...............AuthComponent...............:',);
+    this._clubService.getAllClubs(0, 10).subscribe(res => {
+      if(!res.hasErrors()) {
+        this.allClubs = res.data;
+        this.setDefaultClub()
+      }
     }, (error) => {
     })
   }

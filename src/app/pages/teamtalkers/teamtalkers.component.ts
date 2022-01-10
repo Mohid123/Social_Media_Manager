@@ -222,7 +222,7 @@ export class TeamtalkersComponent implements OnInit {
   }
 
   initializeChecklist() {
-    let club = JSON.parse(localStorage.getItem("selectedClub"));
+    let club = JSON.parse(localStorage.getItem('selectedClub'));
     let obj = {
       id: 1,
       isSelected: false,
@@ -235,8 +235,8 @@ export class TeamtalkersComponent implements OnInit {
     this.clubName = club.clubName;
     this.clubLogo = club.logoURL;
     this.clubPrimaryColor = club.clubColor;
-    this.userName = localStorage.getItem("userName");
-    this.profileImageUrl = localStorage.getItem("profileImageUrl");
+    this.userName = localStorage.getItem('userName');
+    this.profileImageUrl = localStorage.getItem('profileImageUrl');
   }
 
   onChangeSingle(value: Date) {
@@ -965,7 +965,7 @@ export class TeamtalkersComponent implements OnInit {
       this.post.type = "poll";
       this.post.postedTo = "Club";
       this.post.text = this.teamtalkerCaption;
-      this.post.userID = localStorage.getItem("clubUid");
+      this.post.userID = localStorage.getItem('clubUid');
       this.poll.expiryDate = Math.round(this.pollSelectedDate.getTime()) * 1000;
       this.poll.startDate = Math.round(new Date().getTime()) * 1000;
       this.poll.votingDays = days;

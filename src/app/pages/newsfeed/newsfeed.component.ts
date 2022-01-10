@@ -11,8 +11,8 @@ export class NewsfeedComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    this.clubName = JSON.parse( localStorage.getItem("selectedClub")).clubName;
-    this.clubLogo = JSON.parse( localStorage.getItem("selectedClub")).logoURL;
+    this.clubName = JSON.parse( localStorage.getItem('selectedClub')).clubName;
+    this.clubLogo = JSON.parse( localStorage.getItem('selectedClub')).logoURL;
   }
 
 }

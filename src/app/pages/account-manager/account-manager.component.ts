@@ -249,7 +249,7 @@ export class AccountManagerComponent implements OnInit {
 
   Club() {
     this._toast.success(
-      `You are logged in via ${JSON.parse(localStorage.getItem("selectedClub")).clubName} Club`
+      `You are logged in via ${JSON.parse(localStorage.getItem('selectedClub')).clubName} Club`
     );
   }
 }

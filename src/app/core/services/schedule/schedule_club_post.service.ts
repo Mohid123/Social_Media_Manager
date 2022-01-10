@@ -19,7 +19,7 @@ export class ScheduleClubPostService {
   clubToken: string
   clubName: string
   pickerClub: any
-  private userClubID: string = localStorage.getItem("clubUid");
+  private userClubID: string = localStorage.getItem('clubUid');
   constructor(private _reportService: ReportService,
     private _postService: PostService,
     private spinner: NgxSpinnerService,

@@ -1,8 +1,9 @@
+import { BaseClub } from './base-club.model';
 import { LoginResponse } from './response/login-response.model';
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export interface Response {
   status: boolean;
-  data: LoginResponse | any;
+  data: LoginResponse | BaseClub[] | any;
 }
 
 export class ApiResponse<T> {

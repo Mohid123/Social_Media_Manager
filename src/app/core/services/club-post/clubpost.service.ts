@@ -16,7 +16,7 @@ import { locale } from './../../../modules/i18n/vocabs/jp';
 export class ClubpostService {
   condition: Boolean = false;
   private post: Post
-  private userClubID : string = localStorage.getItem("clubUid");
+  private userClubID : string = localStorage.getItem('clubUid');
   public postedSuccessfully: EventEmitter<any> = new EventEmitter();
   constructor(private _reportService: ReportService,
     private _postService: PostService,

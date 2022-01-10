@@ -1,3 +1,4 @@
+import { BaseClub } from './../../../core/models/base-club.model';
 import { LoginResponse } from './../../../core/models/response/login-response.model';
 import { ApiResponse } from './../../../core/models/response.model';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -6,7 +7,7 @@ import { ClubService } from './../../../core/services/club.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit, ViewEncapsulation, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Subscription, Observable } from 'rxjs';
+import { Subscription, Observable, throwError } from 'rxjs';
 import { AuthService } from '../_services/auth.service';
 
 import { ActivatedRoute, Router } from '@angular/router';
@@ -30,6 +31,7 @@ import { AuthRequest } from '@app/core/models/requests/auth-request.model';
   providers: [NgbModalConfig, NgbModal, NgbActiveModal]
 })
 export class LoginComponent implements OnInit {
+  public selectedClub$ = this._clubService.SelectedClub$;
   defaultAuth: any = {
     email: '',
     password: '',
@@ -39,9 +41,8 @@ export class LoginComponent implements OnInit {
   hasError: boolean;
   returnUrl: string;
   isLoading$: Observable<boolean>;
-  allClubs: Club[]
-  tempClubs: Club[]
-  selectedClub: any
+  allClubs: BaseClub[]
+  tempClubs: BaseClub[]
   searchString: string = ''
   searchStarted: boolean = false;
   noClubFound: boolean = false;
@@ -117,27 +118,26 @@ export class LoginComponent implements OnInit {
     this.offset = 0
     this.limit = 20
     this.showBackBtn = false;
-    this.getAllClubs(0,20);
   }
 
 
   loginByEmail() {
     var self = this;
-    if (!this.selectedClub) {
+    if (!this._clubService.selectedClub) {
       this.toastr.error('Please Select Club', 'Empty Club')
       return;
     }
     
     const payload: AuthRequest = {
-      clubID: this.selectedClub.id,
+      clubID: this._clubService.selectedClub.id,
       email: this.loginForm.value.email,
       password: this.loginForm.value.password
     }
 
-    if (this.selectedClub.pickerClub) {
-      payload.clubID = this.selectedClub.pickerModelId
-      payload.pickerClubID = this.selectedClub.id
-      payload.clubName = this.selectedClub.clubName
+    if (this._clubService.selectedClub.pickerClub) {
+      payload.clubID = this._clubService.selectedClub.pickerModelId
+      payload.pickerClubID = this._clubService.selectedClub.id
+      payload.clubName = this._clubService.selectedClub.clubName
     }
 
     this.spinner.show();
@@ -176,10 +176,15 @@ export class LoginComponent implements OnInit {
 
 
   getAllClubs(offset, limit) {
-    this._clubService.getAllClubs(offset, limit).subscribe(clubs => {
-      this.allClubs = clubs;
-      this.tempClubs = clubs;
-      this.setDefaultClub()
+    this._clubService.getAllClubs(offset, limit).subscribe(res => {
+      if(!res.hasErrors()) {
+        this.allClubs = res.data;
+        this.tempClubs = res.data;
+        if(this.allClubs.find(club => club.id == this._clubService.selectedClub.id)) {
+          console.log('have selected club:',);
+          this.onClubSelected(this._clubService.selectedClub);
+        }
+      }
     }, (error) => {
       this.toastr.error(error.message)
     })
@@ -245,29 +250,16 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  setDefaultClub() {
-    let localClub = localStorage.getItem('selectedClub');
-    if (!localClub) {
-      localStorage.setItem('selectedClub', JSON.stringify(this.allClubs[0]))
-      return;
-    }
-    else if (localClub) {
-      this.selectedClub = JSON.parse(localClub);
-      this.cf.detectChanges();
-    }
-  }
-
-
   onClubSelected(club) {
+    console.log('onClubSelected:',club);
     if (!club.isPicker) {
       this.isPickerClub = false
       this.modalService.dismissAll()
     }
-    localStorage.setItem('selectedClub', JSON.stringify(club));
-    this.selectedClub = club
+    this._clubService.selectedClub = club;
     constants.clubApiUrl = club.baseURL;
     this.isPickerClub = true
-    if (this.selectedClub.isPicker || this.selectedClub.isPicker) {
+    if (this._clubService.selectedClub.isPicker || this._clubService.selectedClub.isPicker) {
       this.showBackBtn = true
       this.getDividisClubs(this.offset , this.limit)
     }
@@ -299,12 +291,11 @@ export class LoginComponent implements OnInit {
       }
       dividisClubs.map(item => {
         item.pickerClub = true;
-        item.baseURL = this.selectedClub.baseURL;
-        item.pickerModelId = this.selectedClub.id
+        item.baseURL = this._clubService.selectedClub.baseURL;
+        item.pickerModelId = this._clubService.selectedClub.id
       })
       this.allClubs = dividisClubs;
       this.tempClubs = dividisClubs;
-      this.setDefaultClub()
     }, error => {
       this.toastr.error(error.message)
     })

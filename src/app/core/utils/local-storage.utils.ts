@@ -14,7 +14,7 @@ export enum StorageItem {
   UserName = 'userName'
 }
 
-export const getItem = (itemName: StorageItem): unknown | null => {
+export const getItem = (itemName: StorageItem): any | null => {
   const item = localStorage.getItem(itemName);
   return item ? JSON.parse(item) : null;
 };

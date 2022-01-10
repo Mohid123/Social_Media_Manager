@@ -20,6 +20,8 @@ export interface BaseClub {
     baseURL:             string;
     appPackageID:        string;
     isPicker?:           boolean;
+    pickerClub?:         any;
+    pickerModelId?:      string;
     deleteCheck:         boolean;
     id:                  string;
     projectID?:          string;

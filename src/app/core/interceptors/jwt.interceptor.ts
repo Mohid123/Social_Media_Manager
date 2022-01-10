@@ -1,3 +1,4 @@
+import { constants } from './../../app.constants';
 import {
   HttpEvent,
   HttpHandler,
@@ -20,16 +21,20 @@ export class JwtInterceptor implements HttpInterceptor {
     request: HttpRequest<unknown>,
     next: HttpHandler,
   ): Observable<HttpEvent<unknown>> {
-    return next.handle(request).pipe(
-      map((response: any) => {
-        if (response.status) {
-          response.body = {
-            status: [200,201,204].includes(response.status),
-            data: response.body,
-          };
-        }
-        return response;
-      }),
-    );
+    if (request.url.includes(`${constants.api_url}`)) {
+      return next.handle(request).pipe(
+        map((response: any) => {
+          if (response.status) {
+            response.body = {
+              status: [200, 201, 204].includes(response.status),
+              data: response.body,
+            };
+          }
+          return response;
+        }),
+      );
+    } else {
+      return next.handle(request);
+    }
   }
 }
