@@ -341,3 +341,12 @@
     object-fit: cover; 
     border-radius: 50px;
 }
+
+.insta {
+    background-color: rgba(255, 255, 255, 0.95);
+    border-radius: 5px;
+    color: #F14D5A; width: fit-content;
+    padding: 1rem 2rem;  -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    background-color: #F3F6F9 ;
+}

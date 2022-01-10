@@ -19,19 +19,13 @@ import { Post } from "src/app/core/models/post.model";
 import { MainAuthService } from "src/app/core/services/auth.service";
 import { LoggedInUser } from "@app/core/models/logged-in-user.model";
 import { Report } from "src/app/core/models/report.model";
-import { THIS_EXPR } from "@angular/compiler/src/output/output_ast";
-import { isTemplateMiddle } from "typescript";
 import { DatePickerOptions } from "@ngx-tiny/date-picker";
 import { TimePickerOptions } from "@ngx-tiny/time-picker/ngx-time-picker.options";
 import { Poll } from "src/app/core/models/poll.model";
 import * as moment from "moment";
-import { ThisReceiver } from "@angular/compiler";
 import { ClubpostService } from "./../../core/services/club-post/clubpost.service";
-import { mixinColor } from "@angular/material/core";
-import { tr } from "date-fns/locale";
 import { ScheduleClubPostService } from "../../core/services/schedule/schedule_club_post.service";
 import { ScheduleService } from "./../../core/services/schedule.service";
-import { resourceUsage } from "process";
 import { DomSanitizer } from "@angular/platform-browser";
 
 @Component({

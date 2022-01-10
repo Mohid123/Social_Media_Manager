@@ -33,10 +33,7 @@
          padding: 0px 9px;
          color: #999;
          text-align: end;
-         // border-top: 1px solid #eee;
-         // margin: 0 10px;
-
-     }
+        }
 
      .preview-facebook-media .preview-media {
          height: 350px;
@@ -70,10 +67,8 @@
          position: relative;
          overflow: hidden;
      }
-
-
-
-     .preview-facebook-media video {
+    
+    .preview-facebook-media video {
          position: absolute;
          top: 50%;
          left: 50%;
@@ -419,4 +414,13 @@
      .img-circle {
          height: 40px;
          object-fit: cover;
+     }
+
+     .fb{
+        background-color: rgba(255, 255, 255, 0.95);
+        border-radius: 5px; font-size: 2rem; font-weight: 500;
+        color: #4267B2; width: fit-content;
+        padding: 1rem 2rem;  -webkit-backdrop-filter: blur(10px);
+        backdrop-filter: blur(10px);
+        background-color: #F3F6F9;  margin-bottom: 30px;
      }
