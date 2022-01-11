@@ -190,7 +190,6 @@ export class LoginComponent implements OnInit {
     })
   }
 
-
   openVerticallyCentered(content) {
     this.modalService.open(content, { centered: true, size: 'lg' });
     this.noClubFound = false;
@@ -268,7 +267,6 @@ export class LoginComponent implements OnInit {
     }
   }
 
-
   loadMoreClubs() {
     let findSolisClub = this.allClubs.find((item:any)=>item.clubName == "TeamTalkers" && item.id == "614ac4ceb71e7462a965288e" );
     if(findSolisClub){
@@ -280,6 +278,7 @@ export class LoginComponent implements OnInit {
       this.getDividisClubs(this.offset , this.limit)
     }
   }
+
   getDividisClubs(offset, limit) {
     offset = this.offset;
     limit = this.limit
