@@ -6,6 +6,8 @@ import { Feedback } from './../../core/models/feedback.model';
 import { FeedbackService } from './../../core/services/feedback.service';
 import { ToastrService } from 'ngx-toastr';
 import { JoyrideService } from 'ngx-joyride';
+import { ApiResponse } from '@app/core/models/response.model';
+import { ThrowStmt } from '@angular/compiler';
 
 @Component({
   selector: 'app-help',
@@ -47,7 +49,6 @@ export class FeedbackComponent implements OnInit {
   }
 
   onSubmit(form: FormGroup) {
-    
     let response = form.value;
     response['userId'] = this.userId
     response['clubId'] = this.club.id
@@ -57,7 +58,6 @@ export class FeedbackComponent implements OnInit {
       this._mediaUploadService.uploadClubMedia('Feedback', this.userId, this.mediaFile).subscribe((media: any) => {
         response['imageUrl'] = media.url
         this.submitFeedback(response)
-       
       } , err=>{
         this.spinner.hide()
         this.toast.error(err.message)
@@ -69,14 +69,17 @@ export class FeedbackComponent implements OnInit {
   }
 
   submitFeedback(feedback) {
-    this._feedBackService.addFeedback(feedback).subscribe((data) => {
-      this.resetFeedbackForm()     
-    }, err => {
-      this.spinner.hide();
-      console.log('err: ', err.message);
-      this.toast.error(err.message);
-    })
-  }
+    this._feedBackService.addFeedback(feedback).subscribe((res: ApiResponse<Feedback>) => {
+      debugger
+      if(!res.hasErrors()) {
+        this.resetFeedbackForm(); 
+      }
+    else if(res.errors) {
+      this.spinner.hide()
+      this.toast.error('Feedback failed to submit','Failed!')
+    }
+  })
+}
 
 
   onClick() {
@@ -86,17 +89,13 @@ export class FeedbackComponent implements OnInit {
 }
 
   onSelectFile(event) {
-    ;
     if (event.target.files && event.target.files[0]) {
       this.mediaFile = event.target.files && event.target.files[0]
       var reader = new FileReader();
-
-      reader.readAsDataURL(event.target.files[0]); // read file as data url
-
-      reader.onload = (event) => { // called once readAsDataURL is completed
+       reader.readAsDataURL(event.target.files[0]); // read file as data url
+       reader.onload = (event) => { // called once readAsDataURL is completed
         this.url = event.target.result;
         this.cf.detectChanges()
-
       }
     }
   }
@@ -111,7 +110,7 @@ export class FeedbackComponent implements OnInit {
     this.feedback = new Feedback()
     this.url = ""
     this.spinner.hide()
-    this.toast.success('Feedback submitted', 'Success');
+    this.toast.success('Feedback submitted', 'Success!');
   }
 
 }
