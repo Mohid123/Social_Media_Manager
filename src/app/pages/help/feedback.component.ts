@@ -72,8 +72,9 @@ export class FeedbackComponent implements OnInit {
     this._feedBackService.addFeedback(feedback).subscribe((data) => {
       this.resetFeedbackForm()     
     }, err => {
-      this.spinner.hide()
-      this.toast.error(err.message)
+      this.spinner.hide();
+      console.log('err: ', err.message);
+      this.toast.error(err.message);
     })
   }
 

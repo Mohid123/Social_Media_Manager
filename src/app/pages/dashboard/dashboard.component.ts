@@ -257,20 +257,17 @@ export class DashboardComponent implements OnInit {
 
   getSignedInUserStats() {
     this._reportService.getFacebookStats(this.signedInuserID).subscribe((res: ApiResponse<Report>) => {
-      debugger
-      if(!res.hasErrors) {
+      if(!res.hasErrors()) {
         this.facebookStats = res.data;
       }
     })
     this._reportService.getInstagramStats(this.signedInuserID).subscribe((res: ApiResponse<Report>) => {
-      debugger
-      if(!res.hasErrors) {
+      if(!res.hasErrors()) {
         this.instagramStats = res.data;
       }
     })
     this._reportService.getClubStatus(this.signedInuserID).subscribe((res: ApiResponse<Report>) => {
-      debugger
-      if(!res.hasErrors) {
+      if(!res.hasErrors()) {
         this.clubStats = res.data;
       }
       this.cf.detectChanges();
@@ -279,21 +276,23 @@ export class DashboardComponent implements OnInit {
 
   getLastSevenDaysStats() {
     this._reportService.getLastSevenDaysStats(this.signedInuserID, 'Facebook')
-    .subscribe((facebookStats: ApiResponse<Report>) => {
-      if(!facebookStats.hasErrors) {
-        this.facebookStatistics = facebookStats.data;
+    .subscribe((res: ApiResponse<Report>) => {
+      if(!res.hasErrors()) {
+        this.facebookStatistics = res.data;
       }
     })
     this._reportService.getLastSevenDaysStats(this.signedInuserID, 'Instagram')
-    .subscribe((instagramStats: ApiResponse<Report>) => {
-      if(!instagramStats.hasErrors) {
-        this.instagramStatistics = instagramStats.data;
+    .subscribe((res: ApiResponse<Report>) => {
+      if(!res.hasErrors()) {
+
+        this.instagramStatistics = res.data;
       }
     })
     this._reportService.getLastSeventDaysStatsForClub(this.signedInuserID)
-    .subscribe((clubStats: ApiResponse<Report>) => {
-      if(!clubStats.hasErrors) {
-        this.clubStatistics = clubStats.data;;
+    .subscribe((res: ApiResponse<Report>) => {
+      if(!res.hasErrors()) {
+        debugger
+        this.clubStatistics = res.data;
       }
     })
     this.initializeStatsChart()
