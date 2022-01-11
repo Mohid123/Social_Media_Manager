@@ -5,6 +5,7 @@ export class Report {
     userID : string
     postID : string
     successStatus : number   //(0 for Failed , 1 for Success , 2 for Pending)
+    postedTime: string | number | Date
 
 
     constructor(){

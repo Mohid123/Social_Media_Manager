@@ -2,6 +2,8 @@ import { ChangeDetectorRef } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { ReportService } from 'src/app/core/services/report.service';
 import { LayoutService } from '../../../../../core';
+import { ApiResponse } from '@app/core/models/response.model';
+import { Report } from '@app/core/models/report.model';
 
 @Component({
   selector: 'app-quick-panel-offcanvas',
@@ -27,15 +29,13 @@ export class QuickPanelOffcanvasComponent implements OnInit {
   }
 
   getLatestReports() {
-    this.setActiveTabId('kt_quick_panel_notifications')
+
     let userId = localStorage.getItem('clubUid');
-    this._reportService.getLatestReports(userId).subscribe((reports: any) => {
-      reports.map((singleReport: any) => {
-        let time = new Date(singleReport.postedTime).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })
-        singleReport.time = time;
-      });
-      this.latestReports = reports;
-      this.cf.detectChanges();
+    this._reportService.getLatestReports(userId)
+    .subscribe((reports: ApiResponse<Report>) => {
+      if(!reports.hasErrors()) {
+        this.latestReports = reports.data
+      }
     })
   }
 

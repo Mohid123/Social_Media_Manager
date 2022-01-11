@@ -21,7 +21,7 @@ export class UsersService extends BaseApiService<UsersData> {
     return this.get(`/profile/getAllUsers?offset=${offset}&limit=${limit}`)
   }
 
-  getUserById(id: string): Observable <any> { //errors occur in facebook and instagram components when using ApiResponse<UsersData>
+  getUserById(id: string): Observable <any> {
     let collection = JSON.parse(localStorage.getItem('selectedClub'))?.pickerClub ? 'pickerClubs' :'club';
     return this.get(`/profile/getUserById/${id}?collection=${collection}`)
   }

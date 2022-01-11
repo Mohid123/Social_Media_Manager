@@ -21,6 +21,8 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { Content } from '@angular/compiler/src/render3/r3_ast';
 import { TemplateRef } from '@angular/core';
 import { AsideComponent } from './../_layout/components/aside/aside.component';
+import { ApiResponse } from '@app/core/models/response.model';
+import { Report } from '@app/core/models/report.model';
 
 
 
@@ -228,20 +230,33 @@ export class DashboardComponent implements OnInit {
     this.cf.detectChanges();
   }
 
-
   getLatestReports() {
 
     let userId = localStorage.getItem('clubUid');
-    this._reportService.getLatestReports(userId).subscribe((reports: any) => {
-      reports.map((singleReport: any) => {
-        let time = new Date(singleReport.postedTime).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })
-        singleReport.time = time;
-      });
-      this.latestReports = reports;
-      this.cf.detectChanges();
-      this.spinner.hide()
+    this._reportService.getLatestReports(userId)
+    .subscribe((reports: ApiResponse<Report>) => {
+      debugger
+      if(!reports.hasErrors()) {
+        reports.data.postedTime = new Date(reports.data.postedTime).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })
+        this.latestReports = reports.data
+      }
     })
   }
+
+
+  // getLatestReports() {
+
+  //   let userId = localStorage.getItem('clubUid');
+  //   this._reportService.getLatestReports(userId).subscribe((reports: any) => {
+  //     reports.map((singleReport: any) => {
+  //       let time = new Date(singleReport.postedTime).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })
+  //       singleReport.time = time;
+  //     });
+  //     this.latestReports = reports;
+  //     this.cf.detectChanges();
+  //     this.spinner.hide()
+  //   })
+  // }
 
   openJoyRide() {
     console.log('sdsd')
