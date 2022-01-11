@@ -4,7 +4,7 @@ export class Report {
     clubID : string
     userID : string
     postID : string
-    successStatus : number   //(0 for Failed , 1 for Success , 2 for Pending)
+    successStatus : number | string   //(0 for Failed , 1 for Success , 2 for Pending)
     postedTime: string | number | Date
 
 

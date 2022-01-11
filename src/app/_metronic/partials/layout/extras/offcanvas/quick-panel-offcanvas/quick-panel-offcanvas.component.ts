@@ -32,9 +32,10 @@ export class QuickPanelOffcanvasComponent implements OnInit {
 
     let userId = localStorage.getItem('clubUid');
     this._reportService.getLatestReports(userId)
-    .subscribe((reports: ApiResponse<Report>) => {
-      if(!reports.hasErrors()) {
-        this.latestReports = reports.data
+    .subscribe((res: ApiResponse<Report>) => {
+      if(!res.hasErrors()) {
+        this.latestReports = res.data;
+        this.cf.detectChanges();
       }
     })
   }

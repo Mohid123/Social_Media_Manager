@@ -1,6 +1,5 @@
 import { ReportService } from './../../core/services/report.service';
-import { ClubService } from './../../core/services/club.service';
-import { Component, ViewChild, OnInit, Inject, NgZone, PLATFORM_ID, AfterViewInit, ChangeDetectorRef } from '@angular/core';
+import { Component, ViewChild, OnInit, ChangeDetectorRef } from '@angular/core';
 import { NgxSpinnerService } from "ngx-spinner";
 import {
   ChartComponent,
@@ -15,14 +14,13 @@ import {
   ApexTitleSubtitle,
   ApexLegend
 } from "ng-apexcharts";
-import { Club } from 'src/app/core/models/club.model';
-import { constants } from 'src/app/app.constants';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { Content } from '@angular/compiler/src/render3/r3_ast';
 import { TemplateRef } from '@angular/core';
 import { AsideComponent } from './../_layout/components/aside/aside.component';
 import { ApiResponse } from '@app/core/models/response.model';
 import { Report } from '@app/core/models/report.model';
+import { Club } from './../../core/models/club.model';
 
 
 
@@ -53,23 +51,22 @@ export class DashboardComponent implements OnInit {
   @ViewChild("appTour") modalContent: TemplateRef<any>;
   public chartOptions: Partial<ChartOptions>;
 
-  public facebookStats: any
-  public instagramStats: any
-  public clubStats: any
-  public latestReports: any = []
-  public signedInuserID: string
-  public facebookStatistics: any = [0, 0, 0, 0, 0, 0, 0, 0]
-  public instagramStatistics: any = [0, 0, 0, 0, 0, 0, 0, 0]
-  public clubStatistics: any = [0, 0, 0, 0, 0, 0, 0, 0]
-  public selectedClub: Club
-  clubPrimaryColor: string
+  public facebookStats: any;
+  public instagramStats: any;
+  public clubStats: any;
+  public latestReports: any = [];
+  public signedInuserID: string;
+  public facebookStatistics: any = [0, 0, 0, 0, 0, 0, 0, 0];
+  public instagramStatistics: any = [0, 0, 0, 0, 0, 0, 0, 0];
+  public clubStatistics: any = [0, 0, 0, 0, 0, 0, 0, 0];
+  public selectedClub: Club;
+  clubPrimaryColor: string;
   closeResult: string;
   // content: any;
   // public clubName: string = localStorage.getItem('club');
   // public clubLogo: string = localStorage.getItem('clubLogo')
 
   constructor(private spinner: NgxSpinnerService,
-    private _clubService: ClubService,
     private _reportService: ReportService,
     private cf: ChangeDetectorRef,
     private modalService: NgbModal,
@@ -86,6 +83,7 @@ export class DashboardComponent implements OnInit {
     this.getLastSevenDaysStats()
     this.showAppTour()
     this.spinner.show()
+    this.cf.detectChanges();
     // this.openVerticallyCentered(this.modalContent);
 
   }
@@ -107,6 +105,7 @@ export class DashboardComponent implements OnInit {
       return;
     }
   }
+
   openVerticallyCentered(content) {
     this.modalService.open(content, { centered: true }).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
@@ -234,29 +233,13 @@ export class DashboardComponent implements OnInit {
 
     let userId = localStorage.getItem('clubUid');
     this._reportService.getLatestReports(userId)
-    .subscribe((reports: ApiResponse<Report>) => {
-      debugger
-      if(!reports.hasErrors()) {
-        reports.data.postedTime = new Date(reports.data.postedTime).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })
-        this.latestReports = reports.data
+    .subscribe((res: ApiResponse<Report>) => {
+      if(!res.hasErrors()) {
+        this.latestReports = res.data
+        this.cf.detectChanges();
       }
     })
   }
-
-
-  // getLatestReports() {
-
-  //   let userId = localStorage.getItem('clubUid');
-  //   this._reportService.getLatestReports(userId).subscribe((reports: any) => {
-  //     reports.map((singleReport: any) => {
-  //       let time = new Date(singleReport.postedTime).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })
-  //       singleReport.time = time;
-  //     });
-  //     this.latestReports = reports;
-  //     this.cf.detectChanges();
-  //     this.spinner.hide()
-  //   })
-  // }
 
   openJoyRide() {
     console.log('sdsd')
@@ -269,34 +252,53 @@ export class DashboardComponent implements OnInit {
   }
 
   getClubStats() {
-
     return this._reportService.getClubStatus(this.signedInuserID)
   }
 
   getSignedInUserStats() {
-    this._reportService.getFacebookStats(this.signedInuserID).subscribe(FBstats => {
-      this.facebookStats = FBstats
-      this.getInstagramStats().subscribe(IGstats => {
-        this.instagramStats = IGstats
-        this.getClubStats().subscribe(clubStats => {
-          this.clubStats = clubStats
-          this.cf.detectChanges();
-        })
-      })
+    this._reportService.getFacebookStats(this.signedInuserID).subscribe((res: ApiResponse<Report>) => {
+      debugger
+      if(!res.hasErrors) {
+        this.facebookStats = res.data;
+      }
+    })
+    this._reportService.getInstagramStats(this.signedInuserID).subscribe((res: ApiResponse<Report>) => {
+      debugger
+      if(!res.hasErrors) {
+        this.instagramStats = res.data;
+      }
+    })
+    this._reportService.getClubStatus(this.signedInuserID).subscribe((res: ApiResponse<Report>) => {
+      debugger
+      if(!res.hasErrors) {
+        this.clubStats = res.data;
+      }
+      this.cf.detectChanges();
     })
   }
 
   getLastSevenDaysStats() {
-    this._reportService.getLastSevenDaysStats(this.signedInuserID, 'Facebook').subscribe(facebookStats => {
-      this.facebookStatistics = facebookStats;
-      this._reportService.getLastSevenDaysStats(this.signedInuserID, 'Instagram').subscribe(instagramStats => {
-        this.instagramStatistics = instagramStats;
-        this._reportService.getLastSeventDaysStatsForClub(this.signedInuserID).subscribe(clubStats => {
-          this.clubStatistics = clubStats
-          this.initializeStatsChart()
-        })
-      })
+    this._reportService.getLastSevenDaysStats(this.signedInuserID, 'Facebook')
+    .subscribe((facebookStats: ApiResponse<Report>) => {
+      if(!facebookStats.hasErrors) {
+        this.facebookStatistics = facebookStats.data;
+      }
     })
+    this._reportService.getLastSevenDaysStats(this.signedInuserID, 'Instagram')
+    .subscribe((instagramStats: ApiResponse<Report>) => {
+      if(!instagramStats.hasErrors) {
+        this.instagramStatistics = instagramStats.data;
+      }
+    })
+    this._reportService.getLastSeventDaysStatsForClub(this.signedInuserID)
+    .subscribe((clubStats: ApiResponse<Report>) => {
+      if(!clubStats.hasErrors) {
+        this.clubStatistics = clubStats.data;;
+      }
+    })
+    this.initializeStatsChart()
+    this.cf.detectChanges();
   }
 
-}
+
+  }
