@@ -143,7 +143,7 @@
                 </div>
                 <div class="col-xl-4 col-xs-3">
                     <a class="card card-custom bgi-no-repeat card-stretch gutter-b"
-                        [ngStyle]="{'background-color': clubPrimaryColor}">
+                        [ngStyle]="{'background-color':(selectedClub$ | async)?.clubColor}">
                         <div class="card-body">
                             <i class="svg-icon menu-icon icon-lg"><span><img class="rounded"
                                 style="height: auto; width: 29px; " [src]="(selectedClub$ | async)?.logoURL"></span></i>
