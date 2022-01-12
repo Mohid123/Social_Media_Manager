@@ -1,7 +1,7 @@
-import { environment } from '../environments/environment';
+import { getItem, StorageItem } from './core/utils/local-storage.utils';
 
 export const constants = {
-    clubApiUrl: localStorage.getItem('selectedClub') ? JSON.parse(localStorage.getItem('selectedClub')).baseURL : "" ,
+    clubApiUrl: getItem(StorageItem.SelectedClub)?.baseURL || "" ,
     api_url: 'https://socialapi.solissol.com/api/v1/en' ,
     base_url: 'https://graph.facebook.com/',
     app_id: '132795392262404',

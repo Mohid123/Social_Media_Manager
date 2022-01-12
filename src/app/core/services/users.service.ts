@@ -1,3 +1,4 @@
+import { ClubService } from './club.service';
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { User } from './../models/user.model';
@@ -11,7 +12,10 @@ type UsersData = User
 })
 export class UsersService extends BaseApiService<UsersData> {
 
-  constructor(protected http: HttpClient) {
+  constructor(
+    private clubService: ClubService,
+    protected http: HttpClient,
+  ) {
     super(http);
   }
 
@@ -22,7 +26,7 @@ export class UsersService extends BaseApiService<UsersData> {
   }
 
   getUserById(id: string): Observable <any> {
-    let collection = JSON.parse(localStorage.getItem('selectedClub'))?.pickerClub ? 'pickerClubs' :'club';
+    let collection = this.clubService.selectedClub?.pickerClub ? 'pickerClubs' :'club';
     return this.get(`/profile/getUserById/${id}?collection=${collection}`)
   }
 

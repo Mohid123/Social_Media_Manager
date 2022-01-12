@@ -1,3 +1,5 @@
+import { ClubService } from './../../core/services/club.service';
+import { combineLatest } from 'rxjs';
 import { ReportService } from './../../core/services/report.service';
 import { Component, ViewChild, OnInit, ChangeDetectorRef } from '@angular/core';
 import { NgxSpinnerService } from "ngx-spinner";
@@ -59,14 +61,16 @@ export class DashboardComponent implements OnInit {
   public facebookStatistics: any = [0, 0, 0, 0, 0, 0, 0, 0];
   public instagramStatistics: any = [0, 0, 0, 0, 0, 0, 0, 0];
   public clubStatistics: any = [0, 0, 0, 0, 0, 0, 0, 0];
-  public selectedClub: Club;
+  public selectedClub$ = this.clubService.SelectedClub$
   clubPrimaryColor: string;
   closeResult: string;
   // content: any;
   // public clubName: string = localStorage.getItem('club');
   // public clubLogo: string = localStorage.getItem('clubLogo')
 
-  constructor(private spinner: NgxSpinnerService,
+  constructor(
+    private spinner: NgxSpinnerService,
+    private clubService: ClubService,
     private _reportService: ReportService,
     private cf: ChangeDetectorRef,
     private modalService: NgbModal,
@@ -76,23 +80,15 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit() {
     this.signedInuserID = localStorage.getItem('clubUid');
-    this.getSelectedClub();
     this.getLatestReports()
     this.getSignedInUserStats()
-    this.initializeStatsChart()
+    // this.initializeStatsChart()
     this.getLastSevenDaysStats()
     this.showAppTour()
     this.spinner.show()
-    this.cf.detectChanges();
+    // this.cf.detectChanges();
     // this.openVerticallyCentered(this.modalContent);
 
-  }
-
-  getSelectedClub() {
-    
-    let club = JSON.parse(localStorage.getItem('selectedClub'));
-    this.selectedClub = club;
-    this.clubPrimaryColor = this.selectedClub.clubColor;
   }
 
 
@@ -140,9 +136,9 @@ export class DashboardComponent implements OnInit {
           color: "#D62976"
         },
         {
-          name: this.selectedClub.clubName,
+          name: this.clubService.selectedClub.clubName,
           data: this.clubStatistics,
-          color: this.selectedClub.clubColor
+          color: this.clubService.selectedClub.clubColor
         }
       ],
 
@@ -275,28 +271,23 @@ export class DashboardComponent implements OnInit {
   }
 
   getLastSevenDaysStats() {
-    this._reportService.getLastSevenDaysStats(this.signedInuserID, 'Facebook')
-    .subscribe((res: ApiResponse<Report>) => {
-      if(!res.hasErrors()) {
-        this.facebookStatistics = res.data;
+    combineLatest(
+      this._reportService.getLastSevenDaysStats(this.signedInuserID, 'Facebook'),
+      this._reportService.getLastSevenDaysStats(this.signedInuserID, 'Instagram'),
+      this._reportService.getLastSeventDaysStatsForClub(this.signedInuserID),
+    ).subscribe(res => {
+      if (!res[0].hasErrors()) {
+        this.facebookStatistics = res[0].data;
       }
-    })
-    this._reportService.getLastSevenDaysStats(this.signedInuserID, 'Instagram')
-    .subscribe((res: ApiResponse<Report>) => {
-      if(!res.hasErrors()) {
-
-        this.instagramStatistics = res.data;
+      if (!res[1].hasErrors()) {
+        this.instagramStatistics = res[1].data;
       }
-    })
-    this._reportService.getLastSeventDaysStatsForClub(this.signedInuserID)
-    .subscribe((res: ApiResponse<Report>) => {
-      if(!res.hasErrors()) {
-        debugger
-        this.clubStatistics = res.data;
+      if (!res[2].hasErrors()) {
+        this.clubStatistics = res[2].data;
       }
+      this.initializeStatsChart()
+      // this.cf.detectChanges();
     })
-    this.initializeStatsChart()
-    this.cf.detectChanges();
   }
 
 

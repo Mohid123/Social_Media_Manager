@@ -1,3 +1,4 @@
+import { ClubService } from './../services/club.service';
 import { catchError } from 'rxjs/operators';
 import { Observable, throwError } from 'rxjs';
 import { Injectable } from "@angular/core";
@@ -5,10 +6,17 @@ import { HttpInterceptor, HttpHandler, HttpRequest, HttpEvent } from "@angular/c
 import { constants } from 'src/app/app.constants';
 @Injectable()
 export class Interceptor implements HttpInterceptor {
+
+  constructor(
+    private clubService: ClubService
+  ) {
+
+  }
+
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     let customReq;
-    let clubBaseUrl = constants.clubApiUrl;
-    let club = localStorage.getItem('selectedClub') ? JSON.parse(localStorage.getItem('selectedClub')) : ""
+    let club = this.clubService.selectedClub;
+    let clubBaseUrl = club?.baseURL;
 
     if (request.url.includes('getAllClubs') || request.url.includes('loginByEmail')) {
       customReq = request.clone()
@@ -21,12 +29,12 @@ export class Interceptor implements HttpInterceptor {
         headers: request.headers.set('Authorization', localStorage.getItem('app-token'))
       });
     }
-    else if (request.url.includes(constants.clubApiUrl) && club.pickerClub) {
+    else if (request.url.includes(clubBaseUrl) && club.pickerClub) {
       customReq = request.clone({
         headers: request.headers.set('Authorization', localStorage.getItem('club-token')).set('clubID', club.id)
       });
     }
-    else if (request.url.includes(constants.clubApiUrl)) {
+    else if (request.url.includes(clubBaseUrl)) {
       customReq = request.clone({
         headers: request.headers.set('Authorization', localStorage.getItem('club-token'))
       });

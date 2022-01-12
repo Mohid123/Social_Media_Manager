@@ -1,3 +1,4 @@
+import { ClubService } from './club.service';
 import { Observable } from 'rxjs';
 import { ApiService } from './api.service';
 import { Injectable } from '@angular/core';
@@ -14,7 +15,10 @@ type report = Report
 export class ReportService extends BaseApiService<report> {
   private report : Report
 
-  constructor(protected http: HttpClient) {
+  constructor(
+    private clubService:ClubService,
+    protected http: HttpClient,
+  ) {
     super(http)
     this.report = new Report();
   }
@@ -65,7 +69,7 @@ export class ReportService extends BaseApiService<report> {
   }
 
   createReport(status, postId?, postedTo?) {
-    this.report.clubID = JSON.parse(localStorage.getItem('selectedClub')).id; ;
+    this.report.clubID = this.clubService.selectedClub?.id; ;
     this.report.postID = postId ? postId : "";
     this.report.postedTo = postedTo;
     this.report.successStatus = status;

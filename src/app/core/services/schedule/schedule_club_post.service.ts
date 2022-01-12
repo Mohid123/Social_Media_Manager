@@ -1,3 +1,4 @@
+import { ClubService } from './../club.service';
 import { Injectable } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
@@ -20,7 +21,9 @@ export class ScheduleClubPostService {
   clubName: string
   pickerClub: any
   private userClubID: string = localStorage.getItem('clubUid');
-  constructor(private _reportService: ReportService,
+  constructor(
+    private clubService: ClubService,
+    private _reportService: ReportService,
     private _postService: PostService,
     private spinner: NgxSpinnerService,
     private toast: ToastrService,
@@ -29,11 +32,13 @@ export class ScheduleClubPostService {
     private _scheduleService: ScheduleService
   ) {
     this.post = new Post()
-    this.club = JSON.parse(localStorage.getItem('selectedClub')) 
-    this.clubID = this.club.id
-    this.clubToken = localStorage.getItem('club-token');
-    this.clubName = this.club.clubName
-    this.pickerClub = JSON.parse(localStorage.getItem('selectedClub')).pickerClub;
+    this.clubService.SelectedClub$.subscribe(club => {
+      this.club = club 
+      this.clubID = this.club.id
+      this.clubToken = localStorage.getItem('club-token');
+      this.clubName = this.club.clubName
+      this.pickerClub = club.pickerClub;
+    })
   }
 
   scheduleTextPost(postedText, postedTo, scheduledDate, selectedList) {

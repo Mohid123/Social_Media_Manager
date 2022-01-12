@@ -1,5 +1,5 @@
 import { ToastrModule, ToastrService } from "ngx-toastr";
-import { Observable } from "rxjs";
+import { Observable, Subject } from "rxjs";
 import { MainAuthService } from "./../../core/services/auth.service";
 import { UsersService } from "./../../core/services/users.service";
 import { FacebookService } from "./../../core/services/facebook.service";
@@ -17,13 +17,16 @@ import { ExtrasModule } from './../../_metronic/partials/layout/extras/extras.mo
 import { ChangeDetectorRef } from "@angular/core";
 import { ClubService } from './../../core/services/club.service';
 import { Club } from './../../core/models/club.model';
-import { take } from "rxjs/operators";
+import { take, takeUntil } from "rxjs/operators";
 import { PickerClubService } from './../../core/services/picker_clubs.service';
 @Component({
   selector: "app-account-manager",
   templateUrl: "./account-manager.component.html",
 })
 export class AccountManagerComponent implements OnInit {
+
+  destroy$ = new Subject();
+
   public profileImageUrl: string = localStorage.getItem('profileImageUrl')
   public socialUser: SocialUser;
   public signedInUser: LoggedInUser;
@@ -58,12 +61,14 @@ export class AccountManagerComponent implements OnInit {
 
 
   ngOnInit() {
-    this.club = JSON.parse(localStorage.getItem('selectedClub'))
-    this.clubName = this.club.clubName;
-    this.clubLogo = this.club.logoURL;
-    this.userExisitngFacebookPages = this.club?.FBPages ? this.club?.FBPages : []
-    this.getSignedInUser();
-    this.set_socialFlag_after_getting_club()
+    this._clubService.SelectedClub$.pipe(takeUntil(this.destroy$)).subscribe(club => {
+      this.club = club
+      this.clubName = this.club.clubName;
+      this.clubLogo = this.club.logoURL;
+      this.userExisitngFacebookPages = this.club?.FBPages ? this.club?.FBPages : []
+      this.getSignedInUser();
+      this.set_socialFlag_after_getting_club()
+    })
   }
 
   unLinkFacebookAccount(clubId: string) {
@@ -91,10 +96,9 @@ export class AccountManagerComponent implements OnInit {
 
 
   setFbProfile() {
-    let FBprofile = JSON.parse(localStorage.getItem('selectedClub'))?.userFacebookProfile;
+    let FBprofile = this.club?.userFacebookProfile;
     this.userFBprofile.fbUsername = FBprofile?.fbUsername;
     this.userFBprofile.fbProfileImageUrl = FBprofile?.fbProfileImageUrl;
-    localStorage.setItem('selectedClub', JSON.stringify(this.club));
     this.cf.detectChanges();
   }
 
@@ -144,7 +148,7 @@ export class AccountManagerComponent implements OnInit {
         this.userFBprofile.fbEmail = this.socialUser.response.email;
         this.userFBprofile.fbUsername = this.socialUser.response.name;
         this.userFBprofile.fbProfileImageUrl = this.socialUser.response.picture.data.url;
-        let selectedClub = JSON.parse(localStorage.getItem('selectedClub'))
+        let selectedClub = this.club;
         if(selectedClub) {
           selectedClub.userFacebookProfile = this.userFBprofile;
           localStorage.setItem('selectedClub',JSON.stringify(selectedClub));
@@ -210,7 +214,7 @@ export class AccountManagerComponent implements OnInit {
   }
 
   set_socialFlag_after_getting_club() {
-    this.selectedClub = JSON.parse(localStorage.getItem('selectedClub')) as Club;
+    this.selectedClub = this.club;
     this.selectedClub.clubName == "Solis Solution" && this.selectedClub.id == "60db0c52723416289b31f1d9" ? this.socialFlag = true : this.socialFlag = false;
   }
 
@@ -249,7 +253,12 @@ export class AccountManagerComponent implements OnInit {
 
   Club() {
     this._toast.success(
-      `You are logged in via ${JSON.parse(localStorage.getItem('selectedClub')).clubName} Club`
+      `You are logged in via ${this.club.clubName} Club`
     );
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.complete();
+    this.destroy$.unsubscribe();
   }
 }

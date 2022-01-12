@@ -1,7 +1,8 @@
+import { ClubService } from './../../../../core/services/club.service';
 import { MainAuthService } from './../../../../core/services/auth.service';
 import { AuthService } from './../../../../modules/auth/_services/auth.service';
 import { Location } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { LayoutService } from '../../../../_metronic/core';
 import { Club } from 'src/app/core/models/club.model';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
@@ -9,13 +10,18 @@ import { Router } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import * as CryptoJS from 'crypto-js';
 import { JoyrideService } from 'ngx-joyride';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-aside',
   templateUrl: './aside.component.html',
   styleUrls: ['./aside.component.scss'],
 })
-export class AsideComponent implements OnInit {
+export class AsideComponent implements OnInit, OnDestroy {
+
+  destroy$ = new Subject();
+
   public userNameLogout: string = localStorage.getItem('userName')
   public profileImageUrl: string = localStorage.getItem('profileImageUrl')
   userName: string
@@ -34,18 +40,24 @@ export class AsideComponent implements OnInit {
   closeResult: string;
   socialFlag: boolean = false;
   sponsorPanelExists: boolean = false;
-  constructor(private layout: LayoutService,
+  constructor(
+    private clubService: ClubService,
+    private layout: LayoutService,
     private loc: Location,
     private _authService: MainAuthService,
     private modalService: NgbModal,
     private router: Router,
     private http: HttpClient,
-    private joyrideService: JoyrideService) { }
+    private joyrideService: JoyrideService) {
+    this.clubService.SelectedClub$.pipe(takeUntil(this.destroy$)).subscribe(club => {
+      this.selectedClub = club;
+      this.set_socialFlag_after_getting_club();
+    })
+  }
 
 
   ngOnInit(): void {
     this.setProp();
-    this.set_socialFlag_after_getting_club()
   }
 
   logout() {
@@ -65,7 +77,6 @@ export class AsideComponent implements OnInit {
 }
 
   set_socialFlag_after_getting_club() {
-    this.selectedClub = JSON.parse(localStorage.getItem('selectedClub'));
     this.selectedClub.clubName == "Solis Solution" && this.selectedClub.id == "60db0c52723416289b31f1d9" ? this.socialFlag = true : this.socialFlag = false;
     if (!this.selectedClub.sponsorPanelUrl) {
       this.sponsorPanelExists = false
@@ -134,5 +145,10 @@ export class AsideComponent implements OnInit {
     } else {
       return './assets/media/logos/logo-light.png';
     }
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.complete();
+    this.destroy$.unsubscribe();
   }
 }

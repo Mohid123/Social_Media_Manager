@@ -49,7 +49,12 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
   );
   private unsubscribe: Subscription[] = []; 
 
-  constructor(private layout: LayoutService, private router: Router , private _clubService : ClubService , private cf : ChangeDetectorRef) {
+  constructor(
+    private layout: LayoutService, 
+    private router: Router , 
+    private _clubService : ClubService , 
+    private cf : ChangeDetectorRef
+  ) {
     this.loader$ = this.loaderSubject;
     const routerSubscription = this.router.events.subscribe((event) => {
       if (event instanceof NavigationStart) {
@@ -136,7 +141,7 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   getLiveStreamBit(){
-    let club = JSON.parse(localStorage.getItem('selectedClub'));
+    let club = this._clubService.selectedClub;
     if(club.id == '60a1f5fb764e4033cc10f7d5'){
       this.showLiveStream = true;
       this._clubService.getLiveStreamBit().subscribe((data:any)=>{

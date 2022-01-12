@@ -1,3 +1,4 @@
+import { ClubService } from './../club.service';
 import { Injectable } from '@angular/core';
 import { ScheduleService } from './../schedule.service';
 import { map, take } from 'rxjs/operators';
@@ -13,11 +14,16 @@ export class ScheduleSocialPostService {
   clubID: string
 
   constructor(
+    private clubService: ClubService,
     private _scheduleService: ScheduleService,
     private _mediaUploadService: MediauploadService,
     private spinner: NgxSpinnerService,
     private toast: ToastrService,
-  ) { this.clubID = JSON.parse(localStorage.getItem('selectedClub')).id }
+  ) { 
+    this.clubService.SelectedClub$.subscribe(club => {
+      this.clubID = club.id 
+    })
+  }
 
 
 
