@@ -67,9 +67,22 @@ export class BaseApiService<T> {
 
   public baseGet(path: string): Observable<any> {
     const options: any = {
-      responseType: 'text'
+      responseType: 'text',
+      headers: this.setHeaders()
     };
-    return this.http.get(`${constants.base_url}${path}`, options);
+    return this.mapAndCatchError<T>(
+      this.http.get<ApiResponse<T>>(`${constants.base_url}${path}`, options)
+    );
+  }
+
+  public clubApiGet(path: string): Observable<any> {
+    const options: any = {
+      responseType: 'text',
+      headers: this.setHeaders()
+    };
+    return this.mapAndCatchError<T>(
+      this.http.get<ApiResponse<T>>(`${constants.clubApiUrl}${path}`, options)
+    );
   }
 
   public post(

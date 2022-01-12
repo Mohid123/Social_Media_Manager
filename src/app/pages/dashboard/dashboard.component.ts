@@ -252,21 +252,20 @@ export class DashboardComponent implements OnInit {
   }
 
   getSignedInUserStats() {
-    this._reportService.getFacebookStats(this.signedInuserID).subscribe((res: ApiResponse<Report>) => {
-      if(!res.hasErrors()) {
-        this.facebookStats = res.data;
+    combineLatest(
+      this._reportService.getFacebookStats(this.signedInuserID),
+      this._reportService.getInstagramStats(this.signedInuserID),
+      this._reportService.getClubStatus(this.signedInuserID)
+    ).subscribe(res => {
+      if(!res[0].hasErrors()) {
+        this.facebookStats = res[0].data;
       }
-    })
-    this._reportService.getInstagramStats(this.signedInuserID).subscribe((res: ApiResponse<Report>) => {
-      if(!res.hasErrors()) {
-        this.instagramStats = res.data;
+      if (!res[1].hasErrors()) {
+        this.instagramStats = res[1].data;
       }
-    })
-    this._reportService.getClubStatus(this.signedInuserID).subscribe((res: ApiResponse<Report>) => {
-      if(!res.hasErrors()) {
-        this.clubStats = res.data;
+      if (!res[2].hasErrors()) {
+        this.clubStats = res[2].data;
       }
-      this.cf.detectChanges();
     })
   }
 
@@ -286,7 +285,6 @@ export class DashboardComponent implements OnInit {
         this.clubStatistics = res[2].data;
       }
       this.initializeStatsChart()
-      // this.cf.detectChanges();
     })
   }
 

@@ -7,7 +7,7 @@ import { ClubService } from './../../../core/services/club.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit, ViewEncapsulation, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Subscription, Observable, throwError } from 'rxjs';
+import { Subscription, Observable, throwError, BehaviorSubject } from 'rxjs';
 import { AuthService } from '../_services/auth.service';
 
 import { ActivatedRoute, Router } from '@angular/router';
@@ -54,8 +54,7 @@ export class LoginComponent implements OnInit {
   limit: number = 20;
 
   private unsubscribe: Subscription[] = [];
-
-
+  private allClubs$ = new BehaviorSubject<BaseClub | undefined>(this.getAllClubs(0, 0))
 
   constructor(
     private config: NgbModalConfig,
@@ -118,6 +117,7 @@ export class LoginComponent implements OnInit {
     this.offset = 0
     this.limit = 20
     this.showBackBtn = false;
+    this.allClubs$.next(this.getAllClubs(this.offset, this.limit));
   }
 
 
@@ -175,8 +175,8 @@ export class LoginComponent implements OnInit {
   }
 
 
-  getAllClubs(offset, limit) {
-    this._clubService.getAllClubs(offset, limit).subscribe(res => {
+  getAllClubs(offset, limit): any {
+    this._clubService.getAllClubs(offset, limit).subscribe((res: ApiResponse<BaseClub[]>) => {
       if(!res.hasErrors()) {
         this.allClubs = res.data;
         this.tempClubs = res.data;
@@ -258,7 +258,7 @@ export class LoginComponent implements OnInit {
     this._clubService.selectedClub = club;
     constants.clubApiUrl = club.baseURL;
     this.isPickerClub = true
-    if (this._clubService.selectedClub.isPicker || this._clubService.selectedClub.isPicker) {
+    if (this._clubService.selectedClub.isPicker) {
       this.showBackBtn = true
       this.getDividisClubs(this.offset , this.limit)
     }

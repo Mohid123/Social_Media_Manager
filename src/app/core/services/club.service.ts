@@ -8,8 +8,9 @@ import { BaseClub } from './../models/base-club.model';
 import { BaseApiService } from './base-api.service';
 import { ApiResponse } from '../models/response.model';
 import { getItem } from '../utils';
+import { Group } from './../models/groups.model';
 
-type ClubData = BaseClub[] | any
+type ClubData = BaseClub[] | Group
 
 @Injectable({
   providedIn: 'root'
@@ -34,7 +35,7 @@ export class ClubService extends BaseApiService<ClubData> {
     super(http)
   }
 
-  getAllClubs(offset, limit): Observable<ApiResponse<ClubData>> { //error occurs in login.component and auth.component when using Observable<ApiResponse<Club>>
+  getAllClubs(offset, limit): Observable<ApiResponse<ClubData>> { 
     limit = parseInt(limit) < 1 ? 10 : limit;
     offset = parseInt(offset) < 0 ? 0 : offset;
     return this.get(`/club/getAllClubs?offset=${offset}&limit=${limit}`).pipe(
@@ -69,11 +70,18 @@ export class ClubService extends BaseApiService<ClubData> {
     return this.get(`/club/deleteClub/${clubID}`)
   }
 
-  getClubGroups(offset, limit): Observable<any> {
+  getClubGroups(offset, limit): Observable<ApiResponse<ClubData>> {
 
     limit = parseInt(limit) < 1 ? 10 : limit;
     offset = parseInt(offset) < 0 ? 0 : offset;
-    return this._clubApiService.get(`/groups/getAllGroups?offset=${offset}&limit=${limit}`);
+    return this.clubApiGet(`/groups/getAllGroups?offset=${offset}&limit=${limit}`)
+    // .pipe(
+    //   tap((res:ApiResponse<ClubData>) => {
+    //     if(res.hasErrors()) {
+    //       console.log('Error: ', res.errors[0].error.message)
+    //     }
+    //   })
+    // );
   }
 
   getClubEvents(offset, limit) {

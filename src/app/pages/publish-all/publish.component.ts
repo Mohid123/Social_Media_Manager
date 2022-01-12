@@ -17,6 +17,8 @@ import { Report } from 'src/app/core/models/report.model';
 import { ClubpostService } from './../../core/services/club-post/clubpost.service';
 import { MergeService } from 'src/app/core/services/merge-service.service';
 import { DomSanitizer } from '@angular/platform-browser';
+import { ApiResponse } from '@app/core/models/response.model';
+import { Group } from './../../core/models/groups.model';
 @Component({
   selector: 'app-publish',
   templateUrl: './publish.component.html',
@@ -339,19 +341,28 @@ export class PublishComponent implements OnInit {
   }
 
   getAllClubGroups() {
-
-    this._clubService.getClubGroups(0, 50).subscribe((groups: any) => {
-      groups.map(singleItem => {
-        singleItem.isSelected = false
-        singleItem.name = singleItem.groupName;
-        this.checklist.push(singleItem);
-        this.tempList.push(singleItem);
-        this.cf.detectChanges()
-
-      })
+    this._clubService.getClubGroups(0, 50).subscribe((res: ApiResponse<Group>) => {
+      if(!res.hasErrors()) {
+        this.checklist.push(res.data);
+        this.tempList.push(res.data);
+      }
     })
-    this.cf.detectChanges()
   }
+
+  // getAllClubGroups() {
+
+  //   this._clubService.getClubGroups(0, 50).subscribe((groups: any) => {
+  //     groups.map(singleItem => {
+  //       singleItem.isSelected = false
+  //       singleItem.name = singleItem.groupName;
+  //       this.checklist.push(singleItem);
+  //       this.tempList.push(singleItem);
+  //       this.cf.detectChanges()
+
+  //     })
+  //   })
+  //   this.cf.detectChanges()
+  // }
 
   getAllClubEvents() {
 

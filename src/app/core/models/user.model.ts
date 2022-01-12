@@ -41,4 +41,5 @@ export interface User {
     sponsoredPostViewsCount:  number;
     sponsoredStoryViewsCount: number;
     id:                       string;
+    isFollowed:               boolean;
 }
