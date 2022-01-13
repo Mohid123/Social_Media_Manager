@@ -75,9 +75,13 @@ export class BaseApiService<T> {
     );
   }
 
-  public clubApiGet(path: string): Observable<any> {
-    const options: any = {
-      responseType: 'text',
+  public clubApiGet(
+    path: string,
+    params?: any
+  ): Observable<any> {
+    const options = {
+      params: new HttpParams({ fromString: this.objectToQueryString(params) }),
+      //observe: 'response',
       headers: this.setHeaders()
     };
     return this.mapAndCatchError<T>(

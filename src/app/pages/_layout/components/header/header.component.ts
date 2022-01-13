@@ -1,3 +1,4 @@
+import { ApiResponse } from '@app/core/models/response.model';
 import {
   Component,
   OnInit,
@@ -144,10 +145,12 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
     let club = this._clubService.selectedClub;
     if(club.id == '60a1f5fb764e4033cc10f7d5'){
       this.showLiveStream = true;
-      this._clubService.getLiveStreamBit().subscribe((data:any)=>{
+      this._clubService.getLiveStreamBit().subscribe((res: ApiResponse<any>)=>{
         // console.log(data)
-       this.toggleBtn = data.liveStreamBit;
-       this.cf.detectChanges();
+        if(!res.hasErrors()) {
+          this.toggleBtn = res.data.liveStreamBit;
+          this.cf.detectChanges();
+        }
       })
     }
     else {

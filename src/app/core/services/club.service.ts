@@ -10,7 +10,7 @@ import { ApiResponse } from '../models/response.model';
 import { getItem } from '../utils';
 import { Group } from './../models/groups.model';
 
-type ClubData = BaseClub[] | Group
+type ClubData = BaseClub[] | Group[] | Group | any
 
 @Injectable({
   providedIn: 'root'
@@ -48,10 +48,10 @@ export class ClubService extends BaseApiService<ClubData> {
     )
   }
 
-  getDividisClubs(offset, limit) {
+  getDividisClubs(offset, limit) : Observable<ApiResponse<ClubData>> {
     limit = parseInt(limit) < 1 ? 10 : limit
     offset = parseInt(offset) < 0 ? 0 : offset
-    return this._clubApiService.get(`/club/getAllClubs?offset=${offset}&limit=${limit}`)
+    return this.clubApiGet(`/club/getAllClubs?offset=${offset}&limit=${limit}`)
   }
 
   getClubById(clubID: string): Observable<ApiResponse<ClubData>> {
@@ -87,19 +87,19 @@ export class ClubService extends BaseApiService<ClubData> {
   getClubEvents(offset, limit) {
     limit = parseInt(limit) < 1 ? 10 : limit;
     offset = parseInt(offset) < 0 ? 0 : offset;
-    return this._clubApiService.get(`/event/getAllEvents?offset=${offset}&limit=${limit}`);
+    return this.clubApiGet(`/event/getAllEvents?offset=${offset}&limit=${limit}`);
   }
 
   getLiveStreamBit() {
-    return this._clubApiService.get(`/firebase-migration-functions/getLiveStreamValue`);
+    return this.clubApiGet(`/firebase-migration-functions/getLiveStreamValue`);
   }
 
   changeLiveStreamBit(liveStreamBit: string) {
-    return this._clubApiService.get(`/firebase-migration-functions/changeLiveStreamBit/${liveStreamBit}`);
+    return this.clubApiGet(`/firebase-migration-functions/changeLiveStreamBit/${liveStreamBit}`);
   }
 
   getUserClubProfile(userId: string) {
-    return this._clubApiService.get(`/profile/getProfileById/${userId}`);
+    return this.clubApiGet(`/profile/getProfileById/${userId}`);
   }
 
   searchClubByName(clubName: string, offset , limit): Observable<ApiResponse<ClubData>>{
@@ -107,7 +107,7 @@ export class ClubService extends BaseApiService<ClubData> {
   }
 
   searchClubByNameForPicker(clubName: string, offset , limit){
-    return this._clubApiService.get(`/club/searchClubByName/${clubName}?offset=${offset}&limit=${limit}`);
+    return this.clubApiGet(`/club/searchClubByName/${clubName}?offset=${offset}&limit=${limit}`);
   }
 
 

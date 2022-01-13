@@ -1,3 +1,4 @@
+import { ApiResponse } from '@app/core/models/response.model';
 import { filter } from "rxjs/operators";
 import { ReportService } from "./../../core/services/report.service";
 import { ClubService } from "./../../core/services/club.service";
@@ -354,26 +355,30 @@ export class TeamtalkersComponent implements OnInit {
   }
 
   getClubGroups() {
-    this._clubService.getClubGroups(0, 50).subscribe((groups: any) => {
-      groups.map((singleItem) => {
-        singleItem.isSelected = false;
-        singleItem.name = singleItem.groupName;
-        this.checklist.push(singleItem);
-        this.tempList.push(singleItem);
-        this.cf.detectChanges();
-      });
+    this._clubService.getClubGroups(0, 50).subscribe((res: ApiResponse<any>) => {
+      if(!res.hasErrors()) {
+        res.data.map((singleItem) => {
+          singleItem.isSelected = false;
+          singleItem.name = singleItem.groupName;
+          this.checklist.push(singleItem);
+          this.tempList.push(singleItem);
+          this.cf.detectChanges();
+        });
+      }
     });
   }
 
   getClubEvents() {
-    this._clubService.getClubEvents(0, 50).subscribe((events: any) => {
-      events.map((sigleItem) => {
-        sigleItem.isSelected = false;
-        sigleItem.name = sigleItem.eventName;
-        this.checklist.push(sigleItem);
-        this.tempList.push(sigleItem);
-        this.cf.detectChanges();
-      });
+    this._clubService.getClubEvents(0, 50).subscribe((res: ApiResponse<any>) => {
+      if (!res.hasErrors()) {
+        res.data.map((sigleItem) => {
+          sigleItem.isSelected = false;
+          sigleItem.name = sigleItem.eventName;
+          this.checklist.push(sigleItem);
+          this.tempList.push(sigleItem);
+          this.cf.detectChanges();
+        });
+      }
     });
   }
 

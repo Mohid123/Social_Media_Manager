@@ -53,9 +53,6 @@ export class LoginComponent implements OnInit {
   offset: number = 0;
   limit: number = 20;
 
-  private unsubscribe: Subscription[] = [];
-  private allClubs$ = new BehaviorSubject<BaseClub | undefined>(this.getAllClubs(0, 0))
-
   constructor(
     private config: NgbModalConfig,
     private fb: FormBuilder,
@@ -117,7 +114,7 @@ export class LoginComponent implements OnInit {
     this.offset = 0
     this.limit = 20
     this.showBackBtn = false;
-    this.allClubs$.next(this.getAllClubs(this.offset, this.limit));
+    this.getAllClubs(0,20);
   }
 
 
@@ -180,9 +177,10 @@ export class LoginComponent implements OnInit {
       if(!res.hasErrors()) {
         this.allClubs = res.data;
         this.tempClubs = res.data;
-        if(this.allClubs.find(club => club.id == this._clubService.selectedClub.id)) {
+        if(this.allClubs.find(club => club.id == this._clubService.selectedClub?.id)) {
           console.log('have selected club:',);
-          this.onClubSelected(this._clubService.selectedClub);
+          if(this.showBackBtn)
+            this.onClubSelected(this._clubService.selectedClub);
         }
       }
     }, (error) => {
@@ -209,16 +207,18 @@ export class LoginComponent implements OnInit {
         return
       }
       else {
-        this._clubService.searchClubByNameForPicker(this.searchString, this.offset, this.limit).subscribe((searchedClubs: any) => {
-          if (searchedClubs.length == 0) {
-            this.noClubFound = true;
-            this.allClubs = searchedClubs;
-            return;
-          }
-          else if (searchedClubs.length > 0) {
-            this.allClubs = searchedClubs;
-            this.noClubFound = false
-            this.cf.detectChanges()
+        this._clubService.searchClubByNameForPicker(this.searchString, this.offset, this.limit).subscribe((res: ApiResponse<any>) => {
+          if (!res.hasErrors()) {
+            if (res.data.length == 0) {
+              this.noClubFound = true;
+              this.allClubs = res.data;
+              return;
+            }
+            else if (res.data.length > 0) {
+              this.allClubs = res.data;
+              this.noClubFound = false
+              this.cf.detectChanges()
+            }
           }
         })
       }
@@ -233,16 +233,18 @@ export class LoginComponent implements OnInit {
         return
       }
       else {
-        this._clubService.searchClubByName(this.searchString, this.offset, this.limit).subscribe((searchedClubs: any) => {
-          if (searchedClubs.length == 0 && this.searchString.trim().length !== 0) {
-            this.noClubFound = true;
-            this.allClubs = searchedClubs;
-            return;
-          }
-          else if (searchedClubs.length > 0) {
-            this.allClubs = searchedClubs;
-            this.noClubFound = false
-            this.cf.detectChanges()
+        this._clubService.searchClubByName(this.searchString, this.offset, this.limit).subscribe((res: ApiResponse<any>) => {
+          if (!res.hasErrors()) {
+            if (res.data.length == 0 && this.searchString.trim().length !== 0) {
+              this.noClubFound = true;
+              this.allClubs = res.data;
+              return;
+            }
+            else if (res.data.length > 0) {
+              this.allClubs = res.data;
+              this.noClubFound = false
+              this.cf.detectChanges()
+            }
           }
         })
       }
@@ -282,19 +284,21 @@ export class LoginComponent implements OnInit {
   getDividisClubs(offset, limit) {
     offset = this.offset;
     limit = this.limit
-    this._clubService.getDividisClubs(offset, limit).pipe(take(1)).subscribe((dividisClubs: any) => {
-      if(dividisClubs.length == 0){
-        this.allClubs = []
-        this.noClubFound = true;
-        return
+    this._clubService.getDividisClubs(offset, limit).pipe(take(1)).subscribe((res: ApiResponse<any>) => {
+      if(!res.hasErrors()) {
+        if (res.data.length == 0) {
+          this.allClubs = []
+          this.noClubFound = true;
+          return;
+        }
+        res.data.map(item => {
+          item.pickerClub = true;
+          item.baseURL = this._clubService.selectedClub.baseURL;
+          item.pickerModelId = this._clubService.selectedClub.id
+        })
+        this.allClubs = res.data;
+        this.tempClubs = res.data;
       }
-      dividisClubs.map(item => {
-        item.pickerClub = true;
-        item.baseURL = this._clubService.selectedClub.baseURL;
-        item.pickerModelId = this._clubService.selectedClub.id
-      })
-      this.allClubs = dividisClubs;
-      this.tempClubs = dividisClubs;
     }, error => {
       this.toastr.error(error.message)
     })

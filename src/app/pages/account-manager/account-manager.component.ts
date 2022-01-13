@@ -1,3 +1,4 @@
+import { ApiResponse } from '@app/core/models/response.model';
 import { ToastrModule, ToastrService } from "ngx-toastr";
 import { Observable, Subject } from "rxjs";
 import { MainAuthService } from "./../../core/services/auth.service";
@@ -105,11 +106,13 @@ export class AccountManagerComponent implements OnInit {
 
   setClubProfile() {
     let userId = localStorage.getItem('clubUid');
-    this._clubService.getUserClubProfile(userId).pipe(take(1)).subscribe((data: any) => {
-      this.userClubProfile.clubEmail = data.email,
-        this.userClubProfile.clubProfileImageURL = data.profilePicURL;
-      this.userClubProfile.clubUsername = data.fullName;
-      this.cf.detectChanges();
+    this._clubService.getUserClubProfile(userId).pipe(take(1)).subscribe((res: ApiResponse<any>) => {
+      if(!res.hasErrors()) {
+        this.userClubProfile.clubEmail = res.data.email,
+        this.userClubProfile.clubProfileImageURL = res.data.profilePicURL;
+        this.userClubProfile.clubUsername = res.data.fullName;
+        this.cf.detectChanges();
+      }
     })
 
   }
