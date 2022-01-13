@@ -341,28 +341,18 @@ export class PublishComponent implements OnInit {
   }
 
   getAllClubGroups() {
-    this._clubService.getClubGroups(0, 50).subscribe((res: ApiResponse<Group>) => {
+    this._clubService.getClubGroups(0, 50).subscribe((res: ApiResponse<any>) => {
       if(!res.hasErrors()) {
-        this.checklist.push(res.data);
-        this.tempList.push(res.data);
+        res.data.map((singleItem) => {
+          singleItem.isSelected = false;
+          singleItem.name = singleItem.eventName;
+          this.checklist.push(singleItem)
+          this.tempList.push(singleItem);
+          this.cf.detectChanges()
+        })
       }
     })
   }
-
-  // getAllClubGroups() {
-
-  //   this._clubService.getClubGroups(0, 50).subscribe((groups: any) => {
-  //     groups.map(singleItem => {
-  //       singleItem.isSelected = false
-  //       singleItem.name = singleItem.groupName;
-  //       this.checklist.push(singleItem);
-  //       this.tempList.push(singleItem);
-  //       this.cf.detectChanges()
-
-  //     })
-  //   })
-  //   this.cf.detectChanges()
-  // }
 
   getAllClubEvents() {
 

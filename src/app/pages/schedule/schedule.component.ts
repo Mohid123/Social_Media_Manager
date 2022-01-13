@@ -7,6 +7,7 @@ import { Schedule } from './../../core/models/schedule.model';
 
 import { Club } from 'src/app/core/models/club.model';
 import { ToastrService } from 'ngx-toastr';
+import { ApiResponse } from '@app/core/models/response.model';
 
 @Component({
   selector: 'app-schedule',
@@ -44,19 +45,12 @@ ngAfterViewInit(){
     this.queueSelected.nativeElement.focus();
   }
 
-  // ngAfterViewInit() {
-  //   this.getFacebookSchedule()
-  //   this.getInstagramSchedule()
-  //   this.getClubSchedule()
-  // }
-
   getSelectedSchedule(event) {
     let res = this.events.find(item => {
       return item.id === event
     })
     if (res) {
       this.selectedEvent = res
-      // console.log(this.selectedEvent)
     }
     else {
       return
@@ -64,8 +58,7 @@ ngAfterViewInit(){
   }
 
   deleteSelectedSchedule() {
-    this._scheduleService.deleteSchedule(this.selectedEvent.id).subscribe(res => {
-      // console.log(res);
+    this._scheduleService.deleteSchedule(this.selectedEvent.id).subscribe((res: ApiResponse<any>) => {
       this.selectedEvent = ''
       setTimeout(() => {
         this.toast.success('Schedule Deleted', 'Success')
@@ -82,13 +75,10 @@ ngAfterViewInit(){
     this.getQueuedSchedueles()
   }
 
-  eventClick(event) {
-    // console.log(event)
-  }
 
   getSchedulesByPostedTo() {
-    this._scheduleService.getSchedulesByPostedTo(0, 10, 'Instagram').pipe(take(1)).subscribe((schedules: any) => {
-      const response = schedules.map((schedule, idx) => {
+    this._scheduleService.getSchedulesByPostedTo(0, 10, 'Instagram').pipe(take(1)).subscribe((res: ApiResponse<any>) => {
+      const response = res.data.map((schedule, idx) => {
         return {
           id: schedule.id,
           title: schedule.postedTo,
@@ -102,8 +92,8 @@ ngAfterViewInit(){
 
   getQueuedSchedueles() {
     let clubId = JSON.parse(localStorage.getItem('selectedClub')).id;
-    this._scheduleService.getQueuedSchedules(clubId).pipe(take(1)).subscribe(data => {
-      let res = data.map(((item, idx, self) => {
+    this._scheduleService.getQueuedSchedules(clubId).pipe(take(1)).subscribe((res: ApiResponse<any>) => {
+      let result = res.data.map(((item, idx, self) => {
         return {
           id: item.id,
           title: item.post.postedTo + ': ' + item.post.title , 
@@ -114,16 +104,15 @@ ngAfterViewInit(){
           color: item.post?.color ? item.post.color : this.selectedClub?.clubColor
         }
       }))
-      this.events = res;
+      this.events = result;
       this.showDeleteBtn = true;
-      // console.log(this.events)
       this.cf.detectChanges();
     })
   }
 
   getPublishedSchedules() {
-    this._scheduleService.getPublishedSchedules(this.clubID).pipe(take(1)).subscribe(data => {
-      let res = data.map(((item, idx, self) => {
+    this._scheduleService.getPublishedSchedules(this.clubID).pipe(take(1)).subscribe((res: ApiResponse<any>) => {
+      let result = res.data.map(((item, idx, self) => {
         return {
           id: item.id,
           title: item.post.postedTo + ': ' + item.post.title,
@@ -131,21 +120,18 @@ ngAfterViewInit(){
           post: item.post,
           status: item.status,
           color: item.post?.color ? item.post.color : this.selectedClub?.clubColor
-
-          // color:'red'
         }
       }))
-      // console.log(res)
       this.showDeleteBtn = false;
 
-      this.events = res;
+      this.events = result;
       this.cf.detectChanges();
     })
   }
 
   getUnpublishedSchedules() {
-    this._scheduleService.getUnPublishedSchedules(this.clubID).pipe(take(1)).subscribe(data => {
-      let res = data.map(((item, idx, self) => {
+    this._scheduleService.getUnPublishedSchedules(this.clubID).pipe(take(1)).subscribe((res: ApiResponse<any>) => {
+      let result = res.data.map(((item, idx, self) => {
         return {
           id: item.id,
           title: item.post.postedTo + ': ' + item.post.title ,
@@ -156,14 +142,14 @@ ngAfterViewInit(){
         }
       }))
       this.showDeleteBtn = false;
-      this.events = res;
+      this.events = result;
       this.cf.detectChanges();
     })
   }
 
   getFacebookSchedule() {
-    this._scheduleService.getFacebookSchedules(this.clubID).pipe(take(1)).subscribe((data: any) => {
-      let res = data.map(((item, idx, self) => {
+    this._scheduleService.getFacebookSchedules(this.clubID).pipe(take(1)).subscribe((res: ApiResponse<any>) => {
+      let result = res.data.map(((item, idx, self) => {
         return {
           id: item.id,
           title: item.post.postedTo + ': ' + item.post.title,
@@ -173,8 +159,8 @@ ngAfterViewInit(){
           color: '#3B5998'
         }
       }))
-      localStorage.setItem('fbsch', encodeURIComponent(JSON.stringify(res)))
-      this.events = res;
+      localStorage.setItem('fbsch', encodeURIComponent(JSON.stringify(result)))
+      this.events = result;
       this.showDeleteBtn = false;
 
       this.cf.detectChanges();
@@ -182,8 +168,8 @@ ngAfterViewInit(){
   }
 
   getInstagramSchedule() {
-    this._scheduleService.getInstagramSchedules(this.clubID).pipe(take(1)).subscribe((data: any) => {
-      let res = data.map(((item, idx, self) => {
+    this._scheduleService.getInstagramSchedules(this.clubID).pipe(take(1)).subscribe((res: ApiResponse<any>) => {
+      let result = res.data.map(((item, idx, self) => {
         return {
           id: item.id,
           title: item.post.postedTo + ': ' + item.post.title,
@@ -193,8 +179,8 @@ ngAfterViewInit(){
           status: item.status
         }
       }))
-      localStorage.setItem('igsch', encodeURIComponent(JSON.stringify(res)))
-      this.events = res;
+      localStorage.setItem('igsch', encodeURIComponent(JSON.stringify(result)))
+      this.events = result;
       this.showDeleteBtn = false;
 
       this.cf.detectChanges();
@@ -202,8 +188,8 @@ ngAfterViewInit(){
   }
 
   getClubSchedule() {
-    this._scheduleService.getClubSchedules(this.clubID).pipe(take(1)).subscribe((data: any) => {
-      let res = data.map(((item, idx, self) => {
+    this._scheduleService.getClubSchedules(this.clubID).pipe(take(1)).subscribe((res: ApiResponse<any>) => {
+      let result = res.data.map(((item, idx, self) => {
         return {
           id: item.id,
           title: item.post.postedTo + ': ' + item.post.title,
@@ -214,28 +200,15 @@ ngAfterViewInit(){
 
         }
       }))
-      localStorage.setItem('clubsch', encodeURIComponent(JSON.stringify(res)))
-      this.events = res;
+      localStorage.setItem('clubsch', encodeURIComponent(JSON.stringify(result)))
+      this.events = result;
       this.showDeleteBtn = false;
       this.cf.detectChanges();
     })
   }
 
-  clearFilter() {
-    // console.log(this.radioList)
-  }
-
   getAllSchedule() {
     this.getQueuedSchedueles()
-    // let clubSch, fbSch, igSch, spread
-    // clubSch = JSON.parse(decodeURIComponent(localStorage.getItem('clubsch')));
-    // fbSch = JSON.parse(decodeURIComponent(localStorage.getItem('fbsch')));
-    // igSch = JSON.parse(decodeURIComponent(localStorage.getItem('igsch')));
-    // spread = [...clubSch, ...fbSch, ...igSch];
-    // this.events = spread;
-    // this.showDeleteBtn = false;
-
-    // this.cf.detectChanges()
   }
 
 }

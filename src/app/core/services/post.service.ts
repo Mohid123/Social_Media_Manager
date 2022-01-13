@@ -8,66 +8,73 @@ import { Observable } from 'rxjs';
 import { constants } from 'src/app/app.constants';
 import { ClubApiService } from './club_api.service';
 import { Post } from '../models/post.model';
+import { ApiResponse } from '@app/core/models/response.model';
+import { BaseApiService } from './base-api.service';
+
+type post = Post;
+
 @Injectable({
   providedIn: 'root'
 })
-export class PostService {
 
-  constructor(private _apiService: ApiService, private _errorHandlerService: ErrorhandlerService, private http: HttpClient, private _clubApiService: ClubApiService) {
+export class PostService extends BaseApiService<post> {
+
+  constructor(protected http: HttpClient) {
+    super(http)
   }
 
 
-  addPost(body: Post): Observable<any> {
-    return this._clubApiService.post(`/post/AddPost`, body);
+  addPost(body: Post): Observable<ApiResponse<post>> {
+    return this.post(`/post/AddPost`, body);
   }
 
-  addPostToGroup(body: Post): Observable<any> {
-    return this._clubApiService.post(`/groups/addPost/`, body);
-
-  }
-
-  addPostToEvent(body: PositionCallback): Observable<any> {
-    return this._clubApiService.post(`/event/addPost`, body);
+  addPostToGroup(body: Post): Observable<ApiResponse<post>> {
+    return this.clubApiPost(`/groups/addPost/`, body);
 
   }
 
-  hyperLinkScrapper(postedText: string): Observable<any> {
+  addPostToEvent(body: PositionCallback): Observable<ApiResponse<post>> {
+    return this.clubApiPost(`/event/addPost`, body);
+
+  }
+
+  hyperLinkScrapper(postedText: string) {
     postedText == "" ? postedText = 'MockPayloadScrapper' : postedText = postedText
-    return this._clubApiService.post(`/firebase-migration-functions/hyperlinkScraperForPanel`, { 'text': postedText });
+    return this.clubApiPost(`/firebase-migration-functions/hyperlinkScraperForPanel`, { 'text': postedText });
   }
 
 
-  createClubPost(postedTo: string, post: Post) {
+  createClubPost(postedTo: string, post: Post): Observable<ApiResponse<post>> {
     post.postedTo = postedTo;
     if (postedTo == 'Group') {
-      return this._clubApiService.post(`/groups/addPost/`, post);
+      return this.clubApiPost(`/groups/addPost/`, post);
     }
     else if (postedTo == 'Event') {
-      return this._clubApiService.post(`/event/addPost`, post);
+      return this.clubApiPost(`/event/addPost`, post);
     }
     else {
-      return this._clubApiService.post(`/post/AddPost`, post);
+      return this.clubApiPost(`/post/AddPost`, post);
     }
   }
 
-  getClubPosts(postedTo: string, offset, limit) {
+  getClubPosts(postedTo: string, offset, limit): Observable<ApiResponse<post>> {
     limit = parseInt(limit) < 1 ? 10 : limit;
     offset = parseInt(offset) < 0 ? 0 : offset;
-    return this._clubApiService.get(`/post/getAllPosts/${postedTo}?offset=${offset}&limit=${limit}`);
+    return this.clubApiGet(`/post/getAllPosts/${postedTo}?offset=${offset}&limit=${limit}`);
   }
 
-  getPostCommentsAndReactions(postId: string, offset, limit) {
+  getPostCommentsAndReactions(postId: string, offset, limit): Observable<ApiResponse<post>> {
     limit = parseInt(limit) < 1 ? 10 : limit;
     offset = parseInt(offset) < 0 ? 0 : offset;
-    return this._clubApiService.get(`/post-reaction/getPostReactionswithCount/${postId}?offset=${offset}&limit=${limit}`);
+    return this.clubApiGet(`/post-reaction/getPostReactionswithCount/${postId}?offset=${offset}&limit=${limit}`);
   }
 
-  updateClubPost(post: Post) {
-    return this._clubApiService.post(`/post/EditPost`, post);
+  updateClubPost(post: Post): Observable<ApiResponse<post>> {
+    return this.clubApiGet(`/post/EditPost`, post);
   }
 
-  deleteClubPost(postID: string) {
-    return this._clubApiService.get(`/post/deletePost/${postID}`)
+  deleteClubPost(postID: string): Observable<ApiResponse<Post>> {
+    return this.clubApiGet(`/post/deletePost/${postID}`)
   }
 
 

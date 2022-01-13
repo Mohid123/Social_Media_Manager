@@ -10,6 +10,7 @@ import { MediauploadService } from './../mediaupload.service';
 import { VideoProcessingService } from '../video-service/video-processing.service';
 import { Media } from '../../models/media-model';
 import { locale } from './../../../modules/i18n/vocabs/jp';
+import { ApiResponse } from '@app/core/models/response.model';
 @Injectable({
   providedIn: 'root'
 })
@@ -46,8 +47,8 @@ export class ClubpostService {
       delete this.post.groupID;
     }
     this.condition = true;
-    this._postService.hyperLinkScrapper(postedText).subscribe((data) => {
-      hyperLinkResponse = data;
+    this._postService.hyperLinkScrapper(postedText).subscribe((res: ApiResponse<any>) => {
+      hyperLinkResponse = res.data;
 
       if (hyperLinkResponse.length > 0 && hyperLinkResponse[0].hasOwnProperty("url")) {
         this.post.hyperLink = hyperLinkResponse[0].url;
@@ -57,7 +58,6 @@ export class ClubpostService {
         this.post.textFirst = hyperLinkResponse[0].title;
       }
       if (hyperLinkResponse.length > 0 && hyperLinkResponse[0].hasOwnProperty("description")) {
-
         this.post.textSecond = hyperLinkResponse[0].description;
       }
       if (hyperLinkResponse.length > 0 && hyperLinkResponse[0].hasOwnProperty("image")) {
@@ -73,8 +73,8 @@ export class ClubpostService {
           this.post.eventID = element.id;
         }
         this._reportService.createReport(2, "", postedTo);
-        this._postService.createClubPost(postedTo , this.post).subscribe((post: Post) => {
-          this._reportService.createReport(1, post.id, postedTo);
+        this._postService.createClubPost(postedTo , this.post).subscribe((res: ApiResponse<any>) => {
+          this._reportService.createReport(1, res.id, postedTo);
           if (idx == self.length - 1) {
             this.toast.success(`Your post has been shared to ${postedTo}.`, 'Great!')
             this.condition = false;
@@ -108,8 +108,8 @@ export class ClubpostService {
       delete this.post.eventID;
       delete this.post.groupID;
     }
-    this._postService.hyperLinkScrapper(postedText).subscribe(async (data) => {
-      hyperLinkResponse = data;
+    this._postService.hyperLinkScrapper(postedText).subscribe(async (res: ApiResponse<any>) => {
+      hyperLinkResponse = res.data;
 
       if (hyperLinkResponse.length > 0 && hyperLinkResponse[0].hasOwnProperty("url")) {
         this.post.hyperLink = hyperLinkResponse[0].url;
@@ -124,9 +124,9 @@ export class ClubpostService {
       if (hyperLinkResponse.length > 0 && hyperLinkResponse[0].hasOwnProperty("image")) {
         this.post.captureFileURL = hyperLinkResponse[0].image;
       }
-      this._mediaUploadService.uploadClubMedia(postedTo, userID, MediaFiles).subscribe((media: any) => {
-          this.post.captureFileURL = media.url
-          this.post.path = media.path;
+      this._mediaUploadService.uploadClubMedia(postedTo, userID, MediaFiles).subscribe((res: ApiResponse<any>) => {
+          this.post.captureFileURL = res.data.url
+          this.post.path = res.data.path;
           
           let mediaModel = new Media();
   
@@ -146,8 +146,8 @@ export class ClubpostService {
               this.post.eventID = element.id;
             }
             this._reportService.createReport(2, "", postedTo);
-            this._postService.createClubPost(postedTo, this.post).subscribe((post: Post) => {
-              this._reportService.createReport(1, post.id, postedTo);
+            this._postService.createClubPost(postedTo, this.post).subscribe((res: ApiResponse<any>) => {
+              this._reportService.createReport(1, res.data.id, postedTo);
               if (idx == self.length - 1) {
                 this.toast.success(`Great! The post has been shared to ${postedTo}.`)
                 this.condition = false;
@@ -186,8 +186,8 @@ export class ClubpostService {
       delete this.post.eventID;
       delete this.post.groupID;
     }
-    this._postService.hyperLinkScrapper(postedText).subscribe((data) => {
-      hyperLinkResponse = data;
+    this._postService.hyperLinkScrapper(postedText).subscribe((res: ApiResponse<any>) => {
+      hyperLinkResponse = res.data;
       if (
         hyperLinkResponse.length > 0 &&
         hyperLinkResponse[0].hasOwnProperty("url")
@@ -213,10 +213,10 @@ export class ClubpostService {
         this.post.hyperlinkCaptureFileURL = hyperLinkResponse[0].image;
       }
       this._mediaUploadService
-      .uploadClubMedia("GroupMedia", userID,MediaFile)
-      .subscribe((uploadedVideo: any) => {
-        this.post.captureFileURL = uploadedVideo.url;
-        this.post.path = uploadedVideo.path;
+      .uploadClubMedia("GroupMedia", userID, MediaFile)
+      .subscribe((res: ApiResponse<any>) => {
+        this.post.captureFileURL = res.data.url;
+        this.post.path = res.data.path;
         this._videoService.generateThumbnail(MediaFile).then((base64) => {
           file = base64;
           file = file.replace("data:image/png;base64,", "");
@@ -224,9 +224,9 @@ export class ClubpostService {
           const imageFile = new File([imageBlob], "thumbnail.jpeg", {
             type: "image/jpeg",
           });
-          this._mediaUploadService.uploadClubMedia("VideoThumbnails",userID,imageFile).subscribe((thumbnailFile: any) => {
-              this.post.thumbnailPath = thumbnailFile.path;
-              this.post.thumbnailURL = thumbnailFile.url;
+          this._mediaUploadService.uploadClubMedia("VideoThumbnails",userID,imageFile).subscribe((res: ApiResponse<any>) => {
+              this.post.thumbnailPath = res.data.path;
+              this.post.thumbnailURL = res.data.url;
               selectedList.forEach((element, idx, self) => {
                 this.condition = true;
                 if (element.hasOwnProperty('groupName')) {
@@ -236,8 +236,8 @@ export class ClubpostService {
                   this.post.eventID = element.id;
                 }
                 this._reportService.createReport(2, "", postedTo);
-                this._postService.createClubPost(postedTo , this.post).subscribe((post: any) => {
-                    this._reportService.createReport(1, post.id, postedTo);
+                this._postService.createClubPost(postedTo , this.post).subscribe((res: ApiResponse<any>) => {
+                    this._reportService.createReport(1, res.data.id, postedTo);
                     if (idx == self.length - 1) {
                       this.condition = false;
                       this.toast.success(`Great! The post has been shared to ${postedTo}.`);

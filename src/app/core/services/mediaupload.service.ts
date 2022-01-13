@@ -9,6 +9,8 @@ import { Club } from './../models/club.model';
 import { ClubApiService } from './club_api.service';
 import { HttpRequest } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { ApiResponse } from '@app/core/models/response.model';
+import { Media } from '../models/media-model';
 
 @Injectable({
   providedIn: 'root'
@@ -53,7 +55,7 @@ export class MediauploadService {
   }
 
 
-  uploadClubMedia(folderName , fieldName , file): Observable<any>{
+  uploadClubMedia(folderName , fieldName , file): Observable<ApiResponse<Media>>{
     const formData: FormData = new FormData();
     formData.append('file', file);
     return new Observable((success) => {

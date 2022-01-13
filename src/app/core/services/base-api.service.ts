@@ -104,6 +104,19 @@ export class BaseApiService<T> {
     );
   }
 
+  public clubApiPost(
+    path: string,
+    body: Object = {}
+  ): Observable<ApiResponse<T>> {
+    return this.mapAndCatchError<T>(
+      this.http.post<ApiResponse<T>>(
+        `${constants.clubApiUrl}${path}`,
+        body
+      )
+    );
+  }
+  
+
   public postMedia(
     path: string,
     body: any = {}

@@ -75,16 +75,9 @@ export class ClubService extends BaseApiService<ClubData> {
     limit = parseInt(limit) < 1 ? 10 : limit;
     offset = parseInt(offset) < 0 ? 0 : offset;
     return this.clubApiGet(`/groups/getAllGroups?offset=${offset}&limit=${limit}`)
-    // .pipe(
-    //   tap((res:ApiResponse<ClubData>) => {
-    //     if(res.hasErrors()) {
-    //       console.log('Error: ', res.errors[0].error.message)
-    //     }
-    //   })
-    // );
   }
 
-  getClubEvents(offset, limit) {
+  getClubEvents(offset, limit): Observable<ApiResponse<ClubData>> {
     limit = parseInt(limit) < 1 ? 10 : limit;
     offset = parseInt(offset) < 0 ? 0 : offset;
     return this.clubApiGet(`/event/getAllEvents?offset=${offset}&limit=${limit}`);

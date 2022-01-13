@@ -9,6 +9,7 @@ import { ReportService } from '../report.service';
 import { VideoProcessingService } from '../video-service/video-processing.service';
 import { ScheduleService } from '../schedule.service';
 import { Club } from 'src/app/core/models/club.model';
+import { ApiResponse } from '@app/core/models/response.model';
 
 @Injectable({
   providedIn: 'root'
@@ -61,8 +62,8 @@ export class ScheduleClubPostService {
         delete this.post.eventID;
         delete this.post.groupID;
       }
-      this._postService.hyperLinkScrapper(postedText).subscribe((data) => {
-        hyperLinkResponse = data;
+      this._postService.hyperLinkScrapper(postedText).subscribe((res: ApiResponse<any>) => {
+        hyperLinkResponse = res.data;
 
         if (hyperLinkResponse.length > 0 && hyperLinkResponse[0].hasOwnProperty("url")) {
           this.post.hyperLink = hyperLinkResponse[0].url;
@@ -96,7 +97,8 @@ export class ScheduleClubPostService {
           else {
             this.post.title = this.clubName
           }
-          this._scheduleService.schduleClubPost(postedTo, this.clubID, this.post).subscribe((post: any) => {
+          this._scheduleService.schduleClubPost(postedTo, this.clubID, this.post).subscribe((res: ApiResponse<any>) => {
+            debugger
             if (idx == self.length - 1) {
               this.toast.success(`Post scheduled For ${postedTo}`, "Success");
               resolve('success')
@@ -130,8 +132,8 @@ export class ScheduleClubPostService {
         delete this.post.eventID;
         delete this.post.groupID;
       }
-      this._postService.hyperLinkScrapper(postedText).subscribe((data) => {
-        hyperLinkResponse = data;
+      this._postService.hyperLinkScrapper(postedText).subscribe((res: ApiResponse<any>) => {
+        hyperLinkResponse = res.data;
 
         if (hyperLinkResponse.length > 0 && hyperLinkResponse[0].hasOwnProperty("url")) {
           this.post.hyperLink = hyperLinkResponse[0].url;
@@ -147,9 +149,9 @@ export class ScheduleClubPostService {
           this.post.captureFileURL = hyperLinkResponse[0].image;
         }
 
-        this._mediaUploadService.uploadClubMedia(postedTo, userID, MediaFile).subscribe((media: any) => {
-          this.post.captureFileURL = media.url
-          this.post.path = media.path;
+        this._mediaUploadService.uploadClubMedia(postedTo, userID, MediaFile).subscribe((res: ApiResponse<any>) => {
+          this.post.captureFileURL = res.data.url
+          this.post.path = res.data.path;
           selectedList.forEach((element, idx, self) => {
 
             if (this.pickerClub) {
@@ -167,7 +169,7 @@ export class ScheduleClubPostService {
             else {
               this.post.title = this.clubName
             }
-            this._scheduleService.schduleClubPost(postedTo, this.clubID, this.post).subscribe((post: any) => {
+            this._scheduleService.schduleClubPost(postedTo, this.clubID, this.post).subscribe((res: ApiResponse<any>) => {
               if (idx == self.length - 1) {
                 this.toast.success(`Post scheduled For ${postedTo}`, "Success");
                 resolve('success');
@@ -211,8 +213,8 @@ export class ScheduleClubPostService {
         delete this.post.eventID;
         delete this.post.groupID;
       }
-      this._postService.hyperLinkScrapper(postedText).subscribe((data) => {
-        hyperLinkResponse = data;
+      this._postService.hyperLinkScrapper(postedText).subscribe((res: ApiResponse<any>) => {
+        hyperLinkResponse = res.data;
         if (
           hyperLinkResponse.length > 0 &&
           hyperLinkResponse[0].hasOwnProperty("url")
@@ -239,9 +241,9 @@ export class ScheduleClubPostService {
         }
         this._mediaUploadService
           .uploadClubMedia("GroupMedia", userID, MediaFile)
-          .subscribe((uploadedVideo: any) => {
-            this.post.captureFileURL = uploadedVideo.url;
-            this.post.path = uploadedVideo.path;
+          .subscribe((res: ApiResponse<any>) => {
+            this.post.captureFileURL = res.data.url;
+            this.post.path = res.data.path;
             this._videoService.generateThumbnail(MediaFile).then((base64) => {
               file = base64;
               file = file.replace("data:image/png;base64,", "");
@@ -249,9 +251,9 @@ export class ScheduleClubPostService {
               const imageFile = new File([imageBlob], "thumbnail.jpeg", {
                 type: "image/jpeg",
               });
-              this._mediaUploadService.uploadClubMedia("VideoThumbnails", userID, imageFile).subscribe((thumbnailFile: any) => {
-                this.post.thumbnailPath = thumbnailFile.path;
-                this.post.thumbnailURL = thumbnailFile.url;
+              this._mediaUploadService.uploadClubMedia("VideoThumbnails", userID, imageFile).subscribe((res: ApiResponse<any>) => {
+                this.post.thumbnailPath = res.data.path;
+                this.post.thumbnailURL = res.data.url;
                 selectedList.forEach((element, idx, self) => {
                   if (this.pickerClub) {
                     this.post.pickerClubPost = true
@@ -269,7 +271,7 @@ export class ScheduleClubPostService {
                   else {
                     this.post.title = this.clubName
                   }
-                  this._scheduleService.schduleClubPost(postedTo, this.clubID, this.post).subscribe((post: any) => {
+                  this._scheduleService.schduleClubPost(postedTo, this.clubID, this.post).subscribe((res: ApiResponse<any>) => {
                     if (idx == self.length - 1) {
                       this.toast.success(`Post scheduled For ${postedTo}`, "Success");
                       resolve('success')

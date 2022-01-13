@@ -166,16 +166,16 @@ export class TeamtalkersComponent implements OnInit {
     let tempPosts = [];
     this._postService
       .getClubPosts("Club", 0, 15)
-      .subscribe((clubPosts: Post[]) => {
-        clubPosts.map((singleClubPost: any, idx, self) => {
+      .subscribe((clubPosts: ApiResponse<any>) => {
+        clubPosts.data.map((singleClubPost: any, idx, self) => {
           this._postService
             .getPostCommentsAndReactions(singleClubPost.id, 0, 4)
-            .subscribe((reactionsAndComments: any) => {
+            .subscribe((reactionsAndComments: ApiResponse<any>) => {
               singleClubPost.reactionCount =
-                reactionsAndComments.count.reactionCount;
+                reactionsAndComments.data.count.reactionCount;
               singleClubPost.commentsCount =
-                reactionsAndComments.count.commentsCount;
-              singleClubPost.reactions = reactionsAndComments.reaction;
+                reactionsAndComments.data.count.commentsCount;
+              singleClubPost.reactions = reactionsAndComments.data.reaction;
               tempPosts.push(singleClubPost);
               if (idx == self.length - 1) {
                 tempPosts.sort(function compare(a, b) {
