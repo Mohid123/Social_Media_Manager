@@ -10,7 +10,7 @@ import { ApiResponse } from '../models/response.model';
 import { getItem } from '../utils';
 import { Group } from './../models/groups.model';
 
-type ClubData = BaseClub[] | Group[] | Group | any
+type ClubData = BaseClub[] | Group[] | Group | Event[] | Event | any
 
 @Injectable({
   providedIn: 'root'
@@ -31,7 +31,7 @@ export class ClubService extends BaseApiService<ClubData> {
 
   private club: any
 
-  constructor(protected http: HttpClient, private _clubApiService: ClubApiService) {
+  constructor(protected http: HttpClient) {
     super(http)
   }
 

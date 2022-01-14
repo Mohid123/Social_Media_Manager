@@ -1,5 +1,5 @@
 import { ApiResponse } from '@app/core/models/response.model';
-import { filter } from "rxjs/operators";
+import { filter, map, takeUntil } from "rxjs/operators";
 import { ReportService } from "./../../core/services/report.service";
 import { ClubService } from "./../../core/services/club.service";
 import { BaseModel } from "./../../_metronic/shared/crud-table/models/base.model";
@@ -30,6 +30,7 @@ import { ClubpostService } from "./../../core/services/club-post/clubpost.servic
 import { ScheduleClubPostService } from "../../core/services/schedule/schedule_club_post.service";
 import { ScheduleService } from "./../../core/services/schedule.service";
 import { DomSanitizer } from "@angular/platform-browser";
+import { Subject } from 'rxjs';
 
 @Component({
   selector: "app-teamtalkers",
@@ -113,6 +114,8 @@ export class TeamtalkersComponent implements OnInit {
     this.report = new Report();
     this.poll = new Poll();
   }
+
+  destroy$ = new Subject();
 
   ngOnInit() {
     this.getSignedInUser();
@@ -374,15 +377,16 @@ export class TeamtalkersComponent implements OnInit {
   }
 
   getClubEvents() {
-    this._clubService.getClubEvents(0, 50).subscribe((res: ApiResponse<any>) => {
+    this._clubService.getClubEvents(0, 50).pipe(takeUntil(this.destroy$)).subscribe((res: ApiResponse<Event>) => {
       if (!res.hasErrors()) {
-        res.data.map((sigleItem) => {
-          sigleItem.isSelected = false;
-          sigleItem.name = sigleItem.eventName;
-          this.checklist.push(sigleItem);
-          this.tempList.push(sigleItem);
-          this.cf.detectChanges();
-        });
+        debugger
+        // res.data.map((sigleItem) => {
+        //   sigleItem.isSelected = false;
+        //   sigleItem.name = sigleItem.eventName;
+        //   this.checklist.push(sigleItem);
+        //   this.tempList.push(sigleItem);
+        //   this.cf.detectChanges();
+        // });
       }
     });
   }
@@ -1058,5 +1062,10 @@ export class TeamtalkersComponent implements OnInit {
         this.resetPost();
       });
     }
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.complete();
+    this.destroy$.unsubscribe();
   }
 }
