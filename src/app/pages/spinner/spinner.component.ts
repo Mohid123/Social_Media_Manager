@@ -25,8 +25,7 @@ import { NavigationError } from '@angular/router';
         this.router.events.subscribe(event => {
             if (event instanceof NavigationStart) {
                 this.spinner.show();
-    
-            } else if ( event instanceof NavigationEnd || event instanceof NavigationCancel || event instanceof NavigationError) {
+            } else if (event instanceof NavigationEnd || event instanceof NavigationCancel || event instanceof NavigationError) {
                 setTimeout(() => {
                     this.spinner.hide();
                   }, 1000);

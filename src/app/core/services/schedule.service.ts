@@ -40,15 +40,15 @@ export class ScheduleService extends BaseApiService<schedule> {
     return this.post('/schedule/scheduleInstagramPost', IGpost)
   }
 
-  getQueuedSchedules(clubID: string) : Observable <any>{ //error occurs in schedule.component when using ApiResponse<schedule>
+  getQueuedSchedules(clubID: string) : Observable <ApiResponse<schedule>>{ 
     return this.get(`/schedule/getQueuedSchedules/${clubID}`)
   }
 
-  getPublishedSchedules(clubID: string): Observable <any> { //error occurs in schedule.component when using ApiResponse<schedule>
+  getPublishedSchedules(clubID: string): Observable <ApiResponse<schedule>> { 
     return this.get(`/schedule/getPublishedSchedules/${clubID}`)
   }
 
-  getUnPublishedSchedules(clubID: string) : Observable <any> { //error occurs in schedule.component when using ApiResponse<schedule>
+  getUnPublishedSchedules(clubID: string) : Observable <ApiResponse<schedule>> {
     return this.get(`/schedule/getUnPublishedSchedules/${clubID}`)
   }
 

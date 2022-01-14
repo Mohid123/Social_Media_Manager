@@ -9,6 +9,10 @@ import { ReportService } from '../report.service';
 import { VideoProcessingService } from '../video-service/video-processing.service';
 import { ScheduleService } from '../schedule.service';
 import { Club } from 'src/app/core/models/club.model';
+import { ApiResponse } from '@app/core/models/response.model';
+import { Observable, combineLatest } from 'rxjs';
+import { mergeMap } from 'rxjs/operators';
+import { Media } from './../../models/media-model';
 
 @Injectable({
   providedIn: 'root'
@@ -42,7 +46,6 @@ export class ScheduleClubPostService {
   }
 
   scheduleTextPost(postedText, postedTo, scheduledDate, selectedList) {
-    debugger
     return new Promise((resolve, reject) => {
       let hyperLinkResponse = []
       this.post.type = 'text'
@@ -61,8 +64,8 @@ export class ScheduleClubPostService {
         delete this.post.eventID;
         delete this.post.groupID;
       }
-      this._postService.hyperLinkScrapper(postedText).subscribe((data) => {
-        hyperLinkResponse = data;
+      this._postService.hyperLinkScrapper(postedText).subscribe((res: ApiResponse<any>) => {
+        hyperLinkResponse = res.data;
 
         if (hyperLinkResponse.length > 0 && hyperLinkResponse[0].hasOwnProperty("url")) {
           this.post.hyperLink = hyperLinkResponse[0].url;
@@ -96,7 +99,8 @@ export class ScheduleClubPostService {
           else {
             this.post.title = this.clubName
           }
-          this._scheduleService.schduleClubPost(postedTo, this.clubID, this.post).subscribe((post: any) => {
+          this._scheduleService.schduleClubPost(postedTo, this.clubID, this.post).subscribe((res: ApiResponse<any>) => {
+            debugger
             if (idx == self.length - 1) {
               this.toast.success(`Post scheduled For ${postedTo}`, "Success");
               resolve('success')
@@ -110,10 +114,9 @@ export class ScheduleClubPostService {
     })
   }
 
-
   scheduleImagePost(postedText, postedTo, userID, MediaFile, scheduleDate, selectedList?) {
     return new Promise((resolve, reject) => {
-      let hyperLinkResponse = []
+      let hyperLinkResponse = [];
       this.post.type = 'image'
       this.post.text = postedText;
       this.post.postedTo = postedTo;
@@ -130,9 +133,8 @@ export class ScheduleClubPostService {
         delete this.post.eventID;
         delete this.post.groupID;
       }
-      this._postService.hyperLinkScrapper(postedText).subscribe((data) => {
-        hyperLinkResponse = data;
-
+      this._postService.hyperLinkScrapper(postedText).subscribe((res: ApiResponse<any>) => {
+        hyperLinkResponse = res.data;
         if (hyperLinkResponse.length > 0 && hyperLinkResponse[0].hasOwnProperty("url")) {
           this.post.hyperLink = hyperLinkResponse[0].url;
           this.post.type = "hyperlink";
@@ -146,41 +148,53 @@ export class ScheduleClubPostService {
         if (hyperLinkResponse.length > 0 && hyperLinkResponse[0].hasOwnProperty("image")) {
           this.post.captureFileURL = hyperLinkResponse[0].image;
         }
-
-        this._mediaUploadService.uploadClubMedia(postedTo, userID, MediaFile).subscribe((media: any) => {
-          this.post.captureFileURL = media.url
-          this.post.path = media.path;
-          selectedList.forEach((element, idx, self) => {
-
-            if (this.pickerClub) {
-              this.post.pickerClubPost = true
-              this.post.pickerClubBaseUrl =  this.club.baseURL
-            }
-            if (element.hasOwnProperty('groupName')) {
-              this.post.groupID = element.id;
-              this.post.title = element.groupName
-            }
-            else if (element.hasOwnProperty('eventName')) {
-              this.post.eventID = element.id;
-              this.post.title = element.eventName
-            }
-            else {
-              this.post.title = this.clubName
-            }
-            this._scheduleService.schduleClubPost(postedTo, this.clubID, this.post).subscribe((post: any) => {
-              if (idx == self.length - 1) {
+        let mediaRequests: Array<Observable<any>> = [];
+         MediaFile.forEach(file => {
+         mediaRequests.push(this._mediaUploadService.uploadClubMedia(postedTo, userID, file))
+         } );
+        combineLatest(mediaRequests).pipe(
+          mergeMap((uploadedMedia) => {
+            this.post.captureFileURL = uploadedMedia[0].data.url;
+            this.post.path = uploadedMedia[0].data.path;
+            uploadedMedia.forEach((res: ApiResponse<any>) => {
+              let mediaModel = new Media();
+              mediaModel.type = 'image';
+              mediaModel.captureFileURL = res.data.url;
+              mediaModel.path = res.data.path;
+              mediaModel.thumbnailURL = "";
+              mediaModel.thumbnailPath = "";
+              this.post.media.push(mediaModel);
+            })
+            selectedList.forEach((element, idx, self) => {
+              if (this.pickerClub) {
+                this.post.pickerClubPost = true
+                this.post.pickerClubBaseUrl =  this.club.baseURL
+              }
+              else if (element.hasOwnProperty('groupName')) {
+                this.post.groupID = element.id;
+              }
+              else if (element.hasOwnProperty('eventName')) {
+                this.post.eventID = element.id;
+              }
+              else {
+                this.post.title = this.clubName
+              }
+            })
+            return this._scheduleService.schduleClubPost(postedTo, this.clubID, this.post)
+          }))
+            .subscribe(async (res:ApiResponse<any>) => {
                 this.toast.success(`Post scheduled For ${postedTo}`, "Success");
                 resolve('success');
-              }
-            }, error => {
+            },error => {
               this.toast.error(error.message);
+              this._reportService.createReport(0, "", postedTo);
             })
-          });
+          },
+          error=>{
+            console.log(error)
         })
       })
-    })
   }
-
 
   schedulePollPost(post) {
     if (this.pickerClub) {
@@ -211,8 +225,8 @@ export class ScheduleClubPostService {
         delete this.post.eventID;
         delete this.post.groupID;
       }
-      this._postService.hyperLinkScrapper(postedText).subscribe((data) => {
-        hyperLinkResponse = data;
+      this._postService.hyperLinkScrapper(postedText).subscribe((res: ApiResponse<any>) => {
+        hyperLinkResponse = res.data;
         if (
           hyperLinkResponse.length > 0 &&
           hyperLinkResponse[0].hasOwnProperty("url")
@@ -239,9 +253,9 @@ export class ScheduleClubPostService {
         }
         this._mediaUploadService
           .uploadClubMedia("GroupMedia", userID, MediaFile)
-          .subscribe((uploadedVideo: any) => {
-            this.post.captureFileURL = uploadedVideo.url;
-            this.post.path = uploadedVideo.path;
+          .subscribe((res: ApiResponse<any>) => {
+            this.post.captureFileURL = res.data.url;
+            this.post.path = res.data.path;
             this._videoService.generateThumbnail(MediaFile).then((base64) => {
               file = base64;
               file = file.replace("data:image/png;base64,", "");
@@ -249,9 +263,9 @@ export class ScheduleClubPostService {
               const imageFile = new File([imageBlob], "thumbnail.jpeg", {
                 type: "image/jpeg",
               });
-              this._mediaUploadService.uploadClubMedia("VideoThumbnails", userID, imageFile).subscribe((thumbnailFile: any) => {
-                this.post.thumbnailPath = thumbnailFile.path;
-                this.post.thumbnailURL = thumbnailFile.url;
+              this._mediaUploadService.uploadClubMedia("VideoThumbnails", userID, imageFile).subscribe((res: ApiResponse<any>) => {
+                this.post.thumbnailPath = res.data.path;
+                this.post.thumbnailURL = res.data.url;
                 selectedList.forEach((element, idx, self) => {
                   if (this.pickerClub) {
                     this.post.pickerClubPost = true
@@ -269,7 +283,7 @@ export class ScheduleClubPostService {
                   else {
                     this.post.title = this.clubName
                   }
-                  this._scheduleService.schduleClubPost(postedTo, this.clubID, this.post).subscribe((post: any) => {
+                  this._scheduleService.schduleClubPost(postedTo, this.clubID, this.post).subscribe((res: ApiResponse<any>) => {
                     if (idx == self.length - 1) {
                       this.toast.success(`Post scheduled For ${postedTo}`, "Success");
                       resolve('success')
