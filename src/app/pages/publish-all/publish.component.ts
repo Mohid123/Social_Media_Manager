@@ -263,7 +263,6 @@ export class PublishComponent implements OnInit {
   }
 
   switchTabs(event) {
-    ;
     if (event.index == 0) {
       this.showDiv.photo = true;
       this.showDiv.video = false;
@@ -308,19 +307,64 @@ export class PublishComponent implements OnInit {
   }
 
   onSelectFile(event) {
-    this.file = event.target.files && event.target.files[0];
-    if (this.file) {
-      var reader = new FileReader();
-      reader.readAsDataURL(this.file);
-      if (this.file.type.indexOf('image') > -1) {
-        this.format = 'image';
+    this.file = event.target.files && event.target.files.length;
+    let club = JSON.parse(localStorage.getItem("selectedClub"));
+    let obj = {
+      clubName: club.clubName
+    };
+    if (this.mergeService.gen4 == true && (obj.clubName == 'Dividis Tribe' || obj.clubName == 'Solis Solution' || obj.clubName == 'Solissol')) {
+      //Multiple Images for gen4 = true
+      if (this.file > 0 && this.file < 5) {
+        let i: number = 0;
+        for (const singlefile of event.target.files) {
+          var reader = new FileReader();
+          reader.readAsDataURL(singlefile);
+          this.urls.push(singlefile);
+          this.cf.detectChanges();
+          i++;
+          reader.onload = (event) => {
+            const url = this.sanitizer.bypassSecurityTrustUrl((<FileReader>event.target).result as string);
+            this.multiples.push(url);
+            this.cf.detectChanges();
+            // If multple events are fired by user
+            if (this.multiples.length > 4) {
+              // If multple events are fired by user
+              this.multiples.pop();
+              this.urls.pop();
+              this.cf.detectChanges();
+              this.toast.error(
+                "Max Number of Selected Files reached",
+                "Upload Images"
+              );
+            }
+          };
+        }
+      } else {
+        this.toast.error("No More than 4 images", "Upload Images");
       }
-      reader.onload = (event) => {
-        this.url = (<FileReader>event.target).result as string;
-        this.cf.detectChanges();
+    } else {
+      //Single Image for gen4 = false
+      if (this.file == 1) {
+        for (const singlefile of event.target.files) {
+          var reader = new FileReader();
+          reader.readAsDataURL(singlefile);
+          this.urls.push(singlefile);
+          this.cf.detectChanges();
+          reader.onload = (event) => {
+            const url = this.sanitizer.bypassSecurityTrustUrl((<FileReader>event.target).result as string);
+            this.multiples.push(url);
+            this.cf.detectChanges();
+            if (this.multiples.length > 1) {
+              this.multiples.pop();
+              this.urls.pop();
+              this.cf.detectChanges();
+              this.toast.error("Only one Image is allowed", "Upload Images");
+            }
+          };
+        }
+      } else {
+        this.toast.error("Please Select One Image to Upload", "Upload Image");
       }
-      event.target.value = '';
-
     }
   }
 
@@ -380,7 +424,7 @@ export class PublishComponent implements OnInit {
     let selectedClubEvents = []
     let selectedClub: any[] = [];
 
-    if (!this.file) {
+    if (!this.urls) {
       this.toast.error('Please select an Image File', 'Empty File');
       return;
     }
@@ -413,7 +457,7 @@ export class PublishComponent implements OnInit {
     }
 
     if (selectedFacebookPages.length > 0) {
-      this._mediaUploadService.uploadMedia('Facebook', this.signedInUser.id, this.file).subscribe((media: any) => {
+      this._mediaUploadService.uploadMedia('Facebook', this.signedInUser.id, this.urls).subscribe((media: any) => {
         selectedFacebookPages.forEach((item, index, array) => {
           this._reportService.createReport(2, '', 'Facebook')
           this._facebookService.addImagePostToFB(item.pageID, media.url, this.socialCaption, item.pageAccessToken).subscribe((FbPost: any) => {
@@ -434,7 +478,7 @@ export class PublishComponent implements OnInit {
 
     if (selctedInstagramPages.length > 0) {
 
-      this._mediaUploadService.uploadMedia('Instagram', this.signedInUser.id, this.file).subscribe((media: any) => {
+      this._mediaUploadService.uploadMedia('Instagram', this.signedInUser.id, this.urls).subscribe((media: any) => {
         selctedInstagramPages.forEach((item, index, array) => {
           this._reportService.createReport(2, '', 'Instagram')
           this._instagramService.createIGMediaContainer(item.instagram_business_account.id, this.socialCaption, item.linkedFbPagetoken, media.url).subscribe((container: any) => {
@@ -455,19 +499,19 @@ export class PublishComponent implements OnInit {
       })
     }
     if (selectedClub.length > 0) {
-      this._genericPostService.createImagePost(this.socialCaption, 'Club', this.signedInUser.id, this.file, selectedClub).then(success => {
+      this._genericPostService.createImagePost(this.socialCaption, 'Club', this.signedInUser.id, this.urls, selectedClub).then(success => {
         this.clear()
       })
     }
 
     if (selectedClubGroups.length > 0) {
-      this._genericPostService.createImagePost(this.socialCaption, 'Group', this.signedInUser.id, this.file, selectedClubGroups).then(success => {
+      this._genericPostService.createImagePost(this.socialCaption, 'Group', this.signedInUser.id, this.urls, selectedClubGroups).then(success => {
         this.clear()
       });
     }
 
     if (selectedClubEvents.length > 0) {
-      this._genericPostService.createImagePost(this.socialCaption, 'Event', this.signedInUser.id, this.file, selectedClubEvents).then(success => {
+      this._genericPostService.createImagePost(this.socialCaption, 'Event', this.signedInUser.id, this.urls, selectedClubEvents).then(success => {
         this.clear()
       });
     }

@@ -35,6 +35,11 @@ export class Post {
   backgroundColorHex: any;
   scheduleDate : any;
   media: Media[];
+  imagesObject: any[];
+  jwtToken: string;
+  title: string;
+  pickerClubPost?: boolean;
+  pickerClubBaseUrl?: string;
 
   constructor() {
     this.id = "",
@@ -67,5 +72,10 @@ export class Post {
     this.backgroundColorHex = "";
     this.userID = "";
     this.media = [];
+    this.imagesObject = [];
+    this.jwtToken = "";
+    this.title = "";
+    this.pickerClubPost = false;
+    this.pickerClubBaseUrl = "";
   }
 }

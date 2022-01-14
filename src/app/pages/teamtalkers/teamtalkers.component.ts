@@ -13,6 +13,8 @@ import {
   OnInit,
   ChangeDetectorRef,
   AfterViewInit,
+  ElementRef,
+  ViewChild
 } from "@angular/core";
 import { NgxSpinnerService } from "ngx-spinner";
 import { ToastrService } from "ngx-toastr";
@@ -35,6 +37,7 @@ import { DomSanitizer } from "@angular/platform-browser";
   styleUrls: ["./teamtalkers.component.scss"],
 })
 export class TeamtalkersComponent implements OnInit {
+  @ViewChild('nav') nav : ElementRef;
   public format: string;
   public teamtalkerCaption: string = "";
   public editedPostText: string;
@@ -123,19 +126,6 @@ export class TeamtalkersComponent implements OnInit {
     })
   }
 
-  openImageCentered(content, post) {
-    this.imageModal = post.captureFileURL;
-    this.modalService.open(content, { centered: true }).result.then(
-      (result) => {
-        this.closeResult = `Closed with: ${result}`;
-      },
-      (reason) => {
-        this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-      }
-    );
-  }
-  
-
   openVerticallyCentered(content, post) {
     this.playingVideo = post.captureFileURL;
     this.modalService.open(content, { centered: true }).result.then(
@@ -176,6 +166,17 @@ export class TeamtalkersComponent implements OnInit {
               singleClubPost.commentsCount =
                 reactionsAndComments.data.count.commentsCount;
               singleClubPost.reactions = reactionsAndComments.data.reaction;
+
+              singleClubPost.imagesObject = [];
+              singleClubPost.imagesObject.push(...singleClubPost.media);
+
+              singleClubPost.imagesObject = singleClubPost.imagesObject.map(item=> {
+                this.cf.detectChanges()
+                return {
+                  image: item.captureFileURL,
+                  thumbImage: item.captureFileURL
+                }                 
+              })
               tempPosts.push(singleClubPost);
               if (idx == self.length - 1) {
                 tempPosts.sort(function compare(a, b) {
@@ -208,10 +209,14 @@ export class TeamtalkersComponent implements OnInit {
   resetSchedulePost() {
     this.teamtalkerCaption = "";
     this.url = null;
+    this.urls = [];
+    this.multiples = [];
     this.file = null;
     this.showSchedule = false;
     this.poll = new Poll();
     this.unCheckSlectedItems();
+    this.unCheckSlectedItems();
+    this.getLatestClubPosts();
     this.singleDate = new Date(new Date().setDate(new Date().getDate() + 1));
     this.cf.detectChanges();
   }
@@ -415,19 +420,64 @@ export class TeamtalkersComponent implements OnInit {
   }
 
   onSelectFile(event) {
-    this.file = event.target.files && event.target.files[0];
-    if (this.file) {
-      var reader = new FileReader();
-      reader.readAsDataURL(this.file);
-      if (this.file.type.indexOf('image') > -1) {
-        this.format = 'image';
+    this.file = event.target.files && event.target.files.length;
+    let club = JSON.parse(localStorage.getItem("selectedClub"));
+    let obj = {
+      clubName: club.clubName
+    };
+    if (this.mergeService.gen4 == true && (obj.clubName == 'Dividis Tribe' || obj.clubName == 'Solis Solution' || obj.clubName == 'Solissol')) {
+      //Multiple Images for gen4 = true
+      if (this.file > 0 && this.file < 5) {
+        let i: number = 0;
+        for (const singlefile of event.target.files) {
+          var reader = new FileReader();
+          reader.readAsDataURL(singlefile);
+          this.urls.push(singlefile);
+          this.cf.detectChanges();
+          i++;
+          reader.onload = (event) => {
+            const url = this.sanitizer.bypassSecurityTrustUrl((<FileReader>event.target).result as string);
+            this.multiples.push(url);
+            this.cf.detectChanges();
+            // If multple events are fired by user
+            if (this.multiples.length > 4) {
+              // If multple events are fired by user
+              this.multiples.pop();
+              this.urls.pop();
+              this.cf.detectChanges();
+              this.toast.error(
+                "Max Number of Selected Files reached",
+                "Upload Images"
+              );
+            }
+          };
+        }
+      } else {
+        this.toast.error("No More than 4 images", "Upload Images");
       }
-      reader.onload = (event) => {
-        this.url = (<FileReader>event.target).result as string;
-        this.cf.detectChanges();
+    } else {
+      //Single Image for gen4 = false
+      if (this.file == 1) {
+        for (const singlefile of event.target.files) {
+          var reader = new FileReader();
+          reader.readAsDataURL(singlefile);
+          this.urls.push(singlefile);
+          this.cf.detectChanges();
+          reader.onload = (event) => {
+            const url = this.sanitizer.bypassSecurityTrustUrl((<FileReader>event.target).result as string);
+            this.multiples.push(url);
+            this.cf.detectChanges();
+            if (this.multiples.length > 1) {
+              this.multiples.pop();
+              this.urls.pop();
+              this.cf.detectChanges();
+              this.toast.error("Only one Image is allowed", "Upload Images");
+            }
+          };
+        }
+      } else {
+        this.toast.error("Please Select One Image to Upload", "Upload Image");
       }
-      event.target.value = '';
-
     }
   }
 
@@ -521,7 +571,7 @@ export class TeamtalkersComponent implements OnInit {
     let events = [];
     let club = [];
 
-    if (!this.file) {
+    if (!this.urls) {
       this.toast.error("Please Select Image File to post", "No File Selected");
       return;
     } else if (this.checkedList.length == 0) {
@@ -550,7 +600,7 @@ export class TeamtalkersComponent implements OnInit {
           this.teamtalkerCaption,
           "Club",
           this.signedInUser.id,
-          this.file,
+          this.urls,
           club
         )
         .then((success) => {
@@ -565,7 +615,7 @@ export class TeamtalkersComponent implements OnInit {
           this.teamtalkerCaption,
           "Group",
           this.signedInUser.id,
-          this.file,
+          this.urls,
           groups
         )
         .then((success) => {
@@ -580,7 +630,7 @@ export class TeamtalkersComponent implements OnInit {
           this.teamtalkerCaption,
           "Event",
           this.signedInUser.id,
-          this.file,
+          this.urls,
           events
         )
         .then((success) => {
@@ -743,7 +793,7 @@ export class TeamtalkersComponent implements OnInit {
     let events = [];
     let club = [];
 
-    if (!this.file) {
+    if (!this.urls) {
       this.toast.error("Please Select Image File to post", "No File Selected");
       return;
     } else if (this.checkedList.length == 0) {
@@ -775,7 +825,7 @@ export class TeamtalkersComponent implements OnInit {
             this.teamtalkerCaption,
             "Group",
             this.signedInUser.id,
-            this.file,
+            this.urls,
             this._scheduleService.getScheduleEpox,
             groups
           )
@@ -790,7 +840,7 @@ export class TeamtalkersComponent implements OnInit {
             this.teamtalkerCaption,
             "Event",
             this.signedInUser.id,
-            this.file,
+            this.urls,
             this._scheduleService.getScheduleEpox,
             events
           )
@@ -805,7 +855,7 @@ export class TeamtalkersComponent implements OnInit {
             this.teamtalkerCaption,
             "Club",
             this.signedInUser.id,
-            this.file,
+            this.urls,
             this._scheduleService.getScheduleEpox,
             club
           )

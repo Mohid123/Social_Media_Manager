@@ -56,6 +56,7 @@ import { ScheduleDateTransform } from '../core/pipes/scheduleDateTransform.pipe'
 import { FeedbackComponent } from './help/feedback.component';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 import { JoyrideModule } from 'ngx-joyride';
+import { NgImageSliderModule } from 'ng-image-slider';
 
 FullCalendarModule.registerPlugins([ 
   dayGridPlugin,
@@ -99,8 +100,9 @@ FullCalendarModule.registerPlugins([
   
   ],
   imports: [
-  FullCalendarModule,
-  CommonModule,
+    NgImageSliderModule,
+    FullCalendarModule,
+    CommonModule,
     PagesRoutingModule,
     TranslationModule,
     InlineSVGModule,
