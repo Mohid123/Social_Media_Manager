@@ -1,5 +1,5 @@
 import { ClubService } from './../../core/services/club.service';
-import { combineLatest } from 'rxjs';
+import { combineLatest, Subject } from 'rxjs';
 import { ReportService } from './../../core/services/report.service';
 import { Component, ViewChild, OnInit, ChangeDetectorRef } from '@angular/core';
 import { NgxSpinnerService } from "ngx-spinner";
@@ -23,6 +23,7 @@ import { AsideComponent } from './../_layout/components/aside/aside.component';
 import { ApiResponse } from '@app/core/models/response.model';
 import { Report } from '@app/core/models/report.model';
 import { Club } from './../../core/models/club.model';
+import { takeUntil } from 'rxjs/operators';
 
 
 
@@ -51,8 +52,8 @@ export class DashboardComponent implements OnInit {
 
   @ViewChild("chart") chart: ChartComponent;
   @ViewChild("appTour") modalContent: TemplateRef<any>;
+  destroy$ = new Subject();
   public chartOptions: Partial<ChartOptions>;
-
   public facebookStats: any;
   public instagramStats: any;
   public clubStats: any;
@@ -64,10 +65,6 @@ export class DashboardComponent implements OnInit {
   public selectedClub$ = this.clubService.SelectedClub$
   clubPrimaryColor: string;
   closeResult: string;
-  // content: any;
-  // public clubName: string = localStorage.getItem('club');
-  // public clubLogo: string = localStorage.getItem('clubLogo')
-
   constructor(
     private spinner: NgxSpinnerService,
     private clubService: ClubService,
@@ -75,20 +72,15 @@ export class DashboardComponent implements OnInit {
     private cf: ChangeDetectorRef,
     private modalService: NgbModal,
     private asideComponent: AsideComponent
-  ) {
-  }
+  ) {}
 
   ngOnInit() {
     this.signedInuserID = localStorage.getItem('clubUid');
     this.getLatestReports()
     this.getSignedInUserStats()
-    // this.initializeStatsChart()
     this.getLastSevenDaysStats()
     this.showAppTour()
     this.spinner.show()
-    // this.cf.detectChanges();
-    // this.openVerticallyCentered(this.modalContent);
-
   }
 
 
@@ -226,9 +218,8 @@ export class DashboardComponent implements OnInit {
   }
 
   getLatestReports() {
-
     let userId = localStorage.getItem('clubUid');
-    this._reportService.getLatestReports(userId)
+    this._reportService.getLatestReports(userId).pipe(takeUntil(this.destroy$))
     .subscribe((res: ApiResponse<Report>) => {
       if(!res.hasErrors()) {
         this.latestReports = res.data
@@ -238,8 +229,6 @@ export class DashboardComponent implements OnInit {
   }
 
   openJoyRide() {
-    console.log('sdsd')
-
     this.asideComponent.onClick()
   }
 
@@ -256,7 +245,7 @@ export class DashboardComponent implements OnInit {
       this._reportService.getFacebookStats(this.signedInuserID),
       this._reportService.getInstagramStats(this.signedInuserID),
       this._reportService.getClubStatus(this.signedInuserID)
-    ).subscribe(res => {
+    ).pipe(takeUntil(this.destroy$)).subscribe(res => {
       if(!res[0].hasErrors()) {
         this.facebookStats = res[0].data;
       }
@@ -274,7 +263,7 @@ export class DashboardComponent implements OnInit {
       this._reportService.getLastSevenDaysStats(this.signedInuserID, 'Facebook'),
       this._reportService.getLastSevenDaysStats(this.signedInuserID, 'Instagram'),
       this._reportService.getLastSeventDaysStatsForClub(this.signedInuserID),
-    ).subscribe(res => {
+    ).pipe(takeUntil(this.destroy$)).subscribe(res => {
       if (!res[0].hasErrors()) {
         this.facebookStatistics = res[0].data;
       }
@@ -286,6 +275,11 @@ export class DashboardComponent implements OnInit {
       }
       this.initializeStatsChart()
     })
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.complete();
+    this.destroy$.unsubscribe();
   }
 
 

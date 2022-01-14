@@ -12,13 +12,14 @@ import { Component, OnInit, ChangeDetectorRef, ViewChild, ElementRef } from '@an
 import { NgxSpinnerService } from "ngx-spinner";
 import { LoggedInUser } from '@app/core/models/logged-in-user.model';
 import { Post } from 'src/app/core/models/post.model';
-import { take, filter, single, throwIfEmpty } from 'rxjs/operators';
+import { take, filter, single, throwIfEmpty, takeUntil } from 'rxjs/operators';
 import { Report } from 'src/app/core/models/report.model';
 import { ClubpostService } from './../../core/services/club-post/clubpost.service';
 import { MergeService } from 'src/app/core/services/merge-service.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ApiResponse } from '@app/core/models/response.model';
 import { Group } from './../../core/models/groups.model';
+import { Subject } from 'rxjs';
 @Component({
   selector: 'app-publish',
   templateUrl: './publish.component.html',
@@ -26,6 +27,7 @@ import { Group } from './../../core/models/groups.model';
 })
 export class PublishComponent implements OnInit {
   @ViewChild('logo') logo: ElementRef;
+  destroy$ = new Subject();
   public textFirst: string
   public signedInUser: LoggedInUser
   public masterSelected: boolean = false;
@@ -135,7 +137,7 @@ export class PublishComponent implements OnInit {
   }
 
   getSignedInUser() {
-    this._authService.getSignedInUser().pipe(take(1)).subscribe(user => {
+    this._authService.getSignedInUser().pipe(take(1), takeUntil(this.destroy$)).subscribe(user => {
       this.signedInUser = user;
       if (this.signedInUser?.FBPages?.length > 0) {
         this.signedInUser.FBPages.map(item => {
@@ -183,7 +185,6 @@ export class PublishComponent implements OnInit {
   }
 
   selectAll() {
-
     for (var i = 0; i < this.checklist.length; i++) {
       this.checklist[i].isSelected = this.masterSelected;
     }
@@ -195,7 +196,6 @@ export class PublishComponent implements OnInit {
   }
 
   selectAllGroups() {
-
     for (var i = 0; i < this.checklist.length; i++) {
       if (this.checklist[i].groupName) {
         this.checklist[i].isSelected = this.groupSelected;
@@ -247,7 +247,6 @@ export class PublishComponent implements OnInit {
   }
 
   singleItemSelected() {
-
     this.masterSelected = this.checklist.every((item: any) => {
       return item.isSelected == true;
     })
@@ -272,7 +271,6 @@ export class PublishComponent implements OnInit {
       this.file = null;
       this.urls = [];
       this.url = null;
-
     }
     else if (event.index == 1) {
       this.showDiv.photo = false;
@@ -282,7 +280,6 @@ export class PublishComponent implements OnInit {
       this.file = null;
       this.urls = [];
       this.url = null;
-
     }
     else {
       this.showDiv.photo = false;
@@ -341,32 +338,16 @@ export class PublishComponent implements OnInit {
   }
 
   getAllClubGroups() {
-    this._clubService.getClubGroups(0, 50).subscribe((res: ApiResponse<Group>) => {
+    this._clubService.getClubGroups(0, 50).pipe(takeUntil(this.destroy$)).subscribe((res: ApiResponse<Group>) => {
       if(!res.hasErrors()) {
         this.checklist.push(res.data);
         this.tempList.push(res.data);
       }
     })
   }
-
-  // getAllClubGroups() {
-
-  //   this._clubService.getClubGroups(0, 50).subscribe((groups: any) => {
-  //     groups.map(singleItem => {
-  //       singleItem.isSelected = false
-  //       singleItem.name = singleItem.groupName;
-  //       this.checklist.push(singleItem);
-  //       this.tempList.push(singleItem);
-  //       this.cf.detectChanges()
-
-  //     })
-  //   })
-  //   this.cf.detectChanges()
-  // }
-
+  
   getAllClubEvents() {
-
-    this._clubService.getClubEvents(0, 50).subscribe((res: ApiResponse<any>) => {
+    this._clubService.getClubEvents(0, 50).pipe(takeUntil(this.destroy$)).subscribe((res: ApiResponse<any>) => {
       if (!res.hasErrors()) {
         res.data.map((sigleItem) => {
           sigleItem.isSelected = false;
@@ -383,13 +364,11 @@ export class PublishComponent implements OnInit {
 
 
   addImagePost() {
-
     let selectedFacebookPages = []
     let selctedInstagramPages = []
     let selectedClubGroups = []
     let selectedClubEvents = []
     let selectedClub: any[] = [];
-
     if (!this.file) {
       this.toast.error('Please select an Image File', 'Empty File');
       return;
@@ -398,7 +377,6 @@ export class PublishComponent implements OnInit {
       this.toast.error('Please select atleast one Item from (Club, Group, Event, Facebook Page or Instagram Profile)');
       return;
     }
-    
     this.checkedList.filter(item => {
       if (item.hasOwnProperty('pageAccessToken')) {
         selectedFacebookPages.push(item)
@@ -416,12 +394,10 @@ export class PublishComponent implements OnInit {
         selectedClub.push(item)
       }
     })
-
     if(this.inValidImageAspectRatio && selctedInstagramPages.length > 0){
       this.toast.error('Invalid Image Aspect Ratio for Instagram');
       return;
     }
-
     if (selectedFacebookPages.length > 0) {
       this._mediaUploadService.uploadMedia('Facebook', this.signedInUser.id, this.file).subscribe((media: any) => {
         selectedFacebookPages.forEach((item, index, array) => {
@@ -429,7 +405,6 @@ export class PublishComponent implements OnInit {
           this._facebookService.addImagePostToFB(item.pageID, media.url, this.socialCaption, item.pageAccessToken).subscribe((FbPost: any) => {
             this._reportService.createReport(1, FbPost.id, 'Facebook')
             if (index == array.length - 1) {
-            
               this.toast.success(`Post added to Facebook Pages`, 'Success');
               this.postedSuccessfully()
             }
@@ -437,14 +412,12 @@ export class PublishComponent implements OnInit {
             this.toast.error(error.message);
             this._reportService.createReport(0, '', 'Facebook')
           })
-
         })
       })
     }
 
     if (selctedInstagramPages.length > 0) {
-
-      this._mediaUploadService.uploadMedia('Instagram', this.signedInUser.id, this.file).subscribe((media: any) => {
+      this._mediaUploadService.uploadMedia('Instagram', this.signedInUser.id, this.file).pipe(takeUntil(this.destroy$)).subscribe((media: any) => {
         selctedInstagramPages.forEach((item, index, array) => {
           this._reportService.createReport(2, '', 'Instagram')
           this._instagramService.createIGMediaContainer(item.instagram_business_account.id, this.socialCaption, item.linkedFbPagetoken, media.url).subscribe((container: any) => {
@@ -496,13 +469,10 @@ export class PublishComponent implements OnInit {
       this.toast.error('Please select a Video File', 'Empty File');
       return;
     }
-
     else if (this.checkedList.length == 0) {
       this.toast.error('Please select atleast one Item from (Club, Group, Event, Facebook Page or Instagram Profile)');
-
       return;
     }
-
     this.checkedList.filter(item => {
       if (item.hasOwnProperty('pageAccessToken')) {
         selectedFacebookPages.push(item)
@@ -522,7 +492,7 @@ export class PublishComponent implements OnInit {
     })
 
     if (selectedFacebookPages.length > 0) {
-      this._mediaUploadService.uploadMedia('Facebook', this.signedInUser.id, this.file).pipe(take(1)).subscribe((media: any) => {
+      this._mediaUploadService.uploadMedia('Facebook', this.signedInUser.id, this.file).pipe(take(1), takeUntil(this.destroy$)).subscribe((media: any) => {
         selectedFacebookPages.forEach((item, index, array) => {
           this._reportService.createReport(2, '', 'Facebook');
           this._facebookService.addVideoPost(item.pageID, item.pageAccessToken, media.url, this.socialCaption).pipe(take(1)).subscribe((FbPost: any) => {
@@ -531,7 +501,6 @@ export class PublishComponent implements OnInit {
             this.toast.error(error.message);
             this._reportService.createReport(0, '', 'Facebook')
           })
-
           if (index == array.length - 1) {
             this.toast.success('Video post added to Facebook Pages', 'Success')
             this.postedSuccessfully()
@@ -541,7 +510,7 @@ export class PublishComponent implements OnInit {
     }
 
     if (selctedInstagramPages.length > 0) {
-      this._mediaUploadService.uploadMedia('Instagram', this.signedInUser.id, this.file).pipe(take(1)).subscribe((media: any) => {
+      this._mediaUploadService.uploadMedia('Instagram', this.signedInUser.id, this.file).pipe(take(1), takeUntil(this.destroy$)).subscribe((media: any) => {
         selctedInstagramPages.forEach(item => {
           this._instagramService.createIgContainerForVideo(item.instagram_business_account.id, media.url, this.socialCaption, item.linkedFbPagetoken).pipe(take(1)).subscribe((container: any) => {
             let interval = setInterval(() => {
@@ -600,22 +569,18 @@ export class PublishComponent implements OnInit {
   }
 
   addTextPost() {
-
     let selectedFacebookPages = []
     let selctedInstagramPages = []
     let selectedClubGroups = []
     let selectedClubEvents = []
     let selectedInstagram: boolean = false;
     let selectedClub: any[] = [];
-
-    
     if (this.socialCaption.trim() == "") {
       this.toast.error('Please add content to post', 'No Content Added');
       return;
     }
     else if (this.checkedList.length == 0) {
       this.toast.error('Please select atleast one Item from (Club, Group, Event, Facebook Page or Instagram Profile)');
-
       return;
     }
     this.checkedList.filter(item => {
@@ -635,12 +600,10 @@ export class PublishComponent implements OnInit {
         selectedInstagram = true;
       }
     })
-
     if (selectedInstagram) {
       this.toast.warning('cannot add text post to Instagram', 'Error')
       return;
     }
-
     if (selectedFacebookPages.length > 0) {
       selectedFacebookPages.forEach((item, index, array) => {
         this._reportService.createReport(2, item.id, 'Facebook')
@@ -674,5 +637,10 @@ export class PublishComponent implements OnInit {
         this.clear()
       });
     }
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.complete();
+    this.destroy$.unsubscribe();
   }
 }
