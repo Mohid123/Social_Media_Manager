@@ -643,6 +643,7 @@
                             <div class="preview-facebook">
                                 <div class="card">
                                     <div class="card-body p-0">
+                                        <!--Photo-->
                                         <div class="preview-facebook preview-facebook-media item-post-type"
                                             data-type="photo" *ngIf="showDiv.photo">
                                             <div class="user-info">
@@ -659,13 +660,15 @@
                                                 <div class="line-no-text" *ngIf="!facebookCaption"></div>
                                             </div>
                                             <div class="preview-media" data-max-image="5">
-                                                <img style="object-fit: contain;
-                                                margin-right: auto;
-                                                margin-left: auto;
-                                                height: 100%;
-                                                width: 100%;
-                                                display: block;" [src]="url"
-                                                    *ngIf="format==='image' && url">
+                                                <ng-container *ngFor="let multiple of multiples">
+                                                    <img style="object-fit: contain;
+                                                     margin-right: auto;
+                                                     margin-left: auto;
+                                                     height: 100%;
+                                                     width: 100%;
+                                                     display: block;"
+                                                     [src]="multiple">
+                                                </ng-container>
                                             </div>
                                             <div class="preview-comment">
                                                 <div class="row">
@@ -697,6 +700,8 @@
                                                     placeholder="Write a comment..." disabled>
                                             </div>
                                         </div>
+
+                                        <!--Video-->
                                         <div class="preview-facebook preview-facebook-media item-post-type"
                                             data-type="video" *ngIf="showDiv.video">
                                             <div class="user-info">
@@ -754,6 +759,8 @@
                                                     placeholder="Write a comment..." disabled>
                                             </div>
                                         </div>
+
+                                        <!--Text-->
                                         <div class="preview-facebook preview-facebook-text item-post-type"
                                             data-type="text" *ngIf="showDiv.text">
                                             <div class="user-info">

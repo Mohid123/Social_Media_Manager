@@ -18,6 +18,7 @@ import { ScheduleClubPostService } from 'src/app/core/services/schedule/schedule
 import { ScheduleService } from './../../core/services/schedule.service';
 import { ScheduleSocialPostService } from 'src/app/core/services/schedule/schedule-social-post.service';
 import { ClubService } from '@app/core/services/club.service';
+import { MergeService } from './../../core/services/merge-service.service';
 @Component({
   selector: 'app-facebook',
   templateUrl: './facebook.component.html',
@@ -32,7 +33,8 @@ export class FacebookComponent implements OnInit {
     private _mediaUploadService: MediauploadService,
     private _reportService: ReportService,
     private _scheduleSocialPostService: ScheduleSocialPostService,
-    private _scheduleService: ScheduleService
+    private _scheduleService: ScheduleService,
+    public mergeService: MergeService,
   ) {
     this.report = new Report()
   }
@@ -40,6 +42,8 @@ export class FacebookComponent implements OnInit {
   public facebookCaption: string = "";
   public format: string;
   public url: string;
+  urls: any[] = [];
+  multiples: any[] = [];
   public signedInUser: LoggedInUser
   public file: any
   updateProgress: number;
@@ -88,12 +92,6 @@ export class FacebookComponent implements OnInit {
 
   selectedSchedule() {
     this.showSchedule = !this.showSchedule
-  }
-  onChangeSingle(value: Date) {
-    // console.log(value)
-  }
-  onChangeSingleTime(value: Date) {
-    // console.log(value)
   }
 
   onChangeScheduleDate(value: Date) {
@@ -239,26 +237,69 @@ export class FacebookComponent implements OnInit {
 
 
   onSelectFile(event) {
-    this.file = event.target.files && event.target.files[0];
-    if (this.file) {
-      var reader = new FileReader();
-      reader.readAsDataURL(this.file);
-      if (this.file.type.indexOf('image') > -1) {
-        this.format = 'image';
-      } else if (this.file.type.indexOf('video') > -1) {
-        this.format = 'video';
+    this.file = event.target.files && event.target.files.length;
+    let club = this._clubService.selectedClub;
+    let obj = {
+      clubName: club.clubName
+    };
+    if (this.mergeService.gen4 == true && (obj.clubName == 'Dividis Tribe' || obj.clubName == 'Solis Solution' || obj.clubName == 'Solissol')) {
+      //Multiple Images for gen4 = true
+      if (this.file > 0 && this.file < 5) {
+        let i: number = 0;
+        for (const singlefile of event.target.files) {
+          var reader = new FileReader();
+          reader.readAsDataURL(singlefile);
+          this.urls.push(singlefile);
+          this.cf.detectChanges();
+          i++;
+          reader.onload = (event) => {
+            this.url = (<FileReader>event.target).result as string;
+            this.multiples.push(this.url);
+            this.cf.detectChanges();
+            // If multple events are fired by user
+            if (this.multiples.length > 4) {
+              // If multple events are fired by user
+              this.multiples.pop();
+              this.urls.pop();
+              this.cf.detectChanges();
+              this.toast.error(
+                "Max Number of Selected Files reached",
+                "Upload Images"
+              );
+            }
+          };
+        }
+      } else {
+        this.toast.error("No More than 4 images", "Upload Images");
       }
-      reader.onload = (event) => {
-        this.url = (<FileReader>event.target).result as string;
-        this.cf.detectChanges();
+    } else {
+      //Single Image for gen4 = false
+      if (this.file == 1) {
+        for (const singlefile of event.target.files) {
+          var reader = new FileReader();
+          reader.readAsDataURL(singlefile);
+          this.urls.push(singlefile);
+          this.cf.detectChanges();
+          reader.onload = (event) => {
+            this.url = (<FileReader>event.target).result as string;
+            this.multiples.push(this.url);
+            this.cf.detectChanges();
+            if (this.multiples.length > 1) {
+              this.multiples.pop();
+              this.urls.pop();
+              this.cf.detectChanges();
+              this.toast.error("Only one Image is allowed", "Upload Images");
+            }
+          };
+        }
+      } else {
+        this.toast.error("Please Select One Image to Upload", "Upload Image");
       }
-      event.target.value = '';
-
     }
   }
 
   addImagePost() {
-    if (!this.file) {
+    if (!this.urls) {
       this.toast.error('Please select an Image File', 'Empty File');
       return;
     }
@@ -266,7 +307,7 @@ export class FacebookComponent implements OnInit {
       this.toast.error('No Page Selected', 'Please select Facebook Pages to post');
       return;
     }
-    this._mediaUploadService.uploadMedia('Facebook', this.signedInUser.id, this.file).subscribe((media: any) => {
+    this._mediaUploadService.uploadMedia('Facebook', this.signedInUser.id, this.urls[0]).subscribe((media: any) => {
       
       this.checkedList.forEach((item, index, array) => {
         this.condition = true;

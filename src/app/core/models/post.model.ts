@@ -40,6 +40,7 @@ export class Post {
   title: string;
   pickerClubPost?: boolean;
   pickerClubBaseUrl?: string;
+  reactions: any;
 
   constructor() {
     this.id = "",

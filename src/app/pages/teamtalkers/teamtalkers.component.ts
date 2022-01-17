@@ -160,8 +160,8 @@ export class TeamtalkersComponent implements OnInit {
     let tempPosts = [];
     this._postService
       .getClubPosts("Club", 0, 15)
-      .subscribe((clubPosts: ApiResponse<any>) => {
-        clubPosts.data.map((singleClubPost: any, idx, self) => {
+      .subscribe((res: ApiResponse<any>) => {
+        res.data.map((singleClubPost: Post, idx, self) => {
           this._postService
             .getPostCommentsAndReactions(singleClubPost.id, 0, 4)
             .subscribe((reactionsAndComments: ApiResponse<any>) => {
@@ -274,26 +274,34 @@ export class TeamtalkersComponent implements OnInit {
     this.editedPostText = post.text;
   }
 
-  saveEditPost(post) {
+  saveEditPost(post: Post) {
     post.text = this.editedPostText;
     this.spinner.show();
     this._postService
       .updateClubPost(Object.assign({}, post))
-      .subscribe((data) => {
-        this.spinner.hide();
-        this.toast.success("Post updated", "Succeess");
-        this.getLatestClubPosts();
+      .subscribe((res: ApiResponse<Post>) => {
+        if(!res.hasErrors()) {
+          this.spinner.hide();
+          this.toast.success("Post updated", "Success");
+          this.getLatestClubPosts();
+        }
+        else {
+          this.spinner.hide();
+          this.toast.error('Failed to Edit Post', 'Error');
+        }
       });
   }
 
-  deletePost(post) {
+  deletePost(post: Post) {
     this.spinner.show();
-    this._postService.deleteClubPost(post.id).subscribe((data) => {
-      setTimeout(() => {
-        this.spinner.hide();
-        this.getLatestClubPosts();
-        this.toast.success("Post deleted", "Success");
-      }, 500);
+    this._postService.deleteClubPost(post.id).subscribe((res: ApiResponse<Post>) => {
+      if(!res.hasErrors()) {
+        setTimeout(() => {
+          this.spinner.hide();
+          this.getLatestClubPosts();
+          this.toast.success("Post deleted", "Success");
+        }, 500);
+      }
     });
   }
 
@@ -378,16 +386,15 @@ export class TeamtalkersComponent implements OnInit {
   }
 
   getClubEvents() {
-    this._clubService.getClubEvents(0, 50).pipe(takeUntil(this.destroy$)).subscribe((res: ApiResponse<Event>) => {
+    this._clubService.getClubEvents(0, 50).pipe(takeUntil(this.destroy$)).subscribe((res: ApiResponse<any>) => {
       if (!res.hasErrors()) {
-        debugger
-        // res.data.map((sigleItem) => {
-        //   sigleItem.isSelected = false;
-        //   sigleItem.name = sigleItem.eventName;
-        //   this.checklist.push(sigleItem);
-        //   this.tempList.push(sigleItem);
-        //   this.cf.detectChanges();
-        // });
+        res.data.map((sigleItem) => {
+          sigleItem.isSelected = false;
+          sigleItem.name = sigleItem.eventName;
+          this.checklist.push(sigleItem);
+          this.tempList.push(sigleItem);
+          this.cf.detectChanges();
+        });
       }
     });
   }

@@ -4,6 +4,8 @@ import { Observable } from 'rxjs';
 import { Post } from '../models/post.model';
 import { ApiResponse } from '@app/core/models/response.model';
 import { BaseApiService } from './base-api.service';
+import { take, tap } from 'rxjs/operators';
+import { ToastrService } from 'ngx-toastr';
 
 type post = Post;
 
@@ -12,6 +14,7 @@ type post = Post;
 })
 
 export class PostService extends BaseApiService<post> {
+  private toast: ToastrService
 
   constructor(protected http: HttpClient) {
     super(http)
@@ -64,7 +67,11 @@ export class PostService extends BaseApiService<post> {
   }
 
   updateClubPost(post: Post): Observable<ApiResponse<post>> {
-    return this.clubApiGet(`/post/EditPost`, post);
+    return this.clubApiPost(`/post/EditPost`, post).pipe(take(1), tap((res: ApiResponse<post>) => {
+      if(res.hasErrors()) {
+        this.toast.error(res?.errors[0]?.error.message, 'Edit Post')
+      }
+    }));
   }
 
   deleteClubPost(postID: string): Observable<ApiResponse<Post>> {
