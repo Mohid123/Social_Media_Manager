@@ -19,6 +19,7 @@ import { ScheduleService } from './../../core/services/schedule.service';
 import { ScheduleSocialPostService } from 'src/app/core/services/schedule/schedule-social-post.service';
 import { ClubService } from '@app/core/services/club.service';
 import { MergeService } from './../../core/services/merge-service.service';
+import { FacebookPostModel } from '@app/core/models/facebook-post.model';
 @Component({
   selector: 'app-facebook',
   templateUrl: './facebook.component.html',
@@ -183,8 +184,9 @@ export class FacebookComponent implements OnInit {
           return;
         }
         for (let i = 0; i <= res.data.FBPages.length - 1; i++) {
-          this._facebookService.getPublishedPostsOnFBPages(res.data.FBPages[i].pageID, res.data.FBPages[i].pageAccessToken).subscribe((postObjects: any) => {
-            postObjects.data.forEach((item, idx, self) => {
+          this._facebookService.getPublishedPostsOnFBPages(res.data.FBPages[i].pageID, res.data.FBPages[i].pageAccessToken).subscribe((res: ApiResponse<FacebookPostModel[]>) => {
+            if(!res.hasErrors())
+            res.data.forEach((item, idx, self) => {
               callsList.push(this._facebookService.getSinglePagePost(item.id, res.data.FBPages[i].pageAccessToken));
               if (idx == self.length - 1) {
                 combineLatest(callsList).subscribe(facebookPosts => {

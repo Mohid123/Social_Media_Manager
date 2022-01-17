@@ -169,7 +169,7 @@
                 </div>
             </div>
             <div class="card-body">
-                <div id="chart">
+                <div id="chart" *ngIf="chartOptions">
                     <apx-chart [series]="chartOptions?.series" [chart]="chartOptions?.chart" [xaxis]="chartOptions?.xaxis"
                         [stroke]="chartOptions?.stroke" [tooltip]="chartOptions?.tooltip"
                         [dataLabels]="chartOptions?.dataLabels" [legend]="chartOptions?.legend"

@@ -6,7 +6,7 @@ import { BaseApiService } from './base-api.service';
 import { ApiResponse } from '../models/response.model';
 import { FacebookPostModel } from './../models/facebook-post.model';
 
-type FBModel = FacebookPostModel
+type FBModel = FacebookPostModel | FacebookPostModel[]
 
 @Injectable({
   providedIn: 'root'
