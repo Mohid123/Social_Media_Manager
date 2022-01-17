@@ -67,11 +67,7 @@ export class PostService extends BaseApiService<post> {
   }
 
   updateClubPost(post: Post): Observable<ApiResponse<post>> {
-    return this.clubApiPost(`/post/EditPost`, post).pipe(take(1), tap((res: ApiResponse<post>) => {
-      if(res.hasErrors()) {
-        this.toast.error(res?.errors[0]?.error.message, 'Edit Post')
-      }
-    }));
+    return this.clubApiPost(`/post/EditPost`, post);
   }
 
   deleteClubPost(postID: string): Observable<ApiResponse<Post>> {
