@@ -7,7 +7,7 @@ import { BaseApiService } from './base-api.service';
 import { take, tap } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
 
-type post = Post;
+type post = Post | Post[] | any;
 
 @Injectable({
   providedIn: 'root'
@@ -35,7 +35,7 @@ export class PostService extends BaseApiService<post> {
 
   }
 
-  hyperLinkScrapper(postedText: string) {
+  hyperLinkScrapper(postedText: string): Observable<ApiResponse<post>>  {
     postedText == "" ? postedText = 'MockPayloadScrapper' : postedText = postedText
     return this.clubApiPost(`/firebase-migration-functions/hyperlinkScraperForPanel`, { 'text': postedText });
   }

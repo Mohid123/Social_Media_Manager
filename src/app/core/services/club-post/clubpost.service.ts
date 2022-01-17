@@ -50,7 +50,7 @@ export class ClubpostService {
       delete this.post.groupID;
     }
     this.condition = true;
-    this._postService.hyperLinkScrapper(postedText).subscribe((res: ApiResponse<any>) => {
+    this._postService.hyperLinkScrapper(postedText).subscribe((res: ApiResponse<Post[]>) => {
       hyperLinkResponse = res.data;
 
       if (hyperLinkResponse.length > 0 && hyperLinkResponse[0].hasOwnProperty("url")) {
@@ -76,7 +76,7 @@ export class ClubpostService {
           this.post.eventID = element.id;
         }
         this._reportService.createReport(2, "", postedTo);
-        this._postService.createClubPost(postedTo , this.post).subscribe((res: ApiResponse<any>) => {
+        this._postService.createClubPost(postedTo , this.post).subscribe((res: ApiResponse<Post>) => {
           this._reportService.createReport(1, res.id, postedTo);
           if (idx == self.length - 1) {
             this.toast.success(`Your post has been shared to ${postedTo}.`, 'Great!')
@@ -112,7 +112,7 @@ export class ClubpostService {
       delete post.eventID;
       delete post.groupID;
     }
-    this._postService.hyperLinkScrapper(postedText).subscribe((res: ApiResponse<any>) => {
+    this._postService.hyperLinkScrapper(postedText).subscribe((res: ApiResponse<Post[]>) => {
       hyperLinkResponse = res.data;
 
       if (hyperLinkResponse.length > 0 && hyperLinkResponse[0].hasOwnProperty("url")) {
@@ -199,7 +199,7 @@ export class ClubpostService {
       delete this.post.eventID;
       delete this.post.groupID;
     }
-    this._postService.hyperLinkScrapper(postedText).subscribe((res: ApiResponse<any>) => {
+    this._postService.hyperLinkScrapper(postedText).subscribe((res: ApiResponse<Post[]>) => {
       hyperLinkResponse = res.data;
       if (
         hyperLinkResponse.length > 0 &&
@@ -227,7 +227,7 @@ export class ClubpostService {
       }
       this._mediaUploadService
       .uploadClubMedia("GroupMedia", userID, MediaFile)
-      .subscribe((res: ApiResponse<any>) => {
+      .subscribe((res: ApiResponse<Media>) => {
         this.post.captureFileURL = res.data.url;
         this.post.path = res.data.path;
         this._videoService.generateThumbnail(MediaFile).then((base64) => {
@@ -237,7 +237,7 @@ export class ClubpostService {
           const imageFile = new File([imageBlob], "thumbnail.jpeg", {
             type: "image/jpeg",
           });
-          this._mediaUploadService.uploadClubMedia("VideoThumbnails",userID,imageFile).subscribe((res: ApiResponse<any>) => {
+          this._mediaUploadService.uploadClubMedia("VideoThumbnails",userID,imageFile).subscribe((res: ApiResponse<Media>) => {
               this.post.thumbnailPath = res.data.path;
               this.post.thumbnailURL = res.data.url;
               selectedList.forEach((element, idx, self) => {
@@ -249,7 +249,7 @@ export class ClubpostService {
                   this.post.eventID = element.id;
                 }
                 this._reportService.createReport(2, "", postedTo);
-                this._postService.createClubPost(postedTo , this.post).subscribe((res: ApiResponse<any>) => {
+                this._postService.createClubPost(postedTo , this.post).subscribe((res: ApiResponse<Post>) => {
                     this._reportService.createReport(1, res.data.id, postedTo);
                     if (idx == self.length - 1) {
                       this.condition = false;

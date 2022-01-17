@@ -148,16 +148,11 @@ export class LoginComponent implements OnInit {
             console.log('hjjjjjjjjjj',hjh);
           });
         }
-        else {
-          this.spinner.hide();
-          this.toastr.error('Only admins can access this panel.', 'Access Denied!');
-          return;
-        }
+      
       } else {
-        console.log('error res:', res.errors);
         this.spinner.hide();
         if (res.errors) {
-          this.toastr.error('Email or Password Incorrect.', 'Unauthorized!');
+          this.toastr.warning(res?.errors[0]?.error?.message, 'Invalid!');
           return;
         }
       }
@@ -200,7 +195,7 @@ export class LoginComponent implements OnInit {
         return
       }
       else {
-        this._clubService.searchClubByNameForPicker(this.searchString, this.offset, this.limit).subscribe((res: ApiResponse<any>) => {
+        this._clubService.searchClubByNameForPicker(this.searchString, this.offset, this.limit).subscribe((res: ApiResponse<BaseClub[]>) => {
           if (!res.hasErrors()) {
             if (res.data.length == 0) {
               this.noClubFound = true;
@@ -226,7 +221,7 @@ export class LoginComponent implements OnInit {
         return
       }
       else {
-        this._clubService.searchClubByName(this.searchString, this.offset, this.limit).subscribe((res: ApiResponse<any>) => {
+        this._clubService.searchClubByName(this.searchString, this.offset, this.limit).subscribe((res: ApiResponse<BaseClub[]>) => {
           if (!res.hasErrors()) {
             if (res.data.length == 0 && this.searchString.trim().length !== 0) {
               this.noClubFound = true;
@@ -277,7 +272,7 @@ export class LoginComponent implements OnInit {
   getDividisClubs(offset, limit) {
     offset = this.offset;
     limit = this.limit
-    this._clubService.getDividisClubs(offset, limit).pipe(take(1)).subscribe((res: ApiResponse<any>) => {
+    this._clubService.getDividisClubs(offset, limit).pipe(take(1)).subscribe((res: ApiResponse<BaseClub[]>) => {
       if(!res.hasErrors()) {
         if (res.data.length == 0) {
           this.allClubs = []

@@ -3,6 +3,7 @@ export class Media {
     captureFileURL: string = '';
     path: string = '';
     thumbnailURL: string = '';
+    url: string = '';
     thumbnailPath: string = '';
     blurHash: string = '';
     backgroundColorHex: string = '';

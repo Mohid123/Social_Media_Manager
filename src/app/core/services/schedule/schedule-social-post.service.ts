@@ -1,3 +1,4 @@
+import { ApiResponse } from './../../models/response.model';
 import { ClubService } from './../club.service';
 import { Injectable } from '@angular/core';
 import { ScheduleService } from './../schedule.service';
@@ -6,6 +7,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { MediauploadService } from '../mediaupload.service';
 import { de } from 'date-fns/locale';
+import { Schedule } from '@app/core/models/schedule.model';
 
 @Injectable({
   providedIn: 'root'
@@ -41,7 +43,7 @@ export class ScheduleSocialPostService {
       })
       this.spinner.show();
       selectedList.forEach((element, idx, self) => {
-        this._scheduleService.scheduleFacebookPost(element).pipe(take(1)).subscribe(data => {
+        this._scheduleService.scheduleFacebookPost(element).pipe(take(1)).subscribe((data:ApiResponse<Schedule>) => {
           if (idx == self.length - 1) {
             this.spinner.hide();
             this.toast.success('Post Scheduled', 'Info');
@@ -71,7 +73,7 @@ export class ScheduleSocialPostService {
 
         });
         selectedList.forEach((element, idx, self) => {
-          this._scheduleService.scheduleFacebookPost(element).pipe(take(1)).subscribe(data => {
+          this._scheduleService.scheduleFacebookPost(element).pipe(take(1)).subscribe((data:ApiResponse<Schedule>) => {
             if (idx == self.length - 1) {
               this.toast.success('Post Scheduled', 'Info');
               resolve('success');
@@ -101,7 +103,7 @@ export class ScheduleSocialPostService {
           item.title = item.pageName
         });
         selectedList.forEach((element, idx, self) => {
-          this._scheduleService.scheduleFacebookPost(element).pipe(take(1)).subscribe(data => {
+          this._scheduleService.scheduleFacebookPost(element).pipe(take(1)).subscribe((data:ApiResponse<Schedule>) => {
             console.log(data);
             if (idx == self.length - 1) {
               this.toast.success('Post Scheduled', 'Info');
@@ -134,7 +136,7 @@ export class ScheduleSocialPostService {
 
         });
         selectedList.forEach((element, idx, self) => {
-          this._scheduleService.scheduleInstagramPost(element).pipe(take(1)).subscribe(data => {
+          this._scheduleService.scheduleInstagramPost(element).pipe(take(1)).subscribe((data:ApiResponse<Schedule>) => {
             if (idx == self.length - 1) {
               this.toast.success('Post Scheduled', 'Info');
               resolve('success');
@@ -164,7 +166,7 @@ export class ScheduleSocialPostService {
           item.title = 'Instagram Account'
         });
         selectedList.forEach((element, idx, self) => {
-          this._scheduleService.scheduleInstagramPost(element).pipe(take(1)).subscribe(data => {
+          this._scheduleService.scheduleInstagramPost(element).pipe(take(1)).subscribe((data:ApiResponse<Schedule>) => {
             if (idx == self.length - 1) {
               this.toast.success('Post Scheduled', 'Info');
               resolve('success');

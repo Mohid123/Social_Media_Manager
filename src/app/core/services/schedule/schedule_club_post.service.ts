@@ -1,3 +1,5 @@
+import { Schedule } from './../../models/schedule.model';
+import { BaseClub } from './../../models/base-club.model';
 import { MainAuthService } from 'src/app/core/services/auth.service';
 import { ClubService } from './../club.service';
 import { Injectable } from '@angular/core';
@@ -38,7 +40,7 @@ export class ScheduleClubPostService {
     private _scheduleService: ScheduleService
   ) {
     this.post = new Post()
-    this.clubService.SelectedClub$.subscribe(club => {
+    this.clubService.SelectedClub$.subscribe((club:BaseClub) => {
       this.club = club 
       this.clubID = this.club.id
       this.clubToken = this.mainAuthService.clubToken;
@@ -66,7 +68,7 @@ export class ScheduleClubPostService {
         delete this.post.eventID;
         delete this.post.groupID;
       }
-      this._postService.hyperLinkScrapper(postedText).subscribe((res: ApiResponse<any>) => {
+      this._postService.hyperLinkScrapper(postedText).subscribe((res: ApiResponse<Post[]>) => {
         hyperLinkResponse = res.data;
 
         if (hyperLinkResponse.length > 0 && hyperLinkResponse[0].hasOwnProperty("url")) {
@@ -101,7 +103,7 @@ export class ScheduleClubPostService {
           else {
             this.post.title = this.clubName
           }
-          this._scheduleService.schduleClubPost(postedTo, this.clubID, this.post).subscribe((res: ApiResponse<any>) => {
+          this._scheduleService.schduleClubPost(postedTo, this.clubID, this.post).subscribe((res: ApiResponse<Schedule>) => {
             debugger
             if (idx == self.length - 1) {
               this.toast.success(`Post scheduled For ${postedTo}`, "Success");
@@ -135,7 +137,7 @@ export class ScheduleClubPostService {
         delete this.post.eventID;
         delete this.post.groupID;
       }
-      this._postService.hyperLinkScrapper(postedText).subscribe((res: ApiResponse<any>) => {
+      this._postService.hyperLinkScrapper(postedText).subscribe((res: ApiResponse<Post[]>) => {
         hyperLinkResponse = res.data;
         if (hyperLinkResponse.length > 0 && hyperLinkResponse[0].hasOwnProperty("url")) {
           this.post.hyperLink = hyperLinkResponse[0].url;
@@ -227,7 +229,7 @@ export class ScheduleClubPostService {
         delete this.post.eventID;
         delete this.post.groupID;
       }
-      this._postService.hyperLinkScrapper(postedText).subscribe((res: ApiResponse<any>) => {
+      this._postService.hyperLinkScrapper(postedText).subscribe((res: ApiResponse<Post[]>) => {
         hyperLinkResponse = res.data;
         if (
           hyperLinkResponse.length > 0 &&
@@ -255,7 +257,7 @@ export class ScheduleClubPostService {
         }
         this._mediaUploadService
           .uploadClubMedia("GroupMedia", userID, MediaFile)
-          .subscribe((res: ApiResponse<any>) => {
+          .subscribe((res: ApiResponse<Media>) => {
             this.post.captureFileURL = res.data.url;
             this.post.path = res.data.path;
             this._videoService.generateThumbnail(MediaFile).then((base64) => {
@@ -265,7 +267,7 @@ export class ScheduleClubPostService {
               const imageFile = new File([imageBlob], "thumbnail.jpeg", {
                 type: "image/jpeg",
               });
-              this._mediaUploadService.uploadClubMedia("VideoThumbnails", userID, imageFile).subscribe((res: ApiResponse<any>) => {
+              this._mediaUploadService.uploadClubMedia("VideoThumbnails", userID, imageFile).subscribe((res: ApiResponse<Media>) => {
                 this.post.thumbnailPath = res.data.path;
                 this.post.thumbnailURL = res.data.url;
                 selectedList.forEach((element, idx, self) => {
@@ -285,7 +287,7 @@ export class ScheduleClubPostService {
                   else {
                     this.post.title = this.clubName
                   }
-                  this._scheduleService.schduleClubPost(postedTo, this.clubID, this.post).subscribe((res: ApiResponse<any>) => {
+                  this._scheduleService.schduleClubPost(postedTo, this.clubID, this.post).subscribe((res: ApiResponse<Schedule>) => {
                     if (idx == self.length - 1) {
                       this.toast.success(`Post scheduled For ${postedTo}`, "Success");
                       resolve('success')
