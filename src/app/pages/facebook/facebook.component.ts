@@ -105,6 +105,8 @@ export class FacebookComponent implements OnInit {
   clear() {
     this.file = null;
     this.clicked = false;
+    this.urls = [];
+    this.multiples = [];
     this.url = null
     this.facebookCaption = '';
     this.cf.detectChanges();
@@ -135,7 +137,9 @@ export class FacebookComponent implements OnInit {
 
   postedSuccessfully() {
     this.url = ""
-    this.facebookCaption = ""
+    this.facebookCaption = "";
+    this.urls = [];
+    this.multiples = [];
     this.file = ""
     this.clicked = false;
     this.showSchedule = false;
@@ -431,7 +435,7 @@ export class FacebookComponent implements OnInit {
   scheduleImagePostForFB() {
     let selectedList = this.checkedList;
 
-    if (!this.file) {
+    if (!this.urls) {
       this.toast.error('Please select an Image File', 'Empty File');
       return;
     }
@@ -440,7 +444,7 @@ export class FacebookComponent implements OnInit {
       return;
     }
     else if (this._scheduleService.validateScheduleDate(this.scheduleSelectedDate, this.scheduleSelectedTime)) {
-      this._scheduleSocialPostService.scheduleFacebookImagePost(this.facebookCaption, this._scheduleService.getScheduleEpox, this.file, selectedList).then(()=>{
+      this._scheduleSocialPostService.scheduleFacebookImagePost(this.facebookCaption, this._scheduleService.getScheduleEpox, this.urls[0], selectedList).then(()=>{
         this.postedSuccessfully()
       })
     }

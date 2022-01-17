@@ -322,8 +322,8 @@ export class PublishComponent implements OnInit {
           this.cf.detectChanges();
           i++;
           reader.onload = (event) => {
-            const url = this.sanitizer.bypassSecurityTrustUrl((<FileReader>event.target).result as string);
-            this.multiples.push(url);
+            this.url = (<FileReader>event.target).result as string;
+            this.multiples.push(this.url);
             this.cf.detectChanges();
             // If multple events are fired by user
             if (this.multiples.length > 4) {
@@ -350,8 +350,8 @@ export class PublishComponent implements OnInit {
           this.urls.push(singlefile);
           this.cf.detectChanges();
           reader.onload = (event) => {
-            const url = this.sanitizer.bypassSecurityTrustUrl((<FileReader>event.target).result as string);
-            this.multiples.push(url);
+           this.url = (<FileReader>event.target).result as string;
+            this.multiples.push(this.url);
             this.cf.detectChanges();
             if (this.multiples.length > 1) {
               this.multiples.pop();
@@ -450,7 +450,7 @@ export class PublishComponent implements OnInit {
       return;
     }
     if (selectedFacebookPages.length > 0) {
-      this._mediaUploadService.uploadMedia('Facebook', this.signedInUser.id, this.urls).subscribe((media: any) => {
+      this._mediaUploadService.uploadMedia('Facebook', this.signedInUser.id, this.urls[0]).subscribe((media: any) => {
         selectedFacebookPages.forEach((item, index, array) => {
           this._reportService.createReport(2, '', 'Facebook')
           this._facebookService.addImagePostToFB(item.pageID, media.url, this.socialCaption, item.pageAccessToken).subscribe((FbPost: any) => {
@@ -469,7 +469,7 @@ export class PublishComponent implements OnInit {
 
     if (selctedInstagramPages.length > 0) {
 
-      this._mediaUploadService.uploadMedia('Instagram', this.signedInUser.id, this.urls).subscribe((media: any) => {
+      this._mediaUploadService.uploadMedia('Instagram', this.signedInUser.id, this.urls[0]).subscribe((media: any) => {
         selctedInstagramPages.forEach((item, index, array) => {
           this._reportService.createReport(2, '', 'Instagram')
           this._instagramService.createIGMediaContainer(item.instagram_business_account.id, this.socialCaption, item.linkedFbPagetoken, media.url).subscribe((container: any) => {
