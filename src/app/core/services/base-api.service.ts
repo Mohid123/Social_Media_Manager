@@ -167,7 +167,7 @@ export class BaseApiService<T> {
       );
     } else {
       return this.http.post(
-        `${path}`,
+        `${constants.base_url}${path}`,
         JSON.stringify(body),
         { headers: this.setHeaders() }
       );
