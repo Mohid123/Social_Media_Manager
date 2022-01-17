@@ -200,7 +200,7 @@ export class LoginComponent implements OnInit {
         return
       }
       else {
-        this._clubService.searchClubByNameForPicker(this.searchString, this.offset, this.limit).subscribe((res: ApiResponse<any>) => {
+        this._clubService.searchClubByNameForPicker(this.searchString, this.offset, this.limit).subscribe((res: ApiResponse<BaseClub[]>) => {
           if (!res.hasErrors()) {
             if (res.data.length == 0) {
               this.noClubFound = true;
@@ -226,7 +226,7 @@ export class LoginComponent implements OnInit {
         return
       }
       else {
-        this._clubService.searchClubByName(this.searchString, this.offset, this.limit).subscribe((res: ApiResponse<any>) => {
+        this._clubService.searchClubByName(this.searchString, this.offset, this.limit).subscribe((res: ApiResponse<BaseClub[]>) => {
           if (!res.hasErrors()) {
             if (res.data.length == 0 && this.searchString.trim().length !== 0) {
               this.noClubFound = true;
@@ -277,7 +277,7 @@ export class LoginComponent implements OnInit {
   getDividisClubs(offset, limit) {
     offset = this.offset;
     limit = this.limit
-    this._clubService.getDividisClubs(offset, limit).pipe(take(1)).subscribe((res: ApiResponse<any>) => {
+    this._clubService.getDividisClubs(offset, limit).pipe(take(1)).subscribe((res: ApiResponse<BaseClub[]>) => {
       if(!res.hasErrors()) {
         if (res.data.length == 0) {
           this.allClubs = []
