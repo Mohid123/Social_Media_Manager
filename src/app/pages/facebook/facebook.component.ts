@@ -184,7 +184,7 @@ export class FacebookComponent implements OnInit {
           return;
         }
         for (let i = 0; i <= res.data.FBPages.length - 1; i++) {
-          this._facebookService.getPublishedPostsOnFBPages(res.data.FBPages[i].pageID, res.data.FBPages[i].pageAccessToken).subscribe((res: ApiResponse<FacebookPostModel[]>) => {
+          this._facebookService.getPublishedPostsOnFBPages(res.data.FBPages[i].pageID, res.data.FBPages[i].pageAccessToken).subscribe((res: ApiResponse<any>) => {
             if(!res.hasErrors())
             res.data.forEach((item, idx, self) => {
               callsList.push(this._facebookService.getSinglePagePost(item.id, res.data.FBPages[i].pageAccessToken));
@@ -314,11 +314,12 @@ export class FacebookComponent implements OnInit {
       return;
     }
     this._mediaUploadService.uploadMedia('Facebook', this.signedInUser.id, this.urls[0]).subscribe((media: any) => {
-      
       this.checkedList.forEach((item, index, array) => {
+        debugger
         this.condition = true;
         this._reportService.createReport(2, "", 'Facebook')
-        this._facebookService.addImagePostToFB(item.pageID, media.url, this.facebookCaption, item.pageAccessToken).subscribe(FbPost => {
+        this._facebookService.addImagePostToFB(item.pageID, media.data.url, this.facebookCaption, item.pageAccessToken).subscribe(FbPost => {
+          debugger
           this._reportService.createReport(1, FbPost.id, 'Facebook')
           if (index == array.length - 1) {
             this.postedSuccessfully();
