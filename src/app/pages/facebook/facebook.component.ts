@@ -1,3 +1,4 @@
+import { ApiResponse } from '@app/core/models/response.model';
 import { filter, publish, take } from 'rxjs/operators';
 import { ReportService } from './../../core/services/report.service';
 import { Report } from './../../core/models/report.model';
@@ -16,6 +17,7 @@ import * as moment from 'moment';
 import { ScheduleClubPostService } from 'src/app/core/services/schedule/schedule_club_post.service';
 import { ScheduleService } from './../../core/services/schedule.service';
 import { ScheduleSocialPostService } from 'src/app/core/services/schedule/schedule-social-post.service';
+import { ClubService } from '@app/core/services/club.service';
 @Component({
   selector: 'app-facebook',
   templateUrl: './facebook.component.html',
@@ -24,6 +26,7 @@ import { ScheduleSocialPostService } from 'src/app/core/services/schedule/schedu
 export class FacebookComponent implements OnInit {
   condition: Boolean = false;
   constructor(private spinner: NgxSpinnerService, private cf: ChangeDetectorRef, private toast: ToastrService,
+    private _clubService: ClubService,
     private _facebookService: FacebookService,
     private _authService: MainAuthService,
     private _mediaUploadService: MediauploadService,
@@ -48,8 +51,8 @@ export class FacebookComponent implements OnInit {
   public facebookPageImageUrl: string = 'https://socialapi.solissol.com/api/v1/en/media-upload/mediaFiles/123/test/6ca2499366f5b5611041fe57e2aac1ee9.svg'
   facebookProfileImageUrl : string
   checklist: any = [];
-  public userName: string = localStorage.getItem('userName')
-  public profileImageUrl: string = localStorage.getItem('profileImageUrl')
+  public userName: string = this._authService.user?.fullName
+  public profileImageUrl: string = this._authService.user?.profilePicURL
   public searchString: string
   checkedList: any;
   clicked: Boolean = false;
@@ -72,7 +75,7 @@ export class FacebookComponent implements OnInit {
     military: true,
   };
   ngOnInit() {
-    this.facebookProfileImageUrl = JSON.parse(localStorage.getItem('selectedClub'))?.userFacebookProfile?.fbProfileImageUrl
+    this.facebookProfileImageUrl = this._clubService.selectedClub?.userFacebookProfile?.fbProfileImageUrl
     this.getSignedInUser();
     this.getCheckedItemList();
 
@@ -170,39 +173,41 @@ export class FacebookComponent implements OnInit {
   getSignedInUser() {
     let callsList = []
     let totalPosts;
-    this._authService.getSignedInUser().subscribe(user => {
-      this.signedInUser = user;
-      if (user?.FBPages?.length == 0 || !user?.FBPages ) {
-        this.toast.warning('Log in via Facebook to connect your Facebook pages');
-        return;
-      }     
-      for (let i = 0; i <= user.FBPages.length - 1; i++) {
-        this._facebookService.getPublishedPostsOnFBPages(user.FBPages[i].pageID, user.FBPages[i].pageAccessToken).subscribe((postObjects: any) => {
-          postObjects.data.forEach((item, idx, self) => {
-            callsList.push(this._facebookService.getSinglePagePost(item.id, user.FBPages[i].pageAccessToken)); 
-            if(idx == self.length-1){
-              combineLatest(callsList).subscribe(facebookPosts => {
-                facebookPosts.map((singleItem: any) => {
-                  singleItem.created_time = moment(singleItem.created_time).fromNow()       
-                  singleItem.pageName = user.FBPages[i].pageName
+    this._authService.getSignedInUser().subscribe((res:ApiResponse<any>) => {
+      if (!res.hasErrors()) {
+        this.signedInUser = res.data;
+        if (res.data?.FBPages?.length == 0 || !res.data?.FBPages) {
+          this.toast.warning('Log in via Facebook to connect your Facebook pages');
+          return;
+        }
+        for (let i = 0; i <= res.data.FBPages.length - 1; i++) {
+          this._facebookService.getPublishedPostsOnFBPages(res.data.FBPages[i].pageID, res.data.FBPages[i].pageAccessToken).subscribe((postObjects: any) => {
+            postObjects.data.forEach((item, idx, self) => {
+              callsList.push(this._facebookService.getSinglePagePost(item.id, res.data.FBPages[i].pageAccessToken));
+              if (idx == self.length - 1) {
+                combineLatest(callsList).subscribe(facebookPosts => {
+                  facebookPosts.map((singleItem: any) => {
+                    singleItem.created_time = moment(singleItem.created_time).fromNow()
+                    singleItem.pageName = res.data.FBPages[i].pageName
+                  })
+                  callsList = []
+                  this.recentFBposts.push(...facebookPosts)
+                  this.cf.detectChanges();
                 })
-                callsList = []
-                this.recentFBposts.push(...facebookPosts)
-                this.cf.detectChanges();
-              })
-            }      
-          });
+              }
+            });
+          })
+        }
+
+
+        this.signedInUser.FBPages.map(page => {
+          page.isSelected = false;
+          page.captureImageURL = this.facebookPageImageUrl
+          this.checklist.push(page);
+          this.tempList.push(page);
+          this.cf.detectChanges();
         })
       }
-    
-
-      this.signedInUser.FBPages.map(page => {
-        page.isSelected = false;
-        page.captureImageURL = this.facebookPageImageUrl
-        this.checklist.push(page);
-        this.tempList.push(page);
-        this.cf.detectChanges();
-      })
     });
 
 

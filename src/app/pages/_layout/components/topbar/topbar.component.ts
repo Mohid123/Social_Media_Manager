@@ -22,8 +22,8 @@ import { MainAuthService } from 'src/app/core/services/auth.service';
 })
 export class TopbarComponent implements OnInit, AfterViewInit {
 
-  public userName: string = localStorage.getItem('userName');
-  public profileImageUrl: string = localStorage.getItem('profileImageUrl');
+  public userName: string = this._authService.user?.fullName;
+  public profileImageUrl: string = this._authService.user?.profilePicURL;
 
   closeResult: string;
   // userNameLo: string
@@ -41,7 +41,7 @@ export class TopbarComponent implements OnInit, AfterViewInit {
   extrasLanguagesDisplay: boolean;
   extrasUserDisplay: boolean = true;
   extrasUserLayout: 'offcanvas' | 'dropdown';
-  username: string = localStorage.getItem('userName')
+  username: string = this._authService.user?.fullName
 
   constructor(private layout: LayoutService, private auth: AuthService, private modalService: NgbModal, private router: Router , private _authService : MainAuthService) {
     this.user$ = this.auth.currentUserSubject.asObservable();

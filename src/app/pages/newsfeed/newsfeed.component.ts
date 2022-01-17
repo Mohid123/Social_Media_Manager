@@ -1,3 +1,4 @@
+import { ClubService } from './../../core/services/club.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -8,11 +9,13 @@ import { Component, OnInit } from '@angular/core';
 export class NewsfeedComponent implements OnInit {
   public clubName: string = "";
   public clubLogo: string = ""
-  constructor() { }
+  constructor(
+    private clubService: ClubService,
+  ) { }
 
   ngOnInit(): void {
-    this.clubName = JSON.parse( localStorage.getItem('selectedClub')).clubName;
-    this.clubLogo = JSON.parse( localStorage.getItem('selectedClub')).logoURL;
+    this.clubName = this.clubService.selectedClub?.clubName;
+    this.clubLogo = this.clubService.selectedClub?.logoURL;
   }
 
 }

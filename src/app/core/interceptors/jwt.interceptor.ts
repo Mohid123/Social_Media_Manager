@@ -21,7 +21,7 @@ export class JwtInterceptor implements HttpInterceptor {
     request: HttpRequest<unknown>,
     next: HttpHandler,
   ): Observable<HttpEvent<unknown>> {
-    if (request.url.includes(`${constants.api_url}`) || request.url.includes(`${constants.clubApiUrl}`)) {
+    // if (request.url.includes(`${constants.api_url}`) || request.url.includes(`${constants.clubApiUrl}`)) {
       return next.handle(request).pipe(
         map((response: any) => {
           if (response.status) {
@@ -33,8 +33,8 @@ export class JwtInterceptor implements HttpInterceptor {
           return response;
         }),
       );
-    } else {
-      return next.handle(request);
-    }
+    // } else {
+    //   return next.handle(request);
+    // }
   }
 }

@@ -28,7 +28,7 @@ export class AccountManagerComponent implements OnInit {
 
   destroy$ = new Subject();
 
-  public profileImageUrl: string = localStorage.getItem('profileImageUrl')
+  public profileImageUrl: string = this._authService.user?.profilePicURL
   public socialUser: SocialUser;
   public signedInUser: LoggedInUser;
   public clubName: string = "";
@@ -50,6 +50,7 @@ export class AccountManagerComponent implements OnInit {
     private _profileService: UsersService,
     private _authService: MainAuthService,
     private _toast: ToastrService,
+    private mainAuthService: MainAuthService,
     private cf: ChangeDetectorRef,
     private _clubService: ClubService,
     private _pickerClubService : PickerClubService
@@ -83,15 +84,17 @@ export class AccountManagerComponent implements OnInit {
       fbProfileImageUrl:"",
     }
 
-    localStorage.setItem('selectedClub', JSON.stringify(this.club));
+    this._clubService.selectedClub = this.club;
     this._toast.success('Account Successfully Removed', 'UnLink Account')
   }
 
   getSignedInUser() {
-    this._authService.getSignedInUser().subscribe((user) => {
-      this.signedInUser = user;
-      this.setClubProfile();
-      this.setFbProfile();
+    this._authService.getSignedInUser().subscribe((res:ApiResponse<any>) => {
+      if (!res.hasErrors()) {
+        this.signedInUser = res.data;
+        this.setClubProfile();
+        this.setFbProfile();
+      }
     });
   }
 
@@ -105,7 +108,7 @@ export class AccountManagerComponent implements OnInit {
 
 
   setClubProfile() {
-    let userId = localStorage.getItem('clubUid');
+    let userId = this.mainAuthService.loggedInUser?.userID;
     this._clubService.getUserClubProfile(userId).pipe(take(1)).subscribe((res: ApiResponse<any>) => {
       if(!res.hasErrors()) {
         this.userClubProfile.clubEmail = res.data.email,
@@ -154,7 +157,7 @@ export class AccountManagerComponent implements OnInit {
         let selectedClub = this.club;
         if(selectedClub) {
           selectedClub.userFacebookProfile = this.userFBprofile;
-          localStorage.setItem('selectedClub',JSON.stringify(selectedClub));
+          this._clubService.selectedClub = selectedClub;
         }
         this.cf.detectChanges();
         this.club.userFacebookProfile = Object.assign({}, this.userFBprofile)

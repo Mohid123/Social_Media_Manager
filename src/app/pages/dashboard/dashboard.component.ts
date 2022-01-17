@@ -1,3 +1,4 @@
+import { MainAuthService } from 'src/app/core/services/auth.service';
 import { ClubService } from './../../core/services/club.service';
 import { combineLatest, Subject } from 'rxjs';
 import { ReportService } from './../../core/services/report.service';
@@ -70,12 +71,13 @@ export class DashboardComponent implements OnInit {
     private clubService: ClubService,
     private _reportService: ReportService,
     private cf: ChangeDetectorRef,
+    private mainAuthService: MainAuthService,
     private modalService: NgbModal,
     private asideComponent: AsideComponent
   ) {}
 
   ngOnInit() {
-    this.signedInuserID = localStorage.getItem('clubUid');
+    this.signedInuserID =  this.mainAuthService.loggedInUser?.userID;
     this.getLatestReports()
     this.getSignedInUserStats()
     this.getLastSevenDaysStats()
@@ -218,7 +220,7 @@ export class DashboardComponent implements OnInit {
   }
 
   getLatestReports() {
-    let userId = localStorage.getItem('clubUid');
+    let userId = this.mainAuthService.loggedInUser?.userID;
     this._reportService.getLatestReports(userId).pipe(takeUntil(this.destroy$))
     .subscribe((res: ApiResponse<Report>) => {
       if(!res.hasErrors()) {

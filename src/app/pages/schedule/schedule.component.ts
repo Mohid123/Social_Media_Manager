@@ -1,3 +1,4 @@
+import { ClubService } from './../../core/services/club.service';
 
 import { Component, OnInit, AfterViewInit, ChangeDetectorRef, ViewChild, TemplateRef, ElementRef } from '@angular/core';
 import { take } from 'rxjs/operators';
@@ -27,6 +28,7 @@ export class ScheduleComponent implements OnInit , AfterViewInit {
   @ViewChild('queueSelected') queueSelected:ElementRef;
 
   constructor(
+    private clubService: ClubService,
     private _scheduleService: ScheduleService,
     private cf: ChangeDetectorRef,
 
@@ -70,7 +72,7 @@ ngAfterViewInit(){
 
 
   getUserClub() {
-    this.selectedClub = JSON.parse(localStorage.getItem('selectedClub')) as Club;
+    this.selectedClub = this.clubService.selectedClub;
     this.clubID = this.selectedClub.id
     this.getQueuedSchedueles()
   }
@@ -91,7 +93,7 @@ ngAfterViewInit(){
   }
 
   getQueuedSchedueles() {
-    let clubId = JSON.parse(localStorage.getItem('selectedClub')).id;
+    let clubId = this.clubService.selectedClub?.id;
     this._scheduleService.getQueuedSchedules(clubId).pipe(take(1)).subscribe((res: ApiResponse<any>) => {
       let result = res.data.map(((item, idx, self) => {
         return {

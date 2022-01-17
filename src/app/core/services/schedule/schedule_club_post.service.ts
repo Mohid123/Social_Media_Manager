@@ -1,3 +1,4 @@
+import { MainAuthService } from 'src/app/core/services/auth.service';
 import { ClubService } from './../club.service';
 import { Injectable } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -24,13 +25,14 @@ export class ScheduleClubPostService {
   clubToken: string
   clubName: string
   pickerClub: any
-  private userClubID: string = localStorage.getItem('clubUid');
+
   constructor(
     private clubService: ClubService,
     private _reportService: ReportService,
     private _postService: PostService,
     private spinner: NgxSpinnerService,
     private toast: ToastrService,
+    private mainAuthService: MainAuthService,
     private _videoService: VideoProcessingService,
     private _mediaUploadService: MediauploadService,
     private _scheduleService: ScheduleService
@@ -39,7 +41,7 @@ export class ScheduleClubPostService {
     this.clubService.SelectedClub$.subscribe(club => {
       this.club = club 
       this.clubID = this.club.id
-      this.clubToken = localStorage.getItem('club-token');
+      this.clubToken = this.mainAuthService.clubToken;
       this.clubName = this.club.clubName
       this.pickerClub = club.pickerClub;
     })
@@ -53,7 +55,7 @@ export class ScheduleClubPostService {
       this.post.postedTo = postedTo;
       this.post.jwtToken = this.clubToken
       this.post.scheduleDate = scheduledDate
-      this.post.userID = this.userClubID;
+      this.post.userID = this.mainAuthService.loggedInUser?.userID;
       if (postedTo == 'Group') {
         delete this.post.eventID;
       }
@@ -122,7 +124,7 @@ export class ScheduleClubPostService {
       this.post.postedTo = postedTo;
       this.post.scheduleDate = scheduleDate
       this.post.jwtToken = this.clubToken
-      this.post.userID = this.userClubID;
+      this.post.userID = this.mainAuthService.loggedInUser?.userID;
       if (postedTo == 'Group') {
         delete this.post.eventID;
       }
@@ -214,7 +216,7 @@ export class ScheduleClubPostService {
       this.post.postedTo = postedTo;
       this.post.scheduleDate = scheduledDate
       this.post.jwtToken = this.clubToken
-      this.post.userID = this.userClubID
+      this.post.userID =  this.mainAuthService.loggedInUser?.userID;
       if (postedTo == 'Group') {
         delete this.post.eventID;
       }

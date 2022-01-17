@@ -1,3 +1,4 @@
+import { ClubService } from './../../core/services/club.service';
 import { Report } from './../../core/models/report.model';
 import { ReportService } from './../../core/services/report.service';
 import { MediauploadService } from './../../core/services/mediaupload.service';
@@ -37,8 +38,8 @@ export class InstagramComponent implements OnInit {
   public tempList: any = []
   public validAspectRatios: string[] = ['4:5', '1:1', '4898:6123', '1491:1844', '499:374', '5128:3419', '3:2', '4159:5200'];
   public checkedList: any;
-  public userName: string = localStorage.getItem('userName')
-  public profileImageUrl: string = localStorage.getItem('profileImageUrl')
+  public userName: string = this._authService.user?.fullName
+  public profileImageUrl: string = this._authService.user?.profilePicURL
   facebookProfileImageUrl: string
   public showDiv = {
     photo: true,
@@ -65,6 +66,7 @@ export class InstagramComponent implements OnInit {
   constructor(
     private spinner: NgxSpinnerService,
     private cf: ChangeDetectorRef,
+    private _clubService: ClubService,
     private _authService: MainAuthService,
     private _instagramService: InstagramService,
     private _mediaUploadService: MediauploadService,
@@ -79,7 +81,7 @@ export class InstagramComponent implements OnInit {
 
 
   ngOnInit() {
-    this.facebookProfileImageUrl = JSON.parse(localStorage.getItem('selectedClub'))?.userFacebookProfile?.fbProfileImageUrl
+    this.facebookProfileImageUrl = this._clubService.selectedClub?.userFacebookProfile?.fbProfileImageUrl
     this.getSignedInUser();
     this.getCheckedItemList();
 
@@ -158,24 +160,26 @@ export class InstagramComponent implements OnInit {
 
 
   getSignedInUser() {
-    this._authService.getSignedInUser().pipe(take(1)).subscribe(user => {
-      this.signedInUser = user;
-      if (this.signedInUser?.FBPages?.length > 0) {
-        this.signedInUser?.FBPages.forEach(item => {
-          this.getIGAccountDetails(item.pageID, item.pageAccessToken).pipe(take(1)).subscribe((igaccount: any) => {
-            if (igaccount.hasOwnProperty('instagram_business_account')) {
-              this.getRecentPosts(igaccount.instagram_business_account.id, item.pageAccessToken);
-              igaccount.isSelected = false;
-              igaccount.pageName = 'Instagram Account'
-              igaccount.linkedFbPagetoken = item.pageAccessToken
-              igaccount.captureImageURL = this.instagramProfileUrl;
-              this.checklist.push(igaccount);
-              this.tempList.push(igaccount);
-              this.cf.detectChanges()
-            }
-            this.IGaccount = igaccount
+    this._authService.getSignedInUser().pipe(take(1)).subscribe(res => {
+      if (!res.hasErrors()) {
+        this.signedInUser = res.data;
+        if (this.signedInUser?.FBPages?.length > 0) {
+          this.signedInUser?.FBPages.forEach(item => {
+            this.getIGAccountDetails(item.pageID, item.pageAccessToken).pipe(take(1)).subscribe((igaccount: any) => {
+              if (igaccount.hasOwnProperty('instagram_business_account')) {
+                this.getRecentPosts(igaccount.instagram_business_account.id, item.pageAccessToken);
+                igaccount.isSelected = false;
+                igaccount.pageName = 'Instagram Account'
+                igaccount.linkedFbPagetoken = item.pageAccessToken
+                igaccount.captureImageURL = this.instagramProfileUrl;
+                this.checklist.push(igaccount);
+                this.tempList.push(igaccount);
+                this.cf.detectChanges()
+              }
+              this.IGaccount = igaccount
+            })
           })
-        })
+        }
       }
     })
   }

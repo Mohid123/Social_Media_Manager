@@ -140,20 +140,13 @@ export class LoginComponent implements OnInit {
     this.spinner.show();
     this._authService.loginByEmail(payload).subscribe((res:ApiResponse<LoginResponse>) => {
       if (!res.hasErrors()) {
-        if (res.data?.newUser) {
-          localStorage.setItem('newUser', 'true');
-        }
         if (res.data?.user.admin) {
-          localStorage.setItem('app-token', res.data.app_token.access_token)
-          localStorage.setItem('clubUid', res.data.loggedInUser.userID)
-          localStorage.setItem('userId', res.data.loggedInUser.id)
-          localStorage.setItem('club-token', res.data.token)
-          localStorage.setItem('admin', res.data.user.admin.toString())
-          localStorage.setItem('userName', res.data.user.fullName)
-          localStorage.setItem('profileImageUrl', res.data.user.profilePicURL)
           this.spinner.hide();
           this.toastr.success(`You are logged in as ${res.data.user.fullName}.`, 'Welcome!');
-          this.router.navigateByUrl('/pages/dashboard');
+          console.log('navigation:',);
+          this.router.navigateByUrl('/pages/dashboard').then(hjh=> {
+            console.log('hjjjjjjjjjj',hjh);
+          });
         }
         else {
           this.spinner.hide();

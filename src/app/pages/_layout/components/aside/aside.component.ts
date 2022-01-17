@@ -22,8 +22,8 @@ export class AsideComponent implements OnInit, OnDestroy {
 
   destroy$ = new Subject();
 
-  public userNameLogout: string = localStorage.getItem('userName')
-  public profileImageUrl: string = localStorage.getItem('profileImageUrl')
+  public userNameLogout: string = this._authService.user?.fullName;
+  public profileImageUrl: string = this._authService.user?.profilePicURL;
   userName: string
   disableAsideSelfDisplay: boolean;
   headerLogo: string;
@@ -106,7 +106,7 @@ export class AsideComponent implements OnInit, OnDestroy {
   routeToSponsorPanel() {
     let sponsorPanelBaseUrl, token, encrypted, encoded, url
     sponsorPanelBaseUrl = this.selectedClub.sponsorPanelUrl
-    token = localStorage.getItem('club-token');
+    token = this._authService.clubToken;
     encrypted = CryptoJS.AES.encrypt(token, 'secretkey123').toString();
     encoded = encodeURIComponent(encrypted);
     url = `${sponsorPanelBaseUrl}/loading?value=${encoded}`;

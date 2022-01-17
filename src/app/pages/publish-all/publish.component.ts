@@ -56,8 +56,8 @@ export class PublishComponent implements OnInit {
   public post: Post
   public facebookPages: any = []
   public report: Report
-  public userName: string = localStorage.getItem('userName')
-  public profileImageUrl: string = localStorage.getItem('profileImageUrl')
+  public userName: string = this._authService.user?.fullName
+  public profileImageUrl: string = this._authService.user?.profilePicURL
   public clubLogo: string = "";
   public clubPrimaryColor: string;
   public searchString: string;
@@ -100,7 +100,7 @@ export class PublishComponent implements OnInit {
   }
 
   initializeChecklist(){
-    let club =  JSON.parse( localStorage.getItem('selectedClub'));
+    let club =  this._clubService.selectedClub;
     let obj = {
       id :  1,
       isSelected : false,
@@ -137,32 +137,34 @@ export class PublishComponent implements OnInit {
   }
 
   getSignedInUser() {
-    this._authService.getSignedInUser().pipe(take(1), takeUntil(this.destroy$)).subscribe(user => {
-      this.signedInUser = user;
-      if (this.signedInUser?.FBPages?.length > 0) {
-        this.signedInUser.FBPages.map(item => {
-          item.isSelected = false;
-          item.name = item.pageName
-          item.captureImageURL = this.facebookProfileUrl;
-          this.facebookPages.push(item)
-          this.checklist.push(item);
-          this.tempList.push(item)
-          this.cf.detectChanges();
-        })
-        this.facebookPages.forEach(item => {
-          this.getIGAccountDetails(item.pageID, item.pageAccessToken).subscribe((account: any) => {
-            if (account.hasOwnProperty('instagram_business_account')) {
-              account.isSelected = false;
-              account.igProfileName = 'Instagram Account'
-              account.name = 'Instagram Account'
-              account.linkedFbPagetoken = item.pageAccessToken
-              account.captureImageURL = this.instagramProfileUrl;
-              this.checklist.push(account);
-              this.tempList.push(account);
-              this.cf.detectChanges()
-            }
+    this._authService.getSignedInUser().pipe(take(1), takeUntil(this.destroy$)).subscribe(res => {
+      if (!res.hasErrors()) {
+        this.signedInUser = res.data;
+        if (this.signedInUser?.FBPages?.length > 0) {
+          this.signedInUser.FBPages.map(item => {
+            item.isSelected = false;
+            item.name = item.pageName
+            item.captureImageURL = this.facebookProfileUrl;
+            this.facebookPages.push(item)
+            this.checklist.push(item);
+            this.tempList.push(item)
+            this.cf.detectChanges();
           })
-        });
+          this.facebookPages.forEach(item => {
+            this.getIGAccountDetails(item.pageID, item.pageAccessToken).subscribe((account: any) => {
+              if (account.hasOwnProperty('instagram_business_account')) {
+                account.isSelected = false;
+                account.igProfileName = 'Instagram Account'
+                account.name = 'Instagram Account'
+                account.linkedFbPagetoken = item.pageAccessToken
+                account.captureImageURL = this.instagramProfileUrl;
+                this.checklist.push(account);
+                this.tempList.push(account);
+                this.cf.detectChanges()
+              }
+            })
+          });
+        }
       }
     })
     this.getAllClubGroups()
@@ -305,7 +307,7 @@ export class PublishComponent implements OnInit {
 
   onSelectFile(event) {
     this.file = event.target.files && event.target.files.length;
-    let club = JSON.parse(localStorage.getItem("selectedClub"));
+    let club = this._clubService.selectedClub;
     let obj = {
       clubName: club.clubName
     };

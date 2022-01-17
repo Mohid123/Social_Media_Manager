@@ -1,3 +1,4 @@
+import { MainAuthService } from 'src/app/core/services/auth.service';
 import { Injectable, EventEmitter } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
@@ -19,12 +20,12 @@ import { mergeMap } from 'rxjs/operators';
 export class ClubpostService {
   condition: Boolean = false;
   private post: Post
-  private userClubID : string = localStorage.getItem('clubUid');
   public postedSuccessfully: EventEmitter<any> = new EventEmitter();
   constructor(private _reportService: ReportService,
     private _postService: PostService,
     private spinner: NgxSpinnerService,
     private toast: ToastrService,
+    private mainAuthService: MainAuthService,
     private _videoService: VideoProcessingService,
     private _mediaUploadService: MediauploadService) {
     this.post = new Post()
@@ -34,7 +35,7 @@ export class ClubpostService {
     return new Promise((resolve, reject) => {
     let hyperLinkResponse = []
     this.post.type = 'text'
-    this.post.userID = this.userClubID;
+    this.post.userID = this.mainAuthService.loggedInUser?.userID;
     this.post.text = postedText;
     this.post.postedTo = postedTo;
 
@@ -99,7 +100,7 @@ export class ClubpostService {
     post.type = 'image'
     post.text = postedText;
     post.postedTo = postedTo;
-    post.userID = this.userClubID;
+    post.userID =  this.mainAuthService.loggedInUser?.userID;
     post.media = [];
     if (postedTo == 'Group') {
       delete post.eventID;
@@ -186,7 +187,7 @@ export class ClubpostService {
     this.post.type = 'video';
     this.post.text = postedText;
     this.post.postedTo = postedTo;
-    this.post.userID = this.userClubID;
+    this.post.userID =  this.mainAuthService.loggedInUser?.userID;
 
     if (postedTo == 'Group') {
       delete this.post.eventID;

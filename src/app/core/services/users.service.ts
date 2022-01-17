@@ -25,7 +25,7 @@ export class UsersService extends BaseApiService<UsersData> {
     return this.get(`/profile/getAllUsers?offset=${offset}&limit=${limit}`)
   }
 
-  getUserById(id: string): Observable <any> {
+  getUserById(id: string): Observable<ApiResponse<any>> {
     let collection = this.clubService.selectedClub?.pickerClub ? 'pickerClubs' :'club';
     return this.get(`/profile/getUserById/${id}?collection=${collection}`)
   }

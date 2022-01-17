@@ -102,6 +102,7 @@ export class TeamtalkersComponent implements OnInit {
     private _postService: PostService,
     private _authService: MainAuthService,
     private _clubService: ClubService,
+    private mainAuthService: MainAuthService,
     private modalService: NgbModal,
     public _genericPostService: ClubpostService,
     private _scheduleClubPostService: ScheduleClubPostService,
@@ -225,7 +226,7 @@ export class TeamtalkersComponent implements OnInit {
   }
 
   initializeChecklist() {
-    let club = JSON.parse(localStorage.getItem('selectedClub'));
+    let club = this._clubService.selectedClub;
     let obj = {
       id: 1,
       isSelected: false,
@@ -238,8 +239,8 @@ export class TeamtalkersComponent implements OnInit {
     this.clubName = club.clubName;
     this.clubLogo = club.logoURL;
     this.clubPrimaryColor = club.clubColor;
-    this.userName = localStorage.getItem('userName');
-    this.profileImageUrl = localStorage.getItem('profileImageUrl');
+    this.userName = this._authService.user?.fullName
+    this.profileImageUrl = this._authService.user?.profilePicURL
   }
 
   onChangeSingle(value: Date) {
@@ -425,7 +426,7 @@ export class TeamtalkersComponent implements OnInit {
 
   onSelectFile(event) {
     this.file = event.target.files && event.target.files.length;
-    let club = JSON.parse(localStorage.getItem("selectedClub"));
+    let club = this._clubService.selectedClub;
     let obj = {
       clubName: club.clubName
     };
@@ -510,8 +511,9 @@ export class TeamtalkersComponent implements OnInit {
   }
 
   getSignedInUser() {
-    this._authService.getSignedInUser().subscribe((user) => {
-      this.signedInUser = user;
+    this._authService.getSignedInUser().subscribe((res: ApiResponse<any>) => {
+      if(!res.hasErrors())
+      this.signedInUser = res.data;
     });
     this.getClubGroups();
     this.getClubEvents();
@@ -1018,7 +1020,7 @@ export class TeamtalkersComponent implements OnInit {
       this.post.type = "poll";
       this.post.postedTo = "Club";
       this.post.text = this.teamtalkerCaption;
-      this.post.userID = localStorage.getItem('clubUid');
+      this.post.userID =  this.mainAuthService.loggedInUser?.userID;
       this.poll.expiryDate = Math.round(this.pollSelectedDate.getTime()) * 1000;
       this.poll.startDate = Math.round(new Date().getTime()) * 1000;
       this.poll.votingDays = days;

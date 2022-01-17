@@ -1,12 +1,7 @@
-import { ErrorhandlerService } from './errorhandler.service';
-import { catchError } from 'rxjs/operators';
 import { HttpClient, HttpEvent, HttpEventType } from '@angular/common/http';
-import { environment } from 'src/environments/environment';
 import { ApiService } from './api.service';
 import { Injectable, ApplicationRef, NgZone, Output, EventEmitter } from '@angular/core';
 import { constants } from 'src/app/app.constants';
-import { Club } from './../models/club.model';
-import { ClubApiService } from './club_api.service';
 import { HttpRequest } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { ApiResponse } from '@app/core/models/response.model';
@@ -20,7 +15,7 @@ export class MediauploadService {
   valueChanged: EventEmitter<number> = new EventEmitter<number>();
   progress: number = 0;
 
-  constructor(private _apiService: ApiService, private http: HttpClient, private _errorHandlerService: ErrorhandlerService , private _clubApiService : ClubApiService,
+  constructor(private _apiService: ApiService, private http: HttpClient,
     private ref: ApplicationRef) { 
   }
 

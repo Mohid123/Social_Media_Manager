@@ -12,7 +12,7 @@ import { BaseClub } from './../../core/models/base-club.model';
 export class AuthComponent implements OnInit {
 
   today: Date = new Date();
-  allClubs : Club[] = []
+  allClubs : BaseClub[] = []
   constructor(private _clubService : ClubService) { }
 
   ngOnInit(): void {
@@ -32,9 +32,9 @@ export class AuthComponent implements OnInit {
   }
 
   setDefaultClub() {
-    let localClub = localStorage.getItem('selectedClub');
+    let localClub = this._clubService.selectedClub;
     if (!localClub) {
-      localStorage.setItem('selectedClub', JSON.stringify(this.allClubs[0]))
+      this._clubService.selectedClub = this.allClubs[0];
       return;
     }
   }

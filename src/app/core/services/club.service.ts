@@ -3,7 +3,6 @@ import { StorageItem, setItem } from './../utils/local-storage.utils';
 import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { ClubApiService } from './club_api.service';
 import { BaseClub } from './../models/base-club.model';
 import { BaseApiService } from './base-api.service';
 import { ApiResponse } from '../models/response.model';
@@ -83,15 +82,15 @@ export class ClubService extends BaseApiService<ClubData> {
     return this.clubApiGet(`/event/getAllEvents?offset=${offset}&limit=${limit}`);
   }
 
-  getLiveStreamBit() {
+  getLiveStreamBit(): Observable<ApiResponse<ClubData>> {
     return this.clubApiGet(`/firebase-migration-functions/getLiveStreamValue`);
   }
 
-  changeLiveStreamBit(liveStreamBit: string) {
+  changeLiveStreamBit(liveStreamBit: string): Observable<ApiResponse<ClubData>> {
     return this.clubApiGet(`/firebase-migration-functions/changeLiveStreamBit/${liveStreamBit}`);
   }
 
-  getUserClubProfile(userId: string) {
+  getUserClubProfile(userId: string): Observable<ApiResponse<ClubData>> {
     return this.clubApiGet(`/profile/getProfileById/${userId}`);
   }
 
@@ -99,7 +98,7 @@ export class ClubService extends BaseApiService<ClubData> {
     return this.get(`/club/searchClub/${clubName}?offset=${offset}&limit=${limit}`);
   }
 
-  searchClubByNameForPicker(clubName: string, offset , limit){
+  searchClubByNameForPicker(clubName: string, offset , limit): Observable<ApiResponse<ClubData>> {
     return this.clubApiGet(`/club/searchClubByName/${clubName}?offset=${offset}&limit=${limit}`);
   }
 

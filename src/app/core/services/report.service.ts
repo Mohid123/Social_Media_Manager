@@ -1,3 +1,4 @@
+import { MainAuthService } from 'src/app/core/services/auth.service';
 import { ClubService } from './club.service';
 import { Observable } from 'rxjs';
 import { ApiService } from './api.service';
@@ -17,6 +18,7 @@ export class ReportService extends BaseApiService<report> {
 
   constructor(
     private clubService:ClubService,
+    private mainAuthService: MainAuthService,
     protected http: HttpClient,
   ) {
     super(http)
@@ -73,7 +75,7 @@ export class ReportService extends BaseApiService<report> {
     this.report.postID = postId ? postId : "";
     this.report.postedTo = postedTo;
     this.report.successStatus = status;
-    this.report.userID = localStorage.getItem('clubUid');
+    this.report.userID = this.mainAuthService.loggedInUser?.userID;
     this.addReport(this.report).subscribe((report) => { 
       // console.log(report ,  'Report Created')
     });

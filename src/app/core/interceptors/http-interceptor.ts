@@ -1,3 +1,4 @@
+import { StorageItem, getItem } from './../utils/local-storage.utils';
 import { ClubService } from './../services/club.service';
 import { catchError } from 'rxjs/operators';
 import { Observable, throwError } from 'rxjs';
@@ -26,17 +27,17 @@ export class Interceptor implements HttpInterceptor {
     }
     else if (request.url.includes('socialapi.solissol') || request.url.includes("http://localhost:3005")) {
       customReq = request.clone({
-        headers: request.headers.set('Authorization', localStorage.getItem('app-token'))
+        headers: request.headers.set('Authorization', getItem(StorageItem.AppToken))
       });
     }
     else if (request.url.includes(clubBaseUrl) && club.pickerClub) {
       customReq = request.clone({
-        headers: request.headers.set('Authorization', localStorage.getItem('club-token')).set('clubID', club.id)
+        headers: request.headers.set('Authorization', getItem(StorageItem.ClubToken)).set('clubID', club.id)
       });
     }
     else if (request.url.includes(clubBaseUrl)) {
       customReq = request.clone({
-        headers: request.headers.set('Authorization', localStorage.getItem('club-token'))
+        headers: request.headers.set('Authorization', getItem(StorageItem.ClubToken))
       });
     }
     else {

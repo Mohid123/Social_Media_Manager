@@ -1,3 +1,5 @@
+import { MainAuthService } from 'src/app/core/services/auth.service';
+import { ClubService } from './../../core/services/club.service';
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -25,6 +27,8 @@ export class FeedbackComponent implements OnInit {
   club: any
   feedback: Feedback
   constructor(private spinner: NgxSpinnerService,
+    private _clubService: ClubService,
+    private mainAuthService: MainAuthService,
     private fb: FormBuilder,
     private cf: ChangeDetectorRef,
     private _mediaUploadService: MediauploadService,
@@ -36,12 +40,12 @@ export class FeedbackComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.club = JSON.parse(localStorage.getItem('selectedClub'));
-    this.userId = localStorage.getItem('userId')
+    this.club = this._clubService.selectedClub;
+    this.userId = this.mainAuthService.loggedInUser?.id
     this.Module.push(this.club.clubName)
     let emailRegex = new RegExp( '^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$');
     this.myForm = this.fb.group({
-      name: [localStorage.getItem('userName'), Validators.required],
+      name: [this.mainAuthService.user?.fullName, Validators.required],
       email: ['', [Validators.required, Validators.email , Validators.pattern(emailRegex)]],
       message: ['', [Validators.required, Validators.minLength(15)]],
       type: ['', [Validators.required]]

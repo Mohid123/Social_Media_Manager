@@ -1,3 +1,4 @@
+import { MainAuthService } from 'src/app/core/services/auth.service';
 import { ChangeDetectorRef } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { ReportService } from 'src/app/core/services/report.service';
@@ -19,7 +20,11 @@ export class QuickPanelOffcanvasComponent implements OnInit {
     | 'kt_quick_panel_notifications'
     | 'kt_quick_panel_settings' = 'kt_quick_panel_logs';
 
-  constructor(private layout: LayoutService, private _reportService: ReportService, private cf: ChangeDetectorRef) {}
+  constructor(
+    private mainAuthService: MainAuthService, 
+    private layout: LayoutService, 
+    private _reportService: ReportService, 
+    private cf: ChangeDetectorRef) {}
 
   ngOnInit(): void {
     this.extrasQuickPanelOffcanvasDirectionCSSClass = `offcanvas-${this.layout.getProp(
@@ -30,7 +35,7 @@ export class QuickPanelOffcanvasComponent implements OnInit {
 
   getLatestReports() {
 
-    let userId = localStorage.getItem('clubUid');
+    let userId = this.mainAuthService.loggedInUser?.userID;
     this._reportService.getLatestReports(userId)
     .subscribe((res: ApiResponse<Report>) => {
       if(!res.hasErrors()) {

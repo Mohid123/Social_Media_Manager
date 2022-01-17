@@ -10,8 +10,8 @@ export enum StorageItem {
   NewUser = 'newUser',
   ProfileImageUrl = 'profileImageUrl',
   SelectedClub = 'selectedClub',
-  UserId = 'userId',
-  UserName = 'userName'
+  User = 'user',
+  LoggedInUser = 'loggedInUser',
 }
 
 export const getItem = (itemName: StorageItem): any | null => {
