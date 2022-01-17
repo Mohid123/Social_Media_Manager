@@ -5,7 +5,7 @@ import { Post } from '../models/post.model';
 import { ApiResponse } from '@app/core/models/response.model';
 import { BaseApiService } from './base-api.service';
 
-type post = Post;
+type post = Post | Post[] | any;
 
 @Injectable({
   providedIn: 'root'
@@ -32,7 +32,7 @@ export class PostService extends BaseApiService<post> {
 
   }
 
-  hyperLinkScrapper(postedText: string) {
+  hyperLinkScrapper(postedText: string): Observable<ApiResponse<post>>  {
     postedText == "" ? postedText = 'MockPayloadScrapper' : postedText = postedText
     return this.clubApiPost(`/firebase-migration-functions/hyperlinkScraperForPanel`, { 'text': postedText });
   }

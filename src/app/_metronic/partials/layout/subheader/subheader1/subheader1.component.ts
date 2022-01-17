@@ -41,7 +41,7 @@ export class Subheader1Component implements OnInit {
     this.subheaderDisplayDaterangepicker = this.layout.getProp(
       'subheader.displayDaterangepicker'
     );
-    this.breadcrumbs$.subscribe((res) => {
+    this.breadcrumbs$.subscribe((res:BreadcrumbItemModel[]) => {
       this.breadcrumbs = res;
       this.cdr.detectChanges();
     });

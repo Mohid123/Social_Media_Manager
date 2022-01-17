@@ -76,7 +76,7 @@ export class ReportService extends BaseApiService<report> {
     this.report.postedTo = postedTo;
     this.report.successStatus = status;
     this.report.userID = this.mainAuthService.loggedInUser?.userID;
-    this.addReport(this.report).subscribe((report) => { 
+    this.addReport(this.report).subscribe((report:ApiResponse<report>) => { 
       // console.log(report ,  'Report Created')
     });
   }
