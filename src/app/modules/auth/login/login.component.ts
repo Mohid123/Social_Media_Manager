@@ -148,16 +148,11 @@ export class LoginComponent implements OnInit {
             console.log('hjjjjjjjjjj',hjh);
           });
         }
-        else {
-          this.spinner.hide();
-          this.toastr.error('Only admins can access this panel.', 'Access Denied!');
-          return;
-        }
+      
       } else {
-        console.log('error res:', res.errors);
         this.spinner.hide();
         if (res.errors) {
-          this.toastr.error('Email or Password Incorrect.', 'Unauthorized!');
+          this.toastr.warning(res?.errors[0]?.error?.message, 'Invalid!');
           return;
         }
       }

@@ -5,40 +5,27 @@
 </ngx-spinner>
 
 <div class="login-form login-signin">
-  <h2 class="font-weight-bolder  font-size-h2" style="color: #000000; letter-spacing: 1px;" >
+  <h2 class="font-weight-bolder font-size-h2" style="color: #000000; letter-spacing: 1px;" >
     Sign In
   </h2>
-
-
   <div class="example-preview">
     <ng-template #content6 let-c="close" let-d="dismiss">
       <div class="modal-header d-flex justify-content-between"
         style="background-color: #1e1e2d; padding-bottom: 10px;" >
-    
-
         <form>
-        
           <div class="form-group d-flex flex-row" style="float: left;">
-            
             <button *ngIf="showBackBtn" type="button" class="btn" (click)="showPreviousClubs();searchStarted = false"  
             data-toggle="tooltip" title="back" style="margin-left: -15px;">
             <i class="far fa-arrow-alt-circle-left" style="color:rgba(255, 255, 255, 0.877)"></i>
           </button>
             <label for="exampleInputEmail1" class=" font-size-h2" style="color: #fff;" >Select club</label>
-
           </div>
-
-          <div class="form-group d-flex flex-row-reverse responsive">
+           <div class="form-group d-flex flex-row-reverse responsive">
             <button type="button" class="btn" (click)="c('Close click');searchStarted = false;  "
             data-toggle="tooltip" title="close window">
             <i class="far fa-times-circle" style="color:rgba(255, 255, 255, 0.877)"></i>
           </button>
-           
-          
-          
-            <!-- <button type="button" class="btn-close btn-close-white" aria-label="Close"></button> -->
-
-            <input class="form-control bg-primary-o-30" [ngModelOptions]="{standalone: true}"
+          <input class="form-control bg-primary-o-30" [ngModelOptions]="{standalone: true}"
               [(ngModel)]="searchString" (ngModelChange)="searchClub()" style="color: #fff;"
               id="exampleInputEmail1" placeholder="search">
           </div>
@@ -48,9 +35,7 @@
         </button>
       </div>
       <div class="modal-body d-flex justify-content-center">
-
         <perfect-scrollbar class="media" style="height: 600px">
-
           <div *ngIf="noClubFound" class="custom-height d-flex align-items-center justify-content-center"
             style="width: 100% ">
             <div class="d-flex flex-column-auto flex-column ">
@@ -62,47 +47,33 @@
               </h3>
             </div>
           </div>
-      
-          <div  class="row row-cols-1 row-cols-md-4 g-4" id="items" style="cursor: pointer;">
-        
+          <div class="row row-cols-1 row-cols-md-4 g-4" id="items" style="cursor: pointer;">
             <div class="col" *ngFor="let club of allClubs" id="items">
               <div class="card resp-card" (click)="onClubSelected(club) ">
                 <img src="{{club.logoURL}} "
                   class="rounded mx-auto d-block card-img-top size d-flex justify-content-center" alt="...">
-
-                <ul class="list-group list-group-flush" style="width: 100%;">
-                  <li
-                    class="list-group-item d-flex justify-content-center font-weight-bold text-center " style="margin:auto;">
+                  <ul class="list-group list-group-flush" style="width: 100%;">
+                  <li class="list-group-item d-flex justify-content-center font-weight-bold text-center " style="margin:auto;">
                     {{club.clubName}}</li>
                 </ul>
               </div>
             </div>
           </div>
         </perfect-scrollbar>
-      
       </div>
       <div class="modal-footer d-flex justify-content-center">
-        <!-- <button type="button" class="btn btn-secondary"
-        (click)="showPreviousClubs();searchStarted = false">Back</button> -->
-
         <button type="button" class="btn btn-secondary"
           (click)="c('Close click');searchStarted = false">Close</button>
-
-        <button type="button" class="btn btn-light-primary"
+          <button type="button" class="btn btn-light-primary"
           (click)="loadMoreClubs();searchStarted = false">Load more</button>
-          
-       
-
-        <!-- <button type="button" class="btn" style="background-color: #1e1e2d; color: #fff;">Save changes</button> -->
-      </div>
+        </div>
     </ng-template>
 
     <div class="btn btn-icon btn-light w-auto btn-clean d-inline-flex align-items-center btn-lg px-2 mr-5"
       (click)="openVerticallyCentered(content6)" data-toggle="tooltip" title="select club before login"
       style="background-color: #1e1e2d;">
       <span class="svg-icon svg-icon-primary svg-icon-2x">
-        <!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2021-05-14-112058/theme/html/demo1/dist/../src/media/svg/icons/Design/Select.svg--><svg
-          xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
+       <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
           viewBox="0 0 24 24" version="1.1">
           <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
             <polygon points="0 0 24 0 24 24 0 24" />
