@@ -74,7 +74,7 @@ export class FeedbackComponent implements OnInit {
 
   submitFeedback(feedback) {
     this._feedBackService.addFeedback(feedback).subscribe((res: ApiResponse<Feedback>) => {
-      debugger
+   
       if(!res.hasErrors()) {
         this.resetFeedbackForm(); 
       }

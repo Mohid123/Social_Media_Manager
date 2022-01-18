@@ -1,4 +1,3 @@
-import { Media } from './../../core/models/media-model';
 import { ApiResponse } from '@app/core/models/response.model';
 import { ClubService } from './../../core/services/club.service';
 import { Report } from './../../core/models/report.model';
@@ -10,8 +9,7 @@ import { Component, OnInit, ChangeDetectorRef, ViewChild, ElementRef } from '@an
 import { NgxSpinnerService } from "ngx-spinner";
 import { LoggedInUser } from '@app/core/models/logged-in-user.model';
 import { ToastrService } from 'ngx-toastr';
-import { count, take } from 'rxjs/operators';
-import * as moment from 'moment';
+import { take, takeUntil } from 'rxjs/operators';
 import { DatePickerOptions } from "@ngx-tiny/date-picker";
 import { TimePickerOptions } from "@ngx-tiny/time-picker/ngx-time-picker.options";
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
@@ -19,6 +17,9 @@ import { ScheduleService } from './../../core/services/schedule.service';
 import { ScheduleSocialPostService } from 'src/app/core/services/schedule/schedule-social-post.service';
 import { InstagramPostModel } from '@app/core/models/instagram-post.model';
 import { PublishedPosts } from '@app/core/models/response/published-posts.model';
+import { Subject } from 'rxjs';
+import { MergeService } from 'src/app/core/services/merge-service.service';
+import { Media } from '@app/core/models/media-model';
 
 @Component({
   selector: 'app-instagram',
@@ -27,11 +28,14 @@ import { PublishedPosts } from '@app/core/models/response/published-posts.model'
 })
 export class InstagramComponent implements OnInit {
   @ViewChild('logo') logo: ElementRef;
+  destroy$ = new Subject();
   public instaCaption: string = "";
   condition: Boolean = false;
   private signedInUser: LoggedInUser
   private IGaccount: any
   public file: any;
+  urls: any[] = [];
+  multiples: any[] = [];
   updateProgress: number;
   public format: string;
   public url: string = '';
@@ -78,7 +82,8 @@ export class InstagramComponent implements OnInit {
     private modalService: NgbModal,
     private toast: ToastrService,
     private _scheduleService: ScheduleService,
-    private _scheduleSocialPostService: ScheduleSocialPostService
+    private _scheduleSocialPostService: ScheduleSocialPostService,
+    public mergeService: MergeService,
   ) {
     this.report = new Report()
   }
@@ -98,19 +103,15 @@ export class InstagramComponent implements OnInit {
   clear() {
     this.instaCaption = '';
     this.file = null;
-    this.url = null
-    this.cf.detectChanges()
+    this.url = null;
+    this.urls = [];
+    this.multiples = [];
+    this.removeSlectedItems();
+    this.cf.detectChanges();
     this.clicked = false;
-      
-  }
-  onChangeSingle(value: Date) {
-
-  }
-  onChangeSingleTime(value: Date) {
-
-  }
-
-  onChangeScheduleDate(value: Date) {
+   }
+  
+   onChangeScheduleDate(value: Date) {
     this.scheduleSelectedDate = value;
   }
 
@@ -126,9 +127,6 @@ export class InstagramComponent implements OnInit {
     });
   }
 
-
-
-
   getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
       return 'by pressing ESC';
@@ -143,13 +141,14 @@ export class InstagramComponent implements OnInit {
   onSelectedImageLoad() {
     const width = (this.logo.nativeElement as HTMLImageElement).naturalWidth
     const height = (this.logo.nativeElement as HTMLImageElement).naturalHeight
-
     let gcd = this.calculateAspectRatio(width, height);
     const ratio = width / gcd + ':' + height / gcd;
     this.validAspectRatios.includes(ratio) ? this.inValidImageFormat = false : this.inValidImageFormat = true;
     if (this.inValidImageFormat) {
       this.toast.error('Unsupported Image Format', 'Image Format not supported for Instagram');
       this.url = ""
+      this.urls = [];
+      this.multiples = [];
       this.file = null;
     }
   }
@@ -164,7 +163,7 @@ export class InstagramComponent implements OnInit {
 
 
   getSignedInUser() {
-    this._authService.getSignedInUser().pipe(take(1)).subscribe(res => {
+    this._authService.getSignedInUser().pipe(take(1), takeUntil(this.destroy$)).subscribe(res => {
       if (!res.hasErrors()) {
         this.signedInUser = res.data;
         if (this.signedInUser?.FBPages?.length > 0) {
@@ -281,15 +280,15 @@ export class InstagramComponent implements OnInit {
               clearInterval(interval);
               return
             }
-            this._instagramService.getContainerStatus(container.id, item.linkedFbPagetoken).pipe(take(1)).subscribe((data: any) => {
-              if (data.status_code == "FINISHED") {
+            this._instagramService.getContainerStatus(container.data.id, item.linkedFbPagetoken).pipe(take(1)).subscribe((res: any) => {
+              if (res.data.status_code) {
                 
-                this._instagramService.publishContent(item.instagram_business_account.id, container.id, item.linkedFbPagetoken).pipe(take(1)).subscribe((data: any) => {
+                this._instagramService.publishContent(item.instagram_business_account.id, container.data.id, item.linkedFbPagetoken).pipe(take(1)).subscribe((res: any) => {
 
                   clearInterval(interval)
                   this.postedSuccessfully()
                   this.toast.success('Great! The post has been shared.');
-                  this._reportService.createReport(1, data.id, 'Instagram')
+                  this._reportService.createReport(1, res.data.id, 'Instagram')
                  
                 }, error => {
                   this.toast.error(error.message);
@@ -298,7 +297,7 @@ export class InstagramComponent implements OnInit {
                   this.condition = false;
                 })
               }
-              else if (data.status_code == "ERROR") {
+              else if (!res.data.status_code) {
                 clearInterval(interval)
                 this.postedSuccessfully()
                 this.toast.error('Error uploding Video', 'Video Format Unsupported')
@@ -329,7 +328,7 @@ export class InstagramComponent implements OnInit {
 
   addImagePost() {
    
-    if (!this.file) {
+    if (!this.urls) {
       this.toast.error('Please select an Image File', 'Empty File');
       return;
     }
@@ -341,13 +340,13 @@ export class InstagramComponent implements OnInit {
       this.toast.error('Unsupported Image Format', 'Image Format not supported for Instagram');
       return;
     }
-    this._mediaUploadService.uploadMedia('Instagram', this.signedInUser.id, this.file).pipe(take(1)).subscribe((media: ApiResponse<Media>) => {
+    this._mediaUploadService.uploadMedia('Instagram', this.signedInUser.id, this.urls[0]).pipe(take(1)).subscribe((media: ApiResponse<Media>) => {
       this.checkedList.forEach((item, idx, self) => {
         this.condition = true;
         this._reportService.createReport(2, "", 'Instagram')
         this._instagramService.createIGMediaContainer(item.instagram_business_account.id, this.instaCaption, item.linkedFbPagetoken, media.data.url).pipe(take(1)).subscribe((container: any) => {
-          this._instagramService.publishContent(item.instagram_business_account.id, container.id, item.linkedFbPagetoken).pipe(take(1)).subscribe((data: any) => {
-            this._reportService.createReport(1, data.id, 'Instagram')
+          this._instagramService.publishContent(item.instagram_business_account.id, container.data.id, item.linkedFbPagetoken).pipe(take(1)).subscribe((res: any) => {
+            this._reportService.createReport(1, res.data.id, 'Instagram')
             if (idx == self.length - 1) {
               this.postedSuccessfully();
               this.toast.success('Great! The post has been shared.');
@@ -393,7 +392,7 @@ export class InstagramComponent implements OnInit {
   scheduleInstagramImagePost() {
     let selectedList = this.checkedList;
     console.log(selectedList)
-    if (!this.file) {
+    if (!this.urls) {
       this.toast.error('Please select any Image File', 'Empty File');
       return;
     }
@@ -406,7 +405,7 @@ export class InstagramComponent implements OnInit {
       return;
     }
     else if (this._scheduleService.validateScheduleDate(this.scheduleSelectedDate, this.scheduleSelectedTime)) {
-      this._scheduleSocialPostService.scheduleInstagramImagePost(this.instaCaption, this._scheduleService.getScheduleEpox, this.file, selectedList).then(() => {
+      this._scheduleSocialPostService.scheduleInstagramImagePost(this.instaCaption, this._scheduleService.getScheduleEpox, this.urls[0], selectedList).then(() => {
         this.postedSuccessfully()
       })
     }
@@ -440,15 +439,75 @@ export class InstagramComponent implements OnInit {
     }
   }
 
-
   onSelectFile(event) {
+    this.file = event.target.files && event.target.files.length;
+    let club = this._clubService.selectedClub;
+    let obj = {
+      clubName: club.clubName
+    };
+    if (this.mergeService.gen4 == true && (obj.clubName == 'Dividis Tribe' || obj.clubName == 'Solis Solution' || obj.clubName == 'Solissol')) {
+      //Multiple Images for gen4 = true
+      if (this.file > 0 && this.file < 5) {
+        let i: number = 0;
+        for (const singlefile of event.target.files) {
+          var reader = new FileReader();
+          reader.readAsDataURL(singlefile);
+          this.urls.push(singlefile);
+          this.cf.detectChanges();
+          i++;
+          reader.onload = (event) => {
+            this.url = (<FileReader>event.target).result as string;
+            this.multiples.push(this.url);
+            this.cf.detectChanges();
+            // If multple events are fired by user
+            if (this.multiples.length > 4) {
+              // If multple events are fired by user
+              this.multiples.pop();
+              this.urls.pop();
+              this.cf.detectChanges();
+              this.toast.error(
+                "Max Number of Selected Files reached",
+                "Upload Images"
+              );
+            }
+          };
+        }
+      } else {
+        this.toast.error("No More than 4 images", "Upload Images");
+      }
+    } else {
+      //Single Image for gen4 = false
+      if (this.file == 1) {
+        for (const singlefile of event.target.files) {
+          var reader = new FileReader();
+          reader.readAsDataURL(singlefile);
+          this.urls.push(singlefile);
+          this.cf.detectChanges();
+          reader.onload = (event) => {
+            this.url = (<FileReader>event.target).result as string;
+            this.multiples.push(this.url);
+            this.cf.detectChanges();
+            if (this.multiples.length > 1) {
+              this.multiples.pop();
+              this.urls.pop();
+              this.cf.detectChanges();
+              this.toast.error("Only one Image is allowed", "Upload Images");
+            }
+          };
+        }
+      } else {
+        this.toast.error("Please Select One Image to Upload", "Upload Image");
+      }
+    }
+  }
+
+
+  onSelectVideo(event) {
     this.file = event.target.files && event.target.files[0];
     if (this.file) {
       var reader = new FileReader();
       reader.readAsDataURL(this.file);
-      if (this.file.type.indexOf('image') > -1) {
-        this.format = 'image';
-      } else if (this.file.type.indexOf('video') > -1) {
+      if (this.file.type.indexOf('video') > -1) {
         this.format = 'video';
       }
       reader.onload = (event) => {
@@ -458,6 +517,11 @@ export class InstagramComponent implements OnInit {
       event.target.value = '';
 
     }
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.complete();
+    this.destroy$.unsubscribe();
   }
 
 }
