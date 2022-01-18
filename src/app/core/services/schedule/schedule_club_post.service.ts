@@ -104,8 +104,7 @@ export class ScheduleClubPostService {
             this.post.title = this.clubName
           }
           this._scheduleService.schduleClubPost(postedTo, this.clubID, this.post).subscribe((res: ApiResponse<Schedule>) => {
-            debugger
-            if (idx == self.length - 1) {
+             if (idx == self.length - 1) {
               this.toast.success(`Post scheduled For ${postedTo}`, "Success");
               resolve('success')
             }

@@ -470,7 +470,7 @@ export class PublishComponent implements OnInit {
 
     if (selctedInstagramPages.length > 0) {
 
-      this._mediaUploadService.uploadMedia('Instagram', this.signedInUser.id, this.urls[0]).subscribe((media: ApiResponse<Media>) => {
+      this._mediaUploadService.uploadMedia('Instagram', this.signedInUser.id, this.urls[0]).pipe(take(1), takeUntil(this.destroy$)).subscribe((media: ApiResponse<Media>) => {
         selctedInstagramPages.forEach((item, index, array) => {
           this._reportService.createReport(2, '', 'Instagram')
           this._instagramService.createIGMediaContainer(item.instagram_business_account.id, this.socialCaption, item.linkedFbPagetoken, media.data.url).subscribe((container: any) => {
@@ -546,9 +546,11 @@ export class PublishComponent implements OnInit {
 
     if (selectedFacebookPages.length > 0) {
       this._mediaUploadService.uploadMedia('Facebook', this.signedInUser.id, this.file).pipe(take(1), takeUntil(this.destroy$)).subscribe((res: ApiResponse<Media>) => {
+       
         selectedFacebookPages.forEach((item, index, array) => {
           this._reportService.createReport(2, '', 'Facebook');
           this._facebookService.addVideoPost(item.pageID, item.pageAccessToken, res.data.url, this.socialCaption).pipe(take(1)).subscribe((FbPost: any) => {
+           
             this._reportService.createReport(1, FbPost.id, 'Facebook')
           }, error => {
             this.toast.error(error.message);

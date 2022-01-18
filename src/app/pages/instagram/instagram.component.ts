@@ -10,8 +10,7 @@ import { Component, OnInit, ChangeDetectorRef, ViewChild, ElementRef } from '@an
 import { NgxSpinnerService } from "ngx-spinner";
 import { LoggedInUser } from '@app/core/models/logged-in-user.model';
 import { ToastrService } from 'ngx-toastr';
-import { count, take } from 'rxjs/operators';
-import * as moment from 'moment';
+import { take, takeUntil } from 'rxjs/operators';
 import { DatePickerOptions } from "@ngx-tiny/date-picker";
 import { TimePickerOptions } from "@ngx-tiny/time-picker/ngx-time-picker.options";
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
@@ -19,6 +18,7 @@ import { ScheduleService } from './../../core/services/schedule.service';
 import { ScheduleSocialPostService } from 'src/app/core/services/schedule/schedule-social-post.service';
 import { InstagramPostModel } from '@app/core/models/instagram-post.model';
 import { PublishedPosts } from '@app/core/models/response/published-posts.model';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-instagram',
@@ -27,6 +27,7 @@ import { PublishedPosts } from '@app/core/models/response/published-posts.model'
 })
 export class InstagramComponent implements OnInit {
   @ViewChild('logo') logo: ElementRef;
+  destroy$ = new Subject();
   public instaCaption: string = "";
   condition: Boolean = false;
   private signedInUser: LoggedInUser
@@ -101,16 +102,9 @@ export class InstagramComponent implements OnInit {
     this.url = null
     this.cf.detectChanges()
     this.clicked = false;
-      
-  }
-  onChangeSingle(value: Date) {
-
-  }
-  onChangeSingleTime(value: Date) {
-
-  }
-
-  onChangeScheduleDate(value: Date) {
+   }
+  
+   onChangeScheduleDate(value: Date) {
     this.scheduleSelectedDate = value;
   }
 
@@ -126,9 +120,6 @@ export class InstagramComponent implements OnInit {
     });
   }
 
-
-
-
   getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
       return 'by pressing ESC';
@@ -143,7 +134,6 @@ export class InstagramComponent implements OnInit {
   onSelectedImageLoad() {
     const width = (this.logo.nativeElement as HTMLImageElement).naturalWidth
     const height = (this.logo.nativeElement as HTMLImageElement).naturalHeight
-
     let gcd = this.calculateAspectRatio(width, height);
     const ratio = width / gcd + ':' + height / gcd;
     this.validAspectRatios.includes(ratio) ? this.inValidImageFormat = false : this.inValidImageFormat = true;
@@ -164,7 +154,7 @@ export class InstagramComponent implements OnInit {
 
 
   getSignedInUser() {
-    this._authService.getSignedInUser().pipe(take(1)).subscribe(res => {
+    this._authService.getSignedInUser().pipe(take(1), takeUntil(this.destroy$)).subscribe(res => {
       if (!res.hasErrors()) {
         this.signedInUser = res.data;
         if (this.signedInUser?.FBPages?.length > 0) {
@@ -458,6 +448,11 @@ export class InstagramComponent implements OnInit {
       event.target.value = '';
 
     }
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.complete();
+    this.destroy$.unsubscribe();
   }
 
 }
