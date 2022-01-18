@@ -13,15 +13,12 @@ import { NavigationError } from '@angular/router';
     templateUrl: "./spinner.component.html",
     encapsulation: ViewEncapsulation.None
   })
-  export class AppSpinner implements OnInit {
+  export class AppSpinner {
 
     constructor(
         public spinner: NgxSpinnerService,
         private router: Router
-    ) {}
-
-    ngOnInit() {
-
+    ) {
         this.router.events.subscribe(event => {
             if (event instanceof NavigationStart) {
                 this.spinner.show();
@@ -50,6 +47,5 @@ import { NavigationError } from '@angular/router';
                 this.spinner.hide();
               }, 1000);
         });
-    
     }
 }
