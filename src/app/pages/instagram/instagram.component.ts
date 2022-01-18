@@ -277,12 +277,10 @@ export class InstagramComponent implements OnInit {
       this.toast.error('No Item Selected', 'Please select items to post');
       return;
     }
-    this._mediaUploadService.uploadMedia('InstagramTest', '123', this.file).pipe(take(1)).subscribe((media: any) => {
-      debugger
+    this._mediaUploadService.uploadMedia('InstagramTest', '123', this.file).pipe(take(1)).subscribe((media: ApiResponse<Media>) => {
       this.checkedList.forEach(item => {
         this.condition = true;
         this._instagramService.createIgContainerForVideo(item.instagram_business_account.id, media.data.url, this.instaCaption, item.linkedFbPagetoken).pipe(take(1)).subscribe((container: any) => {
-          debugger
           let interval = setInterval(() => {
             counter = counter + 1
             if (counter == 5) {
@@ -350,13 +348,13 @@ export class InstagramComponent implements OnInit {
       this.toast.error('Unsupported Image Format', 'Image Format not supported for Instagram');
       return;
     }
-    this._mediaUploadService.uploadMedia('Instagram', this.signedInUser.id, this.urls[0]).pipe(take(1)).subscribe((media: ApiResponse<Media>) => {
+    this._mediaUploadService.uploadMedia('Instagram', this.signedInUser.id, this.file).pipe(take(1)).subscribe((media: ApiResponse<Media>) => {
       this.checkedList.forEach((item, idx, self) => {
         this.condition = true;
         this._reportService.createReport(2, "", 'Instagram')
         this._instagramService.createIGMediaContainer(item.instagram_business_account.id, this.instaCaption, item.linkedFbPagetoken, media.data.url).pipe(take(1)).subscribe((container: any) => {
-          this._instagramService.publishContent(item.instagram_business_account.id, container.data.id, item.linkedFbPagetoken).pipe(take(1)).subscribe((res: any) => {
-            this._reportService.createReport(1, res.data.id, 'Instagram')
+          this._instagramService.publishContent(item.instagram_business_account.id, container.id, item.linkedFbPagetoken).pipe(take(1)).subscribe((data: any) => {
+            this._reportService.createReport(1, data.id, 'Instagram')
             if (idx == self.length - 1) {
               this.postedSuccessfully();
               this.toast.success('Great! The post has been shared.');

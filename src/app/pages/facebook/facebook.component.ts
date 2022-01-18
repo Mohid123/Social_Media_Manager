@@ -21,6 +21,7 @@ import { ClubService } from '@app/core/services/club.service';
 import { MergeService } from './../../core/services/merge-service.service';
 import { FacebookPostModel } from '@app/core/models/facebook-post.model';
 import { PublishedPosts } from '@app/core/models/response/published-posts.model';
+import { Media } from '@app/core/models/media-model';
 @Component({
   selector: 'app-facebook',
   templateUrl: './facebook.component.html',
@@ -314,7 +315,7 @@ export class FacebookComponent implements OnInit {
       this.toast.error('No Page Selected', 'Please select Facebook Pages to post');
       return;
     }
-    this._mediaUploadService.uploadMedia('Facebook', this.signedInUser.id, this.urls[0]).subscribe((media: any) => {
+    this._mediaUploadService.uploadMedia('Facebook', this.signedInUser.id, this.urls[0]).subscribe((media: ApiResponse<Media>)=> {
       this.checkedList.forEach((item, index, array) => {
 
         this.condition = true;
@@ -352,12 +353,12 @@ export class FacebookComponent implements OnInit {
       this.toast.error('No Page Selected', 'Please select Facebook Pages to post');
       return;
     }
-    this._mediaUploadService.uploadMedia('Facebook', this.signedInUser.id, this.file).subscribe((media: any) => {
+    this._mediaUploadService.uploadMedia('Facebook', this.signedInUser.id, this.file).subscribe((media: ApiResponse<Media>) => {
       this.checkedList.forEach((item, index, array) => {
         this.condition = true;
       
         this._reportService.createReport(2, "", 'Facebook')
-        this._facebookService.addVideoPost(item.pageID, item.pageAccessToken, media.url, this.facebookCaption).pipe(take(1)).subscribe((video: any) => {
+        this._facebookService.addVideoPost(item.pageID, item.pageAccessToken, media.data.url, this.facebookCaption).pipe(take(1)).subscribe((video: any) => {
           this._reportService.createReport(1, video.id, 'Facebook')
           if (index == array.length - 1) {
             this.toast.success('Great! The post has been shared.');

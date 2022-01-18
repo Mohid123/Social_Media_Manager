@@ -1,4 +1,4 @@
-import { ApiResponse } from './../../models/response.model';
+import { ApiResponse } from '@app/core/models/response.model';
 import { ClubService } from './../club.service';
 import { Injectable } from '@angular/core';
 import { ScheduleService } from './../schedule.service';
@@ -93,9 +93,9 @@ export class ScheduleSocialPostService {
   scheduleFacebookVideoPost(postedText, scheduledDate, mediaFile, selectedList) {
 
     return new Promise((resolve, reject) => {
-      this._mediaUploadService.uploadMedia('Facebook', '123', mediaFile).pipe(take(1)).subscribe((media: any) => {
+      this._mediaUploadService.uploadMedia('Facebook', '123', mediaFile).pipe(take(1)).subscribe((media: ApiResponse<Media>) => {
         selectedList.map(item => {
-          item.videoUrl = media.url
+          item.videoUrl = media.data.url
           item.videoDescription = postedText;
           item.scheduleDate = scheduledDate
           item.postType = 'video'
@@ -122,7 +122,7 @@ export class ScheduleSocialPostService {
 
   scheduleInstagramImagePost(postedText, scheduledDate, mediaFile, selectedList) {
     return new Promise((resolve, reject) => {
-      this._mediaUploadService.uploadMedia('Instagram', '123', mediaFile).pipe(take(1)).subscribe((media: any) => {
+      this._mediaUploadService.uploadMedia('Instagram', '123', mediaFile).pipe(take(1)).subscribe((media: ApiResponse<Media>) => {
         selectedList.map(item => {
           item.instagramAccountID = item.instagram_business_account.id
           item.pageAccessToken = item.linkedFbPagetoken
@@ -154,12 +154,12 @@ export class ScheduleSocialPostService {
 
   scheduleInstagramVideoPost(postedText, scheduledDate, mediaFile, selectedList) {
     return new Promise((resolve, reject) => {
-      this._mediaUploadService.uploadMedia('Instagram', '123', mediaFile).pipe(take(1)).subscribe((media: any) => {
+      this._mediaUploadService.uploadMedia('Instagram', '123', mediaFile).pipe(take(1)).subscribe((media: ApiResponse<Media>) => {
         selectedList.map(item => {
           item.instagramAccountID = item.instagram_business_account.id
           item.pageAccessToken = item.linkedFbPagetoken
           item.caption = postedText;
-          item.videoUrl = media.url
+          item.videoUrl = media.data.url
           item.scheduleDate = scheduledDate
           item.postType = 'video'
           item.clubID = this.clubID
