@@ -151,6 +151,7 @@ ngAfterViewInit(){
 
   getFacebookSchedule() {
     this._scheduleService.getFacebookSchedules(this.clubID).pipe(take(1)).subscribe((res: ApiResponse<any>) => {
+      debugger
       let result = res.data.map(((item, idx, self) => {
         return {
           id: item.id,

@@ -20,6 +20,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { ApiResponse } from '@app/core/models/response.model';
 import { Group } from './../../core/models/groups.model';
 import { Subject } from 'rxjs';
+import { Media } from './../../core/models/media-model';
 @Component({
   selector: 'app-publish',
   templateUrl: './publish.component.html',
@@ -450,10 +451,10 @@ export class PublishComponent implements OnInit {
       return;
     }
     if (selectedFacebookPages.length > 0) {
-      this._mediaUploadService.uploadMedia('Facebook', this.signedInUser.id, this.urls[0]).subscribe((media: any) => {
+      this._mediaUploadService.uploadMedia('Facebook', this.signedInUser.id, this.urls[0]).subscribe((media: ApiResponse<Media>) => {
         selectedFacebookPages.forEach((item, index, array) => {
           this._reportService.createReport(2, '', 'Facebook')
-          this._facebookService.addImagePostToFB(item.pageID, media.url, this.socialCaption, item.pageAccessToken).subscribe((FbPost: any) => {
+          this._facebookService.addImagePostToFB(item.pageID, media.data.url, this.socialCaption, item.pageAccessToken).subscribe((FbPost: any) => {
             this._reportService.createReport(1, FbPost.id, 'Facebook')
             if (index == array.length - 1) {
               this.toast.success(`Post added to Facebook Pages`, 'Success');
@@ -469,10 +470,10 @@ export class PublishComponent implements OnInit {
 
     if (selctedInstagramPages.length > 0) {
 
-      this._mediaUploadService.uploadMedia('Instagram', this.signedInUser.id, this.urls[0]).subscribe((media: any) => {
+      this._mediaUploadService.uploadMedia('Instagram', this.signedInUser.id, this.urls[0]).subscribe((media: ApiResponse<Media>) => {
         selctedInstagramPages.forEach((item, index, array) => {
           this._reportService.createReport(2, '', 'Instagram')
-          this._instagramService.createIGMediaContainer(item.instagram_business_account.id, this.socialCaption, item.linkedFbPagetoken, media.url).subscribe((container: any) => {
+          this._instagramService.createIGMediaContainer(item.instagram_business_account.id, this.socialCaption, item.linkedFbPagetoken, media.data.url).subscribe((container: any) => {
             this._instagramService.publishContent(item.instagram_business_account.id, container.id, item.linkedFbPagetoken).subscribe((IgPost: any) => {
               this.postedSuccessfully()
               this._reportService.createReport(1, IgPost.id, 'Instagram')

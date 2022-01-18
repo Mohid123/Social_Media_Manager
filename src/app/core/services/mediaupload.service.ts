@@ -1,9 +1,8 @@
 import { HttpClient, HttpEvent, HttpEventType } from '@angular/common/http';
-import { ApiService } from './api.service';
-import { Injectable, ApplicationRef, NgZone, Output, EventEmitter } from '@angular/core';
+import { Injectable, ApplicationRef, Output, EventEmitter } from '@angular/core';
 import { constants } from 'src/app/app.constants';
 import { HttpRequest } from '@angular/common/http';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { ApiResponse } from '@app/core/models/response.model';
 import { Media } from '../models/media-model';
 
@@ -15,7 +14,7 @@ export class MediauploadService {
   valueChanged: EventEmitter<number> = new EventEmitter<number>();
   progress: number = 0;
 
-  constructor(private _apiService: ApiService, private http: HttpClient,
+  constructor(private http: HttpClient,
     private ref: ApplicationRef) { 
   }
 

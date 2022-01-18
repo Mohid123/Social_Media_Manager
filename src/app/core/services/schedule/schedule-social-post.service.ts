@@ -8,6 +8,7 @@ import { ToastrService } from 'ngx-toastr';
 import { MediauploadService } from '../mediaupload.service';
 import { de } from 'date-fns/locale';
 import { Schedule } from '@app/core/models/schedule.model';
+import { Media } from './../../models/media-model';
 
 @Injectable({
   providedIn: 'root'
@@ -60,9 +61,10 @@ export class ScheduleSocialPostService {
 
   scheduleFacebookImagePost(postedText, scheduledDate, mediaFile, selectedList) {
     return new Promise((resolve, reject) => {
-      this._mediaUploadService.uploadMedia('Facebook', '123', mediaFile).pipe(take(1)).subscribe((media: any) => {
+      this._mediaUploadService.uploadMedia('Facebook', '123', mediaFile).pipe(take(1)).subscribe((media: ApiResponse<Media>) => {
         selectedList.map(item => {
-          item.imageURL = media.url
+          debugger
+          item.imageURL = media.data.url
           item.caption = postedText;
           item.scheduleDate = scheduledDate
           item.postType = 'image'

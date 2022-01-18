@@ -315,11 +315,11 @@ export class FacebookComponent implements OnInit {
     }
     this._mediaUploadService.uploadMedia('Facebook', this.signedInUser.id, this.urls[0]).subscribe((media: any) => {
       this.checkedList.forEach((item, index, array) => {
-        debugger
+
         this.condition = true;
         this._reportService.createReport(2, "", 'Facebook')
         this._facebookService.addImagePostToFB(item.pageID, media.data.url, this.facebookCaption, item.pageAccessToken).subscribe(FbPost => {
-          debugger
+
           this._reportService.createReport(1, FbPost.id, 'Facebook')
           if (index == array.length - 1) {
             this.postedSuccessfully();

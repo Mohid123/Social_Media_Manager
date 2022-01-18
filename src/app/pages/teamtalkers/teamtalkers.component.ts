@@ -435,9 +435,9 @@ export class TeamtalkersComponent implements OnInit {
     this.file = event.target.files && event.target.files.length;
     let club = this._clubService.selectedClub;
     let obj = {
-      clubName: club.clubName
+      baseUrl: club.baseURL
     };
-    if (this.mergeService.gen4 == true && (obj.clubName == 'Dividis Tribe' || obj.clubName == 'Solis Solution' || obj.clubName == 'Solissol')) {
+    if (this.mergeService.gen4 == true && (obj.baseUrl == 'https://dividisapi.teamtalkers.com/api/v1/en' || obj.baseUrl == 'https://api.solissol.com/api/v1/en')) {
       //Multiple Images for gen4 = true
       if (this.file > 0 && this.file < 5) {
         let i: number = 0;
