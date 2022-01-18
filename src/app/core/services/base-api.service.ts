@@ -65,9 +65,12 @@ export class BaseApiService<T> {
     return this.http.get(`${path}`, options);
   }
 
-  public baseGet(path: string): Observable<any> {
-    const options: any = {
-      responseType: 'text',
+  public baseGet(
+    path: string,
+    params?: any
+  ): Observable<ApiResponse<T>> {
+    const options = {
+      params: new HttpParams({ fromString: this.objectToQueryString(params) }),
       headers: this.setHeaders()
     };
     return this.mapAndCatchError<T>(

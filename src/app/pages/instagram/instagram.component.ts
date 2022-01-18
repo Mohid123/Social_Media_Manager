@@ -1,3 +1,4 @@
+import { ApiResponse } from '@app/core/models/response.model';
 import { ClubService } from './../../core/services/club.service';
 import { Report } from './../../core/models/report.model';
 import { ReportService } from './../../core/services/report.service';
@@ -15,6 +16,8 @@ import { TimePickerOptions } from "@ngx-tiny/time-picker/ngx-time-picker.options
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { ScheduleService } from './../../core/services/schedule.service';
 import { ScheduleSocialPostService } from 'src/app/core/services/schedule/schedule-social-post.service';
+import { InstagramPostModel } from '@app/core/models/instagram-post.model';
+import { PublishedPosts } from '@app/core/models/response/published-posts.model';
 
 @Component({
   selector: 'app-instagram',
@@ -165,18 +168,20 @@ export class InstagramComponent implements OnInit {
         this.signedInUser = res.data;
         if (this.signedInUser?.FBPages?.length > 0) {
           this.signedInUser?.FBPages.forEach(item => {
-            this.getIGAccountDetails(item.pageID, item.pageAccessToken).pipe(take(1)).subscribe((igaccount: any) => {
-              if (igaccount.hasOwnProperty('instagram_business_account')) {
-                this.getRecentPosts(igaccount.instagram_business_account.id, item.pageAccessToken);
-                igaccount.isSelected = false;
-                igaccount.pageName = 'Instagram Account'
-                igaccount.linkedFbPagetoken = item.pageAccessToken
-                igaccount.captureImageURL = this.instagramProfileUrl;
-                this.checklist.push(igaccount);
-                this.tempList.push(igaccount);
-                this.cf.detectChanges()
+            this.getIGAccountDetails(item.pageID, item.pageAccessToken).pipe(take(1)).subscribe((res: ApiResponse<InstagramPostModel>) => {
+              if (!res.hasErrors()) {
+                if (res.data.hasOwnProperty('instagram_business_account')) {
+                  this.getRecentPosts(res.data.instagram_business_account.id, item.pageAccessToken);
+                  res.data.isSelected = false;
+                  res.data.pageName = 'Instagram Account'
+                  res.data.linkedFbPagetoken = item.pageAccessToken
+                  res.data.captureImageURL = this.instagramProfileUrl;
+                  this.checklist.push(res.data);
+                  this.tempList.push(res.data);
+                  this.cf.detectChanges()
+                }
+                this.IGaccount = res.data
               }
-              this.IGaccount = igaccount
             })
           })
         }
@@ -199,9 +204,12 @@ export class InstagramComponent implements OnInit {
 
 
   getRecentPosts(IGaccountID, FBpageaccessToken) {
-    return this._instagramService.getPublishedPostsForIG(IGaccountID, FBpageaccessToken).pipe(take(1)).subscribe((publishedPosts: any) => {
-      this.recentPosts = publishedPosts.data;
-      this.cf.detectChanges();
+    return this._instagramService.getPublishedPostsForIG(IGaccountID, FBpageaccessToken).pipe(take(1)).subscribe((res: ApiResponse<PublishedPosts>) => {
+      if(!res.hasErrors()) {
+        this.recentPosts = res.data.data;
+        console.log('this.recentPosts:',this.recentPosts);
+        this.cf.detectChanges();
+      }
     })
   }
 

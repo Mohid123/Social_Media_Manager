@@ -5,8 +5,9 @@ import { constants } from 'src/app/app.constants';
 import { BaseApiService } from './base-api.service';
 import { ApiResponse } from '../models/response.model';
 import { FacebookPostModel } from './../models/facebook-post.model';
+import { PublishedPosts } from '../models/response/published-posts.model';
 
-type FBModel = FacebookPostModel | FacebookPostModel[]
+type FBModel = FacebookPostModel | FacebookPostModel[] | PublishedPosts
 
 @Injectable({
   providedIn: 'root'

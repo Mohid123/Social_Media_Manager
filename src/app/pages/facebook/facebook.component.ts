@@ -20,6 +20,7 @@ import { ScheduleSocialPostService } from 'src/app/core/services/schedule/schedu
 import { ClubService } from '@app/core/services/club.service';
 import { MergeService } from './../../core/services/merge-service.service';
 import { FacebookPostModel } from '@app/core/models/facebook-post.model';
+import { PublishedPosts } from '@app/core/models/response/published-posts.model';
 @Component({
   selector: 'app-facebook',
   templateUrl: './facebook.component.html',
@@ -176,23 +177,23 @@ export class FacebookComponent implements OnInit {
   getSignedInUser() {
     let callsList = []
     let totalPosts;
-    this._authService.getSignedInUser().subscribe((res:ApiResponse<any>) => {
-      if (!res.hasErrors()) {
-        this.signedInUser = res.data;
-        if (res.data?.FBPages?.length == 0 || !res.data?.FBPages) {
+    this._authService.getSignedInUser().subscribe((userRes:ApiResponse<any>) => {
+      if (!userRes.hasErrors()) {
+        this.signedInUser = userRes.data;
+        if (userRes.data?.FBPages?.length == 0 || !userRes.data?.FBPages) {
           this.toast.warning('Log in via Facebook to connect your Facebook pages');
           return;
         }
-        for (let i = 0; i <= res.data.FBPages.length - 1; i++) {
-          this._facebookService.getPublishedPostsOnFBPages(res.data.FBPages[i].pageID, res.data.FBPages[i].pageAccessToken).subscribe((res: ApiResponse<any>) => {
+        for (let i = 0; i <= userRes.data.FBPages.length - 1; i++) {
+          this._facebookService.getPublishedPostsOnFBPages(userRes.data.FBPages[i].pageID, userRes.data.FBPages[i].pageAccessToken).subscribe((res: ApiResponse<PublishedPosts>) => {
             if(!res.hasErrors())
-            res.data.forEach((item, idx, self) => {
-              callsList.push(this._facebookService.getSinglePagePost(item.id, res.data.FBPages[i].pageAccessToken));
+            res.data.data.forEach((item, idx, self) => {
+              callsList.push(this._facebookService.getSinglePagePost(item.id, userRes.data.FBPages[i].pageAccessToken));
               if (idx == self.length - 1) {
                 combineLatest(callsList).subscribe(facebookPosts => {
                   facebookPosts.map((singleItem: any) => {
                     singleItem.created_time = moment(singleItem.created_time).fromNow()
-                    singleItem.pageName = res.data.FBPages[i].pageName
+                    singleItem.pageName = userRes.data.FBPages[i].pageName
                   })
                   callsList = []
                   this.recentFBposts.push(...facebookPosts)

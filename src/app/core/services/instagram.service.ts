@@ -4,9 +4,10 @@ import { BaseApiService } from './base-api.service';
 import { InstagramPostModel } from '../models/instagram-post.model';
 import { ApiResponse } from '../models/response.model';
 import { Observable } from 'rxjs';
+import { PublishedPosts } from '../models/response/published-posts.model';
 
 
-type InstaModel = InstagramPostModel
+type InstaModel = InstagramPostModel | PublishedPosts;
 
 @Injectable({
   providedIn: 'root'
