@@ -4,12 +4,10 @@ import { ApiResponse } from './../../../core/models/response.model';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { UsersService } from './../../../core/services/users.service';
 import { ClubService } from './../../../core/services/club.service';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Component, OnInit, ViewEncapsulation, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Subscription, Observable, throwError, BehaviorSubject } from 'rxjs';
+import { Observable} from 'rxjs';
 import { AuthService } from '../_services/auth.service';
-
 import { ActivatedRoute, Router } from '@angular/router';
 import { Club } from '../../../core/models/club.model'
 import { MainAuthService } from '../../../core/services/auth.service'
@@ -17,10 +15,9 @@ import { ToastrService } from 'ngx-toastr';
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { constants } from 'src/app/app.constants';
-import { filter, map, take } from 'rxjs/operators';
+import { take } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { JoyrideService } from 'ngx-joyride';
-import { locale } from './../../i18n/vocabs/jp';
 import { AuthRequest } from '@app/core/models/requests/auth-request.model';
 
 
@@ -143,10 +140,7 @@ export class LoginComponent implements OnInit {
         if (res.data?.user.admin) {
           this.spinner.hide();
           this.toastr.success(`You are logged in as ${res.data.user.fullName}.`, 'Welcome!');
-          console.log('navigation:',);
-          this.router.navigateByUrl('/pages/dashboard').then(hjh=> {
-            console.log('hjjjjjjjjjj',hjh);
-          });
+          this.router.navigateByUrl('/pages/dashboard').then(hjh=> {});
         }
       
       } else {
@@ -166,7 +160,6 @@ export class LoginComponent implements OnInit {
         this.allClubs = res.data;
         this.tempClubs = res.data;
         if(this.allClubs.find(club => club.id == this._clubService.selectedClub?.id)) {
-          console.log('have selected club:',);
           if(this.showBackBtn)
             this.onClubSelected(this._clubService.selectedClub);
         }
@@ -240,7 +233,6 @@ export class LoginComponent implements OnInit {
   }
 
   onClubSelected(club) {
-    console.log('onClubSelected:',club);
     if (!club.isPicker) {
       this.isPickerClub = false
       this.modalService.dismissAll()

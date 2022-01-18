@@ -2,11 +2,10 @@ import { ApiResponse } from '@app/core/models/response.model';
 import { ClubService } from './../club.service';
 import { Injectable } from '@angular/core';
 import { ScheduleService } from './../schedule.service';
-import { map, take } from 'rxjs/operators';
+import { take } from 'rxjs/operators';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { MediauploadService } from '../mediaupload.service';
-import { de } from 'date-fns/locale';
 import { Schedule } from '@app/core/models/schedule.model';
 import { Media } from './../../models/media-model';
 
@@ -63,7 +62,6 @@ export class ScheduleSocialPostService {
     return new Promise((resolve, reject) => {
       this._mediaUploadService.uploadMedia('Facebook', '123', mediaFile).pipe(take(1)).subscribe((media: ApiResponse<Media>) => {
         selectedList.map(item => {
-       
           item.imageURL = media.data.url
           item.caption = postedText;
           item.scheduleDate = scheduledDate
@@ -72,7 +70,6 @@ export class ScheduleSocialPostService {
           item.color = '#3B5998'
           item.postedTo = 'Facebook'
           item.title = item.pageName
-
         });
         selectedList.forEach((element, idx, self) => {
           this._scheduleService.scheduleFacebookPost(element).pipe(take(1)).subscribe((data:ApiResponse<Schedule>) => {
@@ -91,10 +88,9 @@ export class ScheduleSocialPostService {
   }
 
   scheduleFacebookVideoPost(postedText, scheduledDate, mediaFile, selectedList) {
-
     return new Promise((resolve, reject) => {
       this._mediaUploadService.uploadMedia('Facebook', '123', mediaFile).pipe(take(1)).subscribe((media: ApiResponse<Media>) => {
-        selectedList.map(item => {
+         selectedList.map(item => {
           item.videoUrl = media.data.url
           item.videoDescription = postedText;
           item.scheduleDate = scheduledDate
@@ -106,8 +102,7 @@ export class ScheduleSocialPostService {
         });
         selectedList.forEach((element, idx, self) => {
           this._scheduleService.scheduleFacebookPost(element).pipe(take(1)).subscribe((data:ApiResponse<Schedule>) => {
-            console.log(data);
-            if (idx == self.length - 1) {
+             if (idx == self.length - 1) {
               this.toast.success('Post Scheduled', 'Info');
               resolve('success');
             }

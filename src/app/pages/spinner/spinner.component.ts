@@ -1,11 +1,8 @@
 import {
-    Component,
-    OnInit,
-    ChangeDetectorRef,
-    ViewEncapsulation
+    Component, ViewEncapsulation
   } from "@angular/core";
 import { NgxSpinnerService } from "ngx-spinner";
-import { Routes, Router, NavigationStart, NavigationEnd, NavigationCancel } from '@angular/router';
+import { Router, NavigationStart, NavigationEnd, NavigationCancel } from '@angular/router';
 import { NavigationError } from '@angular/router';
 
 @Component({

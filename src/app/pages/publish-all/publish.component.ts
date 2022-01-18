@@ -1,8 +1,5 @@
-import { VideoProcessingService } from '../../core/services/video-service/video-processing.service';
 import { ClubService } from '../../core/services/club.service';
 import { ReportService } from '../../core/services/report.service';
-import { locale } from '../../modules/i18n/vocabs/de';
-import { PostService } from '../../core/services/post.service';
 import { MainAuthService } from '../../core/services/auth.service';
 import { MediauploadService } from '../../core/services/mediaupload.service';
 import { InstagramService } from '../../core/services/instagram.service';
@@ -12,13 +9,11 @@ import { Component, OnInit, ChangeDetectorRef, ViewChild, ElementRef } from '@an
 import { NgxSpinnerService } from "ngx-spinner";
 import { LoggedInUser } from '@app/core/models/logged-in-user.model';
 import { Post } from 'src/app/core/models/post.model';
-import { take, filter, single, throwIfEmpty, takeUntil } from 'rxjs/operators';
+import { take, takeUntil } from 'rxjs/operators';
 import { Report } from 'src/app/core/models/report.model';
 import { ClubpostService } from './../../core/services/club-post/clubpost.service';
 import { MergeService } from 'src/app/core/services/merge-service.service';
-import { DomSanitizer } from '@angular/platform-browser';
 import { ApiResponse } from '@app/core/models/response.model';
-import { Group } from './../../core/models/groups.model';
 import { Subject } from 'rxjs';
 import { Media } from './../../core/models/media-model';
 @Component({
@@ -76,14 +71,11 @@ export class PublishComponent implements OnInit {
     private _instagramService: InstagramService,
     private _mediaUploadService: MediauploadService,
     private _authService: MainAuthService,
-    private _postService: PostService,
     private _reportService: ReportService,
     private _clubService: ClubService,
-    private _videoService: VideoProcessingService,
     public _genericPostService : ClubpostService,
     public mediaService: MediauploadService,
     private mergeService: MergeService,
-    private sanitizer: DomSanitizer
   ) {
     this.post = new Post();
     this.report = new Report();
@@ -516,8 +508,7 @@ export class PublishComponent implements OnInit {
     let selectedClubGroups = []
     let selectedClubEvents = [];
     let selectedClub: any[] = [];
-    let file;
-    let hyperLinkResponse = []
+ 
     if (!this.file) {
       this.toast.error('Please select a Video File', 'Empty File');
       return;
@@ -625,7 +616,6 @@ export class PublishComponent implements OnInit {
 
   addTextPost() {
     let selectedFacebookPages = []
-    let selctedInstagramPages = []
     let selectedClubGroups = []
     let selectedClubEvents = []
     let selectedInstagram: boolean = false;

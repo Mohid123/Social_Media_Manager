@@ -1,7 +1,6 @@
 import { MainAuthService } from 'src/app/core/services/auth.service';
 import { ClubService } from './club.service';
 import { Observable } from 'rxjs';
-import { ApiService } from './api.service';
 import { Injectable } from '@angular/core';
 import { Report } from '../models/report.model';
 import { BaseApiService } from './base-api.service';
@@ -76,8 +75,8 @@ export class ReportService extends BaseApiService<report> {
     this.report.postedTo = postedTo;
     this.report.successStatus = status;
     this.report.userID = this.mainAuthService.loggedInUser?.userID;
-    this.addReport(this.report).subscribe((report:ApiResponse<report>) => { 
-      // console.log(report ,  'Report Created')
+    this.addReport(this.report).subscribe((report:ApiResponse<report>) => {
+
     });
   }
   

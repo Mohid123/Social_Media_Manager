@@ -1,6 +1,5 @@
 import { Injectable, Inject } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
-import { he } from 'date-fns/locale';
 
 @Injectable()
 export class VideoProcessingService {
@@ -53,11 +52,7 @@ export class VideoProcessingService {
     return hex.length === 1 ? '0' + hex : hex
   }).join('')
 
-  // console.log(rgbToHex(0, 51, 255)); // '#0033ff'
-
-
-
-  get_average_rgb(img) {
+ get_average_rgb(img) {
     return new Promise((resolve, reject) => {
       var context = document.createElement('canvas').getContext('2d');
       if (typeof img == 'string') {
@@ -86,7 +81,6 @@ export class VideoProcessingService {
       let length;
       let rgb = { r: 0, g: 0, b: 0 };
       let count = 0;
-      // console.log(typeof imgEl);
       if (typeof imgEl == 'string') {
         var src = imgEl;
         imgEl = new Image;
@@ -100,9 +94,7 @@ export class VideoProcessingService {
 
       height = canvas.height 
       width = canvas.width 
-      // console.log(height , width ,'sd')
-
-      context.imageSmoothingEnabled = true;
+       context.imageSmoothingEnabled = true;
       
       context.drawImage(imgEl, 0, 0, 20, 12);
 
