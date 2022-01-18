@@ -545,10 +545,10 @@ export class PublishComponent implements OnInit {
     })
 
     if (selectedFacebookPages.length > 0) {
-      this._mediaUploadService.uploadMedia('Facebook', this.signedInUser.id, this.file).pipe(take(1), takeUntil(this.destroy$)).subscribe((media: any) => {
+      this._mediaUploadService.uploadMedia('Facebook', this.signedInUser.id, this.file).pipe(take(1), takeUntil(this.destroy$)).subscribe((res: ApiResponse<Media>) => {
         selectedFacebookPages.forEach((item, index, array) => {
           this._reportService.createReport(2, '', 'Facebook');
-          this._facebookService.addVideoPost(item.pageID, item.pageAccessToken, media.url, this.socialCaption).pipe(take(1)).subscribe((FbPost: any) => {
+          this._facebookService.addVideoPost(item.pageID, item.pageAccessToken, res.data.url, this.socialCaption).pipe(take(1)).subscribe((FbPost: any) => {
             this._reportService.createReport(1, FbPost.id, 'Facebook')
           }, error => {
             this.toast.error(error.message);
@@ -563,9 +563,9 @@ export class PublishComponent implements OnInit {
     }
 
     if (selctedInstagramPages.length > 0) {
-      this._mediaUploadService.uploadMedia('Instagram', this.signedInUser.id, this.file).pipe(take(1), takeUntil(this.destroy$)).subscribe((media: any) => {
+      this._mediaUploadService.uploadMedia('Instagram', this.signedInUser.id, this.file).pipe(take(1), takeUntil(this.destroy$)).subscribe((media: ApiResponse<Media>) => {
         selctedInstagramPages.forEach(item => {
-          this._instagramService.createIgContainerForVideo(item.instagram_business_account.id, media.url, this.socialCaption, item.linkedFbPagetoken).pipe(take(1)).subscribe((container: any) => {
+          this._instagramService.createIgContainerForVideo(item.instagram_business_account.id, media.data.url, this.socialCaption, item.linkedFbPagetoken).pipe(take(1)).subscribe((container: any) => {
             let interval = setInterval(() => {
               this._instagramService.getContainerStatus(container.id, item.linkedFbPagetoken).pipe(take(1)).subscribe((data: any) => {
                 if (data.status_code == "FINISHED") {
