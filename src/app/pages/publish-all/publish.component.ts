@@ -21,6 +21,7 @@ import { ApiResponse } from '@app/core/models/response.model';
 import { Group } from './../../core/models/groups.model';
 import { Subject } from 'rxjs';
 import { Media } from './../../core/models/media-model';
+import { InstagramPostModel } from './../../core/models/instagram-post.model';
 @Component({
   selector: 'app-publish',
   templateUrl: './publish.component.html',
@@ -474,9 +475,9 @@ export class PublishComponent implements OnInit {
         selctedInstagramPages.forEach((item, index, array) => {
           this._reportService.createReport(2, '', 'Instagram')
           this._instagramService.createIGMediaContainer(item.instagram_business_account.id, this.socialCaption, item.linkedFbPagetoken, media.data.url).subscribe((container: any) => {
-            this._instagramService.publishContent(item.instagram_business_account.id, container.id, item.linkedFbPagetoken).subscribe((IgPost: any) => {
+            this._instagramService.publishContent(item.instagram_business_account.id, container.data.id, item.linkedFbPagetoken).subscribe((IgPost: any) => {
               this.postedSuccessfully()
-              this._reportService.createReport(1, IgPost.id, 'Instagram')
+              this._reportService.createReport(1, IgPost.data.id, 'Instagram')
               this.toast.success(`Post added to Instagram Profile`, 'Success');
             }, (error) => {
               this.toast.error(error.message);
@@ -545,8 +546,7 @@ export class PublishComponent implements OnInit {
     })
 
     if (selectedFacebookPages.length > 0) {
-      this._mediaUploadService.uploadMedia('Facebook', this.signedInUser.id, this.file).pipe(take(1), takeUntil(this.destroy$)).subscribe((res: ApiResponse<Media>) => {
-       
+      this._mediaUploadService.uploadMedia('Facebook', this.signedInUser.id, this.file).pipe(take(1), takeUntil(this.destroy$)).subscribe((res: ApiResponse<Media>) => {  
         selectedFacebookPages.forEach((item, index, array) => {
           this._reportService.createReport(2, '', 'Facebook');
           this._facebookService.addVideoPost(item.pageID, item.pageAccessToken, res.data.url, this.socialCaption).pipe(take(1)).subscribe((FbPost: any) => {
@@ -569,22 +569,24 @@ export class PublishComponent implements OnInit {
         selctedInstagramPages.forEach(item => {
           this._instagramService.createIgContainerForVideo(item.instagram_business_account.id, media.data.url, this.socialCaption, item.linkedFbPagetoken).pipe(take(1)).subscribe((container: any) => {
             let interval = setInterval(() => {
-              this._instagramService.getContainerStatus(container.id, item.linkedFbPagetoken).pipe(take(1)).subscribe((data: any) => {
-                if (data.status_code == "FINISHED") {
-                  this._instagramService.publishContent(item.instagram_business_account.id, container.id, item.linkedFbPagetoken).pipe(take(1)).subscribe((data: any) => {
+              this._instagramService.getContainerStatus(container.data.id, item.linkedFbPagetoken).pipe(take(1)).subscribe((res: any) => {
+                if (res.data.status_code == 'FINISHED') {
+                  
+                  this._instagramService.publishContent(item.instagram_business_account.id, container.data.id, item.linkedFbPagetoken).pipe(take(1)).subscribe((res: any) => {
+                    
                     clearInterval(interval)
                     this.url = "";
                     this.socialCaption = "";
                     this.cf.detectChanges()
                     this.toast.success('Instagram', 'Video Post Added');
-                    this._reportService.createReport(1, data.id, 'Instagram')
+                    this._reportService.createReport(1, res.data.id, 'Instagram')
                   }, (error) => {
                     this.toast.error(error.message);
                     clearInterval(interval)
                     this._reportService.createReport(0, '', 'Instagram')
                   })
                 }
-                else if (data.status_code == "ERROR") {
+                else if (res.data.status_code == "ERROR") {
                   clearInterval(interval)
                   this.postedSuccessfully()
                   this.toast.error('Instagram', 'Error uploading, video format unsupported ')

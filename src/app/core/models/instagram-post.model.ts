@@ -9,4 +9,6 @@ export class InstagramPostModel {
     caption : string
     imageURL: string
     videoUrl : string
+    igProfileName: string;
+    name: string;
 }
