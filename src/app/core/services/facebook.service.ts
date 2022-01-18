@@ -1,3 +1,4 @@
+import { AppToken } from './../models/app-token.model';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -7,7 +8,7 @@ import { ApiResponse } from '../models/response.model';
 import { FacebookPostModel } from './../models/facebook-post.model';
 import { PublishedPosts } from '../models/response/published-posts.model';
 
-type FBModel = FacebookPostModel | FacebookPostModel[] | PublishedPosts
+type FBModel = FacebookPostModel | FacebookPostModel[] | PublishedPosts | AppToken;
 
 @Injectable({
   providedIn: 'root'
@@ -32,8 +33,8 @@ export class FacebookService extends BaseApiService<FBModel> {
     return this.externalPost(`${facebookPageId}/photos?url=${imageURL}&message=${content}&access_token=${fbpageAccessToken}`, '');
   }
 
-  getLongLivedFBAccessToken(userToken: string): Observable<any> {
-    return this.http.get(`https://graph.facebook.com/oauth/access_token?grant_type=fb_exchange_token&client_id=${constants.app_id}&client_secret=${constants.app_secret}&fb_exchange_token=${userToken}`);
+  getLongLivedFBAccessToken(userToken: string): Observable<ApiResponse<FBModel>> {
+    return this.externalGet(`https://graph.facebook.com/oauth/access_token?grant_type=fb_exchange_token&client_id=${constants.app_id}&client_secret=${constants.app_secret}&fb_exchange_token=${userToken}`);
   }
 
   addVideoPost(facebookPageId: string, fbPageAccessToken: string, fileUrl: string, videoDescription: string): Observable<ApiResponse<FBModel>> {

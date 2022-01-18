@@ -4,10 +4,21 @@ export interface PublishedPosts {
 }
 
 export interface PublishedPostsData {
-    media_url:  string;
-    timestamp:  string;
-    media_type: string;
     id:         string;
+    media_url?:  string;
+    timestamp?:  string;
+    media_type?: string;
+
+    access_token?:  string;
+    category?:      string;
+    category_list?: CategoryList[];
+    name?:          string;
+    tasks?:         string[];
+}
+
+export interface CategoryList {
+    id:   string;
+    name: string;
 }
 
 export interface Paging {

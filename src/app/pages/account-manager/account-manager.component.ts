@@ -1,3 +1,5 @@
+import { PublishedPosts } from '@app/core/models/response/published-posts.model';
+import { AppToken } from './../../core/models/app-token.model';
 import { ApiResponse } from '@app/core/models/response.model';
 import { ToastrService } from "ngx-toastr";
 import { Observable, Subject } from "rxjs";
@@ -147,7 +149,6 @@ export class AccountManagerComponent implements OnInit {
       .then((socialUser) => {
         this._toast.success("Successfully logged into Facebook");
         this.socialUser = socialUser;
-        console.log(this.club.FBuserID = this.socialUser.id);
         this.userFBprofile.fbEmail = this.socialUser.response.email;
         this.userFBprofile.fbUsername = this.socialUser.response.name;
         this.userFBprofile.fbProfileImageUrl = this.socialUser.response.picture.data.url;
@@ -159,14 +160,14 @@ export class AccountManagerComponent implements OnInit {
         this.cf.detectChanges();
         this.club.userFacebookProfile = Object.assign({}, this.userFBprofile)
         this.getLongLivedFBUserToken(this.socialUser.authToken).subscribe(
-          (data) => {
-            this.club.FBUserAuthToken = data.access_token;
+          (data:ApiResponse<AppToken>) => {
+            this.club.FBUserAuthToken = data.data.access_token;
             this.getFacebookPages(
               this.socialUser.id,
-              data.access_token
-            ).subscribe((FbPages) => {
-              if (FbPages.data.length) {
-                FbPages.data.forEach((item) => {
+              data.data.access_token
+            ).subscribe((FbPages:ApiResponse<PublishedPosts>) => {
+              if (FbPages.data?.data.length) {
+                FbPages.data.data.forEach((item) => {
                   let obj = {
                     pageAccessToken: item.access_token,
                     pageID: item.id,
@@ -219,11 +220,11 @@ export class AccountManagerComponent implements OnInit {
     this.selectedClub.clubName == "Solis Solution" && this.selectedClub.id == "60db0c52723416289b31f1d9" ? this.socialFlag = true : this.socialFlag = false;
   }
 
-  getLongLivedFBUserToken(userToken): Observable<any> {
+  getLongLivedFBUserToken(userToken) {
     return this._facebookService.getLongLivedFBAccessToken(userToken);
   }
 
-  getFacebookPages(id, userToken): Observable<any> {
+  getFacebookPages(id, userToken) {
     return this._facebookService.getFacebookPages(id, userToken);
   }
 

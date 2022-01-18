@@ -56,11 +56,10 @@ export class BaseApiService<T> {
 
   public externalGet(
     path: string,
-    params: any
+    params?: any
   ): Observable<any> {
-    const options: any = {
-      params: new HttpParams({ fromString: this.objectToQueryString(params) }),
-      responseType: 'text'
+    const options = {
+      params: new HttpParams({ fromString: this.objectToQueryString(params) })
     };
     return this.http.get(`${path}`, options);
   }
