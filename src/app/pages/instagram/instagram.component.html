@@ -149,7 +149,7 @@
                                                             </label>
                                                             <input id="file-input" accept="image/*"
                                                                 (change)="onSelectFile($event)" type="file"
-                                                                name="myfile" multiple />
+                                                                name="myfile"/>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -235,7 +235,7 @@
                                                                 </label>
                                                                 <input id="file-input" accept="image/*"
                                                                     (change)="onSelectFile($event)" type="file"
-                                                                    name="myfile" multiple />
+                                                                    name="myfile"/>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -325,7 +325,7 @@
                                                             </div>
                                                         </label>
                                                         <input id="file-input" accept="video/*" type="file"
-                                                            (change)="onSelectFile($event)" name="myfile"
+                                                            (change)="onSelectVideo($event)" name="myfile"
                                                             multiple />
                                                     </div>
                                                 </div>
@@ -412,7 +412,7 @@
                                                                     </div>
                                                                 </label>
                                                                 <input id="file-input" accept="video/*"
-                                                                    (change)="onSelectFile($event)" type="file"
+                                                                    (change)="onSelectVideo($event)" type="file"
                                                                     name="myfile" multiple />
                                                             </div>
                                                         </div>
@@ -607,14 +607,16 @@
                                                         style="width: 44px; height: 44px; object-fit: cover; border-radius: 50px;">
                                                     <span><b>{{userName}}</b></span>
                                                 </div>
-                                                <div class="preview-media" data-max-image="1"><img logo #logo
-                                                        (load)="onSelectedImageLoad()" style=" margin-right: auto;
-                                                    margin-left: auto;
-                                                    height: 100%;
-                                                    display: block;
-                                                    object-fit: contain;
-                                                    width: 100%;" [src]=url
-                                                        *ngIf="format==='image' && url">
+                                                <div class="preview-media" data-max-image="1">
+                                                    <ng-container *ngFor="let multiple of multiples">
+                                                        <img (load)="onSelectedImageLoad()" style="object-fit: contain;
+                                                         margin-right: auto;
+                                                         margin-left: auto;
+                                                         height: 100%;
+                                                         width: 100%;
+                                                         display: block;"
+                                                         [src]="multiple">
+                                                    </ng-container>
                                                 </div>
                                                 <div class="caption"
                                                     style="white-space: pre-wrap; text-align: justify;">
@@ -655,7 +657,7 @@
                                                     <span><strong>{{userName}}</strong></span>
                                                 </div>
                                                 <div class="preview-media" data-max-image="1"><video [src]="url"
-                                                        *ngIf="format==='video' && url" style=" margin-right: auto;
+                                                        *ngIf="format==='video'" style=" margin-right: auto;
                                                     margin-left: auto;
                                                     height: 100%;
                                                     display: block;

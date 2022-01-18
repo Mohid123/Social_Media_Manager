@@ -128,7 +128,7 @@ export class ScheduleSocialPostService {
           item.pageAccessToken = item.linkedFbPagetoken
           item.caption = postedText;
           delete item.isSelected;
-          item.imageURL = media.url
+          item.imageURL = media.data.url
           item.scheduleDate = scheduledDate
           item.postType = 'image'
           item.clubID = this.clubID
