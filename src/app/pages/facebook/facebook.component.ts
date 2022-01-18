@@ -1,5 +1,5 @@
 import { ApiResponse } from '@app/core/models/response.model';
-import { filter, publish, take } from 'rxjs/operators';
+import { filter, publish, take, takeUntil } from 'rxjs/operators';
 import { ReportService } from './../../core/services/report.service';
 import { Report } from './../../core/models/report.model';
 import { MediauploadService } from './../../core/services/mediaupload.service';
@@ -12,7 +12,7 @@ import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { LoggedInUser } from '@app/core/models/logged-in-user.model';
 import { DatePickerOptions } from "@ngx-tiny/date-picker";
 import { TimePickerOptions } from "@ngx-tiny/time-picker/ngx-time-picker.options";
-import { combineLatest } from 'rxjs';
+import { combineLatest, Subject } from 'rxjs';
 import * as moment from 'moment';
 import { ScheduleClubPostService } from 'src/app/core/services/schedule/schedule_club_post.service';
 import { ScheduleService } from './../../core/services/schedule.service';
@@ -29,6 +29,7 @@ import { Media } from '@app/core/models/media-model';
 })
 export class FacebookComponent implements OnInit {
   condition: Boolean = false;
+  destroy$ = new Subject();
   constructor(private spinner: NgxSpinnerService, private cf: ChangeDetectorRef, private toast: ToastrService,
     private _clubService: ClubService,
     private _facebookService: FacebookService,
@@ -306,6 +307,22 @@ export class FacebookComponent implements OnInit {
     }
   }
 
+  onSelectVideo(event): void {
+    this.file = event.target.files && event.target.files[0];
+    if (this.file) {
+      var reader = new FileReader();
+      reader.readAsDataURL(this.file);
+      if (this.file.type.indexOf('video') > -1) {
+        this.format = 'video';
+      }
+      reader.onload = (event) => {
+        this.url = (<FileReader>event.target).result as string;
+        this.cf.detectChanges();
+      }
+      event.target.value = '';
+    }
+  }
+
   addImagePost() {
     if (!this.urls) {
       this.toast.error('Please select an Image File', 'Empty File');
@@ -315,7 +332,7 @@ export class FacebookComponent implements OnInit {
       this.toast.error('No Page Selected', 'Please select Facebook Pages to post');
       return;
     }
-    this._mediaUploadService.uploadMedia('Facebook', this.signedInUser.id, this.urls[0]).subscribe((media: ApiResponse<Media>)=> {
+    this._mediaUploadService.uploadMedia('Facebook', this.signedInUser.id, this.urls[0]).pipe(take(1), takeUntil(this.destroy$)).subscribe((media: ApiResponse<Media>)=> {
       this.checkedList.forEach((item, index, array) => {
 
         this.condition = true;
@@ -353,12 +370,14 @@ export class FacebookComponent implements OnInit {
       this.toast.error('No Page Selected', 'Please select Facebook Pages to post');
       return;
     }
-    this._mediaUploadService.uploadMedia('Facebook', this.signedInUser.id, this.file).subscribe((media: ApiResponse<Media>) => {
+    this._mediaUploadService.uploadMedia('Facebook', this.signedInUser.id, this.file).pipe(take(1), takeUntil(this.destroy$)).subscribe((media: ApiResponse<Media>) => {
+   
       this.checkedList.forEach((item, index, array) => {
         this.condition = true;
       
         this._reportService.createReport(2, "", 'Facebook')
         this._facebookService.addVideoPost(item.pageID, item.pageAccessToken, media.data.url, this.facebookCaption).pipe(take(1)).subscribe((video: any) => {
+         
           this._reportService.createReport(1, video.id, 'Facebook')
           if (index == array.length - 1) {
             this.toast.success('Great! The post has been shared.');
@@ -483,7 +502,10 @@ export class FacebookComponent implements OnInit {
 
   }
 
-
+  ngOnDestroy(): void {
+    this.destroy$.complete();
+    this.destroy$.unsubscribe();
+  }
 
 }
 

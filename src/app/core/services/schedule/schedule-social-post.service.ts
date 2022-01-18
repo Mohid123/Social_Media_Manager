@@ -63,7 +63,7 @@ export class ScheduleSocialPostService {
     return new Promise((resolve, reject) => {
       this._mediaUploadService.uploadMedia('Facebook', '123', mediaFile).pipe(take(1)).subscribe((media: ApiResponse<Media>) => {
         selectedList.map(item => {
-          debugger
+       
           item.imageURL = media.data.url
           item.caption = postedText;
           item.scheduleDate = scheduledDate
