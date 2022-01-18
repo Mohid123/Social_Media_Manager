@@ -105,7 +105,8 @@ export class InstagramComponent implements OnInit {
     this.url = null;
     this.urls = [];
     this.multiples = [];
-    this.cf.detectChanges()
+    this.removeSlectedItems();
+    this.cf.detectChanges();
     this.clicked = false;
       
   }
@@ -132,9 +133,6 @@ export class InstagramComponent implements OnInit {
     });
   }
 
-
-
-
   getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
       return 'by pressing ESC';
@@ -156,6 +154,8 @@ export class InstagramComponent implements OnInit {
     if (this.inValidImageFormat) {
       this.toast.error('Unsupported Image Format', 'Image Format not supported for Instagram');
       this.url = ""
+      this.urls = [];
+      this.multiples = [];
       this.file = null;
     }
   }
@@ -287,8 +287,7 @@ export class InstagramComponent implements OnInit {
               clearInterval(interval);
               return
             }
-            this._instagramService.getContainerStatus(container.id, item.linkedFbPagetoken).pipe(take(1)).subscribe((res: any) => {
-              debugger
+            this._instagramService.getContainerStatus(container.data.id, item.linkedFbPagetoken).pipe(take(1)).subscribe((res: any) => {
               if (res.data.status_code) {
                 
                 this._instagramService.publishContent(item.instagram_business_account.id, container.data.id, item.linkedFbPagetoken).pipe(take(1)).subscribe((res: any) => {
@@ -348,13 +347,13 @@ export class InstagramComponent implements OnInit {
       this.toast.error('Unsupported Image Format', 'Image Format not supported for Instagram');
       return;
     }
-    this._mediaUploadService.uploadMedia('Instagram', this.signedInUser.id, this.file).pipe(take(1)).subscribe((media: ApiResponse<Media>) => {
+    this._mediaUploadService.uploadMedia('Instagram', this.signedInUser.id, this.urls[0]).pipe(take(1)).subscribe((media: ApiResponse<Media>) => {
       this.checkedList.forEach((item, idx, self) => {
         this.condition = true;
         this._reportService.createReport(2, "", 'Instagram')
         this._instagramService.createIGMediaContainer(item.instagram_business_account.id, this.instaCaption, item.linkedFbPagetoken, media.data.url).pipe(take(1)).subscribe((container: any) => {
-          this._instagramService.publishContent(item.instagram_business_account.id, container.id, item.linkedFbPagetoken).pipe(take(1)).subscribe((data: any) => {
-            this._reportService.createReport(1, data.id, 'Instagram')
+          this._instagramService.publishContent(item.instagram_business_account.id, container.data.id, item.linkedFbPagetoken).pipe(take(1)).subscribe((res: any) => {
+            this._reportService.createReport(1, res.data.id, 'Instagram')
             if (idx == self.length - 1) {
               this.postedSuccessfully();
               this.toast.success('Great! The post has been shared.');
