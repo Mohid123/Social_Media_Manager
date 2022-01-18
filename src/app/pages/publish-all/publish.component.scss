@@ -99,68 +99,9 @@
     height: 180px;
 }
 
-.preview-facebook-media .preview-media.preview-media2 .item:nth-child(1){
-    width: 50%;
-    height: 100%;
-    float: left;
-}
 
-.preview-facebook-media .preview-media.preview-media3 .item:nth-child(1){
-    width: 100%;
-    height: 50%;
-    float: left;
-}
 
-.preview-facebook-media .preview-media.preview-media4 .item:nth-child(1),
-.preview-facebook-media .preview-media.preview-media4 .item:nth-child(2),
-.preview-facebook-media .preview-media.preview-media4 .item:nth-child(3),
-.preview-facebook-media .preview-media.preview-media4 .item:nth-child(4)
-{
-    width: 50%;
-    height: 50%;
-    float: left;
-}
 
-.preview-facebook-media .preview-media.preview-media1 .item:nth-child(1){
-    width: 100%;
-    height: 100%;
-    float: left;
-}
-
-.preview-facebook-media .preview-media.preview-media3 .item:nth-child(2){
-    width: 50%;
-    height: 50%;
-    float: left;
-}
-
-.preview-facebook-media .preview-media.preview-media3 .item:nth-child(3){
-    width: 50%;
-    height: 50%;
-    float: left;
-}
-
-.preview-facebook-media .preview-media.preview-media2 .item:nth-child(2){
-    width: 50%;
-    height: 100%;
-    float: left;
-}
-
-.preview-facebook-media .preview-media.preview-media5 .item:nth-child(1),
-.preview-facebook-media .preview-media.preview-media5 .item:nth-child(2)
-{
-    width: 50%;
-    height: 64%;
-    float: left;
-}
-
-.preview-facebook-media .preview-media.preview-media5 .item:nth-child(3),
-.preview-facebook-media .preview-media.preview-media5 .item:nth-child(4),
-.preview-facebook-media .preview-media.preview-media5 .item:nth-child(5)
-{
-    width: 33.3333%;
-    height: 36%;
-    float: left;
-}
 
 .preview-facebook-media video{
     position: absolute;
@@ -204,46 +145,6 @@
     background: #F3F6F9;
 }
 
-/*Preview Link*/
-.preview-facebook-link{
-    position: relative;
-}
-
-.preview-facebook-link .preview-header{
-    padding: 20px;
-    height: 60px;
-    border-bottom: 1px solid #F3F6F9;
-}
-
-.preview-facebook-link .preview-header i{
-    font-size: 20px;
-}
-
-.preview-facebook-link .preview-header .facebook-logo{
-    position: absolute;
-    text-align: center;
-    width: 100%;
-    left: 0;
-    top: 16px;
-    color: #4a76a8;
-    font-size: 18px;
-}
-
-.preview-facebook-link .preview-header .facebook-logo i{
-    font-size: 30px;
-}
-
-.preview-facebook-link .user-info{
-    padding: 10px 10px;
-    position: relative;
-}
-
-.preview-facebook-link .user-info img{
-    width: 40px;
-    margin-right: 5px;
-    object-fit: cover;
-    border-radius: 5px;
-}
 
 .preview-facebook-media .user-info-tt{
     padding: 10px 25px;
@@ -256,95 +157,6 @@
     border-radius: 5px;
 }
 
-.preview-facebook-link .user-info .text{
-    position: absolute;
-    top: 14px;
-    font-size: 13px;
-    left: 68px;
-    line-height: 17px;
-}
-
-.preview-facebook-link .user-info .text .name{
-    font-weight: bold;
-    color: #2a5885;
-}
-
-.preview-facebook-link .user-info .text span{
-    color: #939393;
-    font-size: 12px;
-}
-
-.preview-facebook-link .post-info,.preview-facebook-link .caption{
-    padding: 10px 10px;
-    word-break: break-all;
-    color: #000;
-}
-
-.preview-facebook-link .post-info img,.preview-facebook-link .caption img{
-    width: 15px;
-    position: relative;
-    top: -2px;
-}
-
-
-.preview-facebook-link .line-no-text{
-    margin-bottom: 3px;
-    height: 13px;
-    display: inline-block;
-    // background: #F3F6F9;
-}
-
-.preview-facebook-link .line-no-text.w50{
-    width: 50%;
-}
-
-.preview-facebook-link .preview-link{
-    border: 1px solid rgba(0, 0, 0, 0.05);
-    margin: 0 10px;
-    margin-bottom: 10px;
-}
-
-.preview-facebook-link .preview-link .image{
-    height: 203px;
-    width: 100%;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-     background-color: #F3F6F9;
-    background-position: center;
-}
-
-.preview-facebook-link .preview-link .info{
-    padding: 10px;
-    letter-spacing: normal;
-}
-
-.preview-facebook-link .preview-link .info .title{
-    color: #000;
-    font-size: 15px;
-    font-weight: 500;
-    line-height: 22px;
-    margin-bottom: 5px;
-    max-height: 110px;
-    overflow: hidden;
-    word-wrap: break-word;
-}
-
-.preview-facebook-link .preview-link .info .desc{
-    color: #000;
-    font-size: 12px;
-    font-family: inherit;
-}
-
-.preview-facebook-link .preview-link .info .website{
-    color: #90949c;
-    font-size: 12px;
-    text-transform: uppercase;
-    font-family: inherit;
-    margin-top: 10px;
-}
-
-.preview-facebook-link .preview-comment{
-    margin-top: 0px;
-}
 
 /*Preview Text*/
 .preview-facebook-text{
@@ -374,10 +186,7 @@
     position: relative;
     padding: 0px 9px;
     color: #999;
-    text-align: end;
-    // border-top: 1px solid #eee;
-    // margin: 0 10px;
-    
+    text-align: end;  
 }
 
 .preview-facebook-text .preview-header .fb-logo i{
@@ -457,23 +266,17 @@
 }
 .preview-facebook .preview-club{
     position: relative;
-    // padding: 0px 9px;
     padding: 5px 22px 13px 22px;
     color: #999;
-    text-align: end;
-    // border-top: 1px solid #eee;
-    // margin: 0 10px;
-    
+    text-align: end; 
 }
+
 .preview-facebook .preview-club-tt{
     position: relative;
-    // padding: 13px 22px;
     padding: 5px 22px 13px 22px;
     color: #999;
     text-align: end;
-    // border-top: 1px solid #eee;
-    // margin: 0 10px;
-    margin-top: 10px;
+     margin-top: 10px;
 }
 .preview-facebook .preview-tt{
   
@@ -515,31 +318,10 @@
     padding: 7px 22px;
     color: #999;
     text-align: end;
-    // border-top: 1px solid #eee;
-    // margin: 0 10px;
     margin-top: 10px;
 }
 
 
-.facebook-icon{
-    //background-image: url(../img/facebook-icon.png);
-    background-repeat: no-repeat;
-    width: 18px;
-    height: 18px;
-    display: inline-block;
-}
-
-.facebook-icon.like{
-    background-position: 0 0;
-}
-
-.facebook-icon.comment{
-    background-position: 0 -22px;
-}
-
-.facebook-icon.share{
-    background-position: 0 -42px;
-}
 
 
 // post css
@@ -619,7 +401,6 @@
     border-top: 1px solid #eee;
     padding: 15px 15px;
     color: #999;
-//    background: url(/assets/media/svg/icons/General/Heart.svg) no-repeat 20px;
 }
 
 .preview-instagram-photo .preview-content .preview-comment-upper{
@@ -633,158 +414,9 @@
 .preview-instagram-photo .preview-content .preview-comment .icon-3dot {
     width: 23px;
     height: 5px;
- //   background: url(../img/icon-3dot.png) no-repeat;
     position: absolute;
     right: 20px;
     top: 22px;
-}
-
-.preview-instagram-story{
-   // background: #000 url(../img/instagram-logo.png) no-repeat center center;
-    height: 557px;
-    overflow: hidden;
-    position: relative;
-    z-index: 5;
-    max-width: 350px;
-    margin: auto;
-}
-
-.preview-instagram-story video{
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: auto;
-    height: 100%;
-    -webkit-transform: translate(-50%, -50%);
-    -moz-transform: translate(-50%, -50%);
-    -ms-transform: translate(-50%, -50%);
-    -o-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
-}
-
-.preview-instagram-story .preview-media{
-    height: 100%;
-    background-size: cover;
-    background-position: center center;
-    overflow: hidden;
-    position: relative;
-}
-
-.preview-instagram-story .preview-media .item{
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center center;
-    transition: all 0.5s;
-    height: 100%;
-}
-
-.preview-instagram-carousel{
-    position: relative;
-    border: 1px solid #F3F6F9;
-}
-
-.preview-instagram-carousel .preview-content .user-info{
-    padding: 10px 20px;
-}
-
-.preview-instagram-carousel .preview-content .user-info img{
-    width: 30px;
-    margin-right: 5px;
-}
-
-.preview-instagram-carousel .owl-theme .owl-nav.disabled+.owl-dots {
-    margin-top: -35px;
-    position: relative;
-    z-index: 100;
-}
-
-.preview-instagram-carousel .owl-theme .owl-dots .owl-dot span{
-    background: transparent;
-    border: 1px solid #fff;
-}
-
-.preview-instagram-carousel .owl-theme .owl-dots .owl-dot.active span, 
-.preview-instagram-carousel .owl-theme .owl-dots .owl-dot:hover span {
-    background: #fff;
-}
-
-.preview-instagram-carousel .preview-content .preview-carousel{
-    display: block;
-    height: 368px;
-    background-size: cover;
-    background-color: #F3F6F9;
-}
-
-.preview-instagram-carousel .preview-content .preview-carousel .item{
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center center;
-    transition: all 0.5s;
-    height: 368px;
-}
-
-.preview-instagram-carousel .preview-content .preview-carousel video{
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: auto;
-    height: 100%;
-    -webkit-transform: translate(-50%, -50%);
-    -moz-transform: translate(-50%, -50%);
-    -ms-transform: translate(-50%, -50%);
-    -o-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
-}
-
-.preview-instagram-carousel .preview-content .preview-carousel .image{
-    height: 359px;
-    background-size: cover;
-    background-color: #F3F6F9;
-    background-position: center center;
-}
-
-.preview-instagram-carousel .preview-content .preview-carousel .carousel-control{
-    background: none;
-}
-
-.preview-instagram-carousel .preview-content .post-info,.preview-instagram-carousel .preview-content .caption{
-    padding: 10px 20px;
-}
-
-.preview-instagram-carousel .preview-content .post-info img,.preview-instagram-carousel .preview-content .caption img{
-    width: 15px;
-    position: relative;
-    top: -2px;
-}
-
-.preview-instagram-carousel .preview-content .line-no-text{
-    margin-bottom: 3px;
-    height: 13px;
-   // background: #F3F6F9;
-}
-
-.preview-instagram-carousel .preview-content .preview-comment{
-    position: relative;
-    border-top: 1px solid #F3F6F9;
-    padding: 15px 50px;
-    color: #999;
-    background: url(/assets/media/svg/icons/General/Heart.svg) no-repeat 20px;
-}
-
-
-.preview-instagram-carousel .preview-content .preview-comment .icon-3dot {
-    width: 23px;
-    height: 5px;
- //   background: url(../img/icon-3dot.png) no-repeat;
-    position: absolute;
-    right: 20px;
-    top: 22px;
-}
-
-.preview-instagram-carousel .carousel-indicators li{
-    margin: 0 2px;
-    width: 15px;
-    height: 15px;
 }
 
 .image-upload > input
