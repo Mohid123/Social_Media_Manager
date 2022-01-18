@@ -1,13 +1,11 @@
 import { ClubService } from './../../../../core/services/club.service';
 import { MainAuthService } from './../../../../core/services/auth.service';
-import { AuthService } from './../../../../modules/auth/_services/auth.service';
 import { Location } from '@angular/common';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { LayoutService } from '../../../../_metronic/core';
-import { Club } from 'src/app/core/models/club.model';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import * as CryptoJS from 'crypto-js';
 import { JoyrideService } from 'ngx-joyride';
 import { Subject } from 'rxjs';
@@ -46,8 +44,6 @@ export class AsideComponent implements OnInit, OnDestroy {
     private loc: Location,
     private _authService: MainAuthService,
     private modalService: NgbModal,
-    private router: Router,
-    private http: HttpClient,
     private joyrideService: JoyrideService) {
     this.clubService.SelectedClub$.pipe(takeUntil(this.destroy$)).subscribe(club => {
       this.selectedClub = club;
@@ -69,8 +65,6 @@ export class AsideComponent implements OnInit, OnDestroy {
      steps: ['firstStep', 'secondStep', 'thirdStep', 'fourthStep', 'fifthStep', 'sixthStep', 'seventhStep', 'eighthStep'],
     themeColor: '#1e1e2d',
     stepDefaultPosition: 'right',
-  
- 
    } // Your steps order
    
     );
@@ -112,12 +106,6 @@ export class AsideComponent implements OnInit, OnDestroy {
     url = `${sponsorPanelBaseUrl}/loading?value=${encoded}`;
     window.open(url)
   }
-
-
-  // decryptData(data) {
-  //   data = CryptoJS.AES.decrypt(data, 'secretkey123').toString(CryptoJS.enc.Utf8);;
-  //   console.log(data, 'decrypted');
-  // }
 
 
   openVerticallyCentered(content) {

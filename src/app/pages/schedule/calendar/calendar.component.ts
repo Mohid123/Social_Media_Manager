@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, ChangeDetectorRef, OnChanges, Output, EventEmitter } from '@angular/core';
 import { CalendarOptions } from '@fullcalendar/angular';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { scheduled } from 'rxjs';
+
 
 @Component({
   selector: 'app-calendar',
@@ -34,7 +34,6 @@ export class CalendarComponent implements OnInit {
   }
 
   ngOnChanges() {
-    // console.log('ngonchanges called')
     this.spinner.show()
     setTimeout(() => {
       this.calendarOptions.events = this.schedules;

@@ -1,5 +1,5 @@
 import { ApiResponse } from '@app/core/models/response.model';
-import { filter, publish, take, takeUntil } from 'rxjs/operators';
+import { take, takeUntil } from 'rxjs/operators';
 import { ReportService } from './../../core/services/report.service';
 import { Report } from './../../core/models/report.model';
 import { MediauploadService } from './../../core/services/mediaupload.service';
@@ -8,18 +8,15 @@ import { FacebookService } from './../../core/services/facebook.service';
 import { ToastrService } from 'ngx-toastr';
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { NgxSpinnerService } from "ngx-spinner";
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { LoggedInUser } from '@app/core/models/logged-in-user.model';
 import { DatePickerOptions } from "@ngx-tiny/date-picker";
 import { TimePickerOptions } from "@ngx-tiny/time-picker/ngx-time-picker.options";
 import { combineLatest, Subject } from 'rxjs';
 import * as moment from 'moment';
-import { ScheduleClubPostService } from 'src/app/core/services/schedule/schedule_club_post.service';
 import { ScheduleService } from './../../core/services/schedule.service';
 import { ScheduleSocialPostService } from 'src/app/core/services/schedule/schedule-social-post.service';
 import { ClubService } from '@app/core/services/club.service';
 import { MergeService } from './../../core/services/merge-service.service';
-import { FacebookPostModel } from '@app/core/models/facebook-post.model';
 import { PublishedPosts } from '@app/core/models/response/published-posts.model';
 import { Media } from '@app/core/models/media-model';
 @Component({
@@ -113,6 +110,7 @@ export class FacebookComponent implements OnInit {
     this.multiples = [];
     this.url = null
     this.facebookCaption = '';
+    this.removeSlectedItems();
     this.cf.detectChanges();
   }
 
@@ -346,7 +344,6 @@ export class FacebookComponent implements OnInit {
           }
         }, error => {
           this.toast.error(error.message)
-          console.log(error)
           this._reportService.createReport(0, "", 'Facebook')
           this.condition = false;
 
@@ -458,7 +455,6 @@ export class FacebookComponent implements OnInit {
 
   scheduleImagePostForFB() {
     let selectedList = this.checkedList;
-
     if (!this.urls) {
       this.toast.error('Please select an Image File', 'Empty File');
       return;
@@ -481,7 +477,6 @@ export class FacebookComponent implements OnInit {
 
   scheduleVideoPostForFB() {
     let selectedList = this.checkedList;
-
     if (!this.file) {
       this.toast.error('Please select any Video File', 'Empty File');
       return;
@@ -491,7 +486,7 @@ export class FacebookComponent implements OnInit {
       return;
     }
     else if (this._scheduleService.validateScheduleDate(this.scheduleSelectedDate, this.scheduleSelectedTime)) {
-      this._scheduleSocialPostService.scheduleFacebookVideoPost(this.facebookCaption, this._scheduleService.getScheduleEpox, this.file, selectedList).then(()=>{
+       this._scheduleSocialPostService.scheduleFacebookVideoPost(this.facebookCaption, this._scheduleService.getScheduleEpox, this.file, selectedList).then(()=>{
         this.postedSuccessfully()
       })
     } 

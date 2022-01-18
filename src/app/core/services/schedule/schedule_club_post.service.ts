@@ -3,7 +3,6 @@ import { BaseClub } from './../../models/base-club.model';
 import { MainAuthService } from 'src/app/core/services/auth.service';
 import { ClubService } from './../club.service';
 import { Injectable } from '@angular/core';
-import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { Post } from '../../models/post.model';
 import { MediauploadService } from '../mediaupload.service';
@@ -32,7 +31,6 @@ export class ScheduleClubPostService {
     private clubService: ClubService,
     private _reportService: ReportService,
     private _postService: PostService,
-    private spinner: NgxSpinnerService,
     private toast: ToastrService,
     private mainAuthService: MainAuthService,
     private _videoService: VideoProcessingService,
@@ -194,7 +192,7 @@ export class ScheduleClubPostService {
             })
           },
           error=>{
-            console.log(error)
+            this.toast.error(error.message);
         })
       })
   }

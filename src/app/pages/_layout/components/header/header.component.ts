@@ -21,7 +21,6 @@ import KTLayoutHeader from '../../../../../assets/js/layout/base/header';
 import KTLayoutHeaderMenu from '../../../../../assets/js/layout/base/header-menu';
 import { KTUtil } from '../../../../../assets/js/components/util';
 import { Subscription, Observable, BehaviorSubject } from 'rxjs';
-import { JsonpClientBackend } from '@angular/common/http';
 import { ClubService } from './../../../../core/services/club.service';
 
 @Component({
@@ -135,10 +134,8 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
   setLiveStreamBit(bit){
-    this._clubService.changeLiveStreamBit(bit).subscribe(data=>{
-      // console.log(data);
-    })
-    // console.log(bit)
+    this._clubService.changeLiveStreamBit(bit).subscribe(data=>{})
+  
   }
 
   getLiveStreamBit(){
@@ -146,7 +143,6 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
     if(club.id == '60a1f5fb764e4033cc10f7d5'){
       this.showLiveStream = true;
       this._clubService.getLiveStreamBit().subscribe((res: ApiResponse<any>)=>{
-        // console.log(data)
         if(!res.hasErrors()) {
           this.toggleBtn = res.data.liveStreamBit;
           this.cf.detectChanges();

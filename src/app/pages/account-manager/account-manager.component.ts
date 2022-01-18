@@ -1,5 +1,5 @@
 import { ApiResponse } from '@app/core/models/response.model';
-import { ToastrModule, ToastrService } from "ngx-toastr";
+import { ToastrService } from "ngx-toastr";
 import { Observable, Subject } from "rxjs";
 import { MainAuthService } from "./../../core/services/auth.service";
 import { UsersService } from "./../../core/services/users.service";
@@ -12,9 +12,7 @@ import {
   SocialAuthService,
   SocialUser,
 } from "angularx-social-login";
-import { NgxSpinnerService } from "ngx-spinner";
 import { LoggedInUser } from "@app/core/models/logged-in-user.model";
-import { ExtrasModule } from './../../_metronic/partials/layout/extras/extras.module';
 import { ChangeDetectorRef } from "@angular/core";
 import { ClubService } from './../../core/services/club.service';
 import { Club } from './../../core/models/club.model';
@@ -44,7 +42,6 @@ export class AccountManagerComponent implements OnInit {
   public userExisitngFacebookPages: any[] = []
 
   constructor(
-    private spinner: NgxSpinnerService,
     private authService: SocialAuthService,
     private _facebookService: FacebookService,
     private _profileService: UsersService,
@@ -199,7 +196,7 @@ export class AccountManagerComponent implements OnInit {
     total = [...existingPages, ...newPages]
     uniqueFacebookPages = total.filter((value, idx, mock) => mock.findIndex((x) => x.pageID === value.pageID) === idx);
     this.club.FBPages = uniqueFacebookPages
-    console.log(uniqueFacebookPages)
+  
   }
 
   signOutOfClub() {
@@ -210,9 +207,7 @@ export class AccountManagerComponent implements OnInit {
     localStorage.setItem(club , JSON.stringify(club))
     if(club.pickerClub){
       club.pickerClubId =  this.selectedClub.id
-      this._pickerClubService.updatePickerClub(club).subscribe(data=>{
-        console.log(data ,'data')
-      }, err=>{console.log(err)})
+      this._pickerClubService.updatePickerClub(club).subscribe(data=>{}, err=>{console.log(err)})
       return;
     }
     this._clubService.updateClub(club).subscribe(data => {

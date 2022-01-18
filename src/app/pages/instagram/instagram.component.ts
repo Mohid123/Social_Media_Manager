@@ -107,6 +107,7 @@ export class InstagramComponent implements OnInit {
     this.urls = [];
     this.multiples = [];
     this.removeSlectedItems();
+  
     this.cf.detectChanges();
     this.clicked = false;
    }
@@ -207,7 +208,6 @@ export class InstagramComponent implements OnInit {
     return this._instagramService.getPublishedPostsForIG(IGaccountID, FBpageaccessToken).pipe(take(1)).subscribe((res: ApiResponse<PublishedPosts>) => {
       if(!res.hasErrors()) {
         this.recentPosts = res.data.data;
-        console.log('this.recentPosts:',this.recentPosts);
         this.cf.detectChanges();
       }
     })
@@ -385,13 +385,14 @@ export class InstagramComponent implements OnInit {
     this.url = ""
     this.instaCaption = ""
     this.showSchedule = false;
+    this.multiples= [];
+    this.urls = [];
     this.removeSlectedItems();
     this.cf.detectChanges();
   }
 
   scheduleInstagramImagePost() {
     let selectedList = this.checkedList;
-    console.log(selectedList)
     if (!this.urls) {
       this.toast.error('Please select any Image File', 'Empty File');
       return;
@@ -417,9 +418,7 @@ export class InstagramComponent implements OnInit {
   }
 
   scheduleInstagramVideoPost() {
-    ;
     let selectedList = this.checkedList;
-    // console.log(selectedList)
     if (!this.file) {
       this.toast.error('Please select any Video File', 'Empty File');
       return;

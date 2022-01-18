@@ -1,16 +1,12 @@
 import { MainAuthService } from 'src/app/core/services/auth.service';
 import { Injectable, EventEmitter } from '@angular/core';
-import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { ReportService } from 'src/app/core/services/report.service';
 import { PostService } from './../post.service';
 import { Post } from '../../models/post.model';
-import { PipeResolver } from '@angular/compiler';
-import { environment } from 'src/environments/environment';
 import { MediauploadService } from './../mediaupload.service';
 import { VideoProcessingService } from '../video-service/video-processing.service';
 import { Media } from '../../models/media-model';
-import { locale } from './../../../modules/i18n/vocabs/jp';
 import { ApiResponse } from '@app/core/models/response.model';
 import { Observable, combineLatest } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
@@ -23,7 +19,6 @@ export class ClubpostService {
   public postedSuccessfully: EventEmitter<any> = new EventEmitter();
   constructor(private _reportService: ReportService,
     private _postService: PostService,
-    private spinner: NgxSpinnerService,
     private toast: ToastrService,
     private mainAuthService: MainAuthService,
     private _videoService: VideoProcessingService,
@@ -174,7 +169,7 @@ export class ClubpostService {
           this._reportService.createReport(0, "", postedTo);
         })
     }, error=>{
-      console.log(error)
+      this.toast.error(error.message);
     })
     })
   }
