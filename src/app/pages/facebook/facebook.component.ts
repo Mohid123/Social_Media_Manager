@@ -1,5 +1,5 @@
 import { ApiResponse } from '@app/core/models/response.model';
-import { take, takeUntil } from 'rxjs/operators';
+import { map, take, takeUntil } from 'rxjs/operators';
 import { ReportService } from './../../core/services/report.service';
 import { Report } from './../../core/models/report.model';
 import { MediauploadService } from './../../core/services/mediaupload.service';
@@ -19,6 +19,7 @@ import { ClubService } from '@app/core/services/club.service';
 import { MergeService } from './../../core/services/merge-service.service';
 import { PublishedPosts } from '@app/core/models/response/published-posts.model';
 import { Media } from '@app/core/models/media-model';
+import { SingelPost } from '@app/core/models/response/singel-post.model';
 @Component({
   selector: 'app-facebook',
   templateUrl: './facebook.component.html',
@@ -177,7 +178,8 @@ export class FacebookComponent implements OnInit {
   getSignedInUser() {
     let callsList = []
     let totalPosts;
-    this._authService.getSignedInUser().subscribe((userRes:ApiResponse<any>) => {
+    this._authService.getSignedInUser().subscribe((userRes:ApiResponse<LoggedInUser>) => {
+      console.log('userRes:',userRes);
       if (!userRes.hasErrors()) {
         this.signedInUser = userRes.data;
         if (userRes.data?.FBPages?.length == 0 || !userRes.data?.FBPages) {
@@ -190,7 +192,15 @@ export class FacebookComponent implements OnInit {
             res.data.data.forEach((item, idx, self) => {
               callsList.push(this._facebookService.getSinglePagePost(item.id, userRes.data.FBPages[i].pageAccessToken));
               if (idx == self.length - 1) {
-                combineLatest(callsList).subscribe(facebookPosts => {
+                combineLatest(callsList).pipe(map((facebookPosts:ApiResponse<SingelPost>[]) => {
+                  let posts:SingelPost = []
+                  facebookPosts.forEach((post:ApiResponse<SingelPost>) => {
+                    if(!post.hasErrors()) {
+                      posts.push(post.data);
+                    }
+                  })
+                  return posts
+                })).subscribe((facebookPosts:SingelPost[]) => {
                   facebookPosts.map((singleItem: any) => {
                     singleItem.created_time = moment(singleItem.created_time).fromNow()
                     singleItem.pageName = userRes.data.FBPages[i].pageName
