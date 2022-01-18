@@ -973,14 +973,16 @@
                                                     border-radius: 50px;" [src]="profileImageUrl">
                                                     <span><b>{{userName}}</b></span>
                                                 </div>
-                                                <div class="preview-media" data-max-image="1"><img logo #logo
+                                                <div class="preview-media" data-max-image="1">
+                                                    <ng-container *ngFor="let multiple of multiples">
+                                                    <img logo #logo
                                                         (load)="onSelectedImageLoad()" style="object-fit: contain;
                                                         margin-right: auto;
                                                         margin-left: auto;
                                                         height: 100%;
                                                         width: 100%;
-                                                        display: block;" class="img-circle" [src]=url
-                                                        *ngIf="format==='image' && url">
+                                                        display: block;" class="img-circle" [src]=multiple>
+                                                    </ng-container> 
                                                 </div>
                                                 <div class="caption" style="white-space: pre-wrap;text-align: justify;">
                                                     <div>{{socialCaption}}</div>
