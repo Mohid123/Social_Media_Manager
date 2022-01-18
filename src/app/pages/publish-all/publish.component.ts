@@ -152,15 +152,15 @@ export class PublishComponent implements OnInit {
             this.cf.detectChanges();
           })
           this.facebookPages.forEach(item => {
-            this.getIGAccountDetails(item.pageID, item.pageAccessToken).subscribe((account: any) => {
-              if (account.hasOwnProperty('instagram_business_account')) {
-                account.isSelected = false;
-                account.igProfileName = 'Instagram Account'
-                account.name = 'Instagram Account'
-                account.linkedFbPagetoken = item.pageAccessToken
-                account.captureImageURL = this.instagramProfileUrl;
-                this.checklist.push(account);
-                this.tempList.push(account);
+            this.getIGAccountDetails(item.pageID, item.pageAccessToken).subscribe((res: ApiResponse<InstagramPostModel>) => {
+              if (res.data.hasOwnProperty('instagram_business_account')) {
+                res.data.isSelected = false;
+                res.data.igProfileName = 'Instagram Account'
+                res.data.name = 'Instagram Account'
+                res.data.linkedFbPagetoken = item.pageAccessToken
+                res.data.captureImageURL = this.instagramProfileUrl;
+                this.checklist.push(res.data);
+                this.tempList.push(res.data);
                 this.cf.detectChanges()
               }
             })
