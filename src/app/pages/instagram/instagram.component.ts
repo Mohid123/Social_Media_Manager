@@ -471,8 +471,6 @@ export class InstagramComponent implements OnInit {
             }
           };
         }
-      } else {
-        this.toast.error("No More than 4 images", "Upload Images");
       }
     } else {
       //Single Image for gen4 = false
@@ -500,6 +498,9 @@ export class InstagramComponent implements OnInit {
     }
   }
 
+  onClick(event) {
+    event.target.value=''
+}
 
   onSelectVideo(event) {
     this.file = event.target.files && event.target.files[0];

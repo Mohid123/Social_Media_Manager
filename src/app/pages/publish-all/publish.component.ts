@@ -109,6 +109,7 @@ export class PublishComponent implements OnInit {
   }
 
   clear() {
+    debugger
     this.socialCaption = "";
     this.file = null;
     this.urls = [];
@@ -287,6 +288,10 @@ export class PublishComponent implements OnInit {
     }
   }
 
+  onClick(event) {
+    event.target.value=''
+}
+
   onSelectedImageLoad() {
     const width = (this.logo.nativeElement as HTMLImageElement).naturalWidth
     const height = (this.logo.nativeElement as HTMLImageElement).naturalHeight
@@ -322,8 +327,8 @@ export class PublishComponent implements OnInit {
             // If multple events are fired by user
             if (this.multiples.length > 4) {
               // If multple events are fired by user
-              this.multiples.pop();
-              this.urls.pop();
+              this.multiples = [];
+              this.urls = [];
               this.cf.detectChanges();
               this.toast.error(
                 "Max Number of Selected Files reached",
@@ -332,8 +337,6 @@ export class PublishComponent implements OnInit {
             }
           };
         }
-      } else {
-        this.toast.error("No More than 4 images", "Upload Images");
       }
     } else {
       //Single Image for gen4 = false
@@ -348,8 +351,8 @@ export class PublishComponent implements OnInit {
             this.multiples.push(this.url);
             this.cf.detectChanges();
             if (this.multiples.length > 1) {
-              this.multiples.pop();
-              this.urls.pop();
+              this.multiples = [];
+              this.urls = [];
               this.cf.detectChanges();
               this.toast.error("Only one Image is allowed", "Upload Images");
             }

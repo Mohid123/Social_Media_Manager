@@ -257,7 +257,7 @@
                                 </div>
                               </label>
                               <input id="file-input" type="file" accept="image/*" name="myfile"
-                                (change)="onSelectFile($event)" multiple/>
+                                (change)="onSelectFile($event)" (click)="onClick($event)"  multiple/>
                             </div>
                           </div>
                         </div>

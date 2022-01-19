@@ -1,9 +1,6 @@
 import { ApiResponse } from '@app/core/models/response.model';
-import { filter, map, takeUntil } from "rxjs/operators";
-import { ReportService } from "./../../core/services/report.service";
+import {  takeUntil } from "rxjs/operators";
 import { ClubService } from "./../../core/services/club.service";
-import { BaseModel } from "./../../_metronic/shared/crud-table/models/base.model";
-import { VideoProcessingService } from "./../../core/services/video-service/video-processing.service";
 import { MediauploadService } from "./../../core/services/mediaupload.service";
 import { PostService } from "./../../core/services/post.service";
 import { NgbModal, ModalDismissReasons } from "@ng-bootstrap/ng-bootstrap";
@@ -12,7 +9,6 @@ import {
   Component,
   OnInit,
   ChangeDetectorRef,
-  AfterViewInit,
   ElementRef,
   ViewChild
 } from "@angular/core";
@@ -31,6 +27,7 @@ import { ScheduleClubPostService } from "../../core/services/schedule/schedule_c
 import { ScheduleService } from "./../../core/services/schedule.service";
 import { DomSanitizer } from "@angular/platform-browser";
 import { Subject } from 'rxjs';
+import { BaseURL } from './../../core/models/base-urls';
 
 @Component({
   selector: "app-teamtalkers",
@@ -437,7 +434,7 @@ export class TeamtalkersComponent implements OnInit {
     let obj = {
       baseUrl: club.baseURL
     };
-    if (this.mergeService.gen4 == true && (obj.baseUrl == 'https://dividisapi.teamtalkers.com/api/v1/en' || obj.baseUrl == 'https://api.solissol.com/api/v1/en')) {
+    if (obj.baseUrl == BaseURL.baseURL[2] || obj.baseUrl == BaseURL.baseURL[0]) {
       //Multiple Images for gen4 = true
       if (this.file > 0 && this.file < 5) {
         let i: number = 0;
@@ -457,15 +454,16 @@ export class TeamtalkersComponent implements OnInit {
               this.multiples.pop();
               this.urls.pop();
               this.cf.detectChanges();
-              this.toast.error(
+              this.toast.warning(
                 "Max Number of Selected Files reached",
                 "Upload Images"
               );
             }
           };
         }
-      } else {
-        this.toast.error("No More than 4 images", "Upload Images");
+      }
+      else {
+        this.toast.warning("Please select upto 4 images.", "Upload Images");
       }
     } else {
       //Single Image for gen4 = false
@@ -492,6 +490,10 @@ export class TeamtalkersComponent implements OnInit {
       }
     }
   }
+
+  onClick(event) {
+    event.target.value=''
+}
 
   onSelectVideo(event) {
     let fileSize;

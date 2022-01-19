@@ -193,7 +193,7 @@ export class FacebookComponent implements OnInit {
               callsList.push(this._facebookService.getSinglePagePost(item.id, userRes.data.FBPages[i].pageAccessToken));
               if (idx == self.length - 1) {
                 combineLatest(callsList).pipe(map((facebookPosts:ApiResponse<SingelPost>[]) => {
-                  let posts:SingelPost = []
+                  let posts:any = []
                   facebookPosts.forEach((post:ApiResponse<SingelPost>) => {
                     if(!post.hasErrors()) {
                       posts.push(post.data);
@@ -314,6 +314,10 @@ export class FacebookComponent implements OnInit {
       }
     }
   }
+
+  onClick(event) {
+    event.target.value=''
+}
 
   onSelectVideo(event): void {
     this.file = event.target.files && event.target.files[0];
