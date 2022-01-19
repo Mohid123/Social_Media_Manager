@@ -20,6 +20,7 @@ import { PublishedPosts } from '@app/core/models/response/published-posts.model'
 import { Subject } from 'rxjs';
 import { MergeService } from 'src/app/core/services/merge-service.service';
 import { Media } from '@app/core/models/media-model';
+import { BaseURL } from './../../core/models/base-urls';
 
 @Component({
   selector: 'app-instagram',
@@ -442,9 +443,9 @@ export class InstagramComponent implements OnInit {
     this.file = event.target.files && event.target.files.length;
     let club = this._clubService.selectedClub;
     let obj = {
-      clubName: club.clubName
+      baseUrl: club.baseURL
     };
-    if (this.mergeService.gen4 == true && (obj.clubName == 'Dividis Tribe' || obj.clubName == 'Solis Solution' || obj.clubName == 'Solissol')) {
+    if (obj.baseUrl == BaseURL.baseURL[2] || obj.baseUrl == BaseURL.baseURL[0]) {
       //Multiple Images for gen4 = true
       if (this.file > 0 && this.file < 5) {
         let i: number = 0;

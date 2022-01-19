@@ -17,6 +17,8 @@ import { ApiResponse } from '@app/core/models/response.model';
 import { Subject } from 'rxjs';
 import { Media } from './../../core/models/media-model';
 import { InstagramPostModel } from './../../core/models/instagram-post.model';
+import { BaseURL } from './../../core/models/base-urls';
+
 @Component({
   selector: 'app-publish',
   templateUrl: './publish.component.html',
@@ -308,9 +310,9 @@ export class PublishComponent implements OnInit {
     this.file = event.target.files && event.target.files.length;
     let club = this._clubService.selectedClub;
     let obj = {
-      clubName: club.clubName
+      baseUrl: club.baseURL
     };
-    if (this.mergeService.gen4 == true && (obj.clubName == 'Dividis Tribe' || obj.clubName == 'Solis Solution' || obj.clubName == 'Solissol')) {
+    if (obj.baseUrl == BaseURL.baseURL[2] || obj.baseUrl == BaseURL.baseURL[0]) {
       //Multiple Images for gen4 = true
       if (this.file > 0 && this.file < 5) {
         let i: number = 0;
