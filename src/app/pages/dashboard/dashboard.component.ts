@@ -25,6 +25,9 @@ import { ApiResponse } from '@app/core/models/response.model';
 import { Report } from '@app/core/models/report.model';
 import { Club } from './../../core/models/club.model';
 import { takeUntil } from 'rxjs/operators';
+import { UserManagement } from 'src/app/core/services/user-management.service';
+import { off } from 'process';
+import { User } from './../../core/models/user.model';
 
 
 
@@ -59,6 +62,8 @@ export class DashboardComponent implements OnInit {
   public instagramStats: any;
   public clubStats: any;
   public latestReports: any = [];
+  offset: number = 0;
+  limit: number = 20;
   public signedInuserID: string;
   public facebookStatistics: any = [0, 0, 0, 0, 0, 0, 0, 0];
   public instagramStatistics: any = [0, 0, 0, 0, 0, 0, 0, 0];
@@ -73,7 +78,8 @@ export class DashboardComponent implements OnInit {
     private cf: ChangeDetectorRef,
     private mainAuthService: MainAuthService,
     private modalService: NgbModal,
-    private asideComponent: AsideComponent
+    private asideComponent: AsideComponent,
+    private user: UserManagement
   ) {}
 
   ngOnInit() {
@@ -82,7 +88,16 @@ export class DashboardComponent implements OnInit {
     this.getSignedInUserStats()
     this.getLastSevenDaysStats()
     this.showAppTour()
+    this.getAllUsers(this.offset, this.limit);
     this.spinner.show()
+  }
+
+  getAllUsers(offset, limit) {
+    this.user.getAllUsers(offset, limit).subscribe((res: ApiResponse<User>) => {
+      if(!res.hasErrors()) {
+        console.log(res.data);
+      }
+    })
   }
 
 
