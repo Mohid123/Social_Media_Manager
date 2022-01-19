@@ -54,6 +54,7 @@ import { FeedbackComponent } from './help/feedback.component';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 import { JoyrideModule } from 'ngx-joyride';
 import { NgImageSliderModule } from 'ng-image-slider';
+import { UserMgtComponent } from './user-mgt/user-mgt.component';
 
 FullCalendarModule.registerPlugins([ 
   dayGridPlugin,
@@ -92,7 +93,8 @@ FullCalendarModule.registerPlugins([
     ScheduleComponent,
     CalendarComponent,
     FeedbackComponent,
-    AppSpinner
+    AppSpinner,
+    UserMgtComponent
 
   
   ],

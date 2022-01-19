@@ -12,6 +12,7 @@ import { NewsfeedComponent } from './newsfeed/newsfeed.component';
 import { PublishComponent } from './publish-all/publish.component';
 import { ScheduleComponent } from './schedule/schedule.component';
 import { TeamtalkersComponent } from './teamtalkers/teamtalkers.component';
+import { UserMgtComponent } from './user-mgt/user-mgt.component';
 import { LayoutComponent } from './_layout/layout.component';
 
 const routes: Routes = [
@@ -68,6 +69,10 @@ const routes: Routes = [
         component: FeedbackComponent 
       },
       {
+        path: 'user-management', 
+        component: UserMgtComponent 
+      },
+      {
         path: 'dashboard',
         loadChildren: () =>
           import('./dashboard/dashboard.module').then((m) => m.DashboardModule),
@@ -92,6 +97,7 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule],
+ 
+exports: [RouterModule],
 })
 export class PagesRoutingModule { }
