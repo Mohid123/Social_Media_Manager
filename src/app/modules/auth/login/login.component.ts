@@ -18,7 +18,7 @@ import { constants } from 'src/app/app.constants';
 import { take } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { JoyrideService } from 'ngx-joyride';
-import { AuthRequest } from '@app/core/models/requests/auth-request.model';
+import { AuthRequest } from 'src/app/core/models/requests/auth-request.model';
 
 
 @Component({
