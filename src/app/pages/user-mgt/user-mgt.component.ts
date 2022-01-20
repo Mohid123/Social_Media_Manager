@@ -24,7 +24,8 @@ export class UserMgtComponent implements OnInit {
     fullName: "",
     password: "",
     phoneNo: "",
-    DOB: new Date
+    DOB: new Date,
+    admin: false
   };
   Gender: string[] = ["Male", "Female", "Other"];
   public url: any;
@@ -111,6 +112,9 @@ export class UserMgtComponent implements OnInit {
       ],
       profilePicURL: [
         this.defaultUser.profilePicURL
+      ],
+      isAdmin: [
+        this.defaultUser.admin
       ]
     });
   }
@@ -124,9 +128,11 @@ export class UserMgtComponent implements OnInit {
       phoneNo: this.userForm.value.phone,
       DOB: this.userForm.value.DOB,
       gender: this.userForm.value.gender,
+      admin: this.userForm.value.isAdmin,
       profilePicURL: 'https://api.solissol.com/api/v1/en/media-upload/mediaFiles/profilepics/0I7KH97u1JOpUAEfpfA7lc7oyhD2/86771a2591c445395929d5e938cef6b7.png'
     }
     this.userMgt.createUser(payload).pipe(takeUntil(this.destroy$)).subscribe((res: ApiResponse<User>) => {
+      debugger
       if(payload.username == '' || payload.fullName == '' || payload.gender == '' || payload.phoneNo == '' || payload.password == '' || payload.email == '') {
         this.toastr.error('Please Fill in all fields', 'Create User');
         return;
@@ -143,7 +149,7 @@ export class UserMgtComponent implements OnInit {
   }
 
   resetUserForm() {
-    this.userForm.reset(this.userForm.value);
+    this.userForm.reset();
     this.defaultUser = new User();
     this.url = ""
   }
