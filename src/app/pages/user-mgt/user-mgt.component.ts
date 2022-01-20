@@ -7,6 +7,9 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { User } from 'src/app/core/models/user.model';
+import { UserList } from './../../core/models/userlist.model';
+import { environment } from '@environments/environment';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'user-management',
@@ -26,25 +29,31 @@ export class UserMgtComponent implements OnInit {
   Gender: string[] = ["Male", "Female", "Other"];
   public url: any;
   mediaFile: any;
-  users: User;
   userForm: FormGroup;
   public offset: number = 0;
-  public limit: number = 12;
   closeResult: string;
   modalReference: any;
+  public isLoading:boolean;
+  public users: UserList;
+  public limit: number = environment.limit;
+  public userLimit = environment.limit ;
+  public searchValue = '';
+  public page:number;
 
   constructor(
     public userMgt : UserManagement,
     public cf: ChangeDetectorRef,
     private modalService: NgbModal,
     private toastr: ToastrService,
-    private fb: FormBuilder)
+    private fb: FormBuilder,
+    private spinner: NgxSpinnerService)
     {
-      this.users = new User()
+      this.page = 1;
+      this.isLoading = false;
+      this.getUsers()
     }
 
   ngOnInit(): void {
-    this.getUsers(this.offset, this.limit);
     this.initUserForm();
   }
 
@@ -139,12 +148,59 @@ export class UserMgtComponent implements OnInit {
     this.url = ""
   }
 
-  getUsers(limit, offset){
-    this.userMgt.getAllUsers(limit, offset).pipe(distinctUntilChanged(),takeUntil(this.destroy$)).subscribe((res: ApiResponse<User>)=>{
-     if(!res.hasErrors()){
+  getUsers(){
+    if (this.isLoading) return
+    this.isLoading = true;
+    this.userMgt.getAllUsers(this.page).pipe(distinctUntilChanged(),takeUntil(this.destroy$)).subscribe((res: ApiResponse<UserList>)=>{
+      if(!res.hasErrors()){
        this.users = res.data;
-       console.log(this.users);
+       console.log(this.users)
        this.cf.detectChanges();
+      }
+      this.isLoading = false;
+    })
+  }
+
+  searchUser(){
+    if(this.isLoading) return
+    this.isLoading = true;
+    this.userMgt.searchUser(this.page, this.searchValue).pipe(distinctUntilChanged(),takeUntil(this.destroy$)).subscribe((res: ApiResponse<UserList>)=>{
+      if(!res.hasErrors()){
+       this.users = res.data;
+       console.log(this.users)
+       this.cf.detectChanges();
+      }
+      this.isLoading = false;
+    })
+  }
+
+  search(searchValue) {
+    this.searchValue = searchValue;
+    this.page = 1;
+    this.searchUser();
+  }
+
+  deleteUser(user){
+    this.spinner.show();
+    this.userMgt.deleteProfileByID(user.id).subscribe(res=>{
+      if(!res.hasErrors()){
+        this.cf.detectChanges();
+        console.log('user deleted ', res)
+        setTimeout(() => {
+          this.spinner.hide();
+          this.toastr.success('User successfully deleted.', 'Success!');
+          this.getUsers();
+        })
+      }
+      
+    })
+  }
+
+  blockUser(user){
+    this.userMgt.blockUser(user.userID).subscribe(res=>{
+      if(!res.hasErrors()){
+        console.log(res)
+        // this.getUsers(this.limit, this.offset);
       }
     })
   }
@@ -185,6 +241,16 @@ export class UserMgtComponent implements OnInit {
     } else {
       return `with: ${reason}`;
     }
+  }
+
+  next():void {
+    this.page++;
+    this.getUsers();
+  }
+
+  previous():void {
+    this.page--;
+    this.getUsers();
   }
 
   ngOnDestroy(): void {
