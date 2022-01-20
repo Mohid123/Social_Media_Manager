@@ -15,7 +15,7 @@
                 </h3>
                     </div>
                      <div class="card-title">
-                        <a href="/metronic/demo1/custom/apps/user/add-user.html" class="btn btn-light-primary font-weight-bold ml-2">+ Add User</a>
+                        <a src="/metronic/demo1/custom/apps/user/add-user.html" (click)="openVerticallyCentered(content)" class="btn btn-light-primary font-weight-bold ml-2">+ Add User</a>
                      </div>
             </div>
                 
@@ -132,8 +132,151 @@
                             <!--end:: Pagination-->
                         </div>
                     </div>
+
+               
                     <!--end::Pagination-->
                 </div>
+
+
+                <!--MODAL-->
+                <div class="example-preview ">
+                    <ng-template #content let-c="close" let-d="dismiss">
+                      <div class="modal-header d-flex justify-content-center" style="background-color: #1e1e2d;">
+                        <h4 class="modal-title" style="color: #fff;">Create New User</h4>
+                        <button type="button" class="close ml-auto" aria-label="Close" (click)="d('Cross click')"> <i
+                            class="ki ki-bold-close icon-sm" style="color:rgba(255, 255, 255, 0.877)"></i>
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body d-flex justify-content-center p-0">
+                        <div class="card card-custom card-stretch w-100">
+                            <!--begin::Header-->
+                            <div class="card-header py-3">
+                                <div class="card-title align-items-start flex-column">
+                                    <h3 class="card-label font-weight-bolder text-dark">User Information</h3>
+                                    <span class="text-muted font-weight-bold font-size-sm mt-1">Please fill in the form to create user</span>
+                                </div>
+                            </div>
+                            <!--end::Header-->
+                            <!--begin::Form-->
+                            <form class="form">
+                                <!--begin::Body-->
+                                <div class="card-body">
+                                    <div class="row">
+                                        <label class="col-xl-3"></label>
+                                        <div class="col-lg-9 col-xl-6">
+                                            <h5 class="font-weight-bold mb-6">User Info</h5>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-xl-3 col-lg-3 col-form-label">Profile Picture</label>
+                                        <div class="col-lg-9 col-xl-6">
+                                            <div class="image-input image-input-outline image-input-changed" id="kt_profile_avatar" style="background-image: url(/metronic/theme/html/demo1/dist/assets/media/users/blank.png)">
+                                                <div class="image-input-wrapper" style="background-image: url(&quot;data:image/jpeg;base64,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&quot;);"></div>
+                                                <label class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="change" data-toggle="tooltip" title="" data-original-title="Change avatar">
+                                                    <i class="fa fa-pen icon-sm text-muted"></i>
+                                                    <input type="file" name="profile_avatar" accept=".png, .jpg, .jpeg">
+                                                    <input type="hidden" name="profile_avatar_remove" value="1">
+                                                </label>
+                                                <span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="cancel" data-toggle="tooltip" title="" data-original-title="Cancel avatar">
+                                                    <i class="ki ki-bold-close icon-xs text-muted"></i>
+                                                </span>
+                                                <span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="remove" data-toggle="tooltip" title="" data-original-title="Remove avatar">
+                                                    <i class="ki ki-bold-close icon-xs text-muted"></i>
+                                                </span>
+                                            </div>
+                                            <span class="form-text text-muted">Allowed file types: png, jpg, jpeg.</span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-xl-3 col-lg-3 col-form-label">Full Name</label>
+                                        <div class="col-lg-9 col-xl-6">
+                                            <input class="form-control form-control-lg form-control-solid" type="text" value="Nick">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-xl-3 col-lg-3 col-form-label">Username</label>
+                                        <div class="col-lg-9 col-xl-6">
+                                            <input class="form-control form-control-lg form-control-solid" type="text" value="Bold">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-xl-3 col-lg-3 col-form-label">Password</label>
+                                        <div class="col-lg-9 col-xl-6">
+                                            <input class="form-control form-control-lg form-control-solid" type="password">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-xl-3 col-lg-3 col-form-label" for="exampleSelect1">Select <span
+                                                class="text-danger">*</span></label>
+                                           
+                                        <div class="col-lg-9 col-xl-6">
+                                            <select  class="custom-select form-control form-control-lg form-control-solid" formControlName="type">
+                                                <option disabled>Type</option>
+                                                <option>Male</option>
+                                                <option>Female</option>
+                                                <option>Other</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <label class="col-xl-3"></label>
+                                        <div class="col-lg-9 col-xl-6">
+                                            <h5 class="font-weight-bold mt-10 mb-6">Contact Info</h5>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-xl-3 col-lg-3 col-form-label">Contact Phone</label>
+                                        <div class="col-lg-9 col-xl-6">
+                                            <div class="input-group input-group-lg input-group-solid">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">
+                                                        <i class="fas fa-phone-alt text-primary"></i>
+                                                    </span>
+                                                </div>
+                                                <input type="text" class="form-control form-control-lg form-control-solid" value="+35278953712" placeholder="Phone">
+                                            </div>
+                                            <span class="form-text text-muted">We'll never share your email with anyone else.</span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-xl-3 col-lg-3 col-form-label">Email Address</label>
+                                        <div class="col-lg-9 col-xl-6">
+                                            <div class="input-group input-group-lg input-group-solid">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">
+                                                        <i class="fa fa-envelope-open-text text-primary"></i>
+                                                    </span>
+                                                </div>
+                                                <input type="text" class="form-control form-control-lg form-control-solid" value="nick.bold@loop.com" placeholder="Email">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-xl-3 col-lg-3 col-form-label">DOB</label>
+                                        <div class="col-lg-9 col-xl-6">
+                                            <div class="input-group input-group-lg input-group-solid">
+                                                <input type="text" class="form-control form-control-lg form-control-solid" placeholder="Username" value="loop">
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text">.com</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--end::Body-->
+                            </form>
+                            <!--end::Form-->
+                        </div>
+                      </div>
+                      <div class="modal-footer d-flex justify-content-center">
+                        <button type="reset" class="btn btn-primary mr-2">Save Changes</button>
+                        <button type="button" class="btn btn-secondary" (click)="c('Close click')">Cancel</button>
+                    </div>
+                    </ng-template>
+                  </div>
+
             </div>
         </div>
     </div>

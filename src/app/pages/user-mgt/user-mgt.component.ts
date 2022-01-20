@@ -4,6 +4,7 @@ import { User } from './../../core/models/user.model';
 import { ApiResponse } from '@app/core/models/response.model';
 import { Subject } from 'rxjs';
 import { distinctUntilChanged, takeUntil } from 'rxjs/operators';
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'user-management',
@@ -15,8 +16,10 @@ export class UserMgtComponent implements OnInit {
   public users: User;
   public offset: number = 0;
   public limit: number = 12;
+  closeResult: string;
   constructor(public userMgt : UserManagement,
-    public cf: ChangeDetectorRef) { }
+    public cf: ChangeDetectorRef,
+    private modalService: NgbModal) { }
 
   ngOnInit(): void {
     this.getUsers(this.offset, this.limit)
@@ -30,6 +33,23 @@ export class UserMgtComponent implements OnInit {
        this.cf.detectChanges();
       }
     })
+  }
+
+  openVerticallyCentered(content) {
+    this.modalService.open(content, { centered: true, size: 'lg' }).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+  }
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return `with: ${reason}`;
+    }
   }
 
   ngOnDestroy(): void {
