@@ -18,49 +18,59 @@
                         <a src="/metronic/demo1/custom/apps/user/add-user.html" (click)="openVerticallyCentered(content)" class="btn btn-light-primary font-weight-bold ml-2">+ Add User</a>
                      </div>
             </div>
-                
-            </div>
+        </div>
             <div class="card-body" style="padding: 0;">
+                <div class="card card-custom mb-12">
+                    <div class="card-body rounded p-0 d-flex" style="background-color:#DAF0FD;">
+                        <div class="d-flex flex-column flex-lg-row-auto w-auto w-lg-350px w-xl-450px w-xxl-500px p-md-10">
+                            <h1 class="font-weight-bolder text-dark">Search Users</h1>
+                            <div class="font-size-h4 mb-8">Search users by full name</div>
+                            <!--begin::Form-->
+                            <form class="d-flex flex-center py-2 px-6 bg-white rounded">
+                                <span class="svg-icon svg-icon-lg svg-icon-primary">
+                                    <img src="../../../assets/media/custom/search.svg"/>
+                                </span>
+                                <input type="text" (search)="search($event)"
+                                    class="form-control border-0 font-weight-bold pl-2"
+                                    placeholder="Search User">
+                            </form>
+                            <!--end::Form-->
+                        </div>
+                        <div class="d-none d-md-flex flex-row-fluid bgi-no-repeat bgi-position-y-center bgi-position-x-left bgi-size-cover"
+                            style="background-image: url(/assets/media/svg/play.svg); background-position: center right; background-size: contain;">
+                        </div>
+                    </div>
+                </div>
                 <div class="flex-row-lg-fluid ml-lg-8">
                     <!--begin::Row-->
                     <div class="row" >
                         <!--begin::Col-->
-                      
-                            <div class="col-xl-4" *ngFor="let user of users">
+                        <div class="col-xl-3" *ngFor="let user of users">
                                 <!--begin::Card-->
-                                <div  class="card card-custom gutter-b card-stretch">
+                                <div  class="card card-custom gutter-b card-stretch" style="border: 1px solid rgb(235, 235, 235)">
                                     <!--begin::Body-->
                                     <div  class="card-body pt-4 d-flex flex-column justify-content-between">
-                                     
                                         <!--begin::User-->
-                                        <div  class="d-flex align-items-center mb-7">
-                                            <!--begin::Pic-->
-                                            <div class="flex-shrink-0 mr-4 mt-lg-0 mt-3">
-                                                <div class="symbol symbol-lg-75">
-                                                    <ng-container *ngIf="user.profilePicURL">
-                                                        <img [src]="user.profilePicURL">
-                                                    </ng-container>
-                                                    <ng-container *ngIf="!user.profilePicURL;">
-                                                        <img src="../../../assets/media/users/avatar.png">
-                                                    </ng-container>
-                                                      
-                                                </div>
-                                                <div class="symbol symbol-lg-75 symbol-primary d-none">
-                                                    <span class="font-size-h3 font-weight-boldest">JM</span>
+                                        <div class="d-flex align-items-center mb-5">
+                                            <div class="symbol symbol-60 symbol-xxl-100 mr-5 align-self-start align-self-xxl-center">
+                                                <ng-container *ngIf="user.profilePicURL">
+                                                    <img [src]="user.profilePicURL">
+                                                </ng-container>
+                                                <ng-container *ngIf="!user.profilePicURL;">
+                                                    <img src="../../../assets/media/users/avatar.png">
+                                                </ng-container>
+                                                <i class="symbol-badge bg-success"></i>
+                                            </div>
+                                            <div>
+                                                <a class="font-weight-bolder font-size-h5 text-dark-75 text-hover-primary">{{user.fullName}}</a>
+                                                <div class="text-muted">{{user.gender}}</div>
+                                                <div class="mt-2">
+                                                    <a class="btn btn-sm btn-light-warning font-weight-bold mr-2 py-2 px-3 px-xxl-5 my-1" (click)="blockUser(user)">Block</a>
+                                                    <a class="btn btn-sm btn-light-danger font-weight-bold py-2 px-3 px-xxl-5 my-1" (click)="deleteUser(user)">Delete</a>
                                                 </div>
                                             </div>
-                                            <!--end::Pic-->
-                                            <!--begin::Title-->
-                                            <div class="d-flex flex-column">
-                                                <a lass="text-dark font-weight-bold text-hover-primary font-size-h4 mb-0">{{user.username}}</a>
-                                                <span class="text-muted font-weight-bold">{{user.gender}}</span>
-                                            </div>
-                                            <!--end::Title-->
                                         </div>
                                         <!--end::User-->
-                                        <!--begin::Desc-->
-                                        <p class="mb-7">{{user.fullName}}</p>
-                                        <!--end::Desc-->
                                         <!--begin::Info-->
                                         <div class="mb-7">
                                             <div class="d-flex justify-content-between align-items-center">
@@ -77,7 +87,7 @@
                                             </div>
                                         </div>
                                         <!--end::Info-->
-                                        <a class="btn btn-block btn-sm btn-light-warning font-weight-bolder text-uppercase py-4">write message</a>
+                                        <span class="label label-light-primary label-pill label-inline py-7 font-weight-bolder text-uppercase">{{user.username}}</span>
                                     </div>
                                     <!--end::Body-->
                                 </div>
@@ -92,46 +102,7 @@
                     <!--end::Row-->
                 
                     <!--begin::Pagination-->
-                    <div class="card card-custom">
-                        <div class="card-body py-7">
-                            <!--begin::Pagination-->
-                            <div class="d-flex justify-content-between align-items-center flex-wrap">
-                                <div class="d-flex flex-wrap mr-3">
-                                    <a href="#" class="btn btn-icon btn-sm btn-light-primary mr-2 my-1">
-                                        <i class="ki ki-bold-double-arrow-back icon-xs"></i>
-                                    </a>
-                                    <a href="#" class="btn btn-icon btn-sm btn-light-primary mr-2 my-1">
-                                        <i class="ki ki-bold-arrow-back icon-xs"></i>
-                                    </a>
-                                    <a href="#" class="btn btn-icon btn-sm border-0 btn-hover-primary mr-2 my-1">...</a>
-                                    <a href="#" class="btn btn-icon btn-sm border-0 btn-hover-primary mr-2 my-1">23</a>
-                                    <a href="#" class="btn btn-icon btn-sm border-0 btn-hover-primary active mr-2 my-1">24</a>
-                                    <a href="#" class="btn btn-icon btn-sm border-0 btn-hover-primary mr-2 my-1">25</a>
-                                    <a href="#" class="btn btn-icon btn-sm border-0 btn-hover-primary mr-2 my-1">26</a>
-                                    <a href="#" class="btn btn-icon btn-sm border-0 btn-hover-primary mr-2 my-1">27</a>
-                                    <a href="#" class="btn btn-icon btn-sm border-0 btn-hover-primary mr-2 my-1">28</a>
-                                    <a href="#" class="btn btn-icon btn-sm border-0 btn-hover-primary mr-2 my-1">...</a>
-                                    <a href="#" class="btn btn-icon btn-sm btn-light-primary mr-2 my-1">
-                                        <i class="ki ki-bold-arrow-next icon-xs"></i>
-                                    </a>
-                                    <a href="#" class="btn btn-icon btn-sm btn-light-primary mr-2 my-1">
-                                        <i class="ki ki-bold-double-arrow-next icon-xs"></i>
-                                    </a>
-                                </div>
-                                <div class="d-flex align-items-center">
-                                    <select class="form-control form-control-sm text-primary font-weight-bold mr-4 border-0 bg-light-primary" style="width: 75px;">
-                                        <option value="10">10</option>
-                                        <option value="20">20</option>
-                                        <option value="30">30</option>
-                                        <option value="50">50</option>
-                                        <option value="100">100</option>
-                                    </select>
-                                    <span class="text-muted">Displaying 10 of 230 records</span>
-                                </div>
-                            </div>
-                            <!--end:: Pagination-->
-                        </div>
-                    </div>
+                 
 
                
                     <!--end::Pagination-->
@@ -279,6 +250,32 @@
 
             </div>
         </div>
+        <div class="card card-custom">
+            <div class="card-body py-7">
+               
+                <!--begin::Pagination-->
+                <div class="d-flex justify-content-end align-items-center flex-wrap">
+                    <div class="d-flex flex-wrap mr-3">
+                        <button [disabled]="page < 2" (click)="previous()" class="btn btn-icon btn-sm btn-light-primary mr-2 my-1">
+                            <i class="ki ki-bold-double-arrow-back icon-xs"></i>
+                        </button>
+                        <ng-container *ngIf="users?.totalCount > limit  ; else noPage">
+                            <span>{{ page }} / {{ (users?.totalCount  / limit) + (0.4) | number:'1.0-0' }}</span>
+                          </ng-container>
+                          <ng-template #noPage >
+                            <span>1/1</span>
+                          </ng-template>
+                        <button  [disabled]="(users?.totalCount / limit) <= page" (click)="next()" class="btn btn-icon btn-sm btn-light-primary mr-2 my-1">
+                            <i class="ki ki-bold-double-arrow-next icon-xs"></i>
+                        </button>
+                    </div>
+                
+                </div>
+                <!--end:: Pagination-->
+            </div>
+        </div>
     </div>
+
+ 
     
 </div>
