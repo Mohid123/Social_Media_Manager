@@ -249,7 +249,7 @@ export class UserMgtComponent implements OnInit {
   }
 
   removeAdmin(user: User) {
-    this.userMgt.createAdmin(user.id).subscribe((res: ApiResponse<User>) => {
+    this.userMgt.removeAdmin(user.id).subscribe((res: ApiResponse<User>) => {
       debugger
       if(!res.hasErrors()) {
         user.admin = false;
