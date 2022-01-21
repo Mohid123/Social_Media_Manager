@@ -107,9 +107,19 @@
                                                     </a>
 
                                                     <!--ADMIN ACCESS-->
-                                                    <a class="btn btn-icon btn-sm btn-light-info">
-                                                        <i class="fas fa-crown"></i>
-                                                    </a>
+                                                    <ng-container *ngIf="user.admin == false">
+                                                        <a class="btn btn-icon btn-sm btn-light-info" (click)="createAdmin(user)">
+                                                            <i class="far fa-user"></i>
+                                                        </a>
+                                                    </ng-container>
+                                                    <ng-container *ngIf="user.admin == true">
+                                                        <a class="btn btn-icon btn-sm btn-light-info" (click)="removeAdmin(user)">
+                                                            <i class="fas fa-crown"></i>
+                                                        </a>
+                                                    </ng-container>
+                                                    
+                                                    
+                                                  
                                                 </div>
                                             </div>
                                         </div>
