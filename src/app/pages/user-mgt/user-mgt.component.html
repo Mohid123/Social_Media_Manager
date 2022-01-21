@@ -1,4 +1,4 @@
-<app-spinner></app-spinner>
+<!-- <app-spinner></app-spinner> -->
 <div class="row">
     <div class="col-lg-12">
         <div class="card card-custom card-stretch">
@@ -47,31 +47,31 @@
                 </div>
                 <div class="flex-row-lg-fluid ml-lg-8">
                     <!--begin::Row-->
-                    <div  class="custom-height d-flex align-items-center justify-content-center"
-                    style="width: 100% ">
-                    <div class="d-flex flex-column-auto flex-column ">
-                      <a class="text-center">
-                        <img src="./assets/media/bg/app________app____.jpg" alt="" />
-                      </a>
-                      <h3 class="text-center">
-                        No record found
-                      </h3>
-                    </div>
-                    </div>
-                    <div class="row" style="position: relative;" >
-                        <ngx-spinner [fullScreen]="false" [showSpinner]="isLoading" [show]="isLoading" bdColor="#171830" size="medium"
-                            color="#fff" type="ball-scale-multiple">
-                            <p style="font-size: 20px; color: white">dsdsds...</p>
+                  
+                    <div class="row" style="position: relative;">
+                        <ngx-spinner [fullScreen]="false" [showSpinner]="isLoading" [show]="isLoading" bdColor="rgba(0, 0, 0, 0.5)" size="default" color="#fff" type="ball-spin">
+                            <p style="color: white">D I V I D I S</p>
                         </ngx-spinner>
+                        <div *ngIf="noRecordFound"  class="custom-height d-flex align-items-center justify-content-center"
+                        style="width: 100% ">
+                        <div class="d-flex flex-column-auto flex-column ">
+                          <a class="text-center">
+                            <img src="./assets/media/bg/app________app____.jpg" alt="" />
+                          </a>
+                          <h3 class="text-center">
+                            No record found
+                          </h3>
+                        </div>
+                        </div>
+
+                        
                         <!--begin::Col-->
                         <div class="col-xl-3" *ngFor="let user of users">
                                 <!--begin::Card-->
-                                
                                 <div  class="card card-custom gutter-b card-stretch" style="border: 1px solid rgb(235, 235, 235)">
-                                    <div *ngIf="!user.admin == true" class=" ribbon ribbon-top">
-                                        <div class="ribbon-target bg-light-success text-dark-75" style="top: -2px; right: 20px;">
-                                            <i class="fas fa-check-double" style="color:	#00657e"></i></div>
-                                        </div>
+                                    <div *ngIf="user.admin == true" class=" ribbon ribbon-top">
+                                        <div class="ribbon-target bg-light-success text-dark-75" style="top: -2px; right: 20px;"><i class="fas fa-check-double" style="color:	#00657e"></i></div>
+                                      </div>
                                     <!--begin::Body-->
                                     <div  class="card-body pt-4 d-flex flex-column justify-content-between">
                                         <!--begin::User-->
