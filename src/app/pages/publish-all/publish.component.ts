@@ -396,18 +396,27 @@ export class PublishComponent implements OnInit {
     })
   }
   getAllClubEvents() {
-    this._clubService.getClubEvents(0, 50).pipe(takeUntil(this.destroy$)).subscribe((res: ApiResponse<any>) => {
-      if (!res.hasErrors()) {
-        res.data.map((sigleItem) => {
-          sigleItem.isSelected = false;
-          sigleItem.name = sigleItem.eventName;
-          this.checklist.push(sigleItem)
-          this.tempList.push(sigleItem);
-          this.cf.detectChanges()
-
-        })
-      }
-    })
+    let club = this._clubService.selectedClub;
+    let obj = {
+      baseUrl: club.baseURL
+    };
+    if(obj.baseUrl == 'https://levskiapi.teamtalkers.com/api/v1/en') {
+      return;
+    }
+    else {
+      this._clubService.getClubEvents(0, 50).pipe(takeUntil(this.destroy$)).subscribe((res: ApiResponse<any>) => {
+        if (!res.hasErrors()) {
+          res.data.map((sigleItem) => {
+            sigleItem.isSelected = false;
+            sigleItem.name = sigleItem.eventName;
+            this.checklist.push(sigleItem)
+            this.tempList.push(sigleItem);
+            this.cf.detectChanges()
+  
+          })
+        }
+      })
+    }
     this.cf.detectChanges()
   }
 
