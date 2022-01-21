@@ -1,8 +1,8 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, ElementRef, ViewChild } from '@angular/core';
 import { UserManagement } from '@app/core/services/user-management.service';
 import { ApiResponse } from '@app/core/models/response.model';
-import { Subject } from 'rxjs';
-import { distinctUntilChanged, takeUntil } from 'rxjs/operators';
+import { fromEvent, Subject } from 'rxjs';
+import { debounceTime, distinctUntilChanged, map, takeUntil } from 'rxjs/operators';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
@@ -17,6 +17,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
   styleUrls: ['./user-mgt.component.scss']
 })
 export class UserMgtComponent implements OnInit {
+  @ViewChild('searchInput', { static: true }) input: ElementRef;
   destroy$ = new Subject();
   defaultUser: User = {
     email: "",
@@ -40,6 +41,7 @@ export class UserMgtComponent implements OnInit {
   public userLimit = environment.limit ;
   public searchValue = '';
   public page:number;
+  name: string = '';
 
   constructor(
     public userMgt : UserManagement,
@@ -132,10 +134,9 @@ export class UserMgtComponent implements OnInit {
       profilePicURL: 'https://api.solissol.com/api/v1/en/media-upload/mediaFiles/profilepics/0I7KH97u1JOpUAEfpfA7lc7oyhD2/86771a2591c445395929d5e938cef6b7.png'
     }
     this.userMgt.createUser(payload).pipe(takeUntil(this.destroy$)).subscribe((res: ApiResponse<User>) => {
-      debugger
-      if(payload.username == '' || payload.fullName == '' || payload.gender == '' || payload.phoneNo == '' || payload.password == '' || payload.email == '') {
+      if(!this.validateRegister(payload)) {
         this.toastr.error('Please Fill in all fields', 'Create User');
-        return;
+        return false;
       }
       if(!res.hasErrors()) {
         this.toastr.success('User Created Successfully', 'Success');
@@ -146,6 +147,14 @@ export class UserMgtComponent implements OnInit {
         this.toastr.error('Failed To Create New User', 'Create User');
       }
     })
+  }
+
+  validateRegister(user) {
+  	if(user.fullname === undefined || user.username === undefined || user.email === undefined || user.password === undefined || user.gender == undefined || user.phoneNo == undefined) {
+  		return false;
+  	} else {
+  		return true;
+  	}
   }
 
   resetUserForm() {
@@ -167,23 +176,30 @@ export class UserMgtComponent implements OnInit {
     })
   }
 
-  searchUser(){
-    if(this.isLoading) return
-    this.isLoading = true;
-    this.userMgt.searchUser(this.page, this.searchValue).pipe(distinctUntilChanged(),takeUntil(this.destroy$)).subscribe((res: ApiResponse<UserList>)=>{
-      if(!res.hasErrors()){
-       this.users = res.data;
-       console.log(this.users)
-       this.cf.detectChanges();
+  searchUser() {
+    fromEvent(this.input.nativeElement, 'keyup').pipe(
+      map((event: any) => {
+        return event.target.value;
+      }),
+      debounceTime(400),
+    ).subscribe((name: string) => {
+      if (name.trim().length == 0 || name == "") {
+        this.getUsers();
+        this.cf.detectChanges()
+        return
       }
-      this.isLoading = false;
+      else {
+        this.userMgt.searchUser(name, this.offset, this.limit).pipe(
+          distinctUntilChanged(),
+          takeUntil(this.destroy$))
+          .subscribe((res: ApiResponse<UserList>) => {
+          if(!res.hasErrors()) {
+            this.users = res.data;
+            this.cf.detectChanges()
+          }
+        })
+      }
     })
-  }
-
-  search(searchValue) {
-    this.searchValue = searchValue;
-    this.page = 1;
-    this.searchUser();
   }
 
   deleteUser(user){

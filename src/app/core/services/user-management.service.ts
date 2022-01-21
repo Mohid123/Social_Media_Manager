@@ -33,13 +33,8 @@ type user = User | UserList
         return this.clubApiGet('/profile/getAllUsers', param)
     }
 
-    searchUser(page: number, searchValue: string): Observable<ApiResponse<user>> {
-        const param:any = {
-            offset: page ? environment.limit * page : 0,
-            limit: environment.limit,
-            name: searchValue
-        }
-        return this.clubApiGet('/profile/searchUsersForUserManagement', param)
+    searchUser(name: string, offset , limit): Observable<ApiResponse<user>> {
+        return this.clubApiGet(`/profile/searchProfileByName/${name}?offset=${offset}&limit=${limit}`)
     }
 
     deleteProfileByID(id: string): Observable<ApiResponse<user>> {

@@ -28,9 +28,15 @@
                                 <span class="svg-icon svg-icon-lg svg-icon-primary">
                                     <img src="../../../assets/media/custom/search.svg"/>
                                 </span>
-                                <input type="text" (search)="search($event)"
+                                <input
+                                    #searchInput
+                                    type="text"
+                                    [ngModelOptions]="{ standalone: true }"
+                                    [(ngModel)]="name"
+                                    (ngModelChange)="searchUser()"
                                     class="form-control border-0 font-weight-bold pl-2"
-                                    placeholder="Search User">
+                                    placeholder="Search User"
+                                >
                             </form>
                             <!--end::Form-->
                         </div>
