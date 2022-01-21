@@ -42,6 +42,7 @@ export class UserMgtComponent implements OnInit {
   public searchValue = '';
   public page:number;
   name: string = '';
+  public noRecordFound: boolean = false;
 
   constructor(
     public userMgt : UserManagement,
@@ -177,29 +178,43 @@ export class UserMgtComponent implements OnInit {
   }
 
   searchUser() {
-    fromEvent(this.input.nativeElement, 'keyup').pipe(
-      map((event: any) => {
-        return event.target.value;
-      }),
-      debounceTime(400),
-    ).subscribe((name: string) => {
-      if (name.trim().length == 0 || name == "") {
-        this.getUsers();
+   
+      fromEvent(this.input.nativeElement, 'keyup').pipe(
+        map((event: any) => {
+          return event.target.value;
+        }),
+        debounceTime(400),
+      ).subscribe((name: string) => {
+        if (name.trim().length == 0 || name == "") {
+          this.noRecordFound = false;
+          this.getUsers();
+          this.cf.detectChanges()
+          return
+        }
+        else {
+          this.userMgt.searchUser(name, this.offset, this.limit).pipe(
+            distinctUntilChanged(),
+            takeUntil(this.destroy$))
+            .subscribe((res: ApiResponse<any>) => {
+            if(!res.hasErrors()) {
+              if(res.data.length == 0){
+                this.users = res.data;
+                this.noRecordFound = true;
+                this.cf.detectChanges()
+              } else if(res.data.length > 0){
+                this.users = res.data;
+                this.noRecordFound = false;
+                this.cf.detectChanges()
+              }
+            
+            }
+          })
+        }
+
         this.cf.detectChanges()
-        return
-      }
-      else {
-        this.userMgt.searchUser(name, this.offset, this.limit).pipe(
-          distinctUntilChanged(),
-          takeUntil(this.destroy$))
-          .subscribe((res: ApiResponse<UserList>) => {
-          if(!res.hasErrors()) {
-            this.users = res.data;
-            this.cf.detectChanges()
-          }
-        })
-      }
-    })
+      })
+    
+  
   }
 
   deleteUser(user){
