@@ -78,10 +78,10 @@
                                         <div class="d-flex align-items-center mb-5">
                                             <div class="symbol symbol-60 symbol-xxl-100 mr-5 align-self-start align-self-xxl-center">
                                                 <ng-container *ngIf="user.profilePicURL">
-                                                    <img [src]="user.profilePicURL">
+                                                    <img [src]="user.profilePicURL" style="border-radius: 50%; object-fit: cover; width: 100px;">
                                                 </ng-container>
                                                 <ng-container *ngIf="!user.profilePicURL;">
-                                                    <img src="../../../assets/media/users/avatar.png">
+                                                    <img src="../../../assets/media/users/avatar.png" style="border-radius: 50%; object-fit: cover; width: 100px;">
                                                 </ng-container>
                                                 <i class="symbol-badge bg-success"></i>
                                             </div>
@@ -222,7 +222,7 @@
                                             <span class="text-danger">*</span>
                                         </label>
                                         <div class="col-lg-9 col-xl-6">
-                                            <input class="form-control form-control-lg form-control-solid" formControlName="fullname" type="text" [ngClass]="{ 'is-in valid': userForm.controls['fullname'].invalid }">
+                                            <input placeholder="John Doe" class="form-control form-control-lg form-control-solid" formControlName="fullname" type="text" [ngClass]="{ 'is-in valid': userForm.controls['fullname'].invalid }">
                                             <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
                                                 validation: 'required',
                                                 message: 'Full Name is required',
@@ -250,7 +250,7 @@
                                             <span class="text-danger">*</span>
                                         </label>
                                         <div class="col-lg-9 col-xl-6">
-                                            <input class="form-control form-control-lg form-control-solid" formControlName="username" type="text" [ngClass]="{ 'is-in valid': userForm.controls['username'].invalid }">
+                                            <input placeholder="johndoe" class="form-control form-control-lg form-control-solid" formControlName="username" type="text" [ngClass]="{ 'is-in valid': userForm.controls['username'].invalid }">
                                             <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
                                                 validation: 'required',
                                                 message: 'Username is required',
@@ -278,23 +278,34 @@
                                             <span class="text-danger">*</span>
                                         </label>
                                         <div class="col-lg-9 col-xl-6">
-                                            <input class="form-control form-control-lg form-control-solid" formControlName="password" type="password" [ngClass]="{ 'is-in valid': userForm.controls['password'].invalid }">
+                                            <div class="input-group-prepend">
+                                                <input
+                                                    class="form-control form-control-lg form-control-solid"
+                                                    formControlName="pass"
+                                                    type="{{passwordHide ? 'password' : 'text'}}"
+                                                    [ngClass]="{ 'is-in valid': userForm.controls['pass'].invalid }"
+                                                    placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;"
+                                                >
+                                                <span class="input-group-text" (click)="passwordShowHide()">
+                                                    <i class="far fa-eye"></i>
+                                                </span>
+                                            </div>
                                             <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
                                                 validation: 'required',
                                                 message: 'Password is required',
-                                                control: userForm.controls['password']
+                                                control: userForm.controls['pass']
                                               }">
                                             </ng-container>
                                             <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
                                                 validation: 'minLength',
                                                 message: 'Username should at least be 8 characters',
-                                                control: userForm.controls['password']
+                                                control: userForm.controls['pass']
                                               }">
                                             </ng-container>
                                             <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
                                                 validation: 'maxLength',
                                                 message: 'Full Name cannot exceed 128 characters',
-                                                control: userForm.controls['password']
+                                                control: userForm.controls['pass']
                                               }">
                                             </ng-container>
                                         </div>
@@ -322,7 +333,7 @@
                                         </label>
                                         <div class="col-lg-9 col-xl-6">
                                             <div class="input-group input-group-lg input-group-solid">
-                                                <input type="date" class="form-control form-control-lg form-control-solid" placeholder="Username" formControlName="DOB" [ngClass]="{ 'is-in valid': userForm.controls['DOB'].invalid }">
+                                                <input type="date" class="form-control form-control-lg form-control-solid" formControlName="DOB" [ngClass]="{ 'is-in valid': userForm.controls['DOB'].invalid }">
                                                 <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
                                                     validation: 'required',
                                                     message: 'Date of Birth is required',
