@@ -1,10 +1,10 @@
-import { Component, OnInit, ChangeDetectorRef, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, ElementRef, ViewChild, Output, EventEmitter } from '@angular/core';
 import { UserManagement } from '@app/core/services/user-management.service';
 import { ApiResponse } from '@app/core/models/response.model';
-import { fromEvent, Subject } from 'rxjs';
-import { debounceTime, distinctUntilChanged, map, subscribeOn, take, takeUntil } from 'rxjs/operators';
+import { fromEvent, Subject, Subscription } from 'rxjs';
+import { debounceTime, delay, distinctUntilChanged, map, subscribeOn, take, takeUntil } from 'rxjs/operators';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
-import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { FormGroup, Validators, FormBuilder, FormControl } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { User } from 'src/app/core/models/user.model';
 import { UserList } from './../../core/models/userlist.model';
@@ -23,7 +23,7 @@ export class UserMgtComponent implements OnInit {
     email: "",
     username: "",
     fullName: "",
-    password: "",
+    pass: "",
     phoneNo: "",
     DOB: new Date,
     admin: false
@@ -38,12 +38,12 @@ export class UserMgtComponent implements OnInit {
   public isLoading:boolean;
   public users: UserList;
   public limit: number = environment.limit;
-  public userLimit = environment.limit ;
   public searchValue = '';
   public page:number;
   name: string = '';
   public noRecordFound: boolean = false;
   public userID: string;
+  passwordHide: boolean = true;
 
   constructor(
     public userMgt : UserManagement,
@@ -73,8 +73,8 @@ export class UserMgtComponent implements OnInit {
           Validators.pattern(emailRegex)
         ]),
       ],
-      password: [
-        this.defaultUser.password,
+      pass: [
+        this.defaultUser.pass,
         Validators.compose([
           Validators.required,
           Validators.minLength(8),
@@ -127,7 +127,7 @@ export class UserMgtComponent implements OnInit {
     const payload: User = {
       username: this.userForm.value.username,
       fullName: this.userForm.value.fullname,
-      password: this.userForm.value.password,
+      pass: this.userForm.value.pass,
       email: this.userForm.value.email,
       phoneNo: this.userForm.value.phone,
       DOB: this.userForm.value.DOB,
@@ -183,25 +183,23 @@ export class UserMgtComponent implements OnInit {
       map((event: any) => {
         return event.target.value;
       }),
-      debounceTime(600),
+      debounceTime(800),
     ).subscribe((name: string) => {
       if (name.trim().length == 0 || name == "") {
         this.noRecordFound = false;
         this.getUsers();
-        this.cf.detectChanges()
         return
       }
       else {
         this.userMgt.searchUser(name, this.offset, this.limit).pipe(
-          take(1),
           distinctUntilChanged(),
+          delay(800),
           takeUntil(this.destroy$))
           .subscribe((res: ApiResponse<any>) => {
           if(!res.hasErrors()) {
             if(res.data.length == 0) {
               this.users = res.data;
               this.noRecordFound = true;
-              this.cf.detectChanges();
             } 
             else if(res.data.length > 0){
               this.users = res.data;
@@ -239,7 +237,6 @@ export class UserMgtComponent implements OnInit {
 
   createAdmin(user: User) {
     this.userMgt.createAdmin(user.id).subscribe((res: ApiResponse<User>) => {
-      debugger
       if(!res.hasErrors()) {
         user.admin = true;
         this.cf.detectChanges();
@@ -316,6 +313,10 @@ export class UserMgtComponent implements OnInit {
   previous():void {
     this.page--;
     this.getUsers();
+  }
+
+  passwordShowHide(): void {
+    this.passwordHide = !this.passwordHide;
   }
 
   ngOnDestroy(): void {

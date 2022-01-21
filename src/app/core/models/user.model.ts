@@ -1,4 +1,5 @@
 export class User {
+    pass?:                     string;
     password?:                 any;
     profilePicURL?:            string;
     admin?:                    boolean;
