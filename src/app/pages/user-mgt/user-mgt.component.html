@@ -30,7 +30,7 @@
                                 <span class="svg-icon svg-icon-lg svg-icon-primary">
                                     <img src="../../../assets/media/custom/search.svg"/>
                                 </span>
-                                <input type="text" (search)="search($event)"
+                                <input type="text" [(ngModel)]="searchString" (ngModelChange)="searchClub()" [ngModelOptions]="{standalone: true}"
                                     class="form-control border-0 font-weight-bold pl-2"
                                     placeholder="Search User">
                             </form>
@@ -43,11 +43,30 @@
                 </div>
                 <div class="flex-row-lg-fluid ml-lg-8">
                     <!--begin::Row-->
-                    <div class="row" >
+                    <div *ngIf="noClubFound" class="custom-height d-flex align-items-center justify-content-center"
+                    style="width: 100% ">
+                    <div class="d-flex flex-column-auto flex-column ">
+                      <a class="text-center">
+                        <img src="./assets/media/bg/app________app____.jpg" alt="" />
+                      </a>
+                      <h3 class="text-center">
+                        No record found
+                      </h3>
+                    </div>
+                    </div>
+                    <div class="row" style="position: relative;" >
+                        <ngx-spinner [fullScreen]="false" [showSpinner]="isLoading" [show]="isLoading" bdColor="#171830" size="medium"
+      color="#fff" type="ball-scale-multiple">
+      <p style="font-size: 20px; color: white">dsdsds...</p>
+    </ngx-spinner>
                         <!--begin::Col-->
                         <div class="col-xl-3" *ngFor="let user of users">
                                 <!--begin::Card-->
+                                
                                 <div  class="card card-custom gutter-b card-stretch" style="border: 1px solid rgb(235, 235, 235)">
+                                    <div *ngIf="!user.admin == true" class=" ribbon ribbon-top">
+                                        <div class="ribbon-target bg-light-success text-dark-75" style="top: -2px; right: 20px;"><i class="fas fa-check-double" style="color:	#00657e"></i></div>
+                                      </div>
                                     <!--begin::Body-->
                                     <div  class="card-body pt-4 d-flex flex-column justify-content-between">
                                         <!--begin::User-->
@@ -92,7 +111,7 @@
                                     <!--end::Body-->
                                 </div>
                                 <!--end::Card-->
-                            </div>
+                        </div>
                        
                         
                         
@@ -259,12 +278,12 @@
                         <button [disabled]="page < 2" (click)="previous()" class="btn btn-icon btn-sm btn-light-primary mr-2 my-1">
                             <i class="ki ki-bold-double-arrow-back icon-xs"></i>
                         </button>
-                        <ng-container *ngIf="users?.totalCount > limit  ; else noPage">
+                        <!-- <ng-container *ngIf="users?.totalCount > limit  ; else noPage">
                             <span>{{ page }} / {{ (users?.totalCount  / limit) + (0.4) | number:'1.0-0' }}</span>
                           </ng-container>
                           <ng-template #noPage >
                             <span>1/1</span>
-                          </ng-template>
+                          </ng-template> -->
                         <button  [disabled]="(users?.totalCount / limit) <= page" (click)="next()" class="btn btn-icon btn-sm btn-light-primary mr-2 my-1">
                             <i class="ki ki-bold-double-arrow-next icon-xs"></i>
                         </button>
