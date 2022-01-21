@@ -247,7 +247,6 @@ export class UserMgtComponent implements OnInit {
 
   removeAdmin(user: User) {
     this.userMgt.removeAdmin(user.id).subscribe((res: ApiResponse<User>) => {
-      debugger
       if(!res.hasErrors()) {
         user.admin = false;
         this.cf.detectChanges();
