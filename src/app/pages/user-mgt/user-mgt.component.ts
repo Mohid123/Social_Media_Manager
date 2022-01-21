@@ -2,7 +2,7 @@ import { Component, OnInit, ChangeDetectorRef, ElementRef, ViewChild } from '@an
 import { UserManagement } from '@app/core/services/user-management.service';
 import { ApiResponse } from '@app/core/models/response.model';
 import { fromEvent, Subject } from 'rxjs';
-import { debounceTime, distinctUntilChanged, map, takeUntil } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, map, take, takeUntil } from 'rxjs/operators';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
@@ -42,6 +42,7 @@ export class UserMgtComponent implements OnInit {
   public searchValue = '';
   public page:number;
   name: string = '';
+  public noRecordFound: boolean = false;
 
   constructor(
     public userMgt : UserManagement,
@@ -150,7 +151,7 @@ export class UserMgtComponent implements OnInit {
   }
 
   validateRegister(user) {
-  	if(user.fullname === undefined || user.username === undefined || user.email === undefined || user.password === undefined || user.gender == undefined || user.phoneNo == undefined) {
+  	if(user.fullname == '' || user.username == '' || user.email == '' || user.password == '' || user.gender == '' || user.phoneNo == '') {
   		return false;
   	} else {
   		return true;
@@ -185,17 +186,23 @@ export class UserMgtComponent implements OnInit {
     ).subscribe((name: string) => {
       if (name.trim().length == 0 || name == "") {
         this.getUsers();
-        this.cf.detectChanges()
         return
       }
       else {
         this.userMgt.searchUser(name, this.offset, this.limit).pipe(
+          take(1),
           distinctUntilChanged(),
           takeUntil(this.destroy$))
-          .subscribe((res: ApiResponse<UserList>) => {
+          .subscribe((res: ApiResponse<any>) => {
           if(!res.hasErrors()) {
-            this.users = res.data;
-            this.cf.detectChanges()
+            if(res.data.length == 0) {
+              this.noRecordFound = true;
+            } 
+            else if(res.data.length > 0){
+              this.users = res.data;
+              this.noRecordFound = false;
+              this.cf.detectChanges()
+            }
           }
         })
       }

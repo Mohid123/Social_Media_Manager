@@ -60,17 +60,18 @@
                     </div>
                     <div class="row" style="position: relative;" >
                         <ngx-spinner [fullScreen]="false" [showSpinner]="isLoading" [show]="isLoading" bdColor="#171830" size="medium"
-      color="#fff" type="ball-scale-multiple">
-      <p style="font-size: 20px; color: white">dsdsds...</p>
-    </ngx-spinner>
+                            color="#fff" type="ball-scale-multiple">
+                            <p style="font-size: 20px; color: white">dsdsds...</p>
+                        </ngx-spinner>
                         <!--begin::Col-->
                         <div class="col-xl-3" *ngFor="let user of users">
                                 <!--begin::Card-->
                                 
                                 <div  class="card card-custom gutter-b card-stretch" style="border: 1px solid rgb(235, 235, 235)">
                                     <div *ngIf="!user.admin == true" class=" ribbon ribbon-top">
-                                        <div class="ribbon-target bg-light-success text-dark-75" style="top: -2px; right: 20px;"><i class="fas fa-check-double" style="color:	#00657e"></i></div>
-                                      </div>
+                                        <div class="ribbon-target bg-light-success text-dark-75" style="top: -2px; right: 20px;">
+                                            <i class="fas fa-check-double" style="color:	#00657e"></i></div>
+                                        </div>
                                     <!--begin::Body-->
                                     <div  class="card-body pt-4 d-flex flex-column justify-content-between">
                                         <!--begin::User-->
