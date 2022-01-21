@@ -41,7 +41,7 @@
                             <!--end::Form-->
                         </div>
                         <div class="d-none d-md-flex flex-row-fluid bgi-no-repeat bgi-position-y-center bgi-position-x-left bgi-size-cover"
-                            style="background-image: url(/assets/media/svg/play.svg); background-position: center right; background-size: contain;">
+                            style="background-image: url(/assets/media/svg/shapes/taieri.svg); background-position: center right; background-size: contain;">
                         </div>
                     </div>
                 </div>
@@ -49,7 +49,7 @@
                     <!--begin::Row-->
                   
                     <div class="row" style="position: relative;">
-                        <ngx-spinner [fullScreen]="false" [showSpinner]="isLoading" [show]="isLoading" bdColor="rgba(0, 0, 0, 0.5)" size="default" color="#fff" type="ball-spin">
+                        <ngx-spinner [fullScreen]="false" [showSpinner]="isLoading" [show]="isLoading" bdColor="rgba(0, 0, 0, 0.3)" size="default" color="#fff" type="ball-spin">
                             <p style="color: white">D I V I D I S</p>
                         </ngx-spinner>
                         <div *ngIf="noRecordFound"  class="custom-height d-flex align-items-center justify-content-center"
@@ -118,7 +118,9 @@
                                         <div class="mb-7">
                                             <div class="d-flex justify-content-between align-items-center">
                                                 <span class="text-dark-75 font-weight-bolder mr-2">Email:</span>
-                                                <a class="text-muted text-hover-primary">{{user.email}}</a>
+                                                <a class="text-muted text-hover-primary" style="text-overflow: ellipsis;
+                                                overflow: hidden;
+                                                text-align: end;">{{user.email}}</a>
                                             </div>
                                             <div class="d-flex justify-content-between align-items-cente my-1">
                                                 <span class="text-dark-75 font-weight-bolder mr-2">Phone:</span>
@@ -130,7 +132,7 @@
                                             </div>
                                         </div>
                                         <!--end::Info-->
-                                        <span class="label label-light-primary label-pill label-inline py-7 font-weight-bolder text-uppercase">{{user.username}}</span>
+                                        <span class="label label-light-primary label-pill label-inline py-7 font-weight-bolder">{{user.username}}</span>
                                     </div>
                                     <!--end::Body-->
                                 </div>
@@ -162,8 +164,8 @@
                           <span aria-hidden="true">&times;</span>
                         </button>
                       </div>
-                      <div class="modal-body d-flex justify-content-center p-0">
-                        <div class="card card-custom card-stretch w-100">
+                      <div class="modal-body d-flex justify-content-center p-0" >
+                        <div class="card card-custom card-stretch w-100 ">
                             <!--begin::Header-->
                             <div class="card-header py-3">
                                 <div class="card-title align-items-start flex-column">
@@ -173,7 +175,7 @@
                             </div>
                             <!--end::Header-->
                             <!--begin::Form-->
-                            <form class="form" [formGroup]="userForm" (ngSubmit)="registerNewUser()">
+                            <form class="form custom-scrollbar-css" [formGroup]="userForm" (ngSubmit)="registerNewUser()">
                                 <!--begin::Body-->
                                 <div class="card-body">
                                     <div class="row">
@@ -323,10 +325,15 @@
 
                                     <!--ADMIN CHECK-->
                                     <div class="form-group row">
-                                        <label class="checkbox checkbox-danger">
-                                            Admin &nbsp; <span></span>
-                                            <input formControlName="isAdmin" class="form-control form-control-lg form-control-solid" type="checkbox" name="Checkboxes5"/>
-                                        </label>
+                                        <label class="col-3 col-form-label">Admin</label>
+                                        <div class="col-9 col-form-label">
+                                            <div class="checkbox-inline">
+                                                <label class="checkbox checkbox-primary">
+                                                <input formControlName="isAdmin" type="checkbox">
+                                                <span></span></label>
+                                            </div>
+                                            <span class="form-text text-muted">Want to become an admin?</span>
+                                        </div>
                                     </div>
 
                                     <div class="row">
