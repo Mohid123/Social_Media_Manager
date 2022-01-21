@@ -206,8 +206,8 @@ export class UserMgtComponent implements OnInit {
                 this.noRecordFound = false;
                 this.cf.detectChanges()
               }
-            
             }
+            this.cf.detectChanges()
           })
         }
 
