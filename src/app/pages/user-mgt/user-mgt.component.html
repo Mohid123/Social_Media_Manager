@@ -28,7 +28,7 @@
                                 <span class="svg-icon svg-icon-lg svg-icon-primary">
                                     <img src="../../../assets/media/custom/search.svg"/>
                                 </span>
-                                <input type="text" [(ngModel)]="searchString" (ngModelChange)="searchClub()" [ngModelOptions]="{standalone: true}"
+                                <input type="text" 
                                     class="form-control border-0 font-weight-bold pl-2"
                                     placeholder="Search User">
                             </form>
@@ -41,7 +41,7 @@
                 </div>
                 <div class="flex-row-lg-fluid ml-lg-8">
                     <!--begin::Row-->
-                    <div *ngIf="noClubFound" class="custom-height d-flex align-items-center justify-content-center"
+                    <div  class="custom-height d-flex align-items-center justify-content-center"
                     style="width: 100% ">
                     <div class="d-flex flex-column-auto flex-column ">
                       <a class="text-center">
