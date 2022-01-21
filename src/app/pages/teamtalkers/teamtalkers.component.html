@@ -1061,9 +1061,9 @@
                                 <div class="symbol-group symbol-hover">
                                   <div *ngFor="let reaction of post.reactions"
                                     class="symbol symbol-circle symbol-20 symbol-sm-2">
-                                    <img *ngIf="reaction.user.profilePicURL !== ''" alt="Pic"
+                                    <img *ngIf="reaction.user.profilePicURL !== ''" style="width: 20px; object-fit: cover;" alt="Pic"
                                       src="{{ reaction.user.profilePicURL }}" />
-                                    <img *ngIf="reaction.user.profilePicURL == ''" alt="Pic"
+                                    <img *ngIf="reaction.user.profilePicURL == ''" style="width: 20px; object-fit: cover;" alt="Pic"
                                       src="../../../assets/media/users/mockfbImage.png" />
                                   </div>
                                   <span class="symbol-label">
@@ -1231,9 +1231,9 @@
                           <div class="symbol-group symbol-hover">
                             <div *ngFor="let reaction of post.reactions"
                               class="symbol symbol-circle symbol-20 symbol-sm-2">
-                              <img *ngIf="reaction.user.profilePicURL !== ''" alt="Pic"
+                              <img *ngIf="reaction.user.profilePicURL !== ''" style="width: 20px; object-fit: cover;" alt="Pic"
                                 src="{{ reaction.user.profilePicURL }}" />
-                              <img *ngIf="reaction.user.profilePicURL == ''" alt="Pic"
+                              <img *ngIf="reaction.user.profilePicURL == ''" style="width: 20px; object-fit: cover;" alt="Pic"
                                 src="../../../assets/media/users/mockfbImage.png" />
                             </div>
                             <span class="symbol-label">{{ post.reactionCount }} likes</span>
