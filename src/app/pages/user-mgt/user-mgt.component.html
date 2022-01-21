@@ -89,8 +89,27 @@
                                                 <a class="font-weight-bolder font-size-h5 text-dark-75 text-hover-primary">{{user.fullName}}</a>
                                                 <div class="text-muted">{{user.gender}}</div>
                                                 <div class="mt-2">
-                                                    <a class="btn btn-sm btn-light-warning font-weight-bold mr-2 py-2 px-3 px-xxl-5 my-1" (click)="blockUser(user)">Block</a>
-                                                    <a class="btn btn-sm btn-light-danger font-weight-bold py-2 px-3 px-xxl-5 my-1" (click)="deleteUser(user)">Delete</a>
+                                                    <!--BLOCK USER-->
+                                                    <ng-container *ngIf="user.blockFromApp == false">
+                                                        <a class="btn btn-icon btn-sm btn-light-warning mr-2" (click)="blockUser(user)" data-toggle="tooltip" title="Block User">
+                                                            <i class="fas fa-lock"></i>
+                                                        </a>
+                                                    </ng-container>
+                                                    <ng-container *ngIf="user.blockFromApp == true">
+                                                        <a class="btn btn-icon btn-sm btn-light-success mr-2" (click)="unBlockUser(user)" data-toggle="tooltip" title="Unblock User">
+                                                            <i class="fas fa-lock-open"></i>
+                                                        </a>
+                                                    </ng-container>
+
+                                                    <!--DELETE USER-->
+                                                    <a class="btn btn-icon btn-sm btn-light-danger mr-2" (click)="deleteUser(user)" data-toggle="tooltip" title="Delete User">
+                                                        <i class="fas fa-trash"></i>
+                                                    </a>
+
+                                                    <!--ADMIN ACCESS-->
+                                                    <a class="btn btn-icon btn-sm btn-light-info">
+                                                        <i class="fas fa-crown"></i>
+                                                    </a>
                                                 </div>
                                             </div>
                                         </div>

@@ -2,7 +2,7 @@ import { Component, OnInit, ChangeDetectorRef, ElementRef, ViewChild } from '@an
 import { UserManagement } from '@app/core/services/user-management.service';
 import { ApiResponse } from '@app/core/models/response.model';
 import { fromEvent, Subject } from 'rxjs';
-import { debounceTime, distinctUntilChanged, map, take, takeUntil } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, map, subscribeOn, take, takeUntil } from 'rxjs/operators';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
@@ -43,6 +43,7 @@ export class UserMgtComponent implements OnInit {
   public page:number;
   name: string = '';
   public noRecordFound: boolean = false;
+  public userID: string;
 
   constructor(
     public userMgt : UserManagement,
@@ -182,10 +183,12 @@ export class UserMgtComponent implements OnInit {
       map((event: any) => {
         return event.target.value;
       }),
-      debounceTime(400),
+      debounceTime(600),
     ).subscribe((name: string) => {
       if (name.trim().length == 0 || name == "") {
+        this.noRecordFound = false;
         this.getUsers();
+        this.cf.detectChanges()
         return
       }
       else {
@@ -196,7 +199,9 @@ export class UserMgtComponent implements OnInit {
           .subscribe((res: ApiResponse<any>) => {
           if(!res.hasErrors()) {
             if(res.data.length == 0) {
+              this.users = res.data;
               this.noRecordFound = true;
+              this.cf.detectChanges();
             } 
             else if(res.data.length > 0){
               this.users = res.data;
@@ -209,27 +214,56 @@ export class UserMgtComponent implements OnInit {
     })
   }
 
-  deleteUser(user){
+  deleteUser(user: User){
     this.spinner.show();
-    this.userMgt.deleteProfileByID(user.id).subscribe(res=>{
-      if(!res.hasErrors()){
+    this.userMgt.deleteProfileByID(user.id).subscribe((res: ApiResponse<User>)=>{
+      if(!res.hasErrors()) {
         this.cf.detectChanges();
-        console.log('user deleted ', res)
-        setTimeout(() => {
-          this.spinner.hide();
-          this.toastr.success('User successfully deleted.', 'Success!');
-          this.getUsers();
-        })
+        this.spinner.hide();
+        this.toastr.success('User successfully deleted.', 'Success!');
+        this.getUsers();
       }
-      
     })
   }
 
-  blockUser(user){
-    this.userMgt.blockUser(user.userID).subscribe(res=>{
+  blockUser(user: User){
+    this.spinner.show();
+    this.userMgt.blockUser(user.id).subscribe((res: ApiResponse<any>)=>{
       if(!res.hasErrors()){
-        console.log(res)
-        // this.getUsers(this.limit, this.offset);
+        user.blockFromApp = true;
+        this.spinner.hide();
+        this.toastr.success('This user has been blocked.', 'Block User');
+      }
+    })
+  }
+
+  createAdmin(user: User) {
+    this.userMgt.createAdmin(user.id).subscribe((res: ApiResponse<User>) => {
+      if(!res.hasErrors()) {
+        user.admin = true;
+        this.cf.detectChanges();
+        this.toastr.success('Admin Access Granted', 'Admin Access')
+      }
+    })
+  }
+
+  removeAdmin(user: User) {
+    this.userMgt.createAdmin(user.id).subscribe((res: ApiResponse<User>) => {
+      if(!res.hasErrors()) {
+        user.admin = false;
+        this.cf.detectChanges();
+        this.toastr.success('Admin Access Revoked', 'Admin Access')
+      }
+    })
+  }
+
+  unBlockUser(user: User) {
+    this.spinner.show();
+    this.userMgt.unBlockUser(user.id).subscribe((res: ApiResponse<User>) => {
+      if(!res.hasErrors()) {
+        user.blockFromApp = false;
+        this.spinner.hide();
+        this.toastr.success('This user has been unblocked', 'Unblock User');
       }
     })
   }
