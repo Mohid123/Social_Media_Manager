@@ -1,10 +1,10 @@
 import { Component, OnInit, ChangeDetectorRef, ElementRef, ViewChild, Output, EventEmitter } from '@angular/core';
 import { UserManagement } from '@app/core/services/user-management.service';
 import { ApiResponse } from '@app/core/models/response.model';
-import { fromEvent, Subject, Subscription } from 'rxjs';
-import { debounceTime, delay, distinctUntilChanged, map, subscribeOn, take, takeUntil } from 'rxjs/operators';
+import { fromEvent, Observable, of, Subject, Subscription } from 'rxjs';
+import { debounceTime, delay, distinctUntilChanged, map, subscribeOn, switchMapTo, take, takeUntil, tap } from 'rxjs/operators';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
-import { FormGroup, Validators, FormBuilder, FormControl } from '@angular/forms';
+import { FormGroup, Validators, FormBuilder, FormControl, AbstractControl, ValidationErrors } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { User } from 'src/app/core/models/user.model';
 import { UserList } from './../../core/models/userlist.model';
@@ -35,7 +35,7 @@ export class UserMgtComponent implements OnInit {
   public offset: number = 0;
   closeResult: string;
   modalReference: any;
-  public isLoading:boolean;
+  public isLoading: boolean;
   public users: UserList;
   public limit: number = environment.limit;
   public searchValue = '';
@@ -44,6 +44,7 @@ export class UserMgtComponent implements OnInit {
   public noRecordFound: boolean = false;
   public userID: string;
   passwordHide: boolean = true;
+  phoneUser: User
 
   constructor(
     public userMgt : UserManagement,
@@ -101,9 +102,10 @@ export class UserMgtComponent implements OnInit {
         this.defaultUser.phoneNo,
         Validators.compose([
           Validators.required,
-          Validators.minLength(13),
-          Validators.maxLength(14),
+          Validators.minLength(11),
+          Validators.maxLength(14)
         ]),
+        [this.phoneValidator()]
       ],
       DOB: [
         this.defaultUser.DOB,
@@ -137,7 +139,11 @@ export class UserMgtComponent implements OnInit {
     }
     this.userMgt.createUser(payload).pipe(takeUntil(this.destroy$)).subscribe((res: ApiResponse<User>) => {
       if(!this.validateRegister(payload)) {
-        this.toastr.error('Please Fill in all fields', 'Create User');
+        this.toastr.error('Please Fill the Required fields', 'Create User');
+        return false;
+      }
+      if(!this.validatePhone(payload)) {
+        this.toastr.warning('This phone number is already registered to a user', 'Inavlid Credentials');
         return false;
       }
       if(!res.hasErrors()) {
@@ -151,10 +157,24 @@ export class UserMgtComponent implements OnInit {
     })
   }
 
-  validateRegister(user) {
-  	if(user.fullname == '' || user.username == '' || user.email == '' || user.password == '' || user.gender == '' || user.phoneNo == '') {
+  validatePhone(user: User): any {
+    this.userMgt.phoneExists(user.phoneNo).pipe(takeUntil(this.destroy$)).subscribe((res: ApiResponse<any>) => {
+      if (!res.hasErrors()) {
+        if(res.data == true) {
+          return true
+        }
+        else {
+          return false
+        }
+      }
+    })
+  }
+
+  validateRegister(user: User) {
+  	if(user.phoneNo == '' || user.fullName == '' || user.email == '' || user.password == '') {
   		return false;
-  	} else {
+  	}
+    else {
   		return true;
   	}
   }
@@ -193,7 +213,7 @@ export class UserMgtComponent implements OnInit {
       else {
         this.userMgt.searchUser(name, this.offset, this.limit).pipe(
           distinctUntilChanged(),
-          delay(800),
+          delay(600),
           takeUntil(this.destroy$))
           .subscribe((res: ApiResponse<any>) => {
           if(!res.hasErrors()) {
@@ -213,11 +233,9 @@ export class UserMgtComponent implements OnInit {
   }
 
   deleteUser(user: User){
-    this.spinner.show();
     this.userMgt.deleteProfileByID(user.id).subscribe((res: ApiResponse<User>)=>{
       if(!res.hasErrors()) {
         this.cf.detectChanges();
-        this.spinner.hide();
         this.toastr.success('User successfully deleted.', 'Success!');
         this.getUsers();
       }
@@ -225,11 +243,9 @@ export class UserMgtComponent implements OnInit {
   }
 
   blockUser(user: User){
-    this.spinner.show();
     this.userMgt.blockUser(user.id).subscribe((res: ApiResponse<any>)=>{
       if(!res.hasErrors()){
         user.blockFromApp = true;
-        this.spinner.hide();
         this.toastr.success('This user has been blocked.', 'Block User');
       }
     })
@@ -256,11 +272,9 @@ export class UserMgtComponent implements OnInit {
   }
 
   unBlockUser(user: User) {
-    this.spinner.show();
     this.userMgt.unBlockUser(user.id).subscribe((res: ApiResponse<User>) => {
       if(!res.hasErrors()) {
         user.blockFromApp = false;
-        this.spinner.hide();
         this.toastr.success('This user has been unblocked', 'Unblock User');
       }
     })
@@ -316,6 +330,31 @@ export class UserMgtComponent implements OnInit {
 
   passwordShowHide(): void {
     this.passwordHide = !this.passwordHide;
+  }
+
+phoneValidator() {
+    return (control: AbstractControl): Observable<ValidationErrors | null> => {
+      if (!control.valueChanges || control.pristine) {
+        return of(null);
+      }
+      else {
+        return this.userMgt.phoneExists(control.value).pipe(
+          distinctUntilChanged(),
+          debounceTime(600),
+          map((res: ApiResponse<any>) => (res.data == true ? {phoneExists: true} : null))
+        )
+      }
+    };
+}
+
+  keyPressNumbers(event) {
+    var charCode = (event.which) ? event.which : event.keyCode;
+    if ((charCode < 48 || charCode > 57)) {
+      event.preventDefault();
+      return false;
+    } else {
+      return true;
+    }
   }
 
   ngOnDestroy(): void {

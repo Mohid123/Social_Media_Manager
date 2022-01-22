@@ -91,34 +91,32 @@
                                                 <div class="mt-2">
                                                     <!--BLOCK USER-->
                                                     <ng-container *ngIf="user.blockFromApp == false">
-                                                        <a class="btn btn-icon btn-sm btn-light-warning mr-2" (click)="blockUser(user)" data-toggle="tooltip" title="Block User">
+                                                        <a class="btn btn-icon btn-sm btn-light-warning mr-2" (click)="blockUser(user)" data-toggle="tooltip" title="Block User" data-theme="dark">
                                                             <i class="fas fa-lock"></i>
                                                         </a>
                                                     </ng-container>
                                                     <ng-container *ngIf="user.blockFromApp == true">
-                                                        <a class="btn btn-icon btn-sm btn-light-success mr-2" (click)="unBlockUser(user)" data-toggle="tooltip" title="Unblock User">
+                                                        <a class="btn btn-icon btn-sm btn-light-success mr-2" (click)="unBlockUser(user)" data-toggle="tooltip" title="Unblock User" data-theme="dark">
                                                             <i class="fas fa-lock-open"></i>
                                                         </a>
                                                     </ng-container>
 
                                                     <!--DELETE USER-->
-                                                    <a class="btn btn-icon btn-sm btn-light-danger mr-2" (click)="deleteUser(user)" data-toggle="tooltip" title="Delete User">
+                                                    <a class="btn btn-icon btn-sm btn-light-danger mr-2" (click)="deleteUser(user)" data-toggle="tooltip" title="Delete User" data-theme="dark">
                                                         <i class="fas fa-trash"></i>
                                                     </a>
 
                                                     <!--ADMIN ACCESS-->
                                                     <ng-container *ngIf="user.admin == false">
-                                                        <a class="btn btn-icon btn-sm btn-light-info" (click)="createAdmin(user)">
-                                                            <i class="far fa-user"></i>
-                                                        </a>
-                                                    </ng-container>
-                                                    <ng-container *ngIf="user.admin == true">
-                                                        <a class="btn btn-icon btn-sm btn-light-info" (click)="removeAdmin(user)">
+                                                        <a class="btn btn-icon btn-sm btn-light-info" (click)="createAdmin(user)" data-toggle="tooltip" title="Allow Admin Access" data-theme="dark">
                                                             <i class="fas fa-crown"></i>
                                                         </a>
                                                     </ng-container>
-                                                    
-                                                    
+                                                    <ng-container *ngIf="user.admin == true">
+                                                        <a class="btn btn-icon btn-sm btn-light-info" (click)="removeAdmin(user)" data-toggle="tooltip" title="Revoke Admin Access" data-theme="dark">
+                                                            <i class="fas fa-user"></i>
+                                                        </a>
+                                                    </ng-container>   
                                                   
                                                 </div>
                                             </div>
@@ -165,7 +163,7 @@
 
 
                 <!--MODAL-->
-                <div class="example-preview ">
+                <div class="example-preview">
                     <ng-template #content let-c="close" let-d="dismiss">
                       <div class="modal-header d-flex justify-content-center" style="background-color: #1e1e2d;">
                         <h4 class="modal-title" style="color: #fff;">Create New User</h4>
@@ -230,13 +228,13 @@
                                               }">
                                             </ng-container>
                                             <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
-                                                validation: 'minLength',
+                                                validation: 'minlength',
                                                 message: 'Full Name should at least be 7 characters',
                                                 control: userForm.controls['fullname']
                                               }">
                                             </ng-container>
                                             <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
-                                                validation: 'maxLength',
+                                                validation: 'maxlength',
                                                 message: 'Full Name cannot exceed 40 characters',
                                                 control: userForm.controls['fullname']
                                               }">
@@ -247,7 +245,6 @@
                                     <!--USERNAME VALIDATION-->
                                     <div class="form-group row">
                                         <label class="col-xl-3 col-lg-3 col-form-label">Username
-                                            <span class="text-danger">*</span>
                                         </label>
                                         <div class="col-lg-9 col-xl-6">
                                             <input placeholder="johndoe" class="form-control form-control-lg form-control-solid" formControlName="username" type="text" [ngClass]="{ 'is-in valid': userForm.controls['username'].invalid }">
@@ -258,13 +255,13 @@
                                               }">
                                             </ng-container>
                                             <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
-                                                validation: 'minLength',
+                                                validation: 'minlength',
                                                 message: 'Username should at least be 7 characters',
                                                 control: userForm.controls['username']
                                               }">
                                             </ng-container>
                                             <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
-                                                validation: 'maxLength',
+                                                validation: 'maxlength',
                                                 message: 'Full Name cannot exceed 20 characters',
                                                 control: userForm.controls['username']
                                               }">
@@ -285,6 +282,7 @@
                                                     type="{{passwordHide ? 'password' : 'text'}}"
                                                     [ngClass]="{ 'is-in valid': userForm.controls['pass'].invalid }"
                                                     placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;"
+                                                    autocomplete="new-password"
                                                 >
                                                 <span class="input-group-text" (click)="passwordShowHide()">
                                                     <i class="far fa-eye"></i>
@@ -297,13 +295,13 @@
                                               }">
                                             </ng-container>
                                             <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
-                                                validation: 'minLength',
+                                                validation: 'minlength',
                                                 message: 'Username should at least be 8 characters',
                                                 control: userForm.controls['pass']
                                               }">
                                             </ng-container>
                                             <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
-                                                validation: 'maxLength',
+                                                validation: 'maxlength',
                                                 message: 'Full Name cannot exceed 128 characters',
                                                 control: userForm.controls['pass']
                                               }">
@@ -316,7 +314,6 @@
                                     <div class="form-group row">
                                         <label class="col-xl-3 col-lg-3 col-form-label" for="exampleSelect1">
                                             Gender
-                                            <span class="text-danger">*</span>
                                         </label>
                                            
                                         <div class="col-lg-9 col-xl-6">
@@ -376,7 +373,14 @@
                                                         <i class="fas fa-phone-alt text-primary"></i>
                                                     </span>
                                                 </div>
-                                                <input type="text" class="form-control form-control-lg form-control-solid" value="+35278953712" placeholder="Phone" formControlName="phone" [ngClass]="{ 'is-in valid': userForm.controls['phone'].invalid }">
+                                                <input
+                                                type="text"
+                                                class="form-control form-control-lg form-control-solid"
+                                                value="+35278953712"
+                                                placeholder="Phone"
+                                                formControlName="phone"
+                                                [ngClass]="{ 'is-in valid': userForm.controls['phone'].invalid}"
+                                                >
                                             </div>
                                             <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
                                                 validation: 'required',
@@ -385,18 +389,21 @@
                                               }">
                                             </ng-container>
                                             <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
-                                                validation: 'minLength',
-                                                message: 'Phone Number should at least be 13 characters',
+                                                validation: 'minlength',
+                                                message: 'Phone Number should at least be 11 characters',
                                                 control: userForm.controls['phone']
                                               }">
                                             </ng-container>
                                             <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
-                                                validation: 'maxLength',
-                                                message: 'Full Name cannot exceed 14 characters',
+                                                validation: 'maxlength',
+                                                message: 'Phone Number cannot exceed 14 characters',
                                                 control: userForm.controls['phone']
                                               }">
                                             </ng-container>
-                                            <span class="form-text text-muted">We'll never share your email with anyone else.</span>
+                                            <div class="text-danger"
+                                                 *ngIf="userForm.controls['phone'].errors?.phoneExists">
+                                                 This Phone Number is already registered to a user
+                                            </div>
                                         </div>
                                     </div>
 
@@ -426,10 +433,12 @@
                                                 control: userForm.controls['email']
                                               }">
                                             </ng-container>
+                                            <span class="form-text text-muted">We'll never share your email with anyone else.</span>
                                         </div>
                                     </div>
 
                                 </div>
+                                <span class="text-danger ml-5" style="font-size: x-small!important;">Fields marked with * are required</span>
                                 <!--end::Body-->
                                 <div class="modal-footer d-flex justify-content-center">
                                     <button type="submit" class="btn btn-primary mr-2">Save Changes</button>

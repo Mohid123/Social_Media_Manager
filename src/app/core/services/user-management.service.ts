@@ -7,6 +7,7 @@ import { Observable, BehaviorSubject } from 'rxjs';
 import { ApiResponse } from '@app/core/models/response.model';
 import { environment } from './../../../environments/environment';
 import { UserList } from './../models/userlist.model';
+import { tap } from 'rxjs/operators';
 
 type user = User | UserList
 
@@ -59,5 +60,9 @@ type user = User | UserList
 
     removeAdmin(adminID: string): Observable<ApiResponse<user>> {
         return this.clubApiGet(`/profile/removeAdmin/${adminID}`)
+    }
+
+    phoneExists(phoneNo: string): Observable<ApiResponse<user>> {
+        return this.clubApiGet(`/profile/isPhoneNumberExists?phoneNo=${phoneNo}`)
     }
   }
