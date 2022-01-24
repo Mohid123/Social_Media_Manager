@@ -137,13 +137,13 @@ export class UserMgtComponent implements OnInit {
       admin: this.userForm.value.isAdmin,
       profilePicURL: 'https://api.solissol.com/api/v1/en/media-upload/mediaFiles/profilepics/0I7KH97u1JOpUAEfpfA7lc7oyhD2/86771a2591c445395929d5e938cef6b7.png'
     }
+    if(!this.validatePhone(payload)) {
+      this.toastr.warning('This phone number is already registered to a user', 'Inavlid Credentials');
+      return;
+    }
     this.userMgt.createUser(payload).pipe(takeUntil(this.destroy$)).subscribe((res: ApiResponse<User>) => {
       if(!this.validateRegister(payload)) {
         this.toastr.error('Please Fill the Required fields', 'Create User');
-        return false;
-      }
-      if(!this.validatePhone(payload)) {
-        this.toastr.warning('This phone number is already registered to a user', 'Inavlid Credentials');
         return false;
       }
       if(!res.hasErrors()) {
