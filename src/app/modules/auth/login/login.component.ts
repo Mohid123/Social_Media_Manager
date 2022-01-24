@@ -142,8 +142,13 @@ export class LoginComponent implements OnInit {
           this.toastr.success(`You are logged in as ${res.data.user.fullName}.`, 'Welcome!');
           this.router.navigateByUrl('/pages/dashboard').then(hjh=> {});
         }
-      
-      } else {
+        else {
+          this.spinner.hide();
+          this.toastr.error('Only admins can access this panel.', 'Access Denied!');
+          return
+        }
+      }
+      else {
         this.spinner.hide();
         if (res.errors) {
           this.toastr.warning(res?.errors[0]?.error?.message, 'Invalid!');
