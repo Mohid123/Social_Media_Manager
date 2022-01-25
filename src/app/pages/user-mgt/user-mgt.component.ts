@@ -109,13 +109,13 @@ export class UserMgtComponent implements OnInit {
         [this.phoneValidator()]
       ],
       DOB: [
-        this.defaultUser.DOB,
-        Validators.compose([
-          Validators.required,
-        ]),
+        this.defaultUser.DOB
       ],
       gender: [
-        this.defaultUser.gender
+        this.defaultUser.gender,
+        Validators.compose([
+          Validators.required
+        ])
       ],
       profilePicURL: [
         this.defaultUser.profilePicURL
@@ -139,7 +139,6 @@ export class UserMgtComponent implements OnInit {
       profilePicURL: 'https://api.solissol.com/api/v1/en/media-upload/mediaFiles/profilepics/0I7KH97u1JOpUAEfpfA7lc7oyhD2/86771a2591c445395929d5e938cef6b7.png'
     }
     this.userMgt.createUser(payload).pipe(takeUntil(this.destroy$)).subscribe((res: ApiResponse<User>) => {
-      debugger
       if(!res.hasErrors()) {
         this.toastr.success('User Created Successfully', 'Success');
         this.resetUserForm();
@@ -175,7 +174,7 @@ export class UserMgtComponent implements OnInit {
       map((event: any) => {
         return event.target.value;
       }),
-      debounceTime(800),
+      debounceTime(600),
     ).subscribe((name: string) => {
       if (name.trim().length == 0 || name == "") {
         this.noRecordFound = false;
@@ -265,7 +264,7 @@ export class UserMgtComponent implements OnInit {
   }
 
   removeImage() {
-    this.url = null;
+    this.url = 'https://api.solissol.com/api/v1/en/media-upload/mediaFiles/profilepics/0I7KH97u1JOpUAEfpfA7lc7oyhD2/86771a2591c445395929d5e938cef6b7.png';
   }
 
   onClick(event) {
