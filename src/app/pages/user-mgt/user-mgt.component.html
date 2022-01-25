@@ -29,11 +29,9 @@
                                     <img src="../../../assets/media/custom/search.svg"/>
                                 </span>
                                 <input
+                                [formControl]="searchControl"
                                     #searchInput
                                     type="text"
-                                    [ngModelOptions]="{ standalone: true }"
-                                    [(ngModel)]="name"
-                                    (ngModelChange)="searchUser()"
                                     class="form-control border-0 font-weight-bold pl-2"
                                     placeholder="Search User"
                                 >

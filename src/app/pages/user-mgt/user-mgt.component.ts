@@ -45,7 +45,8 @@ export class UserMgtComponent implements OnInit {
   public userID: string;
   passwordHide: boolean = true;
   phoneUser: User
-  countryCode: Number
+  countryCode: Number;
+  searchControl = new FormControl();
 
   constructor(
     public userMgt : UserManagement,
@@ -62,6 +63,15 @@ export class UserMgtComponent implements OnInit {
 
   ngOnInit(): void {
     this.initUserForm();
+    this.searchControl.valueChanges.pipe(takeUntil(this.destroy$),debounceTime(1000))
+      .subscribe(newValue => {
+        if (newValue.trim().length == 0 || newValue == "") {
+          this.noRecordFound = false;
+          this.getUsers();
+        } else {
+          this.searchUser(newValue);
+        }
+      });
   }
 
   initUserForm() {
@@ -170,36 +180,20 @@ export class UserMgtComponent implements OnInit {
     })
   }
 
-  searchUser() {
-    fromEvent(this.input.nativeElement, 'keyup').pipe(
-      map((event: any) => {
-        return event.target.value;
-      }),
-      debounceTime(800),
-    ).subscribe((name: string) => {
-      if (name.trim().length == 0 || name == "") {
-        this.noRecordFound = false;
-        this.getUsers();
-        return
-      }
-      else {
-        this.userMgt.searchUser(name, this.offset, this.limit).pipe(
-          distinctUntilChanged(),
-          delay(600),
-          takeUntil(this.destroy$))
-          .subscribe((res: ApiResponse<any>) => {
-          if(!res.hasErrors()) {
-            if(res.data.length == 0) {
-              this.users = res.data;
-              this.noRecordFound = true;
-            } 
-            else if(res.data.length > 0){
-              this.users = res.data;
-              this.noRecordFound = false;
-              this.cf.detectChanges()
-            }
-          }
-        })
+  searchUser(searchString: string) {
+    this.userMgt.searchUser(searchString, this.offset, this.limit).pipe(
+      takeUntil(this.destroy$))
+      .subscribe((res: ApiResponse<any>) => {
+      if(!res.hasErrors()) {
+        if(res.data.length == 0) {
+          this.users = res.data;
+          this.noRecordFound = true;
+        }
+        else if(res.data.length > 0){
+          this.users = res.data;
+          this.noRecordFound = false;
+        }
+        this.cf.detectChanges()
       }
     })
   }
