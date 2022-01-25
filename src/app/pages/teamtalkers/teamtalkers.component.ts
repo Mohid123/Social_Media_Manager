@@ -205,6 +205,7 @@ export class TeamtalkersComponent implements OnInit {
     this.getLatestClubPosts();
     this.clicked = false;
     this.cf.detectChanges();
+    this.showSchedule = false
   }
 
   resetSchedulePost() {

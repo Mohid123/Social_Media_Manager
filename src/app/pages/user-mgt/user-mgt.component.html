@@ -71,7 +71,10 @@
                                 <!--begin::Card-->
                                 <div  class="card card-custom gutter-b card-stretch" style="border: 1px solid rgb(235, 235, 235); box-shadow: rgb(99 99 99 / 20%) 0px 2px 8px 0px; ">
                                     <div *ngIf="user.admin == true" class=" ribbon ribbon-top">
-                                        <div class="ribbon-target bg-light-success text-dark-75" style="top: -2px; right: 20px;"><i class="fas fa-check-double" style="color:	#00657e"></i></div>
+                                        <div class="ribbon-target bg-light-success text-dark-75" style="top: -2px; right: 20px;"><i class="fas fa-check-double" style="color:#00657e"></i></div>
+                                      </div>
+                                    <div *ngIf="user.blockFromApp == true" class=" ribbon ribbon-top">
+                                        <div class="ribbon-target bg-light-success text-dark-75" style="top: -2px; right: 60px;"><i class="fas fa-ban" style="color:#dd1200"></i></div>
                                       </div>
                                     <!--begin::Body-->
                                     <div  class="card-body pt-4 d-flex flex-column justify-content-between">
@@ -364,20 +367,21 @@
 
                                     <!--PHONE NUMBER VALIDATION-->
                                     <div class="form-group row">
+                                        <!-- <input formControlName="phoneNo"  (countryChange)="onCountryChange($event)" (keypress)="numberOnly($event)"   type="text"  class="form-control form-control-solid h-auto py-7 px-6 rounded-lg ml-20" ng2TelInput [ng2TelInputOptions]="{initialCountry: 'bg'}" /> -->
                                         <label class="col-xl-3 col-lg-3 col-form-label">Contact Phone
                                             <span class="text-danger">*</span>
                                         </label>
                                         <div class="col-lg-9 col-xl-6">
                                             <div class="input-group input-group-lg input-group-solid">
-                                                <div class="input-group-prepend">
+                                                <!-- <div class="input-group-prepend">
                                                     <span class="input-group-text">
                                                         <i class="fas fa-phone-alt text-primary"></i>
                                                     </span>
-                                                </div>
-                                                <input
-                                                type="text"
+                                                </div> -->
+                                                <input (countryChange)="onCountryChange($event)" (keypress)="numberOnly($event)"
+                                                ng2TelInput [ng2TelInputOptions]="{initialCountry: 'bg'}"
+                                                type="text" 
                                                 class="form-control form-control-lg form-control-solid"
-                                                value="+35278953712"
                                                 placeholder="Phone"
                                                 formControlName="phone"
                                                 [ngClass]="{ 'is-in valid': userForm.controls['phone'].invalid}"
@@ -420,7 +424,7 @@
                                                         <i class="fa fa-envelope-open-text text-primary"></i>
                                                     </span>
                                                 </div>
-                                                <input type="text" class="form-control form-control-lg form-control-solid" value="nick.bold@loop.com" placeholder="Email" formControlName="email" [ngClass]="{ 'is-in valid': userForm.controls['email'].invalid }">
+                                                <input type="text" class="form-control form-control-lg form-control-solid" placeholder="Email" formControlName="email" [ngClass]="{ 'is-in valid': userForm.controls['email'].invalid }">
                                             </div>
                                             <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
                                                 validation: 'required',
@@ -442,7 +446,7 @@
                                 <span class="text-danger ml-5" style="font-size: x-small!important;">Fields marked with * are required</span>
                                 <!--end::Body-->
                                 <div class="modal-footer d-flex justify-content-center">
-                                    <button type="submit" class="btn btn-primary mr-2">Save Changes</button>
+                                    <button [disabled]="userForm.invalid || userForm.errors" type="submit" class="btn btn-primary mr-2">Save Changes</button>
                                     <button type="button" class="btn btn-secondary" (click)="c('Close click')">Cancel</button>
                                 </div>
                             </form>

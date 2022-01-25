@@ -64,10 +64,12 @@ export class PublishComponent implements OnInit {
   public showDiv = {
     photo: true,
     video: false,
-    text: false
+    text: false,
+    instaCheck : true,
   }
   public selectedFacebook : boolean = false; // initally the value was set to false
   public selectedInstagram: boolean = true // was previousely set to true
+  public inValidImageFormat: boolean;
 
   constructor(private spinner: NgxSpinnerService, private cf: ChangeDetectorRef,
     private toast: ToastrService, private _facebookService: FacebookService,
@@ -266,6 +268,7 @@ export class PublishComponent implements OnInit {
       this.showDiv.video = false;
       this.showDiv.text = false;
       this.selectedInstagram = true;
+      this.showDiv.instaCheck = true;
       this.file = null;
       this.urls = [];
       this.url = null;
@@ -275,6 +278,7 @@ export class PublishComponent implements OnInit {
       this.showDiv.video = true;
       this.showDiv.text = false;
       this.selectedInstagram = true; 
+      this.showDiv.instaCheck = true;
       this.file = null;
       this.urls = [];
       this.url = null;
@@ -287,6 +291,7 @@ export class PublishComponent implements OnInit {
       this.file = null;
       this.urls = [];
       this.url = null;
+      this.showDiv.instaCheck = false;
     }
   }
 
@@ -294,13 +299,21 @@ export class PublishComponent implements OnInit {
     event.target.value=''
 }
 
-  onSelectedImageLoad() {
-    const width = (this.logo.nativeElement as HTMLImageElement).naturalWidth
-    const height = (this.logo.nativeElement as HTMLImageElement).naturalHeight
-    let gcd = this.calculateAspectRatio(width , height);
-    const ratio = width/gcd + ':'+ height/gcd;
-    this.validAspectRatios.includes(ratio) ?  this.inValidImageAspectRatio = false : this.inValidImageAspectRatio = true;
+onSelectedImageLoad() {
+  const width = (this.logo.nativeElement as HTMLImageElement).naturalWidth
+  const height = (this.logo.nativeElement as HTMLImageElement).naturalHeight
+  let gcd = this.calculateAspectRatio(width, height);
+  const ratio = width / gcd + ':' + height / gcd;
+  this.validAspectRatios.includes(ratio) ? this.inValidImageFormat = false : this.inValidImageFormat = true;
+  if (this.inValidImageFormat) {
+    this.toast.error('Unsupported Image Format', 'Image Format not supported for Instagram');
+    this.url = ""
+    this.urls = [];
+    this.multiples = [];
+    this.file = null;
+    this.checkedList = []
   }
+}
 
   calculateAspectRatio(a,b) {
     return (b == 0) ? a : this.calculateAspectRatio (b, a%b);

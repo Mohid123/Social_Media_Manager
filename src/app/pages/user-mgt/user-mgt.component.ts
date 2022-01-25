@@ -26,7 +26,7 @@ export class UserMgtComponent implements OnInit {
     pass: "",
     phoneNo: "",
     DOB: new Date,
-    admin: false
+    admin: false,
   };
   Gender: string[] = ["Male", "Female", "Other"];
   public url: any;
@@ -45,6 +45,7 @@ export class UserMgtComponent implements OnInit {
   public userID: string;
   passwordHide: boolean = true;
   phoneUser: User
+  countryCode: Number
 
   constructor(
     public userMgt : UserManagement,
@@ -102,7 +103,7 @@ export class UserMgtComponent implements OnInit {
         this.defaultUser.phoneNo,
         Validators.compose([
           Validators.required,
-          Validators.minLength(11),
+          Validators.minLength(9),
           Validators.maxLength(14)
         ]),
         [this.phoneValidator()]
@@ -131,21 +132,14 @@ export class UserMgtComponent implements OnInit {
       fullName: this.userForm.value.fullname,
       pass: this.userForm.value.pass,
       email: this.userForm.value.email,
-      phoneNo: this.userForm.value.phone,
+      phoneNo: `+${this.countryCode}${this.userForm.value.phone}`,
       DOB: this.userForm.value.DOB,
       gender: this.userForm.value.gender,
       admin: this.userForm.value.isAdmin,
       profilePicURL: 'https://api.solissol.com/api/v1/en/media-upload/mediaFiles/profilepics/0I7KH97u1JOpUAEfpfA7lc7oyhD2/86771a2591c445395929d5e938cef6b7.png'
     }
-    if(!this.validatePhone(payload)) {
-      this.toastr.warning('This phone number is already registered to a user', 'Inavlid Credentials');
-      return;
-    }
     this.userMgt.createUser(payload).pipe(takeUntil(this.destroy$)).subscribe((res: ApiResponse<User>) => {
-      if(!this.validateRegister(payload)) {
-        this.toastr.error('Please Fill the Required fields', 'Create User');
-        return false;
-      }
+      debugger
       if(!res.hasErrors()) {
         this.toastr.success('User Created Successfully', 'Success');
         this.resetUserForm();
@@ -155,28 +149,6 @@ export class UserMgtComponent implements OnInit {
         this.toastr.error('Failed To Create New User', 'Create User');
       }
     })
-  }
-
-  validatePhone(user: User): any {
-    this.userMgt.phoneExists(user.phoneNo).pipe(takeUntil(this.destroy$)).subscribe((res: ApiResponse<any>) => {
-      if (!res.hasErrors()) {
-        if(res.data == true) {
-          return true
-        }
-        else {
-          return false
-        }
-      }
-    })
-  }
-
-  validateRegister(user: User) {
-  	if(user.phoneNo == '' || user.fullName == '' || user.email == '' || user.password == '') {
-  		return false;
-  	}
-    else {
-  		return true;
-  	}
   }
 
   resetUserForm() {
@@ -338,7 +310,7 @@ phoneValidator() {
         return of(null);
       }
       else {
-        return this.userMgt.phoneExists(control.value).pipe(
+        return this.userMgt.phoneExists(`+${this.countryCode}${control.value}`).pipe(
           distinctUntilChanged(),
           debounceTime(600),
           map((res: ApiResponse<any>) => (res.data == true ? {phoneExists: true} : null))
@@ -347,14 +319,17 @@ phoneValidator() {
     };
 }
 
-  keyPressNumbers(event) {
-    var charCode = (event.which) ? event.which : event.keyCode;
-    if ((charCode < 48 || charCode > 57)) {
-      event.preventDefault();
-      return false;
-    } else {
-      return true;
-    }
+numberOnly(event): boolean {
+  const charCode = (event.which) ? event.which : event.keyCode;
+  if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+    return false;
+  }
+  return true;
+
+}
+
+  onCountryChange(country) {
+    this.countryCode = country.dialCode
   }
 
   ngOnDestroy(): void {

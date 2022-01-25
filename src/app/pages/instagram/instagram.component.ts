@@ -108,7 +108,7 @@ export class InstagramComponent implements OnInit {
     this.urls = [];
     this.multiples = [];
     this.removeSlectedItems();
-  
+    this.showSchedule = false;
     this.cf.detectChanges();
     this.clicked = false;
    }

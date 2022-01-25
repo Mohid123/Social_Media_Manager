@@ -72,7 +72,7 @@
                                 </tr>
 
                                 <!-- FACEBOOK -->
-                                <th *ngIf="facebookPages.length > 0" class="pr-0 pt-5 pb-5 text-left bg-gray-100">
+                                <th *ngIf="facebookPages.length > 0;" class="pr-0 pt-5 pb-5 text-left bg-gray-100">
                                     <span class="label label-xl label-dark label-inline mr-2"> <i
                                             class="fab fa-facebook-f icon-md mr-2"
                                             style="color: white"></i>Facebook</span>
@@ -113,7 +113,8 @@
 
 
                                 <!-- INSTA -->
-                                <th *ngIf="facebookPages.length > 0" class="pr-0 pt-5 pb-5 text-left bg-gray-100">
+                                <ng-container *ngIf="showDiv.instaCheck">
+                                     <th *ngIf="facebookPages.length > 0 " class="pr-0 pt-5 pb-5 text-left bg-gray-100">
                                     <span class="label label-xl label-dark label-inline mr-2"><i
                                             class="fab fa-instagram icon-md mr-2" style="color: white"></i>
                                         Instagram</span>
@@ -151,6 +152,9 @@
                                         </td>
                                     </ng-container>
                                 </tr>
+                                </ng-container>
+                                
+                               
 
                                 <!-- GROUP -->
                                 <th class="pr-0 pt-5 pb-5 text-left bg-gray-100">
@@ -315,7 +319,7 @@
                                                             class="btn btn-transparent-warning">Clear</button>
                                                     </div>
                                                     <div class="ml-auto p-2">
-                                                        <button  (click)="addImagePost(); clicked = true;" type="button" [disabled]="!file || checkedList.length == 0 || clicked"
+                                                        <button  (click)="addImagePost(); clicked = true;" type="button" [disabled]="!file || checkedList.length == 0 || clicked==true"
                                                             [ngClass]="_genericPostService.condition == true ? 'spinner spinner-white spinner-right' : '' "
                                                             class="btn btn-primary flex-row-reverse" style="background-color: #3b5998; border-color: #3b5998;">
                                                             {{_genericPostService.condition == true ? 'Finalizing Your Post': 'Post Now'}}
@@ -463,7 +467,7 @@
                         </div>
                     </mat-tab>
 
-                    <mat-tab (click)="showDiv.text = true ; showDiv.photo = false ; showDiv.video = false ">
+                    <mat-tab (click)="showDiv.text = true ; showDiv.photo = false ; showDiv.video = false; showDiv.instaCheck = false ">
                         <ng-template mat-tab-label>
                             <mat-icon>
                                 <i class="far fa-file-alt icon-lg" style="color: #EAB026;"></i>
