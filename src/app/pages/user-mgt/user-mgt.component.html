@@ -247,6 +247,7 @@
                                     <!--USERNAME VALIDATION-->
                                     <div class="form-group row">
                                         <label class="col-xl-3 col-lg-3 col-form-label">Username
+                                            <span class="text-danger">*</span>
                                         </label>
                                         <div class="col-lg-9 col-xl-6">
                                             <input placeholder="johndoe" class="form-control form-control-lg form-control-solid" formControlName="username" type="text" [ngClass]="{ 'is-in valid': userForm.controls['username'].invalid }">
@@ -316,13 +317,20 @@
                                     <div class="form-group row">
                                         <label class="col-xl-3 col-lg-3 col-form-label" for="exampleSelect1">
                                             Gender
+                                            <span class="text-danger">*</span>
                                         </label>
                                            
                                         <div class="col-lg-9 col-xl-6">
-                                            <select  class="custom-select form-control form-control-lg form-control-solid" formControlName="gender">
+                                            <select class="custom-select form-control form-control-lg form-control-solid" formControlName="gender" [ngClass]="{ 'is-in valid': userForm.controls['username'].invalid }">
                                                 <option disabled>Select</option>
                                                 <option *ngFor="let gender of Gender" [ngValue]="gender">{{gender}}</option>
                                             </select>
+                                            <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+                                                validation: 'required',
+                                                message: 'Gender is required',
+                                                control: userForm.controls['gender']
+                                              }">
+                                            </ng-container>
                                         </div>
                                     </div>
 
@@ -332,13 +340,7 @@
                                         </label>
                                         <div class="col-lg-9 col-xl-6">
                                             <div class="input-group input-group-lg input-group-solid">
-                                                <input type="date" class="form-control form-control-lg form-control-solid" formControlName="DOB" [ngClass]="{ 'is-in valid': userForm.controls['DOB'].invalid }">
-                                                <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
-                                                    validation: 'required',
-                                                    message: 'Date of Birth is required',
-                                                    control: userForm.controls['DOB']
-                                                  }">
-                                                </ng-container>
+                                                <input type="date" class="form-control form-control-lg form-control-solid" formControlName="DOB">
                                             </div>
                                         </div>
                                     </div>
@@ -365,7 +367,6 @@
 
                                     <!--PHONE NUMBER VALIDATION-->
                                     <div class="form-group row">
-                                        <!-- <input formControlName="phoneNo"  (countryChange)="onCountryChange($event)" (keypress)="numberOnly($event)"   type="text"  class="form-control form-control-solid h-auto py-7 px-6 rounded-lg ml-20" ng2TelInput [ng2TelInputOptions]="{initialCountry: 'bg'}" /> -->
                                         <label class="col-xl-3 col-lg-3 col-form-label">Contact Phone
                                             <span class="text-danger">*</span>
                                         </label>
