@@ -13,7 +13,7 @@
                 </h3>
                     </div>
                      <div class="card-title">
-                        <a src="/metronic/demo1/custom/apps/user/add-user.html" (click)="openVerticallyCentered(content)" class="btn btn-light-primary font-weight-bold ml-2">+ Add User</a>
+                        <a  (click)="openVerticallyCentered(content)" class="btn btn-primary font-weight-bolder p-4 ml-2">+ Add User</a>
                      </div>
             </div>
         </div>
@@ -36,10 +36,52 @@
                                     placeholder="Search User"
                                 >
                             </form>
-                          
+                            <div class="d-flex d-inline pt-5">
+                                <a  class="btn btn-outline-primary font-weight-boldest btn-pill mr-2"  (click)="getUsers()">All Users</a>
+                                <a class="btn btn-outline-primary font-weight-boldest btn-pill mr-2">Admins</a>
+                                <a class="btn btn-outline-primary font-weight-boldest btn-pill mr-2">Blocked Users</a>
+                            </div>
                            
                             <!--end::Form-->
                         </div>
+                        <div class="d-flex flex-lg-row-auto w-auto align-items-center">
+                            <div class="card card-custom gutter-b mr-5" style="height: 150px; width: 150px;">
+                                <div class="card-body">
+                                    <span class="svg-icon svg-icon-3x svg-icon-success">
+                                        <!--begin::Svg Icon | path:/metronic/theme/html/demo1/dist/assets/media/svg/icons/Communication/Group.svg-->
+                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                <polygon points="0 0 24 0 24 24 0 24"></polygon>
+                                                <path d="M18,14 C16.3431458,14 15,12.6568542 15,11 C15,9.34314575 16.3431458,8 18,8 C19.6568542,8 21,9.34314575 21,11 C21,12.6568542 19.6568542,14 18,14 Z M9,11 C6.790861,11 5,9.209139 5,7 C5,4.790861 6.790861,3 9,3 C11.209139,3 13,4.790861 13,7 C13,9.209139 11.209139,11 9,11 Z" fill="#000000" fill-rule="nonzero" opacity="0.3"></path>
+                                                <path d="M17.6011961,15.0006174 C21.0077043,15.0378534 23.7891749,16.7601418 23.9984937,20.4 C24.0069246,20.5466056 23.9984937,21 23.4559499,21 L19.6,21 C19.6,18.7490654 18.8562935,16.6718327 17.6011961,15.0006174 Z M0.00065168429,20.1992055 C0.388258525,15.4265159 4.26191235,13 8.98334134,13 C13.7712164,13 17.7048837,15.2931929 17.9979143,20.2 C18.0095879,20.3954741 17.9979143,21 17.2466999,21 C13.541124,21 8.03472472,21 0.727502227,21 C0.476712155,21 -0.0204617505,20.45918 0.00065168429,20.1992055 Z" fill="#000000" fill-rule="nonzero"></path>
+                                            </g>
+                                        </svg>
+                                        <!--end::Svg Icon-->
+                                    </span>
+                                    <div class="text-dark font-weight-bolder font-size-h2 mt-3">{{count.adminCount}}</div>
+                                    <a href="#" class="text-muted text-hover-primary font-weight-bold font-size-lg mt-1">Admin stats</a>
+                                </div>
+                            </div>
+                            <div class="card card-custom gutter-b" style="height: 150px; width: 150px">
+                                <div class="card-body">
+                                    <span class="svg-icon svg-icon-3x svg-icon-success">
+                                        <!--begin::Svg Icon | path:/metronic/theme/html/demo1/dist/assets/media/svg/icons/Communication/Group.svg-->
+                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                <polygon points="0 0 24 0 24 24 0 24"></polygon>
+                                                <path d="M18,14 C16.3431458,14 15,12.6568542 15,11 C15,9.34314575 16.3431458,8 18,8 C19.6568542,8 21,9.34314575 21,11 C21,12.6568542 19.6568542,14 18,14 Z M9,11 C6.790861,11 5,9.209139 5,7 C5,4.790861 6.790861,3 9,3 C11.209139,3 13,4.790861 13,7 C13,9.209139 11.209139,11 9,11 Z" fill="#000000" fill-rule="nonzero" opacity="0.3"></path>
+                                                <path d="M17.6011961,15.0006174 C21.0077043,15.0378534 23.7891749,16.7601418 23.9984937,20.4 C24.0069246,20.5466056 23.9984937,21 23.4559499,21 L19.6,21 C19.6,18.7490654 18.8562935,16.6718327 17.6011961,15.0006174 Z M0.00065168429,20.1992055 C0.388258525,15.4265159 4.26191235,13 8.98334134,13 C13.7712164,13 17.7048837,15.2931929 17.9979143,20.2 C18.0095879,20.3954741 17.9979143,21 17.2466999,21 C13.541124,21 8.03472472,21 0.727502227,21 C0.476712155,21 -0.0204617505,20.45918 0.00065168429,20.1992055 Z" fill="#000000" fill-rule="nonzero"></path>
+                                            </g>
+                                        </svg>
+                                        <!--end::Svg Icon-->
+                                    </span>
+                                    <div class="text-dark font-weight-bolder font-size-h2 mt-3">{{count.userCount}}</div>
+                                    <a href="#" class="text-muted text-hover-primary font-weight-bold font-size-lg mt-1">User stats</a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        
                         <div class="d-none d-md-flex flex-row-fluid bgi-no-repeat bgi-position-y-center bgi-position-x-left bgi-size-cover"
                             style="background-image: url(/assets/media/svg/shapes/taieri.svg); background-position: center right; background-size: contain;">
                         </div>
@@ -70,8 +112,8 @@
                         <div class="col-xl-3" *ngFor="let user of users">
                                 <!--begin::Card-->
                                 <div  class="card card-custom gutter-b card-stretch" style="border: 1px solid rgb(235, 235, 235); box-shadow: rgb(99 99 99 / 20%) 0px 2px 8px 0px; ">
-                                    <div *ngIf="user.admin == true" class=" ribbon ribbon-top">
-                                        <div class="ribbon-target bg-light-success text-dark-75" style="top: -2px; right: 20px;"><i class="fas fa-check-double" style="color:#00657e"></i></div>
+                                    <div *ngIf="user.admin == true" class=" ribbon ribbon-top" data-toggle="tooltip" title="Admin">
+                                        <div class="ribbon-target bg-light-success text-dark-75" style="top: -2px; right: 20px;"><i class="fas fa-crown" style="color:#00657e"></i></div>
                                       </div>
                                     <div *ngIf="user.blockFromApp == true" class=" ribbon ribbon-top">
                                         <div class="ribbon-target bg-light-success text-dark-75" style="top: -2px; right: 60px;"><i class="fas fa-ban" style="color:#dd1200"></i></div>
@@ -79,7 +121,7 @@
                                     <!--begin::Body-->
                                     <div  class="card-body pt-4 d-flex flex-column justify-content-between">
                                         <!--begin::User-->
-                                        <div class="d-flex align-items-center mb-5">
+                                        <div class="d-flex align-items-center mb-5 mt-5">
                                             <div class="symbol symbol-60 symbol-xxl-100 mr-5 align-self-start align-self-xxl-center">
                                                 <ng-container *ngIf="user.profilePicURL">
                                                     <img [src]="user.profilePicURL" style="border-radius: 50%; object-fit: cover; width: 100px;">
@@ -92,7 +134,7 @@
                                             <div>
                                                 <a class="font-weight-bolder font-size-h5 text-dark-75 text-hover-primary">{{user.fullName}}</a>
                                                 <div class="text-muted">{{user.gender}}</div>
-                                                <div class="mt-2">
+                                                <div class="mt-2 d-flex">
                                                     <!--BLOCK USER-->
                                                     <ng-container *ngIf="user.blockFromApp == false">
                                                         <a class="btn btn-icon btn-sm btn-light-warning mr-2" (click)="blockUser(user)" data-toggle="tooltip" title="Block User" data-theme="dark">
@@ -106,18 +148,18 @@
                                                     </ng-container>
 
                                                     <!--DELETE USER-->
-                                                    <a class="btn btn-icon btn-sm btn-light-danger mr-2" (click)="deleteUser(user)" data-toggle="tooltip" title="Delete User" data-theme="dark">
+                                                    <a class="btn btn-icon btn-sm btn-light-danger mr-2" (click)="deleteUserDialog(deleteUserContent)" data-toggle="tooltip" title="Delete User" data-theme="dark">
                                                         <i class="fas fa-trash"></i>
                                                     </a>
 
                                                     <!--ADMIN ACCESS-->
                                                     <ng-container *ngIf="user.admin == false">
-                                                        <a class="btn btn-icon btn-sm btn-light-info" (click)="createAdmin(user)" data-toggle="tooltip" title="Allow Admin Access" data-theme="dark">
+                                                        <a class="btn btn-icon btn-sm btn-light-info mr-2" (click)="createAdmin(user)" data-toggle="tooltip" title="Allow Admin Access" data-theme="dark">
                                                             <i class="fas fa-crown"></i>
                                                         </a>
                                                     </ng-container>
                                                     <ng-container *ngIf="user.admin == true">
-                                                        <a class="btn btn-icon btn-sm btn-light-info" (click)="removeAdmin(user)" data-toggle="tooltip" title="Revoke Admin Access" data-theme="dark">
+                                                        <a class="btn btn-icon btn-sm btn-light-info mr-2" (click)="removeAdmin(user)" data-toggle="tooltip" title="Revoke Admin Access" data-theme="dark">
                                                             <i class="fas fa-user"></i>
                                                         </a>
                                                     </ng-container>   
@@ -125,6 +167,43 @@
                                                 </div>
                                             </div>
                                         </div>
+
+                                        <!--Delete Dialog-->
+                                        <div class="example-preview ">
+                                            <ng-template #deleteUserContent let-c="close" let-d="dismiss">
+                                              <div class="modal-header d-flex justify-content-center" style="background-color: #1e1e2d;">
+                                                <h4 class="modal-title" style="color: #fff;">Delete</h4>
+                                                <button type="button" class="close ml-auto" aria-label="Close" (click)="d('Cross click')"> <i
+                                                    class="ki ki-bold-close icon-sm" style="color:rgba(255, 255, 255, 0.877)"></i>
+                                                  <span aria-hidden="true">&times;</span>
+                                                </button>
+                                              </div>
+                                              <div class="modal-body d-flex justify-content-center">
+                                                <div class="d-flex align-items-center mt-5">
+                                                  <div class="symbol symbol-100 mr-5">
+                                                    <ng-container *ngIf="user.profilePicURL">
+                                                        <img [src]="user.profilePicURL" style="border-radius: 50%; object-fit: cover; width: 100px;">
+                                                    </ng-container>
+                                                    <ng-container *ngIf="!user.profilePicURL;">
+                                                        <img src="../../../assets/media/users/avatar.png" style="border-radius: 50%; object-fit: cover; width: 100px;">
+                                                    </ng-container>
+                                                    <i class="symbol-badge bg-success"></i>
+                                                  </div>
+                                                  <div class="d-flex flex-column">
+                                                    <a class="font-weight-bold font-size-h5 text-dark-75 text-hover-primary">{{user.username}}</a>
+                                                    <div class="text-muted mt-1">Are your sure you want to delete this user?</div>
+                                                
+                                                  </div>
+                                                </div>
+                                              </div>
+                                              <div class="modal-footer d-flex justify-content-center">
+                                                <button type="button" class="btn btn-light-danger" (click)="c('Close click'); deleteUser(user)">Yes</button>
+                                                <button type="button" class="btn btn-secondary" (click)="c('Close click')">No</button>
+                                              
+                                              </div>
+                                            </ng-template>
+                                          </div>
+
                                         <!--end::User-->
                                         <!--begin::Info-->
                                         <div class="mb-7">
@@ -140,7 +219,7 @@
                                             </div>
                                             <div class="d-flex justify-content-between align-items-center">
                                                 <span class="text-dark-75 font-weight-bolder mr-2">DOB:</span>
-                                                <span class="text-muted font-weight-bold">{{user.DOB}}</span>
+                                                <span class="text-muted font-weight-bold text-truncate" style="width: 80px;" >{{user.DOB}}</span>
                                             </div>
                                         </div>
                                         <!--end::Info-->
@@ -372,11 +451,6 @@
                                         </label>
                                         <div class="col-lg-9 col-xl-6">
                                             <div class="input-group input-group-lg input-group-solid">
-                                                <!-- <div class="input-group-prepend">
-                                                    <span class="input-group-text">
-                                                        <i class="fas fa-phone-alt text-primary"></i>
-                                                    </span>
-                                                </div> -->
                                                 <input (countryChange)="onCountryChange($event)" (keypress)="numberOnly($event)"
                                                 ng2TelInput [ng2TelInputOptions]="{initialCountry: 'bg'}"
                                                 type="text" 
@@ -389,18 +463,6 @@
                                             <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
                                                 validation: 'required',
                                                 message: 'Phone Number is required',
-                                                control: userForm.controls['phone']
-                                              }">
-                                            </ng-container>
-                                            <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
-                                                validation: 'minlength',
-                                                message: 'Phone Number should at least be 11 characters',
-                                                control: userForm.controls['phone']
-                                              }">
-                                            </ng-container>
-                                            <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
-                                                validation: 'maxlength',
-                                                message: 'Phone Number cannot exceed 14 characters',
                                                 control: userForm.controls['phone']
                                               }">
                                             </ng-container>
@@ -417,7 +479,10 @@
                                         </label>
                                         <div class="col-lg-9 col-xl-6">
                                             <div class="input-group input-group-lg input-group-solid">
-                                                <input type="date" class="form-control form-control-lg form-control-solid" formControlName="DOB">
+                                                <input readonly [ngxDatePicker]="dateInstanceSingle" [value]="singleDate"
+                                                (valueChange)="onChangeScheduleDate($event)" class="form-control form-control-lg form-control-solid" formControlName="DOB">
+                                                <ngx-date-picker #dateInstanceSingle [options]="singleDatePickerOptions">
+                                                    </ngx-date-picker>
                                             </div>
                                         </div>
                                     </div>
@@ -438,7 +503,7 @@
                                 <span class="text-danger ml-5" style="font-size: x-small!important;">Fields marked with * are required</span>
                                 <!--end::Body-->
                                 <div class="modal-footer d-flex justify-content-center">
-                                    <button [disabled]="userForm.invalid || userForm.errors" type="submit" class="btn btn-primary mr-2">Save Changes</button>
+                                    <button [disabled]="userForm.invalid || userForm.errors" type="submit" class="btn btn-primary mr-2">Create User</button>
                                     <button type="button" class="btn btn-secondary" (click)="c('Close click')">Cancel</button>
                                 </div>
                             </form>
@@ -465,7 +530,7 @@
                           <ng-template #noPage >
                             <span>1/1</span>
                           </ng-template> -->
-                        <button  [disabled]="(users?.totalCount / limit) <= page" (click)="next()" class="btn btn-icon btn-sm btn-light-primary mr-2 my-1">
+                        <button   (click)="next()" class="btn btn-icon btn-sm btn-light-primary mr-2 my-1">
                             <i class="ki ki-bold-double-arrow-next icon-xs"></i>
                         </button>
                     </div>

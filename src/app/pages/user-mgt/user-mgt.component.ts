@@ -2,7 +2,7 @@ import { Component, OnInit, ChangeDetectorRef, ElementRef, ViewChild, Output, Ev
 import { UserManagement } from '@app/core/services/user-management.service';
 import { ApiResponse } from '@app/core/models/response.model';
 import { fromEvent, Observable, of, Subject, Subscription } from 'rxjs';
-import { debounceTime, delay, distinctUntilChanged, map, subscribeOn, switchMapTo, take, takeUntil, tap } from 'rxjs/operators';
+import { debounceTime, delay, distinctUntilChanged, filter, map, subscribeOn, switchMapTo, take, takeUntil, tap } from 'rxjs/operators';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { FormGroup, Validators, FormBuilder, FormControl, AbstractControl, ValidationErrors } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
@@ -10,6 +10,9 @@ import { User } from 'src/app/core/models/user.model';
 import { UserList } from './../../core/models/userlist.model';
 import { environment } from '@environments/environment';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { DatePickerOptions } from "@ngx-tiny/date-picker";
+import * as moment from 'moment';
+import { UserCount } from '@app/core/models/user-count.model';
 
 @Component({
   selector: 'user-management',
@@ -25,7 +28,7 @@ export class UserMgtComponent implements OnInit {
     fullName: "",
     pass: "",
     phoneNo: "",
-    DOB: new Date,
+    DOB: "",
     admin: false,
   };
   Gender: string[] = ["Male", "Female", "Other"];
@@ -36,7 +39,7 @@ export class UserMgtComponent implements OnInit {
   closeResult: string;
   modalReference: any;
   public isLoading: boolean;
-  public users: UserList;
+  public users: User;
   public limit: number = 12;
   public searchValue = '';
   public page:number;
@@ -47,6 +50,13 @@ export class UserMgtComponent implements OnInit {
   phoneUser: User
   countryCode: Number;
   searchControl = new FormControl();
+  scheduleSelectedDate: any;
+  singleDate: Date = new Date(new Date().setDate(new Date().getDate() + 1));
+  singleDatePickerOptions: DatePickerOptions = {
+    // minDate: new Date(new Date().setDate(new Date().getDate() - 1)), // Minimum is selecting a week ago
+    maxDate: new Date(new Date().setDate(new Date().getDate() + 1)), // Maximum date is selecting today
+  };
+  public count: UserCount;
 
   constructor(
     public userMgt : UserManagement,
@@ -59,6 +69,7 @@ export class UserMgtComponent implements OnInit {
       this.page = 1;
       this.isLoading = false;
       this.getUsers()
+      this.getUserCount()
     }
 
   ngOnInit(): void {
@@ -112,9 +123,7 @@ export class UserMgtComponent implements OnInit {
       phone: [
         this.defaultUser.phoneNo,
         Validators.compose([
-          Validators.required,
-          Validators.minLength(9),
-          Validators.maxLength(14)
+          Validators.required
         ]),
         [this.phoneValidator()]
       ],
@@ -143,8 +152,9 @@ export class UserMgtComponent implements OnInit {
       pass: this.userForm.value.pass,
       email: this.userForm.value.email,
       phoneNo: `+${this.countryCode}${this.userForm.value.phone}`,
-      DOB: this.userForm.value.DOB,
+      DOB: moment(this.userForm.value.DOB).format('YYYY-MM-DD'),
       gender: this.userForm.value.gender,
+      verificationStatus: true,
       admin: this.userForm.value.isAdmin,
       profilePicURL: 'https://api.solissol.com/api/v1/en/media-upload/mediaFiles/profilepics/0I7KH97u1JOpUAEfpfA7lc7oyhD2/86771a2591c445395929d5e938cef6b7.png'
     }
@@ -169,12 +179,24 @@ export class UserMgtComponent implements OnInit {
   getUsers(){
     if (this.isLoading) return
     this.isLoading = true;
-    this.userMgt.getAllUsers(this.page, this.offset, this.limit).pipe(distinctUntilChanged(),takeUntil(this.destroy$)).subscribe((res: ApiResponse<UserList>)=>{
+    this.userMgt.getAllUsers(this.page).pipe(
+      distinctUntilChanged(),
+      takeUntil(this.destroy$)).subscribe((res: ApiResponse<User>)=>{
       if(!res.hasErrors()){
        this.users = res.data;
        this.cf.detectChanges();
       }
       this.isLoading = false;
+    })
+  }
+
+  getUserCount(){
+    this.userMgt.getCounts().subscribe((res: ApiResponse<UserCount>)=>{
+      debugger
+      if(!res.hasErrors()){
+        this.count = res.data;
+        console.log(this.count)
+      }
     })
   }
 
@@ -202,6 +224,7 @@ export class UserMgtComponent implements OnInit {
         this.cf.detectChanges();
         this.toastr.success('User successfully deleted.', 'Success!');
         this.getUsers();
+        this.input.nativeElement.value = ""
       }
     })
   }
@@ -264,6 +287,14 @@ export class UserMgtComponent implements OnInit {
     event.target.value = ''
 }
 
+deleteUserDialog(deleteUserContent) {
+  this.modalService.open(deleteUserContent, { centered: true }).result.then((result) => {
+    this.closeResult = `Closed with: ${result}`;
+  }, (reason) => {
+    this.closeResult = `Dismissed ${this.getDismissReasonDelete(reason)}`;
+  });
+}
+
   openVerticallyCentered(content) {
     this.modalService.open(content, { centered: true, size: 'lg' }).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
@@ -280,6 +311,17 @@ export class UserMgtComponent implements OnInit {
     } else {
       return `with: ${reason}`;
     }
+  }
+  private getDismissReasonDelete(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else {
+      return `with: ${reason}`;
+    }
+  }
+
+  onChangeScheduleDate(value: Date) {
+    this.scheduleSelectedDate = value;
   }
 
   next():void {

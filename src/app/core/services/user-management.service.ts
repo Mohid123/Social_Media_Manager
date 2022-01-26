@@ -8,8 +8,10 @@ import { ApiResponse } from '@app/core/models/response.model';
 import { environment } from './../../../environments/environment';
 import { UserList } from './../models/userlist.model';
 import { tap } from 'rxjs/operators';
+import { UserCount } from './../models/user-count.model';
 
-type user = User | UserList
+type user = User | UserList | UserCount
+
 
 @Injectable({
     providedIn: 'root'
@@ -20,14 +22,24 @@ type user = User | UserList
           data: []
       })
       public readonly userList$: Observable<UserList> = this._userList.asObservable()
+      public limit: number = 12
     constructor(protected http: HttpClient) {
         super(http)
     }
 
-    getAllUsers(page: number, limit, offset ): Observable<ApiResponse<user>> {
-        limit = parseInt(limit) < 1 ? 12 : limit;
-        offset = parseInt(offset) < 0 ? 0 : offset;
-        return this.clubApiGet(`/profile/getAllUsers?offset=${offset}&limit=${limit}`)
+    getAllUsers( page: number ): Observable<ApiResponse<user>> {
+        // limit = parseInt(limit) < 1 ? 12 : limit;
+        // offset = parseInt(offset) < 0 ? 0 : offset;
+        const param:any = {
+            offset: page ? this.limit * page : 0,
+            limit: this.limit
+            
+        }
+        return this.clubApiGet('/profile/getAllUsers', param)
+    }
+
+    getCounts(): Observable<ApiResponse<user>>{
+        return this.clubApiGet('/profile/getCounts')
     }
 
     searchUser(name: string, offset , limit): Observable<ApiResponse<user>> {
