@@ -84,8 +84,8 @@ export class TeamtalkersComponent implements OnInit {
   singleDate: Date = new Date(new Date().setDate(new Date().getDate() + 1));
   singleTime: Date = new Date(new Date().setDate(new Date().getDate() + 1));
   singleDatePickerOptions: DatePickerOptions = {
-    minDate: new Date(new Date().setDate(new Date().getDate() - 1)), // Minimum is selecting a week ago
-    maxDate: new Date(new Date().setDate(new Date().getDate() + 7)), // Maximum date is selecting today
+    // minDate: new Date(new Date().setDate(new Date().getDate() - 1)), // Minimum is selecting a week ago
+    maxDate: new Date(new Date().setDate(new Date().getDate() + 1)), // Maximum date is selecting today
   };
   singleTimePickerOptions: TimePickerOptions = {
     military: true,

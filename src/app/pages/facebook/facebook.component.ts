@@ -156,7 +156,6 @@ export class FacebookComponent implements OnInit {
   selectAll() {
     for (var i = 0; i < this.checklist.length; i++) {
       this.checklist[i].isSelected = this.masterSelected;
-
     }
     this.getCheckedItemList();
 

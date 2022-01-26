@@ -52,7 +52,7 @@ type user = User | UserList
     }
 
     createUser(payload: user): Observable<ApiResponse<user>> {
-        return this.clubApiPost(`/profile/addUser`, payload)
+        return this.clubApiPost(`/profile/addUserFromPanel`, payload)
     }
 
     createAdmin(adminID: string): Observable<ApiResponse<user>> {

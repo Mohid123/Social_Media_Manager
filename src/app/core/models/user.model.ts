@@ -2,7 +2,7 @@ export class User {
     pass?:                     string;
     password?:                 any;
     profilePicURL?:            string;
-    admin?:                    boolean;
+    admin?:                    boolean = false;
     demoAdmin?:                boolean;
     fullName?:                 string;
     username?:                 string;
@@ -11,7 +11,7 @@ export class User {
     phoneNo?:                  string;
     verificationStatus?:       boolean;
     verificationId?:           string;
-    DOB?:                      Date;
+    DOB?:                      Date | string;
     followersCount?:           number;
     followingCount?:           number;
     approved?:                 boolean;
