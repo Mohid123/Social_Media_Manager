@@ -246,8 +246,8 @@
 
 
                 <!--MODAL-->
-                <div class="example-preview">
-                    <ng-template #content let-c="close" let-d="dismiss">
+                <div class="example-preview " >
+                    <ng-template #content let-c="close" let-d="dismiss" data-backdrop="static" data-keyboard="false" >
                       <div class="modal-header d-flex justify-content-center" style="background-color: #1e1e2d;">
                         <h4 class="modal-title" style="color: #fff;">Create New User</h4>
                         <button type="button" class="close ml-auto" aria-label="Close" (click)="d('Cross click')"> <i
