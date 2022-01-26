@@ -12,6 +12,7 @@ import { environment } from '@environments/environment';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { DatePickerOptions } from "@ngx-tiny/date-picker";
 import * as moment from 'moment';
+import { UserCount } from '@app/core/models/user-count.model';
 
 @Component({
   selector: 'user-management',
@@ -55,6 +56,7 @@ export class UserMgtComponent implements OnInit {
     // minDate: new Date(new Date().setDate(new Date().getDate() - 1)), // Minimum is selecting a week ago
     maxDate: new Date(new Date().setDate(new Date().getDate() + 1)), // Maximum date is selecting today
   };
+  public count: UserCount;
 
   constructor(
     public userMgt : UserManagement,
@@ -67,6 +69,7 @@ export class UserMgtComponent implements OnInit {
       this.page = 1;
       this.isLoading = false;
       this.getUsers()
+      this.getUserCount()
     }
 
   ngOnInit(): void {
@@ -184,6 +187,16 @@ export class UserMgtComponent implements OnInit {
        this.cf.detectChanges();
       }
       this.isLoading = false;
+    })
+  }
+
+  getUserCount(){
+    this.userMgt.getCounts().subscribe((res: ApiResponse<UserCount>)=>{
+      debugger
+      if(!res.hasErrors()){
+        this.count = res.data;
+        console.log(this.count)
+      }
     })
   }
 
