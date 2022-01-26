@@ -37,7 +37,7 @@ export class UserMgtComponent implements OnInit {
   modalReference: any;
   public isLoading: boolean;
   public users: UserList;
-  public limit: number = environment.limit;
+  public limit: number = 12;
   public searchValue = '';
   public page:number;
   name: string = '';
@@ -169,7 +169,7 @@ export class UserMgtComponent implements OnInit {
   getUsers(){
     if (this.isLoading) return
     this.isLoading = true;
-    this.userMgt.getAllUsers(this.page).pipe(distinctUntilChanged(),takeUntil(this.destroy$)).subscribe((res: ApiResponse<UserList>)=>{
+    this.userMgt.getAllUsers(this.page, this.offset, this.limit).pipe(distinctUntilChanged(),takeUntil(this.destroy$)).subscribe((res: ApiResponse<UserList>)=>{
       if(!res.hasErrors()){
        this.users = res.data;
        this.cf.detectChanges();

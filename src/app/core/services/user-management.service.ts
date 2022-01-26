@@ -24,15 +24,10 @@ type user = User | UserList
         super(http)
     }
 
-    getAllUsers( page: number ): Observable<ApiResponse<user>> {
-        // limit = parseInt(limit) < 1 ? 12 : limit;
-        // offset = parseInt(offset) < 0 ? 0 : offset;
-        const param:any = {
-            offset: page ? environment.limit * page : 0,
-            limit: environment.limit
-            
-        }
-        return this.clubApiGet('/profile/getAllUsers', param)
+    getAllUsers(page: number, limit, offset ): Observable<ApiResponse<user>> {
+        limit = parseInt(limit) < 1 ? 12 : limit;
+        offset = parseInt(offset) < 0 ? 0 : offset;
+        return this.clubApiGet(`/profile/getAllUsers?offset=${offset}&limit=${limit}`)
     }
 
     searchUser(name: string, offset , limit): Observable<ApiResponse<user>> {
