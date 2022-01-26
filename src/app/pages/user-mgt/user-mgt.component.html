@@ -36,6 +36,8 @@
                                     placeholder="Search User"
                                 >
                             </form>
+                          
+                           
                             <!--end::Form-->
                         </div>
                         <div class="d-none d-md-flex flex-row-fluid bgi-no-repeat bgi-position-y-center bgi-position-x-left bgi-size-cover"
@@ -272,6 +274,36 @@
                                         </div>
                                     </div>
 
+                                      <!--EMAIL VALIDATION-->
+                                    <div class="form-group row">
+                                        <label class="col-xl-3 col-lg-3 col-form-label">Email Address
+                                            <span class="text-danger">*</span>
+                                        </label>
+                                        <div class="col-lg-9 col-xl-6">
+                                            <div class="input-group input-group-lg input-group-solid">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">
+                                                        <i class="fa fa-envelope-open-text text-primary"></i>
+                                                    </span>
+                                                </div>
+                                                <input type="text" class="form-control form-control-lg form-control-solid" placeholder="Email" formControlName="email" [ngClass]="{ 'is-in valid': userForm.controls['email'].invalid }">
+                                            </div>
+                                            <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+                                                validation: 'required',
+                                                message: 'Email Address is required',
+                                                control: userForm.controls['email']
+                                              }">
+                                            </ng-container>
+                                            <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+                                                validation: 'pattern',
+                                                message: 'Email should have the following character/s: @',
+                                                control: userForm.controls['email']
+                                              }">
+                                            </ng-container>
+                                            <span class="form-text text-muted">We'll never share your email with anyone else.</span>
+                                        </div>
+                                    </div>
+
                                     <!--PASSWORD VALIDATION-->
                                     <div class="form-group row">
                                         <label class="col-xl-3 col-lg-3 col-form-label">Password
@@ -313,7 +345,6 @@
                                     </div>
 
                                     <!--GENDER VALIDATION-->
-
                                     <div class="form-group row">
                                         <label class="col-xl-3 col-lg-3 col-form-label" for="exampleSelect1">
                                             Gender
@@ -334,38 +365,7 @@
                                         </div>
                                     </div>
 
-                                    <!--DOB VALIDATION-->
-                                    <div class="form-group row">
-                                        <label class="col-xl-3 col-lg-3 col-form-label">DOB
-                                        </label>
-                                        <div class="col-lg-9 col-xl-6">
-                                            <div class="input-group input-group-lg input-group-solid">
-                                                <input type="date" class="form-control form-control-lg form-control-solid" formControlName="DOB">
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!--ADMIN CHECK-->
-                                    <div class="form-group row">
-                                        <label class="col-3 col-form-label">Admin</label>
-                                        <div class="col-9 col-form-label">
-                                            <div class="checkbox-inline">
-                                                <label class="checkbox checkbox-primary">
-                                                <input formControlName="isAdmin" type="checkbox">
-                                                <span></span></label>
-                                            </div>
-                                            <span class="form-text text-muted">Want to become an admin?</span>
-                                        </div>
-                                    </div>
-
-                                    <div class="row">
-                                        <label class="col-xl-3"></label>
-                                        <div class="col-lg-9 col-xl-6">
-                                            <h5 class="font-weight-bold mt-10 mb-6">Contact Info</h5>
-                                        </div>
-                                    </div>
-
-                                    <!--PHONE NUMBER VALIDATION-->
+                                      <!--PHONE NUMBER VALIDATION-->
                                     <div class="form-group row">
                                         <label class="col-xl-3 col-lg-3 col-form-label">Contact Phone
                                             <span class="text-danger">*</span>
@@ -411,36 +411,29 @@
                                         </div>
                                     </div>
 
-                                    <!--EMAIL VALIDATION-->
+                                    <!--DOB VALIDATION-->
                                     <div class="form-group row">
-                                        <label class="col-xl-3 col-lg-3 col-form-label">Email Address
-                                            <span class="text-danger">*</span>
+                                        <label class="col-xl-3 col-lg-3 col-form-label">DOB
                                         </label>
                                         <div class="col-lg-9 col-xl-6">
                                             <div class="input-group input-group-lg input-group-solid">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text">
-                                                        <i class="fa fa-envelope-open-text text-primary"></i>
-                                                    </span>
-                                                </div>
-                                                <input type="text" class="form-control form-control-lg form-control-solid" placeholder="Email" formControlName="email" [ngClass]="{ 'is-in valid': userForm.controls['email'].invalid }">
+                                                <input type="date" class="form-control form-control-lg form-control-solid" formControlName="DOB">
                                             </div>
-                                            <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
-                                                validation: 'required',
-                                                message: 'Email Address is required',
-                                                control: userForm.controls['email']
-                                              }">
-                                            </ng-container>
-                                            <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
-                                                validation: 'pattern',
-                                                message: 'Email should have the following character/s: @',
-                                                control: userForm.controls['email']
-                                              }">
-                                            </ng-container>
-                                            <span class="form-text text-muted">We'll never share your email with anyone else.</span>
                                         </div>
                                     </div>
 
+                                    <!--ADMIN CHECK-->
+                                    <div class="form-group row">
+                                        <label class="col-3 col-form-label">Admin</label>
+                                        <div class="col-9 col-form-label">
+                                            <div class="checkbox-inline">
+                                                <label class="checkbox checkbox-primary">
+                                                <input formControlName="isAdmin" type="checkbox">
+                                                <span></span></label>
+                                            </div>
+                                            <span class="form-text text-muted">Want to become an admin?</span>
+                                        </div>
+                                    </div>
                                 </div>
                                 <span class="text-danger ml-5" style="font-size: x-small!important;">Fields marked with * are required</span>
                                 <!--end::Body-->
