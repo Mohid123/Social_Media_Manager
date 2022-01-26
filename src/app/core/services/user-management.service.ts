@@ -38,8 +38,8 @@ type user = User | UserList
         return this.clubApiGet(`/profile/searchProfileByName/${name}?offset=${offset}&limit=${limit}`)
     }
 
-    deleteProfileByID(id: string): Observable<ApiResponse<user>> {
-        return this.clubApiGet(`/profile/deleteProfileById/${id}`)
+    deleteProfileByID(id: string, email: string): Observable<ApiResponse<user>> {
+        return this.clubApiGet(`/profile/deleteProfileById/${id}?email=${email}`)
     }
 
     blockUser(userID: string): Observable<ApiResponse<user>> {
@@ -51,7 +51,7 @@ type user = User | UserList
     }
 
     createUser(payload: user): Observable<ApiResponse<user>> {
-        return this.clubApiPost(`/profile/addUser`, payload)
+        return this.clubApiPost(`/profile/addUserFromPanel`, payload)
     }
 
     createAdmin(adminID: string): Observable<ApiResponse<user>> {
