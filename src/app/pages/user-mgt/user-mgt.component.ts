@@ -3,7 +3,7 @@ import { UserManagement } from '@app/core/services/user-management.service';
 import { ApiResponse } from '@app/core/models/response.model';
 import { fromEvent, Observable, of, Subject, Subscription } from 'rxjs';
 import { debounceTime, delay, distinctUntilChanged, filter, map, subscribeOn, switchMapTo, take, takeUntil, tap } from 'rxjs/operators';
-import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, ModalDismissReasons, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { FormGroup, Validators, FormBuilder, FormControl, AbstractControl, ValidationErrors } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { User } from 'src/app/core/models/user.model';
@@ -64,12 +64,15 @@ export class UserMgtComponent implements OnInit {
     private modalService: NgbModal,
     private toastr: ToastrService,
     private fb: FormBuilder,
-    private spinner: NgxSpinnerService)
+    private spinner: NgxSpinnerService,
+    private config: NgbModalConfig)
     {
       this.page = 1;
       this.isLoading = false;
       this.getUsers()
       this.getUserCount()
+      config.backdrop = 'static';
+    config.keyboard = false;
     }
 
   ngOnInit(): void {
@@ -296,11 +299,7 @@ deleteUserDialog(deleteUserContent) {
 }
 
   openVerticallyCentered(content) {
-    this.modalService.open(content, { centered: true, size: 'lg' }).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-    });
+    this.modalService.open(content, { centered: true, size: 'lg' })
   }
 
   private getDismissReason(reason: any): string {
