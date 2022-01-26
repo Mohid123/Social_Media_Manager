@@ -195,10 +195,8 @@ export class UserMgtComponent implements OnInit {
 
   getUserCount(){
     this.userMgt.getCounts().subscribe((res: ApiResponse<UserCount>)=>{
-      debugger
       if(!res.hasErrors()){
         this.count = res.data;
-        console.log(this.count)
       }
     })
   }
