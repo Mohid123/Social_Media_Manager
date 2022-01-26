@@ -35,12 +35,19 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.scss",
+              "node_modules/intl-tel-input/build/css/intlTelInput.css"
+              
+
              
             ],
             "scripts": [
               "node_modules/apexcharts/dist/apexcharts.min.js",
-              "node_modules/clipboard/dist/clipboard.js"
+              "node_modules/clipboard/dist/clipboard.js",
+              "node_modules/intl-tel-input/build/js/intlTelInput.min.js",
+              "node_modules/intl-tel-input/build/js/utils.js"
+              
+              
             ]
           },
           "configurations": {
@@ -104,6 +111,7 @@
             ],
             "styles": [
               "src/styles.scss",
+              "node_modules/intl-tel-input/build/css/intlTelInput.css",
               "node_modules/@fortawesome/fontawesome-free/scss/fontawesome.scss",
               "node_modules/@fortawesome/fontawesome-free/scss/solid.scss",
               "node_modules/@fortawesome/fontawesome-free/scss/regular.scss",
@@ -117,9 +125,10 @@
               "./node_modules/quill-emoji/dist/quill-emoji.css",
               "./node_modules/quill-mention/dist/quill.mention.min.css",
               "./node_modules/bootstrap/dist/css/bootstrap.min.css",
-              "../node_modules/ngx-toastr/toastr.css",
-              "node_modules/ngx-toastr/toastr.css" ,
-              "src/styles.scss"
+              "../node_modules/ngx-toastr/toastr.css"
+         
+              
+            
             ],
             "scripts": [
               "node_modules/chart.js/dist/Chart.js",
@@ -127,7 +136,10 @@
               "./node_modules/quill/dist/quill.min.js",
               "./node_modules/jquery/dist/jquery.min.js",
               "./node_modules/popper.js/dist/umd/popper.min.js",
-              "./node_modules/bootstrap/dist/js/bootstrap.min.js"
+              "./node_modules/bootstrap/dist/js/bootstrap.min.js",
+              "node_modules/intl-tel-input/build/js/intlTelInput.min.js",
+              "node_modules/intl-tel-input/build/js/utils.js"
+              
             ]
           }
         },

@@ -1,0 +1,491 @@
+<!-- <app-spinner></app-spinner> -->
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card card-custom card-stretch">
+            <div class="card-header" style="background-color: #1e1e2d;">
+                <div class="d-flex justify-content-between w-100" >
+                    <div class="card-title">
+                    <h3 class="card-label">
+                        <span class="svg-icon svg-icon-primary svg-icon-2x">
+                            <img src="../../../assets/media/custom/add-profiles.svg"/>
+                        </span>
+                    <span class="nav-text" style="color: #fff;"> &nbsp; Manage Users</span>
+                </h3>
+                    </div>
+                     <div class="card-title">
+                        <a src="/metronic/demo1/custom/apps/user/add-user.html" (click)="openVerticallyCentered(content)" class="btn btn-light-primary font-weight-bold ml-2">+ Add User</a>
+                     </div>
+            </div>
+        </div>
+            <div class="card-body" style="padding: 0;">
+                <div class="card card-custom mb-12">
+                    <div class="card-body rounded p-0 d-flex" style="background-color:#DAF0FD;">
+                        <div class="d-flex flex-column flex-lg-row-auto w-auto w-lg-350px w-xl-450px w-xxl-500px p-md-10">
+                            <h1 class="font-weight-bolder text-dark">Search Users</h1>
+                            <div class="font-size-h4 mb-8">Search users by full name</div>
+                            <!--begin::Form-->
+                            <form class="d-flex flex-center py-2 px-6 bg-white rounded">
+                                <span class="svg-icon svg-icon-lg svg-icon-primary">
+                                    <img src="../../../assets/media/custom/search.svg"/>
+                                </span>
+                                <input
+                                [formControl]="searchControl"
+                                    #searchInput
+                                    type="text"
+                                    class="form-control border-0 font-weight-bold pl-2"
+                                    placeholder="Search User"
+                                >
+                            </form>
+                          
+                           
+                            <!--end::Form-->
+                        </div>
+                        <div class="d-none d-md-flex flex-row-fluid bgi-no-repeat bgi-position-y-center bgi-position-x-left bgi-size-cover"
+                            style="background-image: url(/assets/media/svg/shapes/taieri.svg); background-position: center right; background-size: contain;">
+                        </div>
+                    </div>
+                </div>
+                <div class="flex-row-lg-fluid ml-lg-8">
+                    <!--begin::Row-->
+                  
+                    <div class="row" style="position: relative;">
+                        <ngx-spinner [fullScreen]="false" [showSpinner]="isLoading" [show]="isLoading" bdColor="rgba(0, 0, 0, 0.3)" size="default" color="#fff" type="ball-spin">
+                            <p style="color: white">D I V I D I S</p>
+                        </ngx-spinner>
+                        <div *ngIf="noRecordFound"  class="custom-height d-flex align-items-center justify-content-center"
+                        style="width: 100% ">
+                        <div class="d-flex flex-column-auto flex-column ">
+                          <a class="text-center">
+                            <img src="./assets/media/bg/app________app____.jpg" alt="" />
+                          </a>
+                          <h3 class="text-center">
+                            No record found
+                          </h3>
+                          <p class="text-center">It seems we can't find any results.</p>
+                        </div>
+                        </div>
+
+                        
+                        <!--begin::Col-->
+                        <div class="col-xl-3" *ngFor="let user of users">
+                                <!--begin::Card-->
+                                <div  class="card card-custom gutter-b card-stretch" style="border: 1px solid rgb(235, 235, 235); box-shadow: rgb(99 99 99 / 20%) 0px 2px 8px 0px; ">
+                                    <div *ngIf="user.admin == true" class=" ribbon ribbon-top">
+                                        <div class="ribbon-target bg-light-success text-dark-75" style="top: -2px; right: 20px;"><i class="fas fa-check-double" style="color:#00657e"></i></div>
+                                      </div>
+                                    <div *ngIf="user.blockFromApp == true" class=" ribbon ribbon-top">
+                                        <div class="ribbon-target bg-light-success text-dark-75" style="top: -2px; right: 60px;"><i class="fas fa-ban" style="color:#dd1200"></i></div>
+                                      </div>
+                                    <!--begin::Body-->
+                                    <div  class="card-body pt-4 d-flex flex-column justify-content-between">
+                                        <!--begin::User-->
+                                        <div class="d-flex align-items-center mb-5">
+                                            <div class="symbol symbol-60 symbol-xxl-100 mr-5 align-self-start align-self-xxl-center">
+                                                <ng-container *ngIf="user.profilePicURL">
+                                                    <img [src]="user.profilePicURL" style="border-radius: 50%; object-fit: cover; width: 100px;">
+                                                </ng-container>
+                                                <ng-container *ngIf="!user.profilePicURL;">
+                                                    <img src="../../../assets/media/users/avatar.png" style="border-radius: 50%; object-fit: cover; width: 100px;">
+                                                </ng-container>
+                                                <i class="symbol-badge bg-success"></i>
+                                            </div>
+                                            <div>
+                                                <a class="font-weight-bolder font-size-h5 text-dark-75 text-hover-primary">{{user.fullName}}</a>
+                                                <div class="text-muted">{{user.gender}}</div>
+                                                <div class="mt-2">
+                                                    <!--BLOCK USER-->
+                                                    <ng-container *ngIf="user.blockFromApp == false">
+                                                        <a class="btn btn-icon btn-sm btn-light-warning mr-2" (click)="blockUser(user)" data-toggle="tooltip" title="Block User" data-theme="dark">
+                                                            <i class="fas fa-lock"></i>
+                                                        </a>
+                                                    </ng-container>
+                                                    <ng-container *ngIf="user.blockFromApp == true">
+                                                        <a class="btn btn-icon btn-sm btn-light-success mr-2" (click)="unBlockUser(user)" data-toggle="tooltip" title="Unblock User" data-theme="dark">
+                                                            <i class="fas fa-lock-open"></i>
+                                                        </a>
+                                                    </ng-container>
+
+                                                    <!--DELETE USER-->
+                                                    <a class="btn btn-icon btn-sm btn-light-danger mr-2" (click)="deleteUser(user)" data-toggle="tooltip" title="Delete User" data-theme="dark">
+                                                        <i class="fas fa-trash"></i>
+                                                    </a>
+
+                                                    <!--ADMIN ACCESS-->
+                                                    <ng-container *ngIf="user.admin == false">
+                                                        <a class="btn btn-icon btn-sm btn-light-info" (click)="createAdmin(user)" data-toggle="tooltip" title="Allow Admin Access" data-theme="dark">
+                                                            <i class="fas fa-crown"></i>
+                                                        </a>
+                                                    </ng-container>
+                                                    <ng-container *ngIf="user.admin == true">
+                                                        <a class="btn btn-icon btn-sm btn-light-info" (click)="removeAdmin(user)" data-toggle="tooltip" title="Revoke Admin Access" data-theme="dark">
+                                                            <i class="fas fa-user"></i>
+                                                        </a>
+                                                    </ng-container>   
+                                                  
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--end::User-->
+                                        <!--begin::Info-->
+                                        <div class="mb-7">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <span class="text-dark-75 font-weight-bolder mr-2">Email:</span>
+                                                <a class="text-muted text-hover-primary" style="text-overflow: ellipsis;
+                                                overflow: hidden;
+                                                text-align: end;">{{user.email}}</a>
+                                            </div>
+                                            <div class="d-flex justify-content-between align-items-cente my-1">
+                                                <span class="text-dark-75 font-weight-bolder mr-2">Phone:</span>
+                                                <a class="text-muted text-hover-primary">{{user.phoneNo}}</a>
+                                            </div>
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <span class="text-dark-75 font-weight-bolder mr-2">DOB:</span>
+                                                <span class="text-muted font-weight-bold">{{user.DOB}}</span>
+                                            </div>
+                                        </div>
+                                        <!--end::Info-->
+                                        <span class="label label-light-primary label-pill label-inline py-7 font-weight-bolder">{{user.username}}</span>
+                                    </div>
+                                    <!--end::Body-->
+                                </div>
+                                <!--end::Card-->
+                        </div>
+                       
+                        
+                        
+                        <!--end::Col-->
+                    
+                    </div>
+                    <!--end::Row-->
+                
+                    <!--begin::Pagination-->
+                 
+
+               
+                    <!--end::Pagination-->
+                </div>
+
+
+                <!--MODAL-->
+                <div class="example-preview">
+                    <ng-template #content let-c="close" let-d="dismiss">
+                      <div class="modal-header d-flex justify-content-center" style="background-color: #1e1e2d;">
+                        <h4 class="modal-title" style="color: #fff;">Create New User</h4>
+                        <button type="button" class="close ml-auto" aria-label="Close" (click)="d('Cross click')"> <i
+                            class="ki ki-bold-close icon-sm" style="color:rgba(255, 255, 255, 0.877)"></i>
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body d-flex justify-content-center p-0" >
+                        <div class="card card-custom card-stretch w-100 ">
+                            <!--begin::Header-->
+                            <div class="card-header py-3">
+                                <div class="card-title align-items-start flex-column">
+                                    <h3 class="card-label font-weight-bolder text-dark">User Information</h3>
+                                    <span class="text-muted font-weight-bold font-size-sm mt-1">Please fill in the form to create user</span>
+                                </div>
+                            </div>
+                            <!--end::Header-->
+                            <!--begin::Form-->
+                            <form class="form custom-scrollbar-css" [formGroup]="userForm" (ngSubmit)="registerNewUser()">
+                                <!--begin::Body-->
+                                <div class="card-body">
+                                    <div class="row">
+                                        <label class="col-xl-3"></label>
+                                        <div class="col-lg-9 col-xl-6">
+                                            <h5 class="font-weight-bold mb-6">User Info</h5>
+                                        </div>
+                                    </div>
+
+                                    <!--PROFILE PICTURE-->
+                                    <div class="form-group row">
+                                        <label class="col-xl-3 col-lg-3 col-form-label">Profile Picture</label>
+                                        <div class="col-lg-9 col-xl-6">
+                                            <div class="image-input image-input-outline image-input-changed" id="kt_profile_avatar">
+                                                <img class="rounded" src="https://api.solissol.com/api/v1/en/media-upload/mediaFiles/profilepics/0I7KH97u1JOpUAEfpfA7lc7oyhD2/86771a2591c445395929d5e938cef6b7.png" height="200" width="200">
+                                                <!-- <img *ngIf="!url" class="rounded" src="https://api.solissol.com/api/v1/en/media-upload/mediaFiles/profilepics/0I7KH97u1JOpUAEfpfA7lc7oyhD2/86771a2591c445395929d5e938cef6b7.png" height="200" width="200">
+                                                <label class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="change" data-toggle="tooltip" title="" data-original-title="Change avatar">
+                                                    <i class="fa fa-pen icon-sm text-muted"></i>
+                                                    <input formControlName="profilePicURL" type="file" (change)="onSelectFile($event)" (click)="onClick($event)">
+                                                </label>
+                                                <span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="cancel" data-toggle="tooltip" title="" data-original-title="Cancel avatar">
+                                                    <i class="ki ki-bold-close icon-xs text-muted" (click)="removeImage()"></i>
+                                                </span>
+                                                <span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="remove" data-toggle="tooltip" title="" data-original-title="Remove avatar">
+                                                    <i class="ki ki-bold-close icon-xs text-muted" (click)="removeImage()"></i>
+                                                </span> -->
+                                            </div>
+                                            <!-- <span class="form-text text-muted">Allowed file types: png, jpg, jpeg.</span> -->
+                                        </div>
+                                    </div>
+                                    <!--FULL NAME VALIDATION-->
+                                    <div class="form-group row">
+                                        <label class="col-xl-3 col-lg-3 col-form-label">Full Name
+                                            <span class="text-danger">*</span>
+                                        </label>
+                                        <div class="col-lg-9 col-xl-6">
+                                            <input placeholder="John Doe" class="form-control form-control-lg form-control-solid" formControlName="fullname" type="text" [ngClass]="{ 'is-in valid': userForm.controls['fullname'].invalid }">
+                                            <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+                                                validation: 'required',
+                                                message: 'Full Name is required',
+                                                control: userForm.controls['fullname']
+                                              }">
+                                            </ng-container>
+                                            <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+                                                validation: 'minlength',
+                                                message: 'Full Name should at least be 7 characters',
+                                                control: userForm.controls['fullname']
+                                              }">
+                                            </ng-container>
+                                            <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+                                                validation: 'maxlength',
+                                                message: 'Full Name cannot exceed 40 characters',
+                                                control: userForm.controls['fullname']
+                                              }">
+                                            </ng-container>
+                                        </div>
+                                    </div>
+
+                                    <!--USERNAME VALIDATION-->
+                                    <div class="form-group row">
+                                        <label class="col-xl-3 col-lg-3 col-form-label">Username
+                                            <span class="text-danger">*</span>
+                                        </label>
+                                        <div class="col-lg-9 col-xl-6">
+                                            <input placeholder="johndoe" class="form-control form-control-lg form-control-solid" formControlName="username" type="text" [ngClass]="{ 'is-in valid': userForm.controls['username'].invalid }">
+                                            <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+                                                validation: 'required',
+                                                message: 'Username is required',
+                                                control: userForm.controls['username']
+                                              }">
+                                            </ng-container>
+                                            <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+                                                validation: 'minlength',
+                                                message: 'Username should at least be 7 characters',
+                                                control: userForm.controls['username']
+                                              }">
+                                            </ng-container>
+                                            <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+                                                validation: 'maxlength',
+                                                message: 'Full Name cannot exceed 20 characters',
+                                                control: userForm.controls['username']
+                                              }">
+                                            </ng-container>
+                                        </div>
+                                    </div>
+
+                                      <!--EMAIL VALIDATION-->
+                                    <div class="form-group row">
+                                        <label class="col-xl-3 col-lg-3 col-form-label">Email Address
+                                            <span class="text-danger">*</span>
+                                        </label>
+                                        <div class="col-lg-9 col-xl-6">
+                                            <div class="input-group input-group-lg input-group-solid">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">
+                                                        <i class="fa fa-envelope-open-text text-primary"></i>
+                                                    </span>
+                                                </div>
+                                                <input type="text" class="form-control form-control-lg form-control-solid" placeholder="Email" formControlName="email" [ngClass]="{ 'is-in valid': userForm.controls['email'].invalid }">
+                                            </div>
+                                            <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+                                                validation: 'required',
+                                                message: 'Email Address is required',
+                                                control: userForm.controls['email']
+                                              }">
+                                            </ng-container>
+                                            <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+                                                validation: 'pattern',
+                                                message: 'Email should have the following character/s: @',
+                                                control: userForm.controls['email']
+                                              }">
+                                            </ng-container>
+                                            <span class="form-text text-muted">We'll never share your email with anyone else.</span>
+                                        </div>
+                                    </div>
+
+                                    <!--PASSWORD VALIDATION-->
+                                    <div class="form-group row">
+                                        <label class="col-xl-3 col-lg-3 col-form-label">Password
+                                            <span class="text-danger">*</span>
+                                        </label>
+                                        <div class="col-lg-9 col-xl-6">
+                                            <div class="input-group-prepend">
+                                                <input
+                                                    class="form-control form-control-lg form-control-solid"
+                                                    formControlName="pass"
+                                                    type="{{passwordHide ? 'password' : 'text'}}"
+                                                    [ngClass]="{ 'is-in valid': userForm.controls['pass'].invalid }"
+                                                    placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;"
+                                                    autocomplete="new-password"
+                                                >
+                                                <span class="input-group-text" style="cursor: pointer !important" (click)="passwordShowHide()">
+                                                    <i class="far fa-eye"></i>
+                                                </span>
+                                            </div>
+                                            <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+                                                validation: 'required',
+                                                message: 'Password is required',
+                                                control: userForm.controls['pass']
+                                              }">
+                                            </ng-container>
+                                            <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+                                                validation: 'minlength',
+                                                message: 'Username should at least be 8 characters',
+                                                control: userForm.controls['pass']
+                                              }">
+                                            </ng-container>
+                                            <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+                                                validation: 'maxlength',
+                                                message: 'Full Name cannot exceed 128 characters',
+                                                control: userForm.controls['pass']
+                                              }">
+                                            </ng-container>
+                                        </div>
+                                    </div>
+
+                                    <!--GENDER VALIDATION-->
+                                    <div class="form-group row">
+                                        <label class="col-xl-3 col-lg-3 col-form-label" for="exampleSelect1">
+                                            Gender
+                                            <span class="text-danger">*</span>
+                                        </label>
+                                           
+                                        <div class="col-lg-9 col-xl-6">
+                                            <select class="custom-select form-control form-control-lg form-control-solid" formControlName="gender" [ngClass]="{ 'is-in valid': userForm.controls['username'].invalid }">
+                                                <option disabled>Select</option>
+                                                <option *ngFor="let gender of Gender" [ngValue]="gender">{{gender}}</option>
+                                            </select>
+                                            <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+                                                validation: 'required',
+                                                message: 'Gender is required',
+                                                control: userForm.controls['gender']
+                                              }">
+                                            </ng-container>
+                                        </div>
+                                    </div>
+
+                                      <!--PHONE NUMBER VALIDATION-->
+                                    <div class="form-group row">
+                                        <label class="col-xl-3 col-lg-3 col-form-label">Contact Phone
+                                            <span class="text-danger">*</span>
+                                        </label>
+                                        <div class="col-lg-9 col-xl-6">
+                                            <div class="input-group input-group-lg input-group-solid">
+                                                <!-- <div class="input-group-prepend">
+                                                    <span class="input-group-text">
+                                                        <i class="fas fa-phone-alt text-primary"></i>
+                                                    </span>
+                                                </div> -->
+                                                <input (countryChange)="onCountryChange($event)" (keypress)="numberOnly($event)"
+                                                ng2TelInput [ng2TelInputOptions]="{initialCountry: 'bg'}"
+                                                type="text" 
+                                                class="form-control form-control-lg form-control-solid"
+                                                placeholder="Phone"
+                                                formControlName="phone"
+                                                [ngClass]="{ 'is-in valid': userForm.controls['phone'].invalid}"
+                                                >
+                                            </div>
+                                            <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+                                                validation: 'required',
+                                                message: 'Phone Number is required',
+                                                control: userForm.controls['phone']
+                                              }">
+                                            </ng-container>
+                                            <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+                                                validation: 'minlength',
+                                                message: 'Phone Number should at least be 11 characters',
+                                                control: userForm.controls['phone']
+                                              }">
+                                            </ng-container>
+                                            <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+                                                validation: 'maxlength',
+                                                message: 'Phone Number cannot exceed 14 characters',
+                                                control: userForm.controls['phone']
+                                              }">
+                                            </ng-container>
+                                            <div class="text-danger"
+                                                 *ngIf="userForm.controls['phone'].errors?.phoneExists">
+                                                 This Phone Number is already registered to a user
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!--DOB VALIDATION-->
+                                    <div class="form-group row">
+                                        <label class="col-xl-3 col-lg-3 col-form-label">DOB
+                                        </label>
+                                        <div class="col-lg-9 col-xl-6">
+                                            <div class="input-group input-group-lg input-group-solid">
+                                                <input type="date" class="form-control form-control-lg form-control-solid" formControlName="DOB">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!--ADMIN CHECK-->
+                                    <div class="form-group row">
+                                        <label class="col-3 col-form-label">Admin</label>
+                                        <div class="col-9 col-form-label">
+                                            <div class="checkbox-inline">
+                                                <label class="checkbox checkbox-primary">
+                                                <input formControlName="isAdmin" type="checkbox">
+                                                <span></span></label>
+                                            </div>
+                                            <span class="form-text text-muted">Want to become an admin?</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <span class="text-danger ml-5" style="font-size: x-small!important;">Fields marked with * are required</span>
+                                <!--end::Body-->
+                                <div class="modal-footer d-flex justify-content-center">
+                                    <button [disabled]="userForm.invalid || userForm.errors" type="submit" class="btn btn-primary mr-2">Save Changes</button>
+                                    <button type="button" class="btn btn-secondary" (click)="c('Close click')">Cancel</button>
+                                </div>
+                            </form>
+                            <!--end::Form-->
+                        </div>
+                      </div>
+                    </ng-template>
+                  </div>
+
+            </div>
+        </div>
+        <div class="card card-custom">
+            <div class="card-body py-7">
+               
+                <!--begin::Pagination-->
+                <div class="d-flex justify-content-end align-items-center flex-wrap">
+                    <div class="d-flex flex-wrap mr-3">
+                        <button [disabled]="page < 2" (click)="previous()" class="btn btn-icon btn-sm btn-light-primary mr-2 my-1">
+                            <i class="ki ki-bold-double-arrow-back icon-xs"></i>
+                        </button>
+                        <!-- <ng-container *ngIf="users?.totalCount > limit  ; else noPage">
+                            <span>{{ page }} / {{ (users?.totalCount  / limit) + (0.4) | number:'1.0-0' }}</span>
+                          </ng-container>
+                          <ng-template #noPage >
+                            <span>1/1</span>
+                          </ng-template> -->
+                        <button  [disabled]="(users?.totalCount / limit) <= page" (click)="next()" class="btn btn-icon btn-sm btn-light-primary mr-2 my-1">
+                            <i class="ki ki-bold-double-arrow-next icon-xs"></i>
+                        </button>
+                    </div>
+                
+                </div>
+                <!--end:: Pagination-->
+            </div>
+        </div>
+    </div>
+
+ 
+    
+</div>
+
+<ng-template #formError let-control="control" let-message="message" let-validation="validation">
+  <ng-container *ngIf="control.hasError(validation) && (control.dirty || control.touched)">
+    <div class="fv-plugins-message-container">
+      <div class="fv-help-block">
+        {{ message }}
+      </div>
+    </div>
+  </ng-container>
+</ng-template>

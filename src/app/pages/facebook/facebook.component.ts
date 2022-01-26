@@ -111,6 +111,7 @@ export class FacebookComponent implements OnInit {
     this.urls = [];
     this.multiples = [];
     this.url = null
+    this.showSchedule = false;
     this.facebookCaption = '';
     this.removeSlectedItems();
     this.cf.detectChanges();

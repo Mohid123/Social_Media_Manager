@@ -54,7 +54,8 @@ import { FeedbackComponent } from './help/feedback.component';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 import { JoyrideModule } from 'ngx-joyride';
 import { NgImageSliderModule } from 'ng-image-slider';
-
+import { UserMgtComponent } from './user-mgt/user-mgt.component';
+import {Ng2TelInputModule} from 'ng2-tel-input';
 FullCalendarModule.registerPlugins([ 
   dayGridPlugin,
   interactionPlugin
@@ -92,7 +93,8 @@ FullCalendarModule.registerPlugins([
     ScheduleComponent,
     CalendarComponent,
     FeedbackComponent,
-    AppSpinner
+    AppSpinner,
+    UserMgtComponent
 
   
   ],
@@ -118,6 +120,7 @@ FullCalendarModule.registerPlugins([
     NgxTimePickerModule,
     NgxDropzoneModule,
     ReactiveFormsModule,
+    Ng2TelInputModule,
     JoyrideModule.forRoot(),
    
     
