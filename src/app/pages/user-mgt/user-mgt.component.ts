@@ -51,10 +51,10 @@ export class UserMgtComponent implements OnInit {
   countryCode: Number;
   searchControl = new FormControl();
   scheduleSelectedDate: any;
-  singleDate: Date = new Date(new Date().setDate(new Date().getDate() + 1));
+  singleDate: Date = new Date(new Date().setDate(new Date().getDate()));
   singleDatePickerOptions: DatePickerOptions = {
     // minDate: new Date(new Date().setDate(new Date().getDate() - 1)), // Minimum is selecting a week ago
-    maxDate: new Date(new Date().setDate(new Date().getDate() + 1)), // Maximum date is selecting today
+    maxDate: new Date(new Date().setDate(new Date().getDate())), // Maximum date is selecting today
   };
   public count: UserCount;
 
@@ -98,6 +98,7 @@ export class UserMgtComponent implements OnInit {
           Validators.email,
           Validators.pattern(emailRegex)
         ]),
+        [this.emailValidator()]
       ],
       pass: [
         this.defaultUser.pass,
@@ -126,7 +127,8 @@ export class UserMgtComponent implements OnInit {
       phone: [
         this.defaultUser.phoneNo,
         Validators.compose([
-          Validators.required
+          Validators.required,
+          Validators.minLength(10)
         ]),
         [this.phoneValidator()]
       ],
@@ -234,6 +236,13 @@ export class UserMgtComponent implements OnInit {
     this.userMgt.blockUser(user.id).subscribe((res: ApiResponse<any>)=>{
       if(!res.hasErrors()){
         user.blockFromApp = true;
+        this.userMgt.firebaseCheck(user.blockFromApp, user.email).pipe(
+          takeUntil(this.destroy$)
+          ).subscribe((res: ApiResponse<any>) => {
+            if(!res.hasErrors()) {
+              res.data
+            }
+          })
         this.toastr.success('This user has been blocked.', 'Block User');
       }
     })
@@ -348,6 +357,16 @@ phoneValidator() {
         )
       }
     };
+}
+
+emailValidator() {
+  return (control: AbstractControl): Observable<ValidationErrors | null> => {
+      return this.userMgt.emailExists(control.value).pipe(
+        distinctUntilChanged(),
+        debounceTime(600),
+        map((res: ApiResponse<any>) => (res.data == true ? {emailExists: true} : null))
+      )
+  };
 }
 
 numberOnly(event): boolean {

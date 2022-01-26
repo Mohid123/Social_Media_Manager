@@ -73,4 +73,12 @@ type user = User | UserList | UserCount
     phoneExists(phoneNo: string): Observable<ApiResponse<user>> {
         return this.clubApiGet(`/profile/isPhoneNumberExists?phoneNo=${phoneNo}`)
     }
+
+    emailExists(email: string): Observable<ApiResponse<user>> {
+        return this.clubApiPost(`/auth/isEmailExists`, {email})
+    }
+
+    firebaseCheck(checkVal: boolean, email: string): Observable<ApiResponse<user>> {
+        return this.clubApiGet(`/firebase-migration-functions/disableUser?checkVal=${checkVal}&email=${email}`)
+    }
   }

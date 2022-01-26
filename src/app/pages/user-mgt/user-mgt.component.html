@@ -379,6 +379,10 @@
                                                 control: userForm.controls['email']
                                               }">
                                             </ng-container>
+                                            <div class="text-danger"
+                                                 *ngIf="userForm.controls['email'].errors?.emailExists">
+                                                 This Email is already registered to a user
+                                            </div>
                                             <span class="form-text text-muted">We'll never share your email with anyone else.</span>
                                         </div>
                                     </div>
@@ -455,7 +459,7 @@
                                                 ng2TelInput [ng2TelInputOptions]="{initialCountry: 'bg'}"
                                                 type="text" 
                                                 class="form-control form-control-lg form-control-solid"
-                                                placeholder="Phone"
+                                                placeholder="xxxxxxxxxx"
                                                 formControlName="phone"
                                                 [ngClass]="{ 'is-in valid': userForm.controls['phone'].invalid}"
                                                 >
@@ -463,6 +467,12 @@
                                             <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
                                                 validation: 'required',
                                                 message: 'Phone Number is required',
+                                                control: userForm.controls['phone']
+                                              }">
+                                            </ng-container>
+                                            <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+                                                validation: 'minlength',
+                                                message: 'Phone Number should at least be 10 characters',
                                                 control: userForm.controls['phone']
                                               }">
                                             </ng-container>
