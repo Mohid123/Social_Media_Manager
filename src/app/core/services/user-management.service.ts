@@ -11,6 +11,7 @@ import { tap } from 'rxjs/operators';
 
 type user = User | UserList
 
+
 @Injectable({
     providedIn: 'root'
   })
@@ -20,6 +21,7 @@ type user = User | UserList
           data: []
       })
       public readonly userList$: Observable<UserList> = this._userList.asObservable()
+      public limit: number = 12
     constructor(protected http: HttpClient) {
         super(http)
     }
@@ -28,8 +30,8 @@ type user = User | UserList
         // limit = parseInt(limit) < 1 ? 12 : limit;
         // offset = parseInt(offset) < 0 ? 0 : offset;
         const param:any = {
-            offset: page ? environment.limit * page : 0,
-            limit: environment.limit
+            offset: page ? this.limit * page : 0,
+            limit: this.limit
             
         }
         return this.clubApiGet('/profile/getAllUsers', param)

@@ -39,7 +39,7 @@ export class UserMgtComponent implements OnInit {
   modalReference: any;
   public isLoading: boolean;
   public users: User;
-  public limit: number = environment.limit;
+  public limit: number = 12;
   public searchValue = '';
   public page:number;
   name: string = '';
