@@ -181,7 +181,6 @@ export class UserMgtComponent implements OnInit {
       takeUntil(this.destroy$)).subscribe((res: ApiResponse<User>)=>{
       if(!res.hasErrors()){
        this.users = res.data;
-       console.log(this.users)
        this.cf.detectChanges();
       }
       this.isLoading = false;
@@ -207,7 +206,7 @@ export class UserMgtComponent implements OnInit {
   }
 
   deleteUser(user: User){
-    this.userMgt.deleteProfileByID(user.id).subscribe((res: ApiResponse<User>)=>{
+    this.userMgt.deleteProfileByID(user.id, user.email).subscribe((res: ApiResponse<User>)=>{
       if(!res.hasErrors()) {
         this.cf.detectChanges();
         this.toastr.success('User successfully deleted.', 'Success!');

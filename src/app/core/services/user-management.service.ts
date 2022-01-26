@@ -39,8 +39,8 @@ type user = User | UserList
         return this.clubApiGet(`/profile/searchProfileByName/${name}?offset=${offset}&limit=${limit}`)
     }
 
-    deleteProfileByID(id: string): Observable<ApiResponse<user>> {
-        return this.clubApiGet(`/profile/deleteProfileById/${id}`)
+    deleteProfileByID(id: string, email: string): Observable<ApiResponse<user>> {
+        return this.clubApiGet(`/profile/deleteProfileById/${id}?email=${email}`)
     }
 
     blockUser(userID: string): Observable<ApiResponse<user>> {
