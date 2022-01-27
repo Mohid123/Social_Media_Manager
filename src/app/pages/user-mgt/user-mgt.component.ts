@@ -171,17 +171,14 @@ export class UserMgtComponent implements OnInit {
       admin: this.userForm.value.isAdmin,
       profilePicURL: 'https://api.solissol.com/api/v1/en/media-upload/mediaFiles/profilepics/0I7KH97u1JOpUAEfpfA7lc7oyhD2/86771a2591c445395929d5e938cef6b7.png'
     }
-    debugger
     this.userMgt.createUser(payload).pipe(takeUntil(this.destroy$)).subscribe((res: ApiResponse<User>) => {
-      debugger
-      if(!res.hasErrors()) {
+     if(!res.hasErrors()) {
         this.toastr.success('User Created Successfully', 'Success');
         this.getUsers();
         this.getUserCount();
         this.resetUserForm();
         this.cf.detectChanges();
         this.modalService.dismissAll('Close click');
-      
       }
       else {
         this.toastr.error('Failed To Create New User', 'Create User');
@@ -203,7 +200,7 @@ export class UserMgtComponent implements OnInit {
       takeUntil(this.destroy$)).subscribe((res: ApiResponse<User>)=>{
       if(!res.hasErrors()){
        this.users = res.data;
-       console.log(this.users)
+      
        this.cf.detectChanges();
       }
       this.isLoading = false;
@@ -250,8 +247,7 @@ export class UserMgtComponent implements OnInit {
 
   blockUser(user: User){
     this.userMgt.blockUser(user.id).subscribe((res: ApiResponse<any>)=>{
-      debugger
-      if(!res.hasErrors()){
+       if(!res.hasErrors()){
         user.blockFromApp = true;
         let club = this._clubService.selectedClub;
         let obj = {
@@ -261,8 +257,7 @@ export class UserMgtComponent implements OnInit {
           this.userMgt.firebaseCheck(user.blockFromApp, user.email).pipe(
             takeUntil(this.destroy$)
             ).subscribe((res: ApiResponse<any>) => {
-              debugger
-              if(!res.hasErrors()) {
+               if(!res.hasErrors()) {
                 user.clubMember.statusType = "blocked"
               }
             })
