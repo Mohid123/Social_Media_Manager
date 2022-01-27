@@ -198,7 +198,6 @@ export class UserMgtComponent implements OnInit {
     this.userMgt.getAllUsers(this.page).pipe(
       distinctUntilChanged(),
       takeUntil(this.destroy$)).subscribe((res: ApiResponse<User>)=>{
-        debugger
       if(!res.hasErrors()){
        this.users = res.data;
        console.log(this.users)
@@ -311,7 +310,7 @@ export class UserMgtComponent implements OnInit {
             takeUntil(this.destroy$)
             ).subscribe((res: ApiResponse<any>) => {
                if(!res.hasErrors()) {
-                user.clubMember.statusType = "approved"
+                user.blockFromApp = false
               }
             })
             this.toastr.success('This user has been unblocked', 'Unblock User');
