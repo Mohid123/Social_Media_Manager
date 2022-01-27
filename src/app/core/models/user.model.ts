@@ -1,4 +1,5 @@
 export class User {
+    superAdmin?:               boolean;
     pass?:                     string;
     password?:                 any;
     profilePicURL?:            string;
