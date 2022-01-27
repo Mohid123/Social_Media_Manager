@@ -511,7 +511,7 @@
                 <!--begin::Pagination-->
                 <div class="d-flex justify-content-end align-items-center flex-wrap">
                     <div class="d-flex flex-wrap mr-3">
-                        <button [disabled]="page < 2" (click)="previous()" class="btn btn-icon btn-sm btn-light-primary mr-2 my-1">
+                        <button [disabled]="page == 0" (click)="previous()" class="btn btn-icon btn-sm btn-light-primary mr-2 my-1">
                             <i class="ki ki-bold-double-arrow-back icon-xs"></i>
                         </button>
                         <!-- <ng-container *ngIf="users?.totalCount > limit  ; else noPage">
