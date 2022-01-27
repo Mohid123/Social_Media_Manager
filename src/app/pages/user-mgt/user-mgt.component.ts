@@ -75,7 +75,7 @@ export class UserMgtComponent implements OnInit {
     private _clubService: ClubService,
     private config: NgbModalConfig)
     {
-      this.page = 1;
+      this.page = 0;
       this.isLoading = false;
       this.getUsers()
       this.getUserCount()
@@ -198,9 +198,10 @@ export class UserMgtComponent implements OnInit {
     this.userMgt.getAllUsers(this.page).pipe(
       distinctUntilChanged(),
       takeUntil(this.destroy$)).subscribe((res: ApiResponse<User>)=>{
+        debugger
       if(!res.hasErrors()){
        this.users = res.data;
-      
+       console.log(this.users)
        this.cf.detectChanges();
       }
       this.isLoading = false;
@@ -251,25 +252,18 @@ export class UserMgtComponent implements OnInit {
         user.blockFromApp = true;
         let club = this._clubService.selectedClub;
         let obj = {
-          baseUrl: club.baseURL
+          pickerCheck: club.pickerClub
         };
-        if (obj.baseUrl == BaseURL.baseURL[1] || obj.baseUrl == BaseURL.baseURL[2] || obj.baseUrl == BaseURL.baseURL[3]) {
-          this.userMgt.firebaseCheck(user.blockFromApp, user.email).pipe(
-            takeUntil(this.destroy$)
-            ).subscribe((res: ApiResponse<any>) => {
-               if(!res.hasErrors()) {
-                user.clubMember.statusType = "blocked"
-              }
-            })
-            this.toastr.success('This user has been blocked', 'Block User');
+        if (obj.pickerCheck == true) {
+          user.clubMember.statusType = "blocked"
+          this.toastr.success('This user has been blocked', 'Block User');
         }
         else {
           this.userMgt.firebaseCheck(user.blockFromApp, user.email).pipe(
             takeUntil(this.destroy$)
             ).subscribe((res: ApiResponse<any>) => {
-              debugger
                if(!res.hasErrors()) {
-                user.blockFromApp = true;
+                user.blockFromApp = true
               }
             })
             this.toastr.success('This user has been blocked', 'Block User');
@@ -306,25 +300,18 @@ export class UserMgtComponent implements OnInit {
         user.blockFromApp = false;
         let club = this._clubService.selectedClub;
         let obj = {
-          baseUrl: club.baseURL
+          pickerCheck: club.pickerClub
         };
-        if (obj.baseUrl == BaseURL.baseURL[1] || obj.baseUrl == BaseURL.baseURL[2] || obj.baseUrl == BaseURL.baseURL[3]) {
-          this.userMgt.firebaseCheck(user.blockFromApp, user.email).pipe(
-            takeUntil(this.destroy$)
-            ).subscribe((res: ApiResponse<any>) => {
-              if(!res.hasErrors()) {
-                user.clubMember.statusType = "approved"
-              }
-            })
-            this.toastr.success('This user has been unblocked', 'Unblock User');
+        if (obj.pickerCheck == true) {
+          user.clubMember.statusType = "approved"
+          this.toastr.success('This user has been unblocked', 'Unblock User');
         }
         else {
           this.userMgt.firebaseCheck(user.blockFromApp, user.email).pipe(
             takeUntil(this.destroy$)
             ).subscribe((res: ApiResponse<any>) => {
                if(!res.hasErrors()) {
-                user.blockFromApp = false;
-                console.log(res.data);
+                user.clubMember.statusType = "approved"
               }
             })
             this.toastr.success('This user has been unblocked', 'Unblock User');
