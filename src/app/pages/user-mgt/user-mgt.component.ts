@@ -7,12 +7,12 @@ import { NgbModal, ModalDismissReasons, NgbModalConfig } from '@ng-bootstrap/ng-
 import { FormGroup, Validators, FormBuilder, FormControl, AbstractControl, ValidationErrors } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { User } from 'src/app/core/models/user.model';
-import { UserList } from './../../core/models/userlist.model';
-import { environment } from '@environments/environment';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { DatePickerOptions } from "@ngx-tiny/date-picker";
 import * as moment from 'moment';
 import { UserCount } from '@app/core/models/user-count.model';
+import { ClubService } from './../../core/services/club.service';
+import { BaseURL } from './../../core/models/base-urls';
 
 @Component({
   selector: 'user-management',
@@ -57,6 +57,8 @@ export class UserMgtComponent implements OnInit {
     maxDate: new Date(new Date().setDate(new Date().getDate())), // Maximum date is selecting today
   };
   public count: UserCount;
+  public admins: User;
+  public blockedUsers: User
 
   constructor(
     public userMgt : UserManagement,
@@ -65,6 +67,7 @@ export class UserMgtComponent implements OnInit {
     private toastr: ToastrService,
     private fb: FormBuilder,
     private spinner: NgxSpinnerService,
+    private _clubService: ClubService,
     private config: NgbModalConfig)
     {
       this.page = 1;
@@ -72,7 +75,7 @@ export class UserMgtComponent implements OnInit {
       this.getUsers()
       this.getUserCount()
       config.backdrop = 'static';
-    config.keyboard = false;
+      config.keyboard = false;
     }
 
   ngOnInit(): void {
@@ -163,7 +166,9 @@ export class UserMgtComponent implements OnInit {
       admin: this.userForm.value.isAdmin,
       profilePicURL: 'https://api.solissol.com/api/v1/en/media-upload/mediaFiles/profilepics/0I7KH97u1JOpUAEfpfA7lc7oyhD2/86771a2591c445395929d5e938cef6b7.png'
     }
+    debugger
     this.userMgt.createUser(payload).pipe(takeUntil(this.destroy$)).subscribe((res: ApiResponse<User>) => {
+      debugger
       if(!res.hasErrors()) {
         this.toastr.success('User Created Successfully', 'Success');
         this.resetUserForm();
@@ -189,6 +194,7 @@ export class UserMgtComponent implements OnInit {
       takeUntil(this.destroy$)).subscribe((res: ApiResponse<User>)=>{
       if(!res.hasErrors()){
        this.users = res.data;
+       console.log(this.users)
        this.cf.detectChanges();
       }
       this.isLoading = false;
@@ -234,18 +240,29 @@ export class UserMgtComponent implements OnInit {
 
   blockUser(user: User){
     this.userMgt.blockUser(user.id).subscribe((res: ApiResponse<any>)=>{
+      debugger
       if(!res.hasErrors()){
         user.blockFromApp = true;
-        this.userMgt.firebaseCheck(user.blockFromApp, user.email).pipe(
-          takeUntil(this.destroy$)
-          ).subscribe((res: ApiResponse<any>) => {
-            if(!res.hasErrors()) {
-              res.data
-            }
-          })
-        this.toastr.success('This user has been blocked.', 'Block User');
+        let club = this._clubService.selectedClub;
+        let obj = {
+          baseUrl: club.baseURL
+        };
+        if (obj.baseUrl == BaseURL.baseURL[1] || obj.baseUrl == BaseURL.baseURL[2] || obj.baseUrl == BaseURL.baseURL[3]) {
+          this.userMgt.firebaseCheck(user.blockFromApp, user.email).pipe(
+            takeUntil(this.destroy$)
+            ).subscribe((res: ApiResponse<any>) => {
+              debugger
+              if(!res.hasErrors()) {
+                user.clubMember.statusType = "blocked"
+              }
+            })
+        }
+        else {
+          return
+        }
       }
     })
+    this.toastr.success('This user has been blocked.', 'Block User');
   }
 
   createAdmin(user: User) {
@@ -272,9 +289,25 @@ export class UserMgtComponent implements OnInit {
     this.userMgt.unBlockUser(user.id).subscribe((res: ApiResponse<User>) => {
       if(!res.hasErrors()) {
         user.blockFromApp = false;
-        this.toastr.success('This user has been unblocked', 'Unblock User');
+        let club = this._clubService.selectedClub;
+        let obj = {
+          baseUrl: club.baseURL
+        };
+        if (obj.baseUrl == BaseURL.baseURL[1] || obj.baseUrl == BaseURL.baseURL[2] || obj.baseUrl == BaseURL.baseURL[3]) {
+          this.userMgt.firebaseCheck(user.blockFromApp, user.email).pipe(
+            takeUntil(this.destroy$)
+            ).subscribe((res: ApiResponse<any>) => {
+              if(!res.hasErrors()) {
+                user.clubMember.statusType = "approved"
+              }
+            })
+        }
+        else {
+          return
+        }
       }
     })
+    this.toastr.success('This user has been unblocked', 'Unblock User');
   }
 
   onSelectFile(event) {
@@ -297,13 +330,13 @@ export class UserMgtComponent implements OnInit {
     event.target.value = ''
 }
 
-deleteUserDialog(deleteUserContent) {
-  this.modalService.open(deleteUserContent, { centered: true }).result.then((result) => {
-    this.closeResult = `Closed with: ${result}`;
-  }, (reason) => {
-    this.closeResult = `Dismissed ${this.getDismissReasonDelete(reason)}`;
-  });
-}
+  deleteUserDialog(deleteUserContent) {
+    this.modalService.open(deleteUserContent, { centered: true }).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReasonDelete(reason)}`;
+    });
+  }
 
   openVerticallyCentered(content) {
     this.modalService.open(content, { centered: true, size: 'lg' })
@@ -344,39 +377,39 @@ deleteUserDialog(deleteUserContent) {
     this.passwordHide = !this.passwordHide;
   }
 
-phoneValidator() {
+  phoneValidator() {
+      return (control: AbstractControl): Observable<ValidationErrors | null> => {
+        if (!control.valueChanges || control.pristine) {
+          return of(null);
+        }
+        else {
+          return this.userMgt.phoneExists(`+${this.countryCode}${control.value}`).pipe(
+            distinctUntilChanged(),
+            debounceTime(600),
+            map((res: ApiResponse<any>) => (res.data == true ? {phoneExists: true} : null))
+          )
+        }
+      };
+  }
+
+  emailValidator() {
     return (control: AbstractControl): Observable<ValidationErrors | null> => {
-      if (!control.valueChanges || control.pristine) {
-        return of(null);
-      }
-      else {
-        return this.userMgt.phoneExists(`+${this.countryCode}${control.value}`).pipe(
+        return this.userMgt.emailExists(control.value).pipe(
           distinctUntilChanged(),
           debounceTime(600),
-          map((res: ApiResponse<any>) => (res.data == true ? {phoneExists: true} : null))
+          map((res: ApiResponse<any>) => (res.data == true ? {emailExists: true} : null))
         )
-      }
     };
-}
-
-emailValidator() {
-  return (control: AbstractControl): Observable<ValidationErrors | null> => {
-      return this.userMgt.emailExists(control.value).pipe(
-        distinctUntilChanged(),
-        debounceTime(600),
-        map((res: ApiResponse<any>) => (res.data == true ? {emailExists: true} : null))
-      )
-  };
-}
-
-numberOnly(event): boolean {
-  const charCode = (event.which) ? event.which : event.keyCode;
-  if (charCode > 31 && (charCode < 48 || charCode > 57)) {
-    return false;
   }
-  return true;
 
-}
+  numberOnly(event): boolean {
+    const charCode = (event.which) ? event.which : event.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+      return false;
+    }
+    return true;
+
+  }
 
   onCountryChange(country) {
     this.countryCode = country.dialCode

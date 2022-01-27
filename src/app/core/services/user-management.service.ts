@@ -79,6 +79,14 @@ type user = User | UserList | UserCount
     }
 
     firebaseCheck(checkVal: boolean, email: string): Observable<ApiResponse<user>> {
-        return this.clubApiGet(`/firebase-migration-functions/disableUser?checkVal=${checkVal}&email=${email}`)
+        return this.clubApiGet(`/firebase-migration-functions/disableUser?checkVal=${checkVal}&email=${email}`, { responseType: 'text' })
     }
+
+    // getAdmins(offset, limit): Observable<ApiResponse<user>> {
+    //     return this.clubApiGet(`/profile/getAdminsUsers?offset=${offset}&limit=${limit}`)
+    // }
+
+    // getBlockedUsers(offset, limit): Observable<ApiResponse<user>> {
+    //     return this.clubApiGet(`/profile/getBlockedFromAppUsers?offset=${offset}&limit=${limit}`)
+    // }
   }
