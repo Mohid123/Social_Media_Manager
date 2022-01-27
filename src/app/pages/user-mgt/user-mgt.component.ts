@@ -21,6 +21,7 @@ import { UserCount } from '@app/core/models/user-count.model';
 })
 export class UserMgtComponent implements OnInit {
   @ViewChild('searchInput', { static: true }) input: ElementRef;
+
   destroy$ = new Subject();
   defaultUser: User = {
     email: "",
@@ -51,10 +52,14 @@ export class UserMgtComponent implements OnInit {
   countryCode: Number;
   searchControl = new FormControl();
   scheduleSelectedDate: any;
-  singleDate: Date = new Date(new Date().setDate(new Date().getDate() + 1));
+
+  singleDate: Date =  new Date(
+    new Date().setFullYear(new Date().getFullYear() - 50)
+  );
   singleDatePickerOptions: DatePickerOptions = {
-    // minDate: new Date(new Date().setDate(new Date().getDate() - 1)), // Minimum is selecting a week ago
-    maxDate: new Date(new Date().setDate(new Date().getDate() + 1)), // Maximum date is selecting today
+    maxDate: new Date(new Date().setFullYear(new Date().getFullYear() - 10)),
+    minDate: new Date(new Date().setFullYear(new Date().getFullYear() - 50)), // Minimum is selecting a week ago
+  // Maximum date is selecting today
   };
   public count: UserCount;
 
@@ -111,16 +116,18 @@ export class UserMgtComponent implements OnInit {
         this.defaultUser.fullName,
         Validators.compose([
           Validators.required,
-          Validators.minLength(7),
-          Validators.maxLength(40),
+          Validators.minLength(4),
+          Validators.maxLength(30),
+          this.noWhitespaceValidator
         ]),
       ],
       username: [
         this.defaultUser.username,
         Validators.compose([
           Validators.required,
-          Validators.minLength(7),
-          Validators.maxLength(20),
+          Validators.minLength(4),
+          Validators.maxLength(30),
+          this.noWhitespaceValidator
         ]),
       ],
       phone: [
@@ -147,6 +154,12 @@ export class UserMgtComponent implements OnInit {
       ]
     });
   }
+
+  public noWhitespaceValidator(control: FormControl) {
+    const isWhitespace = (control.value || '').trim().length === 0;
+    const isValid = !isWhitespace;
+    return isValid ? null : { 'whitespace': true };
+}
 
   registerNewUser() {
     const payload: User = {
@@ -320,6 +333,7 @@ deleteUserDialog(deleteUserContent) {
   }
 
   onChangeScheduleDate(value: Date) {
+    debugger
     this.scheduleSelectedDate = value;
   }
 

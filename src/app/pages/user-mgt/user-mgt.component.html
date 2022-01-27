@@ -116,7 +116,9 @@
                                                 <i class="symbol-badge bg-success"></i>
                                             </div>
                                             <div>
-                                                <a class="font-weight-bolder font-size-h5 text-dark-75 text-hover-primary">{{user.fullName}}</a>
+                                                <a class="font-weight-bolder font-size-h6 text-dark-75" style="text-overflow: ellipsis;
+                                                overflow: hidden;
+                                                text-align: end;">{{user.fullName}}</a>
                                                 <div class="text-muted">{{user.gender}}</div>
                                                 <div *ngIf="!user.superAdmin == true" class="mt-2 d-flex">
                                                     <!--BLOCK USER-->
@@ -294,13 +296,19 @@
                                             </ng-container>
                                             <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
                                                 validation: 'minlength',
-                                                message: 'Full Name should at least be 7 characters',
+                                                message: 'Full Name should at least be 4 characters',
                                                 control: userForm.controls['fullname']
                                               }">
                                             </ng-container>
                                             <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
                                                 validation: 'maxlength',
-                                                message: 'Full Name cannot exceed 40 characters',
+                                                message: 'Full Name cannot exceed 30 characters',
+                                                control: userForm.controls['fullname']
+                                              }">
+                                            </ng-container>
+                                            <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+                                                validation: 'whitespace',
+                                                message: 'Empty spaces are not allowed',
                                                 control: userForm.controls['fullname']
                                               }">
                                             </ng-container>
@@ -322,13 +330,19 @@
                                             </ng-container>
                                             <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
                                                 validation: 'minlength',
-                                                message: 'Username should at least be 7 characters',
+                                                message: 'Username should at least be 4 characters',
                                                 control: userForm.controls['username']
                                               }">
                                             </ng-container>
                                             <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
                                                 validation: 'maxlength',
-                                                message: 'Full Name cannot exceed 20 characters',
+                                                message: 'Full Name cannot exceed 30 characters',
+                                                control: userForm.controls['username']
+                                              }">
+                                            </ng-container>
+                                            <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+                                                validation: 'whitespace',
+                                                message: 'Empty spaces are not allowed',
                                                 control: userForm.controls['username']
                                               }">
                                             </ng-container>
@@ -437,7 +451,7 @@
                                                 ng2TelInput [ng2TelInputOptions]="{initialCountry: 'bg'}"
                                                 type="text" 
                                                 class="form-control form-control-lg form-control-solid"
-                                                placeholder="Phone"
+                                                placeholder="xxxxxxxxxx"
                                                 formControlName="phone"
                                                 [ngClass]="{ 'is-in valid': userForm.controls['phone'].invalid}"
                                                 >
@@ -461,9 +475,9 @@
                                         </label>
                                         <div class="col-lg-9 col-xl-6">
                                             <div class="input-group input-group-lg input-group-solid">
-                                                <input readonly [ngxDatePicker]="dateInstanceSingle" [value]="singleDate"
+                                                <input readonly [ngxDatePicker]="dateInstanceOne" [value]="singleDate"
                                                 (valueChange)="onChangeScheduleDate($event)" class="form-control form-control-lg form-control-solid" formControlName="DOB">
-                                                <ngx-date-picker #dateInstanceSingle [options]="singleDatePickerOptions">
+                                                <ngx-date-picker #dateInstanceOne  [options]="singleDatePickerOptions">
                                                     </ngx-date-picker>
                                             </div>
                                         </div>
@@ -478,7 +492,6 @@
                                                 <input formControlName="isAdmin" type="checkbox">
                                                 <span></span></label>
                                             </div>
-                                            <span class="form-text text-muted">Want to become an admin?</span>
                                         </div>
                                     </div>
                                 </div>
