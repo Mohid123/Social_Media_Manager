@@ -255,7 +255,6 @@ export class UserMgtComponent implements OnInit {
         };
         if (obj.pickerCheck == true) {
           user.clubMember.statusType = "blocked"
-          this.toastr.success('This user has been blocked', 'Block User');
         }
         else {
           this.userMgt.firebaseCheck(user.blockFromApp, user.email).pipe(
@@ -265,10 +264,10 @@ export class UserMgtComponent implements OnInit {
                 user.blockFromApp = true
               }
             })
-            this.toastr.success('This user has been blocked', 'Block User');
         }
       }
     })
+    this.toastr.success('This user has been blocked', 'Block User');
   }
 
   createAdmin(user: User) {
@@ -303,7 +302,6 @@ export class UserMgtComponent implements OnInit {
         };
         if (obj.pickerCheck == true) {
           user.clubMember.statusType = "approved"
-          this.toastr.success('This user has been unblocked', 'Unblock User');
         }
         else {
           this.userMgt.firebaseCheck(user.blockFromApp, user.email).pipe(
@@ -313,10 +311,10 @@ export class UserMgtComponent implements OnInit {
                 user.blockFromApp = false
               }
             })
-            this.toastr.success('This user has been unblocked', 'Unblock User');
         }
       }
     })
+    this.toastr.success('This user has been unblocked', 'Unblock User');
   }
 
   onSelectFile(event) {
