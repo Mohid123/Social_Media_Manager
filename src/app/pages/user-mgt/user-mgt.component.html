@@ -36,11 +36,11 @@
                                     placeholder="Search User"
                                 >
                             </form>
-                            <div class="d-flex d-inline pt-5">
+                            <!-- <div class="d-flex d-inline pt-5">
                                 <a  class="btn btn-outline-primary font-weight-boldest btn-pill mr-2"  (click)="getUsers()">All Users</a>
-                                <a class="btn btn-outline-primary font-weight-boldest btn-pill mr-2">Admins</a>
-                                <a class="btn btn-outline-primary font-weight-boldest btn-pill mr-2">Blocked Users</a>
-                            </div>
+                                <a class="btn btn-outline-primary font-weight-boldest btn-pill mr-2" (click)="getAdminUsers()">Admins</a>
+                                <a class="btn btn-outline-primary font-weight-boldest btn-pill mr-2" (click)="getBlockedUsersFromApp()">Blocked Users</a>
+                            </div> -->
                            
                             <!--end::Form-->
                         </div>
@@ -50,8 +50,8 @@
                                     <span class="svg-icon svg-icon-3x svg-icon-success">
                                         <i class="fas fa-crown" style="color:#00657e;"></i>
                                     </span>
-                                    <div class="text-dark font-weight-bolder font-size-h2 mt-3">{{count.adminCount}}</div>
-                                    <a  class="text-muted text-hover-primary font-weight-bold font-size-lg mt-1">Admin stats</a>
+                                    <div class="text-dark font-weight-bolder font-size-h2 mt-3">{{count?.adminCount}}</div>
+                                    <a href="#" class="text-muted text-hover-primary font-weight-bold font-size-lg mt-1">Admin stats</a>
                                 </div>
                             </div>
                             <div class="card card-custom gutter-b" style="height: 150px; width: 150px">
@@ -59,8 +59,8 @@
                                     <span class="svg-icon svg-icon-3x svg-icon-success">
                                         <i class="fas fa-user " style="color:#00657e;"></i>
                                     </span>
-                                    <div class="text-dark font-weight-bolder font-size-h2 mt-3">{{count.userCount}}</div>
-                                    <a class="text-muted text-hover-primary font-weight-bold font-size-lg mt-1">User stats</a>
+                                    <div class="text-dark font-weight-bolder font-size-h2 mt-3">{{count?.userCount}}</div>
+                                    <a href="#" class="text-muted text-hover-primary font-weight-bold font-size-lg mt-1">User stats</a>
                                 </div>
                             </div>
                         </div>
@@ -363,6 +363,10 @@
                                                 control: userForm.controls['email']
                                               }">
                                             </ng-container>
+                                            <div class="text-danger"
+                                                 *ngIf="userForm.controls['email'].errors?.emailExists">
+                                                 This Email is already registered to a user
+                                            </div>
                                             <span class="form-text text-muted">We'll never share your email with anyone else.</span>
                                         </div>
                                     </div>
@@ -447,6 +451,12 @@
                                             <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
                                                 validation: 'required',
                                                 message: 'Phone Number is required',
+                                                control: userForm.controls['phone']
+                                              }">
+                                            </ng-container>
+                                            <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+                                                validation: 'minlength',
+                                                message: 'Phone Number should at least be 10 characters',
                                                 control: userForm.controls['phone']
                                               }">
                                             </ng-container>

@@ -45,4 +45,11 @@ export class User {
     sponsoredStoryViewsCount?: number;
     id?:                       string;
     isFollowed?:               boolean;
+    clubMember?: {
+        clubID?: string,
+        count?: number,
+        id?: string,
+        statusType?: string,
+        userID?: string
+    }
 }

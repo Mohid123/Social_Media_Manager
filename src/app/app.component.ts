@@ -23,7 +23,7 @@ import { ToastrService } from "ngx-toastr";
   selector: "body[root]",
   templateUrl: "./app.component.html",
   styleUrls: ["./app.component.scss"],
-  //changeDetection: ChangeDetectionStrategy.OnPush,
+  // changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent implements OnInit, OnDestroy {
   onlineEvent: Observable<Event>;
