@@ -272,24 +272,46 @@ export class UserMgtComponent implements OnInit {
 
   createAdmin(user: User) {
     this.userMgt.createAdmin(user.id).subscribe((res: ApiResponse<User>) => {
+      debugger
       if(!res.hasErrors()) {
-        user.admin = true;
-        this.cf.detectChanges();
-        this.toastr.success('Admin Access Granted', 'Admin Access')
-        this.getUserCount();
+        let club = this._clubService.selectedClub;
+        let obj = {
+          pickerCheck: club.pickerClub
+        };
+        if(obj.pickerCheck == true) {
+          user.clubMember.statusType = 'admin'
+          user.admin = true;
+        }
+        else {
+          user.admin = true;
+          this.cf.detectChanges();
+        }
       }
+      this.toastr.success('Admin Access Granted', 'Admin Access')
+      this.getUserCount();
     })
   }
 
   removeAdmin(user: User) {
     this.userMgt.removeAdmin(user.id).subscribe((res: ApiResponse<User>) => {
+      debugger
       if(!res.hasErrors()) {
-        user.admin = false;
-        this.cf.detectChanges();
-        this.toastr.success('Admin Access Revoked', 'Admin Access');
-        this.getUserCount();
+        let club = this._clubService.selectedClub;
+        let obj = {
+          pickerCheck: club.pickerClub
+        };
+        if(obj.pickerCheck == true) {
+          user.clubMember.statusType = 'approved'
+          user.admin = false;
+        }
+        else {
+          user.admin = false;
+          this.cf.detectChanges();
+        }
       }
     })
+    this.toastr.success('Admin Access Revoked', 'Admin Access');
+    this.getUserCount();
   }
 
   unBlockUser(user: User) {
