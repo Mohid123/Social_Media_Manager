@@ -108,7 +108,7 @@
       </li>
 
       <!--UserManager-->
-      <li class="menu-item" aria-haspopup="true" routerLinkActive="menu-item-active" style="border-bottom: 1px solid rgba(163, 175, 183, 0.219);">
+      <li *ngIf="userMgt" class="menu-item" aria-haspopup="true" routerLinkActive="menu-item-active" style="border-bottom: 1px solid rgba(163, 175, 183, 0.219);">
         <a class="menu-link" routerLink="/pages/user-management" routerLinkActive="active" joyrideStep="eighthStep" title="Account Manager" text="Manage your facebook and instagram profiles.">
           <i class="svg-icon menu-icon fas fa-users icon-lg mr-5" style="color: #f5ec6b"></i>
           <span class="menu-text">User Management</span>

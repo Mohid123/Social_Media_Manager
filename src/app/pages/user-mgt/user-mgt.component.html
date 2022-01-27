@@ -287,7 +287,7 @@
                                             <span class="text-danger">*</span>
                                         </label>
                                         <div class="col-lg-9 col-xl-6">
-                                            <input placeholder="John Doe" class="form-control form-control-lg form-control-solid" formControlName="fullname" type="text" [ngClass]="{ 'is-in valid': userForm.controls['fullname'].invalid }">
+                                            <input appTrim placeholder="John Doe" class="form-control form-control-lg form-control-solid" formControlName="fullname" type="text" [ngClass]="{ 'is-in valid': userForm.controls['fullname'].invalid }">
                                             <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
                                                 validation: 'required',
                                                 message: 'Full Name is required',
@@ -306,12 +306,6 @@
                                                 control: userForm.controls['fullname']
                                               }">
                                             </ng-container>
-                                            <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
-                                                validation: 'whitespace',
-                                                message: 'Empty spaces are not allowed',
-                                                control: userForm.controls['fullname']
-                                              }">
-                                            </ng-container>
                                         </div>
                                     </div>
 
@@ -321,7 +315,7 @@
                                             <span class="text-danger">*</span>
                                         </label>
                                         <div class="col-lg-9 col-xl-6">
-                                            <input placeholder="johndoe" class="form-control form-control-lg form-control-solid" formControlName="username" type="text" [ngClass]="{ 'is-in valid': userForm.controls['username'].invalid }">
+                                            <input appTrim placeholder="johndoe" class="form-control form-control-lg form-control-solid" formControlName="username" type="text" [ngClass]="{ 'is-in valid': userForm.controls['username'].invalid }">
                                             <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
                                                 validation: 'required',
                                                 message: 'Username is required',
@@ -337,12 +331,6 @@
                                             <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
                                                 validation: 'maxlength',
                                                 message: 'Full Name cannot exceed 30 characters',
-                                                control: userForm.controls['username']
-                                              }">
-                                            </ng-container>
-                                            <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
-                                                validation: 'whitespace',
-                                                message: 'Empty spaces are not allowed',
                                                 control: userForm.controls['username']
                                               }">
                                             </ng-container>
@@ -386,7 +374,7 @@
                                         </label>
                                         <div class="col-lg-9 col-xl-6">
                                             <div class="input-group-prepend">
-                                                <input
+                                                <input appTrim
                                                     class="form-control form-control-lg form-control-solid"
                                                     formControlName="pass"
                                                     type="{{passwordHide ? 'password' : 'text'}}"

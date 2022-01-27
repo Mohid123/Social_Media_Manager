@@ -56,6 +56,7 @@ import { JoyrideModule } from 'ngx-joyride';
 import { NgImageSliderModule } from 'ng-image-slider';
 import { UserMgtComponent } from './user-mgt/user-mgt.component';
 import {Ng2TelInputModule} from 'ng2-tel-input';
+import { TrimModule } from '../directive/trim/trim.module'
 FullCalendarModule.registerPlugins([ 
   dayGridPlugin,
   interactionPlugin
@@ -99,6 +100,7 @@ FullCalendarModule.registerPlugins([
   
   ],
   imports: [
+    TrimModule,
     NgImageSliderModule,
     FullCalendarModule,
     CommonModule,
@@ -121,7 +123,7 @@ FullCalendarModule.registerPlugins([
     NgxDropzoneModule,
     ReactiveFormsModule,
     Ng2TelInputModule,
-    JoyrideModule.forRoot(),
+    JoyrideModule.forRoot()
    
     
      

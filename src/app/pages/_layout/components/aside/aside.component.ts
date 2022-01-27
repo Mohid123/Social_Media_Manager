@@ -38,6 +38,7 @@ export class AsideComponent implements OnInit, OnDestroy {
   closeResult: string;
   socialFlag: boolean = false;
   sponsorPanelExists: boolean = false;
+  userMgt: boolean = false;
   constructor(
     private clubService: ClubService,
     private layout: LayoutService,
@@ -48,6 +49,7 @@ export class AsideComponent implements OnInit, OnDestroy {
     this.clubService.SelectedClub$.pipe(takeUntil(this.destroy$)).subscribe(club => {
       this.selectedClub = club;
       this.set_socialFlag_after_getting_club();
+      this.showUserMgt()
     })
   }
 
@@ -68,6 +70,11 @@ export class AsideComponent implements OnInit, OnDestroy {
    } // Your steps order
    
     );
+}
+
+showUserMgt(){
+  this.selectedClub.clubName == "Solis Solution" && this.selectedClub.id == "60db0c52723416289b31f1d9" || this.selectedClub.isPicker == true || this.selectedClub.pickerClub == true ? this.userMgt = true: this.userMgt = false;
+
 }
 
   set_socialFlag_after_getting_club() {

@@ -117,8 +117,7 @@ export class UserMgtComponent implements OnInit {
         Validators.compose([
           Validators.required,
           Validators.minLength(4),
-          Validators.maxLength(30),
-          this.noWhitespaceValidator
+          Validators.maxLength(30)
         ]),
       ],
       username: [
@@ -126,8 +125,7 @@ export class UserMgtComponent implements OnInit {
         Validators.compose([
           Validators.required,
           Validators.minLength(4),
-          Validators.maxLength(30),
-          this.noWhitespaceValidator
+          Validators.maxLength(30)
         ]),
       ],
       phone: [
@@ -155,13 +153,7 @@ export class UserMgtComponent implements OnInit {
     });
   }
 
-  public noWhitespaceValidator(control: FormControl) {
-    const isWhitespace = (control.value || '').trim().length === 0;
-    const isValid = !isWhitespace;
-    return isValid ? null : { 'whitespace': true };
-}
-
-  registerNewUser() {
+ registerNewUser() {
     const payload: User = {
       username: this.userForm.value.username,
       fullName: this.userForm.value.fullname,
@@ -177,8 +169,12 @@ export class UserMgtComponent implements OnInit {
     this.userMgt.createUser(payload).pipe(takeUntil(this.destroy$)).subscribe((res: ApiResponse<User>) => {
       if(!res.hasErrors()) {
         this.toastr.success('User Created Successfully', 'Success');
+        this.getUsers();
+        this.getUserCount();
         this.resetUserForm();
+        this.cf.detectChanges();
         this.modalService.dismissAll('Close click');
+      
       }
       else {
         this.toastr.error('Failed To Create New User', 'Create User');
@@ -208,7 +204,6 @@ export class UserMgtComponent implements OnInit {
 
   getUserCount(){
     this.userMgt.getCounts().subscribe((res: ApiResponse<UserCount>)=>{
-      debugger
       if(!res.hasErrors()){
         this.count = res.data;
         console.log(this.count)
@@ -240,6 +235,7 @@ export class UserMgtComponent implements OnInit {
         this.cf.detectChanges();
         this.toastr.success('User successfully deleted.', 'Success!');
         this.getUsers();
+        this.getUserCount();
         this.input.nativeElement.value = ""
       }
     })
@@ -260,6 +256,7 @@ export class UserMgtComponent implements OnInit {
         user.admin = true;
         this.cf.detectChanges();
         this.toastr.success('Admin Access Granted', 'Admin Access')
+        this.getUserCount();
       }
     })
   }
@@ -269,7 +266,8 @@ export class UserMgtComponent implements OnInit {
       if(!res.hasErrors()) {
         user.admin = false;
         this.cf.detectChanges();
-        this.toastr.success('Admin Access Revoked', 'Admin Access')
+        this.toastr.success('Admin Access Revoked', 'Admin Access');
+        this.getUserCount();
       }
     })
   }
@@ -333,8 +331,7 @@ deleteUserDialog(deleteUserContent) {
   }
 
   onChangeScheduleDate(value: Date) {
-    debugger
-    this.scheduleSelectedDate = value;
+     this.scheduleSelectedDate = value;
   }
 
   next():void {
