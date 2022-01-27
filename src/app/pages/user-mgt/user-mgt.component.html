@@ -349,7 +349,7 @@
                                                         <i class="fa fa-envelope-open-text text-primary"></i>
                                                     </span>
                                                 </div>
-                                                <input type="text" class="form-control form-control-lg form-control-solid" placeholder="Email" formControlName="email" [ngClass]="{ 'is-in valid': userForm.controls['email'].invalid }">
+                                                <input appTrim type="text" class="form-control form-control-lg form-control-solid" placeholder="Email" formControlName="email" [ngClass]="{ 'is-in valid': userForm.controls['email'].invalid }">
                                             </div>
                                             <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
                                                 validation: 'required',
