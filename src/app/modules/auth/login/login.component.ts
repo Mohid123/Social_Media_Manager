@@ -127,7 +127,7 @@ export class LoginComponent implements OnInit {
       email: this.loginForm.value.email,
       password: this.loginForm.value.password
     }
-
+    debugger
     if (this._clubService.selectedClub.pickerClub) {
       payload.clubID = this._clubService.selectedClub.pickerModelId
       payload.pickerClubID = this._clubService.selectedClub.id
@@ -136,6 +136,7 @@ export class LoginComponent implements OnInit {
 
     this.spinner.show();
     this._authService.loginByEmail(payload).subscribe((res:ApiResponse<LoginResponse>) => {
+      debugger
       if (!res.hasErrors()) {
         if (res.data?.user.admin) {
           this.spinner.hide();
@@ -201,6 +202,11 @@ export class LoginComponent implements OnInit {
               return;
             }
             else if (res.data.length > 0) {
+              res.data.map(item => {
+                item.pickerClub = true;
+                item.baseURL = this._clubService.selectedClub.baseURL;
+                item.pickerModelId = this._clubService.selectedClub.id
+              })
               this.allClubs = res.data;
               this.noClubFound = false
               this.cf.detectChanges()
