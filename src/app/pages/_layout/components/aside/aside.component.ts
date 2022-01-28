@@ -73,7 +73,7 @@ export class AsideComponent implements OnInit, OnDestroy {
 }
 
 showUserMgt(){
-  this.selectedClub.clubName == "Solis Solution" && this.selectedClub.id == "60db0c52723416289b31f1d9" || this.selectedClub.isPicker == true || this.selectedClub.pickerClub == true ? this.userMgt = true: this.userMgt = false;
+  this.selectedClub.clubName == "Solis Solution" && this.selectedClub.id == "60db0c52723416289b31f1d9" || this.selectedClub.isPicker == true || this.selectedClub.pickerModelId == "61446df5acf10ff6947f2426" ? this.userMgt = true: this.userMgt = false;
 
 }
 

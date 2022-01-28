@@ -131,6 +131,7 @@ export class UserMgtComponent implements OnInit {
           Validators.minLength(4),
           Validators.maxLength(30)
         ]),
+       
       ],
       phone: [
         this.defaultUser.phoneNo,
@@ -373,6 +374,7 @@ export class UserMgtComponent implements OnInit {
   }
 
   next():void {
+    debugger
     this.page++;
     this.getUsers();
   }
@@ -401,6 +403,7 @@ export class UserMgtComponent implements OnInit {
       };
   }
 
+ 
   emailValidator() {
     return (control: AbstractControl): Observable<ValidationErrors | null> => {
         return this.userMgt.emailExists(control.value).pipe(

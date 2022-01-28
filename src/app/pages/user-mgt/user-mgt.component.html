@@ -51,7 +51,7 @@
                                         <i class="fas fa-crown" style="color:#00657e;"></i>
                                     </span>
                                     <div class="text-dark font-weight-bolder font-size-h2 mt-3">{{count?.adminCount}}</div>
-                                    <a href="#" class="text-muted text-hover-primary font-weight-bold font-size-lg mt-1">Admin stats</a>
+                                    <a class="text-muted text-hover-primary font-weight-bold font-size-lg mt-1">Admin stats</a>
                                 </div>
                             </div>
                             <div class="card card-custom gutter-b" style="height: 150px; width: 150px">
@@ -60,7 +60,7 @@
                                         <i class="fas fa-user " style="color:#00657e;"></i>
                                     </span>
                                     <div class="text-dark font-weight-bolder font-size-h2 mt-3">{{count?.userCount}}</div>
-                                    <a href="#" class="text-muted text-hover-primary font-weight-bold font-size-lg mt-1">User stats</a>
+                                    <a class="text-muted text-hover-primary font-weight-bold font-size-lg mt-1">User stats</a>
                                 </div>
                             </div>
                         </div>
@@ -191,15 +191,15 @@
                                         <!--begin::Info-->
                                         <div class="mb-7">
                                             <div *ngIf="user.email" class="d-flex justify-content-between align-items-center m-1">
-                                                <a class="text-muted text-hover-primary font-weight-bold mr-lg-8 mr-5 mb-lg-0 mb-2">
+                                                <a class="text-muted font-weight-bold mr-lg-8 mr-5 mb-lg-0 mb-2">
                                                     <i class="fa fa-envelope-open-text text-primary mr-5"></i>{{user.email}}</a>
                                                  </div>
                                             <div *ngIf="user.phoneNo" class="d-flex justify-content-between align-items-center m-1">
-                                                 <a class="text-muted text-hover-primary font-weight-bold mr-lg-8 mr-5 mb-lg-0 mb-2">
-                                                    <i class="flaticon2-phone text-success mr-5"></i>{{user.phoneNo}}</a>
+                                                 <a class="text-muted font-weight-bold mr-lg-8 mr-5 mb-lg-0 mb-2">
+                                                    <i class="fas fa-phone-alt text-success mr-5"></i>{{user.phoneNo}}</a>
                                                 </div>
                                             <div *ngIf="user.DOB" class="d-flex justify-content-between align-items-center m-1">
-                                                <a class="text-muted text-hover-primary font-weight-bold mr-lg-8 mr-5 mb-lg-0 mb-2">
+                                                <a class="text-muted font-weight-bold mr-lg-8 mr-5 mb-lg-0 mb-2 text-truncate" style="max-width: 115px;">
                                                     <i class="far fa-calendar-alt text-warning mr-5"></i>{{user.DOB}}</a>
                                                 </div>
                                         </div>
@@ -284,7 +284,7 @@
                                             <span class="text-danger">*</span>
                                         </label>
                                         <div class="col-lg-9 col-xl-6">
-                                            <input appTrim placeholder="John Doe" class="form-control form-control-lg form-control-solid" formControlName="fullname" type="text" [ngClass]="{ 'is-in valid': userForm.controls['fullname'].invalid }">
+                                            <input appTrim placeholder="John Doe" class="form-control form-control-lg form-control-solid" maxlength="30" formControlName="fullname" type="text" [ngClass]="{ 'is-in valid': userForm.controls['fullname'].invalid }">
                                             <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
                                                 validation: 'required',
                                                 message: 'Full Name is required',
@@ -312,7 +312,7 @@
                                             <span class="text-danger">*</span>
                                         </label>
                                         <div class="col-lg-9 col-xl-6">
-                                            <input appTrim placeholder="johndoe" class="form-control form-control-lg form-control-solid" formControlName="username" type="text" [ngClass]="{ 'is-in valid': userForm.controls['username'].invalid }">
+                                            <input appTrim placeholder="johndoe" maxlength="30" class="form-control form-control-lg form-control-solid" formControlName="username" type="text" [ngClass]="{ 'is-in valid': userForm.controls['username'].invalid }">
                                             <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
                                                 validation: 'required',
                                                 message: 'Username is required',
@@ -438,7 +438,7 @@
                                             <div class="input-group input-group-lg input-group-solid">
                                                 <input (countryChange)="onCountryChange($event)" (keypress)="numberOnly($event)"
                                                 ng2TelInput [ng2TelInputOptions]="{initialCountry: 'bg'}"
-                                                type="text" 
+                                                type="text" maxlength="16" minlength="10"
                                                 class="form-control form-control-lg form-control-solid"
                                                 placeholder="xxxxxxxxxx"
                                                 formControlName="phone"
@@ -517,10 +517,10 @@
                         <!-- <ng-container *ngIf="users?.totalCount > limit  ; else noPage">
                             <span>{{ page }} / {{ (users?.totalCount  / limit) + (0.4) | number:'1.0-0' }}</span>
                           </ng-container>
-                          <ng-template #noPage >
-                            <span>1/1</span>
+                          <ng-template 
+                          +
                           </ng-template> -->
-                        <button   (click)="next()" class="btn btn-icon btn-sm btn-light-primary mr-2 my-1">
+                        <button [disabled]="((count?.userCount / limit) <= page - 1)"  (click)="next()" class="btn btn-icon btn-sm btn-light-primary mr-2 my-1">
                             <i class="ki ki-bold-double-arrow-next icon-xs"></i>
                         </button>
                     </div>
