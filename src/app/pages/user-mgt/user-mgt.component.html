@@ -474,10 +474,13 @@
                                         </label>
                                         <div class="col-lg-9 col-xl-6">
                                             <div class="input-group input-group-lg input-group-solid">
-                                                <input readonly [ngxDatePicker]="dateInstanceOne" [value]="singleDate"
+                                                <input type="date" id="start" name="trip-start" formControlName="DOB"
+                                                    value="2012-01-01" class="form-control form-control-lg form-control-solid"
+                                                    min="1995-01-01" max="2012-12-31">
+                                                <!-- <input readonly [ngxDatePicker]="dateInstanceOne" [value]="singleDate"
                                                 (valueChange)="onChangeScheduleDate($event)" class="form-control form-control-lg form-control-solid" formControlName="DOB">
                                                 <ngx-date-picker #dateInstanceOne  [options]="singleDatePickerOptions">
-                                                    </ngx-date-picker>
+                                                    </ngx-date-picker> -->
                                             </div>
                                         </div>
                                     </div>
