@@ -92,6 +92,8 @@ export class TeamtalkersComponent implements OnInit {
   };
   public showSchedule: boolean = false;
   public progress:number = 0;
+  selectedClub
+ 
   constructor(
     private spinner: NgxSpinnerService,
     private cf: ChangeDetectorRef,
@@ -106,11 +108,17 @@ export class TeamtalkersComponent implements OnInit {
     private _scheduleService: ScheduleService,
     public mergeService: MergeService,
     private sanitizer: DomSanitizer,
-    public mediaService: MediauploadService
+    public mediaService: MediauploadService,
+    private clubService: ClubService
   ) {
     this.post = new Post();
     this.report = new Report();
     this.poll = new Poll();
+    this.clubService.SelectedClub$.pipe(takeUntil(this.destroy$)).subscribe(club => {
+      this.selectedClub = club;
+      this.hidePoll()
+    
+    })
   }
 
   destroy$ = new Subject();
@@ -125,6 +133,10 @@ export class TeamtalkersComponent implements OnInit {
       this.updateProgress = progress;
       this.cf.detectChanges();
     })
+  }
+
+  hidePoll(){
+    this.selectedClub.clubName == "Solis Solution" && this.selectedClub.id == "60db0c52723416289b31f1d9" || this.selectedClub.isPicker == true || this.selectedClub.pickerModelId == "61446df5acf10ff6947f2426" ? this.showDiv.poll = false: this.showDiv.poll = true;
   }
 
   openVerticallyCentered(content, post) {
