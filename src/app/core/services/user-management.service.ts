@@ -82,6 +82,10 @@ type user = User | UserList | UserCount
         return this.clubApiGet(`/firebase-migration-functions/disableUser?checkVal=${checkVal}&email=${email}`, { responseType: 'text' })
     }
 
+    usernameExists(username: string): Observable<ApiResponse<user>> {
+        return this.clubApiGet(`/auth/isUsernameAvailable/${username}`);
+    }
+
     // getAdmins(offset, limit): Observable<ApiResponse<user>> {
     //     return this.clubApiGet(`/profile/getAdminsUsers?offset=${offset}&limit=${limit}`)
     // }

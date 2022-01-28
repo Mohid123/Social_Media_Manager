@@ -131,7 +131,7 @@ export class UserMgtComponent implements OnInit {
           Validators.minLength(4),
           Validators.maxLength(30)
         ]),
-       
+        [this.usernameValidator()]
       ],
       phone: [
         this.defaultUser.phoneNo,
@@ -256,7 +256,6 @@ export class UserMgtComponent implements OnInit {
         };
         if (obj.pickerCheck == true) {
           user.clubMember.statusType = "blocked"
-          this.toastr.success('This user has been blocked', 'Block User');
         }
         else {
           this.userMgt.firebaseCheck(user.blockFromApp, user.email).pipe(
@@ -266,32 +265,54 @@ export class UserMgtComponent implements OnInit {
                 user.blockFromApp = true
               }
             })
-            this.toastr.success('This user has been blocked', 'Block User');
         }
       }
     })
+    this.toastr.success('This user has been blocked', 'Block User');
   }
 
   createAdmin(user: User) {
     this.userMgt.createAdmin(user.id).subscribe((res: ApiResponse<User>) => {
+      debugger
       if(!res.hasErrors()) {
-        user.admin = true;
-        this.cf.detectChanges();
-        this.toastr.success('Admin Access Granted', 'Admin Access')
-        this.getUserCount();
+        let club = this._clubService.selectedClub;
+        let obj = {
+          pickerCheck: club.pickerClub
+        };
+        if(obj.pickerCheck == true) {
+          user.clubMember.statusType = 'admin'
+          user.admin = true;
+        }
+        else {
+          user.admin = true;
+          this.cf.detectChanges();
+        }
       }
+      this.toastr.success('Admin Access Granted', 'Admin Access')
+      this.getUserCount();
     })
   }
 
   removeAdmin(user: User) {
     this.userMgt.removeAdmin(user.id).subscribe((res: ApiResponse<User>) => {
+      debugger
       if(!res.hasErrors()) {
-        user.admin = false;
-        this.cf.detectChanges();
-        this.toastr.success('Admin Access Revoked', 'Admin Access');
-        this.getUserCount();
+        let club = this._clubService.selectedClub;
+        let obj = {
+          pickerCheck: club.pickerClub
+        };
+        if(obj.pickerCheck == true) {
+          user.clubMember.statusType = 'approved'
+          user.admin = false;
+        }
+        else {
+          user.admin = false;
+          this.cf.detectChanges();
+        }
       }
     })
+    this.toastr.success('Admin Access Revoked', 'Admin Access');
+    this.getUserCount();
   }
 
   unBlockUser(user: User) {
@@ -304,7 +325,6 @@ export class UserMgtComponent implements OnInit {
         };
         if (obj.pickerCheck == true) {
           user.clubMember.statusType = "approved"
-          this.toastr.success('This user has been unblocked', 'Unblock User');
         }
         else {
           this.userMgt.firebaseCheck(user.blockFromApp, user.email).pipe(
@@ -314,10 +334,10 @@ export class UserMgtComponent implements OnInit {
                 user.blockFromApp = false
               }
             })
-            this.toastr.success('This user has been unblocked', 'Unblock User');
         }
       }
     })
+    this.toastr.success('This user has been unblocked', 'Unblock User');
   }
 
   onSelectFile(event) {
@@ -411,6 +431,22 @@ export class UserMgtComponent implements OnInit {
           debounceTime(600),
           map((res: ApiResponse<any>) => (res.data == true ? {emailExists: true} : null))
         )
+    };
+  }
+
+  usernameValidator() {
+    return (control: AbstractControl): Observable<ValidationErrors | null> => {
+      if (!control.valueChanges || control.pristine) {
+        return of(null);
+      }
+      else {
+        debugger
+        return this.userMgt.usernameExists(control.value).pipe(
+          distinctUntilChanged(),
+          debounceTime(600),
+          map((res: ApiResponse<any>) => (res.data == false ? {userNameExists: true} : null))
+        )
+      }
     };
   }
 
