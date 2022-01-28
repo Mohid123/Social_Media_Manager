@@ -29,6 +29,7 @@ import {
 } from 'angularx-social-login';
 import { VideoProcessingService } from './core/services/video-service/video-processing.service';
 import { MomentPipe } from './core/pipes/datetransform.pipe';
+import { BackButtonDisableModule } from 'angular-disable-browser-back-button';
 
 
 
@@ -60,6 +61,9 @@ function appInitializer(authService: AuthService) {
     ChartsModule,
     NgApexchartsModule,
     MatIconModule, 
+    BackButtonDisableModule.forRoot({
+      preserveScrollPosition: true
+    }),
     
     
     environment.isMockEnabled
