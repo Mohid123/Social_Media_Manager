@@ -131,6 +131,7 @@ export class UserMgtComponent implements OnInit {
           Validators.minLength(4),
           Validators.maxLength(30)
         ]),
+        [this.usernameValidator()]
       ],
       phone: [
         this.defaultUser.phoneNo,
@@ -428,6 +429,22 @@ export class UserMgtComponent implements OnInit {
           debounceTime(600),
           map((res: ApiResponse<any>) => (res.data == true ? {emailExists: true} : null))
         )
+    };
+  }
+
+  usernameValidator() {
+    return (control: AbstractControl): Observable<ValidationErrors | null> => {
+      if (!control.valueChanges || control.pristine) {
+        return of(null);
+      }
+      else {
+        debugger
+        return this.userMgt.usernameExists(control.value).pipe(
+          distinctUntilChanged(),
+          debounceTime(600),
+          map((res: ApiResponse<any>) => (res.data == false ? {userNameExists: true} : null))
+        )
+      }
     };
   }
 

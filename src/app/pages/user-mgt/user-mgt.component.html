@@ -51,7 +51,7 @@
                                         <i class="fas fa-crown" style="color:#00657e;"></i>
                                     </span>
                                     <div class="text-dark font-weight-bolder font-size-h2 mt-3">{{count?.adminCount}}</div>
-                                    <a href="#" class="text-muted text-hover-primary font-weight-bold font-size-lg mt-1">Admin stats</a>
+                                    <a class="text-muted font-weight-bold font-size-lg mt-1">Admin stats</a>
                                 </div>
                             </div>
                             <div class="card card-custom gutter-b" style="height: 150px; width: 150px">
@@ -60,7 +60,7 @@
                                         <i class="fas fa-user " style="color:#00657e;"></i>
                                     </span>
                                     <div class="text-dark font-weight-bolder font-size-h2 mt-3">{{count?.userCount}}</div>
-                                    <a href="#" class="text-muted text-hover-primary font-weight-bold font-size-lg mt-1">User stats</a>
+                                    <a class="text-muted font-weight-bold font-size-lg mt-1">User stats</a>
                                 </div>
                             </div>
                         </div>
@@ -327,10 +327,14 @@
                                             </ng-container>
                                             <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
                                                 validation: 'maxlength',
-                                                message: 'Full Name cannot exceed 30 characters',
+                                                message: 'Username cannot exceed 30 characters',
                                                 control: userForm.controls['username']
                                               }">
                                             </ng-container>
+                                            <div class="text-danger"
+                                                 *ngIf="userForm.controls['username'].errors?.userNameExists">
+                                                 This Username is already registered to a user
+                                            </div>
                                         </div>
                                     </div>
 
@@ -395,13 +399,13 @@
                                             </ng-container>
                                             <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
                                                 validation: 'minlength',
-                                                message: 'Username should at least be 8 characters',
+                                                message: 'Password should at least be 8 characters',
                                                 control: userForm.controls['pass']
                                               }">
                                             </ng-container>
                                             <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
                                                 validation: 'maxlength',
-                                                message: 'Full Name cannot exceed 128 characters',
+                                                message: 'Password cannot exceed 128 characters',
                                                 control: userForm.controls['pass']
                                               }">
                                             </ng-container>
