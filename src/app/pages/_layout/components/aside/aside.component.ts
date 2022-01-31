@@ -60,7 +60,7 @@ export class AsideComponent implements OnInit, OnDestroy {
 
   logout() {
     this._authService.logoutSignedInUser()
-    localStorage.removeItem('selectedClub')
+    // localStorage.removeItem('selectedClub')
   }
 
   onClick() {

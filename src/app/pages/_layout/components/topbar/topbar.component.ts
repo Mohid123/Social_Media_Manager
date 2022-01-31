@@ -95,7 +95,7 @@ export class TopbarComponent implements OnInit, AfterViewInit {
 
   logout(){
     this._authService.logoutSignedInUser()
-    localStorage.removeItem('selectedClub')
+    // localStorage.removeItem('selectedClub')
   }
  
 

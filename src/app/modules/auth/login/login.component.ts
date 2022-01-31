@@ -74,7 +74,7 @@ export class LoginComponent implements OnInit {
     this.spinner.hide();
     this.initLoginForm();
     this.getAllClubs(this.offset, this.limit);
-    this.onClick()
+    // this.onClick()
 
   }
 

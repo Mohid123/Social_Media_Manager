@@ -82,8 +82,8 @@ export class DashboardComponent implements OnInit {
     this.getSignedInUserStats()
     this.getLastSevenDaysStats()
     this.showAppTour()
-    this.spinner.show()
-    this.openJoyRide()
+    // this.spinner.show()
+    // this.openJoyRide()
   }
 
 
@@ -91,6 +91,7 @@ export class DashboardComponent implements OnInit {
     let user = JSON.parse(localStorage.getItem('newUser'))
     if (user === true) {
       this.openVerticallyCentered(this.modalContent)
+      this.cf.detectChanges()
     }
     else {
       return;
