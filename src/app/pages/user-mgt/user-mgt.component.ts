@@ -12,6 +12,7 @@ import * as moment from 'moment';
 import { UserCount } from '@app/core/models/user-count.model';
 import { ClubService } from './../../core/services/club.service';
 import { BaseURL } from './../../core/models/base-urls';
+import { UserList } from '@app/core/models/userlist.model';
 
 @Component({
   selector: 'user-management',
@@ -40,6 +41,7 @@ export class UserMgtComponent implements OnInit {
   modalReference: any;
   public isLoading: boolean;
   public users: User;
+  public allUsers: UserList;
   public limit: number = 12;
   public searchValue = '';
   public page:number;
@@ -53,7 +55,13 @@ export class UserMgtComponent implements OnInit {
   scheduleSelectedDate: any;
   public count: UserCount;
   public admins: User;
-  public blockedUsers: User
+  public blockedUsers: User;
+  filterButtons = [
+    { text: '', isClicked: true },
+    { text: 'Admins', isClicked: false },
+    { text: 'Blocked', isClicked: false }
+   ]
+   public type = '';
 
   constructor(
     public userMgt : UserManagement,
@@ -67,7 +75,7 @@ export class UserMgtComponent implements OnInit {
     {
       this.page = 0;
       this.isLoading = false;
-      this.getUsers()
+      this.getAllUsers()
       this.getUserCount()
       config.backdrop = 'static';
       config.keyboard = false;
@@ -79,7 +87,7 @@ export class UserMgtComponent implements OnInit {
       .subscribe(newValue => {
         if (newValue.trim().length == 0 || newValue == "") {
           this.noRecordFound = false;
-          this.getUsers();
+          this.getAllUsers();
         } else {
           this.searchUser(newValue);
         }
@@ -87,7 +95,7 @@ export class UserMgtComponent implements OnInit {
   }
 
   initUserForm() {
-    let emailRegex = new RegExp( '^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$');
+    let emailRegex = new RegExp( '^[A-Za-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$');
     this.userForm = this.fb.group({
       email: [
         this.defaultUser.email,
@@ -165,7 +173,7 @@ export class UserMgtComponent implements OnInit {
     this.userMgt.createUser(payload).pipe(takeUntil(this.destroy$)).subscribe((res: ApiResponse<User>) => {
      if(!res.hasErrors()) {
         this.toastr.success('User Created Successfully', 'Success');
-        this.getUsers();
+        this.getAllUsers();
         this.getUserCount();
         this.resetUserForm();
         this.cf.detectChanges();
@@ -198,6 +206,29 @@ export class UserMgtComponent implements OnInit {
     })
   }
 
+  getAllUsers() {
+    if (this.isLoading) return
+    this.isLoading = true;
+    this.userMgt.getAllUsersForPanel(this.page, this.type)
+    .pipe(  distinctUntilChanged(),
+    takeUntil(this.destroy$)).subscribe((res: ApiResponse<UserList>) => {
+      if(!res.hasErrors()){
+        // debugger
+        this.allUsers = res.data;
+        console.log(this.users)
+        this.cf.detectChanges();
+       }
+       this.isLoading = false;
+    })
+  }
+
+  setType(type:string): void {
+    
+    this.type = type;
+    this.page = 0;
+    this.getAllUsers();
+  }
+
   getUserCount(){
     this.userMgt.getCounts().subscribe((res: ApiResponse<UserCount>)=>{
       if(!res.hasErrors()){
@@ -210,13 +241,15 @@ export class UserMgtComponent implements OnInit {
     this.userMgt.searchUser(searchString, this.offset, this.limit).pipe(
       takeUntil(this.destroy$))
       .subscribe((res: ApiResponse<any>) => {
+        debugger
       if(!res.hasErrors()) {
         if(res.data.length == 0) {
-          this.users = res.data;
+          debugger
+          this.allUsers.data = res.data;
           this.noRecordFound = true;
         }
         else if(res.data.length > 0){
-          this.users = res.data;
+          this.allUsers.data = res.data;
           this.noRecordFound = false;
         }
         this.cf.detectChanges()
@@ -229,7 +262,7 @@ export class UserMgtComponent implements OnInit {
       if(!res.hasErrors()) {
         this.cf.detectChanges();
         this.toastr.success('User successfully deleted.', 'Success!');
-        this.getUsers();
+        this.getAllUsers();
         this.getUserCount();
         this.input.nativeElement.value = ""
       }
@@ -285,7 +318,6 @@ export class UserMgtComponent implements OnInit {
 
   removeAdmin(user: User) {
     this.userMgt.removeAdmin(user.id).subscribe((res: ApiResponse<User>) => {
-      debugger
       if(!res.hasErrors()) {
         let club = this._clubService.selectedClub;
         let obj = {
@@ -294,21 +326,25 @@ export class UserMgtComponent implements OnInit {
         if(obj.pickerCheck == true) {
           user.clubMember.statusType = 'approved'
           user.admin = false;
+          this.getAllUsers()
         }
         else {
           user.admin = false;
+          this.getAllUsers()
           this.cf.detectChanges();
         }
       }
     })
     this.toastr.success('Admin Access Revoked', 'Admin Access');
     this.getUserCount();
+  
   }
 
   unBlockUser(user: User) {
     this.userMgt.unBlockUser(user.id).subscribe((res: ApiResponse<User>) => {
       if(!res.hasErrors()) {
         user.blockFromApp = false;
+        this.getAllUsers()
         let club = this._clubService.selectedClub;
         let obj = {
           pickerCheck: club.pickerClub
@@ -385,12 +421,12 @@ export class UserMgtComponent implements OnInit {
 
   next():void {
     this.page++;
-    this.getUsers();
+    this.getAllUsers();
   }
 
   previous():void {
     this.page--;
-    this.getUsers();
+    this.getAllUsers();
   }
 
   passwordShowHide(): void {
@@ -450,6 +486,13 @@ export class UserMgtComponent implements OnInit {
 
   onCountryChange(country) {
     this.countryCode = country.dialCode
+  }
+
+  setActive(button: any): void {
+    for(const but of this.filterButtons) {
+      but.isClicked = false;
+    }
+     button.isClicked = true;
   }
 
   ngOnDestroy(): void {

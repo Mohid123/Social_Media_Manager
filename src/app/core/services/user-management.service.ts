@@ -38,6 +38,16 @@ type user = User | UserList | UserCount
         return this.clubApiGet('/profile/getAllUsers', param)
     }
 
+    getAllUsersForPanel( page: number, type?:string ): Observable<ApiResponse<user>> {
+        const param:any = {
+            limit: this.limit, 
+            offset: page ? this.limit * page : 0,
+            userStatus: type
+            
+        }
+        return this.clubApiGet('/profile/getUsersForPanel', param)
+    }
+
     getCounts(): Observable<ApiResponse<user>>{
         return this.clubApiGet('/profile/getCounts')
     }

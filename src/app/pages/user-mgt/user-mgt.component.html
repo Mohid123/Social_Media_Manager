@@ -36,11 +36,12 @@
                                     placeholder="Search User"
                                 >
                             </form>
-                            <!-- <div class="d-flex d-inline pt-5">
-                                <a  class="btn btn-outline-primary font-weight-boldest btn-pill mr-2"  (click)="getUsers()">All Users</a>
-                                <a class="btn btn-outline-primary font-weight-boldest btn-pill mr-2" (click)="getAdminUsers()">Admins</a>
-                                <a class="btn btn-outline-primary font-weight-boldest btn-pill mr-2" (click)="getBlockedUsersFromApp()">Blocked Users</a>
-                            </div> -->
+                            <div class="d-flex d-inline pt-5">
+                                <a *ngFor="let button of filterButtons" [ngClass]="{'active': button.isClicked}" (click)="setActive(button); setType(button.text)" class="btn btn-outline-primary font-weight-boldest btn-pill mr-2">
+                                    {{ button.text || 'All Users' }}
+                                </a>
+
+                            </div>
                            
                             <!--end::Form-->
                         </div>
@@ -91,7 +92,7 @@
 
                         
                         <!--begin::Col-->
-                        <div class="col-xl-3" *ngFor="let user of users">
+                        <div class="col-xl-3" *ngFor="let user of allUsers?.data">
                                 <!--begin::Card-->
                                 <div  class="card card-custom gutter-b card-stretch" style="border: 1px solid rgb(235, 235, 235); box-shadow: rgb(99 99 99 / 20%) 0px 2px 8px 0px; ">
                                     <div *ngIf="user.admin == true" class=" ribbon ribbon-top" data-toggle="tooltip" title="Admin">
@@ -514,14 +515,17 @@
                 <!--begin::Pagination-->
                 <div class="d-flex justify-content-end align-items-center flex-wrap">
                     <div class="d-flex flex-wrap mr-3 align-items-center">
-                        <button [disabled]="page == 0" (click)="previous()" class="btn btn-icon btn-sm btn-light-primary mr-2 my-1">
+                        <button [disabled]="page < 1" (click)="previous()" class="btn btn-icon btn-sm btn-light-primary mr-2 my-1">
                             <i class="ki ki-bold-double-arrow-back icon-xs"></i>
                         </button>
-                        <ng-container *ngIf="count?.userCount > limit">
-                            <span>{{ page }} / {{ (count?.userCount  / limit) + (0.4) | number:'1.0-0' }}</span>
+                        <ng-container *ngIf="allUsers?.totalCount > limit  ; else noPage">
+                            <span>{{ page }} / {{ (allUsers?.totalCount  / limit) + (0.4) | number:'1.0-0' }}</span>
                           </ng-container>
+                          <ng-template #noPage >
+                            <span>0/1</span>
+                          </ng-template>
                     
-                        <button   (click)="next()" class="btn btn-icon btn-sm btn-light-primary ml-3 mr-2 my-1">
+                        <button [disabled]="(allUsers?.totalCount / limit) <= page"  (click)="next()" class="btn btn-icon btn-sm btn-light-primary ml-3 mr-2 my-1">
                             <i class="ki ki-bold-double-arrow-next icon-xs"></i>
                         </button>
                     </div>

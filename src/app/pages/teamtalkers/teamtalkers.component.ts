@@ -73,6 +73,7 @@ export class TeamtalkersComponent implements OnInit {
     text: false,
     poll: false,
   };
+  public showPoll : boolean = false;
   scheduleSelectedDate: any;
   scheduleSelectedTime: Date;
   public clubPrimaryColor: string;
@@ -136,7 +137,7 @@ export class TeamtalkersComponent implements OnInit {
   }
 
   hidePoll(){
-    this.selectedClub.clubName == "Solis Solution" && this.selectedClub.id == "60db0c52723416289b31f1d9" || this.selectedClub.isPicker == true || this.selectedClub.pickerModelId == "61446df5acf10ff6947f2426" ? this.showDiv.poll = false: this.showDiv.poll = true;
+    (this.selectedClub.clubName == "Solis Solution" && this.selectedClub.id == "60db0c52723416289b31f1d9" || this.selectedClub.isPicker == true || this.selectedClub.pickerModelId == "61446df5acf10ff6947f2426") ? this.showPoll = false: this.showPoll = true;
   }
 
   openVerticallyCentered(content, post) {
@@ -239,7 +240,7 @@ export class TeamtalkersComponent implements OnInit {
     let club = this._clubService.selectedClub;
     let obj = {
       id: 1,
-      isSelected: false,
+      isSelected: true,
       clubName: club.clubName,
       captureImageURL: club.logoURL,
       name: club.clubName,
