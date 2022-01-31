@@ -145,6 +145,9 @@ export class LoginComponent implements OnInit {
     this._authService.loginByEmail(payload).subscribe((res:ApiResponse<LoginResponse>) => {
       debugger
       if (!res.hasErrors()) {
+        if (res.data?.newUser) {
+          localStorage.setItem('newUser', 'true');
+        }
         if (res.data?.user.admin) {
           this.spinner.hide();
           this.toastr.success(`You are logged in as ${res.data.user.fullName}.`, 'Welcome!');

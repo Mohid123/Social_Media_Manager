@@ -90,6 +90,7 @@ export class DashboardComponent implements OnInit {
   showAppTour() {
     let user = JSON.parse(localStorage.getItem('newUser'))
     if (user === true) {
+      this.cf.detectChanges()
       this.openVerticallyCentered(this.modalContent)
       this.cf.detectChanges()
     }
