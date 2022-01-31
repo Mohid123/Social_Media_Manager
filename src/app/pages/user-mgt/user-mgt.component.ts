@@ -8,7 +8,6 @@ import { FormGroup, Validators, FormBuilder, FormControl, AbstractControl, Valid
 import { ToastrService } from 'ngx-toastr';
 import { User } from 'src/app/core/models/user.model';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { DatePickerOptions } from "@ngx-tiny/date-picker";
 import * as moment from 'moment';
 import { UserCount } from '@app/core/models/user-count.model';
 import { ClubService } from './../../core/services/club.service';
@@ -52,15 +51,6 @@ export class UserMgtComponent implements OnInit {
   countryCode: Number;
   searchControl = new FormControl();
   scheduleSelectedDate: any;
-
-  singleDate: Date =  new Date(
-    new Date().setFullYear(new Date().getFullYear() - 50)
-  );
-  singleDatePickerOptions: DatePickerOptions = {
-    maxDate: new Date(new Date().setFullYear(new Date().getFullYear() - 10)),
-    minDate: new Date(new Date().setFullYear(new Date().getFullYear() - 50)), // Minimum is selecting a week ago
-  // Maximum date is selecting today
-  };
   public count: UserCount;
   public admins: User;
   public blockedUsers: User
