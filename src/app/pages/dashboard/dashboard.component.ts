@@ -83,6 +83,7 @@ export class DashboardComponent implements OnInit {
     this.getLastSevenDaysStats()
     this.showAppTour()
     this.spinner.show()
+    this.openJoyRide()
   }
 
 

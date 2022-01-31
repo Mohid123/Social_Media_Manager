@@ -513,17 +513,15 @@
                
                 <!--begin::Pagination-->
                 <div class="d-flex justify-content-end align-items-center flex-wrap">
-                    <div class="d-flex flex-wrap mr-3">
+                    <div class="d-flex flex-wrap mr-3 align-items-center">
                         <button [disabled]="page == 0" (click)="previous()" class="btn btn-icon btn-sm btn-light-primary mr-2 my-1">
                             <i class="ki ki-bold-double-arrow-back icon-xs"></i>
                         </button>
-                        <!-- <ng-container *ngIf="users?.totalCount > limit  ; else noPage">
-                            <span>{{ page }} / {{ (users?.totalCount  / limit) + (0.4) | number:'1.0-0' }}</span>
+                        <ng-container *ngIf="count?.userCount > limit">
+                            <span>{{ page }} / {{ (count?.userCount  / limit) + (0.4) | number:'1.0-0' }}</span>
                           </ng-container>
-                          <ng-template 
-                          +
-                          </ng-template> -->
-                        <button [disabled]="((count?.userCount / limit) <= page - 1)"  (click)="next()" class="btn btn-icon btn-sm btn-light-primary mr-2 my-1">
+                    
+                        <button   (click)="next()" class="btn btn-icon btn-sm btn-light-primary ml-3 mr-2 my-1">
                             <i class="ki ki-bold-double-arrow-next icon-xs"></i>
                         </button>
                     </div>

@@ -384,7 +384,6 @@ export class UserMgtComponent implements OnInit {
   }
 
   next():void {
-    debugger
     this.page++;
     this.getUsers();
   }
