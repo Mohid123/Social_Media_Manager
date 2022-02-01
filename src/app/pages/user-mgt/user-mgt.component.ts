@@ -270,6 +270,7 @@ export class UserMgtComponent implements OnInit {
     this.userMgt.blockUser(user.id).subscribe((res: ApiResponse<any>) => {
        if(!res.hasErrors()){
         user.blockFromApp = true;
+        this.getAllUsers()
         let club = this._clubService.selectedClub;
         let obj = {
           pickerCheck: club.pickerClub
@@ -284,7 +285,6 @@ export class UserMgtComponent implements OnInit {
             ).subscribe((res: ApiResponse<any>) => {
                if(!res.hasErrors()) {
                 user.blockFromApp = true;
-                this.getAllUsers()
               }
             })
         }
@@ -343,6 +343,7 @@ export class UserMgtComponent implements OnInit {
     this.userMgt.unBlockUser(user.id).subscribe((res: ApiResponse<User>) => {
       if(!res.hasErrors()) {
         user.blockFromApp = false;
+        this.getAllUsers()
         let club = this._clubService.selectedClub;
         let obj = {
           pickerCheck: club.pickerClub
@@ -357,7 +358,6 @@ export class UserMgtComponent implements OnInit {
             ).subscribe((res: ApiResponse<any>) => {
                if(!res.hasErrors()) {
                 user.blockFromApp = false;
-                this.getAllUsers()
               }
             })
         }

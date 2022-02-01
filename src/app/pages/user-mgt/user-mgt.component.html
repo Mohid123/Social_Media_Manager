@@ -95,12 +95,12 @@
                         <div class="col-xl-3" *ngFor="let user of allUsers?.data">
                                 <!--FOR NON PICKER CASE-->
 
-                                <ng-container *ngIf="_clubService.selectedClub.pickerClub == false">
+                                <ng-container *ngIf="_clubService.selectedClub.pickerClub == false || _clubService.selectedClub.isPicker == false">
                                     <div  class="card card-custom gutter-b card-stretch" style="border: 1px solid rgb(235, 235, 235); box-shadow: rgb(99 99 99 / 20%) 0px 2px 8px 0px; ">
                                         <div *ngIf="user.admin == true" class=" ribbon ribbon-top" data-toggle="tooltip" title="Admin">
                                             <div class="ribbon-target bg-light-success text-dark-75" style="top: -2px; right: 20px;"><i class="fas fa-crown" style="color:#00657e"></i></div>
                                         </div>
-                                        <div *ngIf="user.blockFromApp == true || user.clubMember.statusType == 'blocked'"  class=" ribbon ribbon-top">
+                                        <div *ngIf="user.blockFromApp == true"  class=" ribbon ribbon-top">
                                             <div class="ribbon-target bg-light-success text-dark-75" style="top: -2px; right: 60px;"><i class="fas fa-ban" style="color:#dd1200"></i></div>
                                         </div>
                                         <!--begin::Body-->
