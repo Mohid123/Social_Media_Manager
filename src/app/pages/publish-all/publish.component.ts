@@ -304,16 +304,19 @@ onSelectedImageLoad() {
   let gcd = this.calculateAspectRatio(width, height);
   const ratio = width / gcd + ':' + height / gcd;
   this.validAspectRatios.includes(ratio) ? this.inValidImageFormat = false : this.inValidImageFormat = true;
-  for (var i = 86; i < this.checklist.length; i++) {
-    if (this.checklist[i].isSelected) {
-      if (this.inValidImageFormat) {
-        this.url = ""
-        this.urls = [];
-        this.multiples = [];
-        this.file = null;
-        this.checkedList = []
-      }
+  for (var i = 0; i < this.checklist.length; i++) {
+    if (this.checklist[i].igProfileName) {
+      this.checklist[i].isSelected = this.igProfilesSelected;
+      if(this.checklist[i].isSelected == this.igProfilesSelected) {
+        if (this.inValidImageFormat) {
+          this.url = ""
+          this.urls = [];
+          this.multiples = [];
+          this.file = null;
+          this.checkedList = []
+        }
       this.toast.warning('Unsupported Image Format', 'Image Format not supported for Instagram');
+     }
     }
   }
 }
