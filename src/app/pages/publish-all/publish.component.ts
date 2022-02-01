@@ -258,7 +258,7 @@ export class PublishComponent implements OnInit {
     for (var i = 0; i < this.checklist.length; i++) {
       if (this.checklist[i].isSelected)
         this.checkedList.push(this.checklist[i]);
-    }
+      }
   }
 
   switchTabs(event) {
@@ -304,16 +304,16 @@ onSelectedImageLoad() {
   let gcd = this.calculateAspectRatio(width, height);
   const ratio = width / gcd + ':' + height / gcd;
   this.validAspectRatios.includes(ratio) ? this.inValidImageFormat = false : this.inValidImageFormat = true;
-  for (var i = 0; i < this.checklist.length; i++) {
-    if (this.checklist[i].igProfileName) {
-      this.checklist[i].isSelected = this.igProfilesSelected;
-      if(this.checklist[i].isSelected == this.igProfilesSelected) {
+  for (var i = 0; i < this.checkedList.length; i++) {
+    if (this.checkedList[i].igProfileName) {
+      this.checkedList[i].isSelected = this.igProfilesSelected;
+      if(this.checkedList[i].isSelected == this.igProfilesSelected) {
         if (this.inValidImageFormat) {
           this.url = ""
           this.urls = [];
           this.multiples = [];
           this.file = null;
-          this.checkedList = []
+          this.checkedList = [];
         }
       this.toast.warning('Unsupported Image Format', 'Image Format not supported for Instagram');
      }
