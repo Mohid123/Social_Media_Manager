@@ -69,7 +69,6 @@ export class UserMgtComponent implements OnInit {
     private modalService: NgbModal,
     private toastr: ToastrService,
     private fb: FormBuilder,
-    private spinner: NgxSpinnerService,
     private _clubService: ClubService,
     private config: NgbModalConfig)
     {

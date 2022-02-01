@@ -1138,6 +1138,7 @@
                   </div>
                 </div>
 
+                <!--video play modal-->
                 <div class="example-preview">
                   <ng-template #content let-c="close" let-d="dismiss">
                     <div class="modal-header d-flex justify-content-center"
@@ -1162,14 +1163,14 @@
                 </div>
 
                 <!--HYPERLINK POST DESIGN-->
-                <div *ngIf="post.hyperLink != ''" class="mt-3 mb-8 ml-3 mr-3 border rounded card card-custom mb-lg-0">
+                <div *ngIf="post.hyperLink != '' && post.type != 'video'" class="mt-3 mb-8 ml-3 mr-3 border rounded card card-custom mb-lg-0">
                   <div class="p-0 card-body">
                     <div class="p-5 d-flex align-items-center">
                       <div class="mr-6">
                         <span class="rounded svg-icon svg-icon-4x">
                           <div class="mr-2 symbol symbol-80 symbol-light" style="padding-left: 10px">
                             <span class="rounded symbol-label">
-                              <img *ngIf="post.type == 'hyperlink' &&
+                              <img *ngIf="post.type == 'hyperlink' && 
                                   post.captureFileURL === '' "
                                 src="https://api.teamtalkers.com/api/v1/en/media-upload/mediaFiles/html/html/7bd046a8c10bcfba8800951fc2a9063f9.jpg"
                                 class="rounded h-100 align-self-end" style="
