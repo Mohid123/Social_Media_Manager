@@ -70,7 +70,7 @@ export class UserMgtComponent implements OnInit {
     private toastr: ToastrService,
     private fb: FormBuilder,
     private spinner: NgxSpinnerService,
-    private _clubService: ClubService,
+    public _clubService: ClubService,
     private config: NgbModalConfig)
     {
       this.page = 0;
@@ -191,20 +191,20 @@ export class UserMgtComponent implements OnInit {
     this.url = ""
   }
 
-  getUsers(){
-    if (this.isLoading) return
-    this.isLoading = true;
-    this.userMgt.getAllUsers(this.page).pipe(
-      distinctUntilChanged(),
-      takeUntil(this.destroy$)).subscribe((res: ApiResponse<User>)=>{
-      if(!res.hasErrors()){
-       this.users = res.data;
-       console.log(this.users)
-       this.cf.detectChanges();
-      }
-      this.isLoading = false;
-    })
-  }
+  // getUsers(){
+  //   if (this.isLoading) return
+  //   this.isLoading = true;
+  //   this.userMgt.getAllUsers(this.page).pipe(
+  //     distinctUntilChanged(),
+  //     takeUntil(this.destroy$)).subscribe((res: ApiResponse<User>)=>{
+  //     if(!res.hasErrors()){
+  //      this.users = res.data;
+  //      console.log(this.users)
+  //      this.cf.detectChanges();
+  //     }
+  //     this.isLoading = false;
+  //   })
+  // }
 
   getAllUsers() {
     if (this.isLoading) return
@@ -213,9 +213,8 @@ export class UserMgtComponent implements OnInit {
     .pipe(  distinctUntilChanged(),
     takeUntil(this.destroy$)).subscribe((res: ApiResponse<UserList>) => {
       if(!res.hasErrors()){
-        // debugger
         this.allUsers = res.data;
-        console.log(this.users)
+        console.log(this.allUsers)
         this.cf.detectChanges();
        }
        this.isLoading = false;
@@ -241,10 +240,8 @@ export class UserMgtComponent implements OnInit {
     this.userMgt.searchUser(searchString, this.offset, this.limit).pipe(
       takeUntil(this.destroy$))
       .subscribe((res: ApiResponse<any>) => {
-        debugger
       if(!res.hasErrors()) {
         if(res.data.length == 0) {
-          debugger
           this.allUsers.data = res.data;
           this.noRecordFound = true;
         }
@@ -270,7 +267,7 @@ export class UserMgtComponent implements OnInit {
   }
 
   blockUser(user: User){
-    this.userMgt.blockUser(user.id).subscribe((res: ApiResponse<any>)=>{
+    this.userMgt.blockUser(user.id).subscribe((res: ApiResponse<any>) => {
        if(!res.hasErrors()){
         user.blockFromApp = true;
         let club = this._clubService.selectedClub;
@@ -279,13 +276,15 @@ export class UserMgtComponent implements OnInit {
         };
         if (obj.pickerCheck == true) {
           user.clubMember.statusType = "blocked"
+          this.getAllUsers()
         }
         else {
           this.userMgt.firebaseCheck(user.blockFromApp, user.email).pipe(
             takeUntil(this.destroy$)
             ).subscribe((res: ApiResponse<any>) => {
                if(!res.hasErrors()) {
-                user.blockFromApp = true
+                user.blockFromApp = true;
+                this.getAllUsers()
               }
             })
         }
@@ -296,18 +295,19 @@ export class UserMgtComponent implements OnInit {
 
   createAdmin(user: User) {
     this.userMgt.createAdmin(user.id).subscribe((res: ApiResponse<User>) => {
-      debugger
       if(!res.hasErrors()) {
+        user.admin = true;
         let club = this._clubService.selectedClub;
         let obj = {
           pickerCheck: club.pickerClub
         };
         if(obj.pickerCheck == true) {
           user.clubMember.statusType = 'admin'
-          user.admin = true;
+          this.getAllUsers();
         }
         else {
           user.admin = true;
+          this.getAllUsers();
           this.cf.detectChanges();
         }
       }
@@ -325,12 +325,11 @@ export class UserMgtComponent implements OnInit {
         };
         if(obj.pickerCheck == true) {
           user.clubMember.statusType = 'approved'
-          user.admin = false;
-          this.getAllUsers()
+          this.getAllUsers();
         }
         else {
           user.admin = false;
-          this.getAllUsers()
+          this.getAllUsers();
           this.cf.detectChanges();
         }
       }
@@ -344,20 +343,21 @@ export class UserMgtComponent implements OnInit {
     this.userMgt.unBlockUser(user.id).subscribe((res: ApiResponse<User>) => {
       if(!res.hasErrors()) {
         user.blockFromApp = false;
-        this.getAllUsers()
         let club = this._clubService.selectedClub;
         let obj = {
           pickerCheck: club.pickerClub
         };
         if (obj.pickerCheck == true) {
           user.clubMember.statusType = "approved"
+          this.getAllUsers()
         }
         else {
           this.userMgt.firebaseCheck(user.blockFromApp, user.email).pipe(
             takeUntil(this.destroy$)
             ).subscribe((res: ApiResponse<any>) => {
                if(!res.hasErrors()) {
-                user.blockFromApp = false
+                user.blockFromApp = false;
+                this.getAllUsers()
               }
             })
         }
@@ -398,15 +398,6 @@ export class UserMgtComponent implements OnInit {
     this.modalService.open(content, { centered: true, size: 'lg' })
   }
 
-  private getDismissReason(reason: any): string {
-    if (reason === ModalDismissReasons.ESC) {
-      return 'by pressing ESC';
-    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-      return 'by clicking on a backdrop';
-    } else {
-      return `with: ${reason}`;
-    }
-  }
   private getDismissReasonDelete(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
       return 'by pressing ESC';
@@ -465,7 +456,6 @@ export class UserMgtComponent implements OnInit {
         return of(null);
       }
       else {
-        debugger
         return this.userMgt.usernameExists(control.value).pipe(
           distinctUntilChanged(),
           debounceTime(600),
