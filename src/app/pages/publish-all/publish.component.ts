@@ -113,7 +113,6 @@ export class PublishComponent implements OnInit {
   }
 
   clear() {
-    debugger
     this.socialCaption = "";
     this.file = null;
     this.urls = [];
@@ -305,13 +304,17 @@ onSelectedImageLoad() {
   let gcd = this.calculateAspectRatio(width, height);
   const ratio = width / gcd + ':' + height / gcd;
   this.validAspectRatios.includes(ratio) ? this.inValidImageFormat = false : this.inValidImageFormat = true;
-  if (this.inValidImageFormat) {
-    this.toast.error('Unsupported Image Format', 'Image Format not supported for Instagram');
-    this.url = ""
-    this.urls = [];
-    this.multiples = [];
-    this.file = null;
-    this.checkedList = []
+  for (var i = 86; i < this.checklist.length; i++) {
+    if (this.checklist[i].isSelected) {
+      if (this.inValidImageFormat) {
+        this.url = ""
+        this.urls = [];
+        this.multiples = [];
+        this.file = null;
+        this.checkedList = []
+      }
+      this.toast.warning('Unsupported Image Format', 'Image Format not supported for Instagram');
+    }
   }
 }
 
