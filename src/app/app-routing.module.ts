@@ -19,7 +19,8 @@ export const routes: Routes = [
     loadChildren: () =>
       import('./pages/layout.module').then((m) => m.LayoutModule),
   },
-  { path: '**', redirectTo: 'error/404' },
+  { path: '**', 
+  redirectTo: 'login' },
 ];
 
 @NgModule({
