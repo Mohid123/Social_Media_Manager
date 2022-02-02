@@ -10,6 +10,7 @@ import { FeedbackComponent } from './help/feedback.component';
 import { InstagramComponent } from './instagram/instagram.component';
 import { NewsfeedComponent } from './newsfeed/newsfeed.component';
 import { PublishComponent } from './publish-all/publish.component';
+import { ReportPostComponent } from './report-post/report-post.component';
 import { ScheduleComponent } from './schedule/schedule.component';
 import { TeamtalkersComponent } from './teamtalkers/teamtalkers.component';
 import { UserMgtComponent } from './user-mgt/user-mgt.component';
@@ -71,6 +72,10 @@ const routes: Routes = [
       {
         path: 'user-management', 
         component: UserMgtComponent 
+      },
+      {
+        path: 'reported-posts', 
+        component: ReportPostComponent 
       },
       {
         path: 'dashboard',

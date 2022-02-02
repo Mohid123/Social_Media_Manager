@@ -65,7 +65,7 @@ export class AsideComponent implements OnInit, OnDestroy {
 
   onClick() {
     this.joyrideService.startTour({ 
-     steps: ['firstStep', 'secondStep', 'thirdStep', 'fourthStep', 'fifthStep', 'sixthStep', 'seventhStep', 'eighthStep'],
+     steps: ['firstStep', 'secondStep', 'thirdStep', 'fourthStep', 'fifthStep', 'sixthStep', 'seventhStep', 'eighthStep', 'ninthStep', 'tenthStep', 'eleventhStep', 'twelevethStep'],
     themeColor: '#1e1e2d',
     stepDefaultPosition: 'right',
    } // Your steps order
