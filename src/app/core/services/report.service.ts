@@ -7,6 +7,7 @@ import { BaseApiService } from './base-api.service';
 import { HttpClient } from '@angular/common/http';
 import { ApiResponse } from '../models/response.model';
 import { Post } from 'src/app/core/models/post.model';
+import { retry } from 'rxjs/operators';
 
 type report = Report | Post
 
@@ -14,7 +15,8 @@ type report = Report | Post
   providedIn: 'root'
 })
 export class ReportService extends BaseApiService<report> {
-  private report : Report
+  private report : Report;
+  public limit: number = 20
 
   constructor(
     private clubService:ClubService,
@@ -81,8 +83,16 @@ export class ReportService extends BaseApiService<report> {
     });
   }
 
-  getPostReport(offset, limit): Observable<ApiResponse<report>> {
-    return this.clubApiGet(`/post/getReportPost?offset=${offset}&limit=${limit}`);
+  // getPostReport(offset, limit): Observable<ApiResponse<report>> {
+  //   return this.clubApiGet(`/post/getReportPost?offset=${offset}&limit=${limit}`);
+  // }
+
+  getPostReport( page: number ): Observable<ApiResponse<report>> {
+       const param:any = {
+        offset: page ? this.limit * page : 0,
+        limit: this.limit
+      }
+    return this.clubApiGet('/post/getReportPost', param)
   }
   
 }

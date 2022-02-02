@@ -1,0 +1,231 @@
+/*Preview photos*/
+.preview-facebook-media {
+    position: relative;
+}
+
+.preview-facebook-media .user-info {
+    padding: 10px 25px;
+    position: relative;
+}
+
+.preview-facebook-media .user-info-view {
+    padding: 10px 25px;
+}
+
+.preview-facebook-media .user-info img {
+    width: 44px;
+    margin-right: 5px;
+    border-radius: 100%;
+}
+
+.preview-facebook-media .user-info .text {
+    position: absolute;
+    top: 20px;
+    font-size: 13px;
+    left: 78px;
+    line-height: 12px;
+}
+
+.preview-facebook-media .user-info .text .name {
+    font-weight: bold;
+    color: #365899;
+}
+
+.preview-facebook-media .user-info .text span {
+    color: #90949c;
+    font-size: 12px;
+}
+
+.preview-facebook-media .preview-media {
+    height: 350px;
+    background-size: cover;
+    background-position: center center;
+    background-color: #F3F6F9;
+    overflow: hidden;
+    position: relative;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.preview-facebook-media .preview-media-post {
+    height: 400px;
+    background-size: cover;
+    background-position: center center;
+    background-color: #F3F6F9;
+    overflow: hidden;
+    position: relative;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.preview-facebook-media .preview-media .item {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    border: 1px solid #fff;
+    transition: all 0.5s;
+    position: relative;
+    overflow: hidden;
+}
+
+.preview-facebook-media video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: auto;
+    height: 100%;
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+.preview-facebook-media .post-info,
+.preview-facebook-media .caption {
+    padding: 10px 33px;
+    word-break: break-all;
+    color: #000;
+}
+
+.preview-facebook-media .post-info img,
+.preview-facebook-media .caption img {
+    width: 15px;
+    position: relative;
+    top: -2px;
+}
+
+
+.preview-facebook-media .line-no-text {
+    margin-bottom: 3px;
+    height: 13px;
+    background: #F3F6F9;
+
+}
+
+
+/*Preview Text*/
+.preview-facebook-text {
+    position: relative;
+}
+
+.preview-facebook-text .preview-header {
+    padding: 20px;
+    height: 60px;
+    border-bottom: 1px solid #F3F6F9;
+}
+
+.preview-facebook-text .preview-header i {
+    font-size: 20px;
+}
+
+
+.preview-facebook-text .user-info {
+    padding: 10px 25px;
+    position: relative;
+}
+
+.preview-facebook-text .user-info img {
+    width: 44px;
+    margin-right: 5px;
+    border-radius: 100%;
+}
+
+.preview-facebook-text .user-info .text {
+    position: absolute;
+    top: 20px;
+    font-size: 13px;
+    left: 78px;
+    line-height: 12px;
+
+}
+
+.preview-facebook-text .user-info .text .name {
+    font-weight: bold;
+    color: #2a5885;
+}
+
+.preview-facebook-text .user-info .text span {
+    color: #939393;
+    font-size: 12px;
+}
+
+.preview-facebook-text .post-info,
+.preview-facebook-text .caption {
+    padding: 10px 33px;
+    word-break: break-all;
+    color: #000;
+}
+
+.preview-facebook-text .post-info img,
+.preview-facebook-text .caption img {
+    width: 15px;
+    position: relative;
+    top: -2px;
+}
+
+
+.preview-facebook-text .line-no-text {
+    margin-bottom: 3px;
+    height: 13px;
+
+    background: #F3F6F9;
+}
+
+.preview-facebook-text .preview-comment {
+    margin-top: 0px;
+}
+
+.preview-facebook .preview-comment {
+    position: relative;
+    padding: 12px 0px 12px 25px;
+    color: black;
+    border-top: 1px solid #eee;
+    margin: 0 10px;
+    margin-top: -14px;
+}
+
+.preview-facebook .preview-club {
+    position: relative;
+    padding: 5px 22px 13px 22px;
+    color: #999;
+    text-align: end;
+    margin-top: 10px;
+}
+
+.preview-facebook .preview-fb {
+    position: relative;
+    padding: 7px 22px;
+    color: #999;
+    text-align: end;
+    margin-top: 10px;
+}
+
+.preview-facebook .preview-comment .item {
+    float: left;
+    margin-right: 25px;
+    font-size: 12px;
+}
+
+
+.custom-scrollbar-css {
+    height: 700px;
+  }
+  /* Custom Scrollbar using CSS */
+  .custom-scrollbar-css {
+    overflow-y: scroll;
+  }
+  /* scrollbar width */
+  .custom-scrollbar-css::-webkit-scrollbar {
+    width: 4px;
+  }
+  /* scrollbar track */
+  .custom-scrollbar-css::-webkit-scrollbar-track {
+    background: #eee;
+  }
+  /* scrollbar handle */
+  .custom-scrollbar-css::-webkit-scrollbar-thumb {
+    border-radius: 1rem;
+    background-color: #34ABC5;
+    background-image: linear-gradient(to top, #949494 0%, #1E1E2D 100%);
+  }
