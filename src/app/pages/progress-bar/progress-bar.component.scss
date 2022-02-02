@@ -5,3 +5,7 @@
     z-index: 1;
     box-shadow: rgb(99 99 99 / 20%) 0px 2px 8px 0px;
 }
+
+::ng-deep .specific-class > .mat-expansion-indicator:after {
+    color: white;
+  }
