@@ -1,8 +1,8 @@
-import { Component, OnInit, ChangeDetectorRef, ElementRef, ViewChild, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, ElementRef, ViewChild } from '@angular/core';
 import { UserManagement } from '@app/core/services/user-management.service';
 import { ApiResponse } from '@app/core/models/response.model';
-import { fromEvent, Observable, of, Subject, Subscription } from 'rxjs';
-import { debounceTime, delay, distinctUntilChanged, filter, map, subscribeOn, switchMapTo, take, takeUntil, tap } from 'rxjs/operators';
+import { Observable, of, Subject } from 'rxjs';
+import { debounceTime, distinctUntilChanged, map, takeUntil } from 'rxjs/operators';
 import { NgbModal, ModalDismissReasons, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { FormGroup, Validators, FormBuilder, FormControl, AbstractControl, ValidationErrors } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
@@ -11,8 +11,8 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import * as moment from 'moment';
 import { UserCount } from '@app/core/models/user-count.model';
 import { ClubService } from './../../core/services/club.service';
-import { BaseURL } from './../../core/models/base-urls';
 import { UserList } from '@app/core/models/userlist.model';
+import { MediauploadService } from '@app/core/services/mediaupload.service';
 
 @Component({
   selector: 'user-management',
@@ -56,6 +56,7 @@ export class UserMgtComponent implements OnInit {
   public count: UserCount;
   public admins: User;
   public blockedUsers: User;
+  updateProgress: number;
   filterButtons = [
     { text: '', isClicked: true },
     { text: 'Admins', isClicked: false },
@@ -71,6 +72,7 @@ export class UserMgtComponent implements OnInit {
     private fb: FormBuilder,
     private spinner: NgxSpinnerService,
     public _clubService: ClubService,
+    public mediaService: MediauploadService,
     private config: NgbModalConfig)
     {
       this.page = 0;
@@ -92,6 +94,10 @@ export class UserMgtComponent implements OnInit {
           this.searchUser(newValue);
         }
       });
+      this.mediaService.subscribeToProgressEvents((progress: number) => {
+        this.updateProgress = progress;
+        this.cf.detectChanges();
+      })
   }
 
   initUserForm() {
@@ -190,21 +196,6 @@ export class UserMgtComponent implements OnInit {
     this.defaultUser = new User();
     this.url = ""
   }
-
-  // getUsers(){
-  //   if (this.isLoading) return
-  //   this.isLoading = true;
-  //   this.userMgt.getAllUsers(this.page).pipe(
-  //     distinctUntilChanged(),
-  //     takeUntil(this.destroy$)).subscribe((res: ApiResponse<User>)=>{
-  //     if(!res.hasErrors()){
-  //      this.users = res.data;
-  //      console.log(this.users)
-  //      this.cf.detectChanges();
-  //     }
-  //     this.isLoading = false;
-  //   })
-  // }
 
   getAllUsers() {
     if (this.isLoading) return

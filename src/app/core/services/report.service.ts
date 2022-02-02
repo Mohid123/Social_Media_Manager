@@ -6,8 +6,9 @@ import { Report } from '../models/report.model';
 import { BaseApiService } from './base-api.service';
 import { HttpClient } from '@angular/common/http';
 import { ApiResponse } from '../models/response.model';
+import { Post } from 'src/app/core/models/post.model';
 
-type report = Report
+type report = Report | Post
 
 @Injectable({
   providedIn: 'root'
@@ -78,6 +79,10 @@ export class ReportService extends BaseApiService<report> {
     this.addReport(this.report).subscribe((report:ApiResponse<report>) => {
 
     });
+  }
+
+  getPostReport(offset, limit): Observable<ApiResponse<report>> {
+    return this.clubApiGet(`/post/getReportPost?offset=${offset}&limit=${limit}`);
   }
   
 }

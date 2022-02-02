@@ -25,9 +25,7 @@ import { ApiResponse } from '@app/core/models/response.model';
 import { Report } from '@app/core/models/report.model';
 import { Club } from './../../core/models/club.model';
 import { takeUntil } from 'rxjs/operators';
-
-
-
+import { MediauploadService } from '@app/core/services/mediaupload.service';
 
 export type ChartOptions = {
   series: ApexAxisChartSeries;
@@ -42,8 +40,6 @@ export type ChartOptions = {
   legend: ApexLegend;
   title: ApexTitleSubtitle;
 };
-
-
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -55,6 +51,7 @@ export class DashboardComponent implements OnInit {
   @ViewChild("appTour") modalContent: TemplateRef<any>;
   destroy$ = new Subject();
   public chartOptions: Partial<ChartOptions>;
+  updateProgress: number;
   public facebookStats: any;
   public instagramStats: any;
   public clubStats: any;
@@ -73,7 +70,8 @@ export class DashboardComponent implements OnInit {
     private cf: ChangeDetectorRef,
     private mainAuthService: MainAuthService,
     private modalService: NgbModal,
-    private asideComponent: AsideComponent
+    private asideComponent: AsideComponent,
+    public mediaService: MediauploadService,
   ) {}
 
   ngOnInit() {
@@ -82,6 +80,10 @@ export class DashboardComponent implements OnInit {
     this.getSignedInUserStats()
     this.getLastSevenDaysStats()
     this.showAppTour()
+    this.mediaService.subscribeToProgressEvents((progress: number) => {
+      this.updateProgress = progress;
+      this.cf.detectChanges();
+    });
     // this.spinner.show()
     // this.openJoyRide()
   }

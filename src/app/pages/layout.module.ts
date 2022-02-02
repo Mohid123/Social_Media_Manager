@@ -57,7 +57,8 @@ import { NgImageSliderModule } from 'ng-image-slider';
 import { UserMgtComponent } from './user-mgt/user-mgt.component';
 import {Ng2TelInputModule} from 'ng2-tel-input';
 import { TrimModule } from '../directive/trim/trim.module';
-import { ReportPostComponent } from './report-post/report-post.component'
+import { ReportPostComponent } from './report-post/report-post.component';
+import { ProgressBarComponent } from './progress-bar/progress-bar.component'
 FullCalendarModule.registerPlugins([ 
   dayGridPlugin,
   interactionPlugin
@@ -97,7 +98,8 @@ FullCalendarModule.registerPlugins([
     FeedbackComponent,
     AppSpinner,
     UserMgtComponent,
-    ReportPostComponent
+    ReportPostComponent,
+    ProgressBarComponent
 
   
   ],

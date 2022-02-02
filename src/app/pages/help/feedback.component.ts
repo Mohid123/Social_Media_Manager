@@ -24,9 +24,11 @@ export class FeedbackComponent implements OnInit {
   type: any
   mediaFile: any
   userId: string
-  club: any
+  club: any;
+  updateProgress: number;
   feedback: Feedback
-  constructor(private spinner: NgxSpinnerService,
+  constructor(
+    private spinner: NgxSpinnerService,
     private _clubService: ClubService,
     private mainAuthService: MainAuthService,
     private fb: FormBuilder,
@@ -50,6 +52,11 @@ export class FeedbackComponent implements OnInit {
       message: ['', [Validators.required, Validators.minLength(15)]],
       type: ['', [Validators.required]]
     });
+
+    this._mediaUploadService.subscribeToProgressEvents((progress: number) => {
+      this.updateProgress = progress;
+      this.cf.detectChanges();
+    })
   }
 
   onSubmit(form: FormGroup) {

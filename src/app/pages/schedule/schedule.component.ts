@@ -9,6 +9,7 @@ import { Schedule } from './../../core/models/schedule.model';
 import { Club } from 'src/app/core/models/club.model';
 import { ToastrService } from 'ngx-toastr';
 import { ApiResponse } from '@app/core/models/response.model';
+import { MediauploadService } from '@app/core/services/mediaupload.service';
 
 @Component({
   selector: 'app-schedule',
@@ -19,7 +20,8 @@ export class ScheduleComponent implements OnInit , AfterViewInit {
   public events: any[]
   public mutatedEvents: any[]
   public selectedClub: Club
-  clubID: string
+  clubID: string;
+  updateProgress: number;
   closeResult: string;
   selectedEvent: any
   showDeleteBtn: boolean = false
@@ -31,7 +33,7 @@ export class ScheduleComponent implements OnInit , AfterViewInit {
     private clubService: ClubService,
     private _scheduleService: ScheduleService,
     private cf: ChangeDetectorRef,
-
+    public mediaService: MediauploadService,
     private toast: ToastrService,
     private elementRef: ElementRef
   ) { }
@@ -40,6 +42,10 @@ export class ScheduleComponent implements OnInit , AfterViewInit {
   ngOnInit() {
     this.getUserClub()
     this.cf.detectChanges()
+    this.mediaService.subscribeToProgressEvents((progress: number) => {
+      this.updateProgress = progress;
+      this.cf.detectChanges();
+    });
   }
 
 
