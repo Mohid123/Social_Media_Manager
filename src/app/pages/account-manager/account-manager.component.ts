@@ -20,6 +20,7 @@ import { ClubService } from './../../core/services/club.service';
 import { Club } from './../../core/models/club.model';
 import { take, takeUntil } from "rxjs/operators";
 import { PickerClubService } from './../../core/services/picker_clubs.service';
+import { MediauploadService } from '@app/core/services/mediaupload.service';
 @Component({
   selector: "app-account-manager",
   templateUrl: "./account-manager.component.html",
@@ -35,6 +36,7 @@ export class AccountManagerComponent implements OnInit {
   private connectedIG: boolean = false;
   public clubLogo: string = "";
   hideBtn: Boolean = false;
+  updateProgress: number;
   clubId: string;
   public userFBprofile: FacebookProfileModel
   public userClubProfile: ClubProfileModel
@@ -52,7 +54,8 @@ export class AccountManagerComponent implements OnInit {
     private mainAuthService: MainAuthService,
     private cf: ChangeDetectorRef,
     private _clubService: ClubService,
-    private _pickerClubService : PickerClubService
+    private _pickerClubService : PickerClubService,
+    public mediaService: MediauploadService
 
   ) {
     this.userFBprofile = new FacebookProfileModel();
@@ -69,6 +72,11 @@ export class AccountManagerComponent implements OnInit {
       this.userExisitngFacebookPages = this.club?.FBPages ? this.club?.FBPages : []
       this.getSignedInUser();
       this.set_socialFlag_after_getting_club()
+    })
+
+    this.mediaService.subscribeToProgressEvents((progress: number) => {
+      this.updateProgress = progress;
+      this.cf.detectChanges();
     })
   }
 
