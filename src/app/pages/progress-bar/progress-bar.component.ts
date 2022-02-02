@@ -1,6 +1,7 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, ViewChild } from '@angular/core';
 import { MediauploadService } from '@app/core/services/mediaupload.service';
 import { ClubService } from '@app/core/services/club.service';
+import {MatAccordion} from '@angular/material/expansion';
 
 @Component({
   selector: 'app-progress-bar',
@@ -8,6 +9,7 @@ import { ClubService } from '@app/core/services/club.service';
   styleUrls: ['./progress-bar.component.scss']
 })
 export class ProgressBarComponent implements OnInit {
+  @ViewChild(MatAccordion) accordion: MatAccordion;
   public updateProgress: number;
   public clubPrimaryColor: string;
 

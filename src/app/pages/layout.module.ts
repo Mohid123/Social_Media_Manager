@@ -58,7 +58,9 @@ import { UserMgtComponent } from './user-mgt/user-mgt.component';
 import {Ng2TelInputModule} from 'ng2-tel-input';
 import { TrimModule } from '../directive/trim/trim.module';
 import { ReportPostComponent } from './report-post/report-post.component';
-import { ProgressBarComponent } from './progress-bar/progress-bar.component'
+import { ProgressBarComponent } from './progress-bar/progress-bar.component';
+import {MatExpansionModule} from '@angular/material/expansion';
+
 FullCalendarModule.registerPlugins([ 
   dayGridPlugin,
   interactionPlugin
@@ -127,6 +129,7 @@ FullCalendarModule.registerPlugins([
     NgxDropzoneModule,
     ReactiveFormsModule,
     Ng2TelInputModule,
+    MatExpansionModule,
     JoyrideModule.forRoot()
    
     
