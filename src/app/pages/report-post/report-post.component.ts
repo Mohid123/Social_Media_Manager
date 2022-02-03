@@ -7,6 +7,7 @@ import { ReportService } from 'src/app/core/services/report.service';
 import { distinctUntilChanged, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
+import { PostList } from './../../core/models/postlist.model';
 
 @Component({
   selector: 'app-report-post',
@@ -16,6 +17,8 @@ import { ToastrService } from 'ngx-toastr';
 export class ReportPostComponent implements OnInit {
   destroy$ = new Subject();
   public reportedPosts: Post[] = [];
+  // public allReportedPosts: PostList;
+  public limit: number = 12;
   public clubPrimaryColor: string;
   closeResult: string;
   playingVideo: string;
@@ -31,11 +34,11 @@ export class ReportPostComponent implements OnInit {
   ) {
     this.page = 0;
     this.isLoading = false;
-    this.getAllReportedPosts()
+    this.getAllReportedPosts();
    }
 
   ngOnInit(): void {
-    // this.getLatestClubPosts();
+  
   }
 
   onVideoEnded() {
@@ -151,47 +154,17 @@ export class ReportPostComponent implements OnInit {
       })
   }
 
-  // getLatestClubPosts() {
-  //   let tempPosts = [];
-  //   this._postService
-  //     .getClubPosts("Club", 0, 15)
-  //     .subscribe((res: ApiResponse<any>) => {
-  //       res.data.map((singleClubPost: Post, idx, self) => {
-  //         this._postService
-  //           .getPostCommentsAndReactions(singleClubPost.id, 0, 4)
-  //           .subscribe((reactionsAndComments: ApiResponse<any>) => {
-  //             singleClubPost.reactionCount =
-  //               reactionsAndComments.data.count.reactionCount;
-  //             singleClubPost.commentsCount =
-  //               reactionsAndComments.data.count.commentsCount;
-  //             singleClubPost.reactions = reactionsAndComments.data.reaction;
+  next():void {
+    this.page++;
+    this.getAllReportedPosts()
+  }
 
-  //             singleClubPost.imagesObject = [];
-  //             singleClubPost.imagesObject.push(...singleClubPost.media);
+  previous():void {
+    this.page--;
+    this.getAllReportedPosts()
+  }
 
-  //             singleClubPost.imagesObject = singleClubPost.imagesObject.map(item=> {
-  //               this.cf.detectChanges()
-  //               return {
-  //                 image: item.captureFileURL,
-  //                 thumbImage: item.captureFileURL
-  //               }                 
-  //             })
-  //             tempPosts.push(singleClubPost);
-  //             if (idx == self.length - 1) {
-  //               tempPosts.sort(function compare(a, b) {
-  //                 const dateA = new Date(a.postedDate) as any;
-  //                 const dateB = new Date(b.postedDate) as any;
-  //                 return dateB - dateA;
-  //               });
-  //               this.recentClubPosts = tempPosts;
-                
-  //               this.cf.detectChanges();
-  //             }
-  //           });
-  //       });
-  //     });
-  // }
-
+ 
   ngOnDestroy(): void {
     this.destroy$.complete();
     this.destroy$.unsubscribe();
