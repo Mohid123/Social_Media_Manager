@@ -320,7 +320,7 @@
                                                     </div>
                                                     <div class="ml-auto p-2">
                                                         <button  (click)="addImagePost(); clicked = true;" type="button" [disabled]="!file || checkedList.length == 0 || clicked==true"
-                                                            [ngClass]="_genericPostService.condition == true ? 'spinner spinner-white spinner-right' : '' "
+                                                            [ngClass]="(_genericPostService.condition == true || condition == true) ? 'spinner spinner-white spinner-right' : '' "
                                                             class="btn btn-primary flex-row-reverse" style="background-color: #3b5998; border-color: #3b5998;">
                                                             {{_genericPostService.condition == true ? 'Finalizing Your Post': 'Post Now'}}
                                                         </button>

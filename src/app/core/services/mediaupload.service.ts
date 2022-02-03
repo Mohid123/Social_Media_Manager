@@ -42,7 +42,7 @@ export class MediauploadService {
             setTimeout(() => {
             this.progress = 0;
             this.valueChanged.emit(0);
-          }, 1500);
+          }, 0);
         }
       })
     })
@@ -72,7 +72,7 @@ export class MediauploadService {
             setTimeout(() => {
             this.progress = 0;
             this.valueChanged.emit(0);
-          }, 1500);
+          }, 0);
         }
       })
     })

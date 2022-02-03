@@ -61,6 +61,7 @@ export class PublishComponent implements OnInit {
   public clubPrimaryColor: string;
   public searchString: string;
   public scheduleSelected: boolean = false;
+  condition: boolean = false;
   public showDiv = {
     photo: true,
     video: false,
@@ -479,6 +480,7 @@ onSelectedImageLoad() {
     if (selectedFacebookPages.length > 0) {
       this._mediaUploadService.uploadMedia('Facebook', this.signedInUser.id, this.urls[0]).subscribe((media: ApiResponse<Media>) => {
         selectedFacebookPages.forEach((item, index, array) => {
+          this.condition = true;
           this._reportService.createReport(2, '', 'Facebook')
           this._facebookService.addImagePostToFB(item.pageID, media.data.url, this.socialCaption, item.pageAccessToken).subscribe((FbPost: any) => {
             this._reportService.createReport(1, FbPost.id, 'Facebook')
@@ -489,6 +491,7 @@ onSelectedImageLoad() {
           }, (error) => {
             this.toast.error(error.message);
             this._reportService.createReport(0, '', 'Facebook')
+            this.condition = false;
           })
         })
       })
@@ -498,6 +501,7 @@ onSelectedImageLoad() {
 
       this._mediaUploadService.uploadMedia('Instagram', this.signedInUser.id, this.urls[0]).pipe(take(1), takeUntil(this.destroy$)).subscribe((media: ApiResponse<Media>) => {
         selctedInstagramPages.forEach((item, index, array) => {
+          this.condition = true;
           this._reportService.createReport(2, '', 'Instagram')
           this._instagramService.createIGMediaContainer(item.instagram_business_account.id, this.socialCaption, item.linkedFbPagetoken, media.data.url).subscribe((container: any) => {
             this._instagramService.publishContent(item.instagram_business_account.id, container.data.id, item.linkedFbPagetoken).subscribe((IgPost: any) => {
@@ -507,11 +511,13 @@ onSelectedImageLoad() {
             }, (error) => {
               this.toast.error(error.message);
               this._reportService.createReport(0, '', 'Instagram')
+              this.condition = false;
             })
           }, error => {
             console.log(error)
             this.toast.error(error.error.error.error_user_msg);
             this._reportService.createReport(0, '', 'Instagram')
+            this.condition = false;
           })
         })
       })

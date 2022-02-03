@@ -1,7 +1,7 @@
 <mat-accordion *ngIf="updateProgress" class="w-25 custom">
   <mat-expansion-panel [expanded]="true">
-    <mat-expansion-panel-header class="bg-dark specific-class">
-      <mat-panel-description class="text-light">
+    <mat-expansion-panel-header [ngClass]="updateProgress > 0 ? 'bg-dark specific-class spinner spinner-success spinner-left mr-3': 'bg-dark specific-class' ">
+      <mat-panel-description class="text-light ml-4">
         Your File is Uploading...
       </mat-panel-description>
     </mat-expansion-panel-header>
