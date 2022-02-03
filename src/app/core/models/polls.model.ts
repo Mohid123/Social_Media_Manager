@@ -1,4 +1,5 @@
 import { Media } from './media-model';
+import { User } from './user.model';
 
 export class Polls {
     id?: string;
@@ -51,4 +52,20 @@ export class Polls {
     hideParticipantsDetails?: boolean;
     deletedCheck?: boolean;
     media: Media;
+    topVotes: [
+        {
+            profilePicURL: string;
+            id: string;
+        }
+    ]
+    topReactions?: [
+        {
+          profilePicURL?: string;
+          id?: string;
+        }
+      ];
+    dynamicUrl?: string;
+    createdAt?: Date;
+    updatedAt?: Date;
+    user: User;
 }

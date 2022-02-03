@@ -28,6 +28,8 @@ import { ScheduleService } from "./../../core/services/schedule.service";
 import { DomSanitizer } from "@angular/platform-browser";
 import { Subject } from 'rxjs';
 import { BaseURL } from './../../core/models/base-urls';
+import { PollsService } from '@app/core/services/polls.service';
+import { Polls } from './../../core/models/polls.model';
 
 @Component({
   selector: "app-teamtalkers",
@@ -58,6 +60,7 @@ export class TeamtalkersComponent implements OnInit {
   MultipleImageUpload = false;
   targets: any[] = [];
   clicked: Boolean = false;
+  allPolls: Polls;
   updateProgress: number;
   public masterSelected: boolean;
   public groupSelected: boolean = false;
@@ -78,6 +81,8 @@ export class TeamtalkersComponent implements OnInit {
     polls: false
   }
   public showPoll : boolean = false;
+  offset: number = 0;
+  limit: number = 15
   scheduleSelectedDate: any;
   scheduleSelectedTime: Date;
   public clubPrimaryColor: string;
@@ -114,7 +119,8 @@ export class TeamtalkersComponent implements OnInit {
     public mergeService: MergeService,
     private sanitizer: DomSanitizer,
     public mediaService: MediauploadService,
-    private clubService: ClubService
+    private clubService: ClubService,
+    private pollService: PollsService
   ) {
     this.post = new Post();
     this.report = new Report();
@@ -122,7 +128,6 @@ export class TeamtalkersComponent implements OnInit {
     this.clubService.SelectedClub$.pipe(takeUntil(this.destroy$)).subscribe(club => {
       this.selectedClub = club;
       this.hidePoll()
-    
     })
   }
 
@@ -133,6 +138,7 @@ export class TeamtalkersComponent implements OnInit {
     this.initializeChecklist();
     this.getCheckedItemList();
     this.getLatestClubPosts();
+    this.getPollPosts()
 
     this.mediaService.subscribeToProgressEvents((progress: number) => {
       this.updateProgress = progress;
@@ -208,6 +214,14 @@ export class TeamtalkersComponent implements OnInit {
             });
         });
       });
+  }
+
+  getPollPosts() {
+    this.pollService.getAllPolls(this.offset, this.limit).subscribe((res: ApiResponse<Polls>) => {
+      if(!res.hasErrors()) {
+        this.allPolls = res.data;
+      }
+    })
   }
 
   resetPost() {

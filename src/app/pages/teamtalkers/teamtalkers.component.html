@@ -1165,16 +1165,16 @@
                           </div>
                           <div class="d-flex flex-column">
                             <a href="{{ post.hyperLink }}" target="_blank" class="mb-3 font-weight-normal font-size-h4">
-                              <div *ngIf="post.type == 'hyperlink'" class="text-dark">
+                              <div style ="font-family: 'Poppins', sans-serif;" *ngIf="post.type == 'hyperlink'" class="text-dark">
                                 {{ post.textFirst }}
                               </div>
-                              <div *ngIf="post.type == 'hyperlink'" class="text-muted font-size-sm">
+                              <div style ="font-family: 'Poppins', sans-serif;" *ngIf="post.type == 'hyperlink'" class="text-muted font-size-sm">
                                 {{ post.textSecond }}
                               </div>
-                              <div *ngIf="post.type != 'hyperlink'">
+                              <div style ="font-family: 'Poppins', sans-serif;" *ngIf="post.type != 'hyperlink'">
                                 {{ post.hyperlinkTextFirst }}
                               </div>
-                              <div *ngIf="post.type != 'hyperlink'" class="text-muted font-size-sm">
+                              <div style ="font-family: 'Poppins', sans-serif;" *ngIf="post.type != 'hyperlink'" class="text-muted font-size-sm">
                                 {{ post.hyperlinkTextSecond }}
                               </div>
                             </a>
@@ -1189,7 +1189,7 @@
                         white-space: pre-wrap;
                         text-align: justify;
                       ">
-                      <div *ngIf="post.text">{{ post.text }}</div>
+                      <div style ="font-family: 'Poppins', sans-serif;" *ngIf="post.text">{{ post.text }}</div>
                     </div>
                     <div class="preview-club">
                       <div class="d-flex bd-highlight">
@@ -1242,7 +1242,7 @@
                 </mat-icon>&nbsp; &nbsp;Polls
               </ng-template>
               <div class="card-body">
-                <div *ngFor="let post of recentClubPosts" class="m-6 border rounded"
+                <div *ngFor="let poll of allPolls" class="m-6 border rounded"
                   style="box-shadow: rgb(99 99 99 / 20%) 0px 2px 8px 0px">
                   <div class="
                   preview-facebook preview-facebook-text
@@ -1250,73 +1250,62 @@
                 " data-type="text">
                 <div class="user-info" style="z-index: 1">
                   <img class="img-circle" ngDefaultControl name="fieldName" [(ngModel)]="clubPrimaryColor"
-                    [ngStyle]="{ border: '3px solid' + clubPrimaryColor }" [src]="profileImageUrl" />
+                    [ngStyle]="{ border: '3px solid' + clubPrimaryColor }" [src]="poll.user.profilePicURL">
                   <div class="text">
-                    <div class="name">{{ userName }}</div>
-                    <span>Just now</span>
+                    <div class="name pb-3">{{ poll.user.username }}</div>
+                    <span>{{poll.postedDate | date: 'MMM d, y'}}</span>
                   </div>
                 </div>
-
                 <div class="caption" style="white-space: pre-wrap; text-align: justify">
                   <div class="panel panel-primary">
                     <div class="panel-heading">
-                      <h3 class="panel-title">
+                      <h5 class="panel-title">
                         <div>
-                          <div>{{ teamtalkerCaption }}</div>
-                          <div class="line-no-text" *ngIf="!teamtalkerCaption">
-                            {{ teamtalkerCaption }}
-                          </div>
-                          <div class="line-no-text" *ngIf="!teamtalkerCaption"></div>
-                          <div class="line-no-text" *ngIf="!teamtalkerCaption"></div>
+                          <div style ="font-family: 'Poppins', sans-serif;" class="border rounded border-2 p-5">{{ poll.text }}</div>
                         </div>
-                      </h3>
+                      </h5>
                     </div>
-                    <div>
-                      <div class="form-group">
-                        <input type="text" class="form-control" id="example1" placeholder="Enter your choice"
-                          [(ngModel)]="poll.choice1" disabled />
-                      </div>
-
-                      <div class="form-group">
-                        <input type="text" class="form-control" id="example2" placeholder="Enter your choice"
-                          [(ngModel)]="poll.choice2" disabled />
-                      </div>
-
-                      <div class="form-group">
-                        <input type="text" class="form-control" id="example3"
-                          placeholder="Enter your choice (optional)" [(ngModel)]="poll.choice3" disabled />
-                      </div>
-
-                      <div class="form-group mb-o">
-                        <input type="text" class="form-control" id="example4"
-                          placeholder="Enter your choice (optional)" [(ngModel)]="poll.choice4" disabled />
-                      </div>
-                    </div>
-                  </div></div>
-                <div class="preview-club">
-                  <div class="d-flex bd-highlight">
-                    <div class="p-2 flex-grow-1 bd-highlight">
-                      <div class="row">
-                        <div class="col item">
-                          <div class="symbol-group symbol-hover">
-                            <div class="symbol symbol-circle symbol-20 symbol-sm-2">
-                              <img alt="Pic" src="../../../assets/media/users/100_14.jpg" />
-                            </div>
-                            <div class="symbol symbol-circle symbol-20 symbol-sm-2">
-                              <img alt="Pic" src="../../../assets/media/users/100_6.jpg" />
-                            </div>
-                            <div class="symbol symbol-circle symbol-20 symbol-sm-2">
-                              <img alt="Pic" src="../../../assets/media/users/100_11.jpg" />
-                            </div>
-                            <span class="symbol-label">2 likes</span>
-                          </div>
+                    <div class="card card-custom bg-dark card-stretch gutter-b p-5">
+											<!--begin::Body-->
+											<div class="card-body">
+												<a  class="card-title font-weight-bolder text-white font-size-h6 mb-4 text-hover-state-dark d-block">Total Votes</a>
+												<div class="font-weight-bold text-white font-size-sm">
+												<span class="font-size-h2 mr-2">{{poll.totalVotesCount}}</span></div>
+												<div class="progress progress-xs mt-7 bg-white-o-90">
+													<div class="progress-bar bg-white" role="progressbar" [style.width.%]="poll.totalVotesCount"></div>
+												</div>
+											</div>
+											<!--end::Body-->
+										</div> <ng-container *ngFor="let choice of poll?.choices">
+                      <div class="my-5">
+                        <span style ="font-family: 'Poppins', sans-serif;">{{choice.choiceText}}</span><span class="float-right">{{choice.voteCount}}</span>
+                        <div class="progress" style="height: 20px;">
+                            <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" [style.width.%]="choice.voteCount"></div>
                         </div>
                       </div>
-                    </div>
-                    <div class="p-2 bd-highlight">1 comment</div>
-                    <div class="p-2 bd-highlight">1 share</div>
+                    </ng-container>
                   </div>
                 </div>
+
+                <div class="w-100 p-5 ml-5 mb-5">
+                  <h6 style="font-family: 'Poppins', sans-serif;">Voting Ends in:</h6>
+                  <a class="btn btn-icon btn-light-primary pulse pulse-primary mr-2">
+                    <span style="font-size: 18px">{{poll.votingDays}}</span>
+                    <span class="pulse-ring"></span>
+                  </a>
+                  Days
+                  <a class="btn btn-icon btn-light-success pulse pulse-success mr-2 ml-2">
+                    <span style="font-size: 18px">{{poll.votingHours}}</span>
+                      <span class="pulse-ring"></span>
+                  </a>
+                  Hours
+                  <a class="btn btn-icon btn-light-danger pulse pulse-danger mr-2 ml-2">
+                    <span style="font-size: 18px">{{poll.votingMinutes}}</span>
+                    <span class="pulse-ring"></span>
+                  </a>
+                  Minutes
+                </div>
+
                 <div class="preview-comment">
                   <div class="row">
                     <div class="col-12 item">
