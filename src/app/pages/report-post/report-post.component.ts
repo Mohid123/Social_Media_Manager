@@ -17,7 +17,7 @@ import { PostList } from './../../core/models/postlist.model';
 export class ReportPostComponent implements OnInit {
   destroy$ = new Subject();
   public reportedPosts: Post[] = [];
-  // public allReportedPosts: PostList;
+  public allReportedPosts: PostList | any;
   public limit: number = 12;
   public clubPrimaryColor: string;
   closeResult: string;
@@ -91,22 +91,21 @@ export class ReportPostComponent implements OnInit {
   }
 
   getAllReportedPosts() {
+    if (this.isLoading) return
     this.isLoading = true;
-    let tempPosts = [];
+    let tempPosts = []
     this.reportService.getPostReport(this.page)
     .pipe(
       distinctUntilChanged(),
       takeUntil(this.destroy$))
       .subscribe((res: ApiResponse<any>) => {
       if(!res.hasErrors()){
-        res.data.map((singleClubPost: Post, idx, self) => {
+        res.data.data.map((singleClubPost: Post, idx, self) => {
           this._postService
             .getPostCommentsAndReactions(singleClubPost.id, 0, 4)
             .subscribe((reactionsAndComments: ApiResponse<any>) => {
-
               singleClubPost.imagesObject = [];
               singleClubPost.imagesObject.push(...singleClubPost.media);
-
               singleClubPost.imagesObject = singleClubPost.imagesObject.map(item=> {
                 this.cf.detectChanges()
                 return {
@@ -121,8 +120,8 @@ export class ReportPostComponent implements OnInit {
                   const dateB = new Date(b.postedDate) as any;
                   return dateB - dateA;
                 });
-                this.reportedPosts = tempPosts;
-                
+                this.allReportedPosts = tempPosts;
+                console.log(this.allReportedPosts)
                 this.cf.detectChanges();
               }
             });
@@ -136,6 +135,7 @@ export class ReportPostComponent implements OnInit {
     this._postService.deleteClubPost(post.id).subscribe((res: ApiResponse<Post>) => {
       if(!res.hasErrors()) {
         this.getAllReportedPosts();
+        this.cf.detectChanges()
         this.toastr.success("Post deleted", "Success");
       }
     });
@@ -148,13 +148,14 @@ export class ReportPostComponent implements OnInit {
       takeUntil(this.destroy$)
       ).subscribe((res: ApiResponse<Post>) => {
         if(!res.hasErrors()) {
-          this.toastr.success('Post Successfully Cancelled', 'Cancel Post')
+          this.toastr.success('Report Against Post Successfully Cancelled', 'Cancel Post')
           this.getAllReportedPosts();
         }
       })
   }
 
   next():void {
+    debugger
     this.page++;
     this.getAllReportedPosts()
   }

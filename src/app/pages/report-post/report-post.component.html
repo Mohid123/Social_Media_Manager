@@ -27,7 +27,7 @@
                 <ngx-spinner [fullScreen]="false" [showSpinner]="isLoading" [show]="isLoading" bdColor="rgba(0, 0, 0, 0.3)" size="default" color="#fff" type="ball-spin">
                     <p style="color: white">D I V I D I S</p>
                 </ngx-spinner>
-                <div *ngFor="let post of reportedPosts" class="col-xl-4" >
+                <div *ngFor="let post of allReportedPosts" class="col-xl-4" >
                     <!--begin::Card-->
                     <div class="card card-custom gutter-b card-stretch">
                         <!--begin::Body-->
@@ -269,24 +269,24 @@
               <div class="card-body py-7">
                  
                   <!--begin::Pagination-->
-                  <!-- <div class="d-flex justify-content-end align-items-center flex-wrap">
+                   <div class="d-flex justify-content-end align-items-center flex-wrap">
                       <div class="d-flex flex-wrap mr-3 align-items-center">
                           <button [disabled]="page < 1" (click)="previous()" class="btn btn-icon btn-sm btn-light-primary mr-2 my-1">
                               <i class="ki ki-bold-double-arrow-back icon-xs"></i>
                           </button>
-                          <ng-container *ngIf="allReportedPosts?.totalCount > limit  ; else noPage">
-                              <span>{{ page }} / {{ (allReportedPosts?.totalCount  / limit) + (0.4) | number:'1.0-0' }}</span>
+                          <ng-container *ngIf="allReportedPosts?.totalCount > limit">
+                              <span>{{ page }} / {{ (allReportedPosts?.totalCount/limit) + (0.4) | number:'1.0-0' }}</span>
                             </ng-container>
-                            <ng-template #noPage >
+                            <!-- <ng-template #noPage >
                               <span>0/1</span>
-                            </ng-template>
+                            </ng-template> -->
                       
                           <button [disabled]="(allReportedPosts?.totalCount / limit) <= page"  (click)="next()" class="btn btn-icon btn-sm btn-light-primary ml-3 mr-2 my-1">
                               <i class="ki ki-bold-double-arrow-next icon-xs"></i>
                           </button>
                       </div>
                   
-                  </div> -->
+                  </div> 
                   <!--end:: Pagination-->
               </div>
           </div>

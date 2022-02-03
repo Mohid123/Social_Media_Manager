@@ -89,10 +89,10 @@ export class ReportService extends BaseApiService<report> {
 
   getPostReport( page: number ): Observable<ApiResponse<report>> {
        const param:any = {
-        offset: page ? this.limit * page : 0,
-        limit: this.limit
+        offset: page ? 12 * page : 0,
+        limit: 12
       }
-    return this.clubApiGet('/post/getReportPost', param)
+    return this.clubApiGet('/post/getReportPostWithCount', param)
   }
   
 }
