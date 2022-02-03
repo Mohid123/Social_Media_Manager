@@ -2,7 +2,7 @@ import { Poll } from "./poll.model";
 import { Media } from './media-model';
 
 export class Post {
-  id: string;
+  id?: string;
   userID: string;
   eventID: string;
   groupID: string;

@@ -73,6 +73,10 @@ export class TeamtalkersComponent implements OnInit {
     text: false,
     poll: false,
   };
+  public showPosts = {
+    posts: true,
+    polls: false
+  }
   public showPoll : boolean = false;
   scheduleSelectedDate: any;
   scheduleSelectedTime: Date;
@@ -449,6 +453,16 @@ export class TeamtalkersComponent implements OnInit {
       this.file = null;
       this.url = null;
     }
+  }
+
+  switchTabsRecentPosts(event) {
+    if (event.index == 0) {
+      this.showPosts.posts = true;
+      this.showPosts.polls = false;
+    } else  {
+      this.showPosts.posts = false;
+      this.showPosts.polls = true;
+    } 
   }
 
   onSelectFile(event) {

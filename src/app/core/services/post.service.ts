@@ -6,8 +6,9 @@ import { ApiResponse } from '@app/core/models/response.model';
 import { BaseApiService } from './base-api.service';
 import { take, tap } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
+import { PostList } from './../models/postlist.model';
 
-type post = Post | Post[] | any;
+type post = Post | Post[] | PostList | any;
 
 @Injectable({
   providedIn: 'root'
