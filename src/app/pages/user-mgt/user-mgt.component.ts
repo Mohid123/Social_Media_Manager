@@ -213,7 +213,6 @@ export class UserMgtComponent implements OnInit {
   }
 
   setType(type:string): void {
-    
     this.type = type;
     this.page = 0;
     this.getAllUsers();
@@ -375,7 +374,7 @@ export class UserMgtComponent implements OnInit {
 
   onClick(event) {
     event.target.value = ''
-}
+  }
 
   deleteUserDialog(deleteUserContent) {
     this.modalService.open(deleteUserContent, { centered: true }).result.then((result) => {
@@ -399,7 +398,7 @@ export class UserMgtComponent implements OnInit {
 
   onChangeScheduleDate(value: Date) {
      this.scheduleSelectedDate = value;
-  }
+    }
 
   next():void {
     this.page++;

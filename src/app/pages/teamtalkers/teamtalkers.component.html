@@ -1060,13 +1060,13 @@
                    justify-content: center;">
                   <ng-container *ngIf="post.type == 'image'" #nav>
 
-                    <div style="width: 100%; height:500px; display: block; text-align:center;margin:0; padding:0;">
+                    <div style="width: 100%; height:368px; display: block; text-align:center;margin:0; padding:0;">
                       <ng-image-slider #nav 
                         [images]="post.imagesObject"
                         [infinite]="false"
                         [autoSlide]="1"
                         [imagePopup]="true"
-                        [imageSize]="{width: '99%', height: '500px'}"
+                        [imageSize]="{width: '99%', height: '368px'}"
                         slideImage="1"
                         [defaultActiveImage]="1"
                         [lazyLoading]='true' 
