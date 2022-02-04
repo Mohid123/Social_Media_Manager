@@ -25,6 +25,7 @@ export class ReportPostComponent implements OnInit {
   public page:number;
   public recentClubPosts: Post[] = [];
   public isLoading: boolean;
+  imageModal: string;
   constructor(
     private modalService: NgbModal,
     private cf: ChangeDetectorRef,
@@ -152,6 +153,18 @@ export class ReportPostComponent implements OnInit {
           this.getAllReportedPosts();
         }
       })
+  }
+
+  openImageCentered(content, post: Post) {
+    this.imageModal = post.captureFileURL;
+    this.modalService.open(content, { centered: true, size: 'xl' }).result.then(
+      (result) => {
+        this.closeResult = `Closed with: ${result}`;
+      },
+      (reason) => {
+        this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+      }
+    )
   }
 
   next():void {

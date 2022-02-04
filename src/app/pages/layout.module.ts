@@ -60,6 +60,7 @@ import { TrimModule } from '../directive/trim/trim.module';
 import { ReportPostComponent } from './report-post/report-post.component';
 import { ProgressBarComponent } from './progress-bar/progress-bar.component';
 import {MatExpansionModule} from '@angular/material/expansion';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 FullCalendarModule.registerPlugins([ 
   dayGridPlugin,
@@ -130,6 +131,7 @@ FullCalendarModule.registerPlugins([
     ReactiveFormsModule,
     Ng2TelInputModule,
     MatExpansionModule,
+    NgbModule,
     JoyrideModule.forRoot()
    
     

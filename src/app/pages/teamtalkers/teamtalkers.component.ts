@@ -4,6 +4,7 @@ import { ClubService } from "./../../core/services/club.service";
 import { MediauploadService } from "./../../core/services/mediaupload.service";
 import { PostService } from "./../../core/services/post.service";
 import { NgbModal, ModalDismissReasons } from "@ng-bootstrap/ng-bootstrap";
+import { NgbCarouselConfig } from '@ng-bootstrap/ng-bootstrap';  
 import { MergeService } from "src/app/core/services/merge-service.service";
 import {
   Component,
@@ -120,7 +121,8 @@ export class TeamtalkersComponent implements OnInit {
     private sanitizer: DomSanitizer,
     public mediaService: MediauploadService,
     private clubService: ClubService,
-    private pollService: PollsService
+    private pollService: PollsService,
+    config: NgbCarouselConfig
   ) {
     this.post = new Post();
     this.report = new Report();
@@ -129,6 +131,12 @@ export class TeamtalkersComponent implements OnInit {
       this.selectedClub = club;
       this.hidePoll()
     })
+    config.interval = 5000;  
+    config.wrap = false;  
+    config.keyboard = true;  
+    config.pauseOnHover = false;
+    config.showNavigationIndicators = false
+    config.showNavigationArrows = true;
   }
 
   destroy$ = new Subject();
@@ -162,6 +170,18 @@ export class TeamtalkersComponent implements OnInit {
     );
   }
 
+  openImageCentered(content, post: Post) {
+    this.imageModal = post.captureFileURL;
+    this.modalService.open(content, { centered: true, size: 'xl' }).result.then(
+      (result) => {
+        this.closeResult = `Closed with: ${result}`;
+      },
+      (reason) => {
+        this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+      }
+    )
+  }
+
   getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
       return "by pressing ESC";
@@ -191,16 +211,16 @@ export class TeamtalkersComponent implements OnInit {
                 reactionsAndComments.data.count.commentsCount;
               singleClubPost.reactions = reactionsAndComments.data.reaction;
 
-              singleClubPost.imagesObject = [];
-              singleClubPost.imagesObject.push(...singleClubPost.media);
+              // singleClubPost.imagesObject = [];
+              // singleClubPost.imagesObject.push(...singleClubPost.media);
 
-              singleClubPost.imagesObject = singleClubPost.imagesObject.map(item=> {
-                this.cf.detectChanges()
-                return {
-                  image: item.captureFileURL,
-                  thumbImage: item.captureFileURL
-                }                 
-              })
+              // singleClubPost.imagesObject = singleClubPost.imagesObject.map(item=> {
+              //   this.cf.detectChanges()
+              //   return {
+              //     image: item.captureFileURL,
+              //     thumbImage: item.captureFileURL
+              //   }                 
+              // })
               tempPosts.push(singleClubPost);
               if (idx == self.length - 1) {
                 tempPosts.sort(function compare(a, b) {

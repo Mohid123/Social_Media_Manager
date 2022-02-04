@@ -1002,7 +1002,7 @@
                                     object-fit: cover;
                                   " />
                                 </ng-container>
-                             </div>
+                          </div>
                           <div *ngIf="post.type == 'video'" class="preview-media" style="margin-top: -20px">
                             <video *ngIf="post.type == 'video' && post.captureFileURL" id="clubVideo"
                               src="{{ post.captureFileURL }}" style="
@@ -1059,31 +1059,35 @@
                     </div>
     
                     <div *ngIf="post.type !== 'text' " class="preview-media" 
-                      style=
-                       "margin-top: 20px;
-                       width: auto;
+                      style="width: auto;
                        height: auto;
                        display: flex;
                        flex-wrap: wrap;
                        object-fit: cover;
                        justify-content: center;">
-                      <ng-container *ngIf="post.type == 'image'" #nav>
-    
-                        <div style="width: 100%; height:368px; display: block; text-align:center;margin:0; padding:0;">
-                          <ng-image-slider #nav 
-                            [images]="post.imagesObject"
-                            [infinite]="false"
-                            [autoSlide]="1"
-                            [imagePopup]="true"
-                            [imageSize]="{width: '99%', height: '368px'}"
-                            slideImage="1"
-                            [defaultActiveImage]="1"
-                            [lazyLoading]='true' 
-                            [manageImageRatio]="true">
-                            
-                          </ng-image-slider>
-                        </div>
+
+                      <div *ngIf="post.type == 'image'" (click)="openImageCentered(content6, post)" data-toggle="modal" data-target="#video-modal"
+                        style="width: auto;
+                          height: auto;
+                          display: flex;
+                          flex-wrap: wrap;
+                          object-fit: contain;">
+                        <ng-container *ngFor="let media of post.media; let i = index;">
+                          <img [src]="media.captureFileURL" 
+                          style="
+                            flex-grow: 1;
+                            flex-direction: row;
+                            flex-wrap: wrap;
+                            display: block;
+                            padding: 0.2em;
+                            box-sizing: border-box;
+                            width: 50%;
+                            height: 400px;
+                            object-fit: cover;
+                            border-radius: 12px;
+                          " />
                         </ng-container>
+                      </div>
                      
                       <div *ngIf="post.type == 'video'" style="position: relative; cursor: pointer; height: 368px"
                         (click)="openVerticallyCentered(content, post)" data-toggle="modal" data-target="#video-modal">
@@ -1120,6 +1124,32 @@
                             autoplay disablePictureInPicture oncanplay="this.play()" (ended)="onVideoEnded()"
                             controlsList="nodownload"></video>
                         </div>
+                        <div class="modal-footer d-flex justify-content-center">
+                          <button type="button" class="btn btn-secondary" (click)="c('Close click')">
+                            Close
+                          </button>
+                        </div>
+                      </ng-template>
+                    </div>
+
+                    <!--IMAGE MODAL-->
+                    <div class="example-preview">
+                      <ng-template #content6 let-c="close" let-d="dismiss">
+                        <div class="modal-header d-flex justify-content-center"
+                          style="background-color: #1e1e2d; border-bottom: none">
+                          <h4 class="modal-title" style="color: #fff">Image</h4>
+                          <button type="button" class="ml-auto close" aria-label="Close" (click)="d('Cross click')">
+                            <i class="ki ki-bold-close icon-sm" style="color: rgba(255, 255, 255, 0.877)"></i>
+                            <span aria-hidden="true">
+                              &times;
+                            </span>
+                          </button>
+                        </div>
+                        <ngb-carousel>  
+                          <ng-template ngbSlide *ngFor="let media of post.media; let i = index;">  
+                              <img style="width: 100%; height: 60vh; object-fit: contain; display: block;" [src]="media.captureFileURL">   
+                          </ng-template> 
+                        </ngb-carousel>
                         <div class="modal-footer d-flex justify-content-center">
                           <button type="button" class="btn btn-secondary" (click)="c('Close click')">
                             Close
@@ -1183,7 +1213,7 @@
                       </div>
                     </div>
                     <div class="text-justify caption" style="
-                        padding: 10px 33px;
+                        padding: 0px 33px;
                         word-break: break-all;
                         color: #000;
                         white-space: pre-wrap;
@@ -1232,15 +1262,19 @@
                 </div>
               </div>
             </mat-tab>
-           
+
+           <!--POLLS-->
             <mat-tab (click)="
             showPosts.posts = false;
             showPosts.polls = true;">
+            <!--Poll tab logo-->
               <ng-template mat-tab-label>
                 <mat-icon>
                   <i class="fas fa-poll-h icon-lg" style="color: #3897e0;"></i>
                 </mat-icon>&nbsp; &nbsp;Polls
               </ng-template>
+
+              <!--List of Polls-->
               <div class="card-body">
                 <div *ngFor="let poll of allPolls" class="m-6 border rounded"
                   style="box-shadow: rgb(99 99 99 / 20%) 0px 2px 8px 0px">
@@ -1266,7 +1300,6 @@
                       </h5>
                     </div>
                     <div class="card card-custom bg-dark card-stretch gutter-b p-5">
-											<!--begin::Body-->
 											<div class="card-body">
 												<a  class="card-title font-weight-bolder text-white font-size-h6 mb-4 text-hover-state-dark d-block">Total Votes</a>
 												<div class="font-weight-bold text-white font-size-sm">
@@ -1275,7 +1308,6 @@
 													<div class="progress-bar bg-white" role="progressbar" [style.width.%]="poll.totalVotesCount"></div>
 												</div>
 											</div>
-											<!--end::Body-->
 										</div> <ng-container *ngFor="let choice of poll?.choices">
                       <div class="my-5">
                         <span style ="font-family: 'Poppins', sans-serif;">{{choice.choiceText}}</span><span class="float-right">{{choice.voteCount}}</span>
@@ -1287,6 +1319,7 @@
                   </div>
                 </div>
 
+                <!--Poll Timer-->
                 <div class="w-100 p-5 ml-5 mb-5">
                   <h6 style="font-family: 'Poppins', sans-serif;">Voting Ends in:</h6>
                   <a class="btn btn-icon btn-light-primary pulse pulse-primary mr-2">
@@ -1306,6 +1339,7 @@
                   Minutes
                 </div>
 
+                <!--Comment and Reply-->
                 <div class="preview-comment">
                   <div class="row">
                     <div class="col-12 item">

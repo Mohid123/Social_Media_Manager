@@ -106,50 +106,80 @@
                           </div>
           
                           <div *ngIf="post.type !== 'text' " class="preview-media" 
-                            style=
-                             "margin-top: 20px;
-                             width: auto;
-                             height: auto;
-                             display: flex;
-                             flex-wrap: wrap;
-                             object-fit: cover;
-                             justify-content: center;">
-                            <ng-container *ngIf="post.type == 'image'" #nav>
-          
-                              <div style="width: 100%; height:368px; display: block; text-align:center;margin:0; padding:0;">
-                                <ng-image-slider #nav 
-                                  [images]="post.imagesObject"
-                                  [infinite]="false"
-                                  [autoSlide]="1"
-                                  [imagePopup]="true"
-                                  [imageSize]="{width: '99%', height: '368px'}"
-                                  slideImage="1"
-                                  [defaultActiveImage]="1"
-                                  [lazyLoading]='true' 
-                                  [manageImageRatio]="true">
-                                  
-                                </ng-image-slider>
-                              </div>
-                              </ng-container>
-                           
-                            <div *ngIf="post.type == 'video'" style="position: relative; cursor: pointer; height: 368px"
-                              (click)="openVerticallyCentered(content, post)" data-toggle="modal" data-target="#video-modal">
-                              <img *ngIf="post.type == 'video'" class="img-responsive" [src]="post.thumbnailURL" alt="Photo"
-                                style="-webkit-filter: brightness(75%);
-                                  filter: brightness(75%);
-                                  filter: blur(2px);
-                                  object-fit: contain;
-                                  margin-right: auto;
-                                  margin-left: auto;
-                                  height: 100%;
-                                  width: 100%;
-                                  display: block;" />
-                              <h1 class="playBtn" style="backdrop-filter: blur(0px)">
-                                <i class="far fa-play-circle icon-xl" aria-hidden="true"
-                                  style="font-size: 7.75rem !important; color: #fff"></i>
-                              </h1>
-                            </div>
+                          style="width: auto;
+                           height: auto;
+                           display: flex;
+                           flex-wrap: wrap;
+                           object-fit: cover;
+                           justify-content: center;">
+    
+                          <div *ngIf="post.type == 'image'" (click)="openImageCentered(content6, post)" data-toggle="modal" data-target="#video-modal"
+                            style="width: auto;
+                              height: auto;
+                              display: flex;
+                              flex-wrap: wrap;
+                              object-fit: contain;">
+                            <ng-container *ngFor="let media of post.media; let i = index;">
+                              <img [src]="media.captureFileURL" 
+                              style="
+                                flex-grow: 1;
+                                flex-direction: row;
+                                flex-wrap: wrap;
+                                display: block;
+                                padding: 0.2em;
+                                box-sizing: border-box;
+                                width: 50%;
+                                height: 360px;
+                                object-fit: cover;
+                                border-radius: 12px;
+                              " />
+                            </ng-container>
                           </div>
+                         
+                          <div *ngIf="post.type == 'video'" style="position: relative; cursor: pointer; height: 368px"
+                            (click)="openVerticallyCentered(content, post)" data-toggle="modal" data-target="#video-modal">
+                            <img *ngIf="post.type == 'video'" class="img-responsive" [src]="post.thumbnailURL" alt="Photo"
+                              style="-webkit-filter: brightness(75%);
+                                filter: brightness(75%);
+                                filter: blur(2px);
+                                object-fit: contain;
+                                margin-right: auto;
+                                margin-left: auto;
+                                height: 100%;
+                                width: 100%;
+                                display: block;" />
+                            <h1 class="playBtn" style="backdrop-filter: blur(0px)">
+                              <i class="far fa-play-circle icon-xl" aria-hidden="true"
+                                style="font-size: 7.75rem !important; color: #fff"></i>
+                            </h1>
+                          </div>
+                        </div>
+
+                            <!--IMAGE MODAL-->
+                    <div class="example-preview">
+                      <ng-template #content6 let-c="close" let-d="dismiss">
+                        <div class="modal-header d-flex justify-content-center"
+                          style="background-color: #1e1e2d; border-bottom: none">
+                          <h4 class="modal-title" style="color: #fff">Image</h4>
+                          <button type="button" class="ml-auto close" aria-label="Close" (click)="d('Cross click')">
+                            <i class="ki ki-bold-close icon-sm" style="color: rgba(255, 255, 255, 0.877)"></i>
+                            <span aria-hidden="true">
+                              &times;
+                            </span>
+                          </button>
+                        </div>
+                        <ngb-carousel>  
+                          <ng-template ngbSlide *ngFor="let media of post.media; let i = index;">  
+                              <img style="width: 100%; height: 60vh; object-fit: contain; display: block;" [src]="media.captureFileURL">   
+                          </ng-template> 
+                        </ngb-carousel>
+                        <div class="modal-footer d-flex justify-content-center">
+                          <button type="button" class="btn btn-secondary" (click)="c('Close click')">
+                            Close
+                          </button>
+                        </div>
+                      </ng-template>
+                    </div>
           
                           <!--video play modal-->
                           <div class="example-preview">

@@ -362,6 +362,15 @@
          border-radius: 100%;
      }
 
+    ::ng-deep .carousel-control-next-icon {
+        filter: invert(1);
+    }
+
+    ::ng-deep .carousel-control-prev-icon {
+        filter: invert(1);
+    }
+
+   
    
 
      
