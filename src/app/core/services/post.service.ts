@@ -7,8 +7,10 @@ import { BaseApiService } from './base-api.service';
 import { take, tap } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
 import { PostList } from './../models/postlist.model';
+import { Polls } from '../models/polls.model';
 
 type post = Post | Post[] | PostList | any;
+type poll = Polls
 
 @Injectable({
   providedIn: 'root'
@@ -25,6 +27,7 @@ export class PostService extends BaseApiService<post> {
   addPost(body: Post): Observable<ApiResponse<post>> {
     return this.post(`/post/AddPost`, body);
   }
+
 
   addPostToGroup(body: Post): Observable<ApiResponse<post>> {
     return this.clubApiPost(`/groups/addPost/`, body);

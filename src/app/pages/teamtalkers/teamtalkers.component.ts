@@ -30,6 +30,7 @@ import { Subject } from 'rxjs';
 import { BaseURL } from './../../core/models/base-urls';
 import { PollsService } from '@app/core/services/polls.service';
 import { Polls } from './../../core/models/polls.model';
+import { FormArray, FormBuilder, FormGroup, AbstractControl, FormControl } from '@angular/forms';
 
 @Component({
   selector: "app-teamtalkers",
@@ -102,7 +103,11 @@ export class TeamtalkersComponent implements OnInit {
   };
   public showSchedule: boolean = false;
   public progress:number = 0;
+  public pollChoiceFields;
+  userForm: FormGroup;
+  skillsForm: FormGroup;
   selectedClub
+  images = ['https://i.picsum.photos/id/1011/900/500.jpg?hmac=twSEfoAh6FjOiVcusAReH6ZwI4CYSjT5cWeRc-vCaDE', 'https://i.picsum.photos/id/1011/900/500.jpg?hmac=twSEfoAh6FjOiVcusAReH6ZwI4CYSjT5cWeRc-vCaDE', 'https://i.picsum.photos/id/1011/900/500.jpg?hmac=twSEfoAh6FjOiVcusAReH6ZwI4CYSjT5cWeRc-vCaDE'];
  
   constructor(
     private spinner: NgxSpinnerService,
@@ -120,7 +125,9 @@ export class TeamtalkersComponent implements OnInit {
     private sanitizer: DomSanitizer,
     public mediaService: MediauploadService,
     private clubService: ClubService,
-    private pollService: PollsService
+    private pollService: PollsService,
+    private fb: FormBuilder
+    
   ) {
     this.post = new Post();
     this.report = new Report();
@@ -129,6 +136,26 @@ export class TeamtalkersComponent implements OnInit {
       this.selectedClub = club;
       this.hidePoll()
     })
+
+    // this.userForm = this.fb.group({
+    //   teamtalkerCaption: new FormControl(),
+    //   choices: this.fb.array([
+    //     this.fb.control({
+    //       choiceText: '',
+    //       choiceType: '',
+    //       blurHash: '',
+    //       choiceImage: '',
+    //       voteCount: 0
+    //     })
+    //   ])
+    // })
+
+
+      this.skillsForm = this.fb.group({
+      name: '',
+      skills: this.fb.array([]) ,
+    });
+    
   }
 
   destroy$ = new Subject();
@@ -146,8 +173,60 @@ export class TeamtalkersComponent implements OnInit {
     })
   }
 
+
+  get skills() : FormArray {
+    return this.skillsForm.get("skills") as FormArray
+  }
+ 
+  newSkill(): FormGroup {
+    return this.fb.group({
+      skill: '',
+      exp: '',
+    })
+  }
+ 
+  addSkills() {
+    this.skills.push(this.newSkill());
+  }
+ 
+  removeSkill(i:number) {
+    this.skills.removeAt(i);
+  }
+ 
+  onSubmit() {
+    console.log(this.skillsForm.value);
+  }
+
+  // send(values) {
+  //   console.log(values);
+  // }
+
+  // addChoices(): void {
+  //   (this.userForm.get('choices') as FormArray).push(
+  //     this.fb.control({
+  //       choiceText: '',
+  //       choiceType: '',
+  //       blurHash: '',
+  //       choiceImage: '',
+  //       voteCount: 0
+  //     })
+  //   );
+  // }
+
+  // removeChoices(index) {
+  //   (this.userForm.get('choices') as FormArray).removeAt(index);
+  // }
+
+  // getChoicesFormControls(): AbstractControl[] {
+  //   return (<FormArray> this.userForm.get('choices')).controls
+  // }
+
+  addPolls(){
+    
+  }
+
   hidePoll(){
-    (this.selectedClub.clubName == "Solis Solution" && this.selectedClub.id == "60db0c52723416289b31f1d9" || this.selectedClub.isPicker == true || this.selectedClub.pickerModelId == "61446df5acf10ff6947f2426") ? this.showPoll = false: this.showPoll = true;
+    ( this.selectedClub.isPicker == true || this.selectedClub.pickerModelId == "61446df5acf10ff6947f2426") ? this.showPoll = false: this.showPoll = true;
   }
 
   openVerticallyCentered(content, post) {
@@ -220,6 +299,7 @@ export class TeamtalkersComponent implements OnInit {
     this.pollService.getAllPolls(this.offset, this.limit).subscribe((res: ApiResponse<Polls>) => {
       if(!res.hasErrors()) {
         this.allPolls = res.data;
+        console.log(this.allPolls)
       }
     })
   }

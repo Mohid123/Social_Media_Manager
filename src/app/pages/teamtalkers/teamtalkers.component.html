@@ -730,17 +730,43 @@
                             font-size-lg">{{ userName }}</a>
                       </div>
                     </form>
+
+                  <form [formGroup]="skillsForm" (ngSubmit)="onSubmit()">
+                    
                     <div class="form-group">
-                      <textarea [(ngModel)]="teamtalkerCaption" [ngModelOptions]="{ standalone: true }"
+                      <textarea formControlName="name"
                         class="form-control form-control-lg form-control-solid" id="exampleTextarea" rows="3"
                         placeholder="What’s on your mind, {{ userName }}?"></textarea>
                     </div>
                     <div>
-                      <div class="form-group">
-                        <input maxlength="25" type="text" class="form-control" id="example1"
-                          placeholder="Enter your choice" [(ngModel)]="poll.choice1" />
+                    
+                      <div formArrayName="skills">
+                        <div *ngFor="let skill of skills.controls; let i=index">
+                          <div class="form-group d-flex align-items-center justify-content-center" [formGroupName]="i">
+                           <input maxlength="25" type="text" formControlName="skill"  class="form-control form-control-lg" id="example1"
+                           placeholder="Enter your choice"  />
+                           <a (click)="removeSkill(i)" class="btn btn-icon btn-light-danger">
+                             <i class="flaticon-delete icon-lg"></i>
+                         </a>
+                          </div>
+                           
+                         </div>
                       </div>
-                      <div class="form-group">
+
+                
+                      <div class=" w-auto px-2 mr-2 mb-5 btn btn-icon btn-light btn-clean d-inline-flex align-items-center btn-lg">
+                        <span (click)="addSkills()" class="symbol symbol-35 symbol-light-primary">
+                          <span class="symbol-label"><a class="btn btn-icon btn-sm">
+                            <i class="ki ki-solid-plus icon-lg"></i></a>
+                          </span>
+                        </span>
+                        <span (click)="addSkills()" class="btn
+                          text-dark-50
+                          font-weight-normal font-size-base">
+                          &nbsp;Add Choices
+                        </span>
+                      </div>
+                      <!-- <div class="form-group">
                         <input maxlength="25" type="text" class="form-control" id="example2"
                           placeholder="Enter your choice" [(ngModel)]="poll.choice2" />
                       </div>
@@ -751,7 +777,7 @@
                       <div class="form-group">
                         <input maxlength="25" type="text" class="form-control" id="example4"
                           placeholder="Enter your choice (optional)" [(ngModel)]="poll.choice4" />
-                      </div>
+                      </div> -->
                       <div class="row">
                         <div class="col-md-6">
                           <div class="form-group">
@@ -774,7 +800,7 @@
                       </div>
                     </div>
                     <label class="checkbox checkbox-sm checkbox-inline">
-                      <input [(ngModel)]="showSchedule" class="d-inline" name="list_name" value="m1"
+                      <input  class="d-inline" name="list_name" value="m1"
                         (click)="selectedSchedule()" type="checkbox" value="1" />
                       <span></span>
                       <div class=" w-auto
@@ -797,9 +823,8 @@
                       </div>
                     </label>
                     <form class="pt-10 ql-quil ql-quil-plain">
-                      <div id="kt_forms_widget_2_editor"></div>
                       <div class="my-5 border-top"></div>
-                      <div *ngIf="!showSchedule" id="kt_forms_widget_2_editor_toolbar" class="
+                      <div *ngIf="!showSchedule" class="
                           ql-toolbar
                           d-flex
                           align-items-center
@@ -811,7 +836,7 @@
                             </button>
                           </div>
                           <div class="p-2 ml-auto">
-                            <button [disabled]="!poll.choice1 && !poll.choice2 " (click)="addPollPost(); clicked = true" type="button"
+                            <button (click)="onSubmit()" type="submit"
                               class="flex-row-reverse btn btn-primary" style="
                                 background-color: #3b5998;
                                 border-color: #3b5998;">
@@ -820,7 +845,7 @@
                           </div>
                         </div>
                       </div>
-                      <div *ngIf="showSchedule" id="kt_forms_widget_2_editor_toolbar" class="
+                      <div *ngIf="showSchedule" class="
                           ql-toolbar
                           align-items-center
                           justify-content-between">
@@ -866,6 +891,7 @@
                         </div>
                       </div>
                     </form>
+                  </form>
                   </div>
                 </div>
               </div>
@@ -891,9 +917,7 @@
                 background-color: #f3f6f9;" [ngStyle]="{ color: clubPrimaryColor }">{{ clubName }}
             </h1>
           </div>
-
-
-          <!--recent posts tabs-->
+           <!--recent posts tabs-->
           <mat-tab-group mat-align-tabs="center" (selectedTabChange)="switchTabsRecentPosts($event)" style="margin-top: 20px">
             <mat-tab>
               <ng-template mat-tab-label>
@@ -901,336 +925,341 @@
                   <i class="flaticon-paper-plane-1 icon-lg" style="color: #e62626;"></i>
                 </mat-icon>&nbsp; &nbsp;Posts
               </ng-template>
-              <div class="card-body">
-                <div *ngFor="let post of recentClubPosts" class="m-6 border rounded"
-                  style="box-shadow: rgb(99 99 99 / 20%) 0px 2px 8px 0px">
-                  <div class="preview-facebook preview-media-post item-post-type" data-type="photo">
-                    <div class="pt-5 row">
-                      <div class="col">
-                        <div class="user-info d-inline-block" style="z-index: 1; padding: 10px 25px; position: relative">
-                          <img class="img-circle" style="
-                              height: 44px;
-                              width: 44px;
-                              object-fit: cover;
-                              border-radius: 30px;" name="fieldName" ngDefaultControl [(ngModel)]="clubPrimaryColor"
-                            [ngStyle]="{ border: '3px solid' + clubPrimaryColor }" [src]="post.user.profilePicURL" />
-                          <div class="text" style="
-                              right: -150px !important;
-                              top: 16px !important;
-                              position: absolute;
-                              font-size: 13px;
-                              left: 78px;
-                              line-height: 12px;">
-                            <div class="name" style="font-weight: bold; color: #365899">
-                              {{ post.user.fullName }}
-                            </div>
-                            <span style="color: #90949c; font-size: 12px">
-                              {{ post.postedDate | dateFormat }}
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-    
-                      <!-- EDIT & DELETE -->
-                      <div class="text-right col">
-                        <div ngbDropdown placement="bottom-right" class="d-inline-block">
-                          <button class="btn" id="dropdownBasic1" ngbDropdownToggle>
-                            <i class="ki ki-bold-more-hor" style="color: black"></i>
-                          </button>
-                          <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                            <button (click)="openEditPostDaialog(editPostDialog, post)" ngbDropdownItem>
-                              <i class="mr-2 fas fa-edit text-dark"></i>Edit
-                            </button>
-                            <button (click)="deletePost(post)" ngbDropdownItem>
-                              <i class="mr-2 fas fa-trash-alt text-dark"></i>Delete
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="example-preview">
-                      <ng-template #editPostDialog let-c="close" let-d="dismiss">
-                        <div class="modal-header d-flex justify-content-center"
-                          style="background-color: #1e1e2d; border-bottom: none">
-                          <h4 class="modal-title" style="color: #fff">
-                            Edit Post
-                          </h4>
-                          <button type="button" class="ml-auto close" aria-label="Close" (click)="d('Cross click')">
-                            <i class="ki ki-bold-close icon-sm" style="color: rgba(255, 255, 255, 0.877)"></i>
-                            <span aria-hidden="true">&times;</span>
-                          </button>
-                        </div>
-                        <div class="preview-facebook preview-facebook-media
-                            item-post-type" data-type="photo">
-                          <div class="user-info" style="z-index: 1">
+              <ng-template matTabContent>
+                <div class="card-body">
+                  <div *ngFor="let post of recentClubPosts" class="m-6 border rounded"
+                    style="box-shadow: rgb(99 99 99 / 20%) 0px 2px 8px 0px">
+                    <div class="preview-facebook preview-media-post item-post-type" data-type="photo">
+                      <div class="pt-5 row">
+                        <div class="col">
+                          <div class="user-info d-inline-block" style="z-index: 1; padding: 10px 25px; position: relative">
                             <img class="img-circle" style="
                                 height: 44px;
+                                width: 44px;
                                 object-fit: cover;
                                 border-radius: 30px;" name="fieldName" ngDefaultControl [(ngModel)]="clubPrimaryColor"
-                              [ngStyle]="{
-                                border: '3px solid' + clubPrimaryColor
-                              }" src="{{ post.user.profilePicURL }}" />
-                            <div class="text">
-                              <div class="name">{{ post.user.fullName }}</div>
-                              <span> {{ post.postedDate | dateFormat }} </span>
+                              [ngStyle]="{ border: '3px solid' + clubPrimaryColor }" [src]="post.user.profilePicURL" />
+                            <div class="text" style="
+                                right: -150px !important;
+                                top: 16px !important;
+                                position: absolute;
+                                font-size: 13px;
+                                left: 78px;
+                                line-height: 12px;">
+                              <div class="name" style="font-weight: bold; color: #365899">
+                                {{ post.user.fullName }}
+                              </div>
+                              <span style="color: #90949c; font-size: 12px">
+                                {{ post.postedDate | dateFormat }}
+                              </span>
                             </div>
                           </div>
-                          <div *ngIf="post.type == 'text'" class="m-3">
-                            <textarea [(ngModel)]="editedPostText" style="height: 150px"
-                              style="white-space: pre-wrap; text-align: justify" class="
-                                form-control form-control-xl form-control-solid" id="exampleTextarea" rows="3"
-                              placeholder="What’s on your mind, {{ userName }}?">{{ post.text }}</textarea>
+                        </div>
+      
+                        <!-- EDIT & DELETE -->
+                        <div class="text-right col">
+                          <div ngbDropdown placement="bottom-right" class="d-inline-block">
+                            <button class="btn" id="dropdownBasic1" ngbDropdownToggle>
+                              <i class="ki ki-bold-more-hor" style="color: black"></i>
+                            </button>
+                            <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                              <button (click)="openEditPostDaialog(editPostDialog, post)" ngbDropdownItem>
+                                <i class="mr-2 fas fa-edit text-dark"></i>Edit
+                              </button>
+                              <button (click)="deletePost(post)" ngbDropdownItem>
+                                <i class="mr-2 fas fa-trash-alt text-dark"></i>Delete
+                              </button>
+                            </div>
                           </div>
-                          <div *ngIf="post.type == 'image'" 
-                                style="
-                                  margin-top: 20px;
-                                  width: auto;
-                                  height: auto;
-                                  display: flex;
-                                  flex-wrap: wrap;
-                                  object-fit: cover;">
-                                <ng-container *ngFor="let media of post.media">
-                                  <img [src]="media.captureFileURL" 
-                                   style="
-                                    flex-grow: 1;
-                                    flex-direction: row;
-                                    flex-wrap: wrap;
-                                    padding: 0.2em;
-                                    box-sizing: border-box;
-                                    width: 50%;
+                        </div>
+                      </div>
+                      <div class="example-preview">
+                        <ng-template #editPostDialog let-c="close" let-d="dismiss">
+                          <div class="modal-header d-flex justify-content-center"
+                            style="background-color: #1e1e2d; border-bottom: none">
+                            <h4 class="modal-title" style="color: #fff">
+                              Edit Post
+                            </h4>
+                            <button type="button" class="ml-auto close" aria-label="Close" (click)="d('Cross click')">
+                              <i class="ki ki-bold-close icon-sm" style="color: rgba(255, 255, 255, 0.877)"></i>
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <div class="preview-facebook preview-facebook-media
+                              item-post-type" data-type="photo">
+                            <div class="user-info" style="z-index: 1">
+                              <img class="img-circle" style="
+                                  height: 44px;
+                                  object-fit: cover;
+                                  border-radius: 30px;" name="fieldName" ngDefaultControl [(ngModel)]="clubPrimaryColor"
+                                [ngStyle]="{
+                                  border: '3px solid' + clubPrimaryColor
+                                }" src="{{ post.user.profilePicURL }}" />
+                              <div class="text">
+                                <div class="name">{{ post.user.fullName }}</div>
+                                <span> {{ post.postedDate | dateFormat }} </span>
+                              </div>
+                            </div>
+                            <div *ngIf="post.type == 'text'" class="m-3">
+                              <textarea [(ngModel)]="editedPostText" style="height: 150px"
+                                style="white-space: pre-wrap; text-align: justify" class="
+                                  form-control form-control-xl form-control-solid" id="exampleTextarea" rows="3"
+                                placeholder="What’s on your mind, {{ userName }}?">{{ post.text }}</textarea>
+                            </div>
+                            <div *ngIf="post.type == 'image'" 
+                                  style="
+                                    margin-top: 20px;
+                                    width: auto;
                                     height: auto;
-                                    object-fit: cover;
-                                  " />
-                                </ng-container>
-                             </div>
-                          <div *ngIf="post.type == 'video'" class="preview-media" style="margin-top: -20px">
-                            <video *ngIf="post.type == 'video' && post.captureFileURL" id="clubVideo"
-                              src="{{ post.captureFileURL }}" style="
-                                object-fit: contain;
-                                margin-right: auto;
-                                margin-left: auto;
-                                height: 100%;
-                                width: 100%;
-                                display: block;" controls autoplay disablePictureInPicture oncanplay="this.play()"
-                              (ended)="onVideoEnded()" controlsList="nodownload"></video>
-                          </div>
-                          <div *ngIf="post.type == 'image' || post.type == 'video'" class="m-3 form-group">
-                            <textarea [(ngModel)]="editedPostText" style="height: 100px" class="
-                                form-control form-control-lg form-control-solid" id="exampleTextarea" rows="3"
-                              placeholder="What’s on your mind, {{ userName }}?">{{ post.text }}</textarea>
-                          </div>
-                          <div class="preview-club">
-                            <div class="d-flex bd-highlight">
-                              <div class="p-2 flex-grow-1 bd-highlight">
-                                <div class="row">
-                                  <div class="col item">
-                                    <div class="symbol-group symbol-hover">
-                                      <div *ngFor="let reaction of post.reactions"
-                                        class="symbol symbol-circle symbol-20 symbol-sm-2">
-                                        <img *ngIf="reaction.user.profilePicURL !== ''" style="width:20px; object-fit: cover;" alt="Pic"
-                                          src="{{ reaction.user.profilePicURL }}" />
-                                        <img *ngIf="reaction.user.profilePicURL == ''" style="width:20px; object-fit: cover;" alt="Pic"
-                                          src="../../../assets/media/users/mockfbImage.png" />
+                                    display: flex;
+                                    flex-wrap: wrap;
+                                    object-fit: cover;">
+                                  <ng-container *ngFor="let media of post.media">
+                                    <img [src]="media.captureFileURL" 
+                                     style="
+                                      flex-grow: 1;
+                                      flex-direction: row;
+                                      flex-wrap: wrap;
+                                      padding: 0.2em;
+                                      box-sizing: border-box;
+                                      width: 50%;
+                                      height: auto;
+                                      object-fit: cover;
+                                    " />
+                                  </ng-container>
+                               </div>
+                            <div *ngIf="post.type == 'video'" class="preview-media" style="margin-top: -20px">
+                              <video *ngIf="post.type == 'video' && post.captureFileURL" id="clubVideo"
+                                src="{{ post.captureFileURL }}" style="
+                                  object-fit: contain;
+                                  margin-right: auto;
+                                  margin-left: auto;
+                                  height: 100%;
+                                  width: 100%;
+                                  display: block;" controls autoplay disablePictureInPicture oncanplay="this.play()"
+                                (ended)="onVideoEnded()" controlsList="nodownload"></video>
+                            </div>
+                            <div *ngIf="post.type == 'image' || post.type == 'video'" class="m-3 form-group">
+                              <textarea [(ngModel)]="editedPostText" style="height: 100px" class="
+                                  form-control form-control-lg form-control-solid" id="exampleTextarea" rows="3"
+                                placeholder="What’s on your mind, {{ userName }}?">{{ post.text }}</textarea>
+                            </div>
+                            <div class="preview-club">
+                              <div class="d-flex bd-highlight">
+                                <div class="p-2 flex-grow-1 bd-highlight">
+                                  <div class="row">
+                                    <div class="col item">
+                                      <div class="symbol-group symbol-hover">
+                                        <div *ngFor="let reaction of post.reactions"
+                                          class="symbol symbol-circle symbol-20 symbol-sm-2">
+                                          <img *ngIf="reaction.user.profilePicURL !== ''" style="width:20px; object-fit: cover;" alt="Pic"
+                                            src="{{ reaction.user.profilePicURL }}" />
+                                          <img *ngIf="reaction.user.profilePicURL == ''" style="width:20px; object-fit: cover;" alt="Pic"
+                                            src="../../../assets/media/users/mockfbImage.png" />
+                                        </div>
+                                        
+                                        <span class="symbol-label">
+                                          {{ post.reactionCount }} likes</span>
                                       </div>
-                                      
-                                      <span class="symbol-label">
-                                        {{ post.reactionCount }} likes</span>
                                     </div>
                                   </div>
                                 </div>
-                              </div>
-                              <div class="p-2 bd-highlight">
-                                {{ post.commentsCount }} comment
-                              </div>
-                              <div class="p-2 bd-highlight">
-                                {{ post.repostCount }}share
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="modal-footer d-flex justify-content-center">
-                          <button type="button" class="btn btn-primary" (click)="saveEditPost(post); c('Close click')"
-                            style="background-color: #3b5998;
-                              border-color: #3b5998;">
-                            Update
-                          </button>
-                        </div>
-                      </ng-template>
-                    </div>
-    
-                    <div *ngIf="post.type !== 'text' " class="preview-media" 
-                      style=
-                       "margin-top: 20px;
-                       width: auto;
-                       height: auto;
-                       display: flex;
-                       flex-wrap: wrap;
-                       object-fit: cover;
-                       justify-content: center;">
-                      <ng-container *ngIf="post.type == 'image'" #nav>
-    
-                        <div style="width: 100%; height:368px; display: block; text-align:center;margin:0; padding:0;">
-                          <ng-image-slider #nav 
-                            [images]="post.imagesObject"
-                            [infinite]="false"
-                            [autoSlide]="1"
-                            [imagePopup]="true"
-                            [imageSize]="{width: '99%', height: '368px'}"
-                            slideImage="1"
-                            [defaultActiveImage]="1"
-                            [lazyLoading]='true' 
-                            [manageImageRatio]="true">
-                            
-                          </ng-image-slider>
-                        </div>
-                        </ng-container>
-                     
-                      <div *ngIf="post.type == 'video'" style="position: relative; cursor: pointer; height: 368px"
-                        (click)="openVerticallyCentered(content, post)" data-toggle="modal" data-target="#video-modal">
-                        <img *ngIf="post.type == 'video'" class="img-responsive" [src]="post.thumbnailURL" alt="Photo"
-                          style="-webkit-filter: brightness(75%);
-                            filter: brightness(75%);
-                            filter: blur(2px);
-                            object-fit: contain;
-                            margin-right: auto;
-                            margin-left: auto;
-                            height: 100%;
-                            width: 100%;
-                            display: block;" />
-                        <h1 class="playBtn" style="backdrop-filter: blur(0px)">
-                          <i class="far fa-play-circle icon-xl" aria-hidden="true"
-                            style="font-size: 7.75rem !important; color: #fff"></i>
-                        </h1>
-                      </div>
-                    </div>
-    
-                    <!--video play modal-->
-                    <div class="example-preview">
-                      <ng-template #content let-c="close" let-d="dismiss">
-                        <div class="modal-header d-flex justify-content-center"
-                          style="background-color: #1e1e2d; border-bottom: none">
-                          <h4 class="modal-title" style="color: #fff">Video</h4>
-                          <button type="button" class="ml-auto close" aria-label="Close" (click)="d('Cross click')">
-                            <i class="ki ki-bold-close icon-sm" style="color: rgba(255, 255, 255, 0.877)"></i>
-                            <span aria-hidden="true">&times;</span>
-                          </button>
-                        </div>
-                        <div class="modal-body d-flex justify-content-center" style="padding: 0px">
-                          <video id="clubVideo" src="{{ playingVideo }}" style="height: 420px" width="100%" controls
-                            autoplay disablePictureInPicture oncanplay="this.play()" (ended)="onVideoEnded()"
-                            controlsList="nodownload"></video>
-                        </div>
-                        <div class="modal-footer d-flex justify-content-center">
-                          <button type="button" class="btn btn-secondary" (click)="c('Close click')">
-                            Close
-                          </button>
-                        </div>
-                      </ng-template>
-                    </div>
-    
-                    <!--HYPERLINK POST DESIGN-->
-                    <div *ngIf="post.hyperLink != '' && post.type != 'video'" class="mt-3 mb-8 ml-3 mr-3 border rounded card card-custom mb-lg-0">
-                      <div class="p-0 card-body">
-                        <div class="p-5 d-flex align-items-center">
-                          <div class="mr-6">
-                            <span class="rounded svg-icon svg-icon-4x">
-                              <div class="mr-2 symbol symbol-80 symbol-light" style="padding-left: 10px">
-                                <span class="rounded symbol-label">
-                                  <img *ngIf="post.type == 'hyperlink' && 
-                                      post.captureFileURL === '' "
-                                    src="https://api.teamtalkers.com/api/v1/en/media-upload/mediaFiles/html/html/7bd046a8c10bcfba8800951fc2a9063f9.jpg"
-                                    class="rounded h-100 align-self-end" style="
-                                      object-fit: cover;
-                                      width: -webkit-fill-available;" alt="" />
-                                  <img *ngIf="post.type != 'hyperlink' &&
-                                      post.hyperlinkCaptureFileURL === ''"
-                                    src="https://api.teamtalkers.com/api/v1/en/media-upload/mediaFiles/html/html/7bd046a8c10bcfba8800951fc2a9063f9.jpg"
-                                    class="rounded h-100 align-self-end" style="
-                                      object-fit: cover;
-                                      width: -webkit-fill-available;" alt="" />
-    
-                                  <img *ngIf="post.type == 'hyperlink' &&
-                                      post.captureFileURL" src="{{ post.captureFileURL }}"
-                                    class="rounded h-100 align-self-end" style="
-                                      object-fit: cover;
-                                      width: -webkit-fill-available;" alt="" />
-                                  <img *ngIf="post.type != 'hyperlink' &&
-                                      post.hyperlinkCaptureFileURL" src="{{ post.hyperlinkCaptureFileURL }}"
-                                    class="rounded h-100 align-self-end" style="
-                                      object-fit: cover;
-                                      width: -webkit-fill-available;" alt="" />
-                                </span>
-                              </div>
-                            </span>
-                          </div>
-                          <div class="d-flex flex-column">
-                            <a href="{{ post.hyperLink }}" target="_blank" class="mb-3 font-weight-normal font-size-h4">
-                              <div style ="font-family: 'Poppins', sans-serif;" *ngIf="post.type == 'hyperlink'" class="text-dark">
-                                {{ post.textFirst }}
-                              </div>
-                              <div style ="font-family: 'Poppins', sans-serif;" *ngIf="post.type == 'hyperlink'" class="text-muted font-size-sm">
-                                {{ post.textSecond }}
-                              </div>
-                              <div style ="font-family: 'Poppins', sans-serif;" *ngIf="post.type != 'hyperlink'">
-                                {{ post.hyperlinkTextFirst }}
-                              </div>
-                              <div style ="font-family: 'Poppins', sans-serif;" *ngIf="post.type != 'hyperlink'" class="text-muted font-size-sm">
-                                {{ post.hyperlinkTextSecond }}
-                              </div>
-                            </a>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="text-justify caption" style="
-                        padding: 10px 33px;
-                        word-break: break-all;
-                        color: #000;
-                        white-space: pre-wrap;
-                        text-align: justify;
-                      ">
-                      <div style ="font-family: 'Poppins', sans-serif;" *ngIf="post.text">{{ post.text }}</div>
-                    </div>
-                    <div class="preview-club">
-                      <div class="d-flex bd-highlight">
-                        <div class="p-2 flex-grow-1 bd-highlight">
-                          <div class="row">
-                            <div class="col item">
-                              <div class="symbol-group symbol-hover">
-                                <div *ngFor="let reaction of post.reactions"
-                                  class="symbol symbol-circle symbol-20 symbol-sm-2">
-                                  <img *ngIf="reaction.user.profilePicURL !== ''" style="width:20px; object-fit: cover;" alt="Pic"
-                                    src="{{ reaction.user.profilePicURL }}" />
-                                  <img *ngIf="reaction.user.profilePicURL == ''" style="width:20px; object-fit: cover;" alt="Pic"
-                                    src="../../../assets/media/users/mockfbImage.png" />
+                                <div class="p-2 bd-highlight">
+                                  {{ post.commentsCount }} comment
                                 </div>
-                                <span class="symbol-label">{{ post.reactionCount }} likes</span>
+                                <div class="p-2 bd-highlight">
+                                  {{ post.repostCount }}share
+                                </div>
                               </div>
                             </div>
                           </div>
-                        </div>
-                        <div class="p-2 bd-highlight">
-                          {{ post.commentsCount }} comment
-                        </div>
-                        <div class="p-2 bd-highlight">
-                          {{ post.repostCount }} share
+                          <div class="modal-footer d-flex justify-content-center">
+                            <button type="button" class="btn btn-primary" (click)="saveEditPost(post); c('Close click')"
+                              style="background-color: #3b5998;
+                                border-color: #3b5998;">
+                              Update
+                            </button>
+                          </div>
+                        </ng-template>
+                      </div>
+      
+                      <div *ngIf="post.type !== 'text' " class="preview-media" 
+                        style=
+                         "margin-top: 20px;
+                         width: auto;
+                         height: auto;
+                         display: flex;
+                         flex-wrap: wrap;
+                         object-fit: cover;
+                         justify-content: center;">
+                        <ng-container *ngIf="post.type == 'image'" #nav>
+                          
+                            <div style="width: 100%; height:368px; display: block; text-align:center;margin:0; padding:0;">
+                              <ng-image-slider #nav 
+                                [images]="post.imagesObject"
+                                [infinite]="false"
+                                [autoSlide]="1"
+                                [imagePopup]="true"
+                                [imageSize]="{width: '99%', height: '368px'}"
+                                slideImage="1"
+                                [defaultActiveImage]="1"
+                                [lazyLoading]='true' 
+                                [manageImageRatio]="true">
+                                
+                              </ng-image-slider>
+                            </div>
+                          
+                          
+                         
+                          </ng-container>
+                       
+                        <div *ngIf="post.type == 'video'" style="position: relative; cursor: pointer; height: 368px"
+                          (click)="openVerticallyCentered(content, post)" data-toggle="modal" data-target="#video-modal">
+                          <img *ngIf="post.type == 'video'" class="img-responsive" [src]="post.thumbnailURL" alt="Photo"
+                            style="-webkit-filter: brightness(75%);
+                              filter: brightness(75%);
+                              filter: blur(2px);
+                              object-fit: contain;
+                              margin-right: auto;
+                              margin-left: auto;
+                              height: 100%;
+                              width: 100%;
+                              display: block;" />
+                          <h1 class="playBtn" style="backdrop-filter: blur(0px)">
+                            <i class="far fa-play-circle icon-xl" aria-hidden="true"
+                              style="font-size: 7.75rem !important; color: #fff"></i>
+                          </h1>
                         </div>
                       </div>
-                    </div>
-                    <div class="preview-comment">
-                      <div class="row">
-                        <div class="col-12 item">
-                          <i class="mr-2 far fa-heart" style="color: black"></i>Like
-                          &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
-                          <i class="mr-2 far fa-comment-dots" style="color: black"></i>Comment &nbsp;
-                          &nbsp;&nbsp;&nbsp;&nbsp;
-                          <i class="mr-2 fas fa-share" style="color: black"></i>Share
+      
+                      <!--video play modal-->
+                      <div class="example-preview">
+                        <ng-template #content let-c="close" let-d="dismiss">
+                          <div class="modal-header d-flex justify-content-center"
+                            style="background-color: #1e1e2d; border-bottom: none">
+                            <h4 class="modal-title" style="color: #fff">Video</h4>
+                            <button type="button" class="ml-auto close" aria-label="Close" (click)="d('Cross click')">
+                              <i class="ki ki-bold-close icon-sm" style="color: rgba(255, 255, 255, 0.877)"></i>
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <div class="modal-body d-flex justify-content-center" style="padding: 0px">
+                            <video id="clubVideo" src="{{ playingVideo }}" style="height: 420px" width="100%" controls
+                              autoplay disablePictureInPicture oncanplay="this.play()" (ended)="onVideoEnded()"
+                              controlsList="nodownload"></video>
+                          </div>
+                          <div class="modal-footer d-flex justify-content-center">
+                            <button type="button" class="btn btn-secondary" (click)="c('Close click')">
+                              Close
+                            </button>
+                          </div>
+                        </ng-template>
+                      </div>
+      
+                      <!--HYPERLINK POST DESIGN-->
+                      <div *ngIf="post.hyperLink != '' && post.type != 'video'" class="mt-3 mb-8 ml-3 mr-3 border rounded card card-custom mb-lg-0">
+                        <div class="p-0 card-body">
+                          <div class="p-5 d-flex align-items-center">
+                            <div class="mr-6">
+                              <span class="rounded svg-icon svg-icon-4x">
+                                <div class="mr-2 symbol symbol-80 symbol-light" style="padding-left: 10px">
+                                  <span class="rounded symbol-label">
+                                    <img *ngIf="post.type == 'hyperlink' && 
+                                        post.captureFileURL === '' "
+                                      src="https://api.teamtalkers.com/api/v1/en/media-upload/mediaFiles/html/html/7bd046a8c10bcfba8800951fc2a9063f9.jpg"
+                                      class="rounded h-100 align-self-end" style="
+                                        object-fit: cover;
+                                        width: -webkit-fill-available;" alt="" />
+                                    <img *ngIf="post.type != 'hyperlink' &&
+                                        post.hyperlinkCaptureFileURL === ''"
+                                      src="https://api.teamtalkers.com/api/v1/en/media-upload/mediaFiles/html/html/7bd046a8c10bcfba8800951fc2a9063f9.jpg"
+                                      class="rounded h-100 align-self-end" style="
+                                        object-fit: cover;
+                                        width: -webkit-fill-available;" alt="" />
+      
+                                    <img *ngIf="post.type == 'hyperlink' &&
+                                        post.captureFileURL" src="{{ post.captureFileURL }}"
+                                      class="rounded h-100 align-self-end" style="
+                                        object-fit: cover;
+                                        width: -webkit-fill-available;" alt="" />
+                                    <img *ngIf="post.type != 'hyperlink' &&
+                                        post.hyperlinkCaptureFileURL" src="{{ post.hyperlinkCaptureFileURL }}"
+                                      class="rounded h-100 align-self-end" style="
+                                        object-fit: cover;
+                                        width: -webkit-fill-available;" alt="" />
+                                  </span>
+                                </div>
+                              </span>
+                            </div>
+                            <div class="d-flex flex-column">
+                              <a href="{{ post.hyperLink }}" target="_blank" class="mb-3 font-weight-normal font-size-h4">
+                                <div style ="font-family: 'Poppins', sans-serif;" *ngIf="post.type == 'hyperlink'" class="text-dark">
+                                  {{ post.textFirst }}
+                                </div>
+                                <div style ="font-family: 'Poppins', sans-serif;" *ngIf="post.type == 'hyperlink'" class="text-muted font-size-sm">
+                                  {{ post.textSecond }}
+                                </div>
+                                <div style ="font-family: 'Poppins', sans-serif;" *ngIf="post.type != 'hyperlink'">
+                                  {{ post.hyperlinkTextFirst }}
+                                </div>
+                                <div style ="font-family: 'Poppins', sans-serif;" *ngIf="post.type != 'hyperlink'" class="text-muted font-size-sm">
+                                  {{ post.hyperlinkTextSecond }}
+                                </div>
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="text-justify caption" style="
+                          padding: 10px 33px;
+                          word-break: break-all;
+                          color: #000;
+                          white-space: pre-wrap;
+                          text-align: justify;
+                        ">
+                        <div style ="font-family: 'Poppins', sans-serif;" *ngIf="post.text">{{ post.text }}</div>
+                      </div>
+                      <div class="preview-club">
+                        <div class="d-flex bd-highlight">
+                          <div class="p-2 flex-grow-1 bd-highlight">
+                            <div class="row">
+                              <div class="col item">
+                                <div class="symbol-group symbol-hover">
+                                  <div *ngFor="let reaction of post.reactions"
+                                    class="symbol symbol-circle symbol-20 symbol-sm-2">
+                                    <img *ngIf="reaction.user.profilePicURL !== ''" style="width:20px; object-fit: cover;" alt="Pic"
+                                      src="{{ reaction.user.profilePicURL }}" />
+                                    <img *ngIf="reaction.user.profilePicURL == ''" style="width:20px; object-fit: cover;" alt="Pic"
+                                      src="../../../assets/media/users/mockfbImage.png" />
+                                  </div>
+                                  <span class="symbol-label">{{ post.reactionCount }} likes</span>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="p-2 bd-highlight">
+                            {{ post.commentsCount }} comment
+                          </div>
+                          <div class="p-2 bd-highlight">
+                            {{ post.repostCount }} share
+                          </div>
+                        </div>
+                      </div>
+                      <div class="preview-comment">
+                        <div class="row">
+                          <div class="col-12 item">
+                            <i class="mr-2 far fa-heart" style="color: black"></i>Like
+                            &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
+                            <i class="mr-2 far fa-comment-dots" style="color: black"></i>Comment &nbsp;
+                            &nbsp;&nbsp;&nbsp;&nbsp;
+                            <i class="mr-2 fas fa-share" style="color: black"></i>Share
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
+              </ng-template>
             </mat-tab>
            
             <mat-tab (click)="
@@ -1241,90 +1270,95 @@
                   <i class="fas fa-poll-h icon-lg" style="color: #3897e0;"></i>
                 </mat-icon>&nbsp; &nbsp;Polls
               </ng-template>
-              <div class="card-body">
-                <div *ngFor="let poll of allPolls" class="m-6 border rounded"
-                  style="box-shadow: rgb(99 99 99 / 20%) 0px 2px 8px 0px">
-                  <div class="
-                  preview-facebook preview-facebook-text
-                  item-post-type
-                " data-type="text">
-                <div class="user-info" style="z-index: 1">
-                  <img class="img-circle" ngDefaultControl name="fieldName" [(ngModel)]="clubPrimaryColor"
-                    [ngStyle]="{ border: '3px solid' + clubPrimaryColor }" [src]="poll.user.profilePicURL">
-                  <div class="text">
-                    <div class="name pb-3">{{ poll.user.username }}</div>
-                    <span>{{poll.postedDate | date: 'MMM d, y'}}</span>
+              <ng-template matTabContent>
+                <div class="card-body">
+                  <div *ngFor="let poll of allPolls" class="m-6 border rounded"
+                    style="box-shadow: rgb(99 99 99 / 20%) 0px 2px 8px 0px">
+                    <div  class=" ribbon ribbon-top" data-toggle="tooltip" title="Votes">
+                      <div class="ribbon-target bg-light-success text-dark-75" style="top: -2px; right: 20px;"><i class="fas fa-vote-yea mr-2" style="color:#00657e"></i>Total Votes: {{poll.totalVotesCount}}</div>
                   </div>
-                </div>
-                <div class="caption" style="white-space: pre-wrap; text-align: justify">
-                  <div class="panel panel-primary">
-                    <div class="panel-heading">
-                      <h5 class="panel-title">
-                        <div>
-                          <div style ="font-family: 'Poppins', sans-serif;" class="border rounded border-2 p-5">{{ poll.text }}</div>
-                        </div>
-                      </h5>
+                    <div class="
+                    preview-facebook preview-facebook-text
+                    item-post-type
+                  " data-type="text">
+                  <div class="user-info" style="z-index: 1">
+                    <img class="img-circle" ngDefaultControl name="fieldName" [(ngModel)]="clubPrimaryColor"
+                      [ngStyle]="{ border: '3px solid' + clubPrimaryColor }" [src]="poll.user.profilePicURL">
+                    <div class="text">
+                      <div class="name pb-3">{{ poll.user.username }}</div>
+                      <span>{{poll.postedDate | date: 'MMM d, y'}}</span>
                     </div>
-                    <div class="card card-custom bg-dark card-stretch gutter-b p-5">
-											<!--begin::Body-->
-											<div class="card-body">
-												<a  class="card-title font-weight-bolder text-white font-size-h6 mb-4 text-hover-state-dark d-block">Total Votes</a>
-												<div class="font-weight-bold text-white font-size-sm">
-												<span class="font-size-h2 mr-2">{{poll.totalVotesCount}}</span></div>
-												<div class="progress progress-xs mt-7 bg-white-o-90">
-													<div class="progress-bar bg-white" role="progressbar" [style.width.%]="poll.totalVotesCount"></div>
-												</div>
-											</div>
-											<!--end::Body-->
-										</div> <ng-container *ngFor="let choice of poll?.choices">
-                      <div class="my-5">
-                        <span style ="font-family: 'Poppins', sans-serif;">{{choice.choiceText}}</span><span class="float-right">{{choice.voteCount}}</span>
-                        <div class="progress" style="height: 20px;">
-                            <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" [style.width.%]="choice.voteCount"></div>
-                        </div>
+                  </div>
+                  <div class="caption" style="white-space: pre-wrap; text-align: justify">
+                    <div class="panel panel-primary">
+                      <div class="panel-heading">
+                        <h5 class="panel-title">
+                          <div>
+                            <div style ="font-family: 'Poppins', sans-serif;" class="border rounded border-2 p-5">{{ poll.text }}</div>
+                          </div>
+                        </h5>
                       </div>
-                    </ng-container>
+                      <div class="card card-custom bg-dark card-stretch gutter-b p-5">
+                        <!--begin::Body-->
+                        <div class="card-body">
+                          <a  class="card-title font-weight-bolder text-white font-size-h6 mb-4 text-hover-state-dark d-block">Total Votes</a>
+                          <div class="font-weight-bold text-white font-size-sm">
+                          <span class="font-size-h2 mr-2">{{poll.totalVotesCount}}</span></div>
+                          <div class="progress progress-xs mt-7 bg-white-o-90">
+                            <div class="progress-bar bg-white" role="progressbar" [style.width.%]="poll.totalVotesCount"></div>
+                          </div>
+                        </div>
+                        <!--end::Body-->
+                      </div> <ng-container *ngFor="let choice of poll?.choices">
+                        <div class="my-5">
+                          <span style ="font-family: 'Poppins', sans-serif;">{{choice.choiceText}}</span><span class="float-right">{{choice.voteCount}}</span>
+                          <div class="progress" style="height: 20px;">
+                              <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" [style.width.%]="choice.voteCount"></div>
+                          </div>
+                        </div>
+                      </ng-container>
+                    </div>
                   </div>
-                </div>
-
-                <div class="w-100 p-5 ml-5 mb-5">
-                  <h6 style="font-family: 'Poppins', sans-serif;">Voting Ends in:</h6>
-                  <a class="btn btn-icon btn-light-primary pulse pulse-primary mr-2">
-                    <span style="font-size: 18px">{{poll.votingDays}}</span>
-                    <span class="pulse-ring"></span>
-                  </a>
-                  Days
-                  <a class="btn btn-icon btn-light-success pulse pulse-success mr-2 ml-2">
-                    <span style="font-size: 18px">{{poll.votingHours}}</span>
+  
+                  <div class="w-100 p-5 ml-5 mb-5">
+                    <h6 style="font-family: 'Poppins', sans-serif;">Voting Ends in:</h6>
+                    <a class="btn btn-icon btn-light-primary pulse pulse-primary mr-2">
+                      <span style="font-size: 18px">{{poll.votingDays}}</span>
                       <span class="pulse-ring"></span>
-                  </a>
-                  Hours
-                  <a class="btn btn-icon btn-light-danger pulse pulse-danger mr-2 ml-2">
-                    <span style="font-size: 18px">{{poll.votingMinutes}}</span>
-                    <span class="pulse-ring"></span>
-                  </a>
-                  Minutes
-                </div>
-
-                <div class="preview-comment">
-                  <div class="row">
-                    <div class="col-12 item">
-                      <i class="mr-2 far fa-heart" style="color: black"></i>Like &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
-                      <i class="mr-2 far fa-comment-dots" style="color: black"></i>Comment &nbsp;
-                      &nbsp;&nbsp;&nbsp;&nbsp;
-                      <i class="mr-2 fas fa-share" style="color: black"></i>Share
-                    </div>
-                    <div class="col item">
-                      <!-- <i class="fas fa-comments"></i> &nbsp;Comment -->
-                    </div>
-                    <div class="col item">
-                      <!-- <i class="fas fa-share" aria-hidden="true"></i> &nbsp;Share -->
+                    </a>
+                    Days
+                    <a class="btn btn-icon btn-light-success pulse pulse-success mr-2 ml-2">
+                      <span style="font-size: 18px">{{poll.votingHours}}</span>
+                        <span class="pulse-ring"></span>
+                    </a>
+                    Hours
+                    <a class="btn btn-icon btn-light-danger pulse pulse-danger mr-2 ml-2">
+                      <span style="font-size: 18px">{{poll.votingMinutes}}</span>
+                      <span class="pulse-ring"></span>
+                    </a>
+                    Minutes
+                  </div>
+  
+                  <div class="preview-comment">
+                    <div class="row">
+                      <div class="col-12 item">
+                        <i class="mr-2 far fa-heart" style="color: black"></i>Like &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
+                        <i class="mr-2 far fa-comment-dots" style="color: black"></i>Comment &nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        <i class="mr-2 fas fa-share" style="color: black"></i>Share
+                      </div>
+                      <div class="col item">
+                        <!-- <i class="fas fa-comments"></i> &nbsp;Comment -->
+                      </div>
+                      <div class="col item">
+                        <!-- <i class="fas fa-share" aria-hidden="true"></i> &nbsp;Share -->
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
+                  </div>
                 </div>
-              </div>
+              </ng-template>
             </mat-tab>
           </mat-tab-group>
 
@@ -1556,10 +1590,8 @@
                     </div>
 
                     <!--poll preview-->
-                    <div class="
-                        preview-facebook preview-facebook-text
-                        item-post-type
-                      " data-type="text" *ngIf="showDiv.poll">
+                    <div class="preview-facebook preview-facebook-text 
+                    item-post-type" data-type="text" *ngIf="showDiv.poll">
                       <div class="user-info" style="z-index: 1">
                         <img class="img-circle" ngDefaultControl name="fieldName" [(ngModel)]="clubPrimaryColor"
                           [ngStyle]="{ border: '3px solid' + clubPrimaryColor }" [src]="profileImageUrl" />
@@ -1574,22 +1606,28 @@
                           <div class="panel-heading">
                             <h3 class="panel-title">
                               <div>
-                                <div>{{ teamtalkerCaption }}</div>
-                                <div class="line-no-text" *ngIf="!teamtalkerCaption">
-                                  {{ teamtalkerCaption }}
+                                <div>{{ skillsForm.value.name }}</div>
+                                <div class="line-no-text" *ngIf="!skillsForm.value.name">
+                                  {{ skillsForm.value.name }}
                                 </div>
-                                <div class="line-no-text" *ngIf="!teamtalkerCaption"></div>
-                                <div class="line-no-text" *ngIf="!teamtalkerCaption"></div>
+                                <div class="line-no-text" *ngIf="!skillsForm.value.name"></div>
+                                <div class="line-no-text" *ngIf="!skillsForm.value.name"></div>
                               </div>
                             </h3>
                           </div>
                           <div>
-                            <div class="form-group">
-                              <input type="text" class="form-control" id="example1" placeholder="Enter your choice"
-                                [(ngModel)]="poll.choice1" disabled />
-                            </div>
+                            <!-- <div class="form-group" *ngFor="let skill of skills.controls; let i=index">
+                              <input type="text" class="form-control" id="example1" 
+                                formControlName="skillsForm.value.skills.skill"  />
+                              <p>{{skillsForm.value.skills.skill}}</p>
+                            </div> -->
 
-                            <div class="form-group">
+                            <div *ngFor="let skill of skills.controls; let i=index">
+                              <p >{{skillsForm.value.skills.skill}}</p>
+                               
+                             </div>
+
+                            <!-- <div class="form-group">
                               <input type="text" class="form-control" id="example2" placeholder="Enter your choice"
                                 [(ngModel)]="poll.choice2" disabled />
                             </div>
@@ -1602,7 +1640,7 @@
                             <div class="form-group mb-o">
                               <input type="text" class="form-control" id="example4"
                                 placeholder="Enter your choice (optional)" [(ngModel)]="poll.choice4" disabled />
-                            </div>
+                            </div>  -->
                           </div>
                         </div></div>
                       <div class="preview-club">
@@ -1638,10 +1676,10 @@
                             <i class="mr-2 fas fa-share" style="color: black"></i>Share
                           </div>
                           <div class="col item">
-                            <!-- <i class="fas fa-comments"></i> &nbsp;Comment -->
+                         
                           </div>
                           <div class="col item">
-                            <!-- <i class="fas fa-share" aria-hidden="true"></i> &nbsp;Share -->
+                        
                           </div>
                         </div>
                       </div>
@@ -1659,4 +1697,5 @@
   <!--progress widget-->
   <app-progress-bar></app-progress-bar>
 </div>
+
 
