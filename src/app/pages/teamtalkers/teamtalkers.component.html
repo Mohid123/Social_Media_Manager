@@ -759,7 +759,7 @@
                 <div formArrayName="choices">
                   <div *ngFor="let choice of choices.controls; let i = index">
                     <div class="form-group d-flex align-items-center justify-content-center" [formGroupName]="i">
-                     <input maxlength="25" type="text" formControlName="choiceText" class="form-control form-control-lg" id="example1"
+                     <input maxlength="25" type="text" formControlName="choiceText"  class="form-control form-control-lg" id="example1"
                      placeholder="Enter your choice">
                      <a *ngIf="choices.length > 2 && i > 1" (click)="removeOption(i)" class="btn btn-icon btn-light-danger ml-2">
                        <i class="flaticon-delete icon-lg"></i>
@@ -904,7 +904,7 @@
           </div>
         </div>
       </div>
-    </mat-tab>
+        </mat-tab>
         </mat-tab-group>
         <div>
           <div class="card-header ribbon ribbon-right" style="
@@ -1357,10 +1357,8 @@
 
                   </div>
           
-                  <div class="
-                  preview-facebook preview-facebook-text
-                  item-post-type
-                 " data-type="text">
+                  <div class="preview-facebook preview-facebook-text
+                  item-post-type" data-type="text">
            
              
                  <div class="caption" style="white-space: pre-wrap; text-align: justify">
@@ -1458,6 +1456,8 @@
               <div class="preview-facebook">
                 <div class="card">
                   <div class="p-0 card-body">
+
+
                     <!--photo preview-->
                     <div class="preview-facebook preview-facebook-media
                         item-post-type" data-type="photo" *ngIf="showDiv.photo">
@@ -1673,35 +1673,27 @@
                           <div class="panel-heading">
                             <h3 class="panel-title">
                               <div>
-                                <div>{{ teamtalkerCaption }}</div>
-                                <div class="line-no-text" *ngIf="!teamtalkerCaption">
-                                  {{ teamtalkerCaption }}
+                                <div>{{ this.pollForm.get('text').value  }}</div>
+                                <div class="line-no-text" *ngIf="!this.pollForm.get('text').value">
+                                  {{ this.pollForm.get('text').value }}
                                 </div>
-                                <div class="line-no-text" *ngIf="!teamtalkerCaption"></div>
-                                <div class="line-no-text" *ngIf="!teamtalkerCaption"></div>
+                                <div class="line-no-text" *ngIf="!this.pollForm.get('text').value"></div>
+                                <div class="line-no-text" *ngIf="!this.pollForm.get('text').value"></div>
                               </div>
                             </h3>
                           </div>
                           <div>
                             <div class="form-group">
-                              <input type="text" class="form-control" id="example1" placeholder="Enter your choice"
-                                [(ngModel)]="poll.choice1" disabled />
+                       
+                                <input type="text" class="form-control my-2" id="example1" placeholder="Enter your choice"
+                               disabled />
+                                <p>{{pollForm.get('choices').value | json}}</p>
+                              
+                         
                             </div>
 
-                            <div class="form-group">
-                              <input type="text" class="form-control" id="example2" placeholder="Enter your choice"
-                                [(ngModel)]="poll.choice2" disabled />
-                            </div>
 
-                            <div class="form-group">
-                              <input type="text" class="form-control" id="example3"
-                                placeholder="Enter your choice (optional)" [(ngModel)]="poll.choice3" disabled />
-                            </div>
-
-                            <div class="form-group mb-o">
-                              <input type="text" class="form-control" id="example4"
-                                placeholder="Enter your choice (optional)" [(ngModel)]="poll.choice4" disabled />
-                            </div>
+                            
                           </div>
                         </div></div>
                       <div class="preview-club">
