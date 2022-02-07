@@ -236,14 +236,25 @@ export class TeamtalkersComponent implements OnInit {
       });
   }
 
+  // All Polls
   getPollPosts() {
-    this.pollService.getAllPolls(this.offset, this.limit).subscribe((res: ApiResponse<Polls>) => {
+    this.pollService.getAllPolls(this.offset, this.limit).pipe(takeUntil(this.destroy$)).subscribe((res: ApiResponse<Polls>) => {
       if(!res.hasErrors()) {
         this.allPolls = res.data;
       }
     })
   }
 
+  // Delete Poll
+  deletePoll(polls: Polls) {
+    this.pollService.deletePollByID(polls.id).pipe(takeUntil(this.destroy$)).subscribe((res: ApiResponse<Polls>) => {
+      if(!res.hasErrors()) {
+        this.toast.success('Poll successfully deleted.', 'Success!');
+        this.getPollPosts();
+      }
+    })
+  }
+  
   resetPost() {
     this.teamtalkerCaption = "";
     this.url = null;

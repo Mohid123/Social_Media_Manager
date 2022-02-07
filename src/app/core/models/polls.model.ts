@@ -51,8 +51,8 @@ export class Polls {
     votingMinutes?: number;
     hideParticipantsDetails?: boolean;
     deletedCheck?: boolean;
-    media: Media;
-    topVotes: [
+    media?: Media;
+    topVotes?: [
         {
             profilePicURL: string;
             id: string;
@@ -67,5 +67,5 @@ export class Polls {
     dynamicUrl?: string;
     createdAt?: Date;
     updatedAt?: Date;
-    user: User;
+    user?: User;
 }
