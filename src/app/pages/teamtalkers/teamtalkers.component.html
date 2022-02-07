@@ -1308,7 +1308,8 @@
 													<div class="progress-bar bg-white" role="progressbar" [style.width.%]="poll.totalVotesCount"></div>
 												</div>
 											</div>
-										</div> <ng-container *ngFor="let choice of poll?.choices">
+										</div>
+                    <ng-container *ngFor="let choice of poll?.choices">
                       <div class="my-5">
                         <span style ="font-family: 'Poppins', sans-serif;">{{choice.choiceText}}</span><span class="float-right">{{choice.voteCount}}</span>
                         <div class="progress" style="height: 20px;">
