@@ -1668,6 +1668,7 @@
                         </div>
                       </div>
 
+                      <!--Poll Preview Binding-->
                       <div class="caption" style="white-space: pre-wrap; text-align: justify">
                         <div class="panel panel-primary">
                           <div class="panel-heading">
@@ -1684,18 +1685,16 @@
                           </div>
                           <div>
                             <div class="form-group">
-                       
-                                <input type="text" class="form-control my-2" id="example1" placeholder="Enter your choice"
-                               disabled />
-                                <p>{{pollForm.get('choices').value | json}}</p>
+                              <ng-container *ngFor="let choice of choices.controls; let i = index">
+                                <input type="text" class="form-control my-2" id="example1" placeholder="Enter your choice" value="{{pollForm.get('choices').value[i].choiceText}}"
+                                  disabled />
+                              </ng-container>
                               
-                         
                             </div>
-
-
-                            
                           </div>
-                        </div></div>
+                        </div>
+                      </div>
+
                       <div class="preview-club">
                         <div class="d-flex bd-highlight">
                           <div class="p-2 flex-grow-1 bd-highlight">
