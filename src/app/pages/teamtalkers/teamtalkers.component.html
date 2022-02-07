@@ -702,175 +702,201 @@
             </div>
           </mat-tab>
 
-          <!-- POLL TAB -->
-          <mat-tab *ngIf="showPoll" (click)="showDiv.poll = true;
-              showDiv.photo = false;
-              showDiv.video = false;
-              showDiv.text = false">
-            <ng-template mat-tab-label>
-              <mat-icon><i class="fas fa-poll icon-lg" style="color: #0080ff"></i></mat-icon>
-              &nbsp;Poll
-            </ng-template>
+        <!-- POLL TAB -->
+        <mat-tab *ngIf="showPoll" (click)="showDiv.poll = true;
+        showDiv.photo = false;
+        showDiv.video = false;
+        showDiv.text = false">
+      <ng-template mat-tab-label>
+        <mat-icon><i class="fas fa-poll icon-lg" style="color: #0080ff"></i></mat-icon>
+        &nbsp;Poll
+      </ng-template>
+      <div class="card-body">
+        <div class="tab-content">
+          <div class="tab-pane fade show active" role="tabpanel" aria-labelledby="kt_tab_pane_7_1">
             <div class="card-body">
-              <div class="tab-content">
-                <div class="tab-pane fade show active" role="tabpanel" aria-labelledby="kt_tab_pane_7_1">
-                  <div class="card-body">
-                    <form class="form-inline">
-                      <div class="pb-5 mr-5 symbol symbol-50 symbol-light">
-                        <span class="symbol-label">
-                          <img [src]="profileImageUrl" class="rounded h-100 align-self-center"
-                            style="object-fit: cover; width: 100%" alt="" />
-                        </span>
-                      </div>
-                      <div class="d-flex flex-column flex-grow-1 font-weight-bold">
-                        <a class="
-                            pb-12
-                            mb-1
-                            text-dark text-hover-primary
-                            font-size-lg">{{ userName }}</a>
-                      </div>
-                    </form>
+              <form class="form-inline">
+                <div class="pb-5 mr-5 symbol symbol-50 symbol-light">
+                  <span class="symbol-label">
+                    <img [src]="profileImageUrl" class="rounded h-100 align-self-center"
+                      style="object-fit: cover; width: 100%" alt="" />
+                  </span>
+                </div>
+                <div class="d-flex flex-column flex-grow-1 font-weight-bold">
+                  <a class="
+                      pb-12
+                      mb-1
+                      text-dark text-hover-primary
+                      font-size-lg">{{ userName }}</a>
+                </div>
+              </form>
+
+            <form [formGroup]="skillsForm" (ngSubmit)="onSubmit()">
+              
+              <div class="form-group">
+                <textarea formControlName="name"
+                  class="form-control form-control-lg form-control-solid" id="exampleTextarea" rows="3"
+                  placeholder="What’s on your mind, {{ userName }}?"></textarea>
+              </div>
+              <div>
+              
+                <div formArrayName="skills">
+                  <div *ngFor="let skill of skills.controls; let i=index">
+                    <div class="form-group d-flex align-items-center justify-content-center" [formGroupName]="i">
+                     <input maxlength="25" type="text" formControlName="skill"  class="form-control form-control-lg" id="example1"
+                     placeholder="Enter your choice"  />
+                     <a (click)="removeSkill(i)" class="btn btn-icon btn-light-danger">
+                       <i class="flaticon-delete icon-lg"></i>
+                   </a>
+                    </div>
+                     
+                   </div>
+                </div>
+
+          
+                <div class=" w-auto px-2 mr-2 mb-5 btn btn-icon btn-light btn-clean d-inline-flex align-items-center btn-lg">
+                  <span (click)="addSkills()" class="symbol symbol-35 symbol-light-primary">
+                    <span class="symbol-label"><a class="btn btn-icon btn-sm">
+                      <i class="ki ki-solid-plus icon-lg"></i></a>
+                    </span>
+                  </span>
+                  <span (click)="addSkills()" class="btn
+                    text-dark-50
+                    font-weight-normal font-size-base">
+                    &nbsp;Add Choices
+                  </span>
+                </div>
+                <!-- <div class="form-group">
+                  <input maxlength="25" type="text" class="form-control" id="example2"
+                    placeholder="Enter your choice" [(ngModel)]="poll.choice2" />
+                </div>
+                <div class="form-group">
+                  <input maxlength="25" type="text" class="form-control" id="example3"
+                    placeholder="Enter your choice (optional)" [(ngModel)]="poll.choice3" />
+                </div>
+                <div class="form-group">
+                  <input maxlength="25" type="text" class="form-control" id="example4"
+                    placeholder="Enter your choice (optional)" [(ngModel)]="poll.choice4" />
+                </div> -->
+                <div class="row">
+                  <div class="col-md-6">
                     <div class="form-group">
-                      <textarea [(ngModel)]="teamtalkerCaption" [ngModelOptions]="{ standalone: true }"
-                        class="form-control form-control-lg form-control-solid" id="exampleTextarea" rows="3"
-                        placeholder="What’s on your mind, {{ userName }}?"></textarea>
+                      <label>Expire Date</label>
+                      <input readonly style="background-color: white" class="form-control"
+                        placeholder="Select Date" [ngxDatePicker]="dateInstanceSingle" [value]="singleDate"
+                        (valueChange)="onChangeSingle($event)" />
+                      <ngx-date-picker #dateInstanceSingle [options]="singleDatePickerOptions"></ngx-date-picker>
                     </div>
-                    <div>
-                      <div class="form-group">
-                        <input maxlength="25" type="text" class="form-control" id="example1"
-                          placeholder="Enter your choice" [(ngModel)]="poll.choice1" />
-                      </div>
-                      <div class="form-group">
-                        <input maxlength="25" type="text" class="form-control" id="example2"
-                          placeholder="Enter your choice" [(ngModel)]="poll.choice2" />
-                      </div>
-                      <div class="form-group">
-                        <input maxlength="25" type="text" class="form-control" id="example3"
-                          placeholder="Enter your choice (optional)" [(ngModel)]="poll.choice3" />
-                      </div>
-                      <div class="form-group">
-                        <input maxlength="25" type="text" class="form-control" id="example4"
-                          placeholder="Enter your choice (optional)" [(ngModel)]="poll.choice4" />
-                      </div>
-                      <div class="row">
-                        <div class="col-md-6">
-                          <div class="form-group">
-                            <label>Expire Date</label>
-                            <input readonly style="background-color: white" class="form-control"
-                              placeholder="Select Date" [ngxDatePicker]="dateInstanceSingle" [value]="singleDate"
-                              (valueChange)="onChangeSingle($event)" />
-                            <ngx-date-picker #dateInstanceSingle [options]="singleDatePickerOptions"></ngx-date-picker>
-                          </div>
-                        </div>
-                        <div class="col-md-6">
-                          <div class="form-group">
-                            <label>Time </label>
-                            <input class="form-control" style="background-color: white" readonly
-                              placeholder="Select Time" [ngxTimePicker]="timeInstanceOne" [value]="singleTime"
-                              (valueChange)="onChangeSingleTime($event)" required />
-                            <ngx-time-picker #timeInstanceOne [options]="singleTimePickerOptions"></ngx-time-picker>
-                          </div>
-                        </div>
-                      </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label>Time </label>
+                      <input class="form-control" style="background-color: white" readonly
+                        placeholder="Select Time" [ngxTimePicker]="timeInstanceOne" [value]="singleTime"
+                        (valueChange)="onChangeSingleTime($event)" required />
+                      <ngx-time-picker #timeInstanceOne [options]="singleTimePickerOptions"></ngx-time-picker>
                     </div>
-                    <label class="checkbox checkbox-sm checkbox-inline">
-                      <input [(ngModel)]="showSchedule" class="d-inline" name="list_name" value="m1"
-                        (click)="selectedSchedule()" type="checkbox" value="1" />
-                      <span></span>
-                      <div class=" w-auto
-                          px-2
-                          ml-2
-                          mr-5
-                          btn btn-icon btn-light btn-clean
-                          d-inline-flex
-                          align-items-center
-                          btn-lg">
-                        <span class="symbol symbol-35 symbol-light-primary">
-                          <span class="symbol-label"><a class="btn btn-icon btn-sm">
-                              <i class="flaticon-calendar-with-a-clock-time-tools
-                                  icon-lg"></i> </a></span>
-                        </span>
-                        <span class="btn
-                            text-dark-50
-                            font-weight-normal font-size-base">
-                          &nbsp;Schedule</span>
-                      </div>
-                    </label>
-                    <form class="pt-10 ql-quil ql-quil-plain">
-                      <div id="kt_forms_widget_2_editor"></div>
-                      <div class="my-5 border-top"></div>
-                      <div *ngIf="!showSchedule" id="kt_forms_widget_2_editor_toolbar" class="
-                          ql-toolbar
-                          d-flex
-                          align-items-center
-                          justify-content-end">
-                        <div class="d-flex">
-                          <div class="p-2 ml-auto">
-                            <button (click)="resetPost()" type="button" class="btn btn-transparent-warning">
-                              Clear
-                            </button>
-                          </div>
-                          <div class="p-2 ml-auto">
-                            <button [disabled]="!poll.choice1 && !poll.choice2 " (click)="addPollPost(); clicked = true" type="button"
-                              class="flex-row-reverse btn btn-primary" style="
-                                background-color: #3b5998;
-                                border-color: #3b5998;">
-                              Post Now
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                      <div *ngIf="showSchedule" id="kt_forms_widget_2_editor_toolbar" class="
-                          ql-toolbar
-                          align-items-center
-                          justify-content-between">
-                        <div class="row d-block">
-                          <div class="col-md-6 d-inline-block">
-                            <div class="form-group">
-                              <label>Schedule Date</label>
-                              <input readonly style="background-color: white" class="form-control"
-                                placeholder="Select Date" [ngxDatePicker]="dateInstanceSingle" [value]="singleDate"
-                                (valueChange)="onChangeScheduleDate($event)" />
-                              <ngx-date-picker #dateInstanceSingle [options]="singleDatePickerOptions">
-                              </ngx-date-picker>
-                            </div>
-                          </div>
-                          <div class="col-md-6 d-inline-block">
-                            <div class="form-group">
-                              <label>Time </label>
-                              <input class="form-control" style="background-color: white" readonly
-                                placeholder="Select Time" [ngxTimePicker]="timeInstanceOne" [value]="singleTime"
-                                (valueChange)="onChangeScheduleTime($event)" required />
-                              <ngx-time-picker #timeInstanceOne [options]="singleTimePickerOptions"></ngx-time-picker>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="mb-10 row d-block">
-                          <div class="d-flex">
-                            <div class="p-2 ml-auto"></div>
-                          </div>
-                          <div class="d-flex" style="float: right">
-                            <div class="p-2 ml-auto">
-                              <button (click)="resetPost()" type="button" class="btn btn-transparent-warning">
-                                Clear
-                              </button>
-                            </div>
-                            <div class="p-2 ml-auto">
-                              <button (click)="addPollPost()" type="button" class="flex-row-reverse btn btn-primary"
-                                style="background-color: #3b5998;
-                                  border-color: #3b5998;">
-                                Schedule
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </form>
                   </div>
                 </div>
               </div>
+              <label class="checkbox checkbox-sm checkbox-inline">
+                <input  class="d-inline" name="list_name" value="m1"
+                  (click)="selectedSchedule()" type="checkbox" value="1" />
+                <span></span>
+                <div class=" w-auto
+                    px-2
+                    ml-2
+                    mr-5
+                    btn btn-icon btn-light btn-clean
+                    d-inline-flex
+                    align-items-center
+                    btn-lg">
+                  <span class="symbol symbol-35 symbol-light-primary">
+                    <span class="symbol-label"><a class="btn btn-icon btn-sm">
+                        <i class="flaticon-calendar-with-a-clock-time-tools
+                            icon-lg"></i> </a></span>
+                  </span>
+                  <span class="btn
+                      text-dark-50
+                      font-weight-normal font-size-base">
+                    &nbsp;Schedule</span>
+                </div>
+              </label>
+              <form class="pt-10 ql-quil ql-quil-plain">
+                <div class="my-5 border-top"></div>
+                <div *ngIf="!showSchedule" class="
+                    ql-toolbar
+                    d-flex
+                    align-items-center
+                    justify-content-end">
+                  <div class="d-flex">
+                    <div class="p-2 ml-auto">
+                      <button (click)="resetPost()" type="button" class="btn btn-transparent-warning">
+                        Clear
+                      </button>
+                    </div>
+                    <div class="p-2 ml-auto">
+                      <button (click)="onSubmit()" type="submit"
+                        class="flex-row-reverse btn btn-primary" style="
+                          background-color: #3b5998;
+                          border-color: #3b5998;">
+                        Post Now
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div *ngIf="showSchedule" class="
+                    ql-toolbar
+                    align-items-center
+                    justify-content-between">
+                  <div class="row d-block">
+                    <div class="col-md-6 d-inline-block">
+                      <div class="form-group">
+                        <label>Schedule Date</label>
+                        <input readonly style="background-color: white" class="form-control"
+                          placeholder="Select Date" [ngxDatePicker]="dateInstanceSingle" [value]="singleDate"
+                          (valueChange)="onChangeScheduleDate($event)" />
+                        <ngx-date-picker #dateInstanceSingle [options]="singleDatePickerOptions">
+                        </ngx-date-picker>
+                      </div>
+                    </div>
+                    <div class="col-md-6 d-inline-block">
+                      <div class="form-group">
+                        <label>Time </label>
+                        <input class="form-control" style="background-color: white" readonly
+                          placeholder="Select Time" [ngxTimePicker]="timeInstanceOne" [value]="singleTime"
+                          (valueChange)="onChangeScheduleTime($event)" required />
+                        <ngx-time-picker #timeInstanceOne [options]="singleTimePickerOptions"></ngx-time-picker>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="mb-10 row d-block">
+                    <div class="d-flex">
+                      <div class="p-2 ml-auto"></div>
+                    </div>
+                    <div class="d-flex" style="float: right">
+                      <div class="p-2 ml-auto">
+                        <button (click)="resetPost()" type="button" class="btn btn-transparent-warning">
+                          Clear
+                        </button>
+                      </div>
+                      <div class="p-2 ml-auto">
+                        <button (click)="addPollPost()" type="button" class="flex-row-reverse btn btn-primary"
+                          style="background-color: #3b5998;
+                            border-color: #3b5998;">
+                          Schedule
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </form>
             </div>
-          </mat-tab>
+          </div>
+        </div>
+      </div>
+    </mat-tab>
         </mat-tab-group>
         <div>
           <div class="card-header ribbon ribbon-right" style="
