@@ -1023,7 +1023,7 @@
                                   display: flex;
                                   flex-wrap: wrap;
                                   object-fit: cover;">
-                                <ng-container *ngFor="let media of post.media">
+                                <ng-container *ngFor="let media of post.media; let i = index;">
                                   <img [src]="media.captureFileURL" 
                                    style="
                                     flex-grow: 1;

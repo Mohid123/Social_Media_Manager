@@ -30,7 +30,7 @@ export class PollsService extends BaseApiService<poll> {
     return this.clubApiPost(`/polls/updatePolls`, poll);
   }
 
-  deletePolls(id: string): Observable<ApiResponse<poll>> {
+  deletePollByID(id: string): Observable<ApiResponse<poll>> {
     return this.clubApiGet(`/polls/deletePolls/${id}`); //send deleted Check
   }
 
