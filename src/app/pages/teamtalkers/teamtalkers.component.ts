@@ -110,7 +110,14 @@ export class TeamtalkersComponent implements OnInit {
   pollForm: FormGroup;
   selectedClub
   images = ['https://i.picsum.photos/id/1011/900/500.jpg?hmac=twSEfoAh6FjOiVcusAReH6ZwI4CYSjT5cWeRc-vCaDE', 'https://i.picsum.photos/id/1011/900/500.jpg?hmac=twSEfoAh6FjOiVcusAReH6ZwI4CYSjT5cWeRc-vCaDE', 'https://i.picsum.photos/id/1011/900/500.jpg?hmac=twSEfoAh6FjOiVcusAReH6ZwI4CYSjT5cWeRc-vCaDE'];
- 
+  options = { 
+    choiceType: '',
+    choiceText: '',
+    choiceImage: '',
+    blurHash: '',
+    voteCount: 0
+  };
+
   constructor(
     private spinner: NgxSpinnerService,
     private cf: ChangeDetectorRef,
@@ -168,7 +175,7 @@ export class TeamtalkersComponent implements OnInit {
   createChoiceGroup() {
     return this.fb.group({
       choiceText: ['', [Validators.required]],
-      chocieType: [''],
+      choiceType: [''],
       choiceImage: [''],
       blurHash: [''],
       voteCount: [0]
@@ -177,7 +184,7 @@ export class TeamtalkersComponent implements OnInit {
  
   newOption(): FormGroup {
     return this.fb.group({
-      chocieType: '',
+      choiceType: '',
       choiceText: '',
       choiceImage: '',
       blurHash: '',
@@ -353,6 +360,7 @@ export class TeamtalkersComponent implements OnInit {
   deletePoll(polls: Polls) {
     this.pollService.deletePollByID(polls.id).pipe(takeUntil(this.destroy$)).subscribe((res: ApiResponse<Polls>) => {
       if(!res.hasErrors()) {
+        polls.deletedCheck = true;
         this.toast.success('Poll successfully deleted.', 'Success!');
         this.getPollPosts();
       }
