@@ -15,6 +15,7 @@ import { ApiResponse } from '@app/core/models/response.model';
 import { Observable, combineLatest } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
 import { Media } from './../../models/media-model';
+import { Polls } from './../../models/polls.model';
 
 @Injectable({
   providedIn: 'root'
@@ -203,6 +204,10 @@ export class ScheduleClubPostService {
     }
     post.jwtToken = this.clubToken
     return this._scheduleService.schduleClubPost('Club', this.clubID, post)
+  }
+
+  schedulePollsPost(polls: Polls) {
+   return this._scheduleService.schedulePollsPost('Club', this.clubID, polls);
   }
 
 

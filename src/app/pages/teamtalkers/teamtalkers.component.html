@@ -71,85 +71,93 @@
                     </td>
                   </ng-container>
                 </tr>
-                <th class="pt-5 pb-5 pr-0 text-left bg-gray-100">
-                  <span class="mr-2 label label-xl label-dark label-inline"><i class="mr-2 fas fa-users icon-md"
-                      style="color: white"></i>Group</span>
-                  <label class="mt-5 checkbox checkbox-sm checkbox-inline">
-                    <input [(ngModel)]="groupSelected" name="list_name" value="m1" (change)="selectAllGroups()"
-                      type="checkbox" value="1" />
-                    <span></span>
-                    <label style="padding-left: 10px" class="font-weight-bolder">Select all</label>
-                  </label>
-                </th>
-                <tr *ngFor="let item of checklist">
-                  <ng-container *ngIf="item.groupName">
-                    <td class="pr-0">
-                      <div class="d-flex align-items-center">
-                        <label class="checkbox checkbox-sm checkbox-inline">
-                          <input type="checkbox" [(ngModel)]="item.isSelected" value="{{ item.id }}"
-                            (change)="singleItemSelected()" />
-                          <span></span>
-                          <div class="mr-2 symbol symbol-30 symbol-light" style="padding-left: 10px">
-                            <span class="symbol-label">
-                              <img src="{{ item.captureImageURL }}" class="rounded h-100 align-self-end"
-                                style="object-fit: cover; width: 100%" alt="" />
-                            </span>
-                          </div>
-                          <div class="
-                              d-flex
-                              flex-column flex-grow-1
-                              font-weight-bold">
-                            <a class="
-                                text-dark text-hover-primary
-                                font-size-sm" style="cursor: pointer">{{ item.groupName }}</a>
-                            <span class="text-muted font-size-sm">Group</span>
-                          </div>
-                        </label>
-                      </div>
-                    </td>
-                  </ng-container>
-                </tr>
-                <th class="pt-5 pb-5 pr-0 text-left bg-gray-100">
-                  <span class="mr-2 label label-xl label-dark label-inline">
-                    <i class="mr-2 far fa-calendar-alt icon-md" style="color: white"></i>
-                    Event</span>
-                  <label class="mt-5 checkbox checkbox-sm checkbox-inline">
-                    <input [(ngModel)]="eventSelected" name="list_name" value="m1" (change)="selectAllEvents()"
-                      type="checkbox" value="1" />
-                    <span></span>
-                    <label style="padding-left: 10px" class="font-weight-bolder">Select all</label>
-                  </label>
-                </th>
-                <tr *ngFor="let item of checklist">
-                  <ng-container *ngIf="item.eventName">
-                    <td class="pr-0">
-                      <div class="d-flex align-items-center">
-                        <label class="checkbox checkbox-sm checkbox-inline">
-                          <input type="checkbox" [(ngModel)]="item.isSelected" value="{{ item.id }}"
-                            (change)="singleItemSelected()" />
-                          <span></span>
-                          <div class="mr-2 symbol symbol-30 symbol-light" style="padding-left: 10px">
-                            <span class="symbol-label">
-                              <img src="{{ item.captureImageURL }}" class="rounded h-100 align-self-end" style="
-                                  width: 100%;
-                                  height: 100%;
-                                  object-fit: cover;" alt="" />
-                            </span>
-                          </div>
-                          <div class="d-flex
-                              flex-column flex-grow-1
-                              font-weight-bold ">
-                            <a class="text-dark text-hover-primary
-                                font-size-sm
-                                d-inline-block
-                                text-truncate" style="cursor: pointer; max-width: 145px">{{ item.eventName }}</a>
-                            <span class="text-muted font-size-sm">Event</span>
-                          </div>
-                        </label>
-                      </div>
-                    </td>
-                  </ng-container>
-                </tr>
+                <ng-container *ngIf="showDiv.pollCheck">
+                  <th class="pt-5 pb-5 pr-0 text-left bg-gray-100">
+                    <span class="mr-2 label label-xl label-dark label-inline"><i class="mr-2 fas fa-users icon-md"
+                        style="color: white"></i>Group</span>
+                    <label class="mt-5 checkbox checkbox-sm checkbox-inline">
+                      <input [(ngModel)]="groupSelected" name="list_name" value="m1" (change)="selectAllGroups()"
+                        type="checkbox" value="1" />
+                      <span></span>
+                      <label style="padding-left: 10px" class="font-weight-bolder">Select all</label>
+                    </label>
+                  </th>
+                  <tr *ngFor="let item of checklist" >
+                    <ng-container *ngIf="item.groupName " >
+                      <td class="pr-0">
+                        <div class="d-flex align-items-center">
+                          <label class="checkbox checkbox-sm checkbox-inline">
+                            <input type="checkbox" [(ngModel)]="item.isSelected" value="{{ item.id }}"
+                              (change)="singleItemSelected()" />
+                            <span></span>
+                            <div class="mr-2 symbol symbol-30 symbol-light" style="padding-left: 10px">
+                              <span class="symbol-label">
+                                <img src="{{ item.captureImageURL }}" class="rounded h-100 align-self-end"
+                                  style="object-fit: cover; width: 100%" alt="" />
+                              </span>
+                            </div>
+                            <div class="
+                                d-flex
+                                flex-column flex-grow-1
+                                font-weight-bold">
+                              <a class="
+                                  text-dark text-hover-primary
+                                  font-size-sm" style="cursor: pointer">{{ item.groupName }}</a>
+                              <span class="text-muted font-size-sm">Group</span>
+                            </div>
+                          </label>
+                        </div>
+                      </td>
+                    </ng-container>
+                  </tr>
+                </ng-container>
+                
+                
+                <ng-container *ngIf="showDiv.pollCheck">
+                  <th class="pt-5 pb-5 pr-0 text-left bg-gray-100">
+                    <span class="mr-2 label label-xl label-dark label-inline">
+                      <i class="mr-2 far fa-calendar-alt icon-md" style="color: white"></i>
+                      Event</span>
+                    <label class="mt-5 checkbox checkbox-sm checkbox-inline">
+                      <input [(ngModel)]="eventSelected" name="list_name" value="m1" (change)="selectAllEvents()"
+                        type="checkbox" value="1" />
+                      <span></span>
+                      <label style="padding-left: 10px" class="font-weight-bolder">Select all</label>
+                    </label>
+                  </th>
+                  <tr *ngFor="let item of checklist">
+                    <ng-container *ngIf="item.eventName ">
+                      <td class="pr-0">
+                        <div class="d-flex align-items-center">
+                          <label class="checkbox checkbox-sm checkbox-inline">
+                            <input type="checkbox" [(ngModel)]="item.isSelected" value="{{ item.id }}"
+                              (change)="singleItemSelected()" />
+                            <span></span>
+                            <div class="mr-2 symbol symbol-30 symbol-light" style="padding-left: 10px">
+                              <span class="symbol-label">
+                                <img src="{{ item.captureImageURL }}" class="rounded h-100 align-self-end" style="
+                                    width: 100%;
+                                    height: 100%;
+                                    object-fit: cover;" alt="" />
+                              </span>
+                            </div>
+                            <div class="d-flex
+                                flex-column flex-grow-1
+                                font-weight-bold ">
+                              <a class="text-dark text-hover-primary
+                                  font-size-sm
+                                  d-inline-block
+                                  text-truncate" style="cursor: pointer; max-width: 145px">{{ item.eventName }}</a>
+                              <span class="text-muted font-size-sm">Event</span>
+                            </div>
+                          </label>
+                        </div>
+                      </td>
+                    </ng-container>
+                  </tr>
+                </ng-container>
+                
+                
               </tbody>
             </table>
           </div>
@@ -706,7 +714,8 @@
         <mat-tab *ngIf="showPoll" (click)="showDiv.poll = true;
         showDiv.photo = false;
         showDiv.video = false;
-        showDiv.text = false">
+        showDiv.text = false;
+        showDiv.pollCheck = false" >
       <ng-template mat-tab-label>
         <mat-icon><i class="fas fa-poll icon-lg" style="color: #0080ff"></i></mat-icon>
         &nbsp;Poll
@@ -731,53 +740,52 @@
                 </div>
               </form>
 
-            <form [formGroup]="skillsForm" (ngSubmit)="onSubmit()">
+            <form [formGroup]="pollForm" (ngSubmit)="onSubmit()">
               
               <div class="form-group">
-                <textarea formControlName="name"
+                <textarea formControlName="text"
                   class="form-control form-control-lg form-control-solid" id="exampleTextarea" rows="3"
-                  placeholder="What’s on your mind, {{ userName }}?"></textarea>
+                  placeholder="What’s on your mind, {{ userName }}?">
+                </textarea>
+                <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+                  validation: 'required',
+                  message: 'A valid question is required',
+                  control: pollForm.controls['text']
+                }">
+              </ng-container>
               </div>
               <div>
               
-                <div formArrayName="skills">
-                  <div *ngFor="let skill of skills.controls; let i=index">
+                <div formArrayName="choices">
+                  <div *ngFor="let choice of choices.controls; let i = index">
                     <div class="form-group d-flex align-items-center justify-content-center" [formGroupName]="i">
-                     <input maxlength="25" type="text" formControlName="skill"  class="form-control form-control-lg" id="example1"
-                     placeholder="Enter your choice"  />
-                     <a (click)="removeSkill(i)" class="btn btn-icon btn-light-danger">
+                     <input maxlength="25" type="text" formControlName="choiceText" class="form-control form-control-lg" id="example1"
+                     placeholder="Enter your choice">
+                     <a *ngIf="choices.length > 2 && i > 1" (click)="removeOption(i)" class="btn btn-icon btn-light-danger ml-2">
                        <i class="flaticon-delete icon-lg"></i>
-                   </a>
+                     </a>
                     </div>
                      
                    </div>
+                   <label *ngIf="choices.errors?.minlength" class="text-danger pb-3">
+                    Please Select Upto two Choices.
+                  </label>
                 </div>
 
           
-                <div class=" w-auto px-2 mr-2 mb-5 btn btn-icon btn-light btn-clean d-inline-flex align-items-center btn-lg">
-                  <span (click)="addSkills()" class="symbol symbol-35 symbol-light-primary">
-                    <span class="symbol-label"><a class="btn btn-icon btn-sm">
+                <div [ngClass]="choices.length == 16 ? 'd-none': ' w-auto px-2 mr-2 mb-5 btn btn-icon btn-light btn-clean d-inline-flex align-items-center btn-lg'" (click)="addOption()">
+                  <span class="symbol symbol-35 symbol-light-primary">
+                    <span class="symbol-label">
+                      <a class="btn btn-icon btn-sm">
                       <i class="ki ki-solid-plus icon-lg"></i></a>
                     </span>
                   </span>
-                  <span (click)="addSkills()" class="btn
+                  <span class="btn
                     text-dark-50
                     font-weight-normal font-size-base">
                     &nbsp;Add Choices
                   </span>
                 </div>
-                <!-- <div class="form-group">
-                  <input maxlength="25" type="text" class="form-control" id="example2"
-                    placeholder="Enter your choice" [(ngModel)]="poll.choice2" />
-                </div>
-                <div class="form-group">
-                  <input maxlength="25" type="text" class="form-control" id="example3"
-                    placeholder="Enter your choice (optional)" [(ngModel)]="poll.choice3" />
-                </div>
-                <div class="form-group">
-                  <input maxlength="25" type="text" class="form-control" id="example4"
-                    placeholder="Enter your choice (optional)" [(ngModel)]="poll.choice4" />
-                </div> -->
                 <div class="row">
                   <div class="col-md-6">
                     <div class="form-group">
@@ -881,7 +889,7 @@
                         </button>
                       </div>
                       <div class="p-2 ml-auto">
-                        <button (click)="addPollPost()" type="button" class="flex-row-reverse btn btn-primary"
+                        <button [disabled]="pollForm.errors || pollForm.invalid" type="button" class="flex-row-reverse btn btn-primary"
                           style="background-color: #3b5998;
                             border-color: #3b5998;">
                           Schedule
@@ -1324,16 +1332,16 @@
                             left: 78px;
                             line-height: 12px;">
                           <div class="name" style="font-weight: bold; color: #365899">
-                            {{ poll.user.username }}
+                            {{ poll.user.fullName }}
                           </div>
                           <span style="color: #90949c; font-size: 12px">
-                            {{ post.postedDate | dateFormat }}
+                            {{ poll.postedDate | date:'MMM d, y' }}
                           </span>
                         </div>
                       </div>
                     </div>
 
-                      <!-- EDIT & DELETE -->
+                      <!-- DELETE -->
                       <div class="text-right col">
                         <div ngbDropdown placement="bottom-right" class="d-inline-block">
                           <button class="btn" id="dropdownBasic1" ngbDropdownToggle>
@@ -1751,3 +1759,12 @@
   <app-progress-bar></app-progress-bar>
 </div>
 
+<ng-template #formError let-control="control" let-message="message" let-validation="validation">
+  <ng-container *ngIf="control.hasError(validation) && (control.dirty || control.touched)">
+    <div class="fv-plugins-message-container">
+      <div class="fv-help-block">
+        {{ message }}
+      </div>
+    </div>
+  </ng-container>
+</ng-template>

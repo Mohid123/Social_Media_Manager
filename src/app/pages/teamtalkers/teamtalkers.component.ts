@@ -30,7 +30,7 @@ import { Subject } from 'rxjs';
 import { BaseURL } from './../../core/models/base-urls';
 import { PollsService } from '@app/core/services/polls.service';
 import { Polls } from './../../core/models/polls.model';
-import { FormArray, FormBuilder, FormGroup, AbstractControl, FormControl } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, AbstractControl, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: "app-teamtalkers",
@@ -76,6 +76,7 @@ export class TeamtalkersComponent implements OnInit {
     video: false,
     text: false,
     poll: false,
+    pollCheck : true,
   };
   public showPosts = {
     posts: true,
@@ -83,7 +84,8 @@ export class TeamtalkersComponent implements OnInit {
   }
   public showPoll : boolean = false;
   offset: number = 0;
-  limit: number = 15
+  limit: number = 15;
+  public pollOptions: string;
   scheduleSelectedDate: any;
   scheduleSelectedTime: Date;
   public clubPrimaryColor: string;
@@ -105,7 +107,7 @@ export class TeamtalkersComponent implements OnInit {
   public progress:number = 0;
   public pollChoiceFields;
   userForm: FormGroup;
-  skillsForm: FormGroup;
+  pollForm: FormGroup;
   selectedClub
   images = ['https://i.picsum.photos/id/1011/900/500.jpg?hmac=twSEfoAh6FjOiVcusAReH6ZwI4CYSjT5cWeRc-vCaDE', 'https://i.picsum.photos/id/1011/900/500.jpg?hmac=twSEfoAh6FjOiVcusAReH6ZwI4CYSjT5cWeRc-vCaDE', 'https://i.picsum.photos/id/1011/900/500.jpg?hmac=twSEfoAh6FjOiVcusAReH6ZwI4CYSjT5cWeRc-vCaDE'];
  
@@ -136,26 +138,11 @@ export class TeamtalkersComponent implements OnInit {
       this.selectedClub = club;
       this.hidePoll()
     })
-
-    // this.userForm = this.fb.group({
-    //   teamtalkerCaption: new FormControl(),
-    //   choices: this.fb.array([
-    //     this.fb.control({
-    //       choiceText: '',
-    //       choiceType: '',
-    //       blurHash: '',
-    //       choiceImage: '',
-    //       voteCount: 0
-    //     })
-    //   ])
-    // })
-
-
-      this.skillsForm = this.fb.group({
-      name: '',
-      skills: this.fb.array([]) ,
-    });
     
+    this.pollForm = this.fb.group({
+      text: ['', Validators.compose([Validators.required]) ],
+      choices: this.fb.array([this.createChoiceGroup()], [Validators.compose([Validators.required, Validators.minLength(2)])])
+    });
   }
 
   destroy$ = new Subject();
@@ -174,52 +161,97 @@ export class TeamtalkersComponent implements OnInit {
   }
 
 
-  get skills() : FormArray {
-    return this.skillsForm.get("skills") as FormArray
+  get choices() : FormArray {
+    return this.pollForm.get("choices") as FormArray
   }
- 
-  newSkill(): FormGroup {
+
+  createChoiceGroup() {
     return this.fb.group({
-      skill: '',
-      exp: '',
+      choiceText: ['', [Validators.required]],
+      chocieType: [''],
+      choiceImage: [''],
+      blurHash: [''],
+      voteCount: [0]
     })
   }
  
-  addSkills() {
-    this.skills.push(this.newSkill());
+  newOption(): FormGroup {
+    return this.fb.group({
+      chocieType: '',
+      choiceText: '',
+      choiceImage: '',
+      blurHash: '',
+      voteCount: 0
+    })
   }
  
-  removeSkill(i:number) {
-    this.skills.removeAt(i);
+  addOption() {
+    this.choices.push(this.newOption());
+  }
+ 
+  removeOption(i:number) {
+    this.choices.removeAt(i);
   }
  
   onSubmit() {
-    console.log(this.skillsForm.value);
+    this.pollSelectedDate = new Date(
+      this.pollSelectedDate.setHours(this.pollSelectedTime.getHours())
+    );
+    this.pollSelectedDate = new Date(
+      this.pollSelectedDate.setMinutes(this.pollSelectedTime.getMinutes())
+    );
+    const payload: Polls = {
+      text: this.pollForm.value.text,
+      choices: this.pollForm.value.choices,
+      postedTo: 'Club',
+      userID: this.mainAuthService.loggedInUser?.userID,
+      votingDays: moment.duration(moment(this.pollSelectedDate).diff(moment(new Date()))).days(),
+      votingHours: moment.duration(moment(this.pollSelectedDate).diff(moment(new Date()))).hours(),
+      votingMinutes: moment.duration(moment(this.pollSelectedDate).diff(moment(new Date()))).minutes(),
+      startDate: Math.round(new Date().getTime()) * 1000,
+      expiryDate: Math.round(this.pollSelectedDate.getTime()) * 1000,
+      type: 'poll',
+      hideParticipantsDetails: false
+    }
+    // if (this.showSchedule) {
+    //   if (
+    //     this._scheduleService.validateScheduleDate(
+    //       this.scheduleSelectedDate,
+    //       this.scheduleSelectedTime
+    //     )
+    //   ) {
+    //     if (
+    //       new Date(this.poll.expiryDate / 1000) <
+    //       new Date(this._scheduleService.getScheduleEpox)
+    //     ) {
+    //       this.toast.error("Poll Expiry Time must be ahead of Schedule Time");
+    //       return;
+    //     }
+    //     this.post.scheduleDate = this._scheduleService.getScheduleEpox;
+    //     this._scheduleClubPostService
+    //       .schedulePollsPost(payload)
+    //       .subscribe((data) => {
+    //         this.toast.success("Poll Post Scheduled Successfully");
+    //         this.resetSchedulePost();
+    //       });
+    //     return;
+    //   } else {
+    //     this.toast.error(
+    //       "Schedule should be 5 minutes ahead of current time",
+    //       "info"
+    //     );
+    //     return;
+    //   }
+    // }
+    this.pollService.createPoll(payload).pipe(takeUntil(this.destroy$)).subscribe((res:ApiResponse<Polls>) => {
+      if(!res.hasErrors()){
+        this.toast.success('Poll Created Successfully', 'Create Poll');
+        this.getPollPosts();
+        this.pollForm.reset();
+      }
+    })
   }
-
-  // send(values) {
-  //   console.log(values);
-  // }
-
-  // addChoices(): void {
-  //   (this.userForm.get('choices') as FormArray).push(
-  //     this.fb.control({
-  //       choiceText: '',
-  //       choiceType: '',
-  //       blurHash: '',
-  //       choiceImage: '',
-  //       voteCount: 0
-  //     })
-  //   );
-  // }
-
-  // removeChoices(index) {
-  //   (this.userForm.get('choices') as FormArray).removeAt(index);
-  // }
-
-  // getChoicesFormControls(): AbstractControl[] {
-  //   return (<FormArray> this.userForm.get('choices')).controls
-  // }
+  
 
   addPolls(){
     
@@ -535,6 +567,7 @@ export class TeamtalkersComponent implements OnInit {
       this.showDiv.video = false;
       this.showDiv.text = false;
       this.showDiv.poll = false;
+      this.showDiv.pollCheck = true
       this.file = null;
       this.url = null;
     } else if (event.index == 1) {
@@ -542,6 +575,7 @@ export class TeamtalkersComponent implements OnInit {
       this.showDiv.video = true;
       this.showDiv.text = false;
       this.showDiv.poll = false;
+      this.showDiv.pollCheck = true
       this.file = null;
       this.url = null;
     } else if (event.index == 2) {
@@ -549,6 +583,7 @@ export class TeamtalkersComponent implements OnInit {
       this.showDiv.video = false;
       this.showDiv.text = true;
       this.showDiv.poll = false;
+      this.showDiv.pollCheck = true
       this.file = null;
       this.url = null;
     } else {
@@ -556,6 +591,7 @@ export class TeamtalkersComponent implements OnInit {
       this.showDiv.video = false;
       this.showDiv.text = false;
       this.showDiv.poll = true;
+      this.showDiv.pollCheck = false
       this.file = null;
       this.url = null;
     }
