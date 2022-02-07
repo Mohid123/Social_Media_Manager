@@ -43,7 +43,7 @@ export class TeamtalkersComponent implements OnInit {
   public teamtalkerCaption: string = "";
   public editedPostText: string;
   public poll: Poll;
-  public polls: Polls
+  public polls: Polls;
   public clubName: string;
   public clubLogo: string;
   public url: string;
