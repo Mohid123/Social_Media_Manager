@@ -4,7 +4,6 @@ import { ClubService } from "./../../core/services/club.service";
 import { MediauploadService } from "./../../core/services/mediaupload.service";
 import { PostService } from "./../../core/services/post.service";
 import { NgbModal, ModalDismissReasons } from "@ng-bootstrap/ng-bootstrap";
-import { NgbCarouselConfig } from '@ng-bootstrap/ng-bootstrap';  
 import { MergeService } from "src/app/core/services/merge-service.service";
 import {
   Component,
@@ -31,6 +30,7 @@ import { Subject } from 'rxjs';
 import { BaseURL } from './../../core/models/base-urls';
 import { PollsService } from '@app/core/services/polls.service';
 import { Polls } from './../../core/models/polls.model';
+import { FormArray, FormBuilder, FormGroup, AbstractControl, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: "app-teamtalkers",
@@ -76,6 +76,7 @@ export class TeamtalkersComponent implements OnInit {
     video: false,
     text: false,
     poll: false,
+    pollCheck : true,
   };
   public showPosts = {
     posts: true,
@@ -83,7 +84,8 @@ export class TeamtalkersComponent implements OnInit {
   }
   public showPoll : boolean = false;
   offset: number = 0;
-  limit: number = 15
+  limit: number = 15;
+  public pollOptions: string;
   scheduleSelectedDate: any;
   scheduleSelectedTime: Date;
   public clubPrimaryColor: string;
@@ -103,7 +105,11 @@ export class TeamtalkersComponent implements OnInit {
   };
   public showSchedule: boolean = false;
   public progress:number = 0;
+  public pollChoiceFields;
+  userForm: FormGroup;
+  pollForm: FormGroup;
   selectedClub
+  images = ['https://i.picsum.photos/id/1011/900/500.jpg?hmac=twSEfoAh6FjOiVcusAReH6ZwI4CYSjT5cWeRc-vCaDE', 'https://i.picsum.photos/id/1011/900/500.jpg?hmac=twSEfoAh6FjOiVcusAReH6ZwI4CYSjT5cWeRc-vCaDE', 'https://i.picsum.photos/id/1011/900/500.jpg?hmac=twSEfoAh6FjOiVcusAReH6ZwI4CYSjT5cWeRc-vCaDE'];
  
   constructor(
     private spinner: NgxSpinnerService,
@@ -122,7 +128,8 @@ export class TeamtalkersComponent implements OnInit {
     public mediaService: MediauploadService,
     private clubService: ClubService,
     private pollService: PollsService,
-    config: NgbCarouselConfig
+    private fb: FormBuilder
+    
   ) {
     this.post = new Post();
     this.report = new Report();
@@ -131,12 +138,11 @@ export class TeamtalkersComponent implements OnInit {
       this.selectedClub = club;
       this.hidePoll()
     })
-    config.interval = 5000;  
-    config.wrap = false;  
-    config.keyboard = true;  
-    config.pauseOnHover = false;
-    config.showNavigationIndicators = false
-    config.showNavigationArrows = true;
+    
+    this.pollForm = this.fb.group({
+      text: ['', Validators.compose([Validators.required]) ],
+      choices: this.fb.array([this.createChoiceGroup()], [Validators.compose([Validators.required, Validators.minLength(2)])])
+    });
   }
 
   destroy$ = new Subject();
@@ -154,8 +160,105 @@ export class TeamtalkersComponent implements OnInit {
     })
   }
 
+
+  get choices() : FormArray {
+    return this.pollForm.get("choices") as FormArray
+  }
+
+  createChoiceGroup() {
+    return this.fb.group({
+      choiceText: ['', [Validators.required]],
+      chocieType: [''],
+      choiceImage: [''],
+      blurHash: [''],
+      voteCount: [0]
+    })
+  }
+ 
+  newOption(): FormGroup {
+    return this.fb.group({
+      chocieType: '',
+      choiceText: '',
+      choiceImage: '',
+      blurHash: '',
+      voteCount: 0
+    })
+  }
+ 
+  addOption() {
+    this.choices.push(this.newOption());
+  }
+ 
+  removeOption(i:number) {
+    this.choices.removeAt(i);
+  }
+ 
+  onSubmit() {
+    this.pollSelectedDate = new Date(
+      this.pollSelectedDate.setHours(this.pollSelectedTime.getHours())
+    );
+    this.pollSelectedDate = new Date(
+      this.pollSelectedDate.setMinutes(this.pollSelectedTime.getMinutes())
+    );
+    const payload: Polls = {
+      text: this.pollForm.value.text,
+      choices: this.pollForm.value.choices,
+      postedTo: 'Club',
+      userID: this.mainAuthService.loggedInUser?.userID,
+      votingDays: moment.duration(moment(this.pollSelectedDate).diff(moment(new Date()))).days(),
+      votingHours: moment.duration(moment(this.pollSelectedDate).diff(moment(new Date()))).hours(),
+      votingMinutes: moment.duration(moment(this.pollSelectedDate).diff(moment(new Date()))).minutes(),
+      startDate: Math.round(new Date().getTime()) * 1000,
+      expiryDate: Math.round(this.pollSelectedDate.getTime()) * 1000,
+      type: 'poll',
+      hideParticipantsDetails: false
+    }
+    // if (this.showSchedule) {
+    //   if (
+    //     this._scheduleService.validateScheduleDate(
+    //       this.scheduleSelectedDate,
+    //       this.scheduleSelectedTime
+    //     )
+    //   ) {
+    //     if (
+    //       new Date(this.poll.expiryDate / 1000) <
+    //       new Date(this._scheduleService.getScheduleEpox)
+    //     ) {
+    //       this.toast.error("Poll Expiry Time must be ahead of Schedule Time");
+    //       return;
+    //     }
+    //     this.post.scheduleDate = this._scheduleService.getScheduleEpox;
+    //     this._scheduleClubPostService
+    //       .schedulePollsPost(payload)
+    //       .subscribe((data) => {
+    //         this.toast.success("Poll Post Scheduled Successfully");
+    //         this.resetSchedulePost();
+    //       });
+    //     return;
+    //   } else {
+    //     this.toast.error(
+    //       "Schedule should be 5 minutes ahead of current time",
+    //       "info"
+    //     );
+    //     return;
+    //   }
+    // }
+    this.pollService.createPoll(payload).pipe(takeUntil(this.destroy$)).subscribe((res:ApiResponse<Polls>) => {
+      if(!res.hasErrors()){
+        this.toast.success('Poll Created Successfully', 'Create Poll');
+        this.getPollPosts();
+        this.pollForm.reset();
+      }
+    })
+  }
+  
+
+  addPolls(){
+    
+  }
+
   hidePoll(){
-    (this.selectedClub.clubName == "Solis Solution" && this.selectedClub.id == "60db0c52723416289b31f1d9" || this.selectedClub.isPicker == true || this.selectedClub.pickerModelId == "61446df5acf10ff6947f2426") ? this.showPoll = false: this.showPoll = true;
+    ( this.selectedClub.isPicker == true || this.selectedClub.pickerModelId == "61446df5acf10ff6947f2426") ? this.showPoll = false: this.showPoll = true;
   }
 
   openVerticallyCentered(content, post) {
@@ -170,6 +273,16 @@ export class TeamtalkersComponent implements OnInit {
     );
   }
 
+  getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return "by pressing ESC";
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return "by clicking on a backdrop";
+    } else {
+      return `with: ${reason}`;
+    }
+  }
+
   openImageCentered(content, post: Post) {
     this.imageModal = post.captureFileURL;
     this.modalService.open(content, { centered: true, size: 'xl' }).result.then(
@@ -180,16 +293,6 @@ export class TeamtalkersComponent implements OnInit {
         this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
       }
     )
-  }
-
-  getDismissReason(reason: any): string {
-    if (reason === ModalDismissReasons.ESC) {
-      return "by pressing ESC";
-    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-      return "by clicking on a backdrop";
-    } else {
-      return `with: ${reason}`;
-    }
   }
 
   selectedSchedule() {
@@ -211,16 +314,16 @@ export class TeamtalkersComponent implements OnInit {
                 reactionsAndComments.data.count.commentsCount;
               singleClubPost.reactions = reactionsAndComments.data.reaction;
 
-              // singleClubPost.imagesObject = [];
-              // singleClubPost.imagesObject.push(...singleClubPost.media);
+              singleClubPost.imagesObject = [];
+              singleClubPost.imagesObject.push(...singleClubPost.media);
 
-              // singleClubPost.imagesObject = singleClubPost.imagesObject.map(item=> {
-              //   this.cf.detectChanges()
-              //   return {
-              //     image: item.captureFileURL,
-              //     thumbImage: item.captureFileURL
-              //   }                 
-              // })
+              singleClubPost.imagesObject = singleClubPost.imagesObject.map(item=> {
+                this.cf.detectChanges()
+                return {
+                  image: item.captureFileURL,
+                  thumbImage: item.captureFileURL
+                }                 
+              })
               tempPosts.push(singleClubPost);
               if (idx == self.length - 1) {
                 tempPosts.sort(function compare(a, b) {
@@ -241,6 +344,7 @@ export class TeamtalkersComponent implements OnInit {
     this.pollService.getAllPolls(this.offset, this.limit).pipe(takeUntil(this.destroy$)).subscribe((res: ApiResponse<Polls>) => {
       if(!res.hasErrors()) {
         this.allPolls = res.data;
+        console.log(this.allPolls)
       }
     })
   }
@@ -474,6 +578,7 @@ export class TeamtalkersComponent implements OnInit {
       this.showDiv.video = false;
       this.showDiv.text = false;
       this.showDiv.poll = false;
+      this.showDiv.pollCheck = true
       this.file = null;
       this.url = null;
     } else if (event.index == 1) {
@@ -481,6 +586,7 @@ export class TeamtalkersComponent implements OnInit {
       this.showDiv.video = true;
       this.showDiv.text = false;
       this.showDiv.poll = false;
+      this.showDiv.pollCheck = true
       this.file = null;
       this.url = null;
     } else if (event.index == 2) {
@@ -488,6 +594,7 @@ export class TeamtalkersComponent implements OnInit {
       this.showDiv.video = false;
       this.showDiv.text = true;
       this.showDiv.poll = false;
+      this.showDiv.pollCheck = true
       this.file = null;
       this.url = null;
     } else {
@@ -495,6 +602,7 @@ export class TeamtalkersComponent implements OnInit {
       this.showDiv.video = false;
       this.showDiv.text = false;
       this.showDiv.poll = true;
+      this.showDiv.pollCheck = false
       this.file = null;
       this.url = null;
     }

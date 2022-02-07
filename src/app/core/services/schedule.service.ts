@@ -8,6 +8,7 @@ import { InstagramPostModel } from '../models/instagram-post.model';
 import { BaseApiService } from './base-api.service';
 import { ApiResponse } from '../models/response.model';
 import { HttpClient } from '@angular/common/http';
+import { Polls } from './../models/polls.model';
 
 type schedule = Schedule
 
@@ -30,6 +31,10 @@ export class ScheduleService extends BaseApiService<schedule> {
     schduleClubPost(postedTo: string , clubID: string, post: Post): Observable <ApiResponse<schedule>> {
     post.postedTo = postedTo
     return this.post(`/schedule/scheduleClubPost/${clubID}`, post);
+  }
+
+  schedulePollsPost(postedTo: string , clubID: string, polls: Polls): Observable <ApiResponse<schedule>> {
+    return this.post(`/schedule/schedulePollsPost/${clubID}`, polls)
   }
 
   scheduleFacebookPost(FBpost: FacebookPostModel): Observable <ApiResponse<schedule>>{

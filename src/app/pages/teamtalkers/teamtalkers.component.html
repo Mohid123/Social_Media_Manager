@@ -71,85 +71,93 @@
                     </td>
                   </ng-container>
                 </tr>
-                <th class="pt-5 pb-5 pr-0 text-left bg-gray-100">
-                  <span class="mr-2 label label-xl label-dark label-inline"><i class="mr-2 fas fa-users icon-md"
-                      style="color: white"></i>Group</span>
-                  <label class="mt-5 checkbox checkbox-sm checkbox-inline">
-                    <input [(ngModel)]="groupSelected" name="list_name" value="m1" (change)="selectAllGroups()"
-                      type="checkbox" value="1" />
-                    <span></span>
-                    <label style="padding-left: 10px" class="font-weight-bolder">Select all</label>
-                  </label>
-                </th>
-                <tr *ngFor="let item of checklist">
-                  <ng-container *ngIf="item.groupName">
-                    <td class="pr-0">
-                      <div class="d-flex align-items-center">
-                        <label class="checkbox checkbox-sm checkbox-inline">
-                          <input type="checkbox" [(ngModel)]="item.isSelected" value="{{ item.id }}"
-                            (change)="singleItemSelected()" />
-                          <span></span>
-                          <div class="mr-2 symbol symbol-30 symbol-light" style="padding-left: 10px">
-                            <span class="symbol-label">
-                              <img src="{{ item.captureImageURL }}" class="rounded h-100 align-self-end"
-                                style="object-fit: cover; width: 100%" alt="" />
-                            </span>
-                          </div>
-                          <div class="
-                              d-flex
-                              flex-column flex-grow-1
-                              font-weight-bold">
-                            <a class="
-                                text-dark text-hover-primary
-                                font-size-sm" style="cursor: pointer">{{ item.groupName }}</a>
-                            <span class="text-muted font-size-sm">Group</span>
-                          </div>
-                        </label>
-                      </div>
-                    </td>
-                  </ng-container>
-                </tr>
-                <th class="pt-5 pb-5 pr-0 text-left bg-gray-100">
-                  <span class="mr-2 label label-xl label-dark label-inline">
-                    <i class="mr-2 far fa-calendar-alt icon-md" style="color: white"></i>
-                    Event</span>
-                  <label class="mt-5 checkbox checkbox-sm checkbox-inline">
-                    <input [(ngModel)]="eventSelected" name="list_name" value="m1" (change)="selectAllEvents()"
-                      type="checkbox" value="1" />
-                    <span></span>
-                    <label style="padding-left: 10px" class="font-weight-bolder">Select all</label>
-                  </label>
-                </th>
-                <tr *ngFor="let item of checklist">
-                  <ng-container *ngIf="item.eventName">
-                    <td class="pr-0">
-                      <div class="d-flex align-items-center">
-                        <label class="checkbox checkbox-sm checkbox-inline">
-                          <input type="checkbox" [(ngModel)]="item.isSelected" value="{{ item.id }}"
-                            (change)="singleItemSelected()" />
-                          <span></span>
-                          <div class="mr-2 symbol symbol-30 symbol-light" style="padding-left: 10px">
-                            <span class="symbol-label">
-                              <img src="{{ item.captureImageURL }}" class="rounded h-100 align-self-end" style="
-                                  width: 100%;
-                                  height: 100%;
-                                  object-fit: cover;" alt="" />
-                            </span>
-                          </div>
-                          <div class="d-flex
-                              flex-column flex-grow-1
-                              font-weight-bold ">
-                            <a class="text-dark text-hover-primary
-                                font-size-sm
-                                d-inline-block
-                                text-truncate" style="cursor: pointer; max-width: 145px">{{ item.eventName }}</a>
-                            <span class="text-muted font-size-sm">Event</span>
-                          </div>
-                        </label>
-                      </div>
-                    </td>
-                  </ng-container>
-                </tr>
+                <ng-container *ngIf="showDiv.pollCheck">
+                  <th class="pt-5 pb-5 pr-0 text-left bg-gray-100">
+                    <span class="mr-2 label label-xl label-dark label-inline"><i class="mr-2 fas fa-users icon-md"
+                        style="color: white"></i>Group</span>
+                    <label class="mt-5 checkbox checkbox-sm checkbox-inline">
+                      <input [(ngModel)]="groupSelected" name="list_name" value="m1" (change)="selectAllGroups()"
+                        type="checkbox" value="1" />
+                      <span></span>
+                      <label style="padding-left: 10px" class="font-weight-bolder">Select all</label>
+                    </label>
+                  </th>
+                  <tr *ngFor="let item of checklist" >
+                    <ng-container *ngIf="item.groupName " >
+                      <td class="pr-0">
+                        <div class="d-flex align-items-center">
+                          <label class="checkbox checkbox-sm checkbox-inline">
+                            <input type="checkbox" [(ngModel)]="item.isSelected" value="{{ item.id }}"
+                              (change)="singleItemSelected()" />
+                            <span></span>
+                            <div class="mr-2 symbol symbol-30 symbol-light" style="padding-left: 10px">
+                              <span class="symbol-label">
+                                <img src="{{ item.captureImageURL }}" class="rounded h-100 align-self-end"
+                                  style="object-fit: cover; width: 100%" alt="" />
+                              </span>
+                            </div>
+                            <div class="
+                                d-flex
+                                flex-column flex-grow-1
+                                font-weight-bold">
+                              <a class="
+                                  text-dark text-hover-primary
+                                  font-size-sm" style="cursor: pointer">{{ item.groupName }}</a>
+                              <span class="text-muted font-size-sm">Group</span>
+                            </div>
+                          </label>
+                        </div>
+                      </td>
+                    </ng-container>
+                  </tr>
+                </ng-container>
+                
+                
+                <ng-container *ngIf="showDiv.pollCheck">
+                  <th class="pt-5 pb-5 pr-0 text-left bg-gray-100">
+                    <span class="mr-2 label label-xl label-dark label-inline">
+                      <i class="mr-2 far fa-calendar-alt icon-md" style="color: white"></i>
+                      Event</span>
+                    <label class="mt-5 checkbox checkbox-sm checkbox-inline">
+                      <input [(ngModel)]="eventSelected" name="list_name" value="m1" (change)="selectAllEvents()"
+                        type="checkbox" value="1" />
+                      <span></span>
+                      <label style="padding-left: 10px" class="font-weight-bolder">Select all</label>
+                    </label>
+                  </th>
+                  <tr *ngFor="let item of checklist">
+                    <ng-container *ngIf="item.eventName ">
+                      <td class="pr-0">
+                        <div class="d-flex align-items-center">
+                          <label class="checkbox checkbox-sm checkbox-inline">
+                            <input type="checkbox" [(ngModel)]="item.isSelected" value="{{ item.id }}"
+                              (change)="singleItemSelected()" />
+                            <span></span>
+                            <div class="mr-2 symbol symbol-30 symbol-light" style="padding-left: 10px">
+                              <span class="symbol-label">
+                                <img src="{{ item.captureImageURL }}" class="rounded h-100 align-self-end" style="
+                                    width: 100%;
+                                    height: 100%;
+                                    object-fit: cover;" alt="" />
+                              </span>
+                            </div>
+                            <div class="d-flex
+                                flex-column flex-grow-1
+                                font-weight-bold ">
+                              <a class="text-dark text-hover-primary
+                                  font-size-sm
+                                  d-inline-block
+                                  text-truncate" style="cursor: pointer; max-width: 145px">{{ item.eventName }}</a>
+                              <span class="text-muted font-size-sm">Event</span>
+                            </div>
+                          </label>
+                        </div>
+                      </td>
+                    </ng-container>
+                  </tr>
+                </ng-container>
+                
+                
               </tbody>
             </table>
           </div>
@@ -702,175 +710,201 @@
             </div>
           </mat-tab>
 
-          <!-- POLL TAB -->
-          <mat-tab *ngIf="showPoll" (click)="showDiv.poll = true;
-              showDiv.photo = false;
-              showDiv.video = false;
-              showDiv.text = false">
-            <ng-template mat-tab-label>
-              <mat-icon><i class="fas fa-poll icon-lg" style="color: #0080ff"></i></mat-icon>
-              &nbsp;Poll
-            </ng-template>
+        <!-- POLL TAB -->
+        <mat-tab *ngIf="showPoll" (click)="showDiv.poll = true;
+        showDiv.photo = false;
+        showDiv.video = false;
+        showDiv.text = false;
+        showDiv.pollCheck = false" >
+      <ng-template mat-tab-label>
+        <mat-icon><i class="fas fa-poll icon-lg" style="color: #0080ff"></i></mat-icon>
+        &nbsp;Poll
+      </ng-template>
+      <div class="card-body">
+        <div class="tab-content">
+          <div class="tab-pane fade show active" role="tabpanel" aria-labelledby="kt_tab_pane_7_1">
             <div class="card-body">
-              <div class="tab-content">
-                <div class="tab-pane fade show active" role="tabpanel" aria-labelledby="kt_tab_pane_7_1">
-                  <div class="card-body">
-                    <form class="form-inline">
-                      <div class="pb-5 mr-5 symbol symbol-50 symbol-light">
-                        <span class="symbol-label">
-                          <img [src]="profileImageUrl" class="rounded h-100 align-self-center"
-                            style="object-fit: cover; width: 100%" alt="" />
-                        </span>
-                      </div>
-                      <div class="d-flex flex-column flex-grow-1 font-weight-bold">
-                        <a class="
-                            pb-12
-                            mb-1
-                            text-dark text-hover-primary
-                            font-size-lg">{{ userName }}</a>
-                      </div>
-                    </form>
+              <form class="form-inline">
+                <div class="pb-5 mr-5 symbol symbol-50 symbol-light">
+                  <span class="symbol-label">
+                    <img [src]="profileImageUrl" class="rounded h-100 align-self-center"
+                      style="object-fit: cover; width: 100%" alt="" />
+                  </span>
+                </div>
+                <div class="d-flex flex-column flex-grow-1 font-weight-bold">
+                  <a class="
+                      pb-12
+                      mb-1
+                      text-dark text-hover-primary
+                      font-size-lg">{{ userName }}</a>
+                </div>
+              </form>
+
+            <form [formGroup]="pollForm" (ngSubmit)="onSubmit()">
+              
+              <div class="form-group">
+                <textarea formControlName="text"
+                  class="form-control form-control-lg form-control-solid" id="exampleTextarea" rows="3"
+                  placeholder="What’s on your mind, {{ userName }}?">
+                </textarea>
+                <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+                  validation: 'required',
+                  message: 'A valid question is required',
+                  control: pollForm.controls['text']
+                }">
+              </ng-container>
+              </div>
+              <div>
+              
+                <div formArrayName="choices">
+                  <div *ngFor="let choice of choices.controls; let i = index">
+                    <div class="form-group d-flex align-items-center justify-content-center" [formGroupName]="i">
+                     <input maxlength="25" type="text" formControlName="choiceText" class="form-control form-control-lg" id="example1"
+                     placeholder="Enter your choice">
+                     <a *ngIf="choices.length > 2 && i > 1" (click)="removeOption(i)" class="btn btn-icon btn-light-danger ml-2">
+                       <i class="flaticon-delete icon-lg"></i>
+                     </a>
+                    </div>
+                     
+                   </div>
+                   <label *ngIf="choices.errors?.minlength" class="text-danger pb-3">
+                    Please Select Upto two Choices.
+                  </label>
+                </div>
+
+          
+                <div [ngClass]="choices.length == 16 ? 'd-none': ' w-auto px-2 mr-2 mb-5 btn btn-icon btn-light btn-clean d-inline-flex align-items-center btn-lg'" (click)="addOption()">
+                  <span class="symbol symbol-35 symbol-light-primary">
+                    <span class="symbol-label">
+                      <a class="btn btn-icon btn-sm">
+                      <i class="ki ki-solid-plus icon-lg"></i></a>
+                    </span>
+                  </span>
+                  <span class="btn
+                    text-dark-50
+                    font-weight-normal font-size-base">
+                    &nbsp;Add Choices
+                  </span>
+                </div>
+                <div class="row">
+                  <div class="col-md-6">
                     <div class="form-group">
-                      <textarea [(ngModel)]="teamtalkerCaption" [ngModelOptions]="{ standalone: true }"
-                        class="form-control form-control-lg form-control-solid" id="exampleTextarea" rows="3"
-                        placeholder="What’s on your mind, {{ userName }}?"></textarea>
+                      <label>Expire Date</label>
+                      <input readonly style="background-color: white" class="form-control"
+                        placeholder="Select Date" [ngxDatePicker]="dateInstanceSingle" [value]="singleDate"
+                        (valueChange)="onChangeSingle($event)" />
+                      <ngx-date-picker #dateInstanceSingle [options]="singleDatePickerOptions"></ngx-date-picker>
                     </div>
-                    <div>
-                      <div class="form-group">
-                        <input maxlength="25" type="text" class="form-control" id="example1"
-                          placeholder="Enter your choice" [(ngModel)]="poll.choice1" />
-                      </div>
-                      <div class="form-group">
-                        <input maxlength="25" type="text" class="form-control" id="example2"
-                          placeholder="Enter your choice" [(ngModel)]="poll.choice2" />
-                      </div>
-                      <div class="form-group">
-                        <input maxlength="25" type="text" class="form-control" id="example3"
-                          placeholder="Enter your choice (optional)" [(ngModel)]="poll.choice3" />
-                      </div>
-                      <div class="form-group">
-                        <input maxlength="25" type="text" class="form-control" id="example4"
-                          placeholder="Enter your choice (optional)" [(ngModel)]="poll.choice4" />
-                      </div>
-                      <div class="row">
-                        <div class="col-md-6">
-                          <div class="form-group">
-                            <label>Expire Date</label>
-                            <input readonly style="background-color: white" class="form-control"
-                              placeholder="Select Date" [ngxDatePicker]="dateInstanceSingle" [value]="singleDate"
-                              (valueChange)="onChangeSingle($event)" />
-                            <ngx-date-picker #dateInstanceSingle [options]="singleDatePickerOptions"></ngx-date-picker>
-                          </div>
-                        </div>
-                        <div class="col-md-6">
-                          <div class="form-group">
-                            <label>Time </label>
-                            <input class="form-control" style="background-color: white" readonly
-                              placeholder="Select Time" [ngxTimePicker]="timeInstanceOne" [value]="singleTime"
-                              (valueChange)="onChangeSingleTime($event)" required />
-                            <ngx-time-picker #timeInstanceOne [options]="singleTimePickerOptions"></ngx-time-picker>
-                          </div>
-                        </div>
-                      </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label>Time </label>
+                      <input class="form-control" style="background-color: white" readonly
+                        placeholder="Select Time" [ngxTimePicker]="timeInstanceOne" [value]="singleTime"
+                        (valueChange)="onChangeSingleTime($event)" required />
+                      <ngx-time-picker #timeInstanceOne [options]="singleTimePickerOptions"></ngx-time-picker>
                     </div>
-                    <label class="checkbox checkbox-sm checkbox-inline">
-                      <input [(ngModel)]="showSchedule" class="d-inline" name="list_name" value="m1"
-                        (click)="selectedSchedule()" type="checkbox" value="1" />
-                      <span></span>
-                      <div class=" w-auto
-                          px-2
-                          ml-2
-                          mr-5
-                          btn btn-icon btn-light btn-clean
-                          d-inline-flex
-                          align-items-center
-                          btn-lg">
-                        <span class="symbol symbol-35 symbol-light-primary">
-                          <span class="symbol-label"><a class="btn btn-icon btn-sm">
-                              <i class="flaticon-calendar-with-a-clock-time-tools
-                                  icon-lg"></i> </a></span>
-                        </span>
-                        <span class="btn
-                            text-dark-50
-                            font-weight-normal font-size-base">
-                          &nbsp;Schedule</span>
-                      </div>
-                    </label>
-                    <form class="pt-10 ql-quil ql-quil-plain">
-                      <div id="kt_forms_widget_2_editor"></div>
-                      <div class="my-5 border-top"></div>
-                      <div *ngIf="!showSchedule" id="kt_forms_widget_2_editor_toolbar" class="
-                          ql-toolbar
-                          d-flex
-                          align-items-center
-                          justify-content-end">
-                        <div class="d-flex">
-                          <div class="p-2 ml-auto">
-                            <button (click)="resetPost()" type="button" class="btn btn-transparent-warning">
-                              Clear
-                            </button>
-                          </div>
-                          <div class="p-2 ml-auto">
-                            <button [disabled]="!poll.choice1 && !poll.choice2 " (click)="addPollPost(); clicked = true" type="button"
-                              class="flex-row-reverse btn btn-primary" style="
-                                background-color: #3b5998;
-                                border-color: #3b5998;">
-                              Post Now
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                      <div *ngIf="showSchedule" id="kt_forms_widget_2_editor_toolbar" class="
-                          ql-toolbar
-                          align-items-center
-                          justify-content-between">
-                        <div class="row d-block">
-                          <div class="col-md-6 d-inline-block">
-                            <div class="form-group">
-                              <label>Schedule Date</label>
-                              <input readonly style="background-color: white" class="form-control"
-                                placeholder="Select Date" [ngxDatePicker]="dateInstanceSingle" [value]="singleDate"
-                                (valueChange)="onChangeScheduleDate($event)" />
-                              <ngx-date-picker #dateInstanceSingle [options]="singleDatePickerOptions">
-                              </ngx-date-picker>
-                            </div>
-                          </div>
-                          <div class="col-md-6 d-inline-block">
-                            <div class="form-group">
-                              <label>Time </label>
-                              <input class="form-control" style="background-color: white" readonly
-                                placeholder="Select Time" [ngxTimePicker]="timeInstanceOne" [value]="singleTime"
-                                (valueChange)="onChangeScheduleTime($event)" required />
-                              <ngx-time-picker #timeInstanceOne [options]="singleTimePickerOptions"></ngx-time-picker>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="mb-10 row d-block">
-                          <div class="d-flex">
-                            <div class="p-2 ml-auto"></div>
-                          </div>
-                          <div class="d-flex" style="float: right">
-                            <div class="p-2 ml-auto">
-                              <button (click)="resetPost()" type="button" class="btn btn-transparent-warning">
-                                Clear
-                              </button>
-                            </div>
-                            <div class="p-2 ml-auto">
-                              <button (click)="addPollPost()" type="button" class="flex-row-reverse btn btn-primary"
-                                style="background-color: #3b5998;
-                                  border-color: #3b5998;">
-                                Schedule
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </form>
                   </div>
                 </div>
               </div>
+              <label class="checkbox checkbox-sm checkbox-inline">
+                <input  class="d-inline" name="list_name" value="m1"
+                  (click)="selectedSchedule()" type="checkbox" value="1" />
+                <span></span>
+                <div class=" w-auto
+                    px-2
+                    ml-2
+                    mr-5
+                    btn btn-icon btn-light btn-clean
+                    d-inline-flex
+                    align-items-center
+                    btn-lg">
+                  <span class="symbol symbol-35 symbol-light-primary">
+                    <span class="symbol-label"><a class="btn btn-icon btn-sm">
+                        <i class="flaticon-calendar-with-a-clock-time-tools
+                            icon-lg"></i> </a></span>
+                  </span>
+                  <span class="btn
+                      text-dark-50
+                      font-weight-normal font-size-base">
+                    &nbsp;Schedule</span>
+                </div>
+              </label>
+              <form class="pt-10 ql-quil ql-quil-plain">
+                <div class="my-5 border-top"></div>
+                <div *ngIf="!showSchedule" class="
+                    ql-toolbar
+                    d-flex
+                    align-items-center
+                    justify-content-end">
+                  <div class="d-flex">
+                    <div class="p-2 ml-auto">
+                      <button (click)="resetPost()" type="button" class="btn btn-transparent-warning">
+                        Clear
+                      </button>
+                    </div>
+                    <div class="p-2 ml-auto">
+                      <button (click)="onSubmit()" type="submit"
+                        class="flex-row-reverse btn btn-primary" style="
+                          background-color: #3b5998;
+                          border-color: #3b5998;">
+                        Post Now
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div *ngIf="showSchedule" class="
+                    ql-toolbar
+                    align-items-center
+                    justify-content-between">
+                  <div class="row d-block">
+                    <div class="col-md-6 d-inline-block">
+                      <div class="form-group">
+                        <label>Schedule Date</label>
+                        <input readonly style="background-color: white" class="form-control"
+                          placeholder="Select Date" [ngxDatePicker]="dateInstanceSingle" [value]="singleDate"
+                          (valueChange)="onChangeScheduleDate($event)" />
+                        <ngx-date-picker #dateInstanceSingle [options]="singleDatePickerOptions">
+                        </ngx-date-picker>
+                      </div>
+                    </div>
+                    <div class="col-md-6 d-inline-block">
+                      <div class="form-group">
+                        <label>Time </label>
+                        <input class="form-control" style="background-color: white" readonly
+                          placeholder="Select Time" [ngxTimePicker]="timeInstanceOne" [value]="singleTime"
+                          (valueChange)="onChangeScheduleTime($event)" required />
+                        <ngx-time-picker #timeInstanceOne [options]="singleTimePickerOptions"></ngx-time-picker>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="mb-10 row d-block">
+                    <div class="d-flex">
+                      <div class="p-2 ml-auto"></div>
+                    </div>
+                    <div class="d-flex" style="float: right">
+                      <div class="p-2 ml-auto">
+                        <button (click)="resetPost()" type="button" class="btn btn-transparent-warning">
+                          Clear
+                        </button>
+                      </div>
+                      <div class="p-2 ml-auto">
+                        <button [disabled]="pollForm.errors || pollForm.invalid" type="button" class="flex-row-reverse btn btn-primary"
+                          style="background-color: #3b5998;
+                            border-color: #3b5998;">
+                          Schedule
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </form>
             </div>
-          </mat-tab>
+          </div>
+        </div>
+      </div>
+    </mat-tab>
         </mat-tab-group>
         <div>
           <div class="card-header ribbon ribbon-right" style="
@@ -1278,19 +1312,58 @@
               <div class="card-body">
                 <div *ngFor="let poll of allPolls" class="m-6 border rounded"
                   style="box-shadow: rgb(99 99 99 / 20%) 0px 2px 8px 0px">
+                  <div  class=" ribbon ribbon-top" data-toggle="tooltip" title="Votes">
+                    <div class="ribbon-target bg-light-success text-dark-75" style="top: -2px; right: 20px;"><i class="fas fa-vote-yea mr-2" style="color:#00657e"></i>Total Votes: {{poll.totalVotesCount}}</div>
+                </div>
+                  <div class="pt-7 row">
+                    <div class="col">
+                      <div class="user-info d-inline-block" style="z-index: 1; padding: 10px 25px; position: relative">
+                        <img class="img-circle" style="
+                            height: 44px;
+                            width: 44px;
+                            object-fit: cover;
+                            border-radius: 30px;" name="fieldName" ngDefaultControl [(ngModel)]="clubPrimaryColor"
+                          [ngStyle]="{ border: '3px solid' + clubPrimaryColor }" [src]="poll.user.profilePicURL" />
+                        <div class="text" style="
+                            right: -150px !important;
+                            top: 16px !important;
+                            position: absolute;
+                            font-size: 13px;
+                            left: 78px;
+                            line-height: 12px;">
+                          <div class="name" style="font-weight: bold; color: #365899">
+                            {{ poll.user.fullName }}
+                          </div>
+                          <span style="color: #90949c; font-size: 12px">
+                            {{ poll.postedDate | date:'MMM d, y' }}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+
+                      <!-- DELETE -->
+                      <div class="text-right col">
+                        <div ngbDropdown placement="bottom-right" class="d-inline-block">
+                          <button class="btn" id="dropdownBasic1" ngbDropdownToggle>
+                            <i class="ki ki-bold-more-hor" style="color: black"></i>
+                          </button>
+                          <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                            <button (click)="deletePost(post)" ngbDropdownItem>
+                              <i class="mr-2 fas fa-trash-alt text-dark"></i>Delete
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+
+                  </div>
+          
                   <div class="
                   preview-facebook preview-facebook-text
                   item-post-type
-                " data-type="text">
-                <div class="user-info" style="z-index: 1">
-                  <img class="img-circle" ngDefaultControl name="fieldName" [(ngModel)]="clubPrimaryColor"
-                    [ngStyle]="{ border: '3px solid' + clubPrimaryColor }" [src]="poll.user.profilePicURL">
-                  <div class="text">
-                    <div class="name pb-3">{{ poll.user.username }}</div>
-                    <span>{{poll.postedDate | date: 'MMM d, y'}}</span>
-                  </div>
-                </div>
-                <div class="caption" style="white-space: pre-wrap; text-align: justify">
+                 " data-type="text">
+           
+             
+                 <div class="caption" style="white-space: pre-wrap; text-align: justify">
                   <div class="panel panel-primary">
                     <div class="panel-heading">
                       <h5 class="panel-title">
@@ -1299,16 +1372,7 @@
                         </div>
                       </h5>
                     </div>
-                    <div class="card card-custom bg-dark card-stretch gutter-b p-5">
-											<div class="card-body">
-												<a  class="card-title font-weight-bolder text-white font-size-h6 mb-4 text-hover-state-dark d-block">Total Votes</a>
-												<div class="font-weight-bold text-white font-size-sm">
-												<span class="font-size-h2 mr-2">{{poll.totalVotesCount}}</span></div>
-												<div class="progress progress-xs mt-7 bg-white-o-90">
-													<div class="progress-bar bg-white" role="progressbar" [style.width.%]="poll.totalVotesCount"></div>
-												</div>
-											</div>
-										</div>
+             
                     <ng-container *ngFor="let choice of poll?.choices">
                       <div class="my-5">
                         <span style ="font-family: 'Poppins', sans-serif;">{{choice.choiceText}}</span><span class="float-right">{{choice.voteCount}}</span>
@@ -1357,7 +1421,7 @@
                     </div>
                   </div>
                 </div>
-              </div>
+                    </div>
                 </div>
               </div>
             </mat-tab>
@@ -1695,3 +1759,12 @@
   <app-progress-bar></app-progress-bar>
 </div>
 
+<ng-template #formError let-control="control" let-message="message" let-validation="validation">
+  <ng-container *ngIf="control.hasError(validation) && (control.dirty || control.touched)">
+    <div class="fv-plugins-message-container">
+      <div class="fv-help-block">
+        {{ message }}
+      </div>
+    </div>
+  </ng-container>
+</ng-template>
