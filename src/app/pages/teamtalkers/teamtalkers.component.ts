@@ -43,6 +43,7 @@ export class TeamtalkersComponent implements OnInit {
   public teamtalkerCaption: string = "";
   public editedPostText: string;
   public poll: Poll;
+  public polls: Polls
   public clubName: string;
   public clubLogo: string;
   public url: string;
@@ -251,14 +252,10 @@ export class TeamtalkersComponent implements OnInit {
       }
     })
   }
-  
 
-  addPolls(){
-    
-  }
 
   hidePoll(){
-    ( this.selectedClub.isPicker == true || this.selectedClub.pickerModelId == "61446df5acf10ff6947f2426") ? this.showPoll = false: this.showPoll = true;
+    (this.selectedClub.isPicker == true || this.selectedClub.pickerModelId == "61446df5acf10ff6947f2426") ? this.showPoll = false: this.showPoll = true;
   }
 
   openVerticallyCentered(content, post) {
@@ -353,6 +350,7 @@ export class TeamtalkersComponent implements OnInit {
   deletePoll(polls: Polls) {
     this.pollService.deletePollByID(polls.id).pipe(takeUntil(this.destroy$)).subscribe((res: ApiResponse<Polls>) => {
       if(!res.hasErrors()) {
+        polls.deletedCheck = true;
         this.toast.success('Poll successfully deleted.', 'Success!');
         this.getPollPosts();
       }
