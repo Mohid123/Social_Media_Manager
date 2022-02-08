@@ -77,7 +77,8 @@ export class TeamtalkersComponent implements OnInit {
     photo: true,
     video: false,
     text: false,
-    poll: false,
+    sixteenpoll: false,
+    fourpoll: false,
     pollCheck : true,
   };
   public showPosts = {
@@ -86,6 +87,7 @@ export class TeamtalkersComponent implements OnInit {
  
   }
   public showPoll : boolean = false;
+  public showFourPoll : boolean = false;
   public showRecentPoll: boolean = false;
   offset: number = 0;
   limit: number = 15;
@@ -130,7 +132,7 @@ export class TeamtalkersComponent implements OnInit {
     private toast: ToastrService,
     private _postService: PostService,
     private _authService: MainAuthService,
-    private _clubService: ClubService,
+    public _clubService: ClubService,
     private mainAuthService: MainAuthService,
     private modalService: NgbModal,
     public _genericPostService: ClubpostService,
@@ -270,8 +272,10 @@ export class TeamtalkersComponent implements OnInit {
 
 
   hidePoll(){
-    (this.selectedClub.clubName == "Solis Solution" && this.selectedClub.id == "60db0c52723416289b31f1d9" || this.selectedClub.isPicker == true || this.selectedClub.pickerModelId == "61446df5acf10ff6947f2426") ? this.showPoll = true: this.showPoll = false;
+    (this.selectedClub.clubName == "Solis Solution" || this.selectedClub.isPicker == true || this.selectedClub.pickerClub == true) ? this.showPoll = true: this.showFourPoll = true;
   }
+
+
 
   hideRecentPolls(){
     (this.selectedClub.clubName == "Solis Solution" && this.selectedClub.id == "60db0c52723416289b31f1d9" || this.selectedClub.isPicker == true || this.selectedClub.pickerModelId == "61446df5acf10ff6947f2426") ? this.showRecentPoll = true: this.showRecentPoll = false;
@@ -594,7 +598,8 @@ export class TeamtalkersComponent implements OnInit {
       this.showDiv.photo = true;
       this.showDiv.video = false;
       this.showDiv.text = false;
-      this.showDiv.poll = false;
+      this.showDiv.sixteenpoll = false;
+      this.showDiv.fourpoll = false;
       this.showDiv.pollCheck = true
       this.file = null;
       this.url = null;
@@ -602,7 +607,8 @@ export class TeamtalkersComponent implements OnInit {
       this.showDiv.photo = false;
       this.showDiv.video = true;
       this.showDiv.text = false;
-      this.showDiv.poll = false;
+      this.showDiv.sixteenpoll = false;
+      this.showDiv.fourpoll = false;
       this.showDiv.pollCheck = true
       this.file = null;
       this.url = null;
@@ -610,15 +616,27 @@ export class TeamtalkersComponent implements OnInit {
       this.showDiv.photo = false;
       this.showDiv.video = false;
       this.showDiv.text = true;
-      this.showDiv.poll = false;
+      this.showDiv.sixteenpoll = false;
+      this.showDiv.fourpoll = false;
       this.showDiv.pollCheck = true
       this.file = null;
       this.url = null;
-    } else {
+    } 
+    else if (event.index == 3) {
       this.showDiv.photo = false;
       this.showDiv.video = false;
       this.showDiv.text = false;
-      this.showDiv.poll = true;
+      this.showDiv.sixteenpoll = true;
+      this.showDiv.fourpoll = false;
+      this.showDiv.pollCheck = true
+      this.file = null;
+      this.url = null;
+    }else {
+      this.showDiv.photo = false;
+      this.showDiv.video = false;
+      this.showDiv.text = false;
+      this.showDiv.sixteenpoll = false;
+      this.showDiv.fourpoll = true;
       this.showDiv.pollCheck = false
       this.file = null;
       this.url = null;
