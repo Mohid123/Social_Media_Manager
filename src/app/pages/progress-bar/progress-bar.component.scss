@@ -9,3 +9,7 @@
 ::ng-deep .specific-class > .mat-expansion-indicator:after {
     color: white;
   }
+
+  ::ng-deep .mat-expansion-indicator::after {
+    transform: rotate(225deg) !important;  
+}

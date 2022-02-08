@@ -5,6 +5,7 @@ import { MediauploadService } from "./../../core/services/mediaupload.service";
 import { PostService } from "./../../core/services/post.service";
 import { NgbModal, ModalDismissReasons } from "@ng-bootstrap/ng-bootstrap";
 import { MergeService } from "src/app/core/services/merge-service.service";
+import { NgbCarouselConfig } from '@ng-bootstrap/ng-bootstrap';
 import {
   Component,
   OnInit,
@@ -140,6 +141,7 @@ export class TeamtalkersComponent implements OnInit {
     public mediaService: MediauploadService,
     private clubService: ClubService,
     private pollService: PollsService,
+    public carousel: NgbCarouselConfig,
     private fb: FormBuilder
     
   ) {
@@ -148,10 +150,11 @@ export class TeamtalkersComponent implements OnInit {
     this.poll = new Poll();
     this.clubService.SelectedClub$.pipe(takeUntil(this.destroy$)).subscribe(club => {
       this.selectedClub = club;
-      this.hidePoll()
+      this.hidePoll();
       this.hideRecentPolls();
     })
-    
+    this.carousel.wrap = false;
+    this.carousel.interval = 5000;
     this.pollForm = this.fb.group({
       text: ['', Validators.compose([Validators.required]) ],
       choices: this.fb.array([this.createChoiceGroup()], [Validators.compose([Validators.required, Validators.minLength(2)])])
@@ -218,50 +221,50 @@ export class TeamtalkersComponent implements OnInit {
       choices: this.pollForm.value.choices,
       postedTo: 'Club',
       userID: this.mainAuthService.loggedInUser?.userID,
-      votingDays: Math.floor((this.pollSelectedDate / 1000 / 60) % 60),
-      votingHours: Math.floor((this.pollSelectedDate / (1000 * 60 * 60)) % 24),
-      votingMinutes: Math.floor(this.pollSelectedDate / (1000 * 60 * 60 * 24)),
+      votingDays: moment.duration(moment(this.pollSelectedDate).diff(moment(new Date()))).days(),
+      votingHours: moment.duration(moment(this.pollSelectedDate).diff(moment(new Date()))).hours(),
+      votingMinutes: moment.duration(moment(this.pollSelectedDate).diff(moment(new Date()))).minutes(),
       startDate: Math.round(new Date().getTime()) * 1000,
       expiryDate: Math.round(this.pollSelectedDate.getTime()) * 1000,
       type: 'poll',
       hideParticipantsDetails: false
     }
-    // if (this.showSchedule) {
-    //   if (
-    //     this._scheduleService.validateScheduleDate(
-    //       this.scheduleSelectedDate,
-    //       this.scheduleSelectedTime
-    //     )
-    //   ) {
-    //     if (
-    //       new Date(this.poll.expiryDate / 1000) <
-    //       new Date(this._scheduleService.getScheduleEpox)
-    //     ) {
-    //       this.toast.error("Poll Expiry Time must be ahead of Schedule Time");
-    //       return;
-    //     }
-    //     this.post.scheduleDate = this._scheduleService.getScheduleEpox;
-    //     this._scheduleClubPostService
-    //       .schedulePollsPost(payload)
-    //       .subscribe((data) => {
-    //         this.toast.success("Poll Post Scheduled Successfully");
-    //         this.resetSchedulePost();
-    //       });
-    //     return;
-    //   } else {
-    //     this.toast.error(
-    //       "Schedule should be 5 minutes ahead of current time",
-    //       "info"
-    //     );
-    //     return;
-    //   }
-    // }
+    for (let i = 0; i < payload.choices.length; i++) {
+      if(payload.choices[i].choiceText == "" || payload.choices[i].choiceText == null) {
+        this.toast.warning('Empty Fields are not allowed', 'Create Poll')
+        return;
+      }
+    }
+    if(payload.choices.length < 2) {
+      this.toast.warning('Please Select at least two fields', 'Create Poll')
+      return;
+    }
+    if (payload.text == "" || payload.text == null) {
+      this.toast.warning('Empty Fields not allowed', 'Create Poll')
+      return;
+    }
+    if (this.checkedList.length == 0) {
+      this.toast.warning("No Club Selected", "Nothing to Post");
+      return;
+    }
     this.pollService.createPoll(payload).pipe(takeUntil(this.destroy$)).subscribe((res:ApiResponse<Polls>) => {
-      if(!res.hasErrors()){
+      if(!res.hasErrors()) {
         this.toast.success('Poll Created Successfully', 'Create Poll');
         this.getPollPosts();
         this.pollForm.reset();
+        for(let i = 0; i < payload.choices.length; i++) {
+          this.removeOption(i)
+        }
+        payload.choices = [{
+          choiceImage: '',
+          choiceText: '',
+          choiceType: '',
+          blurHash: '',
+          voteCount: 0
+        }]
+        payload.text = ""
       }
+      
     })
   }
 

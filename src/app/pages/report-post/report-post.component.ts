@@ -8,6 +8,7 @@ import { distinctUntilChanged, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { PostList } from './../../core/models/postlist.model';
+import { NgbCarouselConfig } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-report-post',
@@ -32,10 +33,13 @@ export class ReportPostComponent implements OnInit {
     private _postService: PostService,
     public reportService : ReportService,
     private toastr: ToastrService,
+    public carousel: NgbCarouselConfig
   ) {
     this.page = 0;
     this.isLoading = false;
     this.getAllReportedPosts();
+    this.carousel.wrap = false;
+    this.carousel.interval = 5000;
    }
 
   ngOnInit(): void {
@@ -168,7 +172,6 @@ export class ReportPostComponent implements OnInit {
   }
 
   next():void {
-    debugger
     this.page++;
     this.getAllReportedPosts()
   }
