@@ -1299,7 +1299,7 @@
             </mat-tab>
 
            <!--POLLS-->
-            <mat-tab (click)="
+            <mat-tab *ngIf="showRecentPoll" (click)="
             showPosts.posts = false;
             showPosts.polls = true;">
             <!--Poll tab logo-->
