@@ -81,9 +81,11 @@ export class TeamtalkersComponent implements OnInit {
   };
   public showPosts = {
     posts: true,
-    polls: false
+    polls: false,
+ 
   }
   public showPoll : boolean = false;
+  public showRecentPoll: boolean = false;
   offset: number = 0;
   limit: number = 15;
   public pollOptions: string;
@@ -147,6 +149,7 @@ export class TeamtalkersComponent implements OnInit {
     this.clubService.SelectedClub$.pipe(takeUntil(this.destroy$)).subscribe(club => {
       this.selectedClub = club;
       this.hidePoll()
+      this.hideRecentPolls();
     })
     
     this.pollForm = this.fb.group({
@@ -264,7 +267,11 @@ export class TeamtalkersComponent implements OnInit {
 
 
   hidePoll(){
-    (this.selectedClub.isPicker == true || this.selectedClub.pickerModelId == "61446df5acf10ff6947f2426") ? this.showPoll = false: this.showPoll = true;
+    (this.selectedClub.clubName == "Solis Solution" && this.selectedClub.id == "60db0c52723416289b31f1d9" || this.selectedClub.isPicker == true || this.selectedClub.pickerModelId == "61446df5acf10ff6947f2426") ? this.showPoll = true: this.showPoll = false;
+  }
+
+  hideRecentPolls(){
+    (this.selectedClub.clubName == "Solis Solution" && this.selectedClub.id == "60db0c52723416289b31f1d9" || this.selectedClub.isPicker == true || this.selectedClub.pickerModelId == "61446df5acf10ff6947f2426") ? this.showRecentPoll = true: this.showRecentPoll = false;
   }
 
   openVerticallyCentered(content, post) {
@@ -619,9 +626,11 @@ export class TeamtalkersComponent implements OnInit {
     if (event.index == 0) {
       this.showPosts.posts = true;
       this.showPosts.polls = false;
+      
     } else  {
       this.showPosts.posts = false;
       this.showPosts.polls = true;
+     
     } 
   }
 
