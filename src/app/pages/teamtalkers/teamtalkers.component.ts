@@ -91,7 +91,7 @@ export class TeamtalkersComponent implements OnInit {
   scheduleSelectedTime: Date;
   public clubPrimaryColor: string;
   closeResult: string;
-  pollSelectedDate: Date;
+  pollSelectedDate: any;
   pollSelectedTime: Date;
   datetimelocalObject: any;
   public show: boolean = false;
@@ -109,6 +109,8 @@ export class TeamtalkersComponent implements OnInit {
   public pollChoiceFields;
   userForm: FormGroup;
   pollForm: FormGroup;
+  public difference: any;
+  public seconds: any;
   selectedClub
   images = ['https://i.picsum.photos/id/1011/900/500.jpg?hmac=twSEfoAh6FjOiVcusAReH6ZwI4CYSjT5cWeRc-vCaDE', 'https://i.picsum.photos/id/1011/900/500.jpg?hmac=twSEfoAh6FjOiVcusAReH6ZwI4CYSjT5cWeRc-vCaDE', 'https://i.picsum.photos/id/1011/900/500.jpg?hmac=twSEfoAh6FjOiVcusAReH6ZwI4CYSjT5cWeRc-vCaDE'];
   options = { 
@@ -160,7 +162,7 @@ export class TeamtalkersComponent implements OnInit {
     this.initializeChecklist();
     this.getCheckedItemList();
     this.getLatestClubPosts();
-    this.getPollPosts()
+    this.getPollPosts();
 
     this.mediaService.subscribeToProgressEvents((progress: number) => {
       this.updateProgress = progress;
@@ -213,9 +215,9 @@ export class TeamtalkersComponent implements OnInit {
       choices: this.pollForm.value.choices,
       postedTo: 'Club',
       userID: this.mainAuthService.loggedInUser?.userID,
-      votingDays: moment.duration(moment(this.pollSelectedDate).diff(moment(new Date()))).days(),
-      votingHours: moment.duration(moment(this.pollSelectedDate).diff(moment(new Date()))).hours(),
-      votingMinutes: moment.duration(moment(this.pollSelectedDate).diff(moment(new Date()))).minutes(),
+      votingDays: Math.floor((this.pollSelectedDate / 1000 / 60) % 60),
+      votingHours: Math.floor((this.pollSelectedDate / (1000 * 60 * 60)) % 24),
+      votingMinutes: Math.floor(this.pollSelectedDate / (1000 * 60 * 60 * 24)),
       startDate: Math.round(new Date().getTime()) * 1000,
       expiryDate: Math.round(this.pollSelectedDate.getTime()) * 1000,
       type: 'poll',
@@ -1206,15 +1208,9 @@ export class TeamtalkersComponent implements OnInit {
       this.pollSelectedDate = new Date(
         this.pollSelectedDate.setMinutes(this.pollSelectedTime.getMinutes())
       );
-      var days = moment
-        .duration(moment(this.pollSelectedDate).diff(moment(new Date())))
-        .days();
-      var hours = moment
-        .duration(moment(this.pollSelectedDate).diff(moment(new Date())))
-        .hours();
-      var minutes = moment
-        .duration(moment(this.pollSelectedDate).diff(moment(new Date())))
-        .minutes();
+      var days = Math.floor((this.pollSelectedDate / 1000 / 60) % 60);
+      var hours = Math.floor((this.pollSelectedDate / (1000 * 60 * 60)) % 24);
+      var minutes = Math.floor(this.pollSelectedDate / (1000 * 60 * 60 * 24));
 
       if (days == 0 && hours <= 0 && minutes < 30) {
         this.toast.error("Poll should have minimum 30 minutes time", "info");

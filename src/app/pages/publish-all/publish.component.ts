@@ -487,6 +487,7 @@ onSelectedImageLoad() {
             if (index == array.length - 1) {
               this.toast.success(`Post added to Facebook Pages`, 'Success');
               this.postedSuccessfully()
+              this.condition = false;
             }
           }, (error) => {
             this.toast.error(error.message);
@@ -505,8 +506,8 @@ onSelectedImageLoad() {
           this._reportService.createReport(2, '', 'Instagram')
           this._instagramService.createIGMediaContainer(item.instagram_business_account.id, this.socialCaption, item.linkedFbPagetoken, media.data.url).subscribe((container: any) => {
             this._instagramService.publishContent(item.instagram_business_account.id, container.data.id, item.linkedFbPagetoken).subscribe((IgPost: any) => {
-              this.postedSuccessfully()
-              this._reportService.createReport(1, IgPost.data.id, 'Instagram')
+              this.postedSuccessfully();
+              this._reportService.createReport(1, IgPost.data.id, 'Instagram');
               this.toast.success(`Post added to Instagram Profile`, 'Success');
             }, (error) => {
               this.toast.error(error.message);
@@ -578,6 +579,7 @@ onSelectedImageLoad() {
     if (selectedFacebookPages.length > 0) {
       this._mediaUploadService.uploadMedia('Facebook', this.signedInUser.id, this.file).pipe(take(1), takeUntil(this.destroy$)).subscribe((res: ApiResponse<Media>) => {  
         selectedFacebookPages.forEach((item, index, array) => {
+          this.condition = true;
           this._reportService.createReport(2, '', 'Facebook');
           this._facebookService.addVideoPost(item.pageID, item.pageAccessToken, res.data.url, this.socialCaption).pipe(take(1)).subscribe((FbPost: any) => {
            
@@ -589,6 +591,7 @@ onSelectedImageLoad() {
           if (index == array.length - 1) {
             this.toast.success('Video post added to Facebook Pages', 'Success')
             this.postedSuccessfully()
+            this.condition = false;
           }
         })
       })
