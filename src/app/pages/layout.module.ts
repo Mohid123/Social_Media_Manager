@@ -57,6 +57,7 @@ import { NgImageSliderModule } from 'ng-image-slider';
 import { UserMgtComponent } from './user-mgt/user-mgt.component';
 import {Ng2TelInputModule} from 'ng2-tel-input';
 import { TrimModule } from '../directive/trim/trim.module';
+import { AutoFocusModule } from '@app/directive/focus.module';
 import { ReportPostComponent } from './report-post/report-post.component';
 import { ProgressBarComponent } from './progress-bar/progress-bar.component';
 import {MatExpansionModule} from '@angular/material/expansion';
@@ -108,6 +109,7 @@ FullCalendarModule.registerPlugins([
   ],
   imports: [
     TrimModule,
+    AutoFocusModule,
     NgImageSliderModule,
     FullCalendarModule,
     CommonModule,

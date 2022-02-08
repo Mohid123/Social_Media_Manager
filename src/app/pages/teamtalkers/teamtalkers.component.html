@@ -759,7 +759,7 @@
                 <div formArrayName="choices">
                   <div *ngFor="let choice of choices.controls; let i = index">
                     <div class="form-group d-flex align-items-center justify-content-center" [formGroupName]="i">
-                     <input maxlength="25" type="text" formControlName="choiceText"  class="form-control form-control-lg" id="example1"
+                     <input autoFocus maxlength="25" type="text" formControlName="choiceText"  class="form-control form-control-lg" id="example1"
                      placeholder="Enter your choice">
                      <a *ngIf="choices.length > 2 && i > 1" (click)="removeOption(i)" class="btn btn-icon btn-light-danger ml-2">
                        <i class="flaticon-delete icon-lg"></i>
