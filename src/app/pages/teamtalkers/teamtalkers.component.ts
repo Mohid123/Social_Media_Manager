@@ -61,7 +61,7 @@ export class TeamtalkersComponent implements OnInit {
   value: number[];
   multiples: any[] = [];
   MultipleImageUpload = false;
-  targets: any[] = [];
+  extra: any;
   clicked: Boolean = false;
   allPolls: Polls;
   updateProgress: number;
