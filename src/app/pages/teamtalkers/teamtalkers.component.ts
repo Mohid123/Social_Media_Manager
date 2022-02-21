@@ -127,6 +127,7 @@ export class TeamtalkersComponent implements OnInit, AfterViewInit {
     blurHash: '',
     voteCount: 0
   };
+  isDisabled: boolean = false;
 
   @ViewChild('imageCanvas', {static: false}) imageCanvas: ElementRef<HTMLCanvasElement>;
   private context: CanvasRenderingContext2D;
@@ -341,23 +342,23 @@ export class TeamtalkersComponent implements OnInit, AfterViewInit {
                 reactionsAndComments.data.count.commentsCount;
               singleClubPost.reactions = reactionsAndComments.data.reaction;
 
-              if(singleClubPost.captureFileURL !== '') {
-                singleClubPost.media.forEach((image, i) => {
-                  const validRes = isBlurhashValid(image.blurHash);
-                  if(validRes.result == true) {
-                    this.cf.detectChanges();
-                    const blurhashPixels = decode(image.blurHash, 200, 200);
-                    this.context = this.imageCanvas?.nativeElement?.getContext("2d");
-                    const imageData = this.context?.createImageData(200, 200);
-                    if (!imageData) {
-                      this.toast.error('Could not prepare Blurhash canvas', 'Error');
-                    }
-                    else {
-                      imageData?.data.set(blurhashPixels)
-                    }
-                  }
-                })
-              }
+              // if(singleClubPost.captureFileURL !== '') {
+              //   singleClubPost.media.forEach((image, i) => {
+              //     const validRes = isBlurhashValid(image.blurHash);
+              //     if(validRes.result == true) {
+              //       this.cf.detectChanges();
+              //       const blurhashPixels = decode(image.blurHash, 200, 200);
+              //       this.context = this.imageCanvas?.nativeElement?.getContext("2d");
+              //       const imageData = this.context?.createImageData(200, 200);
+              //       if (!imageData) {
+              //         this.toast.error('Could not prepare Blurhash canvas', 'Error');
+              //       }
+              //       else {
+              //         imageData?.data.set(blurhashPixels)
+              //       }
+              //     }
+              //   })
+              // }
 
               tempPosts.push(singleClubPost);
               if (idx == self.length - 1) {
@@ -405,7 +406,7 @@ export class TeamtalkersComponent implements OnInit, AfterViewInit {
     this.singleDate = new Date(new Date().setDate(new Date().getDate() + 1));
     this.unCheckSlectedItems();
     this.getLatestClubPosts();
-    this.clicked = false;
+    this.isDisabled = false;
     this.cf.detectChanges();
     this.showSchedule = false
   }
@@ -416,6 +417,7 @@ export class TeamtalkersComponent implements OnInit, AfterViewInit {
     this.urls = [];
     this.multiples = [];
     this.file = null;
+    this.isDisabled = false;
     this.showSchedule = false;
     this.poll = new Poll();
     this.unCheckSlectedItems();
@@ -775,13 +777,17 @@ export class TeamtalkersComponent implements OnInit, AfterViewInit {
     let events = [];
     let club = [];
 
+    this.isDisabled = true;
+
     if (this.teamtalkerCaption.trim() == "") {
       this.toast.error("Please add content to post", "No Content Added");
+      this.isDisabled = false;
       return;
     } else if (this.checkedList.length == 0) {
       this.toast.error(
         "Please select atleast one Item from (Club, Group or Event)"
       );
+      this.isDisabled = false;
       return;
     }
 
@@ -828,16 +834,21 @@ export class TeamtalkersComponent implements OnInit, AfterViewInit {
     let events = [];
     let club = [];
 
-    if (!this.urls) {
+    this.isDisabled = true;
+
+    if (this.urls.length == 0) {
       this.toast.error("Please Select Image File to post", "No File Selected");
+      this.isDisabled = false;
       return;
     } else if (this.checkedList.length == 0) {
       this.toast.error(
         "Please select atleast one Item from (Club, Group or Event)"
       );
+      this.isDisabled = false;
       return;
     } else if (this.urls.length > 4) {
       this.toast.error("Please Select upto 4 images only");
+      this.isDisabled = false;
       return;
     }
 
@@ -862,7 +873,6 @@ export class TeamtalkersComponent implements OnInit, AfterViewInit {
         )
         .then((success) => {
           this.resetPost();
-          this.clicked = false;
         });
     }
 
@@ -877,7 +887,6 @@ export class TeamtalkersComponent implements OnInit, AfterViewInit {
         )
         .then((success) => {
           this.resetPost();
-          this.clicked = false;
         });
     }
 
@@ -892,7 +901,6 @@ export class TeamtalkersComponent implements OnInit, AfterViewInit {
         )
         .then((success) => {
           this.resetPost();
-          this.clicked = false;
         });
     }
   }
@@ -901,17 +909,20 @@ export class TeamtalkersComponent implements OnInit, AfterViewInit {
     let groups = [];
     let events = [];
     let club = [];
-    
+    this.isDisabled = true;
     if (!this.file) {
       this.toast.error("Please select a Video File", "Empty File");
+      this.isDisabled = false;
       return;
     } else if (this.checkedList.length == 0) {
       this.toast.error(
         "Please select atleast one Item from (Club, Group or Event)"
       );
+      this.isDisabled = false;
       return;
     } else if (this.file.fileSize > "500") {
       this.toast.error("Video Size must be less than 500MB", "info");
+      this.isDisabled = false;
       return;
     }
   
@@ -973,13 +984,17 @@ export class TeamtalkersComponent implements OnInit, AfterViewInit {
     let events = [];
     let club = [];
 
+    this.isDisabled = false;
+
     if (this.teamtalkerCaption.trim() == "") {
       this.toast.error("Please add content to post", "No Content Added");
+      this.isDisabled = false;
       return;
     } else if (this.checkedList.length == 0) {
       this.toast.error(
         "Please select atleast one Item from (Club, Group or Event)"
       );
+      this.isDisabled = false;
       return;
     }
 
@@ -1050,13 +1065,17 @@ export class TeamtalkersComponent implements OnInit, AfterViewInit {
     let events = [];
     let club = [];
 
+    this.isDisabled = true;
+
     if (!this.urls) {
       this.toast.error("Please Select Image File to post", "No File Selected");
+      this.isDisabled = false;
       return;
     } else if (this.checkedList.length == 0) {
       this.toast.error(
         "Please select atleast one Item from (Club, Group or Event)"
       );
+      this.isDisabled = false;
       return;
     }
 
@@ -1132,14 +1151,17 @@ export class TeamtalkersComponent implements OnInit, AfterViewInit {
     let groups = [];
     let events = [];
     let club = [];
-
+    
+    this.isDisabled = true;
     if (!this.file) {
       this.toast.error("Please select a Video File", "Empty File");
+      this.isDisabled = false;
       return;
     } else if (this.checkedList.length == 0) {
       this.toast.error(
         "Please select atleast one Item from (Club, Group or Event)"
       );
+      this.isDisabled = false;
       return;
     }
 
@@ -1217,8 +1239,11 @@ export class TeamtalkersComponent implements OnInit, AfterViewInit {
     delete this.poll.startTime;
     delete this.poll.expiryTime;
 
+    this.isDisabled = true;
+
     if (this.checkedList.length == 0) {
       this.toast.error("No Item Selected", "Nothing to Post");
+      this.isDisabled = false;
       return;
     } else if (
       this.teamtalkerCaption == "" ||
@@ -1229,6 +1254,7 @@ export class TeamtalkersComponent implements OnInit, AfterViewInit {
         "Please Enter into the poll with at least 2 choices",
         "error"
       );
+      this.isDisabled = false;
       return;
     }
 
@@ -1242,6 +1268,7 @@ export class TeamtalkersComponent implements OnInit, AfterViewInit {
 
     if (selectedClubGroups.length > 0 || selectedClubEvents.length > 0) {
       this.toast.error("Poll can only be created in Club", "Error");
+      this.isDisabled = false;
       return;
     } else {
       this.poll.choice3 ? this.poll.choice3.trim() : delete this.poll.choice3;
@@ -1299,12 +1326,11 @@ export class TeamtalkersComponent implements OnInit, AfterViewInit {
             "Schedule should be 5 minutes ahead of current time",
             "info"
           );
+          this.isDisabled = false;
           return;
         }
       }
-      this.spinner.show();
       this._postService.addPost(this.post).subscribe((data) => {
-        this.spinner.hide();
         this.toast.success("Great! The poll has been shared.");
         this.resetPost();
       });

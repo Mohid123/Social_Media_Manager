@@ -72,6 +72,7 @@ export class InstagramComponent implements OnInit {
   singleTimePickerOptions: TimePickerOptions = {
     military: true,
   };
+  isDisabled: boolean = false;
   constructor(
     private spinner: NgxSpinnerService,
     private cf: ChangeDetectorRef,
@@ -262,13 +263,16 @@ export class InstagramComponent implements OnInit {
   }
 
   addVideoPost() {
+    this.isDisabled = true
     let counter = 0
     if (!this.file) {
       this.toast.error('Please select a Video File', 'Empty File');
+      this.isDisabled = false
       return;
     }
     else if (this.checkedList.length == 0) {
       this.toast.error('No Item Selected', 'Please select items to post');
+      this.isDisabled = false
       return;
     }
     this._mediaUploadService.uploadMedia('InstagramTest', '123', this.file).pipe(take(1)).subscribe((media: ApiResponse<Media>) => {
@@ -295,6 +299,7 @@ export class InstagramComponent implements OnInit {
                   this.toast.error(error.message);
                   clearInterval(interval)
                   this._reportService.createReport(0, "", 'Instagram')
+                  this.isDisabled = false
                   this.condition = false;
                 })
               }
@@ -302,6 +307,7 @@ export class InstagramComponent implements OnInit {
                 clearInterval(interval)
                 this.postedSuccessfully()
                 this.toast.error('Error uploding Video', 'Video Format Unsupported')
+                this.isDisabled = false
                 this._reportService.createReport(0, "", 'Instagram');
                
               }
@@ -309,6 +315,7 @@ export class InstagramComponent implements OnInit {
               this.spinner.hide();
               this.condition = false;
               this.toast.error(error.message);
+              this.isDisabled = false
               clearInterval(interval)
             })
           }, 30000)
@@ -324,21 +331,25 @@ export class InstagramComponent implements OnInit {
     }, (error) => {
       this.spinner.hide();
       this.toast.error(error.message)
+      this.isDisabled = false
     })
   }
 
   addImagePost() {
-   
-    if (!this.urls) {
+    this.isDisabled = true
+    if (this.urls.length == 0) {
       this.toast.error('Please select an Image File', 'Empty File');
+      this.isDisabled = false
       return;
     }
     else if (this.checkedList.length == 0) {
       this.toast.error('No Item Selected', 'Please select items to post');
+      this.isDisabled = false
       return;
     }
     else if (this.inValidImageFormat) {
       this.toast.error('Unsupported Image Format', 'Image Format not supported for Instagram');
+      this.isDisabled = false
       return;
     }
     this._mediaUploadService.uploadMedia('Instagram', this.signedInUser.id, this.urls[0]).pipe(take(1)).subscribe((media: ApiResponse<Media>) => {
@@ -354,15 +365,18 @@ export class InstagramComponent implements OnInit {
             }
           }, error => {
             this.toast.error(error.error.error.error_user_msg)
+            this.isDisabled = false
             this._reportService.createReport(0, "", 'Instagram');
             this.condition = false;
           })
         }, error => {
           this.toast.error(error.error.error.error_user_msg)
+          this.isDisabled = false
           this._reportService.createReport(0, "", 'Instagram');
         })
       }, error => {
         this.toast.error(error.message)
+        this.isDisabled = false
         this._reportService.createReport(0, "", 'Instagram');
       })
     })
@@ -388,22 +402,27 @@ export class InstagramComponent implements OnInit {
     this.showSchedule = false;
     this.multiples= [];
     this.urls = [];
+    this.isDisabled = false
     this.removeSlectedItems();
     this.cf.detectChanges();
   }
 
   scheduleInstagramImagePost() {
+    this.isDisabled = true
     let selectedList = this.checkedList;
-    if (!this.urls) {
+    if (this.urls.length == 0) {
       this.toast.error('Please select any Image File', 'Empty File');
+      this.isDisabled = false
       return;
     }
     else if (this.checkedList.length == 0) {
       this.toast.error('No Page Selected', 'Please select Instagram account to post');
+      this.isDisabled = false
       return;
     }
     else if (this.inValidImageFormat) {
       this.toast.error('Unsupported Image Format', 'Image Format not supported for Instagram');
+      this.isDisabled = false
       return;
     }
     else if (this._scheduleService.validateScheduleDate(this.scheduleSelectedDate, this.scheduleSelectedTime)) {
@@ -419,13 +438,16 @@ export class InstagramComponent implements OnInit {
   }
 
   scheduleInstagramVideoPost() {
+    this.isDisabled = true
     let selectedList = this.checkedList;
     if (!this.file) {
       this.toast.error('Please select any Video File', 'Empty File');
+      this.isDisabled = false
       return;
     }
     else if (this.checkedList.length == 0) {
       this.toast.error('No Page Selected', 'Please select Facebook Pages to post');
+      this.isDisabled = false
       return;
     }
     else if (this._scheduleService.validateScheduleDate(this.scheduleSelectedDate, this.scheduleSelectedTime)) {
@@ -436,6 +458,7 @@ export class InstagramComponent implements OnInit {
 
     else {
       this.toast.error("Schedule should be 5 minutes ahead of current time", "info");
+      this.isDisabled = false
     }
   }
 
