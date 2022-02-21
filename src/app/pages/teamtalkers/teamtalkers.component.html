@@ -1285,7 +1285,7 @@
                           flex-wrap: wrap;
                           object-fit: contain;">
                         <ng-container *ngFor="let media of post.media; let i = index;">
-                          <img [src]="media.captureFileURL" 
+                          <img *ngIf="media.blurHash === undefined" [src]="media.captureFileURL" 
                           style="
                             flex-grow: 1;
                             flex-direction: row;
@@ -1298,6 +1298,18 @@
                             object-fit: cover;
                             border-radius: 12px;
                           " />
+                          <canvas #imageCanvas *ngIf="media.blurHash !== undefined" style="
+                            flex-grow: 1;
+                            flex-direction: row;
+                            flex-wrap: wrap;
+                            display: block;
+                            padding: 0.2em;
+                            box-sizing: border-box;
+                            width: 50%;
+                            height: 400px;
+                            object-fit: cover;
+                            border-radius: 12px;">
+                          </canvas>
                         </ng-container>
                       </div>
                      

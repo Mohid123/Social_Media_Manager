@@ -11,7 +11,8 @@ import {
   OnInit,
   ChangeDetectorRef,
   ElementRef,
-  ViewChild
+  ViewChild,
+  AfterViewInit
 } from "@angular/core";
 import { NgxSpinnerService } from "ngx-spinner";
 import { ToastrService } from "ngx-toastr";
@@ -32,13 +33,14 @@ import { BaseURL } from './../../core/models/base-urls';
 import { PollsService } from '@app/core/services/polls.service';
 import { Polls } from './../../core/models/polls.model';
 import { FormArray, FormBuilder, FormGroup, AbstractControl, FormControl, Validators } from '@angular/forms';
+import { decode, isBlurhashValid } from "blurhash";
 
 @Component({
   selector: "app-teamtalkers",
   templateUrl: "./teamtalkers.component.html",
   styleUrls: ["./teamtalkers.component.scss"],
 })
-export class TeamtalkersComponent implements OnInit {
+export class TeamtalkersComponent implements OnInit, AfterViewInit {
   @ViewChild('nav') nav : ElementRef;
   public format: string;
   public teamtalkerCaption: string = "";
@@ -126,6 +128,9 @@ export class TeamtalkersComponent implements OnInit {
     voteCount: 0
   };
 
+  @ViewChild('imageCanvas', {static: false}) imageCanvas: ElementRef<HTMLCanvasElement>;
+  private context: CanvasRenderingContext2D;
+
   constructor(
     private spinner: NgxSpinnerService,
     private cf: ChangeDetectorRef,
@@ -169,7 +174,7 @@ export class TeamtalkersComponent implements OnInit {
     this.getSignedInUser();
     this.initializeChecklist();
     this.getCheckedItemList();
-    this.getLatestClubPosts();
+   // this.getLatestClubPosts();
     this.getPollPosts();
 
     this.mediaService.subscribeToProgressEvents((progress: number) => {
@@ -178,6 +183,9 @@ export class TeamtalkersComponent implements OnInit {
     })
   }
 
+  ngAfterViewInit() {
+    this.getLatestClubPosts()
+  }
 
   get choices() : FormArray {
     return this.pollForm.get("choices") as FormArray
@@ -276,7 +284,6 @@ export class TeamtalkersComponent implements OnInit {
   }
 
 
-
   hideRecentPolls(){
     (this.selectedClub.clubName == "Solis Solution" && this.selectedClub.id == "60db0c52723416289b31f1d9" || this.selectedClub.isPicker == true || this.selectedClub.pickerModelId == "61446df5acf10ff6947f2426") ? this.showRecentPoll = true: this.showRecentPoll = false;
   }
@@ -322,7 +329,7 @@ export class TeamtalkersComponent implements OnInit {
   getLatestClubPosts() {
     let tempPosts = [];
     this._postService
-      .getClubPosts("Club", 0, 15)
+      .getClubPosts("Club", 0, 15).pipe(takeUntil(this.destroy$))
       .subscribe((res: ApiResponse<any>) => {
         res.data.map((singleClubPost: Post, idx, self) => {
           this._postService
@@ -334,16 +341,24 @@ export class TeamtalkersComponent implements OnInit {
                 reactionsAndComments.data.count.commentsCount;
               singleClubPost.reactions = reactionsAndComments.data.reaction;
 
-              singleClubPost.imagesObject = [];
-              singleClubPost.imagesObject.push(...singleClubPost.media);
+              if(singleClubPost.captureFileURL !== '') {
+                singleClubPost.media.forEach((image, i) => {
+                  const validRes = isBlurhashValid(image.blurHash);
+                  if(validRes.result == true) {
+                    this.cf.detectChanges();
+                    const blurhashPixels = decode(image.blurHash, 200, 200);
+                    this.context = this.imageCanvas?.nativeElement?.getContext("2d");
+                    const imageData = this.context?.createImageData(200, 200);
+                    if (!imageData) {
+                      this.toast.error('Could not prepare Blurhash canvas', 'Error');
+                    }
+                    else {
+                      imageData?.data.set(blurhashPixels)
+                    }
+                  }
+                })
+              }
 
-              singleClubPost.imagesObject = singleClubPost.imagesObject.map(item=> {
-                this.cf.detectChanges()
-                return {
-                  image: item.captureFileURL,
-                  thumbImage: item.captureFileURL
-                }                 
-              })
               tempPosts.push(singleClubPost);
               if (idx == self.length - 1) {
                 tempPosts.sort(function compare(a, b) {
@@ -352,13 +367,13 @@ export class TeamtalkersComponent implements OnInit {
                   return dateB - dateA;
                 });
                 this.recentClubPosts = tempPosts;
+                console.log(this.recentClubPosts)
                 this.cf.detectChanges();
               }
             });
         });
       });
   }
-
   // All Polls
   getPollPosts() {
     this.pollService.getAllPolls(this.offset, this.limit).pipe(takeUntil(this.destroy$)).subscribe((res: ApiResponse<Polls>) => {
