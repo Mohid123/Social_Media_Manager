@@ -14,23 +14,27 @@
         style="background-color: #1e1e2d; padding-bottom: 10px;" >
         <form>
           <div class="form-group d-flex flex-row" style="float: left;">
-            <button *ngIf="showBackBtn" type="button" class="btn" (click)="showPreviousClubs();searchStarted = false"  
+            <button *ngIf="showBackBtn" type="button" class="btn" (click)="showPreviousClubs();"  
             data-toggle="tooltip" title="back" style="margin-left: -15px;">
             <i class="far fa-arrow-alt-circle-left" style="color:rgba(255, 255, 255, 0.877)"></i>
           </button>
+            <!-- <button *ngIf="isPickerClub" type="button" class="btn" (click)="previous();"  
+            data-toggle="tooltip" title="back" style="margin-left: -15px;">
+            <i class="far fa-arrow-alt-circle-left" style="color:rgba(255, 255, 255, 0.877)">Main Clubs</i>
+          </button> -->
             <label for="exampleInputEmail1" class=" font-size-h2" style="color: #fff;" >Select club</label>
           </div>
            <div class="form-group d-flex flex-row-reverse responsive">
-            <button type="button" class="btn" (click)="c('Close click');searchStarted = false;  "
+            <button type="button" class="btn" (click)="c('Close click');"
             data-toggle="tooltip" title="close window">
             <i class="far fa-times-circle" style="color:rgba(255, 255, 255, 0.877)"></i>
           </button>
-          <input class="form-control bg-primary-o-30" [ngModelOptions]="{standalone: true}"
-              [(ngModel)]="searchString" (ngModelChange)="searchClub()" style="color: #fff;"
+          <input class="form-control bg-primary-o-30" 
+          [formControl]="searchControl" style="color: #fff;"
               id="exampleInputEmail1" placeholder="search">
           </div>
         </form>
-        <button type="button" class="close" aria-label="Close" (click)="d('Cross click') ; searchStarted = false">
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click') ;">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -63,9 +67,18 @@
       </div>
       <div class="modal-footer d-flex justify-content-center">
         <button type="button" class="btn btn-secondary"
-          (click)="c('Close click');searchStarted = false">Close</button>
-          <button type="button" class="btn btn-light-primary"
-          (click)="loadMoreClubs();searchStarted = false">Load more</button>
+          (click)="c('Close click');">Close</button>
+          <ng-container *ngIf="!isPickerClub; else picker">
+            <button type="button" class="btn btn-light-primary"
+            (click)="loadMoreClubs();">Load more</button>
+          </ng-container>
+          <ng-template #picker>
+            <button type="button" class="btn btn-light-primary"
+            (click)="next();">Load more Clubs</button>
+          </ng-template>
+          
+          
+      
         </div>
     </ng-template>
 

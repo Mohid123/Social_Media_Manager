@@ -18,6 +18,7 @@ export class ClubService extends BaseApiService<ClubData> {
 
   private _SelectedClub$ = new BehaviorSubject<BaseClub | undefined>(getItem(StorageItem.SelectedClub));
   public readonly SelectedClub$: Observable<BaseClub | undefined> = this._SelectedClub$.asObservable();
+  public limit: number = 20
 
   get selectedClub(): BaseClub {
     return this._SelectedClub$.getValue();
@@ -34,10 +35,16 @@ export class ClubService extends BaseApiService<ClubData> {
     super(http)
   }
 
-  getAllClubs(offset, limit): Observable<ApiResponse<ClubData>> { 
-    limit = parseInt(limit) < 1 ? 10 : limit;
-    offset = parseInt(offset) < 0 ? 0 : offset;
-    return this.get(`/club/getAllClubs?offset=${offset}&limit=${limit}`).pipe(
+  getAllClubs(page:number): Observable<ApiResponse<ClubData>> { 
+    // limit = parseInt(limit) < 1 ? 10 : limit;
+    // offset = parseInt(offset) < 0 ? 0 : offset;
+    const param:any = {
+      limit: this.limit, 
+      offset: page ? this.limit * page : 0
+      // userStatus: type
+      
+  }
+    return this.get('/club/getAllClubs', param).pipe(
       take(1),
       // tap(res => {
       //   if(!res.hasErrors() && !this.selectedClub) {
@@ -47,11 +54,27 @@ export class ClubService extends BaseApiService<ClubData> {
     )
   }
 
-  getDividisClubs(offset, limit) : Observable<ApiResponse<ClubData>> {
-    limit = parseInt(limit) < 1 ? 10 : limit
-    offset = parseInt(offset) < 0 ? 0 : offset
-    return this.clubApiGet(`/club/getAllClubs?offset=${offset}&limit=${limit}`)
+  getDividisClubs(page:number) : Observable<ApiResponse<ClubData>> {
+    const param:any = {
+      limit: this.limit, 
+      offset: page ? this.limit * page : 0
+      // userStatus: type
+      
   }
+    return this.clubApiGet('/club/getAllClubs', param)
+  }
+
+
+  
+//   getAllUsersForPanel( page: number, type?:string ): Observable<ApiResponse<user>> {
+//     const param:any = {
+//         limit: this.limit, 
+//         offset: page ? this.limit * page : 0,
+//         userStatus: type
+        
+//     }
+//     return this.clubApiGet('/profile/getUsersForPanel', param)
+// }
 
   getClubById(clubID: string): Observable<ApiResponse<ClubData>> {
     return this.get(`/club/getClubByID/${clubID}`)
@@ -101,6 +124,8 @@ export class ClubService extends BaseApiService<ClubData> {
   searchClubByNameForPicker(clubName: string, offset , limit): Observable<ApiResponse<ClubData>> {
     return this.clubApiGet(`/club/searchClubByName/${clubName}?offset=${offset}&limit=${limit}`);
   }
+
+
 
 
 }
