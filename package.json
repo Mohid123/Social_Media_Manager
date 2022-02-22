@@ -39,6 +39,7 @@
     "angular-in-memory-web-api": "^0.11.0",
     "angularx-social-login": "^3.5.7",
     "apexcharts": "^3.20.0",
+    "blurhash": "^1.1.5",
     "bootstrap": "^4.6.0",
     "chart.js": "^2.9.3",
     "clipboard": "^2.0.6",

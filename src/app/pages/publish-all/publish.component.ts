@@ -71,6 +71,7 @@ export class PublishComponent implements OnInit {
   public selectedFacebook : boolean = false; // initally the value was set to false
   public selectedInstagram: boolean = true // was previousely set to true
   public inValidImageFormat: boolean;
+  isDisabled: boolean = false;
 
   constructor(private spinner: NgxSpinnerService, private cf: ChangeDetectorRef,
     private toast: ToastrService, private _facebookService: FacebookService,
@@ -128,7 +129,7 @@ export class PublishComponent implements OnInit {
     this.spinner.hide();
     this.url = ""
     this.removeSlectedItems();
-    this.clicked = false;
+    this.isDisabled = false;
     this.cf.detectChanges()
     setTimeout(() => {
       this.clear()
@@ -448,12 +449,16 @@ onSelectedImageLoad() {
     let selectedClubEvents = []
     let selectedClub: any[] = [];
 
-    if (!this.urls) {
+    this.isDisabled = true
+
+    if (this.urls.length == 0) {
       this.toast.error('Please select an Image File', 'Empty File');
+      this.isDisabled = false
       return;
     }
     else if (this.checkedList.length == 0) {
       this.toast.error('Please select atleast one Item from (Club, Group, Event, Facebook Page or Instagram Profile)');
+      this.isDisabled = false
       return;
     }
     this.checkedList.filter(item => {
@@ -475,6 +480,7 @@ onSelectedImageLoad() {
     })
     if(this.inValidImageAspectRatio && selctedInstagramPages.length > 0){
       this.toast.error('Invalid Image Aspect Ratio for Instagram');
+      this.isDisabled = false
       return;
     }
     if (selectedFacebookPages.length > 0) {
@@ -526,18 +532,21 @@ onSelectedImageLoad() {
     if (selectedClub.length > 0) {
       this._genericPostService.createImagePost(this.socialCaption, 'Club', this.signedInUser.id, this.urls, selectedClub).then(success => {
         this.clear()
+        this.postedSuccessfully()
       })
     }
 
     if (selectedClubGroups.length > 0) {
       this._genericPostService.createImagePost(this.socialCaption, 'Group', this.signedInUser.id, this.urls, selectedClubGroups).then(success => {
         this.clear()
+        this.postedSuccessfully()
       });
     }
 
     if (selectedClubEvents.length > 0) {
       this._genericPostService.createImagePost(this.socialCaption, 'Event', this.signedInUser.id, this.urls, selectedClubEvents).then(success => {
         this.clear()
+        this.postedSuccessfully()
       });
     }
   }
@@ -549,13 +558,17 @@ onSelectedImageLoad() {
     let selectedClubGroups = []
     let selectedClubEvents = [];
     let selectedClub: any[] = [];
+
+    this.isDisabled = true;
  
     if (!this.file) {
       this.toast.error('Please select a Video File', 'Empty File');
+      this.isDisabled = false
       return;
     }
     else if (this.checkedList.length == 0) {
       this.toast.error('Please select atleast one Item from (Club, Group, Event, Facebook Page or Instagram Profile)');
+      this.isDisabled = false
       return;
     }
     this.checkedList.filter(item => {
@@ -634,6 +647,7 @@ onSelectedImageLoad() {
         }, (error) => {
           this.toast.error(error.message);
           this._reportService.createReport(0, '', 'Instagram');
+          this.isDisabled = false
 
         })
       })
@@ -642,18 +656,21 @@ onSelectedImageLoad() {
     if (selectedClub.length > 0) {
       this._genericPostService.createVideoPost(this.socialCaption, 'Club', this.signedInUser.id, this.file, selectedClub).then(() => {
         this.clear();
+        this.postedSuccessfully()
       });
     }
 
     if (selectedClubGroups.length > 0) {
       this._genericPostService.createVideoPost(this.socialCaption, 'Group', this.signedInUser.id, this.file, selectedClubGroups).then(() => {
         this.clear();
+        this.postedSuccessfully()
       });
     }
 
     if (selectedClubEvents.length > 0) {
       this._genericPostService.createVideoPost(this.socialCaption, 'Event', this.signedInUser.id, this.file, selectedClubEvents).then(() => {
         this.clear();
+        this.postedSuccessfully()
       });
     }
   }
@@ -664,12 +681,17 @@ onSelectedImageLoad() {
     let selectedClubEvents = []
     let selectedInstagram: boolean = false;
     let selectedClub: any[] = [];
+
+    this.isDisabled = true;
+
     if (this.socialCaption.trim() == "") {
       this.toast.error('Please add content to post', 'No Content Added');
+      this.isDisabled = false
       return;
     }
     else if (this.checkedList.length == 0) {
       this.toast.error('Please select atleast one Item from (Club, Group, Event, Facebook Page or Instagram Profile)');
+      this.isDisabled = false
       return;
     }
     this.checkedList.filter(item => {
@@ -691,6 +713,7 @@ onSelectedImageLoad() {
     })
     if (selectedInstagram) {
       this.toast.warning('cannot add text post to Instagram', 'Error')
+      this.isDisabled = false
       return;
     }
     if (selectedFacebookPages.length > 0) {
@@ -702,6 +725,7 @@ onSelectedImageLoad() {
           this.spinner.hide();
           this.toast.error(error.message);
           this._reportService.createReport(0, '', 'Facebook')
+          this.isDisabled = false
         })
         if (index == array.length - 1) {
           this.postedSuccessfully()
@@ -712,18 +736,21 @@ onSelectedImageLoad() {
     if (selectedClub.length > 0) {
       this._genericPostService.createTextPost(this.socialCaption, 'Club', selectedClub).then(success => {
         this.clear()
+        this.postedSuccessfully()
       });
     }
 
     if (selectedClubGroups.length > 0) {
       this._genericPostService.createTextPost(this.socialCaption, 'Group', selectedClubGroups).then(success => {
         this.clear()
+        this.postedSuccessfully()
       });
     }
 
     if (selectedClubEvents.length > 0) {
       this._genericPostService.createTextPost(this.socialCaption, 'Event', selectedClubEvents).then(success => {
         this.clear()
+        this.postedSuccessfully()
       });
     }
   }

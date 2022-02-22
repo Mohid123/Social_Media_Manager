@@ -161,7 +161,7 @@
                                                             class="btn btn-transparent-warning">Clear</button>
                                                     </div>
                                                     <div class="ml-auto p-2">
-                                                        <button (click)="addImagePost(); clicked = true;" type="button" [disabled]="!file || checkedList.length == 0 || clicked "
+                                                        <button (click)="addImagePost(); clicked = true;" type="button" [disabled]="isDisabled == true"
                                                             class="btn btn-primary flex-row-reverse"
                                                             [ngClass]="condition == true ? 'spinner spinner-white spinner-right' : '' "
                                                             style="background-color: #3b5998; border-color: #3b5998;">
@@ -227,7 +227,7 @@
                                                                 class="btn btn-transparent-warning">Clear</button>
                                                         </div>
                                                         <div class="ml-auto p-2">
-                                                            <button (click)="scheduleImagePostForFB(); clicked = true;" type="button" [disabled]="!file || checkedList.length == 0 || clicked "
+                                                            <button (click)="scheduleImagePostForFB(); clicked = true;" type="button" [disabled]="isDisabled == true"
                                                                 class="btn btn-primary flex-row-reverse"
                                                                 style="background-color: #3b5998; border-color: #3b5998;">Schedule</button>
                                                         </div>
@@ -319,7 +319,7 @@
                                                             class="btn btn-transparent-warning">Clear</button>
                                                     </div>
                                                     <div class="ml-auto p-2">
-                                                        <button (click)="addVideoPost(); clicked = true;" type="button" [disabled]="!file || checkedList.length == 0 || clicked "
+                                                        <button (click)="addVideoPost(); clicked = true;" type="button" [disabled]="isDisabled == true"
                                                             class="btn btn-primary flex-row-reverse"
                                                             [ngClass]="condition == true ? 'spinner spinner-white spinner-right' : '' "
                                                             style="background-color: #3b5998; border-color: #3b5998;">
@@ -385,7 +385,7 @@
                                                                 class="btn btn-transparent-warning">Clear</button>
                                                         </div>
                                                         <div class="ml-auto p-2">
-                                                            <button (click)="scheduleVideoPostForFB(); clicked = true;" type="button" [disabled]="!file || checkedList.length == 0 || clicked"
+                                                            <button (click)="scheduleVideoPostForFB(); clicked = true;" type="button" [disabled]="isDisabled == true"
                                                                 class="btn btn-primary flex-row-reverse"
                                                                 style="background-color: #3b5998; border-color: #3b5998;">Schedule</button>
                                                         </div>
@@ -454,7 +454,7 @@
                                                             class="btn btn-transparent-warning">Clear</button>
                                                     </div>
                                                     <div class="ml-auto p-2">
-                                                        <button (click)="addTextPost(); clicked = true" type="button" [disabled]="!facebookCaption || checkedList.length == 0 || clicked"
+                                                        <button (click)="addTextPost(); clicked = true" type="button" [disabled]="isDisabled == true"
                                                             [ngClass]="condition == true ? 'spinner spinner-white spinner-right' : '' "
                                                             class="btn btn-primary flex-row-reverse"
                                                             style="background-color: #3b5998; border-color: #3b5998;">

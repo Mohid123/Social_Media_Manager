@@ -69,6 +69,7 @@ export class FacebookComponent implements OnInit {
     video: false,
     text: false
   }
+  isDisabled: boolean = false;
   scheduleSelectedDate: any;
   scheduleSelectedTime: Date;
   public recentFBposts: any = [];
@@ -146,7 +147,7 @@ export class FacebookComponent implements OnInit {
     this.urls = [];
     this.multiples = [];
     this.file = ""
-    this.clicked = false;
+    this.isDisabled = false;
     this.showSchedule = false;
     this.removeSlectedItems();
     this.condition = false;
@@ -337,12 +338,15 @@ export class FacebookComponent implements OnInit {
   }
 
   addImagePost() {
-    if (!this.urls) {
+    this.isDisabled = true;
+    if (this.urls.length == 0) {
       this.toast.error('Please select an Image File', 'Empty File');
+      this.isDisabled = false;
       return;
     }
     else if (this.checkedList.length == 0) {
       this.toast.error('No Page Selected', 'Please select Facebook Pages to post');
+      this.isDisabled = false;
       return;
     }
     this._mediaUploadService.uploadMedia('Facebook', this.signedInUser.id, this.urls[0]).pipe(take(1), takeUntil(this.destroy$)).subscribe((media: ApiResponse<Media>)=> {
@@ -360,6 +364,7 @@ export class FacebookComponent implements OnInit {
         }, error => {
           this.toast.error(error.message)
           this._reportService.createReport(0, "", 'Facebook')
+          this.isDisabled = false;
           this.condition = false;
 
         })
@@ -370,16 +375,20 @@ export class FacebookComponent implements OnInit {
       })
     }, (err) => {
       this.toast.error(err.message)
+      this.isDisabled = false;
     })
   }
 
   addVideoPost() {
+    this.isDisabled = true;
     if (!this.file) {
       this.toast.error('Please select a Video File', 'Empty File');
+      this.isDisabled = false;
       return;
     }
     else if (this.checkedList.length == 0) {
       this.toast.error('No Page Selected', 'Please select Facebook Pages to post');
+      this.isDisabled = false;
       return;
     }
     this._mediaUploadService.uploadMedia('Facebook', this.signedInUser.id, this.file).pipe(take(1), takeUntil(this.destroy$)).subscribe((media: ApiResponse<Media>) => {
@@ -403,22 +412,26 @@ export class FacebookComponent implements OnInit {
         this.toast.error(err.message);
         this._reportService.createReport(0, "", 'Facebook')
         this.condition = false;
+        this.isDisabled = false;
       
       })
     }, (err) => {
       this.toast.error(err.message);
+      this.isDisabled = false;
     })
   }
 
 
   addTextPost() {
-
+    this.isDisabled = true;
     if (this.facebookCaption.trim() == "") {
       this.toast.error('Please add content to post', 'No Content Added');
+      this.isDisabled = false;
       return;
     }
     else if (this.checkedList.length == 0) {
       this.toast.error('No Page Selected', 'Please select Facebook Pages to post');
+      this.isDisabled = false;
       return;
     }
     this.condition = true;
@@ -434,12 +447,14 @@ export class FacebookComponent implements OnInit {
       }, error => {
         this.toast.error(error.message);
         this.condition = false;
+        this.isDisabled = false;
         this.cf.detectChanges();
         this._reportService.createReport(0, "", 'Facebook')
       })
     }, (error) => {
       this.toast.error(error.message);
       this.condition = false;
+      this.isDisabled = false;
       this.cf.detectChanges();
       this._reportService.createReport(0, "", 'Facebook')
     })
@@ -448,13 +463,16 @@ export class FacebookComponent implements OnInit {
 
 
   scheduleTextPostForFB() {
+    this.isDisabled = true;
     let selectedList = this.checkedList;
     if (this.facebookCaption.trim() == "") {
       this.toast.error('Please add content to post', 'No Content Added');
+      this.isDisabled = false;
       return;
     }
     else if (selectedList.length == 0) {
       this.toast.error('No Page Selected', 'Please select Facebook Pages to post');
+      this.isDisabled = false;
       return;
     }
     else if (this._scheduleService.validateScheduleDate(this.scheduleSelectedDate, this.scheduleSelectedTime)) {
@@ -464,18 +482,22 @@ export class FacebookComponent implements OnInit {
     }
     else {
       this.toast.error("Schedule should be 5 minutes ahead of current time", "info");
+      this.isDisabled = false;
     }
   }
 
 
   scheduleImagePostForFB() {
+    this.isDisabled = true;
     let selectedList = this.checkedList;
-    if (!this.urls) {
+    if (this.urls.length == 0) {
       this.toast.error('Please select an Image File', 'Empty File');
+      this.isDisabled = false;
       return;
     }
     else if (this.checkedList.length == 0) {
       this.toast.error('No Page Selected', 'Please select Facebook Pages to post');
+      this.isDisabled = false;
       return;
     }
     else if (this._scheduleService.validateScheduleDate(this.scheduleSelectedDate, this.scheduleSelectedTime)) {
@@ -485,19 +507,23 @@ export class FacebookComponent implements OnInit {
     }
     else {
       this.toast.error("Schedule should be 5 minutes ahead of current time", "info");
+      this.isDisabled = false;
     }
 
   }
 
 
   scheduleVideoPostForFB() {
+    this.isDisabled = true;
     let selectedList = this.checkedList;
     if (!this.file) {
       this.toast.error('Please select any Video File', 'Empty File');
+      this.isDisabled = false;
       return;
     }
     else if (this.checkedList.length == 0) {
       this.toast.error('No Page Selected', 'Please select Facebook Pages to post');
+      this.isDisabled = false;
       return;
     }
     else if (this._scheduleService.validateScheduleDate(this.scheduleSelectedDate, this.scheduleSelectedTime)) {
@@ -508,6 +534,7 @@ export class FacebookComponent implements OnInit {
 
     else {
       this.toast.error("Schedule should be 5 minutes ahead of current time", "info");
+      this.isDisabled = false;
     }
 
   }

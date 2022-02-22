@@ -276,7 +276,7 @@
                             </button>
                           </div>
                           <div class="p-2 ml-auto">
-                            <button [disabled]="!file || checkedList.length == 0 || clicked "
+                            <button [disabled]="isDisabled == true"
                               [ngClass]="_genericPostService.condition == true ? 'spinner spinner-white spinner-right' : '' "
                               (click)="addImagePost(); clicked = true;" type="button"
                               class="flex-row-reverse btn btn-primary" style="
@@ -357,7 +357,7 @@
                                 </button>
                               </div>
                               <div class="p-2 ml-auto">
-                                <button (click)="scheduleImagePost('image'); clicked = true;" type="button" [disabled]="!file || checkedList.length == 0 || clicked "
+                                <button (click)="scheduleImagePost('image'); clicked = true;" type="button" [disabled]="isDisabled == true"
                                   class="flex-row-reverse btn btn-primary" style="
                                     background-color: #3b5998;
                                     border-color: #3b5998;">
@@ -475,7 +475,7 @@
                             </button>
                           </div>
                           <div class="p-2 ml-auto">
-                            <button [disabled]="!file || checkedList.length == 0 || clicked"
+                            <button [disabled]="isDisabled == true"
                               [ngClass]="_genericPostService.condition == true ? 'spinner spinner-white spinner-right' : '' "
                               (click)="addVideoPost(); clicked = true" type="button"
                               class="flex-row-reverse btn btn-primary" style="
@@ -560,7 +560,7 @@
                                 </button>
                               </div>
                               <div class="p-2 ml-auto">
-                                <button (click)="scheduleVideoPost('video'); clicked = true;" type="button" [disabled]="!file || checkedList.length == 0 || clicked "
+                                <button (click)="scheduleVideoPost('video'); clicked = true;" type="button" [disabled]="isDisabled == true"
                                   class="flex-row-reverse btn btn-primary" style="
                                     background-color: #3b5998;
                                     border-color: #3b5998;">
@@ -650,7 +650,7 @@
                           </div>
                           <div class="p-2 ml-auto">
                             <button
-                            [disabled]="!teamtalkerCaption || checkedList.length == 0 || clicked"
+                            [disabled]="isDisabled == true"
                             (click)="addTextPost(); clicked = true" type="button"
                               class="flex-row-reverse btn btn-primary"
                               [ngClass]="_genericPostService.condition == true ? 'spinner spinner-white spinner-right' : '' "
@@ -893,7 +893,7 @@
                           </button>
                         </div>
                         <div class="p-2 ml-auto">
-                          <button [disabled]="pollForm.errors || pollForm.invalid" type="button" class="flex-row-reverse btn btn-primary"
+                          <button [disabled]="isDisabled == true" type="button" class="flex-row-reverse btn btn-primary"
                             style="background-color: #3b5998;
                               border-color: #3b5998;">
                             Schedule
@@ -1020,7 +1020,7 @@
                               </button>
                             </div>
                             <div class="p-2 ml-auto">
-                              <button [disabled]="!poll.choice1 && !poll.choice2 " (click)="addPollPost(); clicked = true" type="button"
+                              <button [disabled]="isDisabled == true" (click)="addPollPost(); clicked = true" type="button"
                                 class="flex-row-reverse btn btn-primary" style="
                                   background-color: #3B5998;
                                   border-color: #3B5998;">
@@ -1298,6 +1298,18 @@
                             object-fit: cover;
                             border-radius: 12px;
                           " />
+                          <!-- <canvas #imageCanvas *ngIf="media.blurHash !== undefined" style="
+                            flex-grow: 1;
+                            flex-direction: row;
+                            flex-wrap: wrap;
+                            display: block;
+                            padding: 0.2em;
+                            box-sizing: border-box;
+                            width: 50%;
+                            height: 400px;
+                            object-fit: cover;
+                            border-radius: 12px;">
+                          </canvas> -->
                         </ng-container>
                       </div>
                      
@@ -1846,7 +1858,6 @@
                         </div>
                       </div>
 
-                      <!--Poll Preview Binding-->
                       <div *ngIf="showDiv.sixteenpoll" class="caption" style="white-space: pre-wrap; text-align: justify">
                         <div class="panel panel-primary">
                           <div class="panel-heading">
@@ -1942,10 +1953,8 @@
                             <i class="mr-2 fas fa-share" style="color: black"></i>Share
                           </div>
                           <div class="col item">
-                            <!-- <i class="fas fa-comments"></i> &nbsp;Comment -->
                           </div>
                           <div class="col item">
-                            <!-- <i class="fas fa-share" aria-hidden="true"></i> &nbsp;Share -->
                           </div>
                         </div>
                       </div>
