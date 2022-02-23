@@ -7,8 +7,9 @@ import { Observable, BehaviorSubject } from 'rxjs';
 import { ApiResponse } from '@app/core/models/response.model';
 import { environment } from './../../../environments/environment';
 import { UserList } from './../models/userlist.model';
-import { tap } from 'rxjs/operators';
+import { tap, take } from 'rxjs/operators';
 import { UserCount } from './../models/user-count.model';
+import { ToastrService } from 'ngx-toastr';
 
 type user = User | UserList | UserCount
 
@@ -23,7 +24,7 @@ type user = User | UserList | UserCount
       })
       public readonly userList$: Observable<UserList> = this._userList.asObservable()
       public limit: number = 12
-    constructor(protected http: HttpClient) {
+    constructor(protected http: HttpClient,protected toastrService: ToastrService) {
         super(http)
     }
 
@@ -38,14 +39,19 @@ type user = User | UserList | UserCount
         return this.clubApiGet('/profile/getAllUsers', param)
     }
 
-    getAllUsersForPanel( page: number, type?:string ): Observable<ApiResponse<user>> {
+    getAllUsersForPanel( page: number, limit:number, type?:string,  ): Observable<ApiResponse<user>> {
+        page--;
         const param:any = {
-            limit: this.limit, 
-            offset: page ? this.limit * page : 0,
+            limit: limit, 
+            offset: page ? limit * page : 0,
             userStatus: type
             
         }
-        return this.clubApiGet('/profile/getUsersForPanel', param)
+        return this.clubApiGet('/profile/getUsersForPanel', param).pipe(take(1),tap((result:ApiResponse<user>)=>{
+            if (result.hasErrors()) {
+              this.toastrService.error(result?.errors[0]?.error?.message)
+            }
+          }));
     }
 
     getCounts(): Observable<ApiResponse<user>>{

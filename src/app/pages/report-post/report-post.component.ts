@@ -35,7 +35,7 @@ export class ReportPostComponent implements OnInit {
     private toastr: ToastrService,
     public carousel: NgbCarouselConfig
   ) {
-    this.page = 0;
+    this.page = 1;
     this.isLoading = false;
     this.getAllReportedPosts();
     this.carousel.wrap = false;
@@ -99,7 +99,7 @@ export class ReportPostComponent implements OnInit {
     if (this.isLoading) return
     this.isLoading = true;
     let tempPosts = []
-    this.reportService.getPostReport(this.page)
+    this.reportService.getPostReport(this.page, this.limit)
     .pipe(
       distinctUntilChanged(),
       takeUntil(this.destroy$))
@@ -126,7 +126,7 @@ export class ReportPostComponent implements OnInit {
                   return dateB - dateA;
                 });
                 this.allReportedPosts = tempPosts;
-                console.log(this.allReportedPosts)
+                console.log(tempPosts)
                 this.cf.detectChanges();
               }
             });

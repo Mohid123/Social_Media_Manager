@@ -7,7 +7,6 @@ import { NgbModal, ModalDismissReasons, NgbModalConfig } from '@ng-bootstrap/ng-
 import { FormGroup, Validators, FormBuilder, FormControl, AbstractControl, ValidationErrors } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { User } from 'src/app/core/models/user.model';
-import { NgxSpinnerService } from 'ngx-spinner';
 import * as moment from 'moment';
 import { UserCount } from '@app/core/models/user-count.model';
 import { ClubService } from './../../core/services/club.service';
@@ -70,12 +69,11 @@ export class UserMgtComponent implements OnInit {
     private modalService: NgbModal,
     private toastr: ToastrService,
     private fb: FormBuilder,
-    private spinner: NgxSpinnerService,
     public _clubService: ClubService,
     public mediaService: MediauploadService,
     private config: NgbModalConfig)
     {
-      this.page = 0;
+      this.page = 1;
       this.isLoading = false;
       this.getAllUsers()
       this.getUserCount()
@@ -198,12 +196,14 @@ export class UserMgtComponent implements OnInit {
   }
 
   getAllUsers() {
+
     if (this.isLoading) return
     this.isLoading = true;
-    this.userMgt.getAllUsersForPanel(this.page, this.type)
+    this.userMgt.getAllUsersForPanel(this.page, this.limit, this.type)
     .pipe(  distinctUntilChanged(),
     takeUntil(this.destroy$)).subscribe((res: ApiResponse<UserList>) => {
       if(!res.hasErrors()){
+        debugger
         this.allUsers = res.data;
         console.log(this.allUsers)
         this.cf.detectChanges();
@@ -215,7 +215,7 @@ export class UserMgtComponent implements OnInit {
   setType(type:string): void {
     
     this.type = type;
-    this.page = 0;
+    this.page = 1;
     this.getAllUsers();
   }
 
