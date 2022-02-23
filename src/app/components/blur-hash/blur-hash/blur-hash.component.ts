@@ -46,14 +46,10 @@ export class BlurHashComponent  implements AfterViewInit {
     this.isBrowser = isPlatformBrowser(platformId);
   }
   public ngAfterViewInit(): void {
-    console.log('thisaaaaaaa:',this.blurHash);
-    console.log('thisaaaaaaa:',this.imageSrc);
     this.decodeBlurHash();
   }
 
   private decodeBlurHash() {
-    console.log('thisaaaaaaa:',this.blurHash);
-    console.log('thisaaaaaaa:',this.imageSrc);
     if (this.canvas && this.blurHash) {
       const context = this.canvas.nativeElement.getContext('2d');
       const imageData = context.createImageData(this.canvasWidth, this.canvasHeight);

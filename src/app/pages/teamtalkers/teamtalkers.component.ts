@@ -129,9 +129,6 @@ export class TeamtalkersComponent implements OnInit, AfterViewInit {
   };
   isDisabled: boolean = false;
 
-  @ViewChild('imageCanvas', {static: false}) imageCanvas: ElementRef<HTMLCanvasElement>;
-  private context: CanvasRenderingContext2D;
-
   constructor(
     private spinner: NgxSpinnerService,
     private cf: ChangeDetectorRef,
@@ -336,29 +333,12 @@ export class TeamtalkersComponent implements OnInit, AfterViewInit {
           this._postService
             .getPostCommentsAndReactions(singleClubPost.id, 0, 4)
             .subscribe((reactionsAndComments: ApiResponse<any>) => {
+
               singleClubPost.reactionCount =
                 reactionsAndComments.data.count.reactionCount;
               singleClubPost.commentsCount =
                 reactionsAndComments.data.count.commentsCount;
               singleClubPost.reactions = reactionsAndComments.data.reaction;
-
-              // if(singleClubPost.captureFileURL !== '') {
-              //   singleClubPost.media.forEach((image, i) => {
-              //     const validRes = isBlurhashValid(image.blurHash);
-              //     if(validRes.result == true) {
-              //       this.cf.detectChanges();
-              //       const blurhashPixels = decode(image.blurHash, 200, 200);
-              //       this.context = this.imageCanvas?.nativeElement?.getContext("2d");
-              //       const imageData = this.context?.createImageData(200, 200);
-              //       if (!imageData) {
-              //         this.toast.error('Could not prepare Blurhash canvas', 'Error');
-              //       }
-              //       else {
-              //         imageData?.data.set(blurhashPixels)
-              //       }
-              //     }
-              //   })
-              // }
 
               tempPosts.push(singleClubPost);
               if (idx == self.length - 1) {
@@ -368,7 +348,6 @@ export class TeamtalkersComponent implements OnInit, AfterViewInit {
                   return dateB - dateA;
                 });
                 this.recentClubPosts = tempPosts;
-                console.log(this.recentClubPosts)
                 this.cf.detectChanges();
               }
             });
@@ -380,7 +359,6 @@ export class TeamtalkersComponent implements OnInit, AfterViewInit {
     this.pollService.getAllPolls(this.offset, this.limit).pipe(takeUntil(this.destroy$)).subscribe((res: ApiResponse<Polls>) => {
       if(!res.hasErrors()) {
         this.allPolls = res.data;
-        console.log(this.allPolls)
       }
     })
   }
