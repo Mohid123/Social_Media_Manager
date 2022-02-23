@@ -181,7 +181,6 @@ export class LoginComponent implements OnInit {
 
     this.spinner.show();
     this._authService.loginByEmail(payload).subscribe((res:ApiResponse<LoginResponse>) => {
-      debugger
       if (!res.hasErrors()) {
         if (res.data?.newUser) {
           localStorage.setItem('newUser', 'true');
@@ -236,9 +235,8 @@ export class LoginComponent implements OnInit {
   }
 
   searchClub(searchString: string) {
-    if(this.isPickerClub){
-      debugger
-      this.showBackBtn=true;
+    if(this.isPickerClub) {
+      this.showBackBtn = true;
       if (searchString.trim().length == 0 || searchString == "") {
         this.noClubFound = false;
         this.cf.detectChanges()

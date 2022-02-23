@@ -11,8 +11,11 @@ import { BaseClub } from './../../core/models/base-club.model';
 export class AuthComponent implements OnInit {
 
   today: Date = new Date();
-  allClubs : BaseClub[] = []
-  constructor(private _clubService : ClubService) { }
+  allClubs : BaseClub[] = [];
+  page: number
+  constructor(private _clubService : ClubService) {
+    this.page = 1
+  }
 
   ngOnInit(): void {
    
@@ -20,7 +23,7 @@ export class AuthComponent implements OnInit {
 
 
   getAllClubs() {
-    this._clubService.getAllClubs(0, 10).subscribe((res: ApiResponse<BaseClub[]>) => {
+    this._clubService.getAllClubs(this.page).subscribe((res: ApiResponse<BaseClub[]>) => {
       if(!res.hasErrors()) {
         this.allClubs = res.data;
         this.setDefaultClub()
