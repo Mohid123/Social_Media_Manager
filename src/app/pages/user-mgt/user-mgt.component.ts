@@ -200,10 +200,9 @@ export class UserMgtComponent implements OnInit {
     if (this.isLoading) return
     this.isLoading = true;
     this.userMgt.getAllUsersForPanel(this.page, this.limit, this.type)
-    .pipe(  distinctUntilChanged(),
+    .pipe(distinctUntilChanged(),
     takeUntil(this.destroy$)).subscribe((res: ApiResponse<UserList>) => {
       if(!res.hasErrors()){
-        debugger
         this.allUsers = res.data;
         console.log(this.allUsers)
         this.cf.detectChanges();
