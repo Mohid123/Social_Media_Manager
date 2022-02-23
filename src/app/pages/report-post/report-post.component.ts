@@ -4,7 +4,7 @@ import { Post } from './../../core/models/post.model';
 import { PostService } from './../../core/services/post.service';
 import { ApiResponse } from '@app/core/models/response.model';
 import { ReportService } from 'src/app/core/services/report.service';
-import { distinctUntilChanged, takeUntil } from 'rxjs/operators';
+import { distinctUntilChanged, takeUntil, map } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { PostList } from './../../core/models/postlist.model';
@@ -37,13 +37,12 @@ export class ReportPostComponent implements OnInit {
   ) {
     this.page = 1;
     this.isLoading = false;
-    this.getAllReportedPosts();
     this.carousel.wrap = false;
     this.carousel.interval = 5000;
    }
 
   ngOnInit(): void {
-  
+    this.getAllReportedPosts();
   }
 
   onVideoEnded() {
@@ -98,65 +97,40 @@ export class ReportPostComponent implements OnInit {
   getAllReportedPosts() {
     if (this.isLoading) return
     this.isLoading = true;
-    let tempPosts = []
     this.reportService.getPostReport(this.page, this.limit)
     .pipe(
       distinctUntilChanged(),
       takeUntil(this.destroy$))
       .subscribe((res: ApiResponse<any>) => {
-      if(!res.hasErrors()){
-        res.data.data.map((singleClubPost: Post, idx, self) => {
-          this._postService
-            .getPostCommentsAndReactions(singleClubPost.id, 0, 4)
-            .subscribe((reactionsAndComments: ApiResponse<any>) => {
-              singleClubPost.imagesObject = [];
-              singleClubPost.imagesObject.push(...singleClubPost.media);
-              singleClubPost.imagesObject = singleClubPost.imagesObject.map(item=> {
-                this.cf.detectChanges()
-                return {
-                  image: item.captureFileURL,
-                  thumbImage: item.captureFileURL
-                }                 
-              })
-              tempPosts.push(singleClubPost);
-              if (idx == self.length - 1) {
-                tempPosts.sort(function compare(a, b) {
-                  const dateA = new Date(a.postedDate) as any;
-                  const dateB = new Date(b.postedDate) as any;
-                  return dateB - dateA;
-                });
-                this.allReportedPosts = tempPosts;
-                console.log(tempPosts)
-                this.cf.detectChanges();
-              }
-            });
-        });
-       }
-       this.isLoading = false;
-    })
-  }
-
-  deletePost(post: Post) {
-    this._postService.deleteClubPost(post.id).subscribe((res: ApiResponse<Post>) => {
-      if(!res.hasErrors()) {
-        this.getAllReportedPosts();
-        this.cf.detectChanges()
-        this.toastr.success("Post deleted", "Success");
+       if(!res.hasErrors()){
+        this.allReportedPosts = res.data;
+        this.cf.detectChanges();
       }
-    });
-  }
+      this.isLoading = false;
+  })
+}
 
-  cancelReportPost(post: Post) {
-    post.reportStatus = false;
-    this._postService.updateClubPost(Object.assign({}, post))
-    .pipe(
-      takeUntil(this.destroy$)
-      ).subscribe((res: ApiResponse<Post>) => {
-        if(!res.hasErrors()) {
-          this.toastr.success('Report Against Post Successfully Cancelled', 'Cancel Post')
-          this.getAllReportedPosts();
-        }
-      })
+deletePost(post: Post) {
+  this._postService.deleteClubPost(post.id).subscribe((res: ApiResponse<Post>) => {
+    if(!res.hasErrors()) {
+      this.getAllReportedPosts();
+      this.cf.detectChanges()
+      this.toastr.success("Post deleted", "Success");
+    }
+  });
+}
+
+cancelReportPost(post: Post) {
+  post.reportStatus = false;
+  this._postService.updateClubPost(Object.assign({}, post))
+  .pipe(
+    takeUntil(this.destroy$)
+    ).subscribe((res: ApiResponse<Post>) => {
+      if(!res.hasErrors()) {
+        this.toastr.success('Report Against Post Successfully Cancelled', 'Cancel Post')
+        this.getAllReportedPosts();
+      }
+    })
   }
 
   openImageCentered(content, post: Post) {
