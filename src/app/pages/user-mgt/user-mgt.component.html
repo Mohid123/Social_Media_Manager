@@ -38,7 +38,7 @@
                             </form>
                             <div class="d-flex d-inline pt-5">
                                 <a *ngFor="let button of filterButtons" [ngClass]="{'active': button.isClicked}" (click)="setActive(button); setType(button.text)" class="btn btn-outline-primary font-weight-boldest btn-pill mr-2">
-                                    {{ button.text || 'All Users' }}
+                                    {{ button.text || 'All Users' | titlecase }}
                                 </a>
 
                             </div>

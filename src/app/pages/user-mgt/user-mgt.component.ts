@@ -58,8 +58,8 @@ export class UserMgtComponent implements OnInit {
   updateProgress: number;
   filterButtons = [
     { text: '', isClicked: true },
-    { text: 'Admins', isClicked: false },
-    { text: 'Blocked', isClicked: false }
+    { text: 'admin', isClicked: false },
+    { text: 'blocked', isClicked: false }
    ]
    public type = '';
 
