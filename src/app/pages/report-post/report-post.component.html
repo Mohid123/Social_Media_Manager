@@ -299,17 +299,25 @@
                   <!--begin::Pagination-->
                    <div class="d-flex justify-content-end align-items-center flex-wrap">
                       <div class="d-flex flex-wrap mr-3 align-items-center">
-                          <button [disabled]="page < 1" (click)="previous()" class="btn btn-icon btn-sm btn-light-primary mr-2 my-1">
+                          <button [disabled]="page < 2" (click)="previous()" class="btn btn-icon btn-sm btn-light-primary mr-2 my-1">
                               <i class="ki ki-bold-double-arrow-back icon-xs"></i>
                           </button>
-                          <ng-container *ngIf="allReportedPosts?.totalCount > limit">
+                          <!-- <ng-container *ngIf="allReportedPosts?.totalCount > limit">
                               <span>{{ page }} / {{ (allReportedPosts?.totalCount/limit) + (0.4) | number:'1.0-0' }}</span>
-                            </ng-container>
+                            </ng-container> -->
                             <!-- <ng-template #noPage >
                               <span>0/1</span>
                             </ng-template> -->
+
+                            
+                          <!-- <div *ngIf="allReportedPosts?.totalCount > 0; else noItems" class="inline-flex items-center text-sm text-gray-500">
+                            Show {{ page === 1 ? 1 : (page-1) * limit }}-{{ page * limit < allReportedPosts?.totalCount ? (page * limit) : allReportedPosts?.totalCount }}/{{allReportedPosts?.totalCount}}
+                           </div>
+                           <ng-template #noItems >
+                             Show 0/0
+                           </ng-template> -->
                       
-                          <button [disabled]="(allReportedPosts?.totalCount / limit) <= page"  (click)="next()" class="btn btn-icon btn-sm btn-light-primary ml-3 mr-2 my-1">
+                          <button [disabled]="allReportedPosts?.totalCount  <= page * limit"  (click)="next()" class="btn btn-icon btn-sm btn-light-primary ml-3 mr-2 my-1">
                               <i class="ki ki-bold-double-arrow-next icon-xs"></i>
                           </button>
                       </div>

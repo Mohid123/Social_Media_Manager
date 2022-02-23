@@ -7,7 +7,8 @@ import { BaseApiService } from './base-api.service';
 import { HttpClient } from '@angular/common/http';
 import { ApiResponse } from '../models/response.model';
 import { Post } from 'src/app/core/models/post.model';
-import { retry } from 'rxjs/operators';
+import { retry, take, tap } from 'rxjs/operators';
+import { ToastrService } from 'ngx-toastr';
 
 type report = Report | Post
 
@@ -22,6 +23,7 @@ export class ReportService extends BaseApiService<report> {
     private clubService:ClubService,
     private mainAuthService: MainAuthService,
     protected http: HttpClient,
+    protected toastrService: ToastrService
   ) {
     super(http)
     this.report = new Report();
@@ -87,12 +89,21 @@ export class ReportService extends BaseApiService<report> {
   //   return this.clubApiGet(`/post/getReportPost?offset=${offset}&limit=${limit}`);
   // }
 
-  getPostReport( page: number ): Observable<ApiResponse<report>> {
+  getPostReport( page: number, limit:number ): Observable<ApiResponse<report>> {
+    page--;
        const param:any = {
-        offset: page ? 12 * page : 0,
-        limit: 12
+        offset: page ? limit * page : 0,
+        limit: limit
+      
+       }
+    return this.clubApiGet('/post/getReportPostWithCount', param).pipe(take(1),tap((result:ApiResponse<report>)=>{
+      if (result.hasErrors()) {
+        this.toastrService.error(result?.errors[0]?.error?.message)
       }
-    return this.clubApiGet('/post/getReportPostWithCount', param)
+    }));
   }
+
+
+
   
 }
