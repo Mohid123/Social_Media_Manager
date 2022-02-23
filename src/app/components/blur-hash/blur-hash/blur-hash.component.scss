@@ -1,0 +1,34 @@
+:host {
+	display: block;
+	position: relative;
+  }
+  
+  canvas {
+	height: 100%;
+	width: 100%;
+	position: absolute;
+	left: 0;
+  }
+  
+  img {
+	opacity: 0;
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	left: 0;
+  }
+  
+  .img-loaded {
+	animation: popIn 0.4s both ease-in;
+  }
+  
+  @keyframes popIn {
+	0% {
+		opacity: 0;
+	}
+  
+	100% {
+		opacity: 1;
+	}
+  }
+  

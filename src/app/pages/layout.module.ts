@@ -1,3 +1,4 @@
+import { BlurHashModule } from './../components/blur-hash/blur-hash.module';
 import { VideoProcessingService } from './../core/services/video-service/video-processing.service';
 import {  CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { NgModule } from '@angular/core';
@@ -134,8 +135,8 @@ FullCalendarModule.registerPlugins([
     Ng2TelInputModule,
     MatExpansionModule,
     NgbModule,
-    JoyrideModule.forRoot()
-   
+    JoyrideModule.forRoot(),
+    BlurHashModule,
     
      
   ],

@@ -1279,13 +1279,13 @@
                        justify-content: center;">
 
                       <div *ngIf="post.type == 'image'" (click)="openImageCentered(content6, post)" data-toggle="modal" data-target="#video-modal"
-                        style="width: auto;
+                        style="width: 100%;
                           height: auto;
                           display: flex;
                           flex-wrap: wrap;
                           object-fit: contain;">
                         <ng-container *ngFor="let media of post.media; let i = index;">
-                          <img [src]="media.captureFileURL" 
+                          <app-blur-hash 
                           style="
                             flex-grow: 1;
                             flex-direction: row;
@@ -1297,7 +1297,11 @@
                             height: 400px;
                             object-fit: cover;
                             border-radius: 12px;
-                          " />
+                          "
+                          [blurHash]="media.blurHash" [imageSrc]="media.captureFileURL" [loading]="'lazy'">
+                          </app-blur-hash>
+                          <!-- <img [src]="media.captureFileURL" 
+                           /> -->
                           <!-- <canvas #imageCanvas *ngIf="media.blurHash !== undefined" style="
                             flex-grow: 1;
                             flex-direction: row;
