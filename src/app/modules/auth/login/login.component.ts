@@ -172,7 +172,7 @@ export class LoginComponent implements OnInit {
       email: this.loginForm.value.email,
       password: this.loginForm.value.password
     }
-    debugger
+    
     if (this._clubService.selectedClub.pickerClub) {
       payload.clubID = this._clubService.selectedClub.pickerModelId
       payload.pickerClubID = this._clubService.selectedClub.id
@@ -244,7 +244,7 @@ export class LoginComponent implements OnInit {
       }
       else {
         this._clubService.searchClubByNameForPicker(searchString, this.offset, this.limit).subscribe((res: ApiResponse<BaseClub[]>) => {
-          debugger
+          
           if (!res.hasErrors()) {
             if (res.data.length == 0) {
               this.noClubFound = true;

@@ -204,7 +204,6 @@ export class UserMgtComponent implements OnInit {
     takeUntil(this.destroy$)).subscribe((res: ApiResponse<UserList>) => {
       if(!res.hasErrors()){
         this.allUsers = res.data;
-        console.log(this.allUsers)
         this.cf.detectChanges();
        }
        this.isLoading = false;
