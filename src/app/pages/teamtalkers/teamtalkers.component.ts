@@ -127,6 +127,7 @@ export class TeamtalkersComponent implements OnInit, AfterViewInit {
     voteCount: 0
   };
   isDisabled: boolean = false;
+  public temporaryCheck: any;
 
   constructor(
     private spinner: NgxSpinnerService,
