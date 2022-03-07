@@ -32,8 +32,7 @@ import { Subject } from 'rxjs';
 import { BaseURL } from './../../core/models/base-urls';
 import { PollsService } from '@app/core/services/polls.service';
 import { Polls } from './../../core/models/polls.model';
-import { FormArray, FormBuilder, FormGroup, AbstractControl, FormControl, Validators } from '@angular/forms';
-import { decode, isBlurhashValid } from "blurhash";
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: "app-teamtalkers",
