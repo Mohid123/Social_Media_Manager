@@ -174,6 +174,7 @@ export class TeamtalkersComponent implements OnInit, AfterViewInit {
     this.getCheckedItemList();
    // this.getLatestClubPosts();
     this.getPollPosts();
+    this.addOption();
 
     this.mediaService.subscribeToProgressEvents((progress: number) => {
       this.updateProgress = progress;
@@ -272,7 +273,6 @@ export class TeamtalkersComponent implements OnInit, AfterViewInit {
         }]
         payload.text = ""
       }
-      
     })
   }
 
@@ -426,6 +426,7 @@ export class TeamtalkersComponent implements OnInit, AfterViewInit {
   onChangeSingle(value: Date) {
     this.pollSelectedDate = value;
   }
+
   onChangeSingleTime(value: Date) {
     this.pollSelectedTime = value;
   }

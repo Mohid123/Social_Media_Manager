@@ -470,8 +470,12 @@ export class UserMgtComponent implements OnInit {
   setActive(button: any): void {
     for(const but of this.filterButtons) {
       but.isClicked = false;
+      this.input.nativeElement.value = ""
+      this.noRecordFound = false;
     }
      button.isClicked = true;
+     this.input.nativeElement.value = ""
+     this.noRecordFound = false;
   }
 
   ngOnDestroy(): void {
