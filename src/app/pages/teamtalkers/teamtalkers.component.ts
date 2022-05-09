@@ -719,14 +719,12 @@ export class TeamtalkersComponent implements OnInit, AfterViewInit {
 }
 
   onSelectVideo(event) {
-    debugger
     let fileSize: number = 0;
     this.file = event.target.files && event.target.files[0];
     fileSize = parseInt((this.file.size / (1024 * 1024)).toFixed(2));
     console.log(fileSize)
     this.file.fileSize = fileSize;
     if (this.file) {
-      debugger
       var reader = new FileReader();
       reader.readAsDataURL(this.file);
       if (this.file.type.indexOf("video") > -1) {
@@ -888,25 +886,21 @@ export class TeamtalkersComponent implements OnInit, AfterViewInit {
   }
 
   addVideoPost() {
-    debugger
     let groups = [];
     let events = [];
     let club = [];
     this.isDisabled = true;
     if (!this.file) {
-      debugger
       this.toast.error("Please select a Video File", "Empty File");
       this.isDisabled = false;
       return;
     } else if (this.checkedList.length == 0) {
-      debugger
       this.toast.error(
         "Please select atleast one Item from (Club, Group or Event)"
       );
       this.isDisabled = false;
       return;
     } else if (this.file.fileSize > 500) {
-      debugger
       this.toast.error("Video Size must be less than 500MB", "info");
       this.isDisabled = false;
       return;
