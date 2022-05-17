@@ -719,9 +719,10 @@ export class TeamtalkersComponent implements OnInit, AfterViewInit {
 }
 
   onSelectVideo(event) {
-    let fileSize;
+    let fileSize: number = 0;
     this.file = event.target.files && event.target.files[0];
-    fileSize = (this.file.size / (1024 * 1024)).toFixed(2) + "MB";
+    fileSize = parseInt((this.file.size / (1024 * 1024)).toFixed(2));
+    console.log(fileSize)
     this.file.fileSize = fileSize;
     if (this.file) {
       var reader = new FileReader();
@@ -899,7 +900,7 @@ export class TeamtalkersComponent implements OnInit, AfterViewInit {
       );
       this.isDisabled = false;
       return;
-    } else if (this.file.fileSize > "500") {
+    } else if (this.file.fileSize > 500) {
       this.toast.error("Video Size must be less than 500MB", "info");
       this.isDisabled = false;
       return;
