@@ -39,6 +39,7 @@ export class BlurHashComponent  implements AfterViewInit {
 
   public canvasWidth = 32;
   public canvasHeight = 32;
+  public build: any;
 
   public isBrowser: boolean;
 
