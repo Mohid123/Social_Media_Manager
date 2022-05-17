@@ -13,6 +13,7 @@ export class CalendarComponent implements OnInit {
   @Output() selectedSchedule: EventEmitter<any> =   new EventEmitter();
 
   public options: any
+  public buildtest: any
 
   calendarOptions: CalendarOptions = {
     initialView: 'dayGridMonth',

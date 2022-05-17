@@ -9,7 +9,9 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "rtl": "webpack --config webpack-rtl.config.js",
-    "postinstall": "ngcc"
+    "postinstall": "ngcc",
+    "build-prod-patch": "npm version patch && node ./replace.build.js && ng build --prod --base-href=./ && node ./versioning.build.js",
+    "build-prod-no-patch": "node ./replace.build.js && ng build --prod --base-href=./ && node ./versioning.build.js"
   },
   "private": true,
   "dependencies": {
@@ -66,6 +68,7 @@
     "object-path": "^0.11.4",
     "perfect-scrollbar": "^1.5.0",
     "popper.js": "^1.16.1",
+    "replace-in-file": "^6.3.2",
     "rxjs": "~6.6.0",
     "socicon": "^3.0.5",
     "tslib": "^2.0.0",
