@@ -92,6 +92,7 @@ export class TeamtalkersComponent implements OnInit, AfterViewInit {
   public showRecentPoll: boolean = false;
   offset: number = 0;
   limit: number = 15;
+  public noRecordFound: boolean = false;
   public pollOptions: string;
   scheduleSelectedDate: any;
   scheduleSelectedTime: Date;
@@ -278,12 +279,18 @@ export class TeamtalkersComponent implements OnInit, AfterViewInit {
 
 
   hidePoll(){
-    (this.selectedClub.clubName == "Solis Solution" || this.selectedClub.isPicker == true || this.selectedClub.pickerClub == true) ? this.showPoll = true: this.showFourPoll = true;
+    (this.selectedClub.clubName == "Solis Solution" || 
+    this.selectedClub.clubName == 'Nimba Talk' || 
+    this.selectedClub.clubName =='UMP' ||
+    this.selectedClub.isPicker == true || this.selectedClub.pickerClub == true) ? this.showPoll = true: this.showFourPoll = true;
   }
 
 
   hideRecentPolls(){
-    (this.selectedClub.clubName == "Solis Solution" && this.selectedClub.id == "60db0c52723416289b31f1d9" || this.selectedClub.isPicker == true || this.selectedClub.pickerModelId == "61446df5acf10ff6947f2426") ? this.showRecentPoll = true: this.showRecentPoll = false;
+    (this.selectedClub.clubName == "Solis Solution" && this.selectedClub.id == "60db0c52723416289b31f1d9" || 
+    this.selectedClub.clubName == 'Nimba Talk' && this.selectedClub.id == '6177f5a16e1b510f6d754e53' || 
+    this.selectedClub.clubName =='UMP' && this.selectedClub.id == '62820e43328a79224ae49752' ||
+    this.selectedClub.isPicker == true || this.selectedClub.pickerModelId == "61446df5acf10ff6947f2426") ? this.showRecentPoll = true: this.showRecentPoll = false;
   }
 
   openVerticallyCentered(content, post) {
@@ -359,6 +366,7 @@ export class TeamtalkersComponent implements OnInit, AfterViewInit {
     this.pollService.getAllPolls(this.offset, this.limit).pipe(takeUntil(this.destroy$)).subscribe((res: ApiResponse<Polls>) => {
       if(!res.hasErrors()) {
         this.allPolls = res.data;
+        console.log(res.data)
       }
     })
   }
@@ -657,7 +665,10 @@ export class TeamtalkersComponent implements OnInit, AfterViewInit {
     let obj = {
       baseUrl: club.baseURL
     };
-    if (obj.baseUrl == BaseURL.baseURL[2] || obj.baseUrl == BaseURL.baseURL[0]) {
+    if (obj.baseUrl == BaseURL.baseURL[0] || 
+      obj.baseUrl == BaseURL.baseURL[1] ||
+      obj.baseUrl == BaseURL.baseURL[2] ||
+      obj.baseUrl == BaseURL.baseURL[3]) {
       //Multiple Images for gen4 = true
       if (this.file > 0 && this.file < 5) {
         let i: number = 0;

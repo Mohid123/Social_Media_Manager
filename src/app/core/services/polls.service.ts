@@ -4,8 +4,9 @@ import { HttpClient } from '@angular/common/http';
 import { ApiResponse } from '@app/core/models/response.model';
 import { Observable } from 'rxjs';
 import { Polls } from './../models/polls.model';
+import { PollList } from './../models/polls-list.model';
 
-type poll = Polls
+type poll = Polls | PollList
 
 @Injectable({
   providedIn: 'root'
