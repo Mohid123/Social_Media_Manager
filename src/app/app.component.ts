@@ -12,6 +12,7 @@ import { locale as esLang } from "./modules/i18n/vocabs/es";
 import { locale as jpLang } from "./modules/i18n/vocabs/jp";
 import { locale as deLang } from "./modules/i18n/vocabs/de";
 import { locale as frLang } from "./modules/i18n/vocabs/fr";
+import { locale as duLang } from "./modules/i18n/vocabs/du";
 import { SplashScreenService } from "./_metronic/partials/layout/splash-screen/splash-screen.service";
 import { Router, NavigationEnd, NavigationError } from "@angular/router";
 import { fromEvent, Observable, Subscription } from "rxjs";
@@ -46,7 +47,8 @@ export class AppComponent implements OnInit, OnDestroy {
       esLang,
       jpLang,
       deLang,
-      frLang
+      frLang,
+      duLang
     );
   }
 

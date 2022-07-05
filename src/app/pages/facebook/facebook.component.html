@@ -8,7 +8,7 @@
                         <span class="svg-icon svg-icon-primary svg-icon-2x">
                             <img src="../../../assets/media/custom/search.svg"/>
                         </span>
-                        <span class="nav-text text-white"> &nbsp; Search</span>
+                        <span class="nav-text text-white ml-1" translate="HEADER.SEARCH"></span>
                     </h3>
                 </div>
             </div>
@@ -18,7 +18,7 @@
                         <div class="main">
                             <div class="input-group">
                                 <input [(ngModel)]="searchString" (ngModelChange)="searchFacebookPages($event)"
-                                    type="text" class="form-control" placeholder="Search">
+                                    type="text" class="form-control" placeholder="{{ 'HEADER.SEARCH' | translate}}">
                                 <div class="input-group-append">
                                     <button class="btn btn-secondary" type="button">
                                         <i class="fa fa-search"></i>
@@ -35,8 +35,7 @@
                                         <input [(ngModel)]="masterSelected" name="list_name" value="m1"
                                             (change)="selectAll()" type="checkbox" value="1" />
                                         <span></span>
-                                        <label style="padding-left: 10px;" class="font-weight-bolder">Select
-                                            all</label>
+                                        <label style="padding-left: 10px;" class="font-weight-bolder" translate="CARD.SELECTALL"></label>
                                     </label>
                                 </td>
                             </tr>
@@ -78,7 +77,7 @@
                         <span class="svg-icon svg-icon-primary svg-icon-2x">
                             <img src="../../../assets/media/custom/write.svg"/>
                         </span>
-                        <span class="nav-text text-white"> &nbsp; New post</span>
+                        <span class="nav-text text-white ml-3" translate="HEADER.NEWPOST"></span>
                     </h3>
                 </div>
             </div>
@@ -88,8 +87,7 @@
                         <ng-template mat-tab-label>
                             <mat-icon>
                                 <i class="far fa-images icon-lg" style="color: #006b09;"></i>
-                            </mat-icon>&nbsp;
-                            &nbsp;Photo
+                            </mat-icon><span class="ml-2" translate="CARD.PHOTO"></span>
                         </ng-template>
                         <div class="card-body">
                             <div class="tab-content">
@@ -111,7 +109,7 @@
                                                 [ngModelOptions]="{standalone: true}"
                                                 class="form-control form-control-lg form-control-solid"
                                                 id="exampleTextarea" rows="3"
-                                                placeholder="What’s on your mind, {{userName}}?"></textarea>
+                                                placeholder="{{'CARD.WHATSON'| translate}}, {{userName}}"></textarea>
                                         </div>
                                         <label class="checkbox checkbox-sm checkbox-inline">
                                             <input [(ngModel)]="showSchedule" name="list_name" value="m1"
@@ -125,8 +123,7 @@
                                                         </a>
                                                     </span>
                                                 </span>
-                                                <span class="btn text-dark-50 font-weight-normal font-size-base">
-                                                    &nbsp;Schedule</span>
+                                                <span class="btn text-dark-50 font-weight-normal font-size-base" translate="CARD.SCHEDULE"></span>
                                             </div>
                                         </label>
                                         <form class="pt-10 ql-quil ql-quil-plain">
@@ -146,8 +143,7 @@
                                                                             </a></span>
                                                                     </span>
                                                                     <span
-                                                                        class="btn text-dark-50 font-weight-normal font-size-base">
-                                                                        &nbsp;Select image</span>
+                                                                        class="btn text-dark-50 font-weight-normal font-size-base" translate="CARD.SELECTIMAGE"></span>
                                                                 </div>
                                                             </label>
                                                             <input id="file-input" type="file" accept="image/png, image/jpeg, image/jpg"
@@ -158,14 +154,14 @@
                                                 <div class="d-flex">
                                                     <div class="ml-auto p-2">
                                                         <button (click)="clear()" type="button"
-                                                            class="btn btn-transparent-warning">Clear</button>
+                                                            class="btn btn-transparent-warning" translate="CARD.CLEAR"></button>
                                                     </div>
                                                     <div class="ml-auto p-2">
                                                         <button (click)="addImagePost(); clicked = true;" type="button" [disabled]="isDisabled == true"
                                                             class="btn btn-primary flex-row-reverse"
                                                             [ngClass]="condition == true ? 'spinner spinner-white spinner-right' : '' "
                                                             style="background-color: #3b5998; border-color: #3b5998;">
-                                                            {{condition == true ? 'Finalizing Your Post': 'Post Now'}}
+                                                            {{condition == true ? ('CARD.FINAL' | translate ): ('CARD.POSTNOW' | translate)}}
                                                         </button>
                                                     </div>
                                                 </div>
@@ -174,7 +170,7 @@
                                                 <div class="row d-block">
                                                     <div class="col-md-6 d-inline-block">
                                                         <div class="form-group">
-                                                            <label>Schedule Date</label>
+                                                            <label translate="CARD.SCHEDULEDATE"></label>
                                                             <input readonly style="background-color:white;"
                                                                 class="form-control" placeholder="Select Date"
                                                                 [ngxDatePicker]="dateInstanceSingle"
@@ -187,7 +183,7 @@
                                                     </div>
                                                     <div class="col-md-6 d-inline-block">
                                                         <div class="form-group">
-                                                            <label>Time </label>
+                                                            <label translate="CARD.TIME"></label>
                                                             <input class="form-control" style="background-color:white;"
                                                                 readonly placeholder="Select Time"
                                                                 [ngxTimePicker]="timeInstanceOne" [value]="singleTime"
@@ -212,8 +208,7 @@
                                                                                 </a></span>
                                                                         </span>
                                                                         <span
-                                                                            class="btn text-dark-50 font-weight-normal font-size-base">
-                                                                            &nbsp;Select image</span>
+                                                                            class="btn text-dark-50 font-weight-normal font-size-base" translate="CARD.SELECTIMAGE"></span>
                                                                     </div>
                                                                 </label>
                                                                 <input id="file-input" type="file" accept="image/*"
@@ -224,7 +219,7 @@
                                                     <div class="d-flex" style="float: right; margin-top: 10px;">
                                                         <div class="ml-auto p-2">
                                                             <button (click)="clear()" type="button"
-                                                                class="btn btn-transparent-warning">Clear</button>
+                                                                class="btn btn-transparent-warning" translate="CARD.CLEAR"></button>
                                                         </div>
                                                         <div class="ml-auto p-2">
                                                             <button (click)="scheduleImagePostForFB(); clicked = true;" type="button" [disabled]="isDisabled == true"
@@ -245,8 +240,7 @@
                         <ng-template mat-tab-label>
                             <mat-icon>
                                 <i class="fas fa-video icon-lg" style="color: #da391d;"></i>
-                            </mat-icon>&nbsp;
-                            &nbsp;Video
+                            </mat-icon><span class="ml-2" translate="CARD.VIDEO"></span>
                         </ng-template>
                         <div class="card-body">
                             <div class="tab-content">
@@ -270,7 +264,7 @@
                                                 [ngModelOptions]="{standalone: true}"
                                                 class="form-control form-control-lg form-control-solid"
                                                 id="exampleTextarea" rows="3"
-                                                placeholder="What’s on your mind, {{userName}}?"></textarea>
+                                                placeholder="{{'CARD.WHATSON'| translate}}, {{userName}}"></textarea>
                                         </div>
                                         <label class="checkbox checkbox-sm checkbox-inline">
                                             <input [(ngModel)]="showSchedule" name="list_name" value="m1"
@@ -282,8 +276,7 @@
                                                             <i class="flaticon-calendar-with-a-clock-time-tools icon-lg"></i>
                                                         </a></span>
                                                 </span>
-                                                <span class="btn text-dark-50 font-weight-normal font-size-base">
-                                                    &nbsp;Schedule</span>
+                                                <span class="btn text-dark-50 font-weight-normal font-size-base" translate="CARD.SCHEDULE"></span>
                                             </div>
                                         </label>
                                         <form class="pt-10 ql-quil ql-quil-plain">
@@ -303,8 +296,8 @@
                                                                                         style="cursor: pointer;"></i>
                                                                                 </a></span>
                                                                         </span>
-                                                                        <span class="btn text-dark-50 font-weight-normal font-size-base">
-                                                                            &nbsp;Select video</span>
+                                                                        <span
+                                                                        class="btn text-dark-50 font-weight-normal font-size-base" translate="CARD.SELECTVIDEO"></span>
                                                                     </div>
                                                                 </label>
                                                                 <input id="file-input" type="file" accept="video/*"
@@ -316,14 +309,14 @@
                                                 <div class="d-flex">
                                                     <div class="ml-auto p-2">
                                                         <button (click)="clear()" type="button"
-                                                            class="btn btn-transparent-warning">Clear</button>
+                                                            class="btn btn-transparent-warning" translate="CARD.CLEAR"></button>
                                                     </div>
                                                     <div class="ml-auto p-2">
                                                         <button (click)="addVideoPost(); clicked = true;" type="button" [disabled]="isDisabled == true"
                                                             class="btn btn-primary flex-row-reverse"
                                                             [ngClass]="condition == true ? 'spinner spinner-white spinner-right' : '' "
                                                             style="background-color: #3b5998; border-color: #3b5998;">
-                                                            {{condition == true ? 'Finalizing Your Post': 'Post Now'}}
+                                                            {{condition == true ? ('CARD.FINAL' | translate ): ('CARD.POSTNOW' | translate)}}
                                                         </button>
                                                     </div>
                                                 </div>
@@ -332,7 +325,7 @@
                                                 <div class="row d-block">
                                                     <div class="col-md-6 d-inline-block">
                                                         <div class="form-group">
-                                                            <label>Schedule Date</label>
+                                                            <label translate="CARD.SCHEDULEDATE"></label>
                                                             <input readonly style="background-color:white;"
                                                                 class="form-control" placeholder="Select Date"
                                                                 [ngxDatePicker]="dateInstanceSingle"
@@ -344,7 +337,7 @@
                                                     </div>
                                                     <div class="col-md-6 d-inline-block">
                                                         <div class="form-group">
-                                                            <label>Time </label>
+                                                            <label translate="CARD.TIME"></label>
                                                             <input class="form-control" style="background-color:white;"
                                                                 readonly placeholder="Select Time"
                                                                 [ngxTimePicker]="timeInstanceOne" [value]="singleTime"
@@ -370,8 +363,7 @@
                                                                                 </a></span>
                                                                         </span>
                                                                         <span
-                                                                            class="btn text-dark-50 font-weight-normal font-size-base">
-                                                                            &nbsp;Select video</span>
+                                                                            class="btn text-dark-50 font-weight-normal font-size-base" translate="CARD.SELECTVIDEO"></span>
                                                                     </div>
                                                                 </label>
                                                                 <input id="file-input" type="file" accept="video/*"
@@ -382,12 +374,12 @@
                                                     <div class="d-flex" style="float: right; margin-top: 10px;">
                                                         <div class="ml-auto p-2">
                                                             <button (click)="clear()" type="button"
-                                                                class="btn btn-transparent-warning">Clear</button>
+                                                                class="btn btn-transparent-warning" translate="CARD.CLEAR"></button>
                                                         </div>
                                                         <div class="ml-auto p-2">
                                                             <button (click)="scheduleVideoPostForFB(); clicked = true;" type="button" [disabled]="isDisabled == true"
                                                                 class="btn btn-primary flex-row-reverse"
-                                                                style="background-color: #3b5998; border-color: #3b5998;">Schedule</button>
+                                                                style="background-color: #3b5998; border-color: #3b5998;" translate="CARD.SCHEDULE"></button>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -402,7 +394,7 @@
                     <mat-tab (click)="showDiv.text = true ; showDiv.photo = false ; showDiv.video = false ">
                         <ng-template mat-tab-label>
                             <mat-icon><i class="far fa-file-alt icon-lg" style="color: #EAB026;"></i></mat-icon>
-                            &nbsp;Text
+                            <span class="ml-2" translate="CARD.TEXT"></span>
                         </ng-template>
                         <div class="card-body">
                             <div class="tab-content">
@@ -426,7 +418,7 @@
                                                 [ngModelOptions]="{standalone: true}"
                                                 class="form-control form-control-lg form-control-solid"
                                                 id="exampleTextarea" rows="3"
-                                                placeholder="What’s on your mind, {{userName}}?"></textarea>
+                                                placeholder="{{'CARD.WHATSON'| translate}}, {{userName}}"></textarea>
                                         </div>
                                         <label class="checkbox checkbox-sm checkbox-inline">
                                             <input [(ngModel)]="showSchedule" name="list_name" value="m1"
@@ -440,8 +432,7 @@
                                                                 class="flaticon-calendar-with-a-clock-time-tools icon-lg"></i>
                                                         </a></span>
                                                 </span>
-                                                <span class="btn text-dark-50 font-weight-normal font-size-base">
-                                                    &nbsp;Schedule</span>
+                                                <span class="btn text-dark-50 font-weight-normal font-size-base" translate="CARD.SCHEDULE"></span>
                                             </div>
                                         </label>
                                         <form class="pt-10 ql-quil ql-quil-plain">
@@ -451,14 +442,14 @@
                                                 <div class="d-flex ml-auto">
                                                     <div class="ml-auto p-2">
                                                         <button (click)="clear()" type="button"
-                                                            class="btn btn-transparent-warning">Clear</button>
+                                                            class="btn btn-transparent-warning" translate="CARD.CLEAR"></button>
                                                     </div>
                                                     <div class="ml-auto p-2">
                                                         <button (click)="addTextPost(); clicked = true" type="button" [disabled]="isDisabled == true"
                                                             [ngClass]="condition == true ? 'spinner spinner-white spinner-right' : '' "
                                                             class="btn btn-primary flex-row-reverse"
                                                             style="background-color: #3b5998; border-color: #3b5998;">
-                                                            {{condition == true ? 'Creating Text Post': 'Post Now'}}
+                                                            {{condition == true ? ('CARD.FINAL' | translate ): ('CARD.POSTNOW' | translate)}}
                                                         </button>
                                                     </div>
                                                 </div>
@@ -467,7 +458,7 @@
                                                 <div class="row d-block">
                                                     <div class="col-md-6 d-inline-block">
                                                         <div class="form-group">
-                                                            <label>Schedule Date</label>
+                                                            <label translate="CARD.SCHEDULEDATE"></label>
                                                             <input readonly style="background-color:white;"
                                                                 class="form-control" placeholder="Select Date"
                                                                 [ngxDatePicker]="dateInstanceSingle"
@@ -479,7 +470,7 @@
                                                     </div>
                                                     <div class="col-md-6 d-inline-block">
                                                         <div class="form-group">
-                                                            <label>Time </label>
+                                                            <label translate="CARD.TIME"></label>
                                                             <input class="form-control" style="background-color:white;"
                                                                 readonly placeholder="Select Time"
                                                                 [ngxTimePicker]="timeInstanceOne" [value]="singleTime"
@@ -493,12 +484,12 @@
                                                     <div class="d-flex ml-auto" style="float: right;">
                                                         <div class="ml-auto p-2">
                                                             <button (click)="clear()" type="button"
-                                                                class="btn btn-transparent-warning">Clear</button>
+                                                                class="btn btn-transparent-warning" translate="CARD.CLEAR"></button>
                                                         </div>
                                                         <div class="ml-auto p-2" style="margin-bottom: 45px;">
                                                             <button (click)="scheduleTextPostForFB()" type="button"
                                                                 class="btn btn-primary flex-row-reverse"
-                                                                style="background-color: #3b5998; border-color: #3b5998;">Schedule</button>
+                                                                style="background-color: #3b5998; border-color: #3b5998;" translate="CARD.SCHEDULE"></button>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -513,7 +504,7 @@
                 <div>
                     <div class="card-header ribbon ribbon-right"
                         style="box-shadow: rgb(99 99 99 / 20%) 0px 2px 8px 0px; border-radius: 7px; border-top: 5px solid #4267B2">
-                        <div class="ribbon-target" style="top: 10px; right: -2px; background-color: #4267B2;">Recent posts</div>
+                        <div class="ribbon-target" style="top: 10px; right: -2px; background-color: #4267B2;" translate="CARD.RECENTPOSTS"></div>
                         <h1 class="card-title fb">Facebook</h1>
                     </div>
                     <div class="card-body">

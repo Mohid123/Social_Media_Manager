@@ -1,6 +1,6 @@
 // USA
 export const locale = {
-  lang: 'en',
+  lang: 'du',
   data: {
     TRANSLATOR: {
       SELECT: 'Select your language',
@@ -13,36 +13,36 @@ export const locale = {
       FEATURES: 'Features',
       APPS: 'Apps',
       DASHBOARD: 'Dashboard',
-      CREATECONTENT: 'Create content',
-      SCHEDULES: 'Schedules',
-      ACCMANAGER: 'Account manager',
-      USERMANAGEMENT: 'User management',
-      REPORTEDPOSTS: 'Reported posts',
-      SUPPORT: 'Support',
-      SIGNOUT: 'Sign out',
+      CREATECONTENT: 'Inhoud maken',
+      SCHEDULES: 'Schemas',
+      ACCMANAGER: 'Account Manager',
+      USERMANAGEMENT: 'Gebruikersbeheer',
+      REPORTEDPOSTS: 'Gerapporteerde berichten',
+      SUPPORT: 'Steun',
+      SIGNOUT: 'Afmelden',
     },
     HEADER: {
-      SEARCH: 'Search',
-      NEWPOST: 'New post',
-      PREVIEW: 'Preview',
+      SEARCH: 'Zoeken',
+      NEWPOST: 'Nieuw bericht',
+      PREVIEW: 'Voorbeeld'
     },
     CARD: {
-      SELECTALL: 'Select all',
-      SELECTIMAGE: 'Select image',
-      SELECTVIDEO: 'Select video',
-      CLEAR: 'Clear',
-      POSTNOW: 'Post Now',
-      FINAL: 'Finalizing Your Post',
-      WHATSON: "What's on your mind",
-      PHOTO: 'Photo',
+      SELECTALL: 'Selecteer alles',
+      SELECTIMAGE: 'Selecteer afbeelding',
+      SELECTVIDEO: 'Selecteer video',
+      CLEAR: 'Duidelijk',
+      POSTNOW: 'Nu posten',
+      FINAL: 'Je bericht afronden',
+      WHATSON: 'Waar denk je aan',
+      PHOTO: 'Foto',
       VIDEO: 'Video',
-      TEXT: 'Text',
-      RECENTPOSTS: 'Recent posts',
-      SCHEDULE: 'Schedule',
-      SCHEDULEDATE: 'Schedule Date',
-      TIME: 'Time' 
+      TEXT: 'Tekst',
+      RECENTPOSTS: 'Recente berichten',
+      SCHEDULE: 'Schema',
+      SCHEDULEDATE: 'Planningsdatum',
+      TIME: 'Tijd'
+         
     },
-    
     AUTH: {
       GENERAL: {
         OR: 'Or',

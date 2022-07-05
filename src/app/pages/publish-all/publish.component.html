@@ -8,7 +8,7 @@
                         <span class="svg-icon svg-icon-primary svg-icon-2x">
                             <img src="../../../assets/media/custom/search.svg"/>
                         </span>
-                        <span class="nav-text text-white" > &nbsp; Search</span>
+                        <span class="nav-text text-white ml-1" translate="HEADER.SEARCH"></span>
                     </h3>
                 </div>
             </div>
@@ -17,7 +17,7 @@
                     <div class="card-header border-0 pt-5">
                         <div class="input-group">
                             <input [(ngModel)]="searchString" (ngModelChange)="search($event)" type="text"
-                                class="form-control" placeholder="Search">
+                                class="form-control" placeholder="{{ 'HEADER.SEARCH' | translate}}">
                             <div class="input-group-append">
                                 <button class="btn btn-secondary" type="button">
                                     <i class="fa fa-search"></i>
@@ -33,8 +33,7 @@
                                         <input [(ngModel)]="masterSelected" name="list_name" value="m1"
                                             (change)="selectAll()" type="checkbox" value="1" />
                                         <span></span>
-                                        <label style="padding-left: 10px;" class="font-weight-bolder ">Select
-                                            all</label>
+                                        <label style="padding-left: 10px;" class="font-weight-bolder" translate="CARD.SELECTALL"></label>
                                     </label>
                                 </td>
                             </tr>
@@ -250,7 +249,7 @@
                         <span class="svg-icon svg-icon-primary svg-icon-2x">
                             <img src="../../../assets/media/custom/write.svg"/>
                         </span>
-                        <span class="nav-text text-white"> &nbsp; New post</span>
+                        <span class="nav-text text-white ml-3" translate="HEADER.NEWPOST"></span>
                     </h3>
                 </div>
             </div>
@@ -260,8 +259,7 @@
                         <ng-template mat-tab-label>
                             <mat-icon>
                                 <i class="far fa-images icon-lg" style="color: #006b09;"></i>
-                            </mat-icon>&nbsp;
-                            &nbsp;Photo
+                            </mat-icon> <span class="ml-2" translate="CARD.PHOTO"></span>
                         </ng-template>
                         <div class="card-body">
                             <div class="tab-content">
@@ -284,7 +282,9 @@
                                             <textarea [(ngModel)]="socialCaption" [ngModelOptions]="{standalone: true}"
                                                 class="form-control form-control-lg form-control-solid"
                                                 id="exampleTextarea" rows="3"
-                                                placeholder="What’s on your mind, {{userName}}?"></textarea>
+                                                placeholder="{{'CARD.WHATSON'| translate}}, {{userName}}?"></textarea>
+
+                                                <!-- placeholder="{{ 'HEADER.SEARCH' | translate}}" -->
                                         </div>
                                         <form class="pt-10 ql-quil ql-quil-plain">
                                             <div class="border-top my-5"></div>
@@ -303,8 +303,7 @@
                                                                             </a></span>
                                                                     </span>
                                                                     <span
-                                                                        class="btn text-dark-50 font-weight-normal font-size-base">
-                                                                        &nbsp;Select image</span>
+                                                                        class="btn text-dark-50 font-weight-normal font-size-base" translate="CARD.SELECTIMAGE"></span>
                                                                 </div>
                                                             </label>
                                                             <input id="file-input" accept="image/*"
@@ -316,13 +315,13 @@
                                                 <div class="d-flex">
                                                     <div class="ml-auto p-2">
                                                         <button (click)="clear()" type="button"
-                                                            class="btn btn-transparent-warning">Clear</button>
+                                                            class="btn btn-transparent-warning" translate="CARD.CLEAR"></button>
                                                     </div>
                                                     <div class="ml-auto p-2">
                                                         <button  (click)="addImagePost(); clicked = true;" type="button" [disabled]="isDisabled == true"
                                                             [ngClass]="(_genericPostService.condition == true || condition == true) ? 'spinner spinner-white spinner-right' : '' "
                                                             class="btn btn-primary flex-row-reverse" style="background-color: #3b5998; border-color: #3b5998;">
-                                                            {{_genericPostService.condition == true || condition == true ? 'Finalizing Your Post': 'Post Now'}}
+                                                            {{_genericPostService.condition == true || condition == true ? ('CARD.FINAL' | translate ): ('CARD.POSTNOW' | translate)}}
                                                         </button>
                                                     </div>
                                                 </div>
@@ -338,8 +337,7 @@
                         <ng-template mat-tab-label>
                             <mat-icon>
                                 <i class="fas fa-video icon-lg" style="color: #da391d;"></i>
-                            </mat-icon>&nbsp;
-                            &nbsp;Video
+                            </mat-icon><span class="ml-2" translate="CARD.VIDEO"></span>
                         </ng-template>
                         <div class="card-body">
                             <div class="tab-content">
@@ -362,7 +360,7 @@
                                             <textarea [(ngModel)]="socialCaption" [ngModelOptions]="{standalone: true}"
                                                 class="form-control form-control-lg form-control-solid"
                                                 id="exampleTextarea" rows="3"
-                                                placeholder="What’s on your mind, {{userName}}?"></textarea>
+                                                placeholder="{{'CARD.WHATSON'| translate}}, {{userName}}?"></textarea>
                                         </div>
                                         <form class="pt-10 ql-quil ql-quil-plain">
                                             <div class="border-top my-5"></div>
@@ -381,8 +379,7 @@
                                                                             </a></span>
                                                                     </span>
                                                                     <span
-                                                                        class="btn text-dark-50 font-weight-normal font-size-base">
-                                                                        &nbsp;Select video</span>
+                                                                        class="btn text-dark-50 font-weight-normal font-size-base" translate="CARD.SELECTVIDEO"></span>
                                                                 </div>
                                                             </label>
                                                             <input id="file-input" accept="video/*"
@@ -395,13 +392,13 @@
                                                 <div class="d-flex">
                                                     <div class="ml-auto p-2">
                                                         <button (click)="clear()" type="button"
-                                                            class="btn btn-transparent-warning">Clear</button>
+                                                            class="btn btn-transparent-warning" translate="CARD.CLEAR"></button>
                                                     </div>
                                                     <div class="ml-auto p-2">
                                                         <button (click)="addVideoPost(); clicked = true;" type="button" [disabled]="isDisabled == true"
                                                         [ngClass]="_genericPostService.condition == true ? 'spinner spinner-white spinner-right' : '' "
                                                         class="btn btn-primary flex-row-reverse" style="background-color: #3b5998; border-color: #3b5998;">
-                                                        {{_genericPostService.condition == true || condition == true ? 'Finalizing Your Post': 'Post Now'}}
+                                                        {{_genericPostService.condition == true || condition == true ? ('CARD.FINAL' | translate ): ('CARD.POSTNOW' | translate)}}
                                                         </button>
                                                     </div>
                                                 </div>
@@ -418,7 +415,7 @@
                             <mat-icon>
                                 <i class="far fa-file-alt icon-lg" style="color: #EAB026;"></i>
                             </mat-icon>
-                            &nbsp;Text
+                            <span class="ml-1" translate="CARD.TEXT"></span>
                         </ng-template>
                         <div class="card-body">
                             <div class="tab-content">
@@ -441,7 +438,7 @@
                                             <textarea [(ngModel)]="socialCaption" [ngModelOptions]="{standalone: true}"
                                                 class="form-control form-control-lg form-control-solid"
                                                 id="exampleTextarea" rows="3"
-                                                placeholder="What’s on your mind, {{userName}}?"></textarea>
+                                                placeholder="{{'CARD.WHATSON'| translate}}, {{userName}}?"></textarea>
                                         </div>
                                         <form class="pt-10 ql-quil ql-quil-plain">
                                             <div class="border-top my-5"></div>
@@ -449,14 +446,14 @@
                                                 <div class="d-flex">
                                                     <div class="ml-auto p-2">
                                                         <button (click)="clear()" type="button"
-                                                            class="btn btn-transparent-warning">Clear</button>
+                                                            class="btn btn-transparent-warning" translate="CARD.CLEAR"></button>
                                                     </div>
                                                     <div class="ml-auto p-2">
                                                         <button (click)="addTextPost(); clicked = true;" type="button" [disabled]="isDisabled == true"
                                                             [ngClass]="_genericPostService.condition == true ? 'spinner spinner-white spinner-right' : '' "
                                                             class="btn btn-primary flex-row-reverse"
                                                             style="background-color: #3b5998; border-color: #3b5998;">
-                                                            {{_genericPostService.condition == true ? 'Creating Text Post': 'Post Now'}}
+                                                            {{_genericPostService.condition == true ? ('CARD.FINAL' | translate ): ('CARD.POSTNOW' | translate)}}
                                                         </button>
                                                     </div>
                                                 </div>
@@ -480,7 +477,7 @@
                         <span class="svg-icon svg-icon-primary svg-icon-2x">
                             <img src="../../../assets/media/custom/preview.svg"/>
                         </span>
-                        <span class="nav-text text-white"> &nbsp; Preview</span>
+                        <span class="nav-text text-white ml-3" translate="HEADER.PREVIEW"></span>
                     </h3>
                 </div>
             </div>

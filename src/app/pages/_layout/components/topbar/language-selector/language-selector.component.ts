@@ -23,16 +23,17 @@ export class LanguageSelectorComponent implements OnInit {
       name: 'English',
       flag: './assets/media/svg/flags/226-united-states.svg',
     },
+    {
+      lang: 'du',
+      name: 'Dutch',
+      flag: './assets/media/svg/flags/237-netherlands.svg',
+    },
     // {
     //   lang: 'ch',
     //   name: 'Mandarin',
     //   flag: './assets/media/svg/flags/015-china.svg',
     // },
-    // {
-    //   lang: 'es',
-    //   name: 'Spanish',
-    //   flag: './assets/media/svg/flags/128-spain.svg',
-    // },
+ 
     // {
     //   lang: 'jp',
     //   name: 'Japanese',
